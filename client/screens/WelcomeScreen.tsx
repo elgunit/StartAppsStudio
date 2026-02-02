@@ -388,19 +388,19 @@ export default function WelcomeScreen() {
             <View style={styles.customPackageHeader}>
               <Feather name="briefcase" size={24} color={theme.text} />
               <View style={styles.customPackageInfo}>
-                <ThemedText type="h4">Enterprise Partner</ThemedText>
+                <ThemedText type="h4">Enterprise</ThemedText>
                 <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  Via StartUpSoft.com
+                  Via StartupSoft
                 </ThemedText>
               </View>
               <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
                 <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                  Partnership
+                  Handoff
                 </ThemedText>
               </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              For large-scale projects, we partner with StartUpSoft.com to provide dedicated engineering teams and enterprise solutions.
+              Upon prototype MVP, we handoff to StartupSoft for dedicated engineering teams and enterprise-scale solutions.
             </ThemedText>
             <View style={styles.customServicesList}>
               <View style={styles.customServiceItem}>
