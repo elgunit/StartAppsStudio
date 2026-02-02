@@ -130,6 +130,10 @@ function serveExpoManifest(platform: string, res: Response) {
   res.send(manifest);
 }
 
+function isMobileUserAgent(userAgent: string): boolean {
+  return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+}
+
 function serveLandingPage({
   req,
   res,
@@ -141,6 +145,24 @@ function serveLandingPage({
   landingPageTemplate: string;
   appName: string;
 }) {
+  const userAgent = req.header("user-agent") || "";
+  
+  // Desktop browsers should be redirected to the Expo web app
+  if (!isMobileUserAgent(userAgent)) {
+    const forwardedProto = req.header("x-forwarded-proto");
+    const protocol = forwardedProto || req.protocol || "https";
+    const forwardedHost = req.header("x-forwarded-host");
+    const host = forwardedHost || req.get("host") || "";
+    
+    // Redirect to port 8081 for Expo web app
+    const webAppUrl = host.includes(":5000") 
+      ? `${protocol}://${host.replace(":5000", ":8081")}`
+      : `${protocol}://${host.replace("-5000.", "-8081.")}`;
+    
+    log(`Desktop detected, redirecting to Expo web: ${webAppUrl}`);
+    return res.redirect(302, webAppUrl);
+  }
+
   const forwardedProto = req.header("x-forwarded-proto");
   const protocol = forwardedProto || req.protocol || "https";
   const forwardedHost = req.header("x-forwarded-host");
