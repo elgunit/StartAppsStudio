@@ -270,15 +270,10 @@ export default function WelcomeScreen() {
                     {study.industry}
                   </ThemedText>
                 </View>
-                <View style={styles.caseHats}>
-                  {study.hats.map((hatType, hatIndex) => (
-                    <View 
-                      key={hatIndex} 
-                      style={[styles.caseHatIconWrapper, { backgroundColor: theme.backgroundDefault }]}
-                    >
-                      <Feather name={hatIcons[hatType]} size={12} color={theme.text} />
-                    </View>
-                  ))}
+                <View style={[styles.hatCountBadge, { backgroundColor: theme.text }]}>
+                  <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
+                    {study.hats.length} {study.hats.length === 1 ? "hat" : "hats"}
+                  </ThemedText>
                 </View>
               </View>
               <View style={[styles.resultBadge, { backgroundColor: theme.success + "20" }]}>
@@ -533,18 +528,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginBottom: Spacing.md,
   },
-  caseHats: {
-    flexDirection: "row",
-  },
-  caseHatIconWrapper: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -4,
-    borderWidth: 2,
-    borderColor: "#FFFFFF",
+  hatCountBadge: {
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: Spacing.xs,
+    borderRadius: Spacing.sm,
   },
   resultBadge: {
     flexDirection: "row",
