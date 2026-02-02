@@ -67,6 +67,14 @@ const hatImages: Record<HatType, any> = {
   analyst: require("../../assets/images/hat-analyst.png"),
 };
 
+const hatIcons: Record<HatType, keyof typeof Feather.glyphMap> = {
+  designer: "pen-tool",
+  developer: "code",
+  strategist: "compass",
+  manager: "clipboard",
+  analyst: "bar-chart-2",
+};
+
 const services = [
   {
     icon: "layout" as const,
@@ -264,12 +272,12 @@ export default function WelcomeScreen() {
                 </View>
                 <View style={styles.caseHats}>
                   {study.hats.map((hatType, hatIndex) => (
-                    <Image
-                      key={hatIndex}
-                      source={hatImages[hatType]}
-                      style={styles.caseHatIcon}
-                      resizeMode="contain"
-                    />
+                    <View 
+                      key={hatIndex} 
+                      style={[styles.caseHatIconWrapper, { backgroundColor: theme.backgroundDefault }]}
+                    >
+                      <Feather name={hatIcons[hatType]} size={12} color={theme.text} />
+                    </View>
                   ))}
                 </View>
               </View>
@@ -527,11 +535,16 @@ const styles = StyleSheet.create({
   },
   caseHats: {
     flexDirection: "row",
-    gap: -8,
   },
-  caseHatIcon: {
-    width: 24,
-    height: 24,
+  caseHatIconWrapper: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: -4,
+    borderWidth: 2,
+    borderColor: "#FFFFFF",
   },
   resultBadge: {
     flexDirection: "row",
