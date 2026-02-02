@@ -122,7 +122,7 @@ const caseStudies = [
 const pricingTiers = [
   { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
   { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
-  { name: "Production", price: "$999", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
+  { name: "Production", price: "$999 - $3.5k", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
 ];
 
 export default function WelcomeScreen() {
@@ -349,7 +349,7 @@ export default function WelcomeScreen() {
               <View style={styles.customPackageInfo}>
                 <ThemedText type="h4">Custom Package</ThemedText>
                 <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  Scale with your business growth
+                  $5k - $75k
                 </ThemedText>
               </View>
               <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
