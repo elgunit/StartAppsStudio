@@ -69,14 +69,14 @@ const hatImages: Record<HatType, any> = {
 
 const services = [
   {
-    icon: "layers" as const,
-    title: "MVP Development",
-    description: "Transform your idea into a working product with end-to-end design and development.",
+    icon: "layout" as const,
+    title: "Landing Pages",
+    description: "High-converting landing pages that capture attention and drive results.",
   },
   {
     icon: "smartphone" as const,
-    title: "Mobile Apps",
-    description: "Native iOS and Android apps built with React Native for a seamless user experience.",
+    title: "Native iOS & Android",
+    description: "Beautiful native mobile apps for both platforms with seamless user experience.",
   },
   {
     icon: "globe" as const,
@@ -84,9 +84,9 @@ const services = [
     description: "Responsive web apps with modern technologies and beautiful interfaces.",
   },
   {
-    icon: "compass" as const,
-    title: "Product Strategy",
-    description: "Research-driven strategy to validate your idea and plan your product roadmap.",
+    icon: "layers" as const,
+    title: "MVP Development",
+    description: "Transform your idea into a working product with end-to-end design and development.",
   },
 ];
 
@@ -112,9 +112,9 @@ const caseStudies = [
 ];
 
 const pricingTiers = [
-  { name: "Starter Pack", credits: 50, price: "$99", description: "For prototypes & small projects" },
-  { name: "Growth Suite", credits: 150, price: "$249", popular: true, description: "Best for growing startups" },
-  { name: "Enterprise", credits: 500, price: "$699", description: "Large-scale MVPs" },
+  { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"] },
+  { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"] },
+  { name: "Production", price: "$999", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"] },
 ];
 
 export default function WelcomeScreen() {
@@ -287,10 +287,10 @@ export default function WelcomeScreen() {
       {/* Pricing Preview */}
       <Animated.View entering={FadeInDown.delay(500).duration(600)} style={styles.section}>
         <ThemedText type="h2" style={styles.sectionTitle}>
-          Credit Packages
+          Packages
         </ThemedText>
         <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Flexible pricing that scales with your project
+          Choose the right package for your stage
         </ThemedText>
         
         <View style={styles.pricingGrid}>
@@ -316,16 +316,53 @@ export default function WelcomeScreen() {
                 <ThemedText type="display" style={styles.price}>
                   {tier.price}
                 </ThemedText>
-                <ThemedText type="body" style={{ color: theme.textSecondary }}>
-                  {tier.credits} credits
-                </ThemedText>
-                <ThemedText type="caption" style={[styles.pricingDesc, { color: theme.textTertiary }]}>
+                <ThemedText type="body" style={[styles.pricingDesc, { color: theme.textSecondary }]}>
                   {tier.description}
                 </ThemedText>
+                <View style={styles.featuresList}>
+                  {tier.features.map((feature, featureIndex) => (
+                    <View key={featureIndex} style={styles.featureItem}>
+                      <Feather name="check" size={14} color={theme.success} />
+                      <ThemedText type="small">{feature}</ThemedText>
+                    </View>
+                  ))}
+                </View>
               </Card>
             </Animated.View>
           ))}
         </View>
+
+        {/* Custom Package */}
+        <Animated.View entering={FadeInDown.delay(700).duration(400)}>
+          <Card style={[styles.customPackageCard, { borderColor: theme.textTertiary, borderStyle: "dashed" }]}>
+            <View style={styles.customPackageHeader}>
+              <Feather name="trending-up" size={24} color={theme.text} />
+              <View style={styles.customPackageInfo}>
+                <ThemedText type="h4">Custom Package</ThemedText>
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  Scale with your business growth
+                </ThemedText>
+              </View>
+            </View>
+            <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
+              Need landing pages, native iOS and Android applications, or ongoing product development? Let's create a custom plan tailored to your growth trajectory.
+            </ThemedText>
+            <View style={styles.customFeatures}>
+              <View style={styles.customFeatureItem}>
+                <Feather name="layout" size={16} color={theme.text} />
+                <ThemedText type="small">Landing Pages</ThemedText>
+              </View>
+              <View style={styles.customFeatureItem}>
+                <Feather name="smartphone" size={16} color={theme.text} />
+                <ThemedText type="small">Native iOS & Android</ThemedText>
+              </View>
+              <View style={styles.customFeatureItem}>
+                <Feather name="refresh-cw" size={16} color={theme.text} />
+                <ThemedText type="small">Ongoing Development</ThemedText>
+              </View>
+            </View>
+          </Card>
+        </Animated.View>
       </Animated.View>
 
       {/* How It Works */}
@@ -510,6 +547,43 @@ const styles = StyleSheet.create({
   },
   pricingDesc: {
     marginTop: Spacing.xs,
+    textAlign: "center",
+  },
+  featuresList: {
+    marginTop: Spacing.lg,
+    gap: Spacing.sm,
+    alignSelf: "stretch",
+  },
+  featureItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+  },
+  customPackageCard: {
+    marginTop: Spacing.lg,
+    borderWidth: 1,
+  },
+  customPackageHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    marginBottom: Spacing.md,
+  },
+  customPackageInfo: {
+    flex: 1,
+  },
+  customPackageDesc: {
+    marginBottom: Spacing.lg,
+  },
+  customFeatures: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  customFeatureItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
   },
   stepsContainer: {
     gap: Spacing.xl,
