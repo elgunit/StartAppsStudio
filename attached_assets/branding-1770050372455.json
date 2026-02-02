@@ -1,0 +1,77 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Switzer",
+      "role": "body"
+    }
+  ],
+  "colors": {
+    "primary": "#000000",
+    "accent": "#000000",
+    "background": "#FFFFFF",
+    "textPrimary": "#000000",
+    "link": "#000000"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Switzer",
+      "heading": "Switzer"
+    },
+    "fontStacks": {
+      "heading": [
+        "Switzer",
+        "sans-serif"
+      ],
+      "body": [
+        "Switzer",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Switzer",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "52px",
+      "h2": "52px",
+      "body": "40px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 8,
+    "borderRadius": "0px"
+  },
+  "components": {},
+  "images": {
+    "logo": null,
+    "favicon": "File saved at: attached_assets/favicon.png",
+    "ogImage": null
+  },
+  "__framework_hints": [],
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "design professionals"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0.9,
+    "overall": 0.45
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": false,
+      "llmSucceeded": false,
+      "finalSource": "none"
+    },
+    "buttonClassification": {
+      "llmCalled": false,
+      "llmSucceeded": false
+    }
+  }
+}
