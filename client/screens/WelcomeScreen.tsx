@@ -191,7 +191,7 @@ export default function WelcomeScreen() {
           resizeMode="contain"
         />
         <ThemedText type="display" style={styles.heroTitle}>
-          One Studio.{"\n"}Five Hats.{"\n"}Your Complete{"\n"}MVP Team.
+          Start Apps{"\n"}Studio
         </ThemedText>
         <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
           We bring your product vision to life with design expertise, development skills, and strategic thinking - all in one partnership.
