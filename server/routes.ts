@@ -432,9 +432,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let designer = await storage.getDesigner();
       if (!designer) {
         designer = await storage.createUser({
-          email: "elgar@elgarsirajov.com",
+          email: "create@startappsstudio.com",
           password: hashPassword("designer123"),
-          name: "Elgar Sirajov",
+          name: "Start Apps Studio",
           role: "designer",
           credits: 0,
           isOnline: false,
@@ -444,6 +444,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Init designer error:", error);
       res.status(500).json({ error: "Failed to initialize designer" });
+    }
+  });
+
+  // Contact form submission
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { fullName, email, company, budget, interests, message } = req.body;
+      
+      if (!fullName || !email || !message) {
+        return res.status(400).json({ error: "Name, email, and message are required" });
+      }
+      
+      // Store contact submission
+      await storage.createContactSubmission({
+        fullName,
+        email,
+        company: company || null,
+        budget: budget || null,
+        interests: interests || [],
+        message,
+      });
+      
+      console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Contact form error:", error);
+      res.status(500).json({ error: "Failed to submit contact form" });
     }
   });
 

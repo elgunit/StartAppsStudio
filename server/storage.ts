@@ -1,11 +1,11 @@
 import {
   users, projects, messages, workSessions, projectVersions,
-  creditPackages, creditTransactions, projectHats,
+  creditPackages, creditTransactions, projectHats, contactSubmissions,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
   type InsertCreditPackage, type CreditTransaction, type InsertCreditTransaction,
-  type ProjectHat, type HatType
+  type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
@@ -59,6 +59,9 @@ export interface IStorage {
   createCreditTransaction(transaction: InsertCreditTransaction): Promise<CreditTransaction>;
   addCreditsToUser(userId: string, amount: number, description: string): Promise<void>;
   useCredits(userId: string, amount: number, description: string): Promise<boolean>;
+
+  // Contact Submissions
+  createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -309,6 +312,12 @@ export class DatabaseStorage implements IStorage {
     });
 
     return true;
+  }
+
+  // Contact Submissions
+  async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
+    const [contactSubmission] = await db.insert(contactSubmissions).values(submission).returning();
+    return contactSubmission;
   }
 }
 
