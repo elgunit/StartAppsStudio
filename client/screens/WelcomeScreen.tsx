@@ -388,19 +388,19 @@ export default function WelcomeScreen() {
             <View style={styles.customPackageHeader}>
               <Feather name="briefcase" size={24} color={theme.text} />
               <View style={styles.customPackageInfo}>
-                <ThemedText type="h4">Enterprise</ThemedText>
+                <ThemedText type="h4">Enterprise Partner</ThemedText>
                 <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  Price upon review
+                  Via StartUpSoft.com
                 </ThemedText>
               </View>
               <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
                 <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                  No AI
+                  Partnership
                 </ThemedText>
               </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              Enterprise-grade solutions with dedicated teams. Full-scale development and AI/ML services.
+              For large-scale projects, we partner with StartUpSoft.com to provide dedicated engineering teams and enterprise solutions.
             </ThemedText>
             <View style={styles.customServicesList}>
               <View style={styles.customServiceItem}>
