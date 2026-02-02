@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "Five Hats Studio",
-    "slug": "five-hats-studio",
+    "name": "Start Apps Studio",
+    "slug": "startappsstudio",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "elgarsirajov",
+    "scheme": "startappsstudio",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.elgarsirajov.mvp"
+      "bundleIdentifier": "com.startappsstudio.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +19,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.elgarsirajov.mvp"
+      "package": "com.startappsstudio.app"
     },
     "web": {
       "output": "single",
