@@ -359,24 +359,53 @@ export default function WelcomeScreen() {
               </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              100% handcrafted development from ground up. No AI coding - only image generation and API integration. Perfect for landing pages, native iOS and Android apps, or ongoing product development.
+              Enterprise-grade solutions with 100% handcrafted development. No AI coding - only image generation and third-party API integration allowed.
             </ThemedText>
-            <View style={styles.customFeatures}>
-              <View style={styles.customFeatureItem}>
-                <Feather name="edit-3" size={16} color={theme.text} />
-                <ThemedText type="small">Handcrafted Code</ThemedText>
+            <View style={styles.customServicesList}>
+              <View style={styles.customServiceItem}>
+                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
+                  <Feather name="database" size={14} color={theme.text} />
+                </View>
+                <View style={styles.customServiceText}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>LLM Training Data</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Human-generated code data, SFT & RLHF</ThemedText>
+                </View>
               </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="layout" size={16} color={theme.text} />
-                <ThemedText type="small">Landing Pages</ThemedText>
+              <View style={styles.customServiceItem}>
+                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
+                  <Feather name="cpu" size={14} color={theme.text} />
+                </View>
+                <View style={styles.customServiceText}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>LLM Finetuning</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>End-to-end pipeline, PoC to production</ThemedText>
+                </View>
               </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="smartphone" size={16} color={theme.text} />
-                <ThemedText type="small">Native iOS & Android</ThemedText>
+              <View style={styles.customServiceItem}>
+                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
+                  <Feather name="users" size={14} color={theme.text} />
+                </View>
+                <View style={styles.customServiceText}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>Staff Augmentation</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Senior & lead-level engineering talent</ThemedText>
+                </View>
               </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="link" size={16} color={theme.text} />
-                <ThemedText type="small">API Integration</ThemedText>
+              <View style={styles.customServiceItem}>
+                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
+                  <Feather name="smartphone" size={14} color={theme.text} />
+                </View>
+                <View style={styles.customServiceText}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>Custom Software</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Native iOS, Android & web applications</ThemedText>
+                </View>
+              </View>
+              <View style={styles.customServiceItem}>
+                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
+                  <Feather name="pen-tool" size={14} color={theme.text} />
+                </View>
+                <View style={styles.customServiceText}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>UX/UI Design</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Intuitive designs that drive engagement</ThemedText>
+                </View>
               </View>
             </View>
           </Card>
@@ -590,15 +619,23 @@ const styles = StyleSheet.create({
   customPackageDesc: {
     marginBottom: Spacing.lg,
   },
-  customFeatures: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+  customServicesList: {
     gap: Spacing.md,
   },
-  customFeatureItem: {
+  customServiceItem: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.xs,
+    gap: Spacing.sm,
+  },
+  customServiceIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  customServiceText: {
+    flex: 1,
   },
   methodBadge: {
     flexDirection: "row",
