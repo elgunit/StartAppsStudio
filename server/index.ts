@@ -134,6 +134,10 @@ function isMobileUserAgent(userAgent: string): boolean {
   return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 }
 
+function isDevelopmentEnvironment(host: string): boolean {
+  return host.includes(":5000") || host.includes("-5000.");
+}
+
 function serveLandingPage({
   req,
   res,
@@ -146,30 +150,38 @@ function serveLandingPage({
   appName: string;
 }) {
   const userAgent = req.header("user-agent") || "";
+  const forwardedHost = req.header("x-forwarded-host");
+  const host = forwardedHost || req.get("host") || "";
   
-  // Desktop browsers should be redirected to the Expo web app
-  if (!isMobileUserAgent(userAgent)) {
+  // In development, desktop browsers should be redirected to the Expo web app on port 8081
+  if (!isMobileUserAgent(userAgent) && isDevelopmentEnvironment(host)) {
     const forwardedProto = req.header("x-forwarded-proto");
     const protocol = forwardedProto || req.protocol || "https";
-    const forwardedHost = req.header("x-forwarded-host");
-    const host = forwardedHost || req.get("host") || "";
     
-    // Redirect to port 8081 for Expo web app
     const webAppUrl = host.includes(":5000") 
       ? `${protocol}://${host.replace(":5000", ":8081")}`
       : `${protocol}://${host.replace("-5000.", "-8081.")}`;
     
-    log(`Desktop detected, redirecting to Expo web: ${webAppUrl}`);
+    log(`Development desktop detected, redirecting to Expo web: ${webAppUrl}`);
     return res.redirect(302, webAppUrl);
   }
+  
+  // In production, desktop browsers get the desktop landing page
+  if (!isMobileUserAgent(userAgent)) {
+    const desktopTemplatePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
+    if (fs.existsSync(desktopTemplatePath)) {
+      log(`Production desktop detected, serving desktop landing page`);
+      return res.sendFile(desktopTemplatePath);
+    }
+  }
 
+  // Mobile users get the landing page with QR code
   const forwardedProto = req.header("x-forwarded-proto");
   const protocol = forwardedProto || req.protocol || "https";
-  const forwardedHost = req.header("x-forwarded-host");
-  const host = forwardedHost || req.get("host");
   const baseUrl = `${protocol}://${host}`;
   const expsUrl = `${host}`;
 
+  log(`Mobile detected, serving landing page`);
   log(`baseUrl`, baseUrl);
   log(`expsUrl`, expsUrl);
 

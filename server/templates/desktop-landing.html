@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Five Hats Studio - Premium Design & Rapid Development</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Premium MVP design service offering landing pages, native iOS/Android apps, and web apps. Five expertise areas: Designer, Developer, Strategist, Manager, Analyst." />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FQCKTE2CF8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FQCKTE2CF8');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      
+      :root {
+        --bg: #ffffff;
+        --text: #0a0a0a;
+        --text-secondary: #6b7280;
+        --border: #e5e7eb;
+        --accent: #0a0a0a;
+        --success: #16a34a;
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0a0a0a;
+          --text: #fafafa;
+          --text-secondary: #9ca3af;
+          --border: #27272a;
+          --accent: #fafafa;
+          --success: #22c55e;
+        }
+      }
+      
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+      
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 60px 24px;
+      }
+      
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+      
+      .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+      }
+      
+      .hero .subtitle {
+        font-size: 20px;
+        color: var(--text-secondary);
+        margin-bottom: 32px;
+      }
+      
+      .cta-button {
+        display: inline-block;
+        padding: 16px 32px;
+        background: var(--accent);
+        color: var(--bg);
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: opacity 0.2s;
+      }
+      
+      .cta-button:hover { opacity: 0.9; }
+      
+      /* Hats Section */
+      .section { margin-bottom: 80px; }
+      
+      .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+      
+      .section-subtitle {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      
+      .hats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+      }
+      
+      .hat-card {
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-align: center;
+      }
+      
+      .hat-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+      
+      .hat-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      
+      .hat-desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+      
+      /* Industries */
+      .industries-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      
+      .industry-chip {
+        padding: 10px 20px;
+        background: var(--border);
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      
+      /* Pricing */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      
+      .price-card {
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+      
+      .price-card.featured {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--bg);
+      }
+      
+      .price-card.featured .price-subtitle,
+      .price-card.featured .price-feature {
+        color: inherit;
+        opacity: 0.8;
+      }
+      
+      .price-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      
+      .price-subtitle {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+      }
+      
+      .price-amount {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      
+      .price-feature {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+      
+      /* Contact */
+      .contact {
+        text-align: center;
+        padding: 60px 24px;
+        background: var(--border);
+        border-radius: 16px;
+      }
+      
+      .contact h2 {
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+      
+      .contact p {
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+      
+      .contact-email {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+      }
+      
+      .contact-email:hover { text-decoration: underline; }
+      
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 40px 24px;
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+      
+      @media (max-width: 768px) {
+        .hero h1 { font-size: 32px; }
+        .section-title { font-size: 24px; }
+        .container { padding: 40px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Hero -->
+      <section class="hero">
+        <h1>Five Hats Studio</h1>
+        <p class="subtitle">Premium Design. Rapid Development.</p>
+        <a href="mailto:elgar@elgarsirajov.com" class="cta-button">Start Your Project</a>
+      </section>
+      
+      <!-- Five Hats -->
+      <section class="section">
+        <h2 class="section-title">Five Expertise Areas</h2>
+        <p class="section-subtitle">One team, complete product coverage</p>
+        <div class="hats-grid">
+          <div class="hat-card">
+            <div class="hat-icon">&#9998;</div>
+            <div class="hat-title">Designer</div>
+            <div class="hat-desc">Visual & UX design</div>
+          </div>
+          <div class="hat-card">
+            <div class="hat-icon">&#60;/&#62;</div>
+            <div class="hat-title">Developer</div>
+            <div class="hat-desc">Full-stack engineering</div>
+          </div>
+          <div class="hat-card">
+            <div class="hat-icon">&#9733;</div>
+            <div class="hat-title">Strategist</div>
+            <div class="hat-desc">Product vision</div>
+          </div>
+          <div class="hat-card">
+            <div class="hat-icon">&#9776;</div>
+            <div class="hat-title">Manager</div>
+            <div class="hat-desc">Project delivery</div>
+          </div>
+          <div class="hat-card">
+            <div class="hat-icon">&#128200;</div>
+            <div class="hat-title">Analyst</div>
+            <div class="hat-desc">Data insights</div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Industries -->
+      <section class="section">
+        <h2 class="section-title">Industry Expertise</h2>
+        <p class="section-subtitle">Deep experience across key sectors</p>
+        <div class="industries-grid">
+          <span class="industry-chip">Fintech</span>
+          <span class="industry-chip">Education</span>
+          <span class="industry-chip">Healthcare</span>
+          <span class="industry-chip">Fitness & Wellness</span>
+          <span class="industry-chip">Hospitality</span>
+          <span class="industry-chip">Media & Telecom</span>
+          <span class="industry-chip">Real Estate</span>
+        </div>
+      </section>
+      
+      <!-- Pricing -->
+      <section class="section">
+        <h2 class="section-title">Packages</h2>
+        <p class="section-subtitle">Clear pricing, exceptional value</p>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div class="price-title">Starter</div>
+            <div class="price-subtitle">Quick validation</div>
+            <div class="price-amount">$99</div>
+            <div class="price-feature">Landing page mockup</div>
+            <div class="price-feature">24-hour delivery</div>
+          </div>
+          <div class="price-card">
+            <div class="price-title">Prototype</div>
+            <div class="price-subtitle">Investor-ready</div>
+            <div class="price-amount">$299</div>
+            <div class="price-feature">Clickable prototype</div>
+            <div class="price-feature">3-day delivery</div>
+          </div>
+          <div class="price-card featured">
+            <div class="price-title">Production</div>
+            <div class="price-subtitle">AI-powered MVP</div>
+            <div class="price-amount">$999-3.5k</div>
+            <div class="price-feature">Working MVP</div>
+            <div class="price-feature">1-2 week delivery</div>
+          </div>
+          <div class="price-card">
+            <div class="price-title">Custom</div>
+            <div class="price-subtitle">Handcrafted</div>
+            <div class="price-amount">$5k-75k</div>
+            <div class="price-feature">Bespoke development</div>
+            <div class="price-feature">Dedicated team</div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Contact -->
+      <section class="contact">
+        <h2>Ready to Build?</h2>
+        <p>Let's discuss your project and find the right package for you.</p>
+        <a href="mailto:elgar@elgarsirajov.com" class="contact-email">elgar@elgarsirajov.com</a>
+      </section>
+    </div>
+    
+    <footer>
+      &copy; 2026 Five Hats Studio. All rights reserved.
+    </footer>
+  </body>
+</html>
