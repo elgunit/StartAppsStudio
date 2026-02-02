@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -23,6 +23,8 @@ import { AuthProvider } from "@/lib/auth";
 
 SplashScreen.preventAutoHideAsync();
 
+const GA_MEASUREMENT_ID = "G-FQCKTE2CF8";
+
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
@@ -36,6 +38,27 @@ export default function App() {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
+
+  useEffect(() => {
+    if (Platform.OS === "web" && typeof document !== "undefined") {
+      const existingScript = document.querySelector(`script[src*="googletagmanager"]`);
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        script.async = true;
+        document.head.appendChild(script);
+
+        const inlineScript = document.createElement("script");
+        inlineScript.innerHTML = `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_MEASUREMENT_ID}');
+        `;
+        document.head.appendChild(inlineScript);
+      }
+    }
+  }, []);
 
   if (!fontsLoaded && !fontError) {
     return null;
