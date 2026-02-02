@@ -112,9 +112,9 @@ const caseStudies = [
 ];
 
 const pricingTiers = [
-  { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"] },
-  { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"] },
-  { name: "Production", price: "$999", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"] },
+  { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
+  { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
+  { name: "Production", price: "$999", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
 ];
 
 export default function WelcomeScreen() {
@@ -312,7 +312,13 @@ export default function WelcomeScreen() {
                     </ThemedText>
                   </View>
                 ) : null}
-                <ThemedText type="h4">{tier.name}</ThemedText>
+                <View style={[styles.methodBadge, { backgroundColor: theme.success + "20" }]}>
+                  <Feather name="zap" size={10} color={theme.success} />
+                  <ThemedText type="caption" style={{ color: theme.success }}>
+                    {tier.badge}
+                  </ThemedText>
+                </View>
+                <ThemedText type="h4" style={{ marginTop: Spacing.sm }}>{tier.name}</ThemedText>
                 <ThemedText type="display" style={styles.price}>
                   {tier.price}
                 </ThemedText>
@@ -336,18 +342,27 @@ export default function WelcomeScreen() {
         <Animated.View entering={FadeInDown.delay(700).duration(400)}>
           <Card style={[styles.customPackageCard, { borderColor: theme.textTertiary, borderStyle: "dashed" }]}>
             <View style={styles.customPackageHeader}>
-              <Feather name="trending-up" size={24} color={theme.text} />
+              <Feather name="code" size={24} color={theme.text} />
               <View style={styles.customPackageInfo}>
                 <ThemedText type="h4">Custom Package</ThemedText>
                 <ThemedText type="small" style={{ color: theme.textSecondary }}>
                   Scale with your business growth
                 </ThemedText>
               </View>
+              <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
+                <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
+                  No AI
+                </ThemedText>
+              </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              Need landing pages, native iOS and Android applications, or ongoing product development? Let's create a custom plan tailored to your growth trajectory.
+              100% handcrafted development from ground up. No AI coding - only image generation and API integration. Perfect for landing pages, native iOS and Android apps, or ongoing product development.
             </ThemedText>
             <View style={styles.customFeatures}>
+              <View style={styles.customFeatureItem}>
+                <Feather name="edit-3" size={16} color={theme.text} />
+                <ThemedText type="small">Handcrafted Code</ThemedText>
+              </View>
               <View style={styles.customFeatureItem}>
                 <Feather name="layout" size={16} color={theme.text} />
                 <ThemedText type="small">Landing Pages</ThemedText>
@@ -357,8 +372,8 @@ export default function WelcomeScreen() {
                 <ThemedText type="small">Native iOS & Android</ThemedText>
               </View>
               <View style={styles.customFeatureItem}>
-                <Feather name="refresh-cw" size={16} color={theme.text} />
-                <ThemedText type="small">Ongoing Development</ThemedText>
+                <Feather name="link" size={16} color={theme.text} />
+                <ThemedText type="small">API Integration</ThemedText>
               </View>
             </View>
           </Card>
@@ -584,6 +599,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.xs,
+  },
+  methodBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+    borderRadius: BorderRadius.full,
   },
   stepsContainer: {
     gap: Spacing.xl,
