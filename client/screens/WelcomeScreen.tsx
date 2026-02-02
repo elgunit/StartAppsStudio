@@ -258,7 +258,7 @@ export default function WelcomeScreen() {
                     <Image
                       source={hatImages[hat.type]}
                       style={styles.hatImage}
-                      resizeMode="contain"
+                      resizeMode="cover"
                     />
                     <View style={styles.hatInfo}>
                       <ThemedText type="h4">{hat.label}</ThemedText>
@@ -644,6 +644,8 @@ const styles = StyleSheet.create({
   hatImage: {
     width: 40,
     height: 40,
+    borderRadius: BorderRadius.sm,
+    overflow: "hidden",
   },
   hatInfo: {
     flex: 1,
