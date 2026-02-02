@@ -141,10 +141,10 @@ export default function WelcomeScreen() {
           resizeMode="contain"
         />
         <ThemedText type="display" style={styles.heroTitle}>
-          One Designer.{"\n"}Five Hats.{"\n"}Your Complete{"\n"}MVP Team.
+          One Studio.{"\n"}Five Hats.{"\n"}Your Complete{"\n"}MVP Team.
         </ThemedText>
         <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
-          I bring your product vision to life with design expertise, development skills, and strategic thinking - all in one partnership.
+          We bring your product vision to life with design expertise, development skills, and strategic thinking - all in one partnership.
         </ThemedText>
       </Animated.View>
 
@@ -186,7 +186,7 @@ export default function WelcomeScreen() {
           The Expertise You Need
         </ThemedText>
         <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Five specialized roles, one dedicated partner
+          Five specialized roles, one dedicated team
         </ThemedText>
         
         <View style={styles.hatsContainer}>
@@ -389,7 +389,7 @@ export default function WelcomeScreen() {
         <View style={styles.stepsContainer}>
           {[
             { step: "1", title: "Submit Your Brief", desc: "Describe your project and select the expertise you need" },
-            { step: "2", title: "I Start Building", desc: "Track my progress with real-time transparency metrics" },
+            { step: "2", title: "We Start Building", desc: "Track progress with real-time transparency metrics" },
             { step: "3", title: "Review & Iterate", desc: "Provide feedback and watch your product evolve" },
             { step: "4", title: "Launch Your MVP", desc: "Get your polished product ready for the world" },
           ].map((item, index) => (
