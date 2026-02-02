@@ -359,7 +359,48 @@ export default function WelcomeScreen() {
               </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              Enterprise-grade solutions with 100% handcrafted development. No AI coding - only image generation and third-party API integration allowed.
+              100% handcrafted development from ground up. No AI coding - only image generation and API integration allowed.
+            </ThemedText>
+            <View style={styles.customFeatures}>
+              <View style={styles.customFeatureItem}>
+                <Feather name="edit-3" size={16} color={theme.text} />
+                <ThemedText type="small">Handcrafted Code</ThemedText>
+              </View>
+              <View style={styles.customFeatureItem}>
+                <Feather name="layout" size={16} color={theme.text} />
+                <ThemedText type="small">Landing Pages</ThemedText>
+              </View>
+              <View style={styles.customFeatureItem}>
+                <Feather name="smartphone" size={16} color={theme.text} />
+                <ThemedText type="small">Native iOS & Android</ThemedText>
+              </View>
+              <View style={styles.customFeatureItem}>
+                <Feather name="link" size={16} color={theme.text} />
+                <ThemedText type="small">API Integration</ThemedText>
+              </View>
+            </View>
+          </Card>
+        </Animated.View>
+
+        {/* Enterprise Package */}
+        <Animated.View entering={FadeInDown.delay(750).duration(400)}>
+          <Card style={[styles.customPackageCard, { borderColor: theme.text, borderWidth: 2 }]}>
+            <View style={styles.customPackageHeader}>
+              <Feather name="briefcase" size={24} color={theme.text} />
+              <View style={styles.customPackageInfo}>
+                <ThemedText type="h4">Enterprise</ThemedText>
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  Price upon review
+                </ThemedText>
+              </View>
+              <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
+                <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
+                  No AI
+                </ThemedText>
+              </View>
+            </View>
+            <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
+              Enterprise-grade solutions with dedicated teams. Full-scale development and AI/ML services.
             </ThemedText>
             <View style={styles.customServicesList}>
               <View style={styles.customServiceItem}>
@@ -618,6 +659,16 @@ const styles = StyleSheet.create({
   },
   customPackageDesc: {
     marginBottom: Spacing.lg,
+  },
+  customFeatures: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  customFeatureItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
   },
   customServicesList: {
     gap: Spacing.md,
