@@ -98,6 +98,16 @@ const services = [
   },
 ];
 
+const industries = [
+  { name: "Fintech", icon: "credit-card" as const },
+  { name: "Education", icon: "book-open" as const },
+  { name: "Healthcare", icon: "heart" as const },
+  { name: "Fitness & Wellness", icon: "activity" as const },
+  { name: "Hospitality", icon: "home" as const },
+  { name: "Media & Telecom", icon: "tv" as const },
+  { name: "Real Estate", icon: "map-pin" as const },
+];
+
 const caseStudies = [
   {
     title: "AI Health Platform",
@@ -119,6 +129,33 @@ const caseStudies = [
   },
 ];
 
+const additionalCaseStudies = [
+  {
+    title: "Fitness Tracking App",
+    industry: "Fitness & Wellness",
+    result: "85% daily active users",
+    hats: ["designer", "developer", "analyst"] as HatType[],
+  },
+  {
+    title: "Property Listing Portal",
+    industry: "Real Estate",
+    result: "3x lead generation",
+    hats: ["designer", "developer", "strategist"] as HatType[],
+  },
+  {
+    title: "EdTech Learning Platform",
+    industry: "Education",
+    result: "92% course completion rate",
+    hats: ["designer", "developer", "manager"] as HatType[],
+  },
+  {
+    title: "Hotel Booking System",
+    industry: "Hospitality",
+    result: "45% booking increase",
+    hats: ["designer", "developer"] as HatType[],
+  },
+];
+
 const pricingTiers = [
   { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
   { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
@@ -131,6 +168,11 @@ export default function WelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   const [expandedHat, setExpandedHat] = React.useState<HatType | null>(null);
+  const [showAllWork, setShowAllWork] = React.useState(false);
+  
+  const visibleCaseStudies = showAllWork 
+    ? [...caseStudies, ...additionalCaseStudies] 
+    : caseStudies;
 
   return (
     <ScrollView
@@ -248,6 +290,25 @@ export default function WelcomeScreen() {
         </View>
       </Animated.View>
 
+      {/* Industry Expertise */}
+      <Animated.View entering={FadeInDown.delay(380).duration(600)} style={styles.section}>
+        <ThemedText type="h2" style={styles.sectionTitle}>
+          Industry Expertise
+        </ThemedText>
+        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
+          Deep experience across key sectors
+        </ThemedText>
+        
+        <View style={styles.industriesGrid}>
+          {industries.map((industry, index) => (
+            <View key={index} style={[styles.industryChip, { backgroundColor: theme.backgroundDefault }]}>
+              <Feather name={industry.icon} size={14} color={theme.text} />
+              <ThemedText type="small">{industry.name}</ThemedText>
+            </View>
+          ))}
+        </View>
+      </Animated.View>
+
       {/* Portfolio Preview */}
       <Animated.View entering={FadeInDown.delay(400).duration(600)} style={styles.section}>
         <ThemedText type="h2" style={styles.sectionTitle}>
@@ -257,9 +318,9 @@ export default function WelcomeScreen() {
           Real results for real products
         </ThemedText>
         
-        {caseStudies.map((study, index) => (
+        {visibleCaseStudies.map((study, index) => (
           <Animated.View
-            key={index}
+            key={`${study.title}-${index}`}
             entering={FadeInDown.delay(450 + index * 50).duration(400)}
           >
             <Card style={styles.caseStudyCard}>
@@ -285,6 +346,16 @@ export default function WelcomeScreen() {
             </Card>
           </Animated.View>
         ))}
+        
+        {!showAllWork ? (
+          <Pressable 
+            style={[styles.readMoreButton, { borderColor: theme.textTertiary }]}
+            onPress={() => setShowAllWork(true)}
+          >
+            <ThemedText type="body">View More Work</ThemedText>
+            <Feather name="chevron-down" size={18} color={theme.text} />
+          </Pressable>
+        ) : null}
       </Animated.View>
 
       {/* Pricing Preview */}
@@ -602,6 +673,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.xs,
     borderRadius: Spacing.sm,
+  },
+  industriesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  industryChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.full,
+  },
+  readMoreButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: Spacing.sm,
+    paddingVertical: Spacing.md,
+    marginTop: Spacing.md,
+    borderWidth: 1,
+    borderRadius: BorderRadius.lg,
+    borderStyle: "dashed",
   },
   resultBadge: {
     flexDirection: "row",
