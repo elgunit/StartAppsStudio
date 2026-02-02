@@ -55,7 +55,7 @@ export function HatBadge({ type, size = "md", showLabel = true, selected = false
       <Image
         source={hatImages[type]}
         style={[styles.image, { width: imageSize, height: imageSize }]}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       {showLabel ? (
         <ThemedText type="caption" style={styles.label}>
@@ -76,7 +76,7 @@ export function HatIcon({ type, size = 24 }: HatIconProps) {
     <Image
       source={hatImages[type]}
       style={{ width: size, height: size }}
-      resizeMode="contain"
+      resizeMode="cover"
     />
   );
 }
