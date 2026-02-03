@@ -113,7 +113,7 @@ const caseStudies = [
     title: "AI Health Platform",
     industry: "Healthcare",
     result: "40% user retention increase",
-    hats: ["designer", "developer", "strategist"] as HatType[],
+    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
   },
   {
     title: "E-Commerce Solution",
@@ -125,7 +125,7 @@ const caseStudies = [
     title: "Web3 Interface",
     industry: "Fintech",
     result: "18% fewer transaction errors",
-    hats: ["designer", "developer"] as HatType[],
+    hats: ["designer", "developer", "strategist", "analyst"] as HatType[],
   },
 ];
 
@@ -146,7 +146,7 @@ const additionalCaseStudies = [
     title: "EdTech Learning Platform",
     industry: "Education",
     result: "92% course completion rate",
-    hats: ["designer", "developer", "manager"] as HatType[],
+    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
   },
   {
     title: "Hotel Booking System",
