@@ -24,21 +24,25 @@
       
       :root {
         --bg: #ffffff;
+        --bg-elevated: #f9fafb;
         --text: #0a0a0a;
         --text-secondary: #6b7280;
         --border: #e5e7eb;
         --accent: #0a0a0a;
         --success: #16a34a;
+        --success-bg: rgba(22, 163, 74, 0.1);
       }
       
       @media (prefers-color-scheme: dark) {
         :root {
           --bg: #0a0a0a;
+          --bg-elevated: #18181b;
           --text: #fafafa;
           --text-secondary: #9ca3af;
           --border: #27272a;
           --accent: #fafafa;
           --success: #22c55e;
+          --success-bg: rgba(34, 197, 94, 0.1);
         }
       }
       
@@ -117,6 +121,8 @@
         font-weight: 600;
         font-size: 16px;
         transition: all 0.2s;
+        border: none;
+        cursor: pointer;
       }
       
       .cta-button:hover { opacity: 0.9; transform: translateY(-1px); }
@@ -150,7 +156,7 @@
         color: var(--success);
       }
       
-      /* Hats Section */
+      /* Section Styles */
       .section { margin-bottom: 80px; }
       
       .section-title {
@@ -166,33 +172,118 @@
         margin-bottom: 40px;
       }
       
-      .hats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      /* Expandable Cards */
+      .expandable-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+        cursor: pointer;
+      }
+      
+      .expandable-card:hover { border-color: var(--text-secondary); }
+      .expandable-card.expanded { border-color: var(--text); }
+      
+      .card-header {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
         gap: 16px;
       }
       
-      .hat-card {
-        padding: 24px;
+      .card-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      
+      .card-info { flex: 1; }
+      .card-info h4 { font-weight: 600; margin-bottom: 2px; }
+      .card-info p { font-size: 14px; color: var(--text-secondary); margin: 0; }
+      
+      .card-chevron {
+        color: var(--text-secondary);
+        transition: transform 0.2s;
+      }
+      
+      .expandable-card.expanded .card-chevron { transform: rotate(180deg); }
+      
+      .card-details {
+        display: none;
+        padding: 0 24px 20px 88px;
+      }
+      
+      .expandable-card.expanded .card-details { display: block; }
+      
+      .skill-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .skill-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+      }
+      
+      .skill-item svg { color: var(--success); flex-shrink: 0; }
+      
+      /* Services Grid */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+      
+      .service-card {
         border: 1px solid var(--border);
         border-radius: 12px;
-        text-align: center;
+        padding: 24px;
+        cursor: pointer;
+        transition: all 0.2s;
       }
       
-      .hat-icon {
-        font-size: 28px;
-        margin-bottom: 12px;
+      .service-card:hover { border-color: var(--text-secondary); }
+      .service-card.expanded { border-color: var(--text); }
+      
+      .service-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 8px;
       }
       
-      .hat-title {
-        font-weight: 600;
-        margin-bottom: 4px;
+      .service-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--bg-elevated);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
       }
       
-      .hat-desc {
-        font-size: 14px;
-        color: var(--text-secondary);
+      .service-card h4 { font-weight: 600; margin-bottom: 4px; }
+      .service-card > p { font-size: 14px; color: var(--text-secondary); margin: 0; }
+      
+      .service-details {
+        display: none;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
       }
+      
+      .service-card.expanded .service-details { display: block; }
       
       /* Industries */
       .industries-grid {
@@ -203,103 +294,291 @@
       }
       
       .industry-chip {
-        padding: 10px 20px;
-        background: var(--border);
-        border-radius: 999px;
+        padding: 10px 18px;
+        background: var(--bg-elevated);
+        border-radius: 100px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      /* Case Studies */
+      .case-study-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .case-study-card:hover { border-color: var(--text-secondary); }
+      .case-study-card.expanded { border-color: var(--text); }
+      
+      .case-study-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      
+      .case-study-header h4 { font-weight: 600; margin: 0; }
+      .case-study-header span { font-size: 14px; color: var(--text-secondary); }
+      
+      .case-study-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+      
+      .hat-badge {
+        padding: 4px 10px;
+        background: var(--bg-elevated);
+        border-radius: 100px;
+        font-size: 12px;
+      }
+      
+      .result-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: var(--success-bg);
+        color: var(--success);
+        border-radius: 100px;
         font-size: 14px;
         font-weight: 500;
       }
       
+      .case-study-details {
+        display: none;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+      
+      .case-study-card.expanded .case-study-details { display: block; }
+      
+      .view-more-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        border: 1px dashed var(--border);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      
+      .view-more-btn:hover { border-color: var(--text); color: var(--text); }
+      
       /* Pricing */
       .pricing-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
       }
       
       .price-card {
-        padding: 28px;
         border: 1px solid var(--border);
         border-radius: 12px;
+        padding: 24px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s;
       }
       
-      .price-card.featured {
-        border-color: var(--accent);
+      .price-card:hover { border-color: var(--text-secondary); }
+      .price-card.featured { border-color: var(--text); border-width: 2px; }
+      .price-card.expanded { border-color: var(--text); }
+      
+      .popular-badge {
+        position: absolute;
+        top: -10px;
+        right: 16px;
+        padding: 4px 12px;
         background: var(--accent);
         color: var(--bg);
-      }
-      
-      .price-card.featured .price-subtitle,
-      .price-card.featured .price-feature {
-        color: inherit;
-        opacity: 0.8;
-      }
-      
-      .price-title {
-        font-size: 18px;
+        border-radius: 100px;
+        font-size: 12px;
         font-weight: 600;
-        margin-bottom: 4px;
       }
       
-      .price-subtitle {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-bottom: 16px;
+      .method-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        background: var(--success-bg);
+        color: var(--success);
+        border-radius: 100px;
+        font-size: 12px;
+        margin-bottom: 12px;
       }
       
-      .price-amount {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 16px;
-      }
+      .price-title { font-weight: 600; font-size: 18px; }
+      .price-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+      .price-amount { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
       
-      .price-feature {
+      .price-features { display: flex; flex-direction: column; gap: 8px; }
+      .price-feature { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+      .price-feature svg { color: var(--success); flex-shrink: 0; }
+      
+      .price-details {
+        display: none;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
         font-size: 14px;
         color: var(--text-secondary);
-        margin-bottom: 8px;
       }
+      
+      .price-card.expanded .price-details { display: block; }
+      
+      /* Special Packages */
+      .special-package {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .special-package:hover { border-color: var(--text-secondary); }
+      .special-package.expanded { border-color: var(--text); }
+      .special-package.enterprise { border-width: 2px; border-color: var(--text); }
+      
+      .special-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      .special-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .special-info { flex: 1; }
+      .special-info h4 { font-weight: 600; margin: 0 0 2px 0; }
+      .special-info span { font-size: 14px; color: var(--text-secondary); }
+      
+      .special-badge {
+        padding: 4px 10px;
+        background: var(--accent);
+        color: var(--bg);
+        border-radius: 100px;
+        font-size: 12px;
+      }
+      
+      .special-desc {
+        margin-top: 16px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+      
+      .special-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+      
+      .special-feature {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+      }
+      
+      .special-details {
+        display: none;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+      
+      .special-package.expanded .special-details { display: block; }
+      
+      .enterprise-service {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 0;
+      }
+      
+      .enterprise-service-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--bg-elevated);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      
+      .enterprise-service h5 { font-weight: 600; margin: 0 0 2px 0; font-size: 14px; }
+      .enterprise-service p { font-size: 13px; color: var(--text-secondary); margin: 0; }
+      
+      /* How It Works */
+      .steps-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+      }
+      
+      .step-item { text-align: center; }
+      
+      .step-number {
+        width: 48px;
+        height: 48px;
+        background: var(--accent);
+        color: var(--bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        margin: 0 auto 16px;
+      }
+      
+      .step-item h4 { font-weight: 600; margin-bottom: 4px; }
+      .step-item p { font-size: 14px; color: var(--text-secondary); margin: 0; }
       
       /* Contact */
       .contact {
-        padding: 60px 24px;
-        background: var(--border);
+        background: var(--bg-elevated);
+        padding: 60px 40px;
         border-radius: 16px;
-      }
-      
-      .contact h2 {
-        font-size: 28px;
-        margin-bottom: 8px;
         text-align: center;
       }
       
-      .contact p {
-        color: var(--text-secondary);
-        margin-bottom: 32px;
-        text-align: center;
-      }
+      .contact h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+      .contact > p { color: var(--text-secondary); margin-bottom: 32px; }
       
-      .contact-form {
-        max-width: 500px;
-        margin: 0 auto;
-      }
+      .contact-form { max-width: 600px; margin: 0 auto; text-align: left; }
       
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
-        margin-bottom: 16px;
       }
       
-      .form-group {
-        margin-bottom: 16px;
-      }
-      
-      .form-group label {
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 6px;
-      }
+      .form-group { margin-bottom: 20px; }
+      .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
       
       .form-group input,
       .form-group select,
@@ -318,56 +597,35 @@
       .form-group select:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: var(--accent);
+        border-color: var(--text);
       }
       
-      .form-group textarea {
-        min-height: 120px;
-        resize: vertical;
-      }
+      .form-group textarea { min-height: 120px; resize: vertical; }
       
-      .interest-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
+      .interest-options { display: flex; flex-wrap: wrap; gap: 8px; }
       
       .interest-option {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 14px;
+        padding: 8px 16px;
         border: 1px solid var(--border);
-        border-radius: 999px;
-        background: var(--bg);
-        cursor: pointer;
+        border-radius: 100px;
         font-size: 14px;
+        cursor: pointer;
         transition: all 0.2s;
       }
       
-      .interest-option:hover {
-        border-color: var(--accent);
-      }
-      
-      .interest-option input {
-        display: none;
-      }
-      
-      .interest-option.selected {
-        background: var(--accent);
-        color: var(--bg);
-        border-color: var(--accent);
-      }
+      .interest-option:hover { border-color: var(--text); }
+      .interest-option.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+      .interest-option input { display: none; }
       
       .submit-btn {
         width: 100%;
-        padding: 16px 32px;
+        padding: 16px;
         background: var(--accent);
         color: var(--bg);
         border: none;
         border-radius: 8px;
-        font-weight: 600;
         font-size: 16px;
+        font-weight: 600;
         cursor: pointer;
         transition: opacity 0.2s;
       }
@@ -375,19 +633,9 @@
       .submit-btn:hover { opacity: 0.9; }
       .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
       
-      .form-success {
-        text-align: center;
-        padding: 40px;
-      }
-      
-      .form-success h3 {
-        font-size: 24px;
-        margin-bottom: 12px;
-      }
-      
-      @media (max-width: 600px) {
-        .form-row { grid-template-columns: 1fr; }
-      }
+      .form-success { padding: 40px; text-align: center; }
+      .form-success h3 { font-size: 24px; margin-bottom: 8px; }
+      .form-success p { color: var(--text-secondary); }
       
       /* Footer */
       footer {
@@ -397,12 +645,16 @@
         font-size: 14px;
       }
       
+      /* Responsive */
       @media (max-width: 768px) {
         .hero h1 { font-size: 36px; }
         .hero .subtitle { font-size: 18px; }
         .hero-benefits { gap: 16px; flex-direction: column; align-items: center; }
         .section-title { font-size: 24px; }
         .container { padding: 40px 20px; }
+        .form-row { grid-template-columns: 1fr; }
+        .card-details { padding-left: 24px; }
+        .steps-container { gap: 32px; }
       }
     </style>
   </head>
@@ -439,35 +691,176 @@
         </div>
       </section>
       
-      <!-- Five Hats -->
+      <!-- Services -->
       <section class="section">
-        <h2 class="section-title">Five Expertise Areas</h2>
-        <p class="section-subtitle">One team, complete product coverage</p>
-        <div class="hats-grid">
-          <div class="hat-card">
-            <div class="hat-icon">&#9998;</div>
-            <div class="hat-title">Designer</div>
-            <div class="hat-desc">Visual & UX design</div>
+        <h2 class="section-title">Services</h2>
+        <p class="section-subtitle">End-to-end product development tailored to your needs</p>
+        <div class="services-grid">
+          <div class="service-card" onclick="toggleCard(this)">
+            <div class="service-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <h4>Landing Pages</h4>
+            <p>High-converting landing pages that capture attention and drive results.</p>
+            <div class="service-details">
+              <div class="skill-list">
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Custom responsive design</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> SEO optimization</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Analytics integration</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Lead capture forms</div>
+              </div>
+            </div>
           </div>
-          <div class="hat-card">
-            <div class="hat-icon">&#60;/&#62;</div>
-            <div class="hat-title">Developer</div>
-            <div class="hat-desc">Full-stack engineering</div>
+          <div class="service-card" onclick="toggleCard(this)">
+            <div class="service-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </div>
+            <h4>Native iOS & Android</h4>
+            <p>Beautiful native mobile apps for both platforms with seamless user experience.</p>
+            <div class="service-details">
+              <div class="skill-list">
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> React Native / Expo</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Push notifications</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> App Store submission</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> In-app purchases</div>
+              </div>
+            </div>
           </div>
-          <div class="hat-card">
-            <div class="hat-icon">&#9733;</div>
-            <div class="hat-title">Strategist</div>
-            <div class="hat-desc">Product vision</div>
+          <div class="service-card" onclick="toggleCard(this)">
+            <div class="service-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <h4>Web Applications</h4>
+            <p>Responsive web apps with modern technologies and beautiful interfaces.</p>
+            <div class="service-details">
+              <div class="skill-list">
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> React / Next.js</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Database integration</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User authentication</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> API development</div>
+              </div>
+            </div>
           </div>
-          <div class="hat-card">
-            <div class="hat-icon">&#9776;</div>
-            <div class="hat-title">Manager</div>
-            <div class="hat-desc">Project delivery</div>
+          <div class="service-card" onclick="toggleCard(this)">
+            <div class="service-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4>MVP Development</h4>
+            <p>Transform your idea into a working product with end-to-end design and development.</p>
+            <div class="service-details">
+              <div class="skill-list">
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Product strategy</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full design & development</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Launch support</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Iteration & feedback</div>
+              </div>
+            </div>
           </div>
-          <div class="hat-card">
-            <div class="hat-icon">&#128200;</div>
-            <div class="hat-title">Analyst</div>
-            <div class="hat-desc">Data insights</div>
+        </div>
+      </section>
+      
+      <!-- Expertise -->
+      <section class="section">
+        <h2 class="section-title">The Expertise You Need</h2>
+        <p class="section-subtitle">Five specialized roles, one dedicated team</p>
+        
+        <div class="expandable-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9998;</div>
+            <div class="card-info">
+              <h4>Designer</h4>
+              <p>UI/UX & Visual Design</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User Interface Design</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User Experience</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Prototyping</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Design Systems</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Brand Identity</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&lt;/&gt;</div>
+            <div class="card-info">
+              <h4>Developer</h4>
+              <p>Code & Implementation</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> React & React Native</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full-Stack Development</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> API Integration</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Database Design</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Performance Optimization</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9733;</div>
+            <div class="card-info">
+              <h4>Strategist</h4>
+              <p>Planning & Research</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Market Research</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Competitive Analysis</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Product Strategy</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User Research</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Roadmap Planning</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9776;</div>
+            <div class="card-info">
+              <h4>Manager</h4>
+              <p>Project Leadership</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Project Planning</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Timeline Management</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Stakeholder Communication</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Risk Assessment</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Quality Assurance</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#128200;</div>
+            <div class="card-info">
+              <h4>Analyst</h4>
+              <p>Data & Insights</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Data Analysis</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Metrics & KPIs</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User Analytics</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> A/B Testing</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Reporting</div>
+            </div>
           </div>
         </div>
       </section>
@@ -477,48 +870,339 @@
         <h2 class="section-title">Industry Expertise</h2>
         <p class="section-subtitle">Deep experience across key sectors</p>
         <div class="industries-grid">
-          <span class="industry-chip">Fintech</span>
-          <span class="industry-chip">Education</span>
-          <span class="industry-chip">Healthcare</span>
-          <span class="industry-chip">Fitness & Wellness</span>
-          <span class="industry-chip">Hospitality</span>
-          <span class="industry-chip">Media & Telecom</span>
-          <span class="industry-chip">Real Estate</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Fintech</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> Education</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Healthcare</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Fitness & Wellness</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg> Hospitality</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M17 2l-5 5-5-5"/></svg> Media & Telecom</span>
+          <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Real Estate</span>
+        </div>
+      </section>
+      
+      <!-- Recent Work -->
+      <section class="section">
+        <h2 class="section-title">Recent Work</h2>
+        <p class="section-subtitle">Real results for real products</p>
+        
+        <div id="caseStudiesContainer">
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>AI Health Platform</h4>
+                <span>Healthcare</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+                <span class="hat-badge">Strategist</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              40% user retention increase
+            </div>
+            <div class="case-study-details">
+              An AI-powered health monitoring platform that provides personalized wellness recommendations. Built with React Native for seamless cross-platform experience.
+            </div>
+          </div>
+          
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>E-Commerce Solution</h4>
+                <span>Retail</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+                <span class="hat-badge">Analyst</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              60% organic traffic growth
+            </div>
+            <div class="case-study-details">
+              A modern e-commerce platform with advanced product search, personalized recommendations, and streamlined checkout flow.
+            </div>
+          </div>
+          
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>Web3 Interface</h4>
+                <span>Fintech</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              18% fewer transaction errors
+            </div>
+            <div class="case-study-details">
+              A user-friendly interface for blockchain transactions, making Web3 accessible to mainstream users with intuitive design patterns.
+            </div>
+          </div>
+        </div>
+        
+        <div id="additionalCaseStudies" style="display: none;">
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>Fitness Tracking App</h4>
+                <span>Fitness & Wellness</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+                <span class="hat-badge">Analyst</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              85% daily active users
+            </div>
+            <div class="case-study-details">
+              A comprehensive fitness app with workout tracking, nutrition logging, and progress visualization.
+            </div>
+          </div>
+          
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>Property Listing Portal</h4>
+                <span>Real Estate</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+                <span class="hat-badge">Strategist</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              3x lead generation
+            </div>
+            <div class="case-study-details">
+              A modern property listing platform with virtual tours, intelligent search, and agent matching.
+            </div>
+          </div>
+          
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>EdTech Learning Platform</h4>
+                <span>Education</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+                <span class="hat-badge">Manager</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              92% course completion rate
+            </div>
+            <div class="case-study-details">
+              An interactive learning platform with video courses, quizzes, and progress tracking.
+            </div>
+          </div>
+          
+          <div class="case-study-card" onclick="toggleCard(this)">
+            <div class="case-study-header">
+              <div>
+                <h4>Hotel Booking System</h4>
+                <span>Hospitality</span>
+              </div>
+              <div class="case-study-badges">
+                <span class="hat-badge">Designer</span>
+                <span class="hat-badge">Developer</span>
+              </div>
+            </div>
+            <div class="result-badge">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+              45% booking increase
+            </div>
+            <div class="case-study-details">
+              A streamlined hotel booking experience with real-time availability and instant confirmation.
+            </div>
+          </div>
+        </div>
+        
+        <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
+          <span>View More Work</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </section>
+      
+      <!-- How It Works -->
+      <section class="section">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">From idea to launch in four simple steps</p>
+        <div class="steps-container">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <h4>Submit Your Brief</h4>
+            <p>Describe your project and select the expertise you need</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <h4>We Start Building</h4>
+            <p>Track progress with real-time transparency metrics</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <h4>Review & Iterate</h4>
+            <p>Provide feedback and watch your product evolve</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">4</div>
+            <h4>Launch Your MVP</h4>
+            <p>Get your polished product ready for the world</p>
+          </div>
         </div>
       </section>
       
       <!-- Pricing -->
-      <section class="section">
+      <section class="section" id="pricing">
         <h2 class="section-title">Packages</h2>
-        <p class="section-subtitle">Clear pricing, exceptional value</p>
+        <p class="section-subtitle">Choose the right package for your stage</p>
+        
         <div class="pricing-grid">
-          <div class="price-card">
+          <div class="price-card" onclick="toggleCard(this)">
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              AI + Figma
+            </div>
             <div class="price-title">Starter</div>
             <div class="price-subtitle">Quick validation</div>
             <div class="price-amount">$99</div>
-            <div class="price-feature">Landing page mockup</div>
-            <div class="price-feature">24-hour delivery</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Concept exploration</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Initial wireframes</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Strategy consultation</div>
+            </div>
+            <div class="price-details">
+              Perfect for validating your idea before committing to full development. Get professional feedback and initial designs within 24 hours.
+            </div>
           </div>
-          <div class="price-card">
+          
+          <div class="price-card featured" onclick="toggleCard(this)">
+            <div class="popular-badge">Popular</div>
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              AI + Figma
+            </div>
             <div class="price-title">Prototype</div>
             <div class="price-subtitle">Investor-ready</div>
             <div class="price-amount">$299</div>
-            <div class="price-feature">Clickable prototype</div>
-            <div class="price-feature">3-day delivery</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full UI/UX design</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Functional prototype</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User testing ready</div>
+            </div>
+            <div class="price-details">
+              A clickable, interactive prototype perfect for user testing and investor presentations. Delivered in 3 days.
+            </div>
           </div>
-          <div class="price-card featured">
+          
+          <div class="price-card" onclick="toggleCard(this)">
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              AI + Figma
+            </div>
             <div class="price-title">Production</div>
             <div class="price-subtitle">AI-powered MVP</div>
-            <div class="price-amount">$999-3.5k</div>
-            <div class="price-feature">Working MVP</div>
-            <div class="price-feature">1-2 week delivery</div>
+            <div class="price-amount">$999 - $3.5k</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Complete development</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Launch-ready product</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Ongoing support</div>
+            </div>
+            <div class="price-details">
+              A fully functional MVP with real users in mind. Built with modern technologies and ready for launch in 1-2 weeks.
+            </div>
           </div>
-          <div class="price-card">
-            <div class="price-title">Custom</div>
-            <div class="price-subtitle">Handcrafted</div>
-            <div class="price-amount">$5k-75k</div>
-            <div class="price-feature">Bespoke development</div>
-            <div class="price-feature">Dedicated team</div>
+        </div>
+        
+        <!-- Custom Package -->
+        <div class="special-package" onclick="toggleCard(this)">
+          <div class="special-header">
+            <div class="special-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+            </div>
+            <div class="special-info">
+              <h4>Custom Package</h4>
+              <span>$5k - $75k</span>
+            </div>
+            <div class="special-badge">No AI</div>
+          </div>
+          <p class="special-desc">100% handcrafted development from ground up. No AI coding - only image generation and API integration allowed.</p>
+          <div class="special-features">
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Native iOS & Android</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
+          </div>
+          <div class="special-details">
+            For clients who need completely bespoke solutions built from scratch by experienced developers. Every line of code is manually written and reviewed.
+          </div>
+        </div>
+        
+        <!-- Enterprise Package -->
+        <div class="special-package enterprise" onclick="toggleCard(this)">
+          <div class="special-header">
+            <div class="special-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div class="special-info">
+              <h4>Enterprise</h4>
+              <span>Via StartupSoft</span>
+            </div>
+            <div class="special-badge">Handoff</div>
+          </div>
+          <p class="special-desc">Upon prototype MVP, we handoff to StartupSoft for dedicated engineering teams and enterprise-scale solutions.</p>
+          <div class="special-details">
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+              <div>
+                <h5>LLM Training Data</h5>
+                <p>Human-generated code data, SFT & RLHF</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+              <div>
+                <h5>LLM Finetuning</h5>
+                <p>End-to-end pipeline, PoC to production</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+              <div>
+                <h5>Staff Augmentation</h5>
+                <p>Senior & lead-level engineering talent</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+              <div>
+                <h5>Custom Software</h5>
+                <p>Native iOS, Android & web applications</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+              <div>
+                <h5>UX/UI Design</h5>
+                <p>Intuitive designs that drive engagement</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -597,58 +1281,74 @@
           <p>We've received your message and will get back to you within 24 hours at <strong id="confirmEmail"></strong></p>
         </div>
       </section>
-      
-      <script>
-        function toggleInterest(el) {
-          el.classList.toggle('selected');
-        }
-        
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-          e.preventDefault();
-          const btn = document.getElementById('submitBtn');
-          btn.disabled = true;
-          btn.textContent = 'Sending...';
-          
-          const formData = new FormData(this);
-          const interests = [];
-          document.querySelectorAll('input[name="interest"]:checked').forEach(cb => {
-            interests.push(cb.value);
-          });
-          
-          const data = {
-            fullName: formData.get('fullName'),
-            email: formData.get('email'),
-            company: formData.get('company'),
-            budget: formData.get('budget'),
-            interests: interests,
-            message: formData.get('message')
-          };
-          
-          try {
-            const response = await fetch('/api/contact', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data)
-            });
-            
-            if (response.ok) {
-              document.getElementById('contactForm').style.display = 'none';
-              document.getElementById('formSuccess').style.display = 'block';
-              document.getElementById('confirmEmail').textContent = data.email;
-            } else {
-              throw new Error('Failed to send');
-            }
-          } catch (err) {
-            alert('Failed to send message. Please email us directly at create@startappsstudio.com');
-            btn.disabled = false;
-            btn.textContent = 'Send Message';
-          }
-        });
-      </script>
     </div>
     
     <footer>
-      &copy; 2026 Start Apps Studio. All rights reserved.
+      <p>&copy; 2024 Start Apps Studio. All rights reserved.</p>
     </footer>
+    
+    <script>
+      function toggleCard(el) {
+        el.classList.toggle('expanded');
+      }
+      
+      function toggleInterest(el) {
+        el.classList.toggle('selected');
+      }
+      
+      function toggleMoreWork() {
+        const additional = document.getElementById('additionalCaseStudies');
+        const btn = document.getElementById('viewMoreBtn');
+        if (additional.style.display === 'none') {
+          additional.style.display = 'block';
+          btn.innerHTML = '<span>View Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+        } else {
+          additional.style.display = 'none';
+          btn.innerHTML = '<span>View More Work</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+        }
+      }
+      
+      document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        
+        const formData = new FormData(this);
+        const interests = [];
+        document.querySelectorAll('input[name="interest"]:checked').forEach(cb => {
+          interests.push(cb.value);
+        });
+        
+        const data = {
+          fullName: formData.get('fullName'),
+          email: formData.get('email'),
+          company: formData.get('company'),
+          budget: formData.get('budget'),
+          interests: interests,
+          message: formData.get('message')
+        };
+        
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          
+          if (response.ok) {
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+            document.getElementById('confirmEmail').textContent = data.email;
+          } else {
+            throw new Error('Failed to send');
+          }
+        } catch (error) {
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+          alert('Something went wrong. Please try again or email us directly at create@startappsstudio.com');
+        }
+      });
+    </script>
   </body>
 </html>
