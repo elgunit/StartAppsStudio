@@ -558,6 +558,112 @@
       .step-item h4 { font-weight: 600; margin-bottom: 4px; }
       .step-item p { font-size: 14px; color: var(--text-secondary); margin: 0; }
       
+      /* Benefits */
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 32px;
+      }
+      
+      .benefit-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+      
+      .benefit-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+      
+      .benefit-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        color: var(--accent);
+      }
+      
+      .benefit-card h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      
+      .benefit-card p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin: 0;
+      }
+      
+      .benefit-badge {
+        display: inline-block;
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-bottom: 12px;
+      }
+      
+      .comparison-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 40px;
+      }
+      
+      .comparison-card {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+      }
+      
+      .comparison-card.highlight {
+        border-color: var(--accent);
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+      }
+      
+      .comparison-card h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .comparison-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .comparison-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+      
+      .comparison-item.positive { color: #10b981; }
+      .comparison-item.negative { color: #ef4444; }
+      
+      @media (max-width: 768px) {
+        .comparison-section { grid-template-columns: 1fr; }
+      }
+      
       /* Contact */
       .contact {
         background: var(--bg-elevated);
@@ -754,6 +860,100 @@
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Launch support</div>
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Iteration & feedback</div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Why Start Apps Studio -->
+      <section class="section">
+        <h2 class="section-title">Why Start Apps Studio?</h2>
+        <p class="section-subtitle">Everything you need to launch, nothing you don't</p>
+        
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </div>
+            <span class="benefit-badge">Native Quality</span>
+            <h4>AppStore & PlayStore Ready</h4>
+            <p>Your app ships to both iOS and Android app stores, fully compliant and optimized for each platform.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <span class="benefit-badge">Fast Shipping</span>
+            <h4>One-Click Deployment</h4>
+            <p>Push updates instantly without waiting for app store reviews. Real-time updates that go live in seconds.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+            <span class="benefit-badge">Engagement</span>
+            <h4>Native Push Notifications</h4>
+            <p>Real native push notifications to re-engage users, not just web alerts. Direct to their lock screen.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            </div>
+            <span class="benefit-badge">Revenue</span>
+            <h4>In-App Payments</h4>
+            <p>Built-in payment processing with subscriptions, one-time purchases, and premium features ready to go.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <span class="benefit-badge">Scale</span>
+            <h4>Unlimited Users</h4>
+            <p>No per-user fees or monthly active user limits. Your app scales with your success at no extra cost.</p>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            </div>
+            <span class="benefit-badge">Ownership</span>
+            <h4>Full Source Code</h4>
+            <p>You own everything. Complete source code handoff with no vendor lock-in. Take it anywhere.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-section">
+          <div class="comparison-card highlight">
+            <h4>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              Start Apps Studio
+            </h4>
+            <div class="comparison-list">
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Fixed pricing, no surprises</div>
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> All features included</div>
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Free lifetime updates</div>
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Real-time app updates</div>
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Self-host your codebase</div>
+              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> No vendor lock-in</div>
+            </div>
+          </div>
+          
+          <div class="comparison-card">
+            <h4>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              Traditional Agencies
+            </h4>
+            <div class="comparison-list">
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Setup fee + annual plans</div>
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Expensive paid add-ons</div>
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Paid submission service</div>
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Annual plan for updates</div>
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Partial vendor lock-in</div>
+              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Outdated codebase</div>
             </div>
           </div>
         </div>
