@@ -154,6 +154,24 @@ const additionalCaseStudies = [
     result: "45% booking increase",
     hats: ["designer", "developer"] as HatType[],
   },
+  {
+    title: "Streaming Media App",
+    industry: "Media & Telecom",
+    result: "2.5M+ downloads",
+    hats: ["designer", "developer", "strategist", "analyst"] as HatType[],
+  },
+  {
+    title: "Digital Banking Platform",
+    industry: "Fintech",
+    result: "35% cost reduction",
+    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
+  },
+  {
+    title: "Telemedicine Solution",
+    industry: "Healthcare",
+    result: "50k+ consultations/month",
+    hats: ["designer", "developer", "strategist"] as HatType[],
+  },
 ];
 
 const pricingTiers = [
