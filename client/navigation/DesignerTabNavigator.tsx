@@ -56,7 +56,7 @@ export default function DesignerTabNavigator() {
         component={DesignerDashboardScreen}
         options={{
           title: "Projects",
-          headerTitle: () => <HeaderTitle title="Elgar Sirajov" />,
+          headerTitle: () => <HeaderTitle title="Start Apps Studio" />,
           tabBarIcon: ({ color, size }) => (
             <Feather name="briefcase" size={size} color={color} />
           ),

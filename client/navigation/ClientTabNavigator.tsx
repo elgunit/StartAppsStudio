@@ -54,7 +54,7 @@ export default function ClientTabNavigator() {
         component={ClientDashboardScreen}
         options={{
           title: "Home",
-          headerTitle: () => <HeaderTitle title="Elgar Sirajov" />,
+          headerTitle: () => <HeaderTitle title="Start Apps Studio" />,
           tabBarIcon: ({ color, size }) => (
             <Feather name="home" size={size} color={color} />
           ),
