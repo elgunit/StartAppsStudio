@@ -367,8 +367,8 @@
       .case-study-card {
         border: 1px solid var(--border);
         border-radius: 12px;
-        padding: 20px 24px;
-        margin-bottom: 12px;
+        padding: 24px;
+        margin-bottom: 16px;
         cursor: pointer;
         transition: all 0.2s;
       }
@@ -378,21 +378,48 @@
       
       .case-study-header {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
       }
       
-      .case-study-header h4 { font-weight: 600; margin: 0; }
-      .case-study-header span { font-size: 14px; color: var(--text-secondary); }
+      .case-study-header > div:first-child {
+        flex-shrink: 0;
+      }
       
-      .case-study-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+      .case-study-header h4 { font-weight: 600; margin: 0 0 4px 0; font-size: 17px; line-height: 1.3; }
+      .case-study-header > div:first-child span { font-size: 13px; color: var(--text-secondary); display: block; }
+      
+      .case-study-badges { 
+        display: flex; 
+        gap: 6px; 
+        flex-wrap: wrap;
+      }
       
       .hat-badge {
-        padding: 4px 10px;
+        padding: 5px 10px;
         background: var(--bg-elevated);
         border-radius: 100px;
-        font-size: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+        border: 1px solid var(--border);
+      }
+      
+      @media (min-width: 600px) {
+        .case-study-header {
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: space-between;
+        }
+        
+        .case-study-badges {
+          justify-content: flex-end;
+          max-width: 60%;
+        }
+        
+        .hat-badge {
+          font-size: 12px;
+        }
       }
       
       .result-badge {
@@ -1612,8 +1639,10 @@
       
       <!-- Contact -->
       <section class="contact" id="contact">
-        <h2>Ready to Build?</h2>
-        <p>Fill out the form and we'll get in touch with you.</p>
+        <div id="formHeader">
+          <h2>Ready to Build?</h2>
+          <p>Fill out the form and we'll get in touch with you.</p>
+        </div>
         
         <form class="contact-form" id="contactForm">
           <div class="form-row">
@@ -1763,6 +1792,7 @@
           });
           
           if (response.ok) {
+            document.getElementById('formHeader').style.display = 'none';
             document.getElementById('contactForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
             document.getElementById('confirmEmail').textContent = data.email;

@@ -62,6 +62,7 @@ export interface IStorage {
 
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
+  getContactSubmissions(): Promise<ContactSubmission[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -318,6 +319,10 @@ export class DatabaseStorage implements IStorage {
   async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
     const [contactSubmission] = await db.insert(contactSubmissions).values(submission).returning();
     return contactSubmission;
+  }
+
+  async getContactSubmissions(): Promise<ContactSubmission[]> {
+    return await db.select().from(contactSubmissions).orderBy(sql`created_at DESC`);
   }
 }
 

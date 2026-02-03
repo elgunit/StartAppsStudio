@@ -448,6 +448,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Contact submissions (for designer dashboard)
+  app.get("/api/contact-submissions", async (req, res) => {
+    try {
+      const submissions = await storage.getContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Failed to get contact submissions:", error);
+      res.status(500).json({ error: "Failed to get contact submissions" });
+    }
+  });
+
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
