@@ -3,6 +3,7 @@ import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
 import { z } from "zod";
 import crypto from "crypto";
+import { getUncachableResendClient } from "./resend";
 
 // Simple password hashing
 function hashPassword(password: string): string {
@@ -467,6 +468,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
+      
+      // Send email notification using Resend
+      try {
+        const { client, fromEmail } = await getUncachableResendClient();
+        
+        const interestsList = interests && interests.length > 0 
+          ? interests.join(', ') 
+          : 'Not specified';
+        
+        await client.emails.send({
+          from: fromEmail,
+          to: 'create@startappsstudio.com',
+          subject: `New Project Inquiry from ${fullName}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> ${fullName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Company:</strong> ${company || 'Not specified'}</p>
+            <p><strong>Budget:</strong> ${budget || 'Not specified'}</p>
+            <p><strong>Interested in:</strong> ${interestsList}</p>
+            <h3>Message:</h3>
+            <p>${message}</p>
+          `,
+        });
+        
+        console.log("Email notification sent successfully");
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+        // Don't fail the request if email fails - submission was still saved
+      }
       
       res.json({ success: true });
     } catch (error) {
