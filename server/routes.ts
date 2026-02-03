@@ -483,12 +483,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send email notification using Resend
       try {
         const { client, fromEmail } = await getUncachableResendClient();
+        console.log("Resend client obtained, fromEmail:", fromEmail);
         
         const interestsList = interests && interests.length > 0 
           ? interests.join(', ') 
           : 'Not specified';
         
-        await client.emails.send({
+        const emailResult = await client.emails.send({
           from: fromEmail,
           to: 'create@startappsstudio.com',
           subject: `New Project Inquiry from ${fullName}`,
@@ -504,9 +505,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           `,
         });
         
-        console.log("Email notification sent successfully");
-      } catch (emailError) {
-        console.error("Failed to send email notification:", emailError);
+        console.log("Email notification sent successfully:", JSON.stringify(emailResult));
+      } catch (emailError: any) {
+        console.error("Failed to send email notification:", emailError?.message || emailError);
+        console.error("Full error details:", JSON.stringify(emailError, null, 2));
         // Don't fail the request if email fails - submission was still saved
       }
       

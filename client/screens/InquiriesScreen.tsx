@@ -94,10 +94,10 @@ export default function InquiriesScreen() {
           </ThemedText>
         </View>
 
-        <Card style={[styles.emailRow, { backgroundColor: theme.backgroundRoot }]} onPress={() => handleEmailPress(item.email)}>
+        <Card style={styles.emailRow} onPress={() => handleEmailPress(item.email)}>
           <View style={styles.emailContent}>
-            <Feather name="mail" size={14} color={theme.primary} />
-            <ThemedText type="body" style={{ color: theme.primary }}>{item.email}</ThemedText>
+            <Feather name="mail" size={14} color={theme.link} />
+            <ThemedText type="body" style={{ color: theme.link }}>{item.email}</ThemedText>
           </View>
           <Feather name="external-link" size={14} color={theme.textSecondary} />
         </Card>
@@ -112,7 +112,7 @@ export default function InquiriesScreen() {
         {item.interests && item.interests.length > 0 ? (
           <View style={styles.badgesRow}>
             {item.interests.map((interest, i) => (
-              <View key={i} style={[styles.badge, { backgroundColor: theme.backgroundElevated, borderColor: theme.border }]}>
+              <View key={i} style={[styles.badge, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
                 <ThemedText type="caption">{interestLabels[interest] || interest}</ThemedText>
               </View>
             ))}
