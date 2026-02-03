@@ -141,13 +141,9 @@ function isDevelopmentEnvironment(host: string): boolean {
 function serveLandingPage({
   req,
   res,
-  landingPageTemplate,
-  appName,
 }: {
   req: Request;
   res: Response;
-  landingPageTemplate: string;
-  appName: string;
 }) {
   const userAgent = req.header("user-agent") || "";
   const forwardedHost = req.header("x-forwarded-host");
@@ -166,44 +162,19 @@ function serveLandingPage({
     return res.redirect(302, webAppUrl);
   }
   
-  // In production, desktop browsers get the desktop landing page
-  if (!isMobileUserAgent(userAgent)) {
-    const desktopTemplatePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
-    if (fs.existsSync(desktopTemplatePath)) {
-      log(`Production desktop detected, serving desktop landing page`);
-      return res.sendFile(desktopTemplatePath);
-    }
+  // All visitors (desktop and mobile) get the landing page in production
+  const landingPagePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
+  if (fs.existsSync(landingPagePath)) {
+    log(`Serving landing page to ${isMobileUserAgent(userAgent) ? 'mobile' : 'desktop'} visitor`);
+    return res.sendFile(landingPagePath);
   }
 
-  // Mobile users get the landing page with QR code
-  const forwardedProto = req.header("x-forwarded-proto");
-  const protocol = forwardedProto || req.protocol || "https";
-  const baseUrl = `${protocol}://${host}`;
-  const expsUrl = `${host}`;
-
-  log(`Mobile detected, serving landing page`);
-  log(`baseUrl`, baseUrl);
-  log(`expsUrl`, expsUrl);
-
-  const html = landingPageTemplate
-    .replace(/BASE_URL_PLACEHOLDER/g, baseUrl)
-    .replace(/EXPS_URL_PLACEHOLDER/g, expsUrl)
-    .replace(/APP_NAME_PLACEHOLDER/g, appName);
-
-  res.setHeader("Content-Type", "text/html; charset=utf-8");
-  res.status(200).send(html);
+  // Fallback if landing page doesn't exist
+  log(`Landing page not found, serving 404`);
+  res.status(404).send("Landing page not found");
 }
 
 function configureExpoAndLanding(app: express.Application) {
-  const templatePath = path.resolve(
-    process.cwd(),
-    "server",
-    "templates",
-    "landing-page.html",
-  );
-  const landingPageTemplate = fs.readFileSync(templatePath, "utf-8");
-  const appName = getAppName();
-
   log("Serving static Expo files with dynamic manifest routing");
 
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -221,12 +192,7 @@ function configureExpoAndLanding(app: express.Application) {
     }
 
     if (req.path === "/") {
-      return serveLandingPage({
-        req,
-        res,
-        landingPageTemplate,
-        appName,
-      });
+      return serveLandingPage({ req, res });
     }
 
     next();
