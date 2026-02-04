@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   Image,
-  Dimensions,
   Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -12,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Animated, {
   FadeInDown,
-  FadeInUp,
 } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
 
@@ -22,50 +20,7 @@ import { Card } from "@/components/Card";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
-const { width } = Dimensions.get("window");
-
 type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
-
-const hats: { type: HatType; label: string; description: string; skills: string[] }[] = [
-  { 
-    type: "designer", 
-    label: "Designer", 
-    description: "UI/UX & Visual Design",
-    skills: ["User Interface Design", "User Experience", "Prototyping", "Design Systems", "Brand Identity"]
-  },
-  { 
-    type: "developer", 
-    label: "Developer", 
-    description: "Code & Implementation",
-    skills: ["React & React Native", "Full-Stack Development", "API Integration", "Database Design", "Performance Optimization"]
-  },
-  { 
-    type: "strategist", 
-    label: "Strategist", 
-    description: "Planning & Research",
-    skills: ["Market Research", "Competitive Analysis", "Product Strategy", "User Research", "Roadmap Planning"]
-  },
-  { 
-    type: "manager", 
-    label: "Manager", 
-    description: "Project Leadership",
-    skills: ["Project Planning", "Timeline Management", "Stakeholder Communication", "Risk Assessment", "Quality Assurance"]
-  },
-  { 
-    type: "analyst", 
-    label: "Analyst", 
-    description: "Data & Insights",
-    skills: ["Data Analysis", "Metrics & KPIs", "User Analytics", "A/B Testing", "Reporting"]
-  },
-];
-
-const hatImages: Record<HatType, any> = {
-  designer: require("../../assets/images/hat-designer.png"),
-  developer: require("../../assets/images/hat-developer.png"),
-  strategist: require("../../assets/images/hat-strategist.png"),
-  manager: require("../../assets/images/hat-manager.png"),
-  analyst: require("../../assets/images/hat-analyst.png"),
-};
 
 const hatIcons: Record<HatType, keyof typeof Feather.glyphMap> = {
   designer: "pen-tool",
@@ -75,134 +30,66 @@ const hatIcons: Record<HatType, keyof typeof Feather.glyphMap> = {
   analyst: "bar-chart-2",
 };
 
-const services = [
-  {
-    icon: "layout" as const,
-    title: "Landing Pages",
-    description: "High-converting landing pages that capture attention and drive results.",
-  },
-  {
-    icon: "smartphone" as const,
-    title: "Native iOS & Android",
-    description: "Beautiful native mobile apps for both platforms with seamless user experience.",
-  },
-  {
-    icon: "globe" as const,
-    title: "Web Applications",
-    description: "Responsive web apps with modern technologies and beautiful interfaces.",
-  },
-  {
-    icon: "layers" as const,
-    title: "MVP Development",
-    description: "Transform your idea into a working product with end-to-end design and development.",
-  },
+type MenuSection = "services" | "expertise" | "work" | "packages" | null;
+
+const menuItems = [
+  { id: "services" as const, icon: "grid" as const, label: "Services", subtitle: "What we build" },
+  { id: "expertise" as const, icon: "award" as const, label: "Expertise", subtitle: "5 specialized roles" },
+  { id: "work" as const, icon: "briefcase" as const, label: "Work", subtitle: "13 case studies" },
+  { id: "packages" as const, icon: "package" as const, label: "Packages", subtitle: "Pricing & timelines" },
 ];
 
-const industries = [
-  { name: "Fintech", icon: "credit-card" as const },
-  { name: "Education", icon: "book-open" as const },
-  { name: "Healthcare", icon: "heart" as const },
-  { name: "Fitness & Wellness", icon: "activity" as const },
-  { name: "Hospitality", icon: "home" as const },
-  { name: "Media & Telecom", icon: "tv" as const },
-  { name: "Real Estate", icon: "map-pin" as const },
+const services = [
+  { icon: "layout" as const, title: "Landing Pages", desc: "High-converting pages" },
+  { icon: "smartphone" as const, title: "Native Apps", desc: "iOS & Android" },
+  { icon: "globe" as const, title: "Web Apps", desc: "Modern & responsive" },
+  { icon: "layers" as const, title: "Full MVP", desc: "End-to-end development" },
+];
+
+const hats = [
+  { type: "designer" as HatType, label: "Designer", desc: "UI/UX & Visual" },
+  { type: "developer" as HatType, label: "Developer", desc: "Code & Build" },
+  { type: "strategist" as HatType, label: "Strategist", desc: "Plan & Research" },
+  { type: "manager" as HatType, label: "Manager", desc: "Lead & Deliver" },
+  { type: "analyst" as HatType, label: "Analyst", desc: "Data & Insights" },
 ];
 
 const caseStudies = [
-  {
-    title: "AI Health Platform",
-    industry: "Healthcare",
-    result: "40% user retention increase",
-    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
-  },
-  {
-    title: "E-Commerce Solution",
-    industry: "Retail",
-    result: "60% organic traffic growth",
-    hats: ["designer", "developer", "analyst"] as HatType[],
-  },
-  {
-    title: "Web3 Interface",
-    industry: "Fintech",
-    result: "18% fewer transaction errors",
-    hats: ["designer", "developer", "strategist", "analyst"] as HatType[],
-  },
+  { title: "AI Health Platform", result: "+40% retention", industry: "Healthcare" },
+  { title: "E-Commerce Solution", result: "+60% traffic", industry: "Retail" },
+  { title: "Digital Banking", result: "-35% costs", industry: "Fintech" },
+  { title: "EdTech Platform", result: "92% completion", industry: "Education" },
+  { title: "Fitness App", result: "85% DAU", industry: "Wellness" },
 ];
 
-const additionalCaseStudies = [
-  {
-    title: "Fitness Tracking App",
-    industry: "Fitness & Wellness",
-    result: "85% daily active users",
-    hats: ["designer", "developer", "analyst"] as HatType[],
-  },
-  {
-    title: "Property Listing Portal",
-    industry: "Real Estate",
-    result: "3x lead generation",
-    hats: ["designer", "developer", "strategist"] as HatType[],
-  },
-  {
-    title: "EdTech Learning Platform",
-    industry: "Education",
-    result: "92% course completion rate",
-    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
-  },
-  {
-    title: "Hotel Booking System",
-    industry: "Hospitality",
-    result: "45% booking increase",
-    hats: ["designer", "developer"] as HatType[],
-  },
-  {
-    title: "Streaming Media App",
-    industry: "Media & Telecom",
-    result: "2.5M+ downloads",
-    hats: ["designer", "developer", "strategist", "analyst"] as HatType[],
-  },
-  {
-    title: "Digital Banking Platform",
-    industry: "Fintech",
-    result: "35% cost reduction",
-    hats: ["designer", "developer", "strategist", "manager", "analyst"] as HatType[],
-  },
-  {
-    title: "Telemedicine Solution",
-    industry: "Healthcare",
-    result: "50k+ consultations/month",
-    hats: ["designer", "developer", "strategist"] as HatType[],
-  },
-];
-
-const pricingTiers = [
-  { name: "Starter", price: "$129", description: "Idea presentation & validation (2-3 days)", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
-  { name: "Prototype", price: "$489", popular: true, description: "Prototype MVP with design & development (3-5 days)", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
-  { name: "Production", price: "$1.5k - $5k", description: "Thoroughly thought app & product (2-3 weeks)", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
+const packages = [
+  { name: "Starter", price: "$129", time: "2-3 days", badge: "AI + Figma" },
+  { name: "Prototype", price: "$489", time: "3-5 days", badge: "AI + Figma", popular: true },
+  { name: "Production", price: "$1.5k-$5k", time: "2-3 weeks", badge: "AI + Figma" },
+  { name: "Custom", price: "$7.5k+", time: "1-6 months", badge: "No AI" },
 ];
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
 
-  const [expandedHat, setExpandedHat] = React.useState<HatType | null>(null);
-  const [showAllWork, setShowAllWork] = React.useState(false);
-  
-  const visibleCaseStudies = showAllWork 
-    ? [...caseStudies, ...additionalCaseStudies] 
-    : caseStudies;
+  const toggleSection = (section: MenuSection) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
 
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
       contentContainerStyle={{
-        paddingTop: insets.top + Spacing["3xl"],
-        paddingBottom: insets.bottom + Spacing["4xl"],
+        paddingTop: insets.top + Spacing["2xl"],
+        paddingBottom: insets.bottom + Spacing["3xl"],
       }}
       showsVerticalScrollIndicator={false}
     >
       {/* Hero Section */}
-      <Animated.View entering={FadeInDown.delay(100).duration(600)} style={styles.heroSection}>
+      <Animated.View entering={FadeInDown.delay(100).duration(500)} style={styles.heroSection}>
         <Image
           source={require("../../assets/images/icon.png")}
           style={styles.logo}
@@ -212,387 +99,141 @@ export default function WelcomeScreen() {
           Start Apps{"\n"}Studio
         </ThemedText>
         <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
-          We bring your product vision to life with design expertise, development skills, and strategic thinking - all in one partnership.
+          Design, development & strategy — all in one partnership.
         </ThemedText>
       </Animated.View>
 
-      {/* Services Section */}
-      <Animated.View entering={FadeInDown.delay(200).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          Services
-        </ThemedText>
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          End-to-end product development tailored to your needs
-        </ThemedText>
-        
-        <View style={styles.servicesGrid}>
-          {services.map((service, index) => (
-            <Animated.View
-              key={service.title}
-              entering={FadeInDown.delay(250 + index * 50).duration(400)}
-              style={styles.serviceCardWrapper}
-            >
-              <Card style={styles.serviceCard}>
-                <View style={[styles.serviceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name={service.icon} size={24} color={theme.text} />
-                </View>
-                <ThemedText type="h4" style={styles.serviceTitle}>
-                  {service.title}
-                </ThemedText>
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  {service.description}
-                </ThemedText>
-              </Card>
-            </Animated.View>
-          ))}
-        </View>
-      </Animated.View>
-
-      {/* Expertise Hats Section */}
-      <Animated.View entering={FadeInDown.delay(300).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          The Expertise You Need
-        </ThemedText>
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Five specialized roles, one dedicated team
-        </ThemedText>
-        
-        <View style={styles.hatsContainer}>
-          {hats.map((hat, index) => (
-            <Animated.View
-              key={hat.type}
-              entering={FadeInDown.delay(350 + index * 50).duration(400)}
-            >
-              <Pressable
-                onPress={() => setExpandedHat(expandedHat === hat.type ? null : hat.type)}
-              >
-                <Card 
-                  style={[
-                    styles.hatCard,
-                    expandedHat === hat.type && { borderColor: theme.text },
-                  ]}
-                >
-                  <View style={styles.hatHeader}>
-                    <Image
-                      source={hatImages[hat.type]}
-                      style={styles.hatImage}
-                      resizeMode="cover"
-                    />
-                    <View style={styles.hatInfo}>
-                      <ThemedText type="h4">{hat.label}</ThemedText>
-                      <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                        {hat.description}
-                      </ThemedText>
-                    </View>
-                    <Feather 
-                      name={expandedHat === hat.type ? "chevron-up" : "chevron-down"} 
-                      size={20} 
-                      color={theme.textSecondary} 
-                    />
-                  </View>
-                  
-                  {expandedHat === hat.type ? (
-                    <View style={styles.skillsList}>
-                      {hat.skills.map((skill, skillIndex) => (
-                        <View key={skillIndex} style={styles.skillItem}>
-                          <Feather name="check" size={14} color={theme.success} />
-                          <ThemedText type="small">{skill}</ThemedText>
-                        </View>
-                      ))}
-                    </View>
-                  ) : null}
-                </Card>
-              </Pressable>
-            </Animated.View>
-          ))}
-        </View>
-      </Animated.View>
-
-      {/* Industry Expertise */}
-      <Animated.View entering={FadeInDown.delay(380).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          Industry Expertise
-        </ThemedText>
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Deep experience across key sectors
-        </ThemedText>
-        
-        <View style={styles.industriesGrid}>
-          {industries.map((industry, index) => (
-            <View key={index} style={[styles.industryChip, { backgroundColor: theme.backgroundDefault }]}>
-              <Feather name={industry.icon} size={14} color={theme.text} />
-              <ThemedText type="small">{industry.name}</ThemedText>
-            </View>
-          ))}
-        </View>
-      </Animated.View>
-
-      {/* Portfolio Preview */}
-      <Animated.View entering={FadeInDown.delay(400).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          Recent Work
-        </ThemedText>
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Real results for real products
-        </ThemedText>
-        
-        {visibleCaseStudies.map((study, index) => (
-          <Animated.View
-            key={`${study.title}-${index}`}
-            entering={FadeInDown.delay(450 + index * 50).duration(400)}
-          >
-            <Card style={styles.caseStudyCard}>
-              <View style={styles.caseStudyHeader}>
-                <View>
-                  <ThemedText type="h4">{study.title}</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-                    {study.industry}
-                  </ThemedText>
-                </View>
-                <View style={[styles.hatCountBadge, { backgroundColor: theme.text }]}>
-                  <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                    {study.hats.length} {study.hats.length === 1 ? "hat" : "hats"}
-                  </ThemedText>
-                </View>
-              </View>
-              <View style={[styles.resultBadge, { backgroundColor: theme.success + "20" }]}>
-                <Feather name="trending-up" size={14} color={theme.success} />
-                <ThemedText type="small" style={{ color: theme.success }}>
-                  {study.result}
-                </ThemedText>
-              </View>
-            </Card>
-          </Animated.View>
-        ))}
-        
-        {!showAllWork ? (
-          <Pressable 
-            style={[styles.readMoreButton, { borderColor: theme.textTertiary }]}
-            onPress={() => setShowAllWork(true)}
-          >
-            <ThemedText type="body">View More Work</ThemedText>
-            <Feather name="chevron-down" size={18} color={theme.text} />
-          </Pressable>
-        ) : null}
-      </Animated.View>
-
-      {/* Pricing Preview */}
-      <Animated.View entering={FadeInDown.delay(500).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          Packages
-        </ThemedText>
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>
-          Choose the right package for your stage
-        </ThemedText>
-        
-        <View style={styles.pricingGrid}>
-          {pricingTiers.map((tier, index) => (
-            <Animated.View
-              key={index}
-              entering={FadeInDown.delay(550 + index * 50).duration(400)}
-            >
-              <Card
-                style={[
-                  styles.pricingCard,
-                  tier.popular && { borderColor: theme.text, borderWidth: 2 },
-                ]}
-              >
-                {tier.popular ? (
-                  <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
-                    <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                      Popular
-                    </ThemedText>
-                  </View>
-                ) : null}
-                <View style={[styles.methodBadge, { backgroundColor: theme.success + "20" }]}>
-                  <Feather name="zap" size={10} color={theme.success} />
-                  <ThemedText type="caption" style={{ color: theme.success }}>
-                    {tier.badge}
-                  </ThemedText>
-                </View>
-                <ThemedText type="h4" style={{ marginTop: Spacing.sm }}>{tier.name}</ThemedText>
-                <ThemedText type="display" style={styles.price}>
-                  {tier.price}
-                </ThemedText>
-                <ThemedText type="body" style={[styles.pricingDesc, { color: theme.textSecondary }]}>
-                  {tier.description}
-                </ThemedText>
-                <View style={styles.featuresList}>
-                  {tier.features.map((feature, featureIndex) => (
-                    <View key={featureIndex} style={styles.featureItem}>
-                      <Feather name="check" size={14} color={theme.success} />
-                      <ThemedText type="small">{feature}</ThemedText>
-                    </View>
-                  ))}
-                </View>
-              </Card>
-            </Animated.View>
-          ))}
-        </View>
-
-        {/* Custom Package */}
-        <Animated.View entering={FadeInDown.delay(700).duration(400)}>
-          <Card style={[styles.customPackageCard, { borderColor: theme.textTertiary, borderStyle: "dashed" }]}>
-            <View style={styles.customPackageHeader}>
-              <Feather name="code" size={24} color={theme.text} />
-              <View style={styles.customPackageInfo}>
-                <ThemedText type="h4">Custom Package</ThemedText>
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  $7.5k+ or monthly retainer
-                </ThemedText>
-              </View>
-              <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
-                <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                  No AI
-                </ThemedText>
-              </View>
-            </View>
-            <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              100% handcrafted development from ground up. No AI coding - only image generation and API integration allowed. Most projects: 1-6 months.
-            </ThemedText>
-            <View style={styles.customFeatures}>
-              <View style={styles.customFeatureItem}>
-                <Feather name="edit-3" size={16} color={theme.text} />
-                <ThemedText type="small">Handcrafted Code</ThemedText>
-              </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="layout" size={16} color={theme.text} />
-                <ThemedText type="small">Landing Pages</ThemedText>
-              </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="smartphone" size={16} color={theme.text} />
-                <ThemedText type="small">Native iOS & Android</ThemedText>
-              </View>
-              <View style={styles.customFeatureItem}>
-                <Feather name="link" size={16} color={theme.text} />
-                <ThemedText type="small">API Integration</ThemedText>
-              </View>
-            </View>
-          </Card>
-        </Animated.View>
-
-        {/* Enterprise Package */}
-        <Animated.View entering={FadeInDown.delay(750).duration(400)}>
-          <Card style={[styles.customPackageCard, { borderColor: theme.text, borderWidth: 2 }]}>
-            <View style={styles.customPackageHeader}>
-              <Feather name="briefcase" size={24} color={theme.text} />
-              <View style={styles.customPackageInfo}>
-                <ThemedText type="h4">Enterprise</ThemedText>
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  Via StartupSoft
-                </ThemedText>
-              </View>
-              <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
-                <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-                  Handoff
-                </ThemedText>
-              </View>
-            </View>
-            <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              Upon prototype MVP, we handoff to StartupSoft for dedicated engineering teams and enterprise-scale solutions.
-            </ThemedText>
-            <View style={styles.customServicesList}>
-              <View style={styles.customServiceItem}>
-                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name="database" size={14} color={theme.text} />
-                </View>
-                <View style={styles.customServiceText}>
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>LLM Training Data</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Human-generated code data, SFT & RLHF</ThemedText>
-                </View>
-              </View>
-              <View style={styles.customServiceItem}>
-                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name="cpu" size={14} color={theme.text} />
-                </View>
-                <View style={styles.customServiceText}>
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>LLM Finetuning</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>End-to-end pipeline, PoC to production</ThemedText>
-                </View>
-              </View>
-              <View style={styles.customServiceItem}>
-                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name="users" size={14} color={theme.text} />
-                </View>
-                <View style={styles.customServiceText}>
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>Staff Augmentation</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Senior & lead-level engineering talent</ThemedText>
-                </View>
-              </View>
-              <View style={styles.customServiceItem}>
-                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name="smartphone" size={14} color={theme.text} />
-                </View>
-                <View style={styles.customServiceText}>
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>Custom Software</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Native iOS, Android & web applications</ThemedText>
-                </View>
-              </View>
-              <View style={styles.customServiceItem}>
-                <View style={[styles.customServiceIcon, { backgroundColor: theme.backgroundDefault }]}>
-                  <Feather name="pen-tool" size={14} color={theme.text} />
-                </View>
-                <View style={styles.customServiceText}>
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>UX/UI Design</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Intuitive designs that drive engagement</ThemedText>
-                </View>
-              </View>
-            </View>
-          </Card>
-        </Animated.View>
-      </Animated.View>
-
-      {/* How It Works */}
-      <Animated.View entering={FadeInDown.delay(550).duration(600)} style={styles.section}>
-        <ThemedText type="h2" style={styles.sectionTitle}>
-          How It Works
-        </ThemedText>
-        
-        <View style={styles.stepsContainer}>
-          {[
-            { step: "1", title: "Submit Your Brief", desc: "Describe your project and select the expertise you need" },
-            { step: "2", title: "We Start Building", desc: "Track progress with real-time transparency metrics" },
-            { step: "3", title: "Review & Iterate", desc: "Provide feedback and watch your product evolve" },
-            { step: "4", title: "Launch Your MVP", desc: "Get your polished product ready for the world" },
-          ].map((item, index) => (
-            <View key={index} style={styles.stepItem}>
-              <View style={[styles.stepNumber, { backgroundColor: theme.text }]}>
-                <ThemedText type="h4" style={{ color: theme.backgroundRoot }}>
-                  {item.step}
-                </ThemedText>
-              </View>
-              <View style={styles.stepContent}>
-                <ThemedText type="h4">{item.title}</ThemedText>
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  {item.desc}
-                </ThemedText>
-              </View>
-            </View>
-          ))}
-        </View>
-      </Animated.View>
-
-      {/* CTA Section */}
-      <Animated.View entering={FadeInUp.delay(600).duration(600)} style={styles.ctaSection}>
-        <ThemedText type="h3" style={styles.ctaTitle}>
-          Ready to Build Your MVP?
-        </ThemedText>
+      {/* CTA Buttons */}
+      <Animated.View entering={FadeInDown.delay(200).duration(500)} style={styles.ctaSection}>
         <Button
           onPress={() => navigation.navigate("Register")}
-          style={styles.ctaButton}
-          testID="button-get-started"
+          style={styles.primaryButton}
         >
           Get Started
         </Button>
-        <Pressable
+        <Button
+          variant="secondary"
           onPress={() => navigation.navigate("Login")}
-          style={styles.signInLink}
+          style={styles.secondaryButton}
         >
-          <ThemedText type="body" style={{ color: theme.textSecondary }}>
-            Already have an account?{" "}
-          </ThemedText>
-          <ThemedText type="link">Sign In</ThemedText>
-        </Pressable>
+          Sign In
+        </Button>
+      </Animated.View>
+
+      {/* Menu Sections */}
+      <Animated.View entering={FadeInDown.delay(300).duration(500)} style={styles.menuSection}>
+        <ThemedText type="caption" style={[styles.menuLabel, { color: theme.textTertiary }]}>
+          EXPLORE
+        </ThemedText>
+        
+        {menuItems.map((item, index) => (
+          <Animated.View
+            key={item.id}
+            entering={FadeInDown.delay(350 + index * 50).duration(400)}
+          >
+            <Pressable onPress={() => toggleSection(item.id)}>
+              <Card style={{...styles.menuCard, ...(expandedSection === item.id ? { borderColor: theme.text } : {})}}>
+                <View style={styles.menuHeader}>
+                  <View style={[styles.menuIcon, { backgroundColor: theme.backgroundDefault }]}>
+                    <Feather name={item.icon} size={18} color={theme.text} />
+                  </View>
+                  <View style={styles.menuInfo}>
+                    <ThemedText type="body" style={{ fontWeight: "600" }}>{item.label}</ThemedText>
+                    <ThemedText type="caption" style={{ color: theme.textSecondary }}>{item.subtitle}</ThemedText>
+                  </View>
+                  <Feather 
+                    name={expandedSection === item.id ? "chevron-up" : "chevron-down"} 
+                    size={18} 
+                    color={theme.textSecondary} 
+                  />
+                </View>
+
+                {/* Expanded Content */}
+                {expandedSection === item.id ? (
+                  <View style={styles.expandedContent}>
+                    {item.id === "services" ? (
+                      <View style={styles.gridContent}>
+                        {services.map((service, i) => (
+                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
+                            <Feather name={service.icon} size={16} color={theme.text} />
+                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
+                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
+                          </View>
+                        ))}
+                      </View>
+                    ) : null}
+
+                    {item.id === "expertise" ? (
+                      <View style={styles.listContent}>
+                        {hats.map((hat, i) => (
+                          <View key={i} style={styles.listItem}>
+                            <Feather name={hatIcons[hat.type]} size={16} color={theme.text} />
+                            <ThemedText type="small" style={{ fontWeight: "500", flex: 1 }}>{hat.label}</ThemedText>
+                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{hat.desc}</ThemedText>
+                          </View>
+                        ))}
+                      </View>
+                    ) : null}
+
+                    {item.id === "work" ? (
+                      <View style={styles.listContent}>
+                        {caseStudies.map((study, i) => (
+                          <View key={i} style={styles.workItem}>
+                            <View style={styles.workInfo}>
+                              <ThemedText type="small" style={{ fontWeight: "500" }}>{study.title}</ThemedText>
+                              <ThemedText type="caption" style={{ color: theme.textSecondary }}>{study.industry}</ThemedText>
+                            </View>
+                            <View style={[styles.resultBadge, { backgroundColor: theme.success + "20" }]}>
+                              <ThemedText type="caption" style={{ color: theme.success }}>{study.result}</ThemedText>
+                            </View>
+                          </View>
+                        ))}
+                        <ThemedText type="caption" style={{ color: theme.textTertiary, textAlign: "center", marginTop: Spacing.sm }}>
+                          +8 more projects
+                        </ThemedText>
+                      </View>
+                    ) : null}
+
+                    {item.id === "packages" ? (
+                      <View style={styles.listContent}>
+                        {packages.map((pkg, i) => (
+                          <View key={i} style={[styles.packageItem, pkg.popular && { backgroundColor: theme.backgroundDefault }]}>
+                            <View style={styles.packageInfo}>
+                              <View style={styles.packageNameRow}>
+                                <ThemedText type="small" style={{ fontWeight: "600" }}>{pkg.name}</ThemedText>
+                                {pkg.popular ? (
+                                  <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
+                                    <ThemedText type="caption" style={{ color: theme.backgroundRoot, fontSize: 9 }}>Popular</ThemedText>
+                                  </View>
+                                ) : null}
+                              </View>
+                              <ThemedText type="caption" style={{ color: theme.textSecondary }}>{pkg.time}</ThemedText>
+                            </View>
+                            <View style={styles.packagePricing}>
+                              <ThemedText type="body" style={{ fontWeight: "600" }}>{pkg.price}</ThemedText>
+                              <View style={[styles.methodBadge, { backgroundColor: pkg.badge === "No AI" ? theme.text : theme.success + "20" }]}>
+                                <ThemedText type="caption" style={{ color: pkg.badge === "No AI" ? theme.backgroundRoot : theme.success, fontSize: 9 }}>
+                                  {pkg.badge}
+                                </ThemedText>
+                              </View>
+                            </View>
+                          </View>
+                        ))}
+                      </View>
+                    ) : null}
+                  </View>
+                ) : null}
+              </Card>
+            </Pressable>
+          </Animated.View>
+        ))}
+      </Animated.View>
+
+      {/* Footer */}
+      <Animated.View entering={FadeInDown.delay(550).duration(500)} style={styles.footer}>
+        <ThemedText type="caption" style={{ color: theme.textTertiary, textAlign: "center" }}>
+          create@startappsstudio.com
+        </ThemedText>
       </Animated.View>
     </ScrollView>
   );
@@ -604,246 +245,130 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     paddingHorizontal: Spacing.xl,
-    marginBottom: Spacing["4xl"],
     alignItems: "center",
+    marginBottom: Spacing.xl,
   },
   logo: {
-    width: 72,
-    height: 72,
-    marginBottom: Spacing.xl,
+    width: 80,
+    height: 80,
+    marginBottom: Spacing.lg,
   },
   heroTitle: {
     textAlign: "center",
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
   },
   heroSubtitle: {
     textAlign: "center",
-    paddingHorizontal: Spacing.lg,
-  },
-  section: {
-    marginBottom: Spacing["3xl"],
-    paddingHorizontal: Spacing.xl,
-  },
-  sectionTitle: {
-    marginBottom: Spacing.xs,
-  },
-  sectionSubtitle: {
-    marginBottom: Spacing.xl,
-  },
-  servicesGrid: {
-    gap: Spacing.md,
-  },
-  serviceCardWrapper: {},
-  serviceCard: {
-    paddingVertical: Spacing.xl,
-  },
-  serviceIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: Spacing.md,
-  },
-  serviceTitle: {
-    marginBottom: Spacing.xs,
-  },
-  hatsContainer: {
-    gap: Spacing.sm,
-  },
-  hatCard: {
-    marginBottom: Spacing.xs,
-  },
-  hatHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-  },
-  hatImage: {
-    width: 40,
-    height: 40,
-    borderRadius: BorderRadius.sm,
-    overflow: "hidden",
-  },
-  hatInfo: {
-    flex: 1,
-  },
-  skillsList: {
-    marginTop: Spacing.lg,
-    paddingTop: Spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: "rgba(0,0,0,0.1)",
-    gap: Spacing.sm,
-  },
-  skillItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-  },
-  caseStudyCard: {
-    marginBottom: Spacing.md,
-  },
-  caseStudyHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: Spacing.md,
-  },
-  hatCountBadge: {
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: Spacing.sm,
-  },
-  industriesGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.sm,
-  },
-  industryChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.xs,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
-  },
-  readMoreButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: Spacing.sm,
-    paddingVertical: Spacing.md,
-    marginTop: Spacing.md,
-    borderWidth: 1,
-    borderRadius: BorderRadius.lg,
-    borderStyle: "dashed",
-  },
-  resultBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.xs,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.full,
-    alignSelf: "flex-start",
-  },
-  pricingGrid: {
-    gap: Spacing.md,
-  },
-  pricingCard: {
-    alignItems: "center",
-    paddingVertical: Spacing.xl,
-    position: "relative",
-  },
-  popularBadge: {
-    position: "absolute",
-    top: -10,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.full,
-  },
-  price: {
-    marginVertical: Spacing.sm,
-  },
-  pricingDesc: {
-    marginTop: Spacing.xs,
-    textAlign: "center",
-  },
-  featuresList: {
-    marginTop: Spacing.lg,
-    gap: Spacing.sm,
-    alignSelf: "stretch",
-  },
-  featureItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-  },
-  customPackageCard: {
-    marginTop: Spacing.lg,
-    borderWidth: 1,
-  },
-  customPackageHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-    marginBottom: Spacing.md,
-  },
-  customPackageInfo: {
-    flex: 1,
-  },
-  customPackageDesc: {
-    marginBottom: Spacing.lg,
-  },
-  customFeatures: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.md,
-  },
-  customFeatureItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.xs,
-  },
-  customServicesList: {
-    gap: Spacing.md,
-  },
-  customServiceItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-  },
-  customServiceIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  customServiceText: {
-    flex: 1,
-  },
-  methodBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
-    borderRadius: BorderRadius.full,
-  },
-  stepsContainer: {
-    gap: Spacing.xl,
-  },
-  stepItem: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: Spacing.lg,
-  },
-  stepNumber: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  stepContent: {
-    flex: 1,
+    maxWidth: 280,
   },
   ctaSection: {
     paddingHorizontal: Spacing.xl,
-    alignItems: "center",
-    paddingTop: Spacing.xl,
+    gap: Spacing.sm,
+    marginBottom: Spacing["2xl"],
   },
-  ctaTitle: {
-    textAlign: "center",
-    marginBottom: Spacing.xl,
-  },
-  ctaButton: {
+  primaryButton: {
     width: "100%",
-    marginBottom: Spacing.lg,
   },
-  signInLink: {
+  secondaryButton: {
+    width: "100%",
+  },
+  menuSection: {
+    paddingHorizontal: Spacing.lg,
+  },
+  menuLabel: {
+    marginBottom: Spacing.md,
+    marginLeft: Spacing.xs,
+    letterSpacing: 1,
+  },
+  menuCard: {
+    marginBottom: Spacing.sm,
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  menuHeader: {
     flexDirection: "row",
     alignItems: "center",
+    gap: Spacing.md,
+  },
+  menuIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: BorderRadius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  menuInfo: {
+    flex: 1,
+  },
+  expandedContent: {
+    marginTop: Spacing.md,
+    paddingTop: Spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(128,128,128,0.15)",
+  },
+  gridContent: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  gridItem: {
+    width: "48%",
+    padding: Spacing.md,
+    borderRadius: BorderRadius.md,
+    gap: Spacing.xs,
+  },
+  listContent: {
+    gap: Spacing.sm,
+  },
+  listItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+  },
+  workItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  workInfo: {
+    flex: 1,
+  },
+  resultBadge: {
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.sm,
+  },
+  packageItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: Spacing.sm,
+    borderRadius: BorderRadius.md,
+  },
+  packageInfo: {
+    flex: 1,
+  },
+  packageNameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+  },
+  packagePricing: {
+    alignItems: "flex-end",
+    gap: Spacing.xs,
+  },
+  popularBadge: {
+    paddingHorizontal: Spacing.xs,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+  },
+  methodBadge: {
+    paddingHorizontal: Spacing.xs,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+  },
+  footer: {
+    marginTop: Spacing["2xl"],
+    paddingHorizontal: Spacing.xl,
   },
 });
