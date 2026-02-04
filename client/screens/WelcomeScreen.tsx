@@ -188,9 +188,14 @@ export default function WelcomeScreen() {
                             </View>
                           </View>
                         ))}
-                        <ThemedText type="caption" style={{ color: theme.textTertiary, textAlign: "center", marginTop: Spacing.sm }}>
-                          +8 more projects
-                        </ThemedText>
+                        <Pressable 
+                          onPress={() => navigation.navigate("Register")}
+                          style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+                        >
+                          <ThemedText type="caption" style={{ color: theme.link, textAlign: "center", marginTop: Spacing.sm, textDecorationLine: "underline" }}>
+                            +8 more projects →
+                          </ThemedText>
+                        </Pressable>
                       </View>
                     ) : null}
 
