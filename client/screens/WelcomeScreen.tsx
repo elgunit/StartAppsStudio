@@ -60,6 +60,14 @@ const caseStudies = [
   { title: "Digital Banking", result: "-35% costs", industry: "Fintech" },
   { title: "EdTech Platform", result: "92% completion", industry: "Education" },
   { title: "Fitness App", result: "85% DAU", industry: "Wellness" },
+  { title: "Real Estate Platform", result: "+55% leads", industry: "Property" },
+  { title: "Food Delivery App", result: "4.8★ rating", industry: "Logistics" },
+  { title: "Travel Booking", result: "+70% bookings", industry: "Travel" },
+  { title: "HR Management", result: "-40% admin time", industry: "Enterprise" },
+  { title: "Crypto Dashboard", result: "50k+ users", industry: "Finance" },
+  { title: "Social Platform", result: "3x engagement", industry: "Social" },
+  { title: "IoT Control App", result: "99.9% uptime", industry: "Technology" },
+  { title: "Legal Tech Portal", result: "+45% efficiency", industry: "Legal" },
 ];
 
 const packages = [
@@ -74,10 +82,13 @@ export default function WelcomeScreen() {
   const { theme } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
+  const [showAllProjects, setShowAllProjects] = React.useState(false);
 
   const toggleSection = (section: MenuSection) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
+
+  const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
 
   return (
     <ScrollView
@@ -177,7 +188,7 @@ export default function WelcomeScreen() {
 
                     {item.id === "work" ? (
                       <View style={styles.listContent}>
-                        {caseStudies.map((study, i) => (
+                        {displayedCaseStudies.map((study, i) => (
                           <View key={i} style={styles.workItem}>
                             <View style={styles.workInfo}>
                               <ThemedText type="small" style={{ fontWeight: "500" }}>{study.title}</ThemedText>
@@ -189,11 +200,11 @@ export default function WelcomeScreen() {
                           </View>
                         ))}
                         <Pressable 
-                          onPress={() => navigation.navigate("Register")}
+                          onPress={() => setShowAllProjects(!showAllProjects)}
                           style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
                         >
                           <ThemedText type="caption" style={{ color: theme.link, textAlign: "center", marginTop: Spacing.sm, textDecorationLine: "underline" }}>
-                            +8 more projects →
+                            {showAllProjects ? "Show less" : "+8 more projects →"}
                           </ThemedText>
                         </Pressable>
                       </View>
