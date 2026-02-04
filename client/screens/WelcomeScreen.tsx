@@ -175,9 +175,9 @@ const additionalCaseStudies = [
 ];
 
 const pricingTiers = [
-  { name: "Starter", price: "$99", description: "Idea presentation & validation", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
-  { name: "Prototype", price: "$299", popular: true, description: "Prototype MVP with design & development", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
-  { name: "Production", price: "$999 - $3.5k", description: "Thoroughly thought app & product", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
+  { name: "Starter", price: "$129", description: "Idea presentation & validation (2-3 days)", features: ["Concept exploration", "Initial wireframes", "Strategy consultation"], badge: "AI + Figma" },
+  { name: "Prototype", price: "$489", popular: true, description: "Prototype MVP with design & development (3-5 days)", features: ["Full UI/UX design", "Functional prototype", "User testing ready"], badge: "AI + Figma" },
+  { name: "Production", price: "$1.5k - $5k", description: "Thoroughly thought app & product (2-3 weeks)", features: ["Complete development", "Launch-ready product", "Ongoing support"], badge: "AI + Figma" },
 ];
 
 export default function WelcomeScreen() {
@@ -438,7 +438,7 @@ export default function WelcomeScreen() {
               <View style={styles.customPackageInfo}>
                 <ThemedText type="h4">Custom Package</ThemedText>
                 <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  $5k - $75k
+                  $7.5k+ or monthly retainer
                 </ThemedText>
               </View>
               <View style={[styles.methodBadge, { backgroundColor: theme.text }]}>
@@ -448,7 +448,7 @@ export default function WelcomeScreen() {
               </View>
             </View>
             <ThemedText type="body" style={[styles.customPackageDesc, { color: theme.textSecondary }]}>
-              100% handcrafted development from ground up. No AI coding - only image generation and API integration allowed.
+              100% handcrafted development from ground up. No AI coding - only image generation and API integration allowed. Most projects: 1-6 months.
             </ThemedText>
             <View style={styles.customFeatures}>
               <View style={styles.customFeatureItem}>
