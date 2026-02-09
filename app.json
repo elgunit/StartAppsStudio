@@ -4,7 +4,7 @@
     "slug": "startappsstudio",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-dark.png",
     "scheme": "startappsstudio",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,8 +14,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#FFFFFF",
-        "foregroundImage": "./assets/images/icon.png"
+        "backgroundColor": "#1a1a2e",
+        "foregroundImage": "./assets/images/icon-dark.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
