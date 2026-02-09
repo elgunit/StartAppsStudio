@@ -71,10 +71,10 @@ const caseStudies = [
 ];
 
 const packages = [
-  { name: "Starter", price: "$459", time: "2-5 days", badge: "AI + Figma" },
-  { name: "Prototype", price: "$959", time: "5-10 days", badge: "AI + Figma", popular: true },
-  { name: "Production", price: "$1.5k-$5k", time: "3-10 weeks", badge: "AI + Figma", note: "Up to 10k users" },
-  { name: "Custom", price: "$7.5k+", time: "1-6 months", badge: "No AI", note: "10k+ users" },
+  { name: "Starter", price: "$459", credits: "450 credits", time: "2-5 days", badge: "AI + Figma" },
+  { name: "Prototype", price: "$959", credits: "1,000 credits", time: "5-10 days", badge: "AI + Figma", popular: true },
+  { name: "Production", price: "$1.5k-$5k", credits: "4,000 credits", time: "3-10 weeks", badge: "AI + Figma", note: "Up to 10k users" },
+  { name: "Custom", price: "$7.5k+", credits: "Billed internally", time: "1-6 months", badge: "No AI", note: "10k+ users" },
 ];
 
 export default function WelcomeScreen() {
@@ -218,11 +218,14 @@ export default function WelcomeScreen() {
                               <View style={styles.packageNameRow}>
                                 <ThemedText type="small" style={{ fontWeight: "600" }}>{pkg.name}</ThemedText>
                                 {pkg.popular ? (
-                                  <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
-                                    <ThemedText type="caption" style={{ color: theme.backgroundRoot, fontSize: 9 }}>Popular</ThemedText>
+                                  <View style={[styles.popularBadge, { backgroundColor: theme.tabIconSelected }]}>
+                                    <ThemedText type="caption" style={{ color: "#FFFFFF", fontSize: 9 }}>Popular</ThemedText>
                                   </View>
                                 ) : null}
                               </View>
+                              <ThemedText type="caption" style={{ color: theme.tabIconSelected, fontWeight: "500" }}>
+                                {pkg.credits}
+                              </ThemedText>
                               <ThemedText type="caption" style={{ color: theme.textSecondary }}>
                                 {pkg.time}{pkg.note ? ` · ${pkg.note}` : ""}
                               </ThemedText>
