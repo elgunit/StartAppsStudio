@@ -38,8 +38,6 @@ export default function CreditsScreen() {
 
   const purchaseMutation = useMutation({
     mutationFn: async (packageData: CreditPackage) => {
-      // In a real app, this would go through Stripe
-      // For now, we'll simulate a purchase
       const res = await apiRequest("POST", "/api/credits/add", {
         userId: user?.id,
         amount: packageData.credits,
@@ -55,63 +53,122 @@ export default function CreditsScreen() {
   });
 
   const formatPrice = (cents: number) => {
+    if (cents >= 100000) {
+      const k = cents / 100 / 1000;
+      return `$${k % 1 === 0 ? k.toFixed(0) : k.toFixed(1)}k`;
+    }
     return `$${(cents / 100).toFixed(0)}`;
   };
 
-  const renderPackage = ({ item, index }: { item: CreditPackage; index: number }) => (
-    <Animated.View entering={FadeInDown.delay(100 + index * 50).duration(400)}>
-      <Card
-        style={[
-          styles.packageCard,
-          item.isPopular && { borderColor: theme.text, borderWidth: 2 },
-        ]}
-      >
-        {item.isPopular ? (
-          <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
-            <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
-              Most Popular
+  const isCustomPackage = (item: CreditPackage) => item.name === "Custom";
+
+  const getDeliveryTime = (name: string) => {
+    switch (name) {
+      case "Starter": return "2-5 days";
+      case "Prototype": return "5-10 days";
+      case "Production": return "3-10 weeks";
+      case "Custom": return "1-6 months";
+      default: return "";
+    }
+  };
+
+  const getMethodBadge = (name: string) => {
+    return name === "Custom" ? "No AI" : "AI + Figma";
+  };
+
+  const renderPackage = ({ item, index }: { item: CreditPackage; index: number }) => {
+    const custom = isCustomPackage(item);
+
+    return (
+      <Animated.View entering={FadeInDown.delay(100 + index * 50).duration(400)}>
+        <Card
+          style={[
+            styles.packageCard,
+            item.isPopular && { borderColor: theme.tabIconSelected, borderWidth: 2 },
+          ]}
+        >
+          {item.isPopular ? (
+            <View style={[styles.popularBadge, { backgroundColor: theme.tabIconSelected }]}>
+              <ThemedText type="caption" style={{ color: "#FFFFFF" }}>
+                Most Popular
+              </ThemedText>
+            </View>
+          ) : null}
+
+          <View style={styles.packageHeader}>
+            <ThemedText type="h3">{item.name}</ThemedText>
+            <View style={[styles.methodBadge, { backgroundColor: custom ? theme.text : theme.success + "20" }]}>
+              <ThemedText type="caption" style={{ color: custom ? theme.backgroundRoot : theme.success, fontSize: 10 }}>
+                {getMethodBadge(item.name)}
+              </ThemedText>
+            </View>
+          </View>
+          
+          <View style={styles.priceRow}>
+            <ThemedText type="display">
+              {custom ? "$7.5k+" : formatPrice(item.priceInCents)}
             </ThemedText>
           </View>
-        ) : null}
 
-        <ThemedText type="h3">{item.name}</ThemedText>
-        
-        <View style={styles.priceRow}>
-          <ThemedText type="display">{formatPrice(item.priceInCents)}</ThemedText>
-          <ThemedText type="body" style={{ color: theme.textSecondary }}>
-            {" "}/ {item.credits} credits
-          </ThemedText>
-        </View>
+          <View style={styles.creditsRow}>
+            <Feather name="zap" size={14} color={theme.tabIconSelected} />
+            <ThemedText type="body" style={{ color: theme.text, fontWeight: "600" }}>
+              {custom ? "Credits billed internally" : `${item.credits.toLocaleString()} credits`}
+            </ThemedText>
+          </View>
 
-        {item.description ? (
-          <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
-            {item.description}
-          </ThemedText>
-        ) : null}
+          {item.description ? (
+            <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
+              {item.description}
+            </ThemedText>
+          ) : null}
 
-        <View style={styles.valueRow}>
-          <Feather name="check" size={16} color={theme.success} />
-          <ThemedText type="small" style={{ color: theme.textSecondary }}>
-            ${(item.priceInCents / 100 / item.credits).toFixed(2)} per credit
-          </ThemedText>
-        </View>
+          <View style={styles.detailsRow}>
+            <View style={styles.detailItem}>
+              <Feather name="clock" size={14} color={theme.textSecondary} />
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                {getDeliveryTime(item.name)}
+              </ThemedText>
+            </View>
+            {!custom ? (
+              <View style={styles.detailItem}>
+                <Feather name="check" size={14} color={theme.success} />
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  ${(item.priceInCents / 100 / item.credits).toFixed(2)}/credit
+                </ThemedText>
+              </View>
+            ) : (
+              <View style={styles.detailItem}>
+                <Feather name="check" size={14} color={theme.success} />
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  10k+ users
+                </ThemedText>
+              </View>
+            )}
+          </View>
 
-        <Button
-          onPress={() => purchaseMutation.mutate(item)}
-          loading={purchaseMutation.isPending}
-          variant={item.isPopular ? "primary" : "outline"}
-          style={styles.purchaseButton}
-          testID={`button-purchase-${item.id}`}
-        >
-          Purchase
-        </Button>
-      </Card>
-    </Animated.View>
-  );
+          <Button
+            onPress={() => {
+              if (custom) {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              } else {
+                purchaseMutation.mutate(item);
+              }
+            }}
+            loading={!custom && purchaseMutation.isPending}
+            variant={item.isPopular ? "primary" : "outline"}
+            style={styles.purchaseButton}
+            testID={`button-purchase-${item.id}`}
+          >
+            {custom ? "Contact Us" : "Purchase"}
+          </Button>
+        </Card>
+      </Animated.View>
+    );
+  };
 
   const renderHeader = () => (
     <Animated.View entering={FadeInDown.duration(500)}>
-      {/* Current Balance */}
       <Card style={styles.balanceCard}>
         <View style={styles.balanceContent}>
           <View>
@@ -123,8 +180,8 @@ export default function CreditsScreen() {
               credits available
             </ThemedText>
           </View>
-          <View style={[styles.creditIcon, { backgroundColor: theme.backgroundDefault }]}>
-            <Feather name="zap" size={32} color={theme.text} />
+          <View style={[styles.creditIcon, { backgroundColor: theme.tabIconSelected + "15" }]}>
+            <Feather name="zap" size={32} color={theme.tabIconSelected} />
           </View>
         </View>
       </Card>
@@ -185,20 +242,38 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xs,
     borderRadius: BorderRadius.full,
   },
-  priceRow: {
+  packageHeader: {
     flexDirection: "row",
-    alignItems: "baseline",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  methodBadge: {
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+  },
+  priceRow: {
     marginTop: Spacing.sm,
+  },
+  creditsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    marginTop: Spacing.xs,
     marginBottom: Spacing.sm,
   },
   description: {
     marginBottom: Spacing.md,
   },
-  valueRow: {
+  detailsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: Spacing.lg,
+  },
+  detailItem: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.xs,
-    marginBottom: Spacing.lg,
   },
   purchaseButton: {},
 });

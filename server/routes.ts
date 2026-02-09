@@ -377,24 +377,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create default packages if none exist
       if (packages.length === 0) {
         await storage.createCreditPackage({
-          name: "Starter Pack",
-          credits: 50,
-          priceInCents: 9900,
-          description: "Perfect for small projects and prototypes",
+          name: "Starter",
+          credits: 450,
+          priceInCents: 45900,
+          description: "Quick validation with concept exploration, initial wireframes and strategy consultation. Delivered in 2-5 days.",
           isPopular: false,
         });
         await storage.createCreditPackage({
-          name: "Growth Suite",
-          credits: 150,
-          priceInCents: 24900,
-          description: "Best value for growing startups",
+          name: "Prototype",
+          credits: 1000,
+          priceInCents: 95900,
+          description: "Investor-ready with full UI/UX design, functional prototype and user testing. Delivered in 5-10 days.",
           isPopular: true,
         });
         await storage.createCreditPackage({
-          name: "Enterprise Package",
-          credits: 500,
-          priceInCents: 69900,
-          description: "For large-scale MVPs and ongoing projects",
+          name: "Production",
+          credits: 4000,
+          priceInCents: 150000,
+          description: "Launch-ready MVP with complete development, ongoing support. Scales up to 10k users. Delivered in 3-10 weeks.",
+          isPopular: false,
+        });
+        await storage.createCreditPackage({
+          name: "Custom",
+          credits: 0,
+          priceInCents: 750000,
+          description: "100% handcrafted development for 10k+ users. Credits billed internally. 1-6 months delivery.",
           isPopular: false,
         });
         packages = await storage.getCreditPackages();
