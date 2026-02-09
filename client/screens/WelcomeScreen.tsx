@@ -74,7 +74,7 @@ const packages = [
   { name: "Starter", price: "$459", time: "2-5 days", badge: "AI + Figma" },
   { name: "Prototype", price: "$959", time: "5-10 days", badge: "AI + Figma", popular: true },
   { name: "Production", price: "$1.5k-$5k", time: "3-10 weeks", badge: "AI + Figma", note: "< 1k users" },
-  { name: "Custom", price: "$7.5k+", time: "1-6 months", badge: "No AI", note: "10+ users" },
+  { name: "Custom", price: "$7.5k+", time: "1-6 months", badge: "No AI", note: "10k+ users" },
 ];
 
 export default function WelcomeScreen() {
