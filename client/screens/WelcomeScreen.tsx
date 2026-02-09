@@ -79,7 +79,7 @@ const packages = [
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
   const [showAllProjects, setShowAllProjects] = React.useState(false);
@@ -102,8 +102,8 @@ export default function WelcomeScreen() {
       {/* Hero Section */}
       <Animated.View entering={FadeInDown.delay(100).duration(500)} style={styles.heroSection}>
         <Image
-          source={require("../../assets/images/icon.png")}
-          style={styles.logo}
+          source={isDark ? require("../../assets/images/icon-dark.png") : require("../../assets/images/icon.png")}
+          style={[styles.logo, { borderRadius: 16 }]}
           resizeMode="contain"
         />
         <ThemedText type="display" style={styles.heroTitle}>
