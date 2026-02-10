@@ -60,6 +60,9 @@ export interface IStorage {
   addCreditsToUser(userId: string, amount: number, description: string): Promise<void>;
   useCredits(userId: string, amount: number, description: string): Promise<boolean>;
 
+  // Clients
+  getClientUsers(): Promise<User[]>;
+
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
@@ -313,6 +316,11 @@ export class DatabaseStorage implements IStorage {
     });
 
     return true;
+  }
+
+  // Clients
+  async getClientUsers(): Promise<User[]> {
+    return db.select().from(users).where(eq(users.role, "client"));
   }
 
   // Contact Submissions

@@ -24,6 +24,13 @@ type RootStackParamList = {
   WorkSession: { projectId?: string };
 };
 
+interface ClientUser {
+  id: string;
+  name: string;
+  email: string;
+  credits: number;
+}
+
 export default function WorkSessionScreen() {
   const route = useRoute<RouteProp<RootStackParamList, "WorkSession">>();
   const headerHeight = useHeaderHeight();
@@ -37,6 +44,9 @@ export default function WorkSessionScreen() {
 
   const [elapsedTime, setElapsedTime] = useState(0);
   const [notes, setNotes] = useState("");
+  const [deductCredits, setDeductCredits] = useState("");
+  const [deductDescription, setDeductDescription] = useState("");
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const { data: activeSession, refetch: refetchSession } = useQuery({
@@ -47,18 +57,26 @@ export default function WorkSessionScreen() {
     queryKey: ["/api/projects"],
   });
 
-  // Find the project for the active session
+  const { data: clients = [] } = useQuery<ClientUser[]>({
+    queryKey: ["/api/clients"],
+  });
+
   const activeProject = activeSession
     ? projects.find((p) => p.id === activeSession.projectId)
     : projectIdParam
     ? projects.find((p) => p.id === projectIdParam)
     : null;
 
-  // Timer effect
+  useEffect(() => {
+    if (activeProject?.clientId && !selectedClientId) {
+      setSelectedClientId(activeProject.clientId);
+    }
+  }, [activeProject]);
+
   useEffect(() => {
     if (activeSession?.isActive && activeSession.startTime) {
       const startTime = new Date(activeSession.startTime).getTime();
-      
+
       const updateTimer = () => {
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
         setElapsedTime(elapsed);
@@ -133,6 +151,24 @@ export default function WorkSessionScreen() {
     },
   });
 
+  const deductCreditsMutation = useMutation({
+    mutationFn: async (data: { userId: string; amount: number; description: string }) => {
+      const res = await apiRequest("POST", "/api/credits/deduct", data);
+      return res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/clients"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
+      setDeductCredits("");
+      setDeductDescription("");
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      Alert.alert("Credits Deducted", `Client now has ${data.credits} credits remaining.`);
+    },
+    onError: (error: any) => {
+      Alert.alert("Error", error.message || "Failed to deduct credits");
+    },
+  });
+
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600);
     const mins = Math.floor((seconds % 3600) / 60);
@@ -173,7 +209,48 @@ export default function WorkSessionScreen() {
     });
   };
 
+  const handleDeductCredits = () => {
+    const amount = parseInt(deductCredits, 10);
+    const clientId = selectedClientId || activeProject?.clientId;
+
+    if (!clientId) {
+      Alert.alert("Error", "No client selected");
+      return;
+    }
+    if (!amount || amount <= 0) {
+      Alert.alert("Error", "Please enter a valid credit amount");
+      return;
+    }
+    if (!deductDescription.trim()) {
+      Alert.alert("Error", "Please add a description for this deduction");
+      return;
+    }
+
+    const client = clients.find((c) => c.id === clientId);
+    Alert.alert(
+      "Deduct Credits",
+      `Deduct ${amount} credits from ${client?.name || "client"} for:\n"${deductDescription}"`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Deduct",
+          onPress: () => {
+            deductCreditsMutation.mutate({
+              userId: clientId,
+              amount,
+              description: deductDescription,
+            });
+          },
+        },
+      ]
+    );
+  };
+
   const isSessionActive = activeSession?.isActive;
+
+  const currentClient = clients.find(
+    (c) => c.id === (selectedClientId || activeProject?.clientId)
+  );
 
   return (
     <KeyboardAwareScrollViewCompat
@@ -304,6 +381,102 @@ export default function WorkSessionScreen() {
           </View>
         )}
       </Animated.View>
+
+      {/* Credit Management Section */}
+      <Animated.View entering={FadeInDown.delay(200).duration(500)}>
+        <View style={styles.creditManagementDivider}>
+          <View style={[styles.dividerLine, { backgroundColor: theme.border }]} />
+          <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+            CREDIT MANAGEMENT
+          </ThemedText>
+          <View style={[styles.dividerLine, { backgroundColor: theme.border }]} />
+        </View>
+
+        <Card style={styles.creditCard}>
+          {/* Client selector - show list of clients */}
+          {clients.length > 0 ? (
+            <View style={styles.clientSelector}>
+              <ThemedText type="small" style={styles.label}>
+                Client
+              </ThemedText>
+              <View style={styles.clientList}>
+                {clients.map((client) => (
+                  <View
+                    key={client.id}
+                    style={[
+                      styles.clientChip,
+                      {
+                        backgroundColor:
+                          (selectedClientId || activeProject?.clientId) === client.id
+                            ? theme.text
+                            : theme.backgroundDefault,
+                        borderColor: theme.border,
+                      },
+                    ]}
+                  >
+                    <ThemedText
+                      type="caption"
+                      style={{
+                        color:
+                          (selectedClientId || activeProject?.clientId) === client.id
+                            ? theme.backgroundRoot
+                            : theme.text,
+                        fontWeight: "500",
+                      }}
+                      onPress={() => setSelectedClientId(client.id)}
+                    >
+                      {client.name} ({client.credits} cr)
+                    </ThemedText>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
+
+          {currentClient ? (
+            <View style={[styles.clientBalance, { backgroundColor: theme.backgroundDefault }]}>
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                {currentClient.name}'s balance
+              </ThemedText>
+              <ThemedText type="h3">{currentClient.credits} credits</ThemedText>
+            </View>
+          ) : null}
+
+          <View style={styles.deductSection}>
+            <ThemedText type="small" style={styles.label}>
+              Credits to deduct
+            </ThemedText>
+            <Input
+              placeholder="e.g. 25"
+              value={deductCredits}
+              onChangeText={setDeductCredits}
+              keyboardType="numeric"
+              testID="input-deduct-credits"
+            />
+          </View>
+
+          <View style={styles.deductSection}>
+            <ThemedText type="small" style={styles.label}>
+              Work description
+            </ThemedText>
+            <Input
+              placeholder="e.g. Homepage design review & iterations"
+              value={deductDescription}
+              onChangeText={setDeductDescription}
+              testID="input-deduct-description"
+            />
+          </View>
+
+          <Button
+            onPress={handleDeductCredits}
+            loading={deductCreditsMutation.isPending}
+            variant="primary"
+            testID="button-deduct-credits"
+          >
+            Deduct Credits
+          </Button>
+        </Card>
+      </Animated.View>
     </KeyboardAwareScrollViewCompat>
   );
 }
@@ -383,5 +556,41 @@ const styles = StyleSheet.create({
   },
   noProjectText: {
     textAlign: "center",
+  },
+  creditManagementDivider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    marginTop: Spacing["2xl"],
+    marginBottom: Spacing.lg,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+  },
+  creditCard: {
+    marginBottom: Spacing.lg,
+  },
+  clientSelector: {
+    marginBottom: Spacing.md,
+  },
+  clientList: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  clientChip: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.full,
+    borderWidth: 1,
+  },
+  clientBalance: {
+    padding: Spacing.md,
+    borderRadius: BorderRadius.md,
+    marginBottom: Spacing.md,
+  },
+  deductSection: {
+    marginBottom: Spacing.md,
   },
 });

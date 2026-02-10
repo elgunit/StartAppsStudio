@@ -218,12 +218,12 @@ export default function WelcomeScreen() {
                               <View style={styles.packageNameRow}>
                                 <ThemedText type="small" style={{ fontWeight: "600" }}>{pkg.name}</ThemedText>
                                 {pkg.popular ? (
-                                  <View style={[styles.popularBadge, { backgroundColor: theme.tabIconSelected }]}>
-                                    <ThemedText type="caption" style={{ color: "#FFFFFF", fontSize: 9 }}>Popular</ThemedText>
+                                  <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
+                                    <ThemedText type="caption" style={{ color: theme.backgroundRoot, fontSize: 9 }}>Popular</ThemedText>
                                   </View>
                                 ) : null}
                               </View>
-                              <ThemedText type="caption" style={{ color: theme.tabIconSelected, fontWeight: "500" }}>
+                              <ThemedText type="caption" style={{ color: theme.info, fontWeight: "500" }}>
                                 {pkg.credits}
                               </ThemedText>
                               <ThemedText type="caption" style={{ color: theme.textSecondary }}>

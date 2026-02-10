@@ -434,6 +434,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/credits/deduct", async (req, res) => {
+    try {
+      const { userId, amount, description } = req.body;
+      if (!userId || !amount || amount <= 0) {
+        return res.status(400).json({ error: "Valid userId and positive amount required" });
+      }
+      const success = await storage.useCredits(userId, amount, description || "Work session deduction");
+      if (!success) {
+        return res.status(400).json({ error: "Insufficient credits" });
+      }
+      const user = await storage.getUser(userId);
+      res.json({ credits: user?.credits || 0 });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to deduct credits" });
+    }
+  });
+
+  app.get("/api/clients", async (req, res) => {
+    try {
+      const clients = await storage.getClientUsers();
+      res.json(clients.map((c: any) => ({ ...c, password: undefined })));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get clients" });
+    }
+  });
+
   // Initialize designer account if not exists
   app.post("/api/init-designer", async (req, res) => {
     try {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, SectionList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -7,6 +7,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { formatDistanceToNow } from "date-fns";
 
 import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
@@ -25,6 +26,15 @@ interface CreditPackage {
   isPopular: boolean;
 }
 
+interface CreditTransaction {
+  id: string;
+  userId: string;
+  amount: number;
+  type: string;
+  description: string | null;
+  createdAt: string;
+}
+
 export default function CreditsScreen() {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
@@ -35,6 +45,18 @@ export default function CreditsScreen() {
   const { data: packages = [] } = useQuery<CreditPackage[]>({
     queryKey: ["/api/credit-packages"],
   });
+
+  const { data: transactions = [] } = useQuery<CreditTransaction[]>({
+    queryKey: ["/api/credit-transactions", user?.id],
+    enabled: !!user?.id,
+    queryFn: async () => {
+      const res = await fetch(`${require("@/lib/query-client").getApiUrl()}/api/credit-transactions/${user!.id}`);
+      if (!res.ok) throw new Error("Failed to fetch transactions");
+      return res.json();
+    },
+  });
+
+  const hasPurchasedPlan = transactions.some((t) => t.type === "purchase" && t.amount > 0);
 
   const purchaseMutation = useMutation({
     mutationFn: async (packageData: CreditPackage) => {
@@ -48,6 +70,23 @@ export default function CreditsScreen() {
     onSuccess: () => {
       refreshUser();
       queryClient.invalidateQueries({ queryKey: ["/api/credit-packages"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    },
+  });
+
+  const purchaseAdditionalMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/credits/add", {
+        userId: user?.id,
+        amount: 400,
+        description: "Additional Credits (400)",
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      refreshUser();
+      queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     },
   });
@@ -76,134 +115,252 @@ export default function CreditsScreen() {
     return name === "Custom" ? "No AI" : "AI + Figma";
   };
 
-  const renderPackage = ({ item, index }: { item: CreditPackage; index: number }) => {
-    const custom = isCustomPackage(item);
+  const sections = [
+    { title: "balance", data: ["balance"] as const },
+    ...(hasPurchasedPlan
+      ? [{ title: "additional", data: ["additional"] as const }]
+      : [{ title: "packages", data: packages }]),
+    ...(transactions.length > 0
+      ? [{ title: "history", data: transactions }]
+      : []),
+  ];
 
-    return (
-      <Animated.View entering={FadeInDown.delay(100 + index * 50).duration(400)}>
-        <Card
-          style={[
-            styles.packageCard,
-            item.isPopular && { borderColor: theme.tabIconSelected, borderWidth: 2 },
-          ]}
-        >
-          {item.isPopular ? (
-            <View style={[styles.popularBadge, { backgroundColor: theme.tabIconSelected }]}>
-              <ThemedText type="caption" style={{ color: "#FFFFFF" }}>
-                Most Popular
-              </ThemedText>
-            </View>
-          ) : null}
-
-          <View style={styles.packageHeader}>
-            <ThemedText type="h3">{item.name}</ThemedText>
-            <View style={[styles.methodBadge, { backgroundColor: custom ? theme.text : theme.success + "20" }]}>
-              <ThemedText type="caption" style={{ color: custom ? theme.backgroundRoot : theme.success, fontSize: 10 }}>
-                {getMethodBadge(item.name)}
-              </ThemedText>
-            </View>
-          </View>
-          
-          <View style={styles.priceRow}>
-            <ThemedText type="display">
-              {custom ? "$7.5k+" : formatPrice(item.priceInCents)}
-            </ThemedText>
-          </View>
-
-          <View style={styles.creditsRow}>
-            <Feather name="zap" size={14} color={theme.tabIconSelected} />
-            <ThemedText type="body" style={{ color: theme.text, fontWeight: "600" }}>
-              {custom ? "Credits billed internally" : `${item.credits.toLocaleString()} credits`}
-            </ThemedText>
-          </View>
-
-          {item.description ? (
-            <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
-              {item.description}
-            </ThemedText>
-          ) : null}
-
-          <View style={styles.detailsRow}>
-            <View style={styles.detailItem}>
-              <Feather name="clock" size={14} color={theme.textSecondary} />
-              <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                {getDeliveryTime(item.name)}
-              </ThemedText>
-            </View>
-            {!custom ? (
-              <View style={styles.detailItem}>
-                <Feather name="check" size={14} color={theme.success} />
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  ${(item.priceInCents / 100 / item.credits).toFixed(2)}/credit
-                </ThemedText>
-              </View>
-            ) : (
-              <View style={styles.detailItem}>
-                <Feather name="check" size={14} color={theme.success} />
-                <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                  10k+ users
-                </ThemedText>
-              </View>
-            )}
-          </View>
-
-          <Button
-            onPress={() => {
-              if (custom) {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-              } else {
-                purchaseMutation.mutate(item);
-              }
-            }}
-            loading={!custom && purchaseMutation.isPending}
-            variant={item.isPopular ? "primary" : "outline"}
-            style={styles.purchaseButton}
-            testID={`button-purchase-${item.id}`}
-          >
-            {custom ? "Contact Us" : "Purchase"}
-          </Button>
-        </Card>
-      </Animated.View>
-    );
+  const renderSectionHeader = ({ section }: any) => {
+    if (section.title === "balance") return null;
+    if (section.title === "additional") {
+      return (
+        <ThemedText type="h3" style={styles.sectionTitle}>
+          Need More Credits?
+        </ThemedText>
+      );
+    }
+    if (section.title === "packages") {
+      return (
+        <ThemedText type="h3" style={styles.sectionTitle}>
+          Choose a Package
+        </ThemedText>
+      );
+    }
+    if (section.title === "history") {
+      return (
+        <ThemedText type="h3" style={styles.sectionTitle}>
+          Activity
+        </ThemedText>
+      );
+    }
+    return null;
   };
 
-  const renderHeader = () => (
-    <Animated.View entering={FadeInDown.duration(500)}>
-      <Card style={styles.balanceCard}>
-        <View style={styles.balanceContent}>
-          <View>
-            <ThemedText type="small" style={{ color: theme.textSecondary }}>
-              Current Balance
-            </ThemedText>
-            <ThemedText type="display">{user?.credits || 0}</ThemedText>
-            <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-              credits available
-            </ThemedText>
-          </View>
-          <View style={[styles.creditIcon, { backgroundColor: theme.tabIconSelected + "15" }]}>
-            <Feather name="zap" size={32} color={theme.tabIconSelected} />
-          </View>
-        </View>
-      </Card>
+  const renderItem = ({ item, section, index }: any) => {
+    if (section.title === "balance") {
+      return (
+        <Animated.View entering={FadeInDown.duration(500)}>
+          <Card style={styles.balanceCard}>
+            <View style={styles.balanceContent}>
+              <View>
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  Current Balance
+                </ThemedText>
+                <ThemedText type="display">{user?.credits || 0}</ThemedText>
+                <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+                  credits available
+                </ThemedText>
+              </View>
+              <View style={[styles.creditIcon, { backgroundColor: theme.backgroundDefault }]}>
+                <Feather name="zap" size={32} color={theme.text} />
+              </View>
+            </View>
+          </Card>
+        </Animated.View>
+      );
+    }
 
-      <ThemedText type="h3" style={styles.sectionTitle}>
-        Choose a Package
-      </ThemedText>
-    </Animated.View>
-  );
+    if (section.title === "additional") {
+      return (
+        <Animated.View entering={FadeInDown.delay(50).duration(400)}>
+          <Card style={styles.packageCard}>
+            <View style={styles.packageHeader}>
+              <ThemedText type="h3">Additional Credits</ThemedText>
+              <View style={[styles.methodBadge, { backgroundColor: theme.success + "20" }]}>
+                <ThemedText type="caption" style={{ color: theme.success, fontSize: 10 }}>
+                  Top-up
+                </ThemedText>
+              </View>
+            </View>
+            <View style={styles.priceRow}>
+              <ThemedText type="display">$99</ThemedText>
+            </View>
+            <View style={styles.creditsRow}>
+              <Feather name="zap" size={14} color={theme.text} />
+              <ThemedText type="body" style={{ color: theme.text, fontWeight: "600" }}>
+                400 credits
+              </ThemedText>
+            </View>
+            <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
+              Top up your balance with additional credits anytime. Perfect for extending your current project scope.
+            </ThemedText>
+            <View style={styles.detailsRow}>
+              <View style={styles.detailItem}>
+                <Feather name="check" size={14} color={theme.success} />
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  $0.25/credit
+                </ThemedText>
+              </View>
+              <View style={styles.detailItem}>
+                <Feather name="check" size={14} color={theme.success} />
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  Instant delivery
+                </ThemedText>
+              </View>
+            </View>
+            <Button
+              onPress={() => purchaseAdditionalMutation.mutate()}
+              loading={purchaseAdditionalMutation.isPending}
+              variant="outline"
+              style={styles.purchaseButton}
+              testID="button-purchase-additional"
+            >
+              Purchase
+            </Button>
+          </Card>
+        </Animated.View>
+      );
+    }
+
+    if (section.title === "packages") {
+      const pkg = item as CreditPackage;
+      const custom = isCustomPackage(pkg);
+
+      return (
+        <Animated.View entering={FadeInDown.delay(100 + index * 50).duration(400)}>
+          <Card
+            style={[
+              styles.packageCard,
+              pkg.isPopular && { borderColor: theme.text, borderWidth: 2 },
+            ]}
+          >
+            {pkg.isPopular ? (
+              <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
+                <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
+                  Most Popular
+                </ThemedText>
+              </View>
+            ) : null}
+
+            <View style={styles.packageHeader}>
+              <ThemedText type="h3">{pkg.name}</ThemedText>
+              <View style={[styles.methodBadge, { backgroundColor: custom ? theme.text : theme.success + "20" }]}>
+                <ThemedText type="caption" style={{ color: custom ? theme.backgroundRoot : theme.success, fontSize: 10 }}>
+                  {getMethodBadge(pkg.name)}
+                </ThemedText>
+              </View>
+            </View>
+
+            <View style={styles.priceRow}>
+              <ThemedText type="display">
+                {custom ? "$7.5k+" : formatPrice(pkg.priceInCents)}
+              </ThemedText>
+            </View>
+
+            <View style={styles.creditsRow}>
+              <Feather name="zap" size={14} color={theme.text} />
+              <ThemedText type="body" style={{ color: theme.text, fontWeight: "600" }}>
+                {custom ? "Credits billed internally" : `${pkg.credits.toLocaleString()} credits`}
+              </ThemedText>
+            </View>
+
+            {pkg.description ? (
+              <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
+                {pkg.description}
+              </ThemedText>
+            ) : null}
+
+            <View style={styles.detailsRow}>
+              <View style={styles.detailItem}>
+                <Feather name="clock" size={14} color={theme.textSecondary} />
+                <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                  {getDeliveryTime(pkg.name)}
+                </ThemedText>
+              </View>
+              {!custom ? (
+                <View style={styles.detailItem}>
+                  <Feather name="check" size={14} color={theme.success} />
+                  <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                    ${(pkg.priceInCents / 100 / pkg.credits).toFixed(2)}/credit
+                  </ThemedText>
+                </View>
+              ) : (
+                <View style={styles.detailItem}>
+                  <Feather name="check" size={14} color={theme.success} />
+                  <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                    10k+ users
+                  </ThemedText>
+                </View>
+              )}
+            </View>
+
+            <Button
+              onPress={() => {
+                if (custom) {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                } else {
+                  purchaseMutation.mutate(pkg);
+                }
+              }}
+              loading={!custom && purchaseMutation.isPending}
+              variant={pkg.isPopular ? "primary" : "outline"}
+              style={styles.purchaseButton}
+              testID={`button-purchase-${pkg.id}`}
+            >
+              {custom ? "Contact Us" : "Purchase"}
+            </Button>
+          </Card>
+        </Animated.View>
+      );
+    }
+
+    if (section.title === "history") {
+      const tx = item as CreditTransaction;
+      const isDeduction = tx.amount < 0;
+      const icon = isDeduction ? "minus-circle" : "plus-circle";
+      const color = isDeduction ? theme.error : theme.success;
+
+      return (
+        <View style={[styles.transactionItem, { borderBottomColor: theme.border }]} testID={`transaction-${tx.id}`}>
+          <View style={styles.transactionIcon}>
+            <Feather name={icon} size={20} color={color} />
+          </View>
+          <View style={styles.transactionInfo}>
+            <ThemedText type="small" style={{ fontWeight: "500" }}>
+              {tx.description || (isDeduction ? "Credit used" : "Credits added")}
+            </ThemedText>
+            <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+              {formatDistanceToNow(new Date(tx.createdAt), { addSuffix: true })}
+            </ThemedText>
+          </View>
+          <ThemedText type="body" style={{ color, fontWeight: "600" }}>
+            {isDeduction ? "" : "+"}{tx.amount}
+          </ThemedText>
+        </View>
+      );
+    }
+
+    return null;
+  };
 
   return (
-    <FlatList
+    <SectionList
       style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
       contentContainerStyle={{
         paddingTop: headerHeight + Spacing.xl,
         paddingBottom: insets.bottom + Spacing["4xl"],
         paddingHorizontal: Spacing.lg,
       }}
-      data={packages}
-      keyExtractor={(item) => item.id}
-      renderItem={renderPackage}
-      ListHeaderComponent={renderHeader}
+      sections={sections}
+      keyExtractor={(item: any, index) => item?.id || `section-${index}`}
+      renderItem={renderItem}
+      renderSectionHeader={renderSectionHeader}
+      stickySectionHeadersEnabled={false}
     />
   );
 }
@@ -229,6 +386,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginBottom: Spacing.lg,
+    marginTop: Spacing.sm,
   },
   packageCard: {
     marginBottom: Spacing.md,
@@ -276,4 +434,18 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   purchaseButton: {},
+  transactionItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    gap: Spacing.md,
+  },
+  transactionIcon: {
+    width: 32,
+    alignItems: "center",
+  },
+  transactionInfo: {
+    flex: 1,
+  },
 });
