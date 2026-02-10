@@ -45,6 +45,7 @@ export const projects = pgTable("projects", {
   status: projectStatusEnum("status").notNull().default("brief_submitted"),
   currentHat: hatTypeEnum("current_hat"),
   previewUrl: text("preview_url"),
+  planTier: text("plan_tier"),
   estimatedCredits: integer("estimated_credits").notNull().default(0),
   usedCredits: integer("used_credits").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -105,6 +106,7 @@ export const creditPackages = pgTable("credit_packages", {
 export const creditTransactions = pgTable("credit_transactions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").notNull().references(() => users.id),
+  projectId: varchar("project_id").references(() => projects.id),
   amount: integer("amount").notNull(),
   type: text("type").notNull(), // 'purchase' | 'usage' | 'refund'
   description: text("description"),
