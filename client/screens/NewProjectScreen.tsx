@@ -125,6 +125,12 @@ function PlanCard({
 
   const maxCredits = Math.max(...plan.roles.map((r) => r.credits));
 
+  const selectedBg = isDark ? "#1C1C1E" : "#000000";
+  const selectedBorder = isDark ? "#3A3A3C" : "#000000";
+  const selectedText = "#FFFFFF";
+  const selectedSubtle = isDark ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.85)";
+  const selectedMuted = isDark ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.6)";
+
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
@@ -142,14 +148,14 @@ function PlanCard({
             styles.planCard,
             {
               backgroundColor: selected
-                ? theme.text
+                ? selectedBg
                 : theme.backgroundDefault,
               borderColor: selected
-                ? theme.text
+                ? selectedBorder
                 : plan.highlight
                   ? isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)"
                   : theme.border,
-              borderWidth: plan.highlight && !selected ? 1.5 : 1,
+              borderWidth: selected ? 2 : plan.highlight && !selected ? 1.5 : 1,
             },
           ]}
         >
@@ -159,7 +165,7 @@ function PlanCard({
                 styles.popularBadge,
                 {
                   backgroundColor: selected
-                    ? "rgba(255,255,255,0.2)"
+                    ? "rgba(255,255,255,0.15)"
                     : isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
                 },
               ]}
@@ -169,7 +175,7 @@ function PlanCard({
                 style={{
                   fontWeight: "700",
                   fontSize: 10,
-                  color: selected ? "#FFFFFF" : theme.textSecondary,
+                  color: selected ? selectedText : theme.textSecondary,
                   textTransform: "uppercase",
                   letterSpacing: 1,
                 }}
@@ -186,7 +192,7 @@ function PlanCard({
                   styles.planIconWrap,
                   {
                     backgroundColor: selected
-                      ? "rgba(255,255,255,0.15)"
+                      ? "rgba(255,255,255,0.12)"
                       : theme.backgroundSecondary,
                   },
                 ]}
@@ -194,14 +200,14 @@ function PlanCard({
                 <Feather
                   name={plan.icon}
                   size={18}
-                  color={selected ? "#FFFFFF" : theme.text}
+                  color={selected ? selectedText : theme.text}
                 />
               </View>
               <View style={{ flex: 1 }}>
                 <ThemedText
                   type="h4"
                   style={{
-                    color: selected ? "#FFFFFF" : theme.text,
+                    color: selected ? selectedText : theme.text,
                   }}
                 >
                   {plan.name}
@@ -209,9 +215,7 @@ function PlanCard({
                 <ThemedText
                   type="caption"
                   style={{
-                    color: selected
-                      ? "rgba(255,255,255,0.6)"
-                      : theme.textSecondary,
+                    color: selected ? selectedMuted : theme.textSecondary,
                     marginTop: 1,
                   }}
                 >
@@ -222,7 +226,7 @@ function PlanCard({
                 <ThemedText
                   type="h3"
                   style={{
-                    color: selected ? "#FFFFFF" : theme.text,
+                    color: selected ? selectedText : theme.text,
                   }}
                 >
                   {plan.price}
@@ -230,9 +234,7 @@ function PlanCard({
                 <ThemedText
                   type="caption"
                   style={{
-                    color: selected
-                      ? "rgba(255,255,255,0.5)"
-                      : theme.textTertiary,
+                    color: selected ? selectedMuted : theme.textTertiary,
                   }}
                 >
                   {plan.totalCredits} credits
@@ -246,7 +248,7 @@ function PlanCard({
               styles.divider,
               {
                 backgroundColor: selected
-                  ? "rgba(255,255,255,0.12)"
+                  ? "rgba(255,255,255,0.1)"
                   : theme.border,
               },
             ]}
@@ -261,18 +263,12 @@ function PlanCard({
                     <Feather
                       name={role.icon}
                       size={13}
-                      color={
-                        selected
-                          ? "rgba(255,255,255,0.7)"
-                          : theme.textSecondary
-                      }
+                      color={selected ? selectedSubtle : theme.textSecondary}
                     />
                     <ThemedText
                       type="caption"
                       style={{
-                        color: selected
-                          ? "rgba(255,255,255,0.85)"
-                          : theme.text,
+                        color: selected ? selectedSubtle : theme.text,
                         fontWeight: "500",
                       }}
                     >
@@ -296,7 +292,7 @@ function PlanCard({
                           {
                             width: `${barWidth}%`,
                             backgroundColor: selected
-                              ? "rgba(255,255,255,0.4)"
+                              ? "rgba(255,255,255,0.3)"
                               : isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)",
                           },
                         ]}
@@ -307,9 +303,7 @@ function PlanCard({
                     type="caption"
                     style={{
                       fontWeight: "600",
-                      color: selected
-                        ? "rgba(255,255,255,0.7)"
-                        : theme.textSecondary,
+                      color: selected ? selectedSubtle : theme.textSecondary,
                       width: 40,
                       textAlign: "right",
                     }}
@@ -327,23 +321,21 @@ function PlanCard({
                 styles.selectIndicator,
                 {
                   backgroundColor: selected
-                    ? "#FFFFFF"
+                    ? selectedText
                     : "transparent",
-                  borderColor: selected ? "#FFFFFF" : theme.border,
+                  borderColor: selected ? selectedText : theme.border,
                 },
               ]}
             >
               {selected ? (
-                <Feather name="check" size={14} color={theme.text} />
+                <Feather name="check" size={14} color={selectedBg} />
               ) : null}
             </View>
             <ThemedText
               type="small"
               style={{
                 fontWeight: "500",
-                color: selected
-                  ? "rgba(255,255,255,0.8)"
-                  : theme.textSecondary,
+                color: selected ? selectedSubtle : theme.textSecondary,
               }}
             >
               {selected ? "Selected" : "Select this plan"}
