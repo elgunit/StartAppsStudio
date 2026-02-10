@@ -425,12 +425,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/credits/add", async (req, res) => {
     try {
-      const { userId, amount, description } = req.body;
-      await storage.addCreditsToUser(userId, amount, description);
+      const { userId, amount, description, projectId } = req.body;
+      await storage.addCreditsToUser(userId, amount, description, projectId);
       const user = await storage.getUser(userId);
       res.json({ credits: user?.credits || 0 });
     } catch (error) {
       res.status(500).json({ error: "Failed to add credits" });
+    }
+  });
+
+  app.post("/api/credits/purchase", async (req, res) => {
+    try {
+      const { userId, projectId, packageId, tier } = req.body;
+      if (!userId || !projectId || (!packageId && !tier)) {
+        return res.status(400).json({ error: "userId, projectId, and packageId or tier are required" });
+      }
+
+      const project = await storage.getProject(projectId);
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const tierOrder = ["Starter", "Prototype", "Production", "Custom"];
+      const currentTierIndex = project.planTier ? tierOrder.indexOf(project.planTier) : -1;
+
+      let pkg: any;
+      if (packageId) {
+        pkg = await storage.getCreditPackage(packageId);
+      } else {
+        const packages = await storage.getCreditPackages();
+        pkg = packages.find((p: any) => p.name === tier);
+      }
+      if (!pkg) {
+        return res.status(404).json({ error: "Package not found" });
+      }
+
+      const newTierIndex = tierOrder.indexOf(pkg.name);
+      if (newTierIndex <= currentTierIndex) {
+        return res.status(400).json({ error: "Can only upgrade to a higher tier" });
+      }
+
+      if (pkg.name !== "Custom") {
+        await storage.addCreditsToUser(userId, pkg.credits, `Purchased ${pkg.name} for ${project.name}`, projectId);
+      }
+
+      await storage.updateProject(projectId, { planTier: pkg.name });
+
+      const user = await storage.getUser(userId);
+      res.json({ credits: user?.credits || 0, planTier: pkg.name });
+    } catch (error) {
+      console.error("Purchase error:", error);
+      res.status(500).json({ error: "Failed to purchase plan" });
     }
   });
 

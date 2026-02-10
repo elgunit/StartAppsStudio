@@ -57,7 +57,7 @@ export interface IStorage {
   // Credit Transactions
   getCreditTransactionsByUser(userId: string): Promise<CreditTransaction[]>;
   createCreditTransaction(transaction: InsertCreditTransaction): Promise<CreditTransaction>;
-  addCreditsToUser(userId: string, amount: number, description: string): Promise<void>;
+  addCreditsToUser(userId: string, amount: number, description: string, projectId?: string): Promise<void>;
   useCredits(userId: string, amount: number, description: string): Promise<boolean>;
 
   // Clients
@@ -285,7 +285,7 @@ export class DatabaseStorage implements IStorage {
     return transaction;
   }
 
-  async addCreditsToUser(userId: string, amount: number, description: string): Promise<void> {
+  async addCreditsToUser(userId: string, amount: number, description: string, projectId?: string): Promise<void> {
     await db.update(users).set({
       credits: sql`${users.credits} + ${amount}`,
       updatedAt: new Date(),
@@ -293,6 +293,7 @@ export class DatabaseStorage implements IStorage {
 
     await this.createCreditTransaction({
       userId,
+      projectId: projectId || null,
       amount,
       type: "purchase",
       description,
