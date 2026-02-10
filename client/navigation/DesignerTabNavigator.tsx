@@ -32,15 +32,16 @@ export default function DesignerTabNavigator() {
       initialRouteName="Projects"
       screenOptions={{
         ...screenOptions,
-        tabBarActiveTintColor: theme.tabIconSelected,
-        tabBarInactiveTintColor: theme.tabIconDefault,
+        tabBarActiveTintColor: isDark ? "#FFFFFF" : "#000000",
+        tabBarInactiveTintColor: isDark ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.35)",
         tabBarStyle: {
           position: "absolute",
           backgroundColor: Platform.select({
             ios: "transparent",
-            android: theme.backgroundRoot,
+            default: isDark ? "#000000" : "#F5F5F5",
           }),
-          borderTopWidth: 0,
+          borderTopWidth: StyleSheet.hairlineWidth,
+          borderTopColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
           elevation: 0,
         },
         tabBarBackground: () =>
