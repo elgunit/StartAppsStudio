@@ -142,7 +142,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/projects", async (req, res) => {
     try {
-      const { clientId, name, description, hats, estimatedCredits } = req.body;
+      const { clientId, name, description, hats, estimatedCredits, planTier } = req.body;
       
       if (!clientId || !name || !description) {
         return res.status(400).json({ error: "Missing required fields" });
@@ -155,6 +155,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: "brief_submitted",
         estimatedCredits: estimatedCredits || 0,
         usedCredits: 0,
+        planTier: planTier || null,
       });
 
       // Add hats

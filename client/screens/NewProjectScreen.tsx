@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, View, Pressable, ScrollView, TextInput } from "react-native";
+import { StyleSheet, View, Pressable, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -20,117 +20,311 @@ import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Card } from "@/components/Card";
-import { HatIcon } from "@/components/HatBadge";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
 import { apiRequest } from "@/lib/query-client";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
 type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
+type PlanTier = "starter" | "prototype" | "production" | "custom";
 
-const hatOptions: {
-  type: HatType;
+interface RoleAllocation {
+  hat: HatType;
   label: string;
-  credits: number;
+  title: string;
   icon: keyof typeof Feather.glyphMap;
-  description: string;
-}[] = [
+  credits: number;
+}
+
+interface PlanConfig {
+  tier: PlanTier;
+  name: string;
+  tagline: string;
+  totalCredits: number;
+  price: string;
+  icon: keyof typeof Feather.glyphMap;
+  roles: RoleAllocation[];
+  highlight?: boolean;
+}
+
+const PLANS: PlanConfig[] = [
   {
-    type: "designer",
-    label: "Designer",
-    credits: 120,
-    icon: "pen-tool",
-    description: "UI/UX design, wireframes, prototypes, visual identity",
+    tier: "starter",
+    name: "Starter",
+    tagline: "Core build focus",
+    totalCredits: 450,
+    price: "$459",
+    icon: "zap",
+    roles: [
+      { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 200 },
+      { hat: "developer", label: "Developer", title: "CTO", icon: "code", credits: 250 },
+    ],
   },
   {
-    type: "developer",
-    label: "Developer",
-    credits: 180,
-    icon: "code",
-    description: "Frontend & backend code, APIs, database, deployment",
+    tier: "prototype",
+    name: "Prototype",
+    tagline: "Full prototype with strategy",
+    totalCredits: 1000,
+    price: "$959",
+    icon: "layers",
+    highlight: true,
+    roles: [
+      { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 300 },
+      { hat: "developer", label: "Developer", title: "CTO", icon: "code", credits: 400 },
+      { hat: "strategist", label: "Strategist", title: "CSO", icon: "target", credits: 150 },
+      { hat: "manager", label: "Manager", title: "COO", icon: "clipboard", credits: 150 },
+    ],
   },
   {
-    type: "strategist",
-    label: "Strategist",
-    credits: 80,
-    icon: "target",
-    description: "Market research, positioning, go-to-market planning",
+    tier: "production",
+    name: "Production",
+    tagline: "All 5 hats, deep engagement",
+    totalCredits: 4000,
+    price: "$1.5k - $5k",
+    icon: "box",
+    roles: [
+      { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 800 },
+      { hat: "developer", label: "Developer", title: "CTO", icon: "code", credits: 1500 },
+      { hat: "strategist", label: "Strategist", title: "CSO", icon: "target", credits: 600 },
+      { hat: "manager", label: "Manager", title: "COO", icon: "clipboard", credits: 500 },
+      { hat: "analyst", label: "Analyst", title: "CAO", icon: "bar-chart-2", credits: 600 },
+    ],
   },
   {
-    type: "manager",
-    label: "Manager",
-    credits: 60,
-    icon: "clipboard",
-    description: "Sprint planning, timeline, deliverables, coordination",
-  },
-  {
-    type: "analyst",
-    label: "Analyst",
-    credits: 70,
-    icon: "bar-chart-2",
-    description: "Data modeling, KPIs, analytics setup, user insights",
+    tier: "custom",
+    name: "Custom",
+    tagline: "Full ongoing partnership",
+    totalCredits: 7500,
+    price: "$7.5k+",
+    icon: "star",
+    roles: [
+      { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 1500 },
+      { hat: "developer", label: "Developer", title: "CTO", icon: "code", credits: 2500 },
+      { hat: "strategist", label: "Strategist", title: "CSO", icon: "target", credits: 1200 },
+      { hat: "manager", label: "Manager", title: "COO", icon: "clipboard", credits: 1000 },
+      { hat: "analyst", label: "Analyst", title: "CAO", icon: "bar-chart-2", credits: 1300 },
+    ],
   },
 ];
 
-function HatCard({
-  hat,
+function PlanCard({
+  plan,
   selected,
-  onToggle,
+  onSelect,
 }: {
-  hat: (typeof hatOptions)[0];
+  plan: PlanConfig;
   selected: boolean;
-  onToggle: () => void;
+  onSelect: () => void;
 }) {
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
 
+  const maxCredits = Math.max(...plan.roles.map((r) => r.credits));
+
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
         onPressIn={() => {
-          scale.value = withSpring(0.97, { damping: 15, stiffness: 200 });
+          scale.value = withSpring(0.98, { damping: 15, stiffness: 200 });
         }}
         onPressOut={() => {
           scale.value = withSpring(1, { damping: 15, stiffness: 200 });
         }}
-        onPress={onToggle}
-        testID={`hat-${hat.type}`}
+        onPress={onSelect}
+        testID={`plan-${plan.tier}`}
       >
         <View
           style={[
-            styles.hatCard,
+            styles.planCard,
             {
               backgroundColor: selected
                 ? theme.text
                 : theme.backgroundDefault,
-              borderColor: selected ? theme.text : theme.border,
+              borderColor: selected
+                ? theme.text
+                : plan.highlight
+                  ? isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)"
+                  : theme.border,
+              borderWidth: plan.highlight && !selected ? 1.5 : 1,
             },
           ]}
         >
-          <View style={styles.hatCardTop}>
+          {plan.highlight ? (
             <View
               style={[
-                styles.hatIconWrap,
+                styles.popularBadge,
                 {
                   backgroundColor: selected
-                    ? "rgba(255,255,255,0.15)"
-                    : theme.backgroundSecondary,
+                    ? "rgba(255,255,255,0.2)"
+                    : isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
                 },
               ]}
             >
-              <Feather
-                name={hat.icon}
-                size={20}
-                color={selected ? "#FFFFFF" : theme.text}
-              />
+              <ThemedText
+                type="caption"
+                style={{
+                  fontWeight: "700",
+                  fontSize: 10,
+                  color: selected ? "#FFFFFF" : theme.textSecondary,
+                  textTransform: "uppercase",
+                  letterSpacing: 1,
+                }}
+              >
+                Most Popular
+              </ThemedText>
             </View>
+          ) : null}
+
+          <View style={styles.planHeader}>
+            <View style={styles.planTitleRow}>
+              <View
+                style={[
+                  styles.planIconWrap,
+                  {
+                    backgroundColor: selected
+                      ? "rgba(255,255,255,0.15)"
+                      : theme.backgroundSecondary,
+                  },
+                ]}
+              >
+                <Feather
+                  name={plan.icon}
+                  size={18}
+                  color={selected ? "#FFFFFF" : theme.text}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <ThemedText
+                  type="h4"
+                  style={{
+                    color: selected ? "#FFFFFF" : theme.text,
+                  }}
+                >
+                  {plan.name}
+                </ThemedText>
+                <ThemedText
+                  type="caption"
+                  style={{
+                    color: selected
+                      ? "rgba(255,255,255,0.6)"
+                      : theme.textSecondary,
+                    marginTop: 1,
+                  }}
+                >
+                  {plan.tagline}
+                </ThemedText>
+              </View>
+              <View style={{ alignItems: "flex-end" }}>
+                <ThemedText
+                  type="h3"
+                  style={{
+                    color: selected ? "#FFFFFF" : theme.text,
+                  }}
+                >
+                  {plan.price}
+                </ThemedText>
+                <ThemedText
+                  type="caption"
+                  style={{
+                    color: selected
+                      ? "rgba(255,255,255,0.5)"
+                      : theme.textTertiary,
+                  }}
+                >
+                  {plan.totalCredits} credits
+                </ThemedText>
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={[
+              styles.divider,
+              {
+                backgroundColor: selected
+                  ? "rgba(255,255,255,0.12)"
+                  : theme.border,
+              },
+            ]}
+          />
+
+          <View style={styles.rolesSection}>
+            {plan.roles.map((role) => {
+              const barWidth = (role.credits / maxCredits) * 100;
+              return (
+                <View key={role.hat} style={styles.roleRow}>
+                  <View style={styles.roleInfo}>
+                    <Feather
+                      name={role.icon}
+                      size={13}
+                      color={
+                        selected
+                          ? "rgba(255,255,255,0.7)"
+                          : theme.textSecondary
+                      }
+                    />
+                    <ThemedText
+                      type="caption"
+                      style={{
+                        color: selected
+                          ? "rgba(255,255,255,0.85)"
+                          : theme.text,
+                        fontWeight: "500",
+                      }}
+                    >
+                      {role.title}
+                    </ThemedText>
+                  </View>
+                  <View style={styles.roleBarContainer}>
+                    <View
+                      style={[
+                        styles.roleBarTrack,
+                        {
+                          backgroundColor: selected
+                            ? "rgba(255,255,255,0.08)"
+                            : theme.backgroundSecondary,
+                        },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.roleBarFill,
+                          {
+                            width: `${barWidth}%`,
+                            backgroundColor: selected
+                              ? "rgba(255,255,255,0.4)"
+                              : isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.15)",
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
+                  <ThemedText
+                    type="caption"
+                    style={{
+                      fontWeight: "600",
+                      color: selected
+                        ? "rgba(255,255,255,0.7)"
+                        : theme.textSecondary,
+                      width: 40,
+                      textAlign: "right",
+                    }}
+                  >
+                    {role.credits}
+                  </ThemedText>
+                </View>
+              );
+            })}
+          </View>
+
+          <View style={styles.planFooter}>
             <View
               style={[
-                styles.hatCheck,
+                styles.selectIndicator,
                 {
                   backgroundColor: selected
                     ? "#FFFFFF"
@@ -140,51 +334,19 @@ function HatCard({
               ]}
             >
               {selected ? (
-                <Feather name="check" size={12} color={theme.text} />
+                <Feather name="check" size={14} color={theme.text} />
               ) : null}
             </View>
-          </View>
-
-          <ThemedText
-            type="body"
-            style={{
-              fontWeight: "600",
-              color: selected ? "#FFFFFF" : theme.text,
-              marginBottom: 2,
-            }}
-          >
-            {hat.label}
-          </ThemedText>
-
-          <ThemedText
-            type="caption"
-            style={{
-              color: selected
-                ? "rgba(255,255,255,0.7)"
-                : theme.textSecondary,
-              marginBottom: Spacing.sm,
-            }}
-            numberOfLines={2}
-          >
-            {hat.description}
-          </ThemedText>
-
-          <View style={styles.hatCreditsRow}>
-            <Feather
-              name="zap"
-              size={12}
-              color={selected ? "rgba(255,255,255,0.8)" : theme.textSecondary}
-            />
             <ThemedText
-              type="caption"
+              type="small"
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 color: selected
-                  ? "rgba(255,255,255,0.9)"
+                  ? "rgba(255,255,255,0.8)"
                   : theme.textSecondary,
               }}
             >
-              {hat.credits} credits
+              {selected ? "Selected" : "Select this plan"}
             </ThemedText>
           </View>
         </View>
@@ -203,22 +365,19 @@ export default function NewProjectScreen() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedHats, setSelectedHats] = useState<HatType[]>([]);
+  const [selectedPlan, setSelectedPlan] = useState<PlanTier | null>(null);
   const [errors, setErrors] = useState<{
     name?: string;
     description?: string;
-    hats?: string;
+    plan?: string;
   }>({});
 
-  const estimatedCredits = selectedHats.reduce((sum, hat) => {
-    const hatOption = hatOptions.find((h) => h.type === hat);
-    return sum + (hatOption?.credits || 0);
-  }, 0);
+  const selectedPlanConfig = PLANS.find((p) => p.tier === selectedPlan);
 
   const resetForm = useCallback(() => {
     setName("");
     setDescription("");
-    setSelectedHats([]);
+    setSelectedPlan(null);
     setErrors({});
   }, []);
 
@@ -227,6 +386,7 @@ export default function NewProjectScreen() {
       clientId: string;
       name: string;
       description: string;
+      planTier: PlanTier;
       hats: HatType[];
       estimatedCredits: number;
     }) => {
@@ -241,13 +401,11 @@ export default function NewProjectScreen() {
     },
   });
 
-  const toggleHat = (hat: HatType) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setSelectedHats((prev) =>
-      prev.includes(hat) ? prev.filter((h) => h !== hat) : [...prev, hat]
-    );
-    if (errors.hats) {
-      setErrors((prev) => ({ ...prev, hats: undefined }));
+  const selectPlan = (tier: PlanTier) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setSelectedPlan((prev) => (prev === tier ? null : tier));
+    if (errors.plan) {
+      setErrors((prev) => ({ ...prev, plan: undefined }));
     }
   };
 
@@ -262,27 +420,24 @@ export default function NewProjectScreen() {
       newErrors.description =
         "Please provide more details (at least 20 characters)";
     }
-    if (selectedHats.length === 0) {
-      newErrors.hats = "Select at least one expertise area";
+    if (!selectedPlan) {
+      newErrors.plan = "Please select a plan";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = () => {
-    if (!validate() || !user) return;
+    if (!validate() || !user || !selectedPlanConfig) return;
     createProjectMutation.mutate({
       clientId: user.id,
       name: name.trim(),
       description: description.trim(),
-      hats: selectedHats,
-      estimatedCredits,
+      planTier: selectedPlanConfig.tier,
+      hats: selectedPlanConfig.roles.map((r) => r.hat),
+      estimatedCredits: selectedPlanConfig.totalCredits,
     });
   };
-
-  const selectedHatDetails = hatOptions.filter((h) =>
-    selectedHats.includes(h.type)
-  );
 
   return (
     <KeyboardAwareScrollViewCompat
@@ -301,11 +456,10 @@ export default function NewProjectScreen() {
           type="body"
           style={[styles.subtitle, { color: theme.textSecondary }]}
         >
-          Tell us about your MVP and pick the expertise you need
+          Tell us about your MVP and choose your plan
         </ThemedText>
       </Animated.View>
 
-      {/* Step 1: Project Details */}
       <Animated.View
         entering={FadeInDown.delay(80).duration(400)}
         style={styles.section}
@@ -389,7 +543,6 @@ export default function NewProjectScreen() {
         </View>
       </Animated.View>
 
-      {/* Step 2: Expertise Selection */}
       <Animated.View
         entering={FadeInDown.delay(160).duration(400)}
         style={styles.section}
@@ -406,126 +559,102 @@ export default function NewProjectScreen() {
             </ThemedText>
           </View>
           <View style={{ flex: 1 }}>
-            <ThemedText type="h4">Select Expertise</ThemedText>
+            <ThemedText type="h4">Choose Your Plan</ThemedText>
             <ThemedText
               type="caption"
               style={{ color: theme.textSecondary, marginTop: 2 }}
             >
-              Choose the hats you need for this project
+              Each plan includes preset expertise with credit allocation
             </ThemedText>
           </View>
         </View>
 
-        <View style={styles.hatsGrid}>
-          {hatOptions.map((hat, index) => (
-            <Animated.View
-              key={hat.type}
-              entering={FadeInDown.delay(200 + index * 40).duration(350)}
-              style={styles.hatGridItem}
-            >
-              <HatCard
-                hat={hat}
-                selected={selectedHats.includes(hat.type)}
-                onToggle={() => toggleHat(hat.type)}
-              />
-            </Animated.View>
-          ))}
-        </View>
-        {errors.hats ? (
+        {PLANS.map((plan, index) => (
+          <Animated.View
+            key={plan.tier}
+            entering={FadeInDown.delay(200 + index * 60).duration(350)}
+            style={{ marginBottom: Spacing.md }}
+          >
+            <PlanCard
+              plan={plan}
+              selected={selectedPlan === plan.tier}
+              onSelect={() => selectPlan(plan.tier)}
+            />
+          </Animated.View>
+        ))}
+
+        {errors.plan ? (
           <ThemedText
             type="caption"
             style={[styles.error, { color: theme.error }]}
           >
-            {errors.hats}
+            {errors.plan}
           </ThemedText>
         ) : null}
       </Animated.View>
 
-      {/* Credit Breakdown */}
-      {selectedHats.length > 0 ? (
+      {selectedPlanConfig ? (
         <Animated.View entering={FadeInUp.duration(350)}>
-          <Card style={styles.breakdownCard}>
-            <View style={styles.breakdownHeader}>
-              <Feather name="zap" size={18} color={theme.text} />
-              <ThemedText type="h4">Credit Breakdown</ThemedText>
-            </View>
-
-            {selectedHatDetails.map((hat) => (
-              <View
-                key={hat.type}
-                style={[
-                  styles.breakdownRow,
-                  { borderBottomColor: theme.border },
-                ]}
-              >
-                <View style={styles.breakdownLabel}>
-                  <Feather
-                    name={hat.icon}
-                    size={14}
-                    color={theme.textSecondary}
-                  />
-                  <ThemedText type="small">{hat.label}</ThemedText>
-                </View>
-                <ThemedText
-                  type="small"
-                  style={{ fontWeight: "600" }}
-                >
-                  {hat.credits}
-                </ThemedText>
-              </View>
-            ))}
-
-            <View style={styles.breakdownTotal}>
-              <ThemedText type="body" style={{ fontWeight: "600" }}>
-                Estimated Total
-              </ThemedText>
-              <ThemedText type="h3">{estimatedCredits}</ThemedText>
+          <Card style={styles.summaryCard}>
+            <View style={styles.summaryHeader}>
+              <Feather name="check-circle" size={18} color={theme.success} />
+              <ThemedText type="h4">Plan Summary</ThemedText>
             </View>
 
             <View
               style={[
-                styles.balanceIndicator,
-                {
-                  backgroundColor:
-                    (user?.credits || 0) >= estimatedCredits
-                      ? theme.success + "15"
-                      : theme.error + "15",
-                },
+                styles.summaryRow,
+                { borderBottomColor: theme.border },
               ]}
             >
-              <Feather
-                name={
-                  (user?.credits || 0) >= estimatedCredits
-                    ? "check-circle"
-                    : "alert-circle"
-                }
-                size={14}
-                color={
-                  (user?.credits || 0) >= estimatedCredits
-                    ? theme.success
-                    : theme.error
-                }
-              />
-              <ThemedText
-                type="caption"
-                style={{
-                  color:
-                    (user?.credits || 0) >= estimatedCredits
-                      ? theme.success
-                      : theme.error,
-                  fontWeight: "500",
-                }}
-              >
-                Your balance: {user?.credits || 0} credits
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                Plan
               </ThemedText>
+              <ThemedText type="small" style={{ fontWeight: "600" }}>
+                {selectedPlanConfig.name}
+              </ThemedText>
+            </View>
+
+            <View
+              style={[
+                styles.summaryRow,
+                { borderBottomColor: theme.border },
+              ]}
+            >
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                Roles Included
+              </ThemedText>
+              <ThemedText type="small" style={{ fontWeight: "600" }}>
+                {selectedPlanConfig.roles.map((r) => r.title).join(", ")}
+              </ThemedText>
+            </View>
+
+            <View
+              style={[
+                styles.summaryRow,
+                { borderBottomColor: theme.border },
+              ]}
+            >
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                Total Credits
+              </ThemedText>
+              <ThemedText type="small" style={{ fontWeight: "600" }}>
+                {selectedPlanConfig.totalCredits}
+              </ThemedText>
+            </View>
+
+            <View style={styles.summaryTotal}>
+              <ThemedText type="body" style={{ fontWeight: "600" }}>
+                Price
+              </ThemedText>
+              <ThemedText type="h3">{selectedPlanConfig.price}</ThemedText>
             </View>
           </Card>
         </Animated.View>
       ) : null}
 
-      {/* Submit */}
       <Animated.View
-        entering={FadeInDown.delay(400).duration(400)}
+        entering={FadeInDown.delay(500).duration(400)}
         style={styles.submitSection}
       >
         <Button
@@ -599,34 +728,71 @@ const styles = StyleSheet.create({
   error: {
     marginTop: Spacing.xs,
   },
-  hatsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.sm,
-  },
-  hatGridItem: {
-    width: "48%",
-    flexGrow: 1,
-  },
-  hatCard: {
-    padding: Spacing.md,
+  planCard: {
     borderRadius: BorderRadius.lg,
     borderWidth: 1,
+    padding: Spacing.lg,
   },
-  hatCardTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  popularBadge: {
+    alignSelf: "flex-start",
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 3,
+    borderRadius: BorderRadius.sm,
     marginBottom: Spacing.sm,
   },
-  hatIconWrap: {
-    width: 40,
-    height: 40,
+  planHeader: {
+    marginBottom: Spacing.md,
+  },
+  planTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+  },
+  planIconWrap: {
+    width: 36,
+    height: 36,
     borderRadius: BorderRadius.md,
     alignItems: "center",
     justifyContent: "center",
   },
-  hatCheck: {
+  divider: {
+    height: 1,
+    marginBottom: Spacing.md,
+  },
+  rolesSection: {
+    gap: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  roleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+  },
+  roleInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    width: 58,
+  },
+  roleBarContainer: {
+    flex: 1,
+  },
+  roleBarTrack: {
+    height: 6,
+    borderRadius: 3,
+    overflow: "hidden",
+  },
+  roleBarFill: {
+    height: "100%",
+    borderRadius: 3,
+  },
+  planFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    paddingTop: Spacing.xs,
+  },
+  selectIndicator: {
     width: 22,
     height: 22,
     borderRadius: 11,
@@ -634,45 +800,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  hatCreditsRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  breakdownCard: {
+  summaryCard: {
     marginBottom: Spacing.xl,
   },
-  breakdownHeader: {
+  summaryHeader: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
     marginBottom: Spacing.md,
   },
-  breakdownRow: {
+  summaryRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: Spacing.sm,
     borderBottomWidth: 1,
   },
-  breakdownLabel: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-  },
-  breakdownTotal: {
+  summaryTotal: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: Spacing.md,
-    marginBottom: Spacing.md,
-  },
-  balanceIndicator: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    padding: Spacing.sm,
-    borderRadius: BorderRadius.sm,
   },
   submitSection: {
     marginTop: Spacing.sm,
