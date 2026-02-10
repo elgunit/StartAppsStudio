@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, View, Pressable, ScrollView } from "react-native";
+import { StyleSheet, View, Pressable, ScrollView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -350,8 +350,9 @@ export default function NewProjectScreen() {
               },
             ]}
           >
-            <Input
+            <TextInput
               placeholder="Describe your idea, target audience, key features, and goals..."
+              placeholderTextColor={theme.textTertiary}
               value={description}
               onChangeText={(text) => {
                 setDescription(text);
@@ -360,7 +361,7 @@ export default function NewProjectScreen() {
               }}
               multiline
               numberOfLines={4}
-              style={styles.textArea}
+              style={[styles.textArea, { color: theme.text }]}
               testID="input-project-description"
             />
           </View>
