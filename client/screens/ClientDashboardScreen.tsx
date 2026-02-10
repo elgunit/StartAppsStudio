@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, FlatList, RefreshControl, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -17,15 +17,14 @@ import { OnlineIndicator } from "@/components/OnlineIndicator";
 import { EmptyState } from "@/components/EmptyState";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
-import { getApiUrl } from "@/lib/query-client";
-import { Spacing } from "@/constants/theme";
+import { Spacing, BorderRadius } from "@/constants/theme";
 import { formatDistanceToNow } from "date-fns";
 
 export default function ClientDashboardScreen() {
   const headerHeight = useHeaderHeight();
   const tabBarHeight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const { user, refreshUser } = useAuth();
 
@@ -45,10 +44,12 @@ export default function ClientDashboardScreen() {
   const activeProjects = projects.filter(
     (p) => p.status !== "completed"
   );
+  const completedProjects = projects.filter(
+    (p) => p.status === "completed"
+  );
 
   const renderHeader = () => (
     <Animated.View entering={FadeInDown.duration(500)}>
-      {/* Welcome Section */}
       <View style={styles.welcomeSection}>
         <View>
           <ThemedText type="body" style={{ color: theme.textSecondary }}>
@@ -59,7 +60,6 @@ export default function ClientDashboardScreen() {
         <OnlineIndicator isOnline={designer?.isOnline || false} />
       </View>
 
-      {/* Credits Card */}
       <Card style={styles.creditsCard}>
         <View style={styles.creditsHeader}>
           <View>
@@ -79,7 +79,29 @@ export default function ClientDashboardScreen() {
         </View>
       </Card>
 
-      {/* Active Projects Header */}
+      <Pressable
+        onPress={() => navigation.navigate("NewProject")}
+        testID="button-new-project"
+        style={({ pressed }) => [
+          styles.newProjectButton,
+          {
+            backgroundColor: isDark ? "#FFFFFF" : "#000000",
+            opacity: pressed ? 0.85 : 1,
+          },
+        ]}
+      >
+        <Feather name="plus" size={18} color={isDark ? "#000000" : "#FFFFFF"} />
+        <ThemedText
+          type="body"
+          style={{
+            color: isDark ? "#000000" : "#FFFFFF",
+            fontWeight: "600",
+          }}
+        >
+          Start New Project
+        </ThemedText>
+      </Pressable>
+
       <View style={styles.sectionHeader}>
         <ThemedText type="h3">Active Projects</ThemedText>
         <ThemedText type="small" style={{ color: theme.textSecondary }}>
@@ -106,7 +128,9 @@ export default function ClientDashboardScreen() {
         description={item.description}
         status={item.status}
         currentHat={item.currentHat}
-        isDesignerOnline={designer?.isOnline || false}
+        planTier={item.planTier}
+        estimatedCredits={item.estimatedCredits}
+        usedCredits={item.usedCredits}
         lastActivity={formatDistanceToNow(new Date(item.updatedAt), {
           addSuffix: true,
         })}
@@ -115,6 +139,37 @@ export default function ClientDashboardScreen() {
       />
     </Animated.View>
   );
+
+  const renderFooter = () => {
+    if (completedProjects.length === 0) return null;
+    return (
+      <View>
+        <View style={[styles.sectionHeader, { marginTop: Spacing.lg }]}>
+          <ThemedText type="h3">Completed</ThemedText>
+          <ThemedText type="small" style={{ color: theme.textSecondary }}>
+            {completedProjects.length} project{completedProjects.length !== 1 ? "s" : ""}
+          </ThemedText>
+        </View>
+        {completedProjects.map((item, index) => (
+          <Animated.View key={item.id} entering={FadeInDown.delay(100 + index * 50).duration(400)}>
+            <ProjectCard
+              name={item.name}
+              description={item.description}
+              status={item.status}
+              planTier={item.planTier}
+              estimatedCredits={item.estimatedCredits}
+              usedCredits={item.usedCredits}
+              lastActivity={formatDistanceToNow(new Date(item.updatedAt), {
+                addSuffix: true,
+              })}
+              onPress={() => navigation.navigate("ProjectDetail", { projectId: item.id })}
+              testID={`card-project-${item.id}`}
+            />
+          </Animated.View>
+        ))}
+      </View>
+    );
+  };
 
   return (
     <FlatList
@@ -131,6 +186,7 @@ export default function ClientDashboardScreen() {
       renderItem={renderProject}
       ListHeaderComponent={renderHeader}
       ListEmptyComponent={isLoading ? null : renderEmptyState}
+      ListFooterComponent={renderFooter}
       refreshControl={
         <RefreshControl refreshing={isLoading} onRefresh={refetch} />
       }
@@ -149,12 +205,21 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.xl,
   },
   creditsCard: {
-    marginBottom: Spacing.xl,
+    marginBottom: Spacing.lg,
   },
   creditsHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  newProjectButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: Spacing.sm,
+    paddingVertical: 14,
+    borderRadius: BorderRadius.lg,
+    marginBottom: Spacing.xl,
   },
   sectionHeader: {
     flexDirection: "row",
