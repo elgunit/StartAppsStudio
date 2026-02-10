@@ -80,7 +80,7 @@ const PLANS: PlanConfig[] = [
     name: "Production",
     tagline: "All 5 hats, deep engagement",
     totalCredits: 4000,
-    price: "$1.5k - $5k",
+    price: "$2k - $6k",
     icon: "box",
     roles: [
       { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 800 },
