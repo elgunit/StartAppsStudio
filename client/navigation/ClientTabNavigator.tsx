@@ -5,6 +5,7 @@ import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
 
 import ClientDashboardScreen from "@/screens/ClientDashboardScreen";
+import GrowScreen from "@/screens/GrowScreen";
 import MessagesListScreen from "@/screens/MessagesListScreen";
 import AccountScreen from "@/screens/AccountScreen";
 import { HeaderTitle } from "@/components/HeaderTitle";
@@ -13,6 +14,7 @@ import { useScreenOptions } from "@/hooks/useScreenOptions";
 
 export type ClientTabParamList = {
   Dashboard: undefined;
+  Grow: undefined;
   Messages: undefined;
   Account: undefined;
 };
@@ -58,6 +60,17 @@ export default function ClientTabNavigator() {
           headerTitle: () => <HeaderTitle title="Start Apps Studio" />,
           tabBarIcon: ({ color, size }) => (
             <Feather name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Grow"
+        component={GrowScreen}
+        options={{
+          title: "Grow",
+          headerTitle: "Grow",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="trending-up" size={size} color={color} />
           ),
         }}
       />

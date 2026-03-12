@@ -20,7 +20,7 @@ Preferred communication style: Simple, everyday language.
 - **Path Aliases**: `@/` maps to `./client`, `@shared/` maps to `./shared`
 
 ### Role-Based Navigation
-- **Client Role**: 3 tabs (Dashboard, Messages, Account) + project creation flow
+- **Client Role**: 4 tabs (Dashboard, Grow, Messages, Account) + project creation flow + service request flow
 - **Designer Role**: 4 tabs (Projects, Messages, WorkSession, Account)
 - **Auth Flow**: Stack-based (Welcome → Login/Register → Role-based home)
 
@@ -32,9 +32,13 @@ Preferred communication style: Simple, everyday language.
 - **Storage Layer**: Abstracted storage interface in `server/storage.ts` for data access
 
 ### Data Model
-Key entities: Users (client/designer roles), Projects (with status workflow), Messages, WorkSessions, ProjectVersions, CreditPackages, CreditTransactions, ProjectHats
+Key entities: Users (client/designer roles), Projects (with status workflow), Messages, WorkSessions, ProjectVersions, CreditPackages, CreditTransactions, ProjectHats, MarketingServices, ServiceOrders
 
 Project status workflow: brief_submitted → hat_selection → discovery → design_build → client_review → iteration → completed
+
+Service order status workflow: submitted → in_progress → delivered
+
+Marketing service categories: SEO, Content, Ads, Social, Email, Brand
 
 ### Build & Deployment
 - Development: Separate processes for Expo (`expo:dev`) and Express server (`server:dev`)

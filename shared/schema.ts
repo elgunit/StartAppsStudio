@@ -113,6 +113,47 @@ export const creditTransactions = pgTable("credit_transactions", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Marketing services
+export const serviceOrderStatusEnum = pgEnum("service_order_status", [
+  "submitted",
+  "in_progress",
+  "delivered",
+]);
+
+export const marketingServices = pgTable("marketing_services", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  category: text("category").notNull(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  creditsRequired: integer("credits_required").notNull(),
+  deliverables: text("deliverables").array().notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const serviceOrders = pgTable("service_orders", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  clientId: varchar("client_id").notNull().references(() => users.id),
+  serviceId: varchar("service_id").notNull().references(() => marketingServices.id),
+  status: serviceOrderStatusEnum("status").notNull().default("submitted"),
+  goals: text("goals").notNull(),
+  websiteUrl: text("website_url"),
+  creditsCharged: integer("credits_charged").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const serviceOrdersRelations = relations(serviceOrders, ({ one }) => ({
+  client: one(users, {
+    fields: [serviceOrders.clientId],
+    references: [users.id],
+  }),
+  service: one(marketingServices, {
+    fields: [serviceOrders.serviceId],
+    references: [marketingServices.id],
+  }),
+}));
+
 // Contact form submissions
 export const contactSubmissions = pgTable("contact_submissions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -223,6 +264,17 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   createdAt: true,
 });
 
+export const insertMarketingServiceSchema = createInsertSchema(marketingServices).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertServiceOrderSchema = createInsertSchema(serviceOrders).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -241,5 +293,10 @@ export type InsertCreditTransaction = z.infer<typeof insertCreditTransactionSche
 export type ProjectHat = typeof projectHats.$inferSelect;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
+export type MarketingService = typeof marketingServices.$inferSelect;
+export type InsertMarketingService = z.infer<typeof insertMarketingServiceSchema>;
+export type ServiceOrder = typeof serviceOrders.$inferSelect;
+export type InsertServiceOrder = z.infer<typeof insertServiceOrderSchema>;
 export type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
 export type ProjectStatus = "brief_submitted" | "hat_selection" | "discovery" | "design_build" | "client_review" | "iteration" | "completed";
+export type ServiceOrderStatus = "submitted" | "in_progress" | "delivered";

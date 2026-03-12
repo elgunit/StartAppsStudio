@@ -598,6 +598,138 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Marketing services routes
+  app.get("/api/marketing/services", async (req, res) => {
+    try {
+      let services = await storage.getMarketingServices();
+
+      if (services.length === 0) {
+        const defaults = [
+          {
+            category: "SEO",
+            name: "SEO Audit & Optimization",
+            description: "Comprehensive technical SEO audit with actionable fixes to improve search rankings.",
+            creditsRequired: 200,
+            deliverables: ["Full site crawl & technical audit report", "Keyword gap analysis", "On-page optimization recommendations"],
+            isActive: true,
+          },
+          {
+            category: "SEO",
+            name: "Keyword Strategy",
+            description: "Data-driven keyword research and content mapping for organic growth.",
+            creditsRequired: 150,
+            deliverables: ["100+ keyword opportunities ranked by impact", "Content calendar with topics", "Competitor keyword gap report"],
+            isActive: true,
+          },
+          {
+            category: "Content",
+            name: "Content Plan & Copywriting",
+            description: "Strategic content plan with professionally written copy for your MVP.",
+            creditsRequired: 250,
+            deliverables: ["30-day content strategy document", "5 SEO-optimized blog posts", "Landing page copy & CTAs"],
+            isActive: true,
+          },
+          {
+            category: "Ads",
+            name: "Paid Ads Setup",
+            description: "Launch-ready ad campaigns on Google and Meta with targeting and creatives.",
+            creditsRequired: 300,
+            deliverables: ["Campaign structure & audience targeting", "Ad creative designs (5 variations)", "Tracking & conversion setup"],
+            isActive: true,
+          },
+          {
+            category: "Social",
+            name: "Social Media Kit",
+            description: "Complete social media brand kit with templates and launch strategy.",
+            creditsRequired: 200,
+            deliverables: ["Profile & cover designs for 3 platforms", "15 branded post templates", "Launch week posting schedule"],
+            isActive: true,
+          },
+          {
+            category: "Email",
+            name: "Email Sequence",
+            description: "Automated email sequences to convert and retain your early users.",
+            creditsRequired: 180,
+            deliverables: ["5-email welcome sequence", "3-email re-engagement flow", "Email template designs"],
+            isActive: true,
+          },
+          {
+            category: "Brand",
+            name: "Brand Identity Report",
+            description: "Define your brand voice, visual identity, and positioning in the market.",
+            creditsRequired: 350,
+            deliverables: ["Brand voice & messaging guide", "Visual identity system (colors, typography)", "Competitive positioning map"],
+            isActive: true,
+          },
+        ];
+
+        for (const svc of defaults) {
+          await storage.createMarketingService(svc);
+        }
+        services = await storage.getMarketingServices();
+      }
+
+      res.json(services);
+    } catch (error) {
+      console.error("Failed to get marketing services:", error);
+      res.status(500).json({ error: "Failed to get marketing services" });
+    }
+  });
+
+  app.get("/api/marketing/orders", async (req, res) => {
+    try {
+      const { clientId } = req.query;
+      if (!clientId) {
+        return res.status(400).json({ error: "clientId is required" });
+      }
+      const orders = await storage.getServiceOrdersByClient(clientId as string);
+      res.json(orders);
+    } catch (error) {
+      console.error("Failed to get service orders:", error);
+      res.status(500).json({ error: "Failed to get service orders" });
+    }
+  });
+
+  app.post("/api/marketing/orders", async (req, res) => {
+    try {
+      const { clientId, serviceId, goals, websiteUrl } = req.body;
+
+      if (!clientId || !serviceId || !goals) {
+        return res.status(400).json({ error: "clientId, serviceId, and goals are required" });
+      }
+
+      const service = await storage.getMarketingService(serviceId);
+      if (!service) {
+        return res.status(404).json({ error: "Service not found" });
+      }
+
+      const success = await storage.useCredits(
+        clientId,
+        service.creditsRequired,
+        `Marketing service: ${service.name}`
+      );
+
+      if (!success) {
+        return res.status(400).json({ error: "Insufficient credits" });
+      }
+
+      const order = await storage.createServiceOrder({
+        clientId,
+        serviceId,
+        goals,
+        websiteUrl: websiteUrl || null,
+        creditsCharged: service.creditsRequired,
+        status: "submitted",
+      });
+
+      const orderWithService = { ...order, service };
+      res.json(orderWithService);
+    } catch (error) {
+      console.error("Failed to create service order:", error);
+      res.status(500).json({ error: "Failed to create service order" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

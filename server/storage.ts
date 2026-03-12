@@ -1,11 +1,13 @@
 import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
+  marketingServices, serviceOrders,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
   type InsertCreditPackage, type CreditTransaction, type InsertCreditTransaction,
-  type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission
+  type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission,
+  type MarketingService, type InsertMarketingService, type ServiceOrder, type InsertServiceOrder
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
@@ -66,6 +68,17 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+
+  // Marketing Services
+  getMarketingServices(): Promise<MarketingService[]>;
+  getMarketingService(id: string): Promise<MarketingService | undefined>;
+  createMarketingService(service: InsertMarketingService): Promise<MarketingService>;
+
+  // Service Orders
+  getServiceOrdersByClient(clientId: string): Promise<any[]>;
+  getServiceOrder(id: string): Promise<ServiceOrder | undefined>;
+  createServiceOrder(order: InsertServiceOrder): Promise<ServiceOrder>;
+  updateServiceOrder(id: string, data: Partial<ServiceOrder>): Promise<ServiceOrder | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -332,6 +345,48 @@ export class DatabaseStorage implements IStorage {
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(sql`created_at DESC`);
+  }
+
+  // Marketing Services
+  async getMarketingServices(): Promise<MarketingService[]> {
+    return db.select().from(marketingServices).where(eq(marketingServices.isActive, true));
+  }
+
+  async getMarketingService(id: string): Promise<MarketingService | undefined> {
+    const [service] = await db.select().from(marketingServices).where(eq(marketingServices.id, id));
+    return service || undefined;
+  }
+
+  async createMarketingService(insertService: InsertMarketingService): Promise<MarketingService> {
+    const [service] = await db.insert(marketingServices).values(insertService).returning();
+    return service;
+  }
+
+  // Service Orders
+  async getServiceOrdersByClient(clientId: string): Promise<any[]> {
+    const orders = await db.select().from(serviceOrders).where(eq(serviceOrders.clientId, clientId)).orderBy(desc(serviceOrders.createdAt));
+    const results = await Promise.all(
+      orders.map(async (order) => {
+        const service = await this.getMarketingService(order.serviceId);
+        return { ...order, service };
+      })
+    );
+    return results;
+  }
+
+  async getServiceOrder(id: string): Promise<ServiceOrder | undefined> {
+    const [order] = await db.select().from(serviceOrders).where(eq(serviceOrders.id, id));
+    return order || undefined;
+  }
+
+  async createServiceOrder(insertOrder: InsertServiceOrder): Promise<ServiceOrder> {
+    const [order] = await db.insert(serviceOrders).values(insertOrder).returning();
+    return order;
+  }
+
+  async updateServiceOrder(id: string, data: Partial<ServiceOrder>): Promise<ServiceOrder | undefined> {
+    const [order] = await db.update(serviceOrders).set({ ...data, updatedAt: new Date() }).where(eq(serviceOrders.id, id)).returning();
+    return order || undefined;
   }
 }
 

@@ -10,6 +10,7 @@ import ProjectDetailScreen from "@/screens/ProjectDetailScreen";
 import ChatScreen from "@/screens/ChatScreen";
 import WorkSessionScreen from "@/screens/WorkSessionScreen";
 import CreditsScreen from "@/screens/CreditsScreen";
+import RequestServiceScreen from "@/screens/RequestServiceScreen";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
 import { useAuth } from "@/lib/auth";
 import { apiRequest } from "@/lib/query-client";
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   Chat: { projectId: string };
   WorkSession: { projectId?: string };
   Credits: undefined;
+  RequestService: { serviceId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -110,6 +112,14 @@ export default function RootStackNavigator() {
             name="Credits"
             component={CreditsScreen}
             options={{ headerTitle: "Credits" }}
+          />
+          <Stack.Screen
+            name="RequestService"
+            component={RequestServiceScreen}
+            options={{
+              presentation: "modal",
+              headerTitle: "Request Service",
+            }}
           />
         </>
       )}
