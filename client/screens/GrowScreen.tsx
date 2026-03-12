@@ -35,6 +35,16 @@ const CATEGORIES: ServiceCategory[] = [
   "Brand",
 ];
 
+const CATEGORY_DISPLAY_LABELS: Record<string, string> = {
+  All: "All",
+  SEO: "SEO",
+  Content: "Content",
+  Ads: "Paid Ads",
+  Social: "Social",
+  Email: "Email",
+  Brand: "Brand Identity",
+};
+
 const CATEGORY_ICONS: Record<string, keyof typeof Feather.glyphMap> = {
   SEO: "search",
   Content: "file-text",
@@ -161,7 +171,7 @@ export default function GrowScreen() {
                     : theme.textSecondary,
                 }}
               >
-                {cat}
+                {CATEGORY_DISPLAY_LABELS[cat] || cat}
               </ThemedText>
             </Pressable>
           );

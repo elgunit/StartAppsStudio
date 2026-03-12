@@ -70,7 +70,7 @@ export default function ClientTabNavigator() {
           title: "Grow",
           headerTitle: "Grow",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="trending-up" size={size} color={color} />
+            <Feather name="bar-chart-2" size={size} color={color} />
           ),
         }}
       />
