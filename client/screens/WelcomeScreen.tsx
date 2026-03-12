@@ -33,7 +33,7 @@ const hatIcons: Record<HatType, keyof typeof Feather.glyphMap> = {
 type MenuSection = "services" | "expertise" | "work" | "packages" | null;
 
 const menuItems = [
-  { id: "services" as const, icon: "grid" as const, label: "Services", subtitle: "What we build" },
+  { id: "services" as const, icon: "grid" as const, label: "Services", subtitle: "What we offer" },
   { id: "expertise" as const, icon: "award" as const, label: "Expertise", subtitle: "5 specialized roles" },
   { id: "work" as const, icon: "briefcase" as const, label: "Work", subtitle: "13 case studies" },
   { id: "packages" as const, icon: "package" as const, label: "Packages", subtitle: "Pricing & timelines" },
@@ -44,6 +44,16 @@ const services = [
   { icon: "smartphone" as const, title: "Native Apps", desc: "iOS & Android" },
   { icon: "globe" as const, title: "Web Apps", desc: "Modern & responsive" },
   { icon: "layers" as const, title: "Full MVP", desc: "End-to-end development" },
+];
+
+const growthServices = [
+  { icon: "search" as const, title: "SEO Audit", desc: "Site analysis & fixes", color: "#10B981" },
+  { icon: "search" as const, title: "Keyword Strategy", desc: "Rankings & traffic", color: "#10B981" },
+  { icon: "file-text" as const, title: "Content Plan", desc: "Blog & copy strategy", color: "#3B82F6" },
+  { icon: "target" as const, title: "Paid Ads", desc: "Google & Meta ads", color: "#F59E0B" },
+  { icon: "share-2" as const, title: "Social Media Kit", desc: "Templates & calendar", color: "#8B5CF6" },
+  { icon: "mail" as const, title: "Email Sequences", desc: "Drip & onboarding", color: "#EF4444" },
+  { icon: "award" as const, title: "Brand Identity", desc: "Logo, voice & style", color: "#EC4899" },
 ];
 
 const hats = [
@@ -163,14 +173,33 @@ export default function WelcomeScreen() {
                 {expandedSection === item.id ? (
                   <View style={styles.expandedContent}>
                     {item.id === "services" ? (
-                      <View style={styles.gridContent}>
-                        {services.map((service, i) => (
-                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
-                            <Feather name={service.icon} size={16} color={theme.text} />
-                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
-                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
+                      <View style={{ gap: Spacing.lg }}>
+                        <View>
+                          <ThemedText type="caption" style={[styles.sectionDividerLabel, { color: theme.textTertiary }]}>BUILD</ThemedText>
+                          <View style={styles.gridContent}>
+                            {services.map((service, i) => (
+                              <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
+                                <Feather name={service.icon} size={16} color={theme.text} />
+                                <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
+                                <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
+                              </View>
+                            ))}
                           </View>
-                        ))}
+                        </View>
+                        <View>
+                          <ThemedText type="caption" style={[styles.sectionDividerLabel, { color: theme.textTertiary }]}>GROW</ThemedText>
+                          <View style={styles.gridContent}>
+                            {growthServices.map((service, i) => (
+                              <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
+                                <View style={styles.growIconRow}>
+                                  <Feather name={service.icon} size={14} color={service.color} />
+                                </View>
+                                <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
+                                <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
+                              </View>
+                            ))}
+                          </View>
+                        </View>
                       </View>
                     ) : null}
 
@@ -387,6 +416,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xs,
     paddingVertical: 2,
     borderRadius: BorderRadius.sm,
+  },
+  sectionDividerLabel: {
+    fontSize: 11,
+    fontWeight: "600" as const,
+    letterSpacing: 1.5,
+    marginBottom: Spacing.sm,
+    marginLeft: 2,
+  },
+  growIconRow: {
+    width: 24,
+    height: 24,
+    borderRadius: 6,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
   },
   footer: {
     marginTop: Spacing["2xl"],

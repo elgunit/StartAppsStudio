@@ -4,7 +4,7 @@
     <title>Start Apps Studio - Premium Design & Rapid Development</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Premium MVP design service offering landing pages, native iOS/Android apps, and web apps. Five expertise areas: Designer, Developer, Strategist, Manager, Analyst." />
+    <meta name="description" content="Premium MVP design service offering landing pages, native iOS/Android apps, web apps, and marketing, SEO & growth services. Five expertise areas: Designer, Developer, Strategist, Manager, Analyst." />
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FQCKTE2CF8"></script>
@@ -344,7 +344,49 @@
       }
       
       .service-card.expanded .service-details { display: block; }
-      
+
+      /* Growth Services */
+      .growth-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .growth-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.2s;
+      }
+
+      .growth-card:hover {
+        border-color: var(--text-secondary);
+        transform: translateY(-2px);
+      }
+
+      .growth-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+
+      .growth-card h4 { font-weight: 600; margin-bottom: 4px; }
+      .growth-card p { font-size: 14px; color: var(--text-secondary); margin: 0 0 12px 0; }
+
+      .growth-credit-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 500;
+        background: var(--bg-elevated);
+        color: var(--text-secondary);
+      }
+
       /* Industries */
       .industries-grid {
         display: flex;
@@ -885,6 +927,7 @@
         .form-row { grid-template-columns: 1fr; }
         .card-details { padding-left: 24px; }
         .steps-container { gap: 32px; }
+        .growth-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -928,7 +971,7 @@
             Analyst
           </div>
         </div>
-        <p class="subtitle">We design, build, and ship beautiful MVPs in weeks, not months. One dedicated team covering design, development, strategy, and everything in between.</p>
+        <p class="subtitle">We design, build, and grow beautiful MVPs in weeks, not months. One dedicated team covering design, development, strategy, marketing, and everything in between.</p>
         <div class="hero-cta-group">
           <a href="#contact" class="cta-button">Start Your Project</a>
           <a href="#pricing" class="cta-button secondary">View Pricing</a>
@@ -1023,6 +1066,70 @@
         </div>
       </section>
       
+      <!-- Growth Services -->
+      <section class="section">
+        <h2 class="section-title">Grow Your Reach</h2>
+        <p class="section-subtitle">Marketing & SEO services to help your MVP find and keep users</p>
+        <div class="growth-grid">
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h4>SEO Audit</h4>
+            <p>Full technical and on-page analysis with a prioritized fix list to improve rankings.</p>
+            <span class="growth-credit-badge">150 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h4>Keyword Strategy</h4>
+            <p>Research-backed keyword plan targeting high-intent searches in your niche.</p>
+            <span class="growth-credit-badge">200 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(59,130,246,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h4>Content Plan</h4>
+            <p>Blog calendar, topic clusters, and copywriting briefs to fuel organic growth.</p>
+            <span class="growth-credit-badge">250 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(245,158,11,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h4>Paid Ads Setup</h4>
+            <p>Google & Meta campaign structure, ad creative, and audience targeting strategy.</p>
+            <span class="growth-credit-badge">300 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(139,92,246,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#8B5CF6" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <h4>Social Media Kit</h4>
+            <p>Branded templates, posting calendar, and content strategy across platforms.</p>
+            <span class="growth-credit-badge">200 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(239,68,68,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h4>Email Sequences</h4>
+            <p>Drip campaigns, onboarding flows, and re-engagement sequences that convert.</p>
+            <span class="growth-credit-badge">250 credits</span>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(236,72,153,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#EC4899" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <h4>Brand Identity</h4>
+            <p>Logo system, color palette, typography guide, and brand voice documentation.</p>
+            <span class="growth-credit-badge">350 credits</span>
+          </div>
+        </div>
+      </section>
+
       <!-- Why Start Apps Studio -->
       <section class="section">
         <h2 class="section-title">Why Start Apps Studio?</h2>
