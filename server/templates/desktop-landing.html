@@ -1295,6 +1295,7 @@
       }
 
       .industries-scroll::-webkit-scrollbar {
+        height: 0;
         display: none;
       }
 
@@ -1314,6 +1315,7 @@
       }
 
       .interest-scroll::-webkit-scrollbar {
+        height: 0;
         display: none;
       }
 
@@ -2404,6 +2406,7 @@
             startAutoScroll();
           } else {
             stopAutoScroll();
+            if (resumeTimeout) { clearTimeout(resumeTimeout); resumeTimeout = null; }
           }
         });
         observer.observe(document.getElementById('whyModal'), { attributes: true, attributeFilter: ['class'] });
