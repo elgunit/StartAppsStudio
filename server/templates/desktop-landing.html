@@ -999,6 +999,294 @@
         margin-top: 8px;
       }
       
+      /* App Download Section */
+      .app-section {
+        text-align: center;
+        padding: 40px 24px;
+        margin-bottom: 80px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--bg-elevated);
+      }
+
+      .app-section h3 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .app-section p {
+        font-size: 15px;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .store-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+
+      .store-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        opacity: 0.7;
+        cursor: default;
+      }
+
+      .store-btn svg { flex-shrink: 0; }
+
+      .store-btn-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.2;
+      }
+
+      .store-btn-label {
+        font-size: 11px;
+        color: var(--text-secondary);
+      }
+
+      .store-btn-name {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .app-preregister {
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .app-preregister a {
+        color: var(--text);
+        font-weight: 500;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      /* Service Tabs */
+      .service-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-bottom: 32px;
+        background: var(--bg-elevated);
+        border-radius: 10px;
+        padding: 4px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border);
+      }
+
+      .service-tab {
+        padding: 10px 28px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        background: transparent;
+        color: var(--text-secondary);
+        font-family: inherit;
+      }
+
+      .service-tab:hover { color: var(--text); }
+
+      .service-tab.active {
+        background: var(--accent);
+        color: var(--bg);
+        font-weight: 600;
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      /* Why Modal */
+      .why-trigger {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+
+      .why-trigger h2 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .why-trigger p {
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .why-glance-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 28px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--text);
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+
+      .why-glance-btn:hover {
+        border-color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+        backdrop-filter: blur(4px);
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal-content {
+        background: var(--bg);
+        border-radius: 16px;
+        padding: 40px;
+        max-width: 900px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        position: relative;
+        border: 1px solid var(--border);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        font-size: 18px;
+      }
+
+      .modal-close:hover {
+        background: var(--bg-elevated);
+        border-color: var(--text);
+      }
+
+      .modal-content h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+
+      .modal-content > p {
+        color: var(--text-secondary);
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      /* Expertise Grid */
+      .expertise-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .expertise-grid .expandable-card {
+        margin-bottom: 0;
+      }
+
+      /* Industries horizontal scroll */
+      .industries-scroll {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .industries-scroll::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .industries-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .industries-scroll::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+
+      .industries-scroll .industry-chip {
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      /* Interest options horizontal scroll */
+      .interest-scroll {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .interest-scroll::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .interest-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .interest-scroll::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+
+      .interest-scroll .interest-option {
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .hero { padding: 48px 24px; }
@@ -1013,6 +1301,8 @@
         .card-details { padding-left: 24px; }
         .steps-container { gap: 32px; }
         .growth-grid { grid-template-columns: 1fr; }
+        .expertise-grid { grid-template-columns: 1fr; }
+        .modal-content { padding: 24px; }
       }
     </style>
   </head>
@@ -1091,11 +1381,39 @@
           </div>
         </div>
       </section>
+
+      <!-- App Download -->
+      <div class="app-section">
+        <h3>Coming to iOS & Android — May 2026</h3>
+        <p>Be among the first. Pre-register for early access.</p>
+        <div class="store-buttons">
+          <div class="store-btn">
+            <svg width="20" height="24" viewBox="0 0 20 24" fill="currentColor"><path d="M15.77 12.7c-.02-2.45 2-3.63 2.09-3.69a4.52 4.52 0 00-3.56-1.92c-1.5-.16-2.95.9-3.72.9-.78 0-1.97-.88-3.24-.86a4.78 4.78 0 00-4.02 2.45c-1.73 2.99-.44 7.4 1.23 9.82.83 1.19 1.81 2.52 3.08 2.47 1.24-.05 1.71-.8 3.22-.8 1.5 0 1.93.8 3.23.77 1.34-.02 2.18-1.2 2.99-2.4a10.5 10.5 0 001.36-2.78 4.37 4.37 0 01-2.66-3.96zM13.25 5.28A4.44 4.44 0 0014.3 2a4.52 4.52 0 00-2.92 1.51 4.22 4.22 0 00-1.07 3.06 3.73 3.73 0 002.94-1.29z"/></svg>
+            <div class="store-btn-text">
+              <span class="store-btn-label">Coming May 2026</span>
+              <span class="store-btn-name">App Store</span>
+            </div>
+          </div>
+          <div class="store-btn">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="currentColor"><path d="M1.57 1.04L11.6 11l-10.03 9.96c-.37-.36-.57-.87-.57-1.46V2.5c0-.59.2-1.1.57-1.46zM12.65 12.05l2.8 2.78-8.73 4.96 5.93-7.74zM17.15 9.89c.53.3.85.77.85 1.11s-.32.81-.85 1.11l-2.3 1.31-2.87-2.87 2.87-2.87 2.3 1.21zM6.72 4.21l8.73 4.96-2.8 2.78-5.93-7.74z"/></svg>
+            <div class="store-btn-text">
+              <span class="store-btn-label">Coming May 2026</span>
+              <span class="store-btn-name">Google Play</span>
+            </div>
+          </div>
+        </div>
+        <div class="app-preregister">Interested? <a href="#contact">Pre-register now</a></div>
+      </div>
       
-      <!-- Services -->
+      <!-- What We Do -->
       <section class="section">
-        <h2 class="section-title">Services</h2>
-        <p class="section-subtitle">End-to-end product development tailored to your needs</p>
+        <h2 class="section-title">What We Do</h2>
+        <p class="section-subtitle">End-to-end product development and growth</p>
+        <div class="service-tabs">
+          <button class="service-tab active" onclick="switchTab('build', this)">Build</button>
+          <button class="service-tab" onclick="switchTab('grow', this)">Grow</button>
+        </div>
+        <div id="tab-build" class="tab-content active">
         <div class="services-grid">
           <div class="service-card" onclick="toggleCard(this)">
             <div class="service-icon">
@@ -1158,12 +1476,8 @@
             </div>
           </div>
         </div>
-      </section>
-      
-      <!-- Growth Services -->
-      <section class="section">
-        <h2 class="section-title">Grow Your Reach</h2>
-        <p class="section-subtitle">Marketing & SEO services to help your MVP find and keep users</p>
+        </div>
+        <div id="tab-grow" class="tab-content">
         <div class="growth-grid">
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
@@ -1222,13 +1536,24 @@
             <span class="growth-credit-badge">350 credits</span>
           </div>
         </div>
+        </div>
       </section>
 
       <!-- Why Start Apps Studio -->
-      <section class="section">
-        <h2 class="section-title">Why Start Apps Studio?</h2>
-        <p class="section-subtitle">Everything you need to launch, nothing you don't</p>
-        
+      <div class="why-trigger">
+        <h2>Why Start Apps Studio?</h2>
+        <p>Everything you need to launch, nothing you don't</p>
+        <button class="why-glance-btn" onclick="openWhyModal()">
+          Take a Glance
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-overlay" id="whyModal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeWhyModal()">&times;</button>
+          <h3>Why Start Apps Studio?</h3>
+          <p>Everything you need to launch, nothing you don't</p>
         <div class="benefits-grid">
           <div class="benefit-card">
             <div class="benefit-icon">
@@ -1316,13 +1641,15 @@
             </div>
           </div>
         </div>
-      </section>
+        </div>
+      </div>
       
       <!-- Expertise -->
       <section class="section">
         <h2 class="section-title">The Expertise You Need</h2>
         <p class="section-subtitle">Five specialized roles, one dedicated team</p>
         
+        <div class="expertise-grid">
         <div class="expandable-card" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&#9998;</div>
@@ -1422,13 +1749,14 @@
             </div>
           </div>
         </div>
+        </div>
       </section>
       
       <!-- Industries -->
       <section class="section">
         <h2 class="section-title">Industry Expertise</h2>
         <p class="section-subtitle">Deep experience across key sectors</p>
-        <div class="industries-grid">
+        <div class="industries-scroll">
           <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Fintech</span>
           <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> Education</span>
           <span class="industry-chip"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Healthcare</span>
@@ -1666,7 +1994,7 @@
         </div>
         
         <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
-          <span>View More Work</span>
+          <span>Load More</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
       </section>
@@ -1877,7 +2205,7 @@
           
           <div class="form-group">
             <label>I'm interested in...</label>
-            <div class="interest-options">
+            <div class="interest-scroll">
               <label class="interest-option" onclick="toggleInterest(this)">
                 <input type="checkbox" name="interest" value="landing">
                 Landing Page
@@ -1952,15 +2280,36 @@
         }
       }
       
+      function switchTab(tab, el) {
+        document.querySelectorAll('.service-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+        document.getElementById('tab-' + tab).classList.add('active');
+        el.classList.add('active');
+      }
+
+      function openWhyModal() {
+        document.getElementById('whyModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeWhyModal() {
+        document.getElementById('whyModal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('whyModal').addEventListener('click', function(e) {
+        if (e.target === this) closeWhyModal();
+      });
+
       function toggleMoreWork() {
         const additional = document.getElementById('additionalCaseStudies');
         const btn = document.getElementById('viewMoreBtn');
         if (additional.style.display === 'none') {
           additional.style.display = 'block';
-          btn.innerHTML = '<span>View Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+          btn.innerHTML = '<span>Show Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
         } else {
           additional.style.display = 'none';
-          btn.innerHTML = '<span>View More Work</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+          btn.innerHTML = '<span>Load More</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
       }
       
