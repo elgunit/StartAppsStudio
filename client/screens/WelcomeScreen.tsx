@@ -30,10 +30,11 @@ const hatIcons: Record<HatType, keyof typeof Feather.glyphMap> = {
   analyst: "bar-chart-2",
 };
 
-type MenuSection = "services" | "expertise" | "work" | "packages" | null;
+type MenuSection = "services" | "grow" | "expertise" | "work" | "packages" | null;
 
 const menuItems = [
-  { id: "services" as const, icon: "grid" as const, label: "Services", subtitle: "What we offer" },
+  { id: "services" as const, icon: "grid" as const, label: "Services", subtitle: "Build products" },
+  { id: "grow" as const, icon: "trending-up" as const, label: "Grow", subtitle: "Marketing & SEO" },
   { id: "expertise" as const, icon: "award" as const, label: "Expertise", subtitle: "5 specialized roles" },
   { id: "work" as const, icon: "briefcase" as const, label: "Work", subtitle: "13 case studies" },
   { id: "packages" as const, icon: "package" as const, label: "Packages", subtitle: "Pricing & timelines" },
@@ -120,8 +121,21 @@ export default function WelcomeScreen() {
           Start Apps{"\n"}Studio
         </ThemedText>
         <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
-          Design, development & strategy — all in one partnership.
+          Design, development & growth — all in one partnership.
         </ThemedText>
+        <View style={styles.statsRow}>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            145+ MVPs
+          </ThemedText>
+          <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            Since 2010
+          </ThemedText>
+          <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            5 Roles
+          </ThemedText>
+        </View>
       </Animated.View>
 
       {/* CTA Buttons */}
@@ -173,33 +187,28 @@ export default function WelcomeScreen() {
                 {expandedSection === item.id ? (
                   <View style={styles.expandedContent}>
                     {item.id === "services" ? (
-                      <View style={{ gap: Spacing.lg }}>
-                        <View>
-                          <ThemedText type="caption" style={[styles.sectionDividerLabel, { color: theme.textTertiary }]}>BUILD</ThemedText>
-                          <View style={styles.gridContent}>
-                            {services.map((service, i) => (
-                              <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
-                                <Feather name={service.icon} size={16} color={theme.text} />
-                                <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
-                                <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
-                              </View>
-                            ))}
+                      <View style={styles.gridContent}>
+                        {services.map((service, i) => (
+                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
+                            <Feather name={service.icon} size={16} color={theme.text} />
+                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
+                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
                           </View>
-                        </View>
-                        <View>
-                          <ThemedText type="caption" style={[styles.sectionDividerLabel, { color: theme.textTertiary }]}>GROW</ThemedText>
-                          <View style={styles.gridContent}>
-                            {growthServices.map((service, i) => (
-                              <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
-                                <View style={styles.growIconRow}>
-                                  <Feather name={service.icon} size={14} color={service.color} />
-                                </View>
-                                <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
-                                <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
-                              </View>
-                            ))}
+                        ))}
+                      </View>
+                    ) : null}
+
+                    {item.id === "grow" ? (
+                      <View style={styles.gridContent}>
+                        {growthServices.map((service, i) => (
+                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
+                            <View style={styles.growIconRow}>
+                              <Feather name={service.icon} size={14} color={service.color} />
+                            </View>
+                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
+                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
                           </View>
-                        </View>
+                        ))}
                       </View>
                     ) : null}
 
@@ -310,6 +319,15 @@ const styles = StyleSheet.create({
   heroSubtitle: {
     textAlign: "center",
     maxWidth: 280,
+  },
+  statsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+  },
+  statItem: {
+    fontWeight: "500" as const,
   },
   ctaSection: {
     paddingHorizontal: Spacing.xl,
