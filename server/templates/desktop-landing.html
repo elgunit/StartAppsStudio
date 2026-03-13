@@ -1212,12 +1212,65 @@
         font-weight: 700;
         margin-bottom: 8px;
         text-align: center;
+        padding: 8px 48px 0 48px;
       }
 
       .modal-content > p {
         color: var(--text-secondary);
         text-align: center;
         margin-bottom: 32px;
+      }
+
+      .carousel-wrapper {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carousel-wrapper::before,
+      .carousel-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .carousel-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, var(--bg), transparent);
+      }
+
+      .carousel-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, var(--bg), transparent);
+      }
+
+      .benefits-carousel {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 4px 20px;
+        cursor: grab;
+        user-select: none;
+      }
+
+      .benefits-carousel:active {
+        cursor: grabbing;
+      }
+
+      .benefits-carousel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .benefits-carousel .benefit-card {
+        min-width: 280px;
+        max-width: 280px;
+        flex-shrink: 0;
       }
 
       /* Expertise Grid */
@@ -1236,22 +1289,13 @@
         display: flex;
         gap: 12px;
         overflow-x: auto;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+        scrollbar-width: none;
       }
 
       .industries-scroll::-webkit-scrollbar {
-        height: 4px;
-      }
-
-      .industries-scroll::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      .industries-scroll::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 4px;
+        display: none;
       }
 
       .industries-scroll .industry-chip {
@@ -1264,22 +1308,13 @@
         display: flex;
         gap: 8px;
         overflow-x: auto;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+        scrollbar-width: none;
       }
 
       .interest-scroll::-webkit-scrollbar {
-        height: 4px;
-      }
-
-      .interest-scroll::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      .interest-scroll::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 4px;
+        display: none;
       }
 
       .interest-scroll .interest-option {
@@ -1554,7 +1589,8 @@
           <button class="modal-close" onclick="closeWhyModal()">&times;</button>
           <h3>Why Start Apps Studio?</h3>
           <p>Everything you need to launch, nothing you don't</p>
-        <div class="benefits-grid">
+        <div class="carousel-wrapper">
+        <div class="benefits-carousel" id="benefitsCarousel">
           <div class="benefit-card">
             <div class="benefit-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
@@ -1608,6 +1644,7 @@
             <h4>Full Source Code</h4>
             <p>You own everything. Complete source code handoff with no vendor lock-in. Take it anywhere.</p>
           </div>
+        </div>
         </div>
         
         <div class="comparison-section">
@@ -2300,6 +2337,77 @@
       document.getElementById('whyModal').addEventListener('click', function(e) {
         if (e.target === this) closeWhyModal();
       });
+
+      (function() {
+        var carousel = document.getElementById('benefitsCarousel');
+        var autoInterval = null;
+        var resumeTimeout = null;
+        var isDragging = false;
+        var startX = 0;
+        var scrollStart = 0;
+        var cardWidth = 296;
+
+        function startAutoScroll() {
+          stopAutoScroll();
+          autoInterval = setInterval(function() {
+            if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 10) {
+              carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+              carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+          }, 3000);
+        }
+
+        function stopAutoScroll() {
+          if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+        }
+
+        function scheduleResume() {
+          if (resumeTimeout) clearTimeout(resumeTimeout);
+          resumeTimeout = setTimeout(startAutoScroll, 4000);
+        }
+
+        function onPointerDown(e) {
+          isDragging = true;
+          startX = e.pageX || e.touches[0].pageX;
+          scrollStart = carousel.scrollLeft;
+          carousel.style.scrollBehavior = 'auto';
+          stopAutoScroll();
+        }
+
+        function onPointerMove(e) {
+          if (!isDragging) return;
+          e.preventDefault();
+          var x = e.pageX || e.touches[0].pageX;
+          carousel.scrollLeft = scrollStart - (x - startX);
+        }
+
+        function onPointerUp() {
+          if (!isDragging) return;
+          isDragging = false;
+          carousel.style.scrollBehavior = 'smooth';
+          scheduleResume();
+        }
+
+        carousel.addEventListener('mousedown', onPointerDown);
+        carousel.addEventListener('mousemove', onPointerMove);
+        carousel.addEventListener('mouseup', onPointerUp);
+        carousel.addEventListener('mouseleave', onPointerUp);
+        carousel.addEventListener('touchstart', onPointerDown, { passive: true });
+        carousel.addEventListener('touchmove', onPointerMove, { passive: false });
+        carousel.addEventListener('touchend', onPointerUp);
+
+        var observer = new MutationObserver(function() {
+          var modal = document.getElementById('whyModal');
+          if (modal.classList.contains('open')) {
+            carousel.scrollLeft = 0;
+            startAutoScroll();
+          } else {
+            stopAutoScroll();
+          }
+        });
+        observer.observe(document.getElementById('whyModal'), { attributes: true, attributeFilter: ['class'] });
+      })();
 
       function toggleMoreWork() {
         const additional = document.getElementById('additionalCaseStudies');
