@@ -771,18 +771,17 @@
       }
 
       .step-badge {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 6px;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
         background: var(--accent);
         color: var(--bg);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        padding: 4px 12px;
-        border-radius: 100px;
-        margin-bottom: 16px;
+        font-size: 24px;
+        font-weight: 800;
+        border-radius: 14px;
+        margin: 0 auto 14px;
       }
 
       .step-icon {
@@ -840,20 +839,19 @@
 
       .step-connector-line {
         width: 100%;
-        height: 2px;
-        background: var(--border);
+        height: 0;
+        border-top: 2px dashed var(--border);
         position: relative;
-        overflow: hidden;
       }
 
       .step-connector-line::after {
         content: '';
         position: absolute;
-        top: 0;
+        top: -2px;
         left: 0;
-        height: 100%;
+        height: 0;
+        border-top: 2px dashed var(--accent);
         width: 0;
-        background: var(--accent);
         transition: width 0.6s ease;
       }
 
@@ -1444,17 +1442,37 @@
         .steps-track {
           flex-direction: column;
           gap: 0;
+          padding-left: 20px;
+          position: relative;
         }
-        .step-connector {
-          width: 2px;
-          height: 24px;
-          margin: 0 auto;
+        .steps-track::before {
+          content: '';
+          position: absolute;
+          left: 8px;
+          top: 0;
+          bottom: 0;
+          border-left: 2px dashed var(--border);
         }
-        .step-connector-line {
-          width: 2px;
-          height: 100%;
+        .step-connector { display: none; }
+        .step-card {
+          padding: 20px 16px;
+          margin-bottom: 16px;
+          position: relative;
         }
-        .step-card { padding: 20px 16px; }
+        .step-card::before {
+          content: '';
+          position: absolute;
+          left: -20px;
+          top: 50%;
+          width: 12px;
+          border-top: 2px dashed var(--accent);
+        }
+        .step-badge {
+          width: 40px;
+          height: 40px;
+          font-size: 20px;
+          border-radius: 10px;
+        }
         .growth-grid { grid-template-columns: 1fr; }
         .expertise-grid { grid-template-columns: 1fr; }
         .modal-content { padding: 24px 16px; }
@@ -2166,7 +2184,7 @@
         <p class="section-subtitle">From idea to launch in four simple steps</p>
         <div class="steps-track" id="stepsTrack">
           <div class="step-card">
-            <div class="step-badge">Step 1</div>
+            <div class="step-badge">1</div>
             <div class="step-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
@@ -2176,7 +2194,7 @@
           </div>
           <div class="step-connector"><div class="step-connector-line"></div></div>
           <div class="step-card">
-            <div class="step-badge">Step 2</div>
+            <div class="step-badge">2</div>
             <div class="step-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
@@ -2186,7 +2204,7 @@
           </div>
           <div class="step-connector"><div class="step-connector-line"></div></div>
           <div class="step-card">
-            <div class="step-badge">Step 3</div>
+            <div class="step-badge">3</div>
             <div class="step-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             </div>
@@ -2196,7 +2214,7 @@
           </div>
           <div class="step-connector"><div class="step-connector-line"></div></div>
           <div class="step-card">
-            <div class="step-badge">Step 4</div>
+            <div class="step-badge">4</div>
             <div class="step-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
