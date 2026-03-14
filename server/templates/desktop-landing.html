@@ -1348,21 +1348,16 @@
       .industries-scroll {
         display: flex;
         gap: 16px;
-        overflow-x: hidden;
+        overflow: hidden;
         padding: 8px 0;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        width: 100%;
+        will-change: transform;
         cursor: grab;
         user-select: none;
       }
 
       .industries-scroll:active {
         cursor: grabbing;
-      }
-
-      .industries-scroll::-webkit-scrollbar {
-        height: 0;
-        display: none;
       }
 
       .industries-scroll .industry-chip {
