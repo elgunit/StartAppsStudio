@@ -2246,35 +2246,35 @@
           <div class="form-group">
             <label>I'm interested in...</label>
             <div class="interest-scroll">
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="landing">
                 Landing Page
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="mobile">
                 Mobile App
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="webapp">
                 Web App
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="mvp">
                 Full MVP
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="other">
                 Other
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="hiring">
                 Hiring a Team
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="outsourcing">
                 Outsourcing a Project
               </label>
-              <label class="interest-option" onclick="toggleInterest(this)">
+              <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="aiml">
                 AI/ML
               </label>
@@ -2311,7 +2311,8 @@
         el.classList.toggle('expanded');
       }
       
-      function toggleInterest(el) {
+      function toggleInterest(e, el) {
+        e.preventDefault();
         el.classList.toggle('selected');
         const checkbox = el.querySelector('input[type="checkbox"]');
         if (checkbox) {
