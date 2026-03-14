@@ -2466,8 +2466,11 @@
           halfWidth = w;
         }
 
-        measureHalf();
+        setTimeout(measureHalf, 100);
         window.addEventListener('resize', measureHalf);
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(measureHalf);
+        }
 
         function tick() {
           if (!paused && !isDragging) {
