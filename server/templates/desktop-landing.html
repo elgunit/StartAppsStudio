@@ -1000,23 +1000,29 @@
       .form-group textarea {
         width: 100%;
         padding: 14px 16px;
-        border: 1px solid var(--border);
+        border: 1px solid transparent;
         border-bottom: 2px solid var(--border);
         border-radius: 4px;
-        background: var(--bg);
+        background: rgba(255, 255, 255, 0.04);
         color: var(--text);
         font-size: 15px;
         font-family: inherit;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 15px;
       }
       
       .form-group input:focus,
       .form-group select:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: transparent;
         border-bottom-color: var(--accent);
-        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
+        background: rgba(16, 185, 129, 0.04);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
       }
       
       .form-group textarea { min-height: 100px; resize: vertical; }
