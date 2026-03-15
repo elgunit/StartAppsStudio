@@ -2403,7 +2403,7 @@
           belt.appendChild(chip.cloneNode(true));
         });
         
-        var isScrolling = false;
+        var isPaused = false;
         var speed = 100; // pixels per second
         var lastTime = Date.now();
         
@@ -2415,42 +2415,39 @@
         }
         
         function autoScroll() {
-          if (isScrolling) {
-            requestAnimationFrame(autoScroll);
-            return;
-          }
-          
-          var now = Date.now();
-          var deltaTime = (now - lastTime) / 1000;
-          lastTime = now;
-          
-          var originalWidth = getOriginalWidth();
-          belt.scrollLeft += speed * deltaTime;
-          
-          // Seamless loop: reset to start when reaching the duplicated section
-          if (originalWidth > 0 && belt.scrollLeft >= originalWidth) {
-            belt.scrollLeft = 0;
+          if (!isPaused) {
+            var now = Date.now();
+            var deltaTime = (now - lastTime) / 1000;
+            lastTime = now;
+            
+            var originalWidth = getOriginalWidth();
+            belt.scrollLeft += speed * deltaTime;
+            
+            // Seamless loop: reset to start when reaching the duplicated section
+            if (originalWidth > 0 && belt.scrollLeft >= originalWidth) {
+              belt.scrollLeft = 0;
+            }
+          } else {
+            lastTime = Date.now();
           }
           
           requestAnimationFrame(autoScroll);
         }
         
         belt.addEventListener('mouseenter', function() {
-          isScrolling = true;
+          isPaused = true;
         });
         
         belt.addEventListener('mouseleave', function() {
-          isScrolling = false;
-          lastTime = Date.now();
+          isPaused = false;
         });
         
         belt.addEventListener('touchstart', function() {
-          isScrolling = true;
+          isPaused = true;
         });
         
         belt.addEventListener('touchend', function() {
-          isScrolling = false;
-          lastTime = Date.now();
+          isPaused = false;
         });
         
         autoScroll();
