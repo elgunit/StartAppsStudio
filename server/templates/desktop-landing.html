@@ -2388,14 +2388,13 @@
         var isScrolling = false;
         var speed = 40; // pixels per second
         var lastTime = Date.now();
-        var originalWidth = 0;
         
-        // Calculate original width after cloning
-        setTimeout(function() {
-          originalWidth = chips.reduce(function(sum, chip) {
+        // Calculate original width of first set
+        function getOriginalWidth() {
+          return chips.reduce(function(sum, chip) {
             return sum + chip.offsetWidth + 16; // 16px gap
           }, 0);
-        }, 100);
+        }
         
         function autoScroll() {
           if (isScrolling) {
@@ -2407,6 +2406,7 @@
           var deltaTime = (now - lastTime) / 1000;
           lastTime = now;
           
+          var originalWidth = getOriginalWidth();
           belt.scrollLeft += speed * deltaTime;
           
           // Seamless loop: reset to start when reaching the duplicated section
