@@ -2374,14 +2374,28 @@
         if (e.target === this) closeWhyModal();
       });
 
-      // Industry belt auto-scroll
+      // Industry belt auto-scroll with seamless loop
       (function() {
         var belt = document.getElementById('industriesBelt');
         if (!belt) return;
         
+        // Clone items for seamless infinite scroll
+        var chips = Array.from(belt.querySelectorAll('.industry-chip'));
+        chips.forEach(function(chip) {
+          belt.appendChild(chip.cloneNode(true));
+        });
+        
         var isScrolling = false;
         var speed = 40; // pixels per second
         var lastTime = Date.now();
+        var originalWidth = 0;
+        
+        // Calculate original width after cloning
+        setTimeout(function() {
+          originalWidth = chips.reduce(function(sum, chip) {
+            return sum + chip.offsetWidth + 16; // 16px gap
+          }, 0);
+        }, 100);
         
         function autoScroll() {
           if (isScrolling) {
@@ -2395,8 +2409,8 @@
           
           belt.scrollLeft += speed * deltaTime;
           
-          // Loop back to start when reaching end
-          if (belt.scrollLeft >= belt.scrollWidth - belt.clientWidth) {
+          // Seamless loop: reset to start when reaching the duplicated section
+          if (originalWidth > 0 && belt.scrollLeft >= originalWidth) {
             belt.scrollLeft = 0;
           }
           
