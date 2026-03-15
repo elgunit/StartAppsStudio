@@ -987,6 +987,20 @@
 
       .contact-form { text-align: left; }
       
+      .form-section {
+        margin-bottom: 28px;
+      }
+
+      .form-section > .form-section-title {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 14px;
+        display: block;
+      }
+
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1044,32 +1058,79 @@
       .interest-options { display: flex; flex-wrap: wrap; gap: 8px; }
       
       .interest-option {
-        padding: 8px 16px;
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        font-size: 14px;
+        padding: 10px 16px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.25s ease;
+        background: transparent;
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
       
-      .interest-option:hover { border-color: var(--text); }
-      .interest-option.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+      .interest-option:hover {
+        border-color: var(--accent);
+        background: rgba(139,92,246,0.04);
+        transform: translateY(-2px);
+      }
+
+      .interest-option.selected {
+        background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
+        border-color: var(--accent);
+        color: var(--accent);
+        font-weight: 600;
+      }
+
       .interest-option input { display: none; }
+
+      .interest-option::before {
+        content: '';
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 4px;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+
+      .interest-option.selected::before {
+        background: var(--accent);
+        border-color: var(--accent);
+        background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5L4 7L8 3' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 8px;
+      }
       
       .submit-btn {
         width: 100%;
-        padding: 16px;
-        background: var(--accent);
+        padding: 16px 24px;
+        background: linear-gradient(135deg, var(--accent), rgba(139,92,246,0.8));
         color: var(--bg);
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: opacity 0.2s;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       }
       
-      .submit-btn:hover { opacity: 0.9; }
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(139,92,246,0.3);
+      }
+
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
       .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
       
       .form-success { padding: 40px; text-align: center; }
@@ -2435,28 +2496,37 @@
           <div class="contact-right">
 
         <form class="contact-form" id="contactForm">
-          <div class="form-row">
-            <div class="form-group">
-              <input type="text" id="fullName" name="fullName" required placeholder="Full Name *">
-            </div>
-            <div class="form-group">
-              <input type="email" id="email" name="email" required placeholder="you@company.com *">
+          <!-- Basic Info Section -->
+          <div class="form-section">
+            <span class="form-section-title">Your Details</span>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" id="fullName" name="fullName" required placeholder="Full Name">
+              </div>
+              <div class="form-group">
+                <input type="email" id="email" name="email" required placeholder="you@company.com">
+              </div>
             </div>
           </div>
-          
-          <div class="form-group">
-            <select id="budget" name="budget">
-              <option value="">Estimated Budget</option>
-              <option value="starter">$459 - Starter</option>
-              <option value="prototype">$959 - Prototype</option>
-              <option value="production">$1.5k-$5k - Production</option>
-              <option value="custom">$7.5k+ - Custom</option>
-              <option value="enterprise">$75k+ - Enterprise</option>
-            </select>
+
+          <!-- Budget Section -->
+          <div class="form-section">
+            <span class="form-section-title">Project Budget</span>
+            <div class="form-group">
+              <select id="budget" name="budget">
+                <option value="">Select Your Budget Range</option>
+                <option value="starter">$459 - Starter</option>
+                <option value="prototype">$959 - Prototype</option>
+                <option value="production">$1.5k-$5k - Production</option>
+                <option value="custom">$7.5k+ - Custom</option>
+                <option value="enterprise">$75k+ - Enterprise</option>
+              </select>
+            </div>
           </div>
-          
-          <div class="form-group">
-            <label>I'm interested in...</label>
+
+          <!-- Interest Section -->
+          <div class="form-section">
+            <span class="form-section-title">What You're Building</span>
             <div class="interest-scroll">
               <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="landing">
@@ -2492,12 +2562,16 @@
               </label>
             </div>
           </div>
-          
-          <div class="form-group">
-            <textarea id="message" name="message" required placeholder="Tell us about your project *"></textarea>
+
+          <!-- Message Section -->
+          <div class="form-section">
+            <span class="form-section-title">Tell Us More</span>
+            <div class="form-group">
+              <textarea id="message" name="message" required placeholder="Describe your idea, goals, and timeline..."></textarea>
+            </div>
           </div>
-          
-          <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Start Building →</button>
         </form>
         
         <div class="form-success" id="formSuccess" style="display: none;">
