@@ -2400,59 +2400,54 @@
         if (!belt) return;
         
         // Clone items for seamless infinite scroll
-        var chips = Array.from(belt.querySelectorAll('.industry-chip'));
-        chips.forEach(function(chip) {
+        var originalChips = belt.querySelectorAll('.industry-chip');
+        var firstSetWidth = 0;
+        originalChips.forEach(function(chip) {
+          firstSetWidth += chip.offsetWidth + 16;
           belt.appendChild(chip.cloneNode(true));
         });
         
         var isPaused = false;
-        var speed = 100; // pixels per second
-        var lastTime = Date.now();
+        var scrollPixelsPerInterval = 2; // pixels per 30ms interval
+        var scrollInterval = null;
         
-        // Calculate original width of first set
-        function getOriginalWidth() {
-          return chips.reduce(function(sum, chip) {
-            return sum + chip.offsetWidth + 16; // 16px gap
-          }, 0);
-        }
-        
-        function autoScroll() {
-          if (!isPaused) {
-            var now = Date.now();
-            var deltaTime = (now - lastTime) / 1000;
-            lastTime = now;
+        function startScroll() {
+          if (scrollInterval) return;
+          
+          scrollInterval = setInterval(function() {
+            if (isPaused) return;
             
-            var originalWidth = getOriginalWidth();
-            belt.scrollLeft += speed * deltaTime;
+            belt.scrollLeft += scrollPixelsPerInterval;
             
-            // Seamless loop: reset to start when reaching the duplicated section
-            if (originalWidth > 0 && belt.scrollLeft >= originalWidth) {
+            // Seamless loop: reset to start when reaching the end
+            if (belt.scrollLeft >= firstSetWidth) {
               belt.scrollLeft = 0;
             }
-          } else {
-            lastTime = Date.now();
-          }
-          
-          requestAnimationFrame(autoScroll);
+          }, 30);
         }
         
+        // Pause on hover
         belt.addEventListener('mouseenter', function() {
           isPaused = true;
         });
         
+        // Resume on mouse leave
         belt.addEventListener('mouseleave', function() {
           isPaused = false;
         });
         
+        // Pause on touch
         belt.addEventListener('touchstart', function() {
           isPaused = true;
         });
         
+        // Resume on touch end
         belt.addEventListener('touchend', function() {
           isPaused = false;
         });
         
-        autoScroll();
+        // Start scrolling after a brief delay to ensure DOM is ready
+        setTimeout(startScroll, 100);
       })();
 
 
