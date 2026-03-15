@@ -1009,19 +1009,24 @@
       .form-group textarea {
         width: 100%;
         padding: 14px 16px;
-        border: 1px solid transparent;
-        border-bottom: 2px solid var(--border);
-        border-radius: 4px;
-        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
         color: var(--text);
         font-size: 15px;
         font-family: inherit;
-        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        -webkit-appearance: none;
+        appearance: none;
       }
 
       .form-group input::placeholder,
       .form-group textarea::placeholder {
-        color: rgba(255, 255, 255, 0.35);
+        color: var(--text-secondary);
         font-size: 15px;
       }
       
@@ -1482,6 +1487,14 @@
         .how-card-ghost { font-size: 96px; }
         .how-card h4 { font-size: 18px; }
         .how-card p { font-size: 13px; }
+        .interest-scroll {
+          flex-wrap: wrap;
+          overflow-x: visible;
+        }
+        .interest-scroll .interest-option {
+          white-space: normal;
+          flex-shrink: 1;
+        }
         .contact-inner {
           grid-template-columns: 1fr;
           gap: 28px;
