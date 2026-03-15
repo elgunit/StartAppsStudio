@@ -2372,6 +2372,56 @@
         if (e.target === this) closeWhyModal();
       });
 
+      // Industry belt auto-scroll
+      (function() {
+        var belt = document.getElementById('industriesBelt');
+        if (!belt) return;
+        
+        var isScrolling = false;
+        var speed = 40; // pixels per second
+        var lastTime = Date.now();
+        
+        function autoScroll() {
+          if (isScrolling) {
+            requestAnimationFrame(autoScroll);
+            return;
+          }
+          
+          var now = Date.now();
+          var deltaTime = (now - lastTime) / 1000;
+          lastTime = now;
+          
+          belt.scrollLeft += speed * deltaTime;
+          
+          // Loop back to start when reaching end
+          if (belt.scrollLeft >= belt.scrollWidth - belt.clientWidth) {
+            belt.scrollLeft = 0;
+          }
+          
+          requestAnimationFrame(autoScroll);
+        }
+        
+        belt.addEventListener('mouseenter', function() {
+          isScrolling = true;
+        });
+        
+        belt.addEventListener('mouseleave', function() {
+          isScrolling = false;
+          lastTime = Date.now();
+        });
+        
+        belt.addEventListener('touchstart', function() {
+          isScrolling = true;
+        });
+        
+        belt.addEventListener('touchend', function() {
+          isScrolling = false;
+          lastTime = Date.now();
+        });
+        
+        autoScroll();
+      })();
+
 
       (function() {
         var grid = document.getElementById('howItWorksGrid');
