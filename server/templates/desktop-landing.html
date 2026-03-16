@@ -1474,7 +1474,7 @@
         max-width: 100vw;
         scrollbar-width: none;
         scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling: auto;
       }
 
       .industries-scroll::-webkit-scrollbar {
@@ -2652,7 +2652,7 @@
         });
         
         var isPaused = false;
-        var scrollPixelsPerInterval = 2; // pixels per 30ms interval
+        var scrollPixelsPerInterval = 3.5; // pixels per 30ms interval (smoother/faster)
         var scrollInterval = null;
         
         function startScroll() {
@@ -2667,7 +2667,7 @@
             if (belt.scrollLeft >= firstSetWidth) {
               belt.scrollLeft = 0;
             }
-          }, 30);
+          }, 25);
         }
         
         // Pause on hover
