@@ -5,6 +5,21 @@ import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
 import { activeVisitorNotification, socialClickNotification } from "./email-templates";
+import {
+  renderArticleHtml,
+  renderIndexHtml,
+  renderRobotsTxt,
+  renderSitemapXml,
+} from "./journal/render";
+import { getPost } from "./journal/posts";
+
+function resolveOrigin(req: { header: (n: string) => string | undefined; get: (n: string) => string | undefined; protocol: string }): string {
+  const forwardedHost = req.header("x-forwarded-host");
+  const forwardedProto = req.header("x-forwarded-proto");
+  const host = forwardedHost || req.get("host") || "localhost:5000";
+  const proto = forwardedProto || (host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https");
+  return `${proto}://${host}`;
+}
 
 // Simple password hashing
 function hashPassword(password: string): string {
@@ -12,6 +27,38 @@ function hashPassword(password: string): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // ─── Journal (SEO content) ───────────────────────────────────────────
+  app.get("/journal", (req, res) => {
+    const origin = resolveOrigin(req as any);
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    res.send(renderIndexHtml(origin));
+  });
+
+  app.get("/journal/:slug", (req, res) => {
+    const post = getPost(req.params.slug);
+    if (!post) {
+      res.status(404).setHeader("content-type", "text/html; charset=utf-8");
+      return res.send(
+        `<!doctype html><meta charset="utf-8"><title>Not found</title><p>No article at that URL. <a href="/journal">Back to the Journal</a>.</p>`,
+      );
+    }
+    const origin = resolveOrigin(req as any);
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    res.send(renderArticleHtml(post, origin));
+  });
+
+  app.get("/sitemap.xml", (req, res) => {
+    const origin = resolveOrigin(req as any);
+    res.setHeader("content-type", "application/xml; charset=utf-8");
+    res.send(renderSitemapXml(origin));
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    const origin = resolveOrigin(req as any);
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.send(renderRobotsTxt(origin));
+  });
+
   // Auth routes
   app.post("/api/auth/register", async (req, res) => {
     try {
