@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Platform, StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -20,12 +20,14 @@ import { queryClient } from "@/lib/query-client";
 import RootStackNavigator from "@/navigation/RootStackNavigator";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/lib/auth";
+import ScrollToTopOnNavigate from "@/components/ScrollToTopOnNavigate";
 
 SplashScreen.preventAutoHideAsync();
 
 const GA_MEASUREMENT_ID = "G-FQCKTE2CF8";
 
 export default function App() {
+  const navRef = useNavigationContainerRef();
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_500Medium,
@@ -71,7 +73,8 @@ export default function App() {
           <SafeAreaProvider>
             <GestureHandlerRootView style={styles.root}>
               <KeyboardProvider>
-                <NavigationContainer>
+                <NavigationContainer ref={navRef}>
+                  <ScrollToTopOnNavigate navRef={navRef} />
                   <RootStackNavigator />
                 </NavigationContainer>
                 <StatusBar style="auto" />

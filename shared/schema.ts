@@ -154,6 +154,30 @@ export const serviceOrdersRelations = relations(serviceOrders, ({ one }) => ({
   }),
 }));
 
+// Section views — anonymous-friendly tracking of when sections become visible
+export const sectionViews = pgTable("section_views", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  sectionName: text("section_name").notNull(),
+  visitorId: varchar("visitor_id").notNull(),
+  userAgent: text("user_agent"),
+  referrerUrl: text("referrer_url"),
+  pageLoadAt: timestamp("page_load_at").notNull().defaultNow(),
+  durationMs: integer("duration_ms"),
+  userId: varchar("user_id").references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+// Visitor events — generic event log (clicks, scroll depth, route changes, etc.)
+export const visitorEvents = pgTable("visitor_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  visitorId: varchar("visitor_id").notNull(),
+  eventType: text("event_type").notNull(),
+  pagePath: text("page_path"),
+  eventData: text("event_data"),
+  userId: varchar("user_id").references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Contact form submissions
 export const contactSubmissions = pgTable("contact_submissions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -300,3 +324,17 @@ export type InsertServiceOrder = z.infer<typeof insertServiceOrderSchema>;
 export type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
 export type ProjectStatus = "brief_submitted" | "hat_selection" | "discovery" | "design_build" | "client_review" | "iteration" | "completed";
 export type ServiceOrderStatus = "submitted" | "in_progress" | "delivered";
+
+// Visitor analytics
+export const insertSectionViewSchema = createInsertSchema(sectionViews).omit({
+  id: true,
+  createdAt: true,
+});
+export const insertVisitorEventSchema = createInsertSchema(visitorEvents).omit({
+  id: true,
+  createdAt: true,
+});
+export type SectionView = typeof sectionViews.$inferSelect;
+export type InsertSectionView = z.infer<typeof insertSectionViewSchema>;
+export type VisitorEvent = typeof visitorEvents.$inferSelect;
+export type InsertVisitorEvent = z.infer<typeof insertVisitorEventSchema>;

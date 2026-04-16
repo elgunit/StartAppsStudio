@@ -17,6 +17,7 @@ import { Feather } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import Footer from "@/components/Footer";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
@@ -290,9 +291,7 @@ export default function WelcomeScreen() {
 
       {/* Footer */}
       <Animated.View entering={FadeInDown.delay(550).duration(500)} style={styles.footer}>
-        <ThemedText type="caption" style={{ color: theme.textTertiary, textAlign: "center" }}>
-          create@startappsstudio.com
-        </ThemedText>
+        <Footer />
       </Animated.View>
     </ScrollView>
   );

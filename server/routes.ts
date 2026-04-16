@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
+import { activeVisitorNotification, socialClickNotification } from "./email-templates";
 
 // Simple password hashing
 function hashPassword(password: string): string {
@@ -524,6 +525,163 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Init designer error:", error);
       res.status(500).json({ error: "Failed to initialize designer" });
+    }
+  });
+
+  // ────────────────────────────────────────────────────────────────────
+  // Visitor analytics — anonymous-friendly tracking
+  // POST endpoints are open (anonymous insert).
+  // GET endpoints require designer/admin role (passed via ?adminId=...).
+  // ────────────────────────────────────────────────────────────────────
+  const requireAdmin = async (adminId: unknown): Promise<boolean> => {
+    if (typeof adminId !== "string" || !adminId) return false;
+    const u = await storage.getUser(adminId);
+    return Boolean(u && u.role === "designer");
+  };
+
+  app.post("/api/track/section-view", async (req, res) => {
+    try {
+      const { sectionName, visitorId, userAgent, referrer, durationMs, userId } = req.body || {};
+      if (!sectionName || !visitorId) {
+        return res.status(400).json({ error: "sectionName and visitorId required" });
+      }
+      await storage.createSectionView({
+        sectionName: String(sectionName).slice(0, 120),
+        visitorId: String(visitorId).slice(0, 120),
+        userAgent: userAgent ? String(userAgent).slice(0, 500) : null,
+        referrerUrl: referrer ? String(referrer).slice(0, 500) : null,
+        pageLoadAt: new Date(),
+        durationMs: typeof durationMs === "number" ? Math.round(durationMs) : null,
+        userId: userId || null,
+      } as any);
+      res.json({ ok: true });
+    } catch (error) {
+      console.error("section-view error:", error);
+      res.status(500).json({ error: "Failed to record section view" });
+    }
+  });
+
+  app.post("/api/track/visitor-event", async (req, res) => {
+    try {
+      const { eventType, visitorId, pagePath, eventData, userId } = req.body || {};
+      if (!eventType || !visitorId) {
+        return res.status(400).json({ error: "eventType and visitorId required" });
+      }
+      await storage.createVisitorEvent({
+        eventType: String(eventType).slice(0, 80),
+        visitorId: String(visitorId).slice(0, 120),
+        pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
+        eventData: eventData == null ? null : (typeof eventData === "string" ? eventData : JSON.stringify(eventData)).slice(0, 4000),
+        userId: userId || null,
+      } as any);
+      res.json({ ok: true });
+    } catch (error) {
+      console.error("visitor-event error:", error);
+      res.status(500).json({ error: "Failed to record visitor event" });
+    }
+  });
+
+  app.post("/api/track/active-visitor", async (req, res) => {
+    try {
+      const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
+      if (!visitorId) return res.status(400).json({ error: "visitorId required" });
+
+      // Persist the event for analytics history.
+      await storage.createVisitorEvent({
+        eventType: "active_visitor",
+        visitorId: String(visitorId).slice(0, 120),
+        pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
+        eventData: JSON.stringify({ scrollPercent, userAgent, referrer }).slice(0, 4000),
+        userId: userId || null,
+      } as any);
+
+      // Send notification email (best-effort).
+      try {
+        const { client, fromEmail } = await getUncachableResendClient();
+        const { subject, html } = activeVisitorNotification({
+          visitorId: String(visitorId),
+          pagePath: pagePath ? String(pagePath) : "/",
+          scrollPercent: typeof scrollPercent === "number" ? scrollPercent : 0,
+          userAgent: userAgent ? String(userAgent) : undefined,
+          referrer: referrer ? String(referrer) : undefined,
+        });
+        await client.emails.send({
+          from: fromEmail,
+          to: "elgunit@gmail.com",
+          subject,
+          html,
+        });
+      } catch (emailError: any) {
+        console.error("active-visitor email failed:", emailError?.message || emailError);
+      }
+      res.json({ ok: true });
+    } catch (error) {
+      console.error("active-visitor error:", error);
+      res.status(500).json({ error: "Failed to record active visitor" });
+    }
+  });
+
+  app.post("/api/track/social-click", async (req, res) => {
+    try {
+      const { visitorId, pagePath, platform, userAgent, referrer, userId } = req.body || {};
+      if (!visitorId || !platform) {
+        return res.status(400).json({ error: "visitorId and platform required" });
+      }
+      await storage.createVisitorEvent({
+        eventType: "social_click",
+        visitorId: String(visitorId).slice(0, 120),
+        pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
+        eventData: JSON.stringify({ platform, userAgent, referrer }).slice(0, 4000),
+        userId: userId || null,
+      } as any);
+
+      try {
+        const { client, fromEmail } = await getUncachableResendClient();
+        const { subject, html } = socialClickNotification({
+          visitorId: String(visitorId),
+          pagePath: pagePath ? String(pagePath) : "/",
+          platform: String(platform),
+          userAgent: userAgent ? String(userAgent) : undefined,
+          referrer: referrer ? String(referrer) : undefined,
+        });
+        await client.emails.send({
+          from: fromEmail,
+          to: "elgunit@gmail.com",
+          subject,
+          html,
+        });
+      } catch (emailError: any) {
+        console.error("social-click email failed:", emailError?.message || emailError);
+      }
+      res.json({ ok: true });
+    } catch (error) {
+      console.error("social-click error:", error);
+      res.status(500).json({ error: "Failed to record social click" });
+    }
+  });
+
+  // Admin reads — designer-only.
+  app.get("/api/admin/section-views", async (req, res) => {
+    try {
+      if (!(await requireAdmin(req.query.adminId))) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
+      res.json(await storage.getSectionViews(limit));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch section views" });
+    }
+  });
+
+  app.get("/api/admin/visitor-events", async (req, res) => {
+    try {
+      if (!(await requireAdmin(req.query.adminId))) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
+      res.json(await storage.getVisitorEvents(limit));
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch visitor events" });
     }
   });
 

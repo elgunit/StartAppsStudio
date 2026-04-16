@@ -1,13 +1,14 @@
 import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
-  marketingServices, serviceOrders,
+  marketingServices, serviceOrders, sectionViews, visitorEvents,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
   type InsertCreditPackage, type CreditTransaction, type InsertCreditTransaction,
   type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission,
-  type MarketingService, type InsertMarketingService, type ServiceOrder, type InsertServiceOrder
+  type MarketingService, type InsertMarketingService, type ServiceOrder, type InsertServiceOrder,
+  type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
@@ -68,6 +69,12 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+
+  // Visitor Analytics
+  createSectionView(view: InsertSectionView): Promise<SectionView>;
+  createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent>;
+  getSectionViews(limit?: number): Promise<SectionView[]>;
+  getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
 
   // Marketing Services
   getMarketingServices(): Promise<MarketingService[]>;
@@ -345,6 +352,25 @@ export class DatabaseStorage implements IStorage {
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(sql`created_at DESC`);
+  }
+
+  // Visitor Analytics
+  async createSectionView(view: InsertSectionView): Promise<SectionView> {
+    const [row] = await db.insert(sectionViews).values(view).returning();
+    return row;
+  }
+
+  async createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent> {
+    const [row] = await db.insert(visitorEvents).values(event).returning();
+    return row;
+  }
+
+  async getSectionViews(limit: number = 200): Promise<SectionView[]> {
+    return await db.select().from(sectionViews).orderBy(desc(sectionViews.createdAt)).limit(limit);
+  }
+
+  async getVisitorEvents(limit: number = 200): Promise<VisitorEvent[]> {
+    return await db.select().from(visitorEvents).orderBy(desc(visitorEvents.createdAt)).limit(limit);
   }
 
   // Marketing Services

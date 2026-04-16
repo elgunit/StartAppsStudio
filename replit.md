@@ -32,7 +32,15 @@ Preferred communication style: Simple, everyday language.
 - **Storage Layer**: Abstracted storage interface in `server/storage.ts` for data access
 
 ### Data Model
-Key entities: Users (client/designer roles), Projects (with status workflow), Messages, WorkSessions, ProjectVersions, CreditPackages, CreditTransactions, ProjectHats, MarketingServices, ServiceOrders
+Key entities: Users (client/designer roles), Projects (with status workflow), Messages, WorkSessions, ProjectVersions, CreditPackages, CreditTransactions, ProjectHats, MarketingServices, ServiceOrders, SectionViews, VisitorEvents
+
+### Visitor Analytics
+- Anonymous-friendly tracking pipeline: `/api/track/section-view`, `/api/track/visitor-event`, `/api/track/active-visitor`, `/api/track/social-click`
+- Admin reads (designer-only via `?adminId=`): `/api/admin/section-views`, `/api/admin/visitor-events`
+- Frontend hooks: `useSectionTracker`, `useScrollDepth`, `useVisitorEvent`, `useActiveVisitorNotification`
+- `ScrollToTopOnNavigate` (mounted in App.tsx with shared NavigationContainer ref) drives scroll-depth tracking and one-shot per-session active-visitor email at 15% scroll
+- `Footer` component (Instagram + LinkedIn) emits social-click email notifications via Resend
+- Visitor IDs persisted in `localStorage` (web); session flags via `sessionStorage`
 
 Project status workflow: brief_submitted → hat_selection → discovery → design_build → client_review → iteration → completed
 
