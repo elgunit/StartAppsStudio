@@ -197,6 +197,13 @@ export const posts: Post[] = [
         id: "brand",
       },
       {
+        type: "image",
+        src: "/assets/journal/brand-identity-checklist.png",
+        alt: "Five-point brand identity checklist: purpose (why it exists), exclusion (who it's not for), vision (what success looks like), competitive landscape (where it plays), and clarity (the insight it's designed around).",
+        caption:
+          "Source: 'The key to nailing every brand identity project' — Maik Noblovits.",
+      },
+      {
         type: "p",
         text:
           "GEO works only when your brand identity is well-defined. Before you audit a single page, you should be able to answer five questions in one sentence each: why this brand needs to exist, who it is not for, what success looks like, the competitive landscape, and the clarity (not a hunch) you're designing toward. That clarity becomes the source of truth every piece of copy and schema inherits from.",

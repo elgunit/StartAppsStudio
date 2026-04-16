@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
 import { z } from "zod";
@@ -13,11 +13,15 @@ import {
 } from "./journal/render";
 import { getPost } from "./journal/posts";
 
-function resolveOrigin(req: { header: (n: string) => string | undefined; get: (n: string) => string | undefined; protocol: string }): string {
+function resolveOrigin(req: Request): string {
   const forwardedHost = req.header("x-forwarded-host");
   const forwardedProto = req.header("x-forwarded-proto");
   const host = forwardedHost || req.get("host") || "localhost:5000";
-  const proto = forwardedProto || (host.includes("localhost") || host.includes("127.0.0.1") ? "http" : "https");
+  const proto =
+    forwardedProto ||
+    (host.includes("localhost") || host.includes("127.0.0.1")
+      ? "http"
+      : "https");
   return `${proto}://${host}`;
 }
 
@@ -29,7 +33,7 @@ function hashPassword(password: string): string {
 export async function registerRoutes(app: Express): Promise<Server> {
   // ─── Journal (SEO content) ───────────────────────────────────────────
   app.get("/journal", (req, res) => {
-    const origin = resolveOrigin(req as any);
+    const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderIndexHtml(origin));
   });
@@ -42,19 +46,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `<!doctype html><meta charset="utf-8"><title>Not found</title><p>No article at that URL. <a href="/journal">Back to the Journal</a>.</p>`,
       );
     }
-    const origin = resolveOrigin(req as any);
+    const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderArticleHtml(post, origin));
   });
 
   app.get("/sitemap.xml", (req, res) => {
-    const origin = resolveOrigin(req as any);
+    const origin = resolveOrigin(req);
     res.setHeader("content-type", "application/xml; charset=utf-8");
     res.send(renderSitemapXml(origin));
   });
 
   app.get("/robots.txt", (req, res) => {
-    const origin = resolveOrigin(req as any);
+    const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.send(renderRobotsTxt(origin));
   });
