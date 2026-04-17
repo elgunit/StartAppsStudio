@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Platform, StyleSheet } from "react-native";
-import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
+import { NavigationContainer, useNavigationContainerRef, LinkingOptions } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -66,6 +67,28 @@ export default function App() {
     return null;
   }
 
+  const linking: LinkingOptions<any> = {
+    prefixes: [
+      Linking.createURL("/"),
+      "https://startappsstudio.com",
+      "https://www.startappsstudio.com",
+    ],
+    config: {
+      screens: {
+        JournalList: "journal",
+        JournalArticle: "journal/:slug",
+        ClientMain: {
+          screens: {
+            Dashboard: "",
+            Grow: "grow",
+            Messages: "messages",
+            Account: "account",
+          },
+        },
+      },
+    },
+  };
+
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -73,7 +96,7 @@ export default function App() {
           <SafeAreaProvider>
             <GestureHandlerRootView style={styles.root}>
               <KeyboardProvider>
-                <NavigationContainer ref={navRef}>
+                <NavigationContainer ref={navRef} linking={linking}>
                   <ScrollToTopOnNavigate navRef={navRef} />
                   <RootStackNavigator />
                 </NavigationContainer>

@@ -47,6 +47,12 @@ export default function AccountScreen() {
       visible: user?.role === "client",
     },
     {
+      icon: "book-open" as const,
+      label: "Journal",
+      onPress: () => navigation.navigate("JournalList"),
+      visible: true,
+    },
+    {
       icon: "bell" as const,
       label: "Notifications",
       onPress: () => {},

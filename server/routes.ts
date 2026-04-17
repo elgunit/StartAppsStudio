@@ -11,7 +11,7 @@ import {
   renderRobotsTxt,
   renderSitemapXml,
 } from "./journal/render";
-import { getPost } from "./journal/posts";
+import { getPost, allPostsNewestFirst } from "./journal/posts";
 
 function resolveOrigin(req: Request): string {
   const forwardedHost = req.header("x-forwarded-host");
@@ -49,6 +49,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderArticleHtml(post, origin));
+  });
+
+  // JSON API for the in-app Journal (Expo client)
+  app.get("/api/journal/posts", (_req, res) => {
+    const list = allPostsNewestFirst().map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      excerpt: p.excerpt,
+      heroImage: p.heroImage,
+      heroAlt: p.heroAlt,
+      publishedAt: p.publishedAt,
+      updatedAt: p.updatedAt,
+      readMinutes: p.readMinutes,
+      tags: p.tags,
+    }));
+    res.json({ posts: list });
+  });
+
+  app.get("/api/journal/posts/:slug", (req, res) => {
+    const post = getPost(req.params.slug);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    res.json({ post });
   });
 
   app.get("/sitemap.xml", (req, res) => {
