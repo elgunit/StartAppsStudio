@@ -10,6 +10,7 @@ export interface User {
   avatarUrl?: string | null;
   credits: number;
   isOnline: boolean;
+  sessionToken?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -41,15 +42,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const storedUser = await AsyncStorage.getItem(USER_STORAGE_KEY);
       if (storedUser) {
-        const parsed = JSON.parse(storedUser);
+        const parsed: User = JSON.parse(storedUser);
         setUser(parsed);
-        // Refresh user data from server
+        // Refresh user data from server. The user endpoint intentionally
+        // strips `sessionToken` for security, so we keep the locally cached
+        // token attached to the refreshed object — it was issued by the
+        // server at login time and is the authoritative copy on the client.
         try {
           const res = await fetch(new URL(`/api/users/${parsed.id}`, getApiUrl()).toString());
           if (res.ok) {
-            const freshUser = await res.json();
-            setUser(freshUser);
-            await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(freshUser));
+            const freshUser: User = await res.json();
+            const merged: User = { ...freshUser, sessionToken: parsed.sessionToken ?? null };
+            setUser(merged);
+            await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(merged));
           }
         } catch {
           // Use cached data if server unreachable
@@ -78,8 +83,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      if (user) {
-        await apiRequest("POST", "/api/auth/logout", { userId: user.id });
+      if (user?.sessionToken) {
+        // The server authenticates logout via the session token header so
+        // an unauth caller can't invalidate someone else's token. Use a
+        // raw fetch because apiRequest doesn't pass custom headers.
+        await fetch(new URL("/api/auth/logout", getApiUrl()).toString(), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-session-token": user.sessionToken,
+          },
+          body: JSON.stringify({}),
+        });
       }
     } catch {
       // Continue with logout even if API fails
@@ -91,9 +106,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const updateUser = async (data: Partial<User>) => {
     if (!user) return;
     const res = await apiRequest("PATCH", `/api/users/${user.id}`, data);
-    const updatedUser = await res.json();
-    setUser(updatedUser);
-    await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUser));
+    const updatedUser: User = await res.json();
+    // Preserve the locally cached sessionToken — the user endpoint strips
+    // it for security, so the merged copy keeps admin access intact after
+    // profile edits.
+    const merged: User = { ...updatedUser, sessionToken: user.sessionToken ?? null };
+    setUser(merged);
+    await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(merged));
   };
 
   const refreshUser = async () => {
@@ -101,9 +120,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const res = await fetch(new URL(`/api/users/${user.id}`, getApiUrl()).toString());
       if (res.ok) {
-        const freshUser = await res.json();
-        setUser(freshUser);
-        await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(freshUser));
+        const freshUser: User = await res.json();
+        // Preserve the locally cached sessionToken — the user endpoint
+        // strips it for security, but our local copy is still valid.
+        const merged: User = { ...freshUser, sessionToken: user.sessionToken ?? null };
+        setUser(merged);
+        await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(merged));
       }
     } catch (error) {
       console.error("Failed to refresh user:", error);

@@ -1,14 +1,15 @@
 import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
-  marketingServices, serviceOrders, sectionViews, visitorEvents,
+  marketingServices, serviceOrders, sectionViews, visitorEvents, journalLeads,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
   type InsertCreditPackage, type CreditTransaction, type InsertCreditTransaction,
   type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission,
   type MarketingService, type InsertMarketingService, type ServiceOrder, type InsertServiceOrder,
-  type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent
+  type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent,
+  type JournalLead, type InsertJournalLead
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
@@ -69,6 +70,10 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+
+  // Journal Leads
+  createJournalLead(lead: InsertJournalLead): Promise<JournalLead>;
+  getJournalLeads(limit?: number): Promise<JournalLead[]>;
 
   // Visitor Analytics
   createSectionView(view: InsertSectionView): Promise<SectionView>;
@@ -352,6 +357,16 @@ export class DatabaseStorage implements IStorage {
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(sql`created_at DESC`);
+  }
+
+  // Journal Leads
+  async createJournalLead(lead: InsertJournalLead): Promise<JournalLead> {
+    const [row] = await db.insert(journalLeads).values(lead).returning();
+    return row;
+  }
+
+  async getJournalLeads(limit: number = 200): Promise<JournalLead[]> {
+    return await db.select().from(journalLeads).orderBy(desc(journalLeads.createdAt)).limit(limit);
   }
 
   // Visitor Analytics

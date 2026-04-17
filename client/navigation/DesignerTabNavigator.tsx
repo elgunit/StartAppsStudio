@@ -6,6 +6,7 @@ import { Platform, StyleSheet } from "react-native";
 
 import DesignerDashboardScreen from "@/screens/DesignerDashboardScreen";
 import InquiriesScreen from "@/screens/InquiriesScreen";
+import JournalLeadsScreen from "@/screens/JournalLeadsScreen";
 import MessagesListScreen from "@/screens/MessagesListScreen";
 import WorkSessionScreen from "@/screens/WorkSessionScreen";
 import AccountScreen from "@/screens/AccountScreen";
@@ -16,6 +17,7 @@ import { useScreenOptions } from "@/hooks/useScreenOptions";
 export type DesignerTabParamList = {
   Projects: undefined;
   Inquiries: undefined;
+  Leads: undefined;
   Messages: undefined;
   WorkSession: undefined;
   Account: undefined;
@@ -73,6 +75,17 @@ export default function DesignerTabNavigator() {
           headerTitle: "Inquiries",
           tabBarIcon: ({ color, size }) => (
             <Feather name="inbox" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Leads"
+        component={JournalLeadsScreen}
+        options={{
+          title: "Leads",
+          headerTitle: "Journal Leads",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="user-plus" size={size} color={color} />
           ),
         }}
       />

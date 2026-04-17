@@ -32,6 +32,7 @@ export const users = pgTable("users", {
   avatarUrl: text("avatar_url"),
   credits: integer("credits").notNull().default(0),
   isOnline: boolean("is_online").notNull().default(false),
+  sessionToken: text("session_token"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -178,6 +179,16 @@ export const visitorEvents = pgTable("visitor_events", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Journal leads — guest emails captured from in-app Journal article CTAs
+export const journalLeads = pgTable("journal_leads", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  slug: text("slug").notNull(),
+  title: text("title"),
+  email: text("email").notNull(),
+  source: text("source").notNull().default("journal_signup"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 // Contact form submissions
 export const contactSubmissions = pgTable("contact_submissions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -288,6 +299,11 @@ export const insertContactSubmissionSchema = createInsertSchema(contactSubmissio
   createdAt: true,
 });
 
+export const insertJournalLeadSchema = createInsertSchema(journalLeads).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertMarketingServiceSchema = createInsertSchema(marketingServices).omit({
   id: true,
   createdAt: true,
@@ -317,6 +333,8 @@ export type InsertCreditTransaction = z.infer<typeof insertCreditTransactionSche
 export type ProjectHat = typeof projectHats.$inferSelect;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
+export type JournalLead = typeof journalLeads.$inferSelect;
+export type InsertJournalLead = z.infer<typeof insertJournalLeadSchema>;
 export type MarketingService = typeof marketingServices.$inferSelect;
 export type InsertMarketingService = z.infer<typeof insertMarketingServiceSchema>;
 export type ServiceOrder = typeof serviceOrders.$inferSelect;

@@ -1,10 +1,13 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
+import { db } from "./db";
+import { users as usersTable, type User } from "@shared/schema";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
-import { activeVisitorNotification, socialClickNotification } from "./email-templates";
+import { activeVisitorNotification, socialClickNotification, journalLeadNotification } from "./email-templates";
 import {
   renderArticleHtml,
   renderIndexHtml,
@@ -28,6 +31,28 @@ function resolveOrigin(req: Request): string {
 // Simple password hashing
 function hashPassword(password: string): string {
   return crypto.createHash("sha256").update(password).digest("hex");
+}
+
+// Strip auth-sensitive fields (password hash, session token) from user
+// objects before they leave the server. Use this for every response that
+// includes a user — the only exception is the login response, which must
+// include the freshly-issued session token for the client.
+type SensitiveUserKeys = "password" | "sessionToken";
+type PublicUser<T> = T extends null | undefined
+  ? T
+  : Omit<T, SensitiveUserKeys>;
+
+function publicUser<T extends Record<string, unknown> | null | undefined>(
+  u: T,
+): PublicUser<T> {
+  if (!u) return u as PublicUser<T>;
+  const { password, sessionToken, ...rest } = u as Record<string, unknown> & {
+    password?: unknown;
+    sessionToken?: unknown;
+  };
+  void password;
+  void sessionToken;
+  return rest as PublicUser<T>;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -76,6 +101,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ post });
   });
 
+  // Capture a guest email from an in-app Journal article CTA.
+  app.post("/api/journal/leads", async (req, res) => {
+    try {
+      const { slug, title, email, source } = req.body || {};
+      const cleanEmail = typeof email === "string" ? email.trim() : "";
+      const cleanSlug = typeof slug === "string" ? slug.trim() : "";
+      if (!cleanSlug) {
+        return res.status(400).json({ error: "slug is required" });
+      }
+      if (!cleanEmail || !/\S+@\S+\.\S+/.test(cleanEmail)) {
+        return res.status(400).json({ error: "valid email is required" });
+      }
+
+      // Resolve the canonical title from the slug when possible so the
+      // studio sees the real article title even if the client omits it.
+      const post = getPost(cleanSlug);
+      const finalTitle =
+        (typeof title === "string" && title.trim()) ||
+        (post ? post.title : null);
+
+      const lead = await storage.createJournalLead({
+        slug: cleanSlug.slice(0, 200),
+        title: finalTitle ? String(finalTitle).slice(0, 500) : null,
+        email: cleanEmail.slice(0, 320),
+        source: typeof source === "string" && source ? source.slice(0, 80) : "journal_signup",
+      });
+
+      // Fire-and-forget studio notification.
+      try {
+        const { client, fromEmail } = await getUncachableResendClient();
+        const { subject, html } = journalLeadNotification({
+          email: lead.email,
+          slug: lead.slug,
+          title: lead.title || undefined,
+          source: lead.source,
+        });
+        await client.emails.send({
+          from: fromEmail,
+          to: "create@startappsstudio.com",
+          subject,
+          html,
+        });
+      } catch (emailError: unknown) {
+        const message =
+          emailError instanceof Error ? emailError.message : String(emailError);
+        console.error("journal-lead email failed:", message);
+      }
+
+      res.json({ ok: true, lead });
+    } catch (error) {
+      console.error("journal-lead error:", error);
+      res.status(500).json({ error: "Failed to save lead" });
+    }
+  });
+
+  // Admin read of captured Journal leads (designer-only).
+  // Uses the server-issued session token from the `x-session-token` header
+  // — never trusts a client-supplied user ID — because lead emails are PII.
+  app.get("/api/admin/journal-leads", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
+      res.json(await storage.getJournalLeads(limit));
+    } catch (error) {
+      console.error("journal-leads list error:", error);
+      res.status(500).json({ error: "Failed to fetch journal leads" });
+    }
+  });
+
   app.get("/sitemap.xml", (req, res) => {
     const origin = resolveOrigin(req);
     res.setHeader("content-type", "application/xml; charset=utf-8");
@@ -111,7 +208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isOnline: false,
       });
 
-      res.json({ user: { ...user, password: undefined } });
+      res.json({ user: publicUser(user) });
     } catch (error) {
       console.error("Registration error:", error);
       res.status(500).json({ error: "Failed to register" });
@@ -131,9 +228,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      await storage.updateUser(user.id, { isOnline: true });
+      // Rotate a fresh server-issued session token on every successful login
+      // so admin endpoints can verify identity without trusting client-supplied IDs.
+      const sessionToken = crypto.randomBytes(32).toString("hex");
+      const updated = await storage.updateUser(user.id, { isOnline: true, sessionToken });
 
-      res.json({ user: { ...user, password: undefined, isOnline: true } });
+      res.json({
+        user: { ...publicUser(updated || user), isOnline: true, sessionToken },
+      });
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ error: "Failed to login" });
@@ -142,10 +244,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/logout", async (req, res) => {
     try {
-      const { userId } = req.body;
-      if (userId) {
-        await storage.updateUser(userId, { isOnline: false });
+      // Authenticate the caller by their server-issued session token instead
+      // of trusting a `userId` from the request body. Otherwise any unauth
+      // caller could repeatedly null another user's sessionToken and lock
+      // them out of token-gated admin endpoints.
+      const raw = req.header("x-session-token");
+      const token = typeof raw === "string" ? raw.trim() : "";
+      if (token && token.length >= 16) {
+        const [u] = await db
+          .select()
+          .from(usersTable)
+          .where(eq(usersTable.sessionToken, token));
+        if (u) {
+          await storage.updateUser(u.id, { isOnline: false, sessionToken: null });
+        }
       }
+      // Always respond success — the client should clear local state even
+      // if the server-side token was already invalidated.
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to logout" });
@@ -159,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      res.json({ ...user, password: undefined });
+      res.json(publicUser(user));
     } catch (error) {
       res.status(500).json({ error: "Failed to get user" });
     }
@@ -171,7 +286,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!designer) {
         return res.status(404).json({ error: "Designer not found" });
       }
-      res.json({ ...designer, password: undefined });
+      res.json(publicUser(designer));
     } catch (error) {
       res.status(500).json({ error: "Failed to get designer" });
     }
@@ -179,11 +294,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/users/:id", async (req, res) => {
     try {
-      const user = await storage.updateUser(req.params.id, req.body);
+      // Disallow client-driven mutation of auth-sensitive fields. Anything
+      // sensitive (password rotation, session token rotation, role changes)
+      // must go through dedicated server-controlled flows.
+      const body = (req.body ?? {}) as Record<string, unknown>;
+      const { password, sessionToken, role, ...safe } = body;
+      void password;
+      void sessionToken;
+      void role;
+      const user = await storage.updateUser(req.params.id, safe as Partial<User>);
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      res.json({ ...user, password: undefined });
+      res.json(publicUser(user));
     } catch (error) {
       res.status(500).json({ error: "Failed to update user" });
     }
@@ -577,7 +700,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/clients", async (req, res) => {
     try {
       const clients = await storage.getClientUsers();
-      res.json(clients.map((c: any) => ({ ...c, password: undefined })));
+      res.json(clients.map((c: any) => publicUser(c)));
     } catch (error) {
       res.status(500).json({ error: "Failed to get clients" });
     }
@@ -597,7 +720,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           isOnline: false,
         });
       }
-      res.json({ ...designer, password: undefined });
+      res.json(publicUser(designer));
     } catch (error) {
       console.error("Init designer error:", error);
       res.status(500).json({ error: "Failed to initialize designer" });
@@ -613,6 +736,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (typeof adminId !== "string" || !adminId) return false;
     const u = await storage.getUser(adminId);
     return Boolean(u && u.role === "designer");
+  };
+
+  // Session-token based admin auth. Reads `x-session-token` from the request,
+  // looks up the matching user, and only allows designers through. Used for
+  // admin endpoints that return PII (e.g. captured leads) — does NOT trust
+  // any client-supplied user ID.
+  const requireDesignerFromToken = async (req: Request) => {
+    const raw = req.header("x-session-token");
+    const token = typeof raw === "string" ? raw.trim() : "";
+    if (!token || token.length < 16) return null;
+    const [u] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.sessionToken, token));
+    if (!u || u.role !== "designer") return null;
+    return u;
   };
 
   app.post("/api/track/section-view", async (req, res) => {

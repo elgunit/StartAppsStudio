@@ -15,6 +15,7 @@ import { Card } from "@/components/Card";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import { trackVisitorEvent } from "@/lib/tracking";
+import { apiRequest } from "@/lib/query-client";
 
 type JournalSignupRoute = RouteProp<
   { JournalSignup: { slug: string; title?: string } },
@@ -61,8 +62,23 @@ export default function JournalSignupScreen() {
         title,
         email: trimmed,
       });
-      // Small delay so the loading indicator is perceptible.
-      await new Promise((r) => setTimeout(r, 300));
+      try {
+        await apiRequest("POST", "/api/journal/leads", {
+          slug,
+          title,
+          email: trimmed,
+          source: "journal_signup",
+        });
+      } catch (err) {
+        // Persisting the lead failed — surface the error instead of
+        // silently confirming, otherwise leads would be lost without the
+        // user knowing to retry.
+        console.warn("journal lead save failed", err);
+        setEmailError(
+          "We couldn't save your email just now. Please try again.",
+        );
+        return;
+      }
       setSubmitted(true);
     } finally {
       setSubmitting(false);

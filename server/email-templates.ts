@@ -137,6 +137,37 @@ export interface SocialClickOpts {
   timestamp?: string;
 }
 
+export interface JournalLeadOpts {
+  email: string;
+  slug: string;
+  title?: string;
+  source?: string;
+  timestamp?: string;
+}
+
+export function journalLeadNotification(opts: JournalLeadOpts): { subject: string; html: string } {
+  const ts = opts.timestamp || new Date().toISOString();
+  const articleLabel = opts.title || opts.slug;
+  const subject = `New Journal lead: ${opts.email} (${articleLabel})`;
+  const html = baseTemplate({
+    preheader: `${opts.email} signed up from "${articleLabel}".`,
+    title: "New guest lead from the Journal",
+    bodyHtml: `
+      <p style="margin:0 0 18px 0;">A guest just dropped their email after reading <strong style="color:${BRAND.text};">${escapeHtml(articleLabel)}</strong>.</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;padding:16px;">
+        ${row("Email", opts.email)}
+        ${row("Article", opts.title || "—")}
+        ${row("Slug", opts.slug)}
+        ${row("Source", opts.source || "journal_signup")}
+        ${row("Time", ts)}
+      </table>
+    `,
+    ctaText: "Reply to lead",
+    ctaUrl: `mailto:${opts.email}?subject=${encodeURIComponent("Re: " + articleLabel)}`,
+  });
+  return { subject, html };
+}
+
 export function socialClickNotification(opts: SocialClickOpts): { subject: string; html: string } {
   const ts = opts.timestamp || new Date().toISOString();
   const subject = `${opts.platform} click from ${opts.pagePath}`;
