@@ -13,6 +13,7 @@ import Animated, {
   FadeInDown,
 } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
@@ -95,25 +96,50 @@ export default function WelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
   const [showAllProjects, setShowAllProjects] = React.useState(false);
+  const [menuVisible, setMenuVisible] = React.useState(false);
+  const [floatingMenuVisible, setFloatingMenuVisible] = React.useState(false);
+  const scrollRef = React.useRef<ScrollView>(null);
+  const heroLayout = React.useRef(0);
 
   const toggleSection = (section: MenuSection) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setMenuVisible(false);
+      setFloatingMenuVisible(false);
+    }, []),
+  );
 
   const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
   const loopingCaseStudies = [...displayedCaseStudies, ...displayedCaseStudies];
 
   return (
     <ScrollView
+      ref={scrollRef}
       style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
       contentContainerStyle={{
         paddingTop: insets.top + Spacing["2xl"],
         paddingBottom: insets.bottom + Spacing["3xl"],
       }}
+      scrollEventThrottle={16}
+      onScroll={(event) => {
+        const y = event.nativeEvent.contentOffset.y;
+        const showMenu = y > Math.max(120, heroLayout.current - 20);
+        setMenuVisible(showMenu);
+        setFloatingMenuVisible(showMenu);
+      }}
       showsVerticalScrollIndicator={false}
     >
       {/* Hero Section */}
-      <Animated.View entering={FadeInDown.delay(100).duration(500)} style={styles.heroSection}>
+      <Animated.View
+        entering={FadeInDown.delay(100).duration(500)}
+        style={styles.heroSection}
+        onLayout={(event) => {
+          heroLayout.current = event.nativeEvent.layout.y + event.nativeEvent.layout.height;
+        }}
+      >
         <Image
           source={isDark ? require("../../assets/images/icon-dark.png") : require("../../assets/images/icon.png")}
           style={[styles.logo, { borderRadius: 16 }]}
@@ -158,7 +184,8 @@ export default function WelcomeScreen() {
       </Animated.View>
 
       {/* Menu Sections */}
-      <Animated.View entering={FadeInDown.delay(300).duration(500)} style={styles.menuSection}>
+      {menuVisible ? (
+        <Animated.View entering={FadeInDown.delay(300).duration(500)} style={styles.menuSection}>
         <ThemedText type="caption" style={[styles.menuLabel, { color: theme.textTertiary }]}>
           EXPLORE
         </ThemedText>
@@ -288,12 +315,37 @@ export default function WelcomeScreen() {
             </Pressable>
           </Animated.View>
         ))}
-      </Animated.View>
+        </Animated.View>
+      ) : null}
 
-      {/* Footer */}
-      <Animated.View entering={FadeInDown.delay(550).duration(500)} style={styles.footer}>
-        <Footer />
-      </Animated.View>
+      <Footer />
+
+      {floatingMenuVisible ? (
+        <View style={[styles.floatingMenu, { top: insets.top + Spacing.md }]}>
+          <Card style={[styles.floatingMenuCard, { backgroundColor: theme.backgroundDefault }]}>
+            <View style={styles.floatingMenuRow}>
+              {menuItems.map((item) => (
+                <Pressable
+                  key={item.id}
+                  onPress={() => {
+                    setExpandedSection(item.id);
+                    scrollRef.current?.scrollTo({
+                      y: Math.max(0, heroLayout.current - Spacing.xl),
+                      animated: true,
+                    });
+                  }}
+                  style={styles.floatingMenuButton}
+                >
+                  <Feather name={item.icon} size={16} color={theme.text} />
+                  <ThemedText type="caption" style={{ color: theme.text }}>
+                    {item.label}
+                  </ThemedText>
+                </Pressable>
+              ))}
+            </View>
+          </Card>
+        </View>
+      ) : null}
     </ScrollView>
   );
 }
@@ -452,5 +504,25 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: Spacing["2xl"],
     paddingHorizontal: Spacing.xl,
+  },
+  floatingMenu: {
+    position: "absolute",
+    left: Spacing.lg,
+    right: Spacing.lg,
+    zIndex: 20,
+  },
+  floatingMenuCard: {
+    padding: Spacing.sm,
+  },
+  floatingMenuRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: Spacing.xs,
+  },
+  floatingMenuButton: {
+    flex: 1,
+    alignItems: "center",
+    gap: 4,
+    paddingVertical: Spacing.sm,
   },
 });
