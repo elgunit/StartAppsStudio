@@ -1,5 +1,5 @@
 import { sql, relations } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean, pgEnum, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -187,7 +187,9 @@ export const journalLeads = pgTable("journal_leads", {
   email: text("email").notNull(),
   source: text("source").notNull().default("journal_signup"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+}, (table) => ({
+  slugEmailUnique: uniqueIndex("journal_leads_slug_email_unique").on(table.slug, table.email),
+}));
 
 // Contact form submissions
 export const contactSubmissions = pgTable("contact_submissions", {

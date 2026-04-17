@@ -82,7 +82,7 @@ export interface IStorage {
   getContactSubmissions(): Promise<ContactSubmission[]>;
 
   // Journal Leads
-  createJournalLead(lead: InsertJournalLead): Promise<JournalLead>;
+  createJournalLead(lead: InsertJournalLead): Promise<{ lead: JournalLead; created: boolean }>;
   getJournalLeads(limit?: number): Promise<JournalLead[]>;
 
   // Visitor Analytics
@@ -371,9 +371,31 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Journal Leads
-  async createJournalLead(lead: InsertJournalLead): Promise<JournalLead> {
-    const [row] = await db.insert(journalLeads).values(lead).returning();
-    return row;
+  async createJournalLead(lead: InsertJournalLead): Promise<{ lead: JournalLead; created: boolean }> {
+    // Upsert on (slug, email) — a duplicate submission returns the existing
+    // row without inserting again, so the studio doesn't get a second
+    // notification email for the same visitor on the same article.
+    const inserted = await db
+      .insert(journalLeads)
+      .values(lead)
+      .onConflictDoNothing({ target: [journalLeads.slug, journalLeads.email] })
+      .returning();
+    if (inserted.length > 0) {
+      return { lead: inserted[0], created: true };
+    }
+    const [existing] = await db
+      .select()
+      .from(journalLeads)
+      .where(and(eq(journalLeads.slug, lead.slug), eq(journalLeads.email, lead.email)));
+    if (!existing) {
+      // Should not happen — onConflictDoNothing returned no row but the
+      // existing row also can't be located. Surface a clear error so the
+      // route returns 500 instead of silently sending malformed data.
+      throw new Error(
+        `journal lead upsert produced no row for slug=${lead.slug}`,
+      );
+    }
+    return { lead: existing, created: false };
   }
 
   async getJournalLeads(limit: number = 200): Promise<JournalLead[]> {

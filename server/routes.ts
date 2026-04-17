@@ -119,35 +119,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
         (typeof title === "string" && title.trim()) ||
         (post ? post.title : null);
 
-      const lead = await storage.createJournalLead({
+      const { lead, created } = await storage.createJournalLead({
         slug: cleanSlug.slice(0, 200),
         title: finalTitle ? String(finalTitle).slice(0, 500) : null,
         email: cleanEmail.slice(0, 320),
         source: typeof source === "string" && source ? source.slice(0, 80) : "journal_signup",
       });
 
-      // Fire-and-forget studio notification.
-      try {
-        const { client, fromEmail } = await getUncachableResendClient();
-        const { subject, html } = journalLeadNotification({
-          email: lead.email,
-          slug: lead.slug,
-          title: lead.title || undefined,
-          source: lead.source,
-        });
-        await client.emails.send({
-          from: fromEmail,
-          to: "create@startappsstudio.com",
-          subject,
-          html,
-        });
-      } catch (emailError: unknown) {
-        const message =
-          emailError instanceof Error ? emailError.message : String(emailError);
-        console.error("journal-lead email failed:", message);
+      // Only notify the studio on the first capture for this slug+email,
+      // so a visitor who taps the CTA twice doesn't trigger a second email.
+      if (created) {
+        try {
+          const { client, fromEmail } = await getUncachableResendClient();
+          const { subject, html } = journalLeadNotification({
+            email: lead.email,
+            slug: lead.slug,
+            title: lead.title || undefined,
+            source: lead.source,
+          });
+          await client.emails.send({
+            from: fromEmail,
+            to: "create@startappsstudio.com",
+            subject,
+            html,
+          });
+        } catch (emailError: unknown) {
+          const message =
+            emailError instanceof Error ? emailError.message : String(emailError);
+          console.error("journal-lead email failed:", message);
+        }
       }
 
-      res.json({ ok: true, lead });
+      res.json({ ok: true, lead, duplicate: !created });
     } catch (error) {
       console.error("journal-lead error:", error);
       res.status(500).json({ error: "Failed to save lead" });
