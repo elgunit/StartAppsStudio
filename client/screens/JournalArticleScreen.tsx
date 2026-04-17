@@ -20,7 +20,7 @@ import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
 import { Spacing, BorderRadius } from "@/constants/theme";
-import { resolveAssetUrl } from "@/screens/JournalListScreen";
+import { resolveAssetUrl } from "@/lib/journal";
 import { trackVisitorEvent } from "@/lib/tracking";
 
 type Block =

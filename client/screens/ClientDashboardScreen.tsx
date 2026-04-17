@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Pressable } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -13,6 +13,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { ProjectCard } from "@/components/ProjectCard";
+import { resolveAssetUrl, type JournalPostSummary } from "@/lib/journal";
 import { OnlineIndicator } from "@/components/OnlineIndicator";
 import { EmptyState } from "@/components/EmptyState";
 import { useTheme } from "@/hooks/useTheme";
@@ -36,6 +37,11 @@ export default function ClientDashboardScreen() {
   const { data: designer } = useQuery({
     queryKey: ["/api/designer"],
   });
+
+  const { data: journalData } = useQuery<{ posts: JournalPostSummary[] }>({
+    queryKey: ["/api/journal/posts"],
+  });
+  const journalPreview = (journalData?.posts ?? []).slice(0, 2);
 
   useEffect(() => {
     refreshUser();
@@ -140,33 +146,107 @@ export default function ClientDashboardScreen() {
     </Animated.View>
   );
 
-  const renderFooter = () => {
-    if (completedProjects.length === 0) return null;
+  const renderJournalSection = () => {
+    if (journalPreview.length === 0) return null;
     return (
-      <View>
-        <View style={[styles.sectionHeader, { marginTop: Spacing.lg }]}>
-          <ThemedText type="h3">Completed</ThemedText>
-          <ThemedText type="small" style={{ color: theme.textSecondary }}>
-            {completedProjects.length} project{completedProjects.length !== 1 ? "s" : ""}
-          </ThemedText>
+      <View style={{ marginTop: Spacing.lg }} testID="section-journal-preview">
+        <View style={styles.sectionHeader}>
+          <ThemedText type="h3">From the Journal</ThemedText>
+          <Pressable
+            onPress={() => navigation.navigate("JournalList")}
+            testID="button-journal-see-all"
+          >
+            <ThemedText type="small" style={{ color: theme.textSecondary }}>
+              See all
+            </ThemedText>
+          </Pressable>
         </View>
-        {completedProjects.map((item, index) => (
-          <Animated.View key={item.id} entering={FadeInDown.delay(100 + index * 50).duration(400)}>
-            <ProjectCard
-              name={item.name}
-              description={item.description}
-              status={item.status}
-              planTier={item.planTier}
-              estimatedCredits={item.estimatedCredits}
-              usedCredits={item.usedCredits}
-              lastActivity={formatDistanceToNow(new Date(item.updatedAt), {
-                addSuffix: true,
-              })}
-              onPress={() => navigation.navigate("ProjectDetail", { projectId: item.id })}
-              testID={`card-project-${item.id}`}
-            />
+        {journalPreview.map((post, index) => (
+          <Animated.View
+            key={post.slug}
+            entering={FadeInDown.delay(100 + index * 50).duration(400)}
+            style={styles.journalCardWrap}
+          >
+            <Card
+              testID={`card-journal-${post.slug}`}
+              onPress={() =>
+                navigation.navigate("JournalArticle", { slug: post.slug })
+              }
+              style={styles.journalCard}
+            >
+              <Image
+                source={{ uri: resolveAssetUrl(post.heroImage) }}
+                style={[
+                  styles.journalHero,
+                  { backgroundColor: theme.backgroundSecondary },
+                ]}
+                resizeMode="cover"
+                accessibilityLabel={post.heroAlt}
+              />
+              <View style={styles.journalCardBody}>
+                <ThemedText type="caption" style={{ color: theme.textTertiary }}>
+                  {new Date(post.publishedAt).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}{" "}
+                  · {post.readMinutes} min read
+                </ThemedText>
+                <ThemedText type="h3" style={{ marginTop: Spacing.xs }}>
+                  {post.title}
+                </ThemedText>
+                <ThemedText
+                  type="small"
+                  style={{ color: theme.textSecondary, marginTop: Spacing.sm }}
+                  numberOfLines={3}
+                >
+                  {post.excerpt}
+                </ThemedText>
+              </View>
+            </Card>
           </Animated.View>
         ))}
+      </View>
+    );
+  };
+
+  const renderFooter = () => {
+    return (
+      <View>
+        {completedProjects.length > 0 ? (
+          <View>
+            <View style={[styles.sectionHeader, { marginTop: Spacing.lg }]}>
+              <ThemedText type="h3">Completed</ThemedText>
+              <ThemedText type="small" style={{ color: theme.textSecondary }}>
+                {completedProjects.length} project
+                {completedProjects.length !== 1 ? "s" : ""}
+              </ThemedText>
+            </View>
+            {completedProjects.map((item, index) => (
+              <Animated.View
+                key={item.id}
+                entering={FadeInDown.delay(100 + index * 50).duration(400)}
+              >
+                <ProjectCard
+                  name={item.name}
+                  description={item.description}
+                  status={item.status}
+                  planTier={item.planTier}
+                  estimatedCredits={item.estimatedCredits}
+                  usedCredits={item.usedCredits}
+                  lastActivity={formatDistanceToNow(new Date(item.updatedAt), {
+                    addSuffix: true,
+                  })}
+                  onPress={() =>
+                    navigation.navigate("ProjectDetail", { projectId: item.id })
+                  }
+                  testID={`card-project-${item.id}`}
+                />
+              </Animated.View>
+            ))}
+          </View>
+        ) : null}
+        {renderJournalSection()}
       </View>
     );
   };
@@ -227,4 +307,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: Spacing.lg,
   },
+  journalCardWrap: { marginBottom: Spacing.lg },
+  journalCard: { padding: 0, overflow: "hidden" },
+  journalHero: { width: "100%", height: 160 },
+  journalCardBody: { padding: Spacing.lg },
 });

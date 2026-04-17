@@ -9,38 +9,15 @@ import { useQuery } from "@tanstack/react-query";
 import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
 import { useTheme } from "@/hooks/useTheme";
-import { getApiUrl } from "@/lib/query-client";
 import { Spacing, BorderRadius } from "@/constants/theme";
+import {
+  resolveAssetUrl,
+  formatJournalDate as formatDate,
+  type JournalPostSummary,
+} from "@/lib/journal";
 
-export type JournalPostSummary = {
-  slug: string;
-  title: string;
-  description: string;
-  excerpt: string;
-  heroImage: string;
-  heroAlt: string;
-  publishedAt: string;
-  updatedAt?: string;
-  readMinutes: number;
-  tags: string[];
-};
-
-function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  } catch {
-    return iso;
-  }
-}
-
-export function resolveAssetUrl(src: string): string {
-  if (/^https?:\/\//i.test(src)) return src;
-  return new URL(src, getApiUrl()).href;
-}
+export type { JournalPostSummary };
+export { resolveAssetUrl };
 
 export default function JournalListScreen() {
   const headerHeight = useHeaderHeight();
