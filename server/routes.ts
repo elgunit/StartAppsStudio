@@ -163,8 +163,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!designer) {
         return res.status(403).json({ error: "Forbidden" });
       }
-      const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
-      res.json(await storage.getJournalLeads(limit));
+      const wantsCsv = String(req.query.format ?? "").toLowerCase() === "csv";
+      const limit = Math.min(
+        wantsCsv ? 10000 : 1000,
+        parseInt(String(req.query.limit ?? (wantsCsv ? "10000" : "200")), 10) ||
+          (wantsCsv ? 10000 : 200),
+      );
+      const leads = await storage.getJournalLeads(limit);
+      if (!wantsCsv) {
+        return res.json(leads);
+      }
+      const escape = (val: unknown) => {
+        let s = val === null || val === undefined ? "" : String(val);
+        // Defuse spreadsheet formula injection: a leading =, +, -, @, tab,
+        // or carriage return makes Excel/Sheets evaluate the cell. Prefix
+        // with a single quote to neutralize without losing the original.
+        if (s.length > 0 && /^[=+\-@\t\r]/.test(s)) {
+          s = `'${s}`;
+        }
+        // Always quote so commas/newlines/quotes inside fields stay safe.
+        // Doubling quote chars is the CSV escape per RFC 4180.
+        return `"${s.replace(/"/g, '""')}"`;
+      };
+      const header = ["slug", "title", "email", "source", "createdAt"];
+      const lines = [header.join(",")];
+      for (const lead of leads) {
+        lines.push(
+          [
+            escape(lead.slug),
+            escape(lead.title ?? ""),
+            escape(lead.email),
+            escape(lead.source),
+            escape(
+              lead.createdAt instanceof Date
+                ? lead.createdAt.toISOString()
+                : lead.createdAt,
+            ),
+          ].join(","),
+        );
+      }
+      const csv = lines.join("\r\n") + "\r\n";
+      const stamp = new Date().toISOString().slice(0, 10);
+      res.setHeader("content-type", "text/csv; charset=utf-8");
+      res.setHeader(
+        "content-disposition",
+        `attachment; filename="journal-leads-${stamp}.csv"`,
+      );
+      return res.send(csv);
     } catch (error) {
       console.error("journal-leads list error:", error);
       res.status(500).json({ error: "Failed to fetch journal leads" });
