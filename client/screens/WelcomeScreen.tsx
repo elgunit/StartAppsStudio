@@ -7,13 +7,10 @@ import {
   Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Animated, {
   FadeInDown,
 } from "react-native-reanimated";
 import { Feather } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
@@ -90,8 +87,6 @@ const packages = [
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
   const { theme, isDark } = useTheme();
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
   const [showAllProjects, setShowAllProjects] = React.useState(false);
   const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
   const loopingCaseStudies = [...displayedCaseStudies, ...displayedCaseStudies];
@@ -132,21 +127,6 @@ export default function WelcomeScreen() {
         </View>
       </View>
 
-      <View style={styles.ctaSection}>
-        <View style={styles.menuHeader}>
-          <View style={[styles.menuIcon, { backgroundColor: theme.backgroundDefault }]}>
-            <Feather name="layout" size={18} color={theme.text} />
-          </View>
-          <View style={styles.menuInfo}>
-            <ThemedText type="body" style={{ fontWeight: "600" }}>
-              Build products
-            </ThemedText>
-            <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-              Scroll to explore services, work, and packages
-            </ThemedText>
-          </View>
-        </View>
-      </View>
     </ScrollView>
   );
 }
@@ -181,32 +161,6 @@ const styles = StyleSheet.create({
   },
   statItem: {
     fontWeight: "500" as const,
-  },
-  ctaSection: {
-    paddingHorizontal: Spacing.xl,
-    gap: Spacing.sm,
-    marginBottom: Spacing["2xl"],
-  },
-  primaryButton: {
-    width: "100%",
-  },
-  secondaryButton: {
-    width: "100%",
-  },
-  menuHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-  },
-  menuIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: BorderRadius.md,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  menuInfo: {
-    flex: 1,
   },
   floatingMenu: {
     position: "absolute",
