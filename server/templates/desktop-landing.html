@@ -1504,9 +1504,14 @@
         padding: 8px 0;
         max-width: 100vw;
         scrollbar-width: none;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: auto;
+        /* IMPORTANT: keep `auto` (not `smooth`) — the auto-scroller writes
+           sub-pixel positions every frame, and `smooth` would animate the
+           seamless wrap-around and cause a visible jump. */
+        scroll-behavior: auto;
+        -webkit-overflow-scrolling: touch;
+        cursor: grab;
       }
+      .industries-scroll:active { cursor: grabbing; }
 
       .industries-scroll::-webkit-scrollbar {
         height: 0;
@@ -2675,60 +2680,151 @@
         if (e.target === this) closeWhyModal();
       });
 
-      // Industry belt auto-scroll with seamless loop
+      // Industry belt — endless smooth auto-rotation with interaction-aware pause.
+      // - Uses requestAnimationFrame + delta time so motion is smooth on every device.
+      // - Clones the chip set once so position can wrap seamlessly.
+      // - Pauses on hover, touch, wheel, manual drag-scroll, keyboard focus, or
+      //   when the section is off-screen / the tab is hidden. Resumes from the
+      //   user's current scroll position after a short idle window.
       (function() {
         var belt = document.getElementById('industriesBelt');
         if (!belt) return;
-        
-        // Clone items for seamless infinite scroll
-        var originalChips = belt.querySelectorAll('.industry-chip');
-        var firstSetWidth = 0;
+
+        // 1. Clone original chips once for a seamless loop.
+        var originalChips = Array.prototype.slice.call(belt.querySelectorAll('.industry-chip'));
+        if (!originalChips.length) return;
         originalChips.forEach(function(chip) {
-          firstSetWidth += chip.offsetWidth + 16;
           belt.appendChild(chip.cloneNode(true));
         });
-        
-        var isPaused = false;
-        var scrollPixelsPerInterval = 3.5; // pixels per 30ms interval (smoother/faster)
-        var scrollInterval = null;
-        
-        function startScroll() {
-          if (scrollInterval) return;
-          
-          scrollInterval = setInterval(function() {
-            if (isPaused) return;
-            
-            belt.scrollLeft += scrollPixelsPerInterval;
-            
-            // Seamless loop: reset to start when reaching the end
-            if (belt.scrollLeft >= firstSetWidth) {
-              belt.scrollLeft = 0;
-            }
-          }, 25);
+
+        // 2. Measure the width of one full set (recompute on resize).
+        var firstSetWidth = 0;
+        function measure() {
+          firstSetWidth = 0;
+          originalChips.forEach(function(chip) {
+            firstSetWidth += chip.getBoundingClientRect().width + 16; // 16 = gap
+          });
         }
-        
-        // Pause on hover
-        belt.addEventListener('mouseenter', function() {
-          isPaused = true;
-        });
-        
-        // Resume on mouse leave
+        measure();
+        window.addEventListener('resize', measure);
+
+        // 3. Animation state.
+        var SPEED_PX_PER_SEC = 60;       // smooth, constant speed
+        var IDLE_RESUME_MS   = 1200;     // wait after last user interaction
+        var pauseRefs = 0;               // hover / touch counters (active = paused while > 0)
+        var resumeTimer = null;          // scheduled resume after transient interactions
+        var lastTs = 0;
+        var subPixelOffset = 0;          // accumulates < 1px scroll between frames
+        var programmatic = false;        // suppress our own scroll handler
+        var visible = true;
+        var inViewport = true;
+
+        function isPaused() {
+          return pauseRefs > 0 || resumeTimer !== null || !visible || !inViewport;
+        }
+
+        function normalize() {
+          // Wrap scrollLeft into [0, firstSetWidth) so the loop is invisible
+          // even when the user has dragged the belt manually.
+          if (firstSetWidth <= 0) return;
+          if (belt.scrollLeft >= firstSetWidth) {
+            programmatic = true;
+            belt.scrollLeft -= firstSetWidth;
+          } else if (belt.scrollLeft < 0) {
+            programmatic = true;
+            belt.scrollLeft += firstSetWidth;
+          }
+        }
+
+        function tick(ts) {
+          if (!lastTs) lastTs = ts;
+          var dt = Math.min(64, ts - lastTs); // clamp huge deltas (tab returns)
+          lastTs = ts;
+
+          if (!isPaused()) {
+            subPixelOffset += (SPEED_PX_PER_SEC * dt) / 1000;
+            var whole = Math.floor(subPixelOffset);
+            if (whole >= 1) {
+              subPixelOffset -= whole;
+              programmatic = true;
+              belt.scrollLeft += whole;
+              normalize();
+            }
+          }
+          requestAnimationFrame(tick);
+        }
+
+        // 4. Interaction handlers.
+        function pauseFor(ms) {
+          if (resumeTimer) {
+            clearTimeout(resumeTimer);
+            resumeTimer = null;
+          }
+          if (ms > 0) {
+            resumeTimer = setTimeout(function() {
+              resumeTimer = null;
+              lastTs = 0; // reset so a long idle doesn't produce a jump
+            }, ms);
+          }
+        }
+
+        belt.addEventListener('mouseenter', function() { pauseRefs++; });
         belt.addEventListener('mouseleave', function() {
-          isPaused = false;
+          pauseRefs = Math.max(0, pauseRefs - 1);
+          pauseFor(0); // resume immediately on mouse-out
         });
-        
-        // Pause on touch
-        belt.addEventListener('touchstart', function() {
-          isPaused = true;
+
+        belt.addEventListener('touchstart', function() { pauseRefs++; }, { passive: true });
+        belt.addEventListener('touchend',  function() {
+          pauseRefs = Math.max(0, pauseRefs - 1);
+          pauseFor(IDLE_RESUME_MS); // give iOS momentum-scroll time to settle
+        }, { passive: true });
+        belt.addEventListener('touchcancel', function() {
+          pauseRefs = Math.max(0, pauseRefs - 1);
+          pauseFor(IDLE_RESUME_MS);
+        }, { passive: true });
+
+        // Wheel / trackpad scroll: pause briefly, then resume from new position.
+        belt.addEventListener('wheel', function() { pauseFor(IDLE_RESUME_MS); }, { passive: true });
+
+        // Keyboard / focus on a chip: pause until focus leaves.
+        belt.addEventListener('focusin',  function() { pauseRefs++; });
+        belt.addEventListener('focusout', function() {
+          pauseRefs = Math.max(0, pauseRefs - 1);
+          pauseFor(0);
         });
-        
-        // Resume on touch end
-        belt.addEventListener('touchend', function() {
-          isPaused = false;
+
+        // Native scroll events (drag, keyboard, momentum) — keep position normalized
+        // and treat user-driven scrolls as a brief interaction.
+        belt.addEventListener('scroll', function() {
+          if (programmatic) {
+            programmatic = false;
+          } else {
+            // User-driven scroll → pause briefly so they can read.
+            pauseFor(IDLE_RESUME_MS);
+          }
+          normalize();
+        }, { passive: true });
+
+        // Pause when tab is hidden so we don't waste CPU.
+        document.addEventListener('visibilitychange', function() {
+          visible = !document.hidden;
+          if (visible) lastTs = 0;
         });
-        
-        // Start scrolling after a brief delay to ensure DOM is ready
-        setTimeout(startScroll, 100);
+
+        // Pause when the section scrolls out of view.
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function(entries) {
+            inViewport = entries[0].isIntersecting;
+            if (inViewport) lastTs = 0;
+          }, { threshold: 0 }).observe(belt);
+        }
+
+        // 5. Respect prefers-reduced-motion: don't auto-rotate.
+        var prm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prm && prm.matches) return;
+
+        requestAnimationFrame(tick);
       })();
 
 
