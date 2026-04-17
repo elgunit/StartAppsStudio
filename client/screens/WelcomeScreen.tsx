@@ -16,8 +16,6 @@ import { Feather } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { ThemedText } from "@/components/ThemedText";
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
@@ -95,46 +93,19 @@ export default function WelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
   const [showAllProjects, setShowAllProjects] = React.useState(false);
-  const [floatingMenuVisible, setFloatingMenuVisible] = React.useState(false);
-  const scrollRef = React.useRef<ScrollView>(null);
-  const heroLayout = React.useRef(0);
-
-  const toggleSection = (section: MenuSection) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      setFloatingMenuVisible(false);
-    }, []),
-  );
-
   const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
   const loopingCaseStudies = [...displayedCaseStudies, ...displayedCaseStudies];
 
   return (
     <ScrollView
-      ref={scrollRef}
       style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
       contentContainerStyle={{
-        paddingTop: insets.top + Spacing["2xl"],
+        paddingTop: insets.top + Spacing.xl,
         paddingBottom: insets.bottom + Spacing["3xl"],
-      }}
-      scrollEventThrottle={16}
-      onScroll={(event) => {
-        const y = event.nativeEvent.contentOffset.y;
-        setFloatingMenuVisible(y > Math.max(120, heroLayout.current - 20));
       }}
       showsVerticalScrollIndicator={false}
     >
-      {/* Hero Section */}
-      <Animated.View
-        entering={FadeInDown.delay(100).duration(500)}
-        style={styles.heroSection}
-        onLayout={(event) => {
-          heroLayout.current = event.nativeEvent.layout.y + event.nativeEvent.layout.height;
-        }}
-      >
+      <View style={styles.heroSection}>
         <Image
           source={isDark ? require("../../assets/images/icon-dark.png") : require("../../assets/images/icon.png")}
           style={[styles.logo, { borderRadius: 16 }]}
@@ -159,51 +130,23 @@ export default function WelcomeScreen() {
             5 Roles
           </ThemedText>
         </View>
-      </Animated.View>
+      </View>
 
-      {/* CTA Buttons */}
-      <Animated.View entering={FadeInDown.delay(200).duration(500)} style={styles.ctaSection}>
-        <Button
-          onPress={() => navigation.navigate("Register")}
-          style={styles.primaryButton}
-        >
-          Get Started
-        </Button>
-        <Button
-          variant="secondary"
-          onPress={() => navigation.navigate("Login")}
-          style={styles.secondaryButton}
-        >
-          Sign In
-        </Button>
-      </Animated.View>
-
-      {floatingMenuVisible ? (
-        <View style={[styles.floatingMenu, { top: insets.top + Spacing.md }]}>
-          <Card style={[styles.floatingMenuCard, { backgroundColor: theme.backgroundDefault }]}>
-            <View style={styles.floatingMenuRow}>
-              {menuItems.map((item) => (
-                <Pressable
-                  key={item.id}
-                  onPress={() => {
-                    setExpandedSection(item.id);
-                    scrollRef.current?.scrollTo({
-                      y: Math.max(0, heroLayout.current - Spacing.xl),
-                      animated: true,
-                    });
-                  }}
-                  style={styles.floatingMenuButton}
-                >
-                  <Feather name={item.icon} size={16} color={theme.text} />
-                  <ThemedText type="caption" style={{ color: theme.text }}>
-                    {item.label}
-                  </ThemedText>
-                </Pressable>
-              ))}
-            </View>
-          </Card>
+      <View style={styles.ctaSection}>
+        <View style={styles.menuHeader}>
+          <View style={[styles.menuIcon, { backgroundColor: theme.backgroundDefault }]}>
+            <Feather name="layout" size={18} color={theme.text} />
+          </View>
+          <View style={styles.menuInfo}>
+            <ThemedText type="body" style={{ fontWeight: "600" }}>
+              Build products
+            </ThemedText>
+            <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+              Scroll to explore services, work, and packages
+            </ThemedText>
+          </View>
         </View>
-      ) : null}
+      </View>
     </ScrollView>
   );
 }
@@ -250,19 +193,6 @@ const styles = StyleSheet.create({
   secondaryButton: {
     width: "100%",
   },
-  menuSection: {
-    paddingHorizontal: Spacing.lg,
-  },
-  menuLabel: {
-    marginBottom: Spacing.md,
-    marginLeft: Spacing.xs,
-    letterSpacing: 1,
-  },
-  menuCard: {
-    marginBottom: Spacing.sm,
-    borderWidth: 1,
-    borderColor: "transparent",
-  },
   menuHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -277,87 +207,6 @@ const styles = StyleSheet.create({
   },
   menuInfo: {
     flex: 1,
-  },
-  expandedContent: {
-    marginTop: Spacing.md,
-    paddingTop: Spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: "rgba(128,128,128,0.15)",
-  },
-  gridContent: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: Spacing.sm,
-  },
-  gridItem: {
-    width: "48%",
-    padding: Spacing.md,
-    borderRadius: BorderRadius.md,
-    gap: Spacing.xs,
-  },
-  listContent: {
-    gap: Spacing.sm,
-  },
-  listItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-  },
-  workItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  workInfo: {
-    flex: 1,
-  },
-  resultBadge: {
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.sm,
-  },
-  packageItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: Spacing.sm,
-    borderRadius: BorderRadius.md,
-  },
-  packageInfo: {
-    flex: 1,
-  },
-  packageNameRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.xs,
-  },
-  packagePricing: {
-    alignItems: "flex-end",
-    gap: Spacing.xs,
-  },
-  popularBadge: {
-    paddingHorizontal: Spacing.xs,
-    paddingVertical: 2,
-    borderRadius: BorderRadius.sm,
-  },
-  methodBadge: {
-    paddingHorizontal: Spacing.xs,
-    paddingVertical: 2,
-    borderRadius: BorderRadius.sm,
-  },
-  sectionDividerLabel: {
-    fontSize: 11,
-    fontWeight: "600" as const,
-    letterSpacing: 1.5,
-    marginBottom: Spacing.sm,
-    marginLeft: 2,
-  },
-  growIconRow: {
-    width: 24,
-    height: 24,
-    borderRadius: 6,
-    alignItems: "center" as const,
-    justifyContent: "center" as const,
   },
   floatingMenu: {
     position: "absolute",
