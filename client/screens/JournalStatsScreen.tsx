@@ -17,7 +17,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeIn, FadeOut } from "react-native-reanimated";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 
@@ -647,7 +647,11 @@ function MetricSection({
       </View>
 
       {selectedIndex !== null ? (
-        <View style={[styles.tooltip, { backgroundColor: color + "18", borderColor: color + "44" }]}>
+        <Animated.View
+          entering={FadeIn.duration(180).springify().damping(18).stiffness(220)}
+          exiting={FadeOut.duration(140)}
+          style={[styles.tooltip, { backgroundColor: color + "18", borderColor: color + "44" }]}
+        >
           <ThemedText type="caption" style={{ color, fontWeight: "700", fontSize: 15 }}>
             {values[selectedIndex]}
           </ThemedText>
@@ -657,7 +661,7 @@ function MetricSection({
           <Pressable onPress={() => setSelectedIndex(null)} style={styles.tooltipClose}>
             <Feather name="x" size={12} color={theme.textTertiary} />
           </Pressable>
-        </View>
+        </Animated.View>
       ) : null}
 
       <Sparkline

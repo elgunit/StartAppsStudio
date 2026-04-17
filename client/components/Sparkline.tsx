@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path, Circle, Defs, LinearGradient, Stop, G, Rect } from "react-native-svg";
+import Animated, { useSharedValue, useAnimatedProps, withSpring } from "react-native-reanimated";
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 export interface SparklineSeries {
   values: number[];
@@ -39,6 +42,53 @@ function buildAreaPath(values: number[], maxVal: number, width: number, height: 
   const linePath = buildPath(values, maxVal, width, height);
   const lastX = ((values.length - 1) * width / (values.length - 1)).toFixed(1);
   return `${linePath} L${lastX},${height} L0,${height} Z`;
+}
+
+function AnimatedDot({
+  cx,
+  cy,
+  color,
+  isSelected,
+  onPress,
+}: {
+  cx: number;
+  cy: number;
+  color: string;
+  isSelected: boolean;
+  onPress?: () => void;
+}) {
+  const radius = useSharedValue(isSelected ? 4.5 : 2);
+
+  useEffect(() => {
+    radius.value = withSpring(isSelected ? 4.5 : 2, { damping: 14, stiffness: 240 });
+  }, [isSelected]);
+
+  const animatedProps = useAnimatedProps(() => ({
+    r: radius.value,
+  }));
+
+  return (
+    <G>
+      {onPress ? (
+        <Rect
+          x={cx - 12}
+          y={cy - 12}
+          width={24}
+          height={24}
+          fill="transparent"
+          onPress={onPress}
+        />
+      ) : null}
+      <AnimatedCircle
+        animatedProps={animatedProps}
+        cx={cx}
+        cy={cy}
+        fill={isSelected ? "#fff" : color}
+        stroke={isSelected ? color : "none"}
+        strokeWidth={isSelected ? 2 : 0}
+      />
+    </G>
+  );
 }
 
 export function Sparkline({ series, width = 120, height = 36, showDots = false, onDotPress, selectedIndex }: SparklineProps) {
@@ -82,28 +132,15 @@ export function Sparkline({ series, width = 120, height = 36, showDots = false, 
               ? s.values.map((v, j) => {
                   const x = j * step;
                   const y = pad + (maxVal > 0 ? (1 - v / maxVal) * drawHeight : drawHeight);
-                  const isSelected = selectedIndex === j;
                   return (
-                    <G key={j}>
-                      {onDotPress ? (
-                        <Rect
-                          x={x - 12}
-                          y={y - 12}
-                          width={24}
-                          height={24}
-                          fill="transparent"
-                          onPress={() => onDotPress(j)}
-                        />
-                      ) : null}
-                      <Circle
-                        cx={x}
-                        cy={y}
-                        r={isSelected ? 4.5 : 2}
-                        fill={isSelected ? "#fff" : s.color}
-                        stroke={isSelected ? s.color : "none"}
-                        strokeWidth={isSelected ? 2 : 0}
-                      />
-                    </G>
+                    <AnimatedDot
+                      key={j}
+                      cx={x}
+                      cy={y}
+                      color={s.color}
+                      isSelected={selectedIndex === j}
+                      onPress={onDotPress ? () => onDotPress(j) : undefined}
+                    />
                   );
                 })
               : null}
