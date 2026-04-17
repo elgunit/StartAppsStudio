@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Pressable, Image } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -13,7 +13,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { ProjectCard } from "@/components/ProjectCard";
-import { resolveAssetUrl, type JournalPostSummary } from "@/lib/journal";
+import { type JournalPostSummary } from "@/lib/journal";
 import { OnlineIndicator } from "@/components/OnlineIndicator";
 import { EmptyState } from "@/components/EmptyState";
 import { useTheme } from "@/hooks/useTheme";
@@ -174,15 +174,6 @@ export default function ClientDashboardScreen() {
               }
               style={styles.journalCard}
             >
-              <Image
-                source={{ uri: resolveAssetUrl(post.heroImage) }}
-                style={[
-                  styles.journalHero,
-                  { backgroundColor: theme.backgroundSecondary },
-                ]}
-                resizeMode="cover"
-                accessibilityLabel={post.heroAlt}
-              />
               <View style={styles.journalCardBody}>
                 <ThemedText type="caption" style={{ color: theme.textTertiary }}>
                   {new Date(post.publishedAt).toLocaleDateString(undefined, {
@@ -309,6 +300,5 @@ const styles = StyleSheet.create({
   },
   journalCardWrap: { marginBottom: Spacing.lg },
   journalCard: { padding: 0, overflow: "hidden" },
-  journalHero: { width: "100%", height: 160 },
   journalCardBody: { padding: Spacing.lg },
 });

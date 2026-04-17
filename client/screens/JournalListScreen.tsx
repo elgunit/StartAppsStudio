@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Image, ActivityIndicator, FlatList } from "react-native";
+import { StyleSheet, View, ActivityIndicator, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -11,13 +11,11 @@ import { Card } from "@/components/Card";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import {
-  resolveAssetUrl,
   formatJournalDate as formatDate,
   type JournalPostSummary,
 } from "@/lib/journal";
 
 export type { JournalPostSummary };
-export { resolveAssetUrl };
 
 export default function JournalListScreen() {
   const headerHeight = useHeaderHeight();
@@ -92,12 +90,6 @@ export default function JournalListScreen() {
               }
               style={styles.card}
             >
-              <Image
-                source={{ uri: resolveAssetUrl(item.heroImage) }}
-                style={[styles.hero, { backgroundColor: theme.backgroundSecondary }]}
-                resizeMode="cover"
-                accessibilityLabel={item.heroAlt}
-              />
               <View style={styles.cardBody}>
                 <ThemedText type="caption" style={{ color: theme.textTertiary }}>
                   {formatDate(item.publishedAt)} · {item.readMinutes} min read
@@ -147,7 +139,6 @@ const styles = StyleSheet.create({
   intro: { marginBottom: Spacing.lg },
   cardWrap: { marginBottom: Spacing.lg },
   card: { padding: 0, overflow: "hidden" },
-  hero: { width: "100%", height: 180 },
   cardBody: { padding: Spacing.lg },
   tagRow: {
     flexDirection: "row",

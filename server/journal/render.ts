@@ -57,12 +57,6 @@ function renderBlock(block: Block): string {
       return `<blockquote><p>${inline(block.text)}</p>${block.cite ? `<cite>— ${inline(block.cite)}</cite>` : ""}</blockquote>`;
     case "callout":
       return `<aside class="callout">${block.title ? `<strong>${inline(block.title)}</strong> ` : ""}${inline(block.text)}</aside>`;
-    case "image": {
-      const cap = block.caption
-        ? `<figcaption>${inline(block.caption)}</figcaption>`
-        : "";
-      return `<figure><img src="${esc(block.src)}" alt="${esc(block.alt)}" loading="lazy" />${cap}</figure>`;
-    }
     case "faq": {
       const items = block.items
         .map(
@@ -99,7 +93,7 @@ function renderArticleJsonLd(post: Post, canonical: string, origin: string): str
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    image: [`${origin}${post.heroImage}`],
+    image: [`${origin}/assets/images/favicon.png`],
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
     author: {
@@ -239,14 +233,6 @@ const STYLE = `
     color: var(--text-secondary);
     border: 1px solid var(--border);
   }
-  .hero-figure {
-    margin: 0 0 40px;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--bg-elevated);
-  }
-  .hero-figure img { width: 100%; }
   .article-body { font-size: 17px; color: var(--text); }
   .article-body p { margin: 0 0 18px; }
   .article-body h2 {
@@ -281,20 +267,6 @@ const STYLE = `
     border-radius: 4px;
     font-size: 14px;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  .article-body figure {
-    margin: 28px 0;
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-  }
-  .article-body figure img { width: 100%; }
-  .article-body figcaption {
-    font-size: 13px;
-    color: var(--text-secondary);
-    padding: 10px 14px;
-    border-top: 1px solid var(--border);
   }
   .answer-box {
     background: var(--bg-elevated);
@@ -424,12 +396,6 @@ const STYLE = `
     border-color: var(--text-secondary);
     text-decoration: none;
   }
-  .post-card-image {
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: var(--bg-subtle);
-  }
-  .post-card-image img { width: 100%; height: 100%; object-fit: cover; }
   .post-card-body { padding: 18px 20px 22px; }
   .post-card h2 {
     font-size: 19px;
@@ -545,7 +511,6 @@ export function renderArticleHtml(post: Post, origin: string): string {
         <span>${post.readMinutes} min read</span>
       </div>
       <div class="tag-list">${tags}</div>
-      <figure class="hero-figure"><img src="${esc(post.heroImage)}" alt="${esc(post.heroAlt)}" /></figure>
       <div class="article-body">${body}</div>
       ${sources}
       <section class="article-cta">
@@ -561,7 +526,7 @@ export function renderArticleHtml(post: Post, origin: string): string {
     description: post.description,
     canonical,
     origin,
-    ogImage: post.heroImage,
+    ogImage: "/assets/images/favicon.png",
     ogType: "article",
     jsonLd,
     bodyInner,
@@ -591,7 +556,6 @@ export function renderIndexHtml(origin: string): string {
     .map(
       (p) => `
     <a href="/journal/${esc(p.slug)}" class="post-card">
-      <div class="post-card-image"><img src="${esc(p.heroImage)}" alt="${esc(p.heroAlt)}" loading="lazy" /></div>
       <div class="post-card-body">
         <h2>${esc(p.title)}</h2>
         <p>${esc(p.excerpt)}</p>
@@ -620,7 +584,7 @@ export function renderIndexHtml(origin: string): string {
       "Field notes on shipping MVPs that rank on Google and get quoted by AI — GEO, vibe-coding, and the state of AI at work.",
     canonical,
     origin,
-    ogImage: postsList[0]?.heroImage || "/assets/images/favicon.png",
+    ogImage: "/assets/images/favicon.png",
     ogType: "website",
     jsonLd,
     bodyInner,

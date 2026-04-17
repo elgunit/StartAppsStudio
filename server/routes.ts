@@ -83,8 +83,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       title: p.title,
       description: p.description,
       excerpt: p.excerpt,
-      heroImage: p.heroImage,
-      heroAlt: p.heroAlt,
       publishedAt: p.publishedAt,
       updatedAt: p.updatedAt,
       readMinutes: p.readMinutes,

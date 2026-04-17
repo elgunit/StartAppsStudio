@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   View,
-  Image,
   ActivityIndicator,
   Pressable,
   ScrollView,
@@ -20,7 +19,6 @@ import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
 import { Spacing, BorderRadius } from "@/constants/theme";
-import { resolveAssetUrl } from "@/lib/journal";
 import { trackVisitorEvent } from "@/lib/tracking";
 
 type Block =
@@ -32,7 +30,6 @@ type Block =
   | { type: "ol"; items: string[] }
   | { type: "quote"; text: string; cite?: string }
   | { type: "callout"; title?: string; text: string }
-  | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "faq"; items: { q: string; a: string }[] };
 
 type Post = {
@@ -40,8 +37,6 @@ type Post = {
   title: string;
   description: string;
   excerpt: string;
-  heroImage: string;
-  heroAlt: string;
   publishedAt: string;
   updatedAt?: string;
   readMinutes: number;
@@ -209,32 +204,6 @@ function BlockView({ block }: { block: Block }) {
           </ThemedText>
         </Card>
       );
-    case "image":
-      return (
-        <View style={styles.block}>
-          <Image
-            source={{ uri: resolveAssetUrl(block.src) }}
-            style={[
-              styles.contentImage,
-              { backgroundColor: theme.backgroundSecondary },
-            ]}
-            resizeMode="cover"
-            accessibilityLabel={block.alt}
-          />
-          {block.caption ? (
-            <ThemedText
-              type="caption"
-              style={{
-                color: theme.textTertiary,
-                marginTop: Spacing.xs,
-                textAlign: "center",
-              }}
-            >
-              {block.caption}
-            </ThemedText>
-          ) : null}
-        </View>
-      );
     case "faq":
       return (
         <View style={styles.block}>
@@ -359,16 +328,6 @@ export default function JournalArticleScreen() {
         </View>
       ) : null}
 
-      <Image
-        source={{ uri: resolveAssetUrl(post.heroImage) }}
-        style={[
-          styles.hero,
-          { backgroundColor: theme.backgroundSecondary, marginTop: Spacing.xl },
-        ]}
-        resizeMode="cover"
-        accessibilityLabel={post.heroAlt}
-      />
-
       <View style={{ marginTop: Spacing.xl }}>
         {post.body.map((b, i) => (
           <BlockView key={i} block={b} />
@@ -414,7 +373,6 @@ export default function JournalArticleScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  hero: { width: "100%", height: 220, borderRadius: BorderRadius.lg },
   tagRow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -444,11 +402,6 @@ const styles = StyleSheet.create({
     paddingLeft: Spacing.md,
   },
   callout: {},
-  contentImage: {
-    width: "100%",
-    height: 220,
-    borderRadius: BorderRadius.lg,
-  },
   faqItem: {
     borderWidth: 1,
     borderRadius: BorderRadius.md,

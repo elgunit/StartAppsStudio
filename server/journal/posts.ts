@@ -7,7 +7,6 @@ export type Block =
   | { type: "ol"; items: string[] }
   | { type: "quote"; text: string; cite?: string }
   | { type: "callout"; title?: string; text: string }
-  | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "faq"; items: { q: string; a: string }[] };
 
 export interface Post {
@@ -15,8 +14,6 @@ export interface Post {
   title: string;
   description: string;
   excerpt: string;
-  heroImage: string;
-  heroAlt: string;
   publishedAt: string; // ISO date
   updatedAt?: string;
   readMinutes: number;
@@ -36,9 +33,6 @@ export const posts: Post[] = [
       "Five concrete patterns we see in pages pulled into Google AI Overviews — one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats — applied to three Start Apps Studio MVPs.",
     excerpt:
       "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things — and none of them are luck.",
-    heroImage: "/assets/journal/ai-overviews-citation-anatomy.png",
-    heroAlt:
-      "Stylized illustration of an AI answer card highlighted at the top of a search results screen, with citation links connecting it to smaller source documents below.",
     publishedAt: "2026-04-17",
     readMinutes: 6,
     tags: ["GEO", "AI Overviews", "Schema", "MVP"],
@@ -107,13 +101,6 @@ export const posts: Post[] = [
         type: "p",
         text:
           "Freshness is a tiebreaker. Include at least one statistic with a year attached (\"as of 2026, 38% of...\"). Pages with current-year context get re-crawled more often and are preferred by AIO over evergreen pages with no time signal.",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/ai-overviews-citation-anatomy.png",
-        alt: "Illustration showing an AI Overview answer card at the top of a search interface, with citation links connecting down to smaller source document cards.",
-        caption:
-          "The anatomy of an AI Overview citation: a single sentence quoted, with three to five sources cited below.",
       },
       {
         type: "h2",
@@ -218,9 +205,6 @@ export const posts: Post[] = [
       "A 12-point GEO checklist — answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T — so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
     excerpt:
       "If ChatGPT never names your product when someone asks for a recommendation, your site is failing 12 specific tests. Here's the checklist we run on every MVP we ship.",
-    heroImage: "/assets/journal/chatgpt-visibility-12-reasons.jpeg",
-    heroAlt:
-      "Infographic titled '12 Reasons Your Brand Is Invisible in ChatGPT Responses' listing GEO failures.",
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 7,
@@ -235,13 +219,6 @@ export const posts: Post[] = [
         type: "p",
         text:
           "Generative Engine Optimization (GEO) is the new SEO. Your MVP can rank on Google and still be invisible inside ChatGPT, Claude, Perplexity and Google's AI Overviews, because LLMs don't index pages the way crawlers do — they extract answers. Below is the 12-point audit we run on every MVP we ship at Start Apps Studio, based on the patterns we see across brands that actually get quoted by AI.",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/chatgpt-visibility-12-reasons.jpeg",
-        alt: "Twelve reasons a brand becomes invisible inside ChatGPT, arranged as a 3x4 grid.",
-        caption:
-          "Source: '12 Reasons Your Brand Is Invisible in ChatGPT Responses', Francesco Gatti.",
       },
       { type: "h2", text: "Why this matters for MVPs", id: "why" },
       {
@@ -380,13 +357,6 @@ export const posts: Post[] = [
         id: "brand",
       },
       {
-        type: "image",
-        src: "/assets/journal/brand-identity-checklist.png",
-        alt: "Five-point brand identity checklist: purpose (why it exists), exclusion (who it's not for), vision (what success looks like), competitive landscape (where it plays), and clarity (the insight it's designed around).",
-        caption:
-          "Source: 'The key to nailing every brand identity project' — Maik Noblovits.",
-      },
-      {
         type: "p",
         text:
           "GEO works only when your brand identity is well-defined. Before you audit a single page, you should be able to answer five questions in one sentence each: why this brand needs to exist, who it is not for, what success looks like, the competitive landscape, and the clarity (not a hunch) you're designing toward. That clarity becomes the source of truth every piece of copy and schema inherits from.",
@@ -444,9 +414,6 @@ export const posts: Post[] = [
       "Lovable, Bolt and v0 ship empty divs to crawlers. This is how to fix it: a Cloudflare Worker SSR proxy pattern, or a full migration to Claude Code + Supabase + Vercel when you need to rank.",
     excerpt:
       "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it — a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
-    heroImage: "/assets/journal/lovable-seo-cloudflare-fix.png",
-    heroAlt:
-      "Reddit post titled 'I solved Lovable's biggest SEO problem' describing a Cloudflare Worker fix.",
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 9,
@@ -478,13 +445,6 @@ export const posts: Post[] = [
           "A Cloudflare Worker sits between your domain and Lovable. When a request comes in, the Worker checks the User-Agent: real visitors are proxied through to Lovable as usual; bots (Googlebot, Bingbot, GPTBot, PerplexityBot, ClaudeBot) get server-rendered HTML with real content and full schema markup, from the same URL.",
       },
       {
-        type: "image",
-        src: "/assets/journal/lovable-seo-cloudflare-fix.png",
-        alt: "r/lovable post describing a Cloudflare Worker that server-renders HTML for crawlers while real visitors get the Lovable app.",
-        caption:
-          "Source: r/lovable showcase post 'I solved Lovable's biggest SEO problem'.",
-      },
-      {
         type: "p",
         text:
           "This is not cloaking when it's done correctly — the content the bot receives has to match what the user eventually sees once the JS executes. The setup is two steps:",
@@ -511,18 +471,6 @@ export const posts: Post[] = [
         type: "p",
         text:
           "The Worker buys you time. But if the app has to rank seriously, handle dynamic content, or be maintained by humans a year from now, you'll want to move to a \"normal\" web stack. The fastest way we've seen is to let Claude Code do the migration for you.",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/migrate-lovable-claude-steps-1.png",
-        alt: "Reddit post listing steps 1 through 8 of migrating a Lovable project to Claude Code, Supabase and Vercel.",
-        caption: "Steps 1–8 — push to GitHub, install Claude Code, and migrate.",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/migrate-lovable-claude-steps-2.png",
-        alt: "Continued Reddit post listing steps 6 through 10 of migrating a Lovable project to a standard web stack.",
-        caption: "Steps 6–10 — hosting, secrets, deployment and debugging.",
       },
       { type: "h3", text: "The 10-step migration recipe", id: "recipe" },
       {
@@ -554,13 +502,6 @@ export const posts: Post[] = [
         type: "p",
         text:
           "If you're mid-project and not ready to migrate, there's a middle path that multiple r/lovable users have validated: connect Lovable to GitHub, then give Claude Code access to the same repo. Claude sits on a layer above Lovable, guiding it through complex features, debugging, and enhancements, while you run SQL directly in Supabase for database changes (free — Lovable doesn't charge to run a query).",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/lovable-claude-workflow.png",
-        alt: "Reddit post titled 'Lovable + Claude = 10X performance' describing a hybrid workflow.",
-        caption:
-          "Source: r/lovable tutorial 'Lovable <> Claude = 10X performance'.",
       },
       {
         type: "p",
@@ -637,9 +578,6 @@ export const posts: Post[] = [
       "74.5% of programmers are AI-exposed, observed usage trails theoretical capability, and HubSpot's 2026 marketing report is about lead generation, not content. What that means if you're building an MVP in 2026.",
     excerpt:
       "The gap between what AI can do and what workers actually use it for is now the biggest arbitrage of the decade. Here's how to read the 2026 data as a founder.",
-    heroImage: "/assets/journal/ai-at-work-exposure.jpeg",
-    heroAlt:
-      "Infographic titled 'AI at Work: Mapping the Landscape of Occupational Exposure' showing high exposure for programmers, customer service and data entry.",
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 8,
@@ -659,13 +597,6 @@ export const posts: Post[] = [
         type: "h2",
         text: "1. Exposure is now a job-level fact",
         id: "exposure",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/ai-at-work-exposure.jpeg",
-        alt: "AI at work infographic with 74.5% programmer exposure, 70.1% customer service, 67.1% data entry, plus wage and demographic breakdowns.",
-        caption:
-          "Source: 'AI at Work: Mapping the Landscape of Occupational Exposure'.",
       },
       { type: "h3", text: "The headline numbers" },
       {
@@ -696,13 +627,6 @@ export const posts: Post[] = [
         id: "capability-gap",
       },
       {
-        type: "image",
-        src: "/assets/journal/ai-occupational-radar.jpeg",
-        alt: "Radar chart comparing theoretical AI capability against observed AI usage across 20+ occupational categories; theoretical capability far exceeds observed usage almost everywhere.",
-        caption:
-          "Theoretical capability (blue) vs observed usage (red) across occupations.",
-      },
-      {
         type: "p",
         text:
           "Across every occupational category we looked at — management, business and finance, computer and math, architecture and engineering, legal, arts and media — observed AI usage is a fraction of theoretical capability. Even in office and admin work, where exposure is highest, the red-shaded \"observed\" footprint sits at roughly a third of the blue \"theoretical\" one.",
@@ -716,13 +640,6 @@ export const posts: Post[] = [
         type: "h2",
         text: "3. HubSpot's 2026 marketing report reframes the funnel",
         id: "hubspot-2026",
-      },
-      {
-        type: "image",
-        src: "/assets/journal/hubspot-state-marketing-2026.png",
-        alt: "HubSpot's 2026 marketing dashboard listing top marketing goals (revenue, traffic, engagement, CX, closing deals) and top challenges (generating traffic, leads, hiring, driving purchases, budget).",
-        caption:
-          "Source: HubSpot State of Marketing 2026 — what's new vs 2025.",
       },
       { type: "h3", text: "Top marketing goals in 2026" },
       {
