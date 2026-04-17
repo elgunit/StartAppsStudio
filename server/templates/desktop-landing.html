@@ -71,98 +71,163 @@
       }
       
       /* Hero Section */
+      /* === Hero (uplift) ============================================ */
       .hero {
         text-align: center;
-        margin-bottom: 100px;
-        padding: 120px 40px 80px;
+        margin: 24px 0 100px;
+        padding: clamp(64px, 12vw, 132px) clamp(20px, 4vw, 56px) clamp(56px, 8vw, 88px);
         position: relative;
-        border-radius: 32px;
-        background: 
-          linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.08) 50%, rgba(16, 185, 129, 0.05) 100%),
-          radial-gradient(ellipse 60% 60% at 50% 20%, rgba(139, 92, 246, 0.12), transparent);
+        border-radius: clamp(20px, 3vw, 32px);
         overflow: hidden;
-        border: 1px solid rgba(139, 92, 246, 0.2);
+        isolation: isolate;
+        background:
+          radial-gradient(ellipse 120% 80% at 50% 0%, rgba(139, 92, 246, 0.10), transparent 60%),
+          linear-gradient(180deg, rgba(139, 92, 246, 0.04), rgba(59, 130, 246, 0.02) 70%, transparent);
+        border: 1px solid rgba(139, 92, 246, 0.18);
       }
-      
+
+      /* Animated aurora — GPU-only (transform/opacity), behind everything. */
+      .hero-aurora {
+        position: absolute;
+        inset: -40%;
+        z-index: -2;
+        pointer-events: none;
+        filter: blur(60px) saturate(140%);
+        opacity: 0.55;
+        background:
+          radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.55), transparent 38%),
+          radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.45), transparent 36%),
+          radial-gradient(circle at 60% 80%, rgba(16, 185, 129, 0.35), transparent 38%),
+          radial-gradient(circle at 20% 75%, rgba(236, 72, 153, 0.30), transparent 38%);
+        animation: hero-aurora-drift 22s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+      @keyframes hero-aurora-drift {
+        0%   { transform: translate3d(-2%, -1%, 0) scale(1);    }
+        50%  { transform: translate3d(2%,  1%, 0) scale(1.04);  }
+        100% { transform: translate3d(-1%, 2%, 0) scale(1.02);  }
+      }
+
+      /* Faint dotted grid (cheap, single static gradient). */
       .hero::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-          repeating-linear-gradient(0deg, transparent, transparent 100px, rgba(139, 92, 246, 0.02) 100px, rgba(139, 92, 246, 0.02) 101px),
-          repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(139, 92, 246, 0.02) 100px, rgba(139, 92, 246, 0.02) 101px);
+        inset: 0;
+        z-index: -1;
+        background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.10) 1px, transparent 0);
+        background-size: 28px 28px;
+        mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 80%);
         pointer-events: none;
       }
 
-      .hero::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(ellipse, rgba(139, 92, 246, 0.1), transparent 60%);
-        pointer-events: none;
-        filter: blur(60px);
+      @media (prefers-reduced-motion: reduce) {
+        .hero-aurora { animation: none; }
       }
-      
-      .hero > * {
-        position: relative;
-        z-index: 1;
+
+      .hero > * { position: relative; z-index: 1; }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px 7px 10px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(139, 92, 246, 0.22);
+        border-radius: 100px;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        margin-bottom: 28px;
+        color: var(--text);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 4px 14px rgba(139, 92, 246, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        .hero-eyebrow { background: rgba(24, 24, 27, 0.55); color: var(--text); }
+      }
+      .hero-eyebrow-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+        animation: hero-dot-pulse 2.4s ease-in-out infinite;
+      }
+      @keyframes hero-dot-pulse {
+        0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.20); }
+        50%     { box-shadow: 0 0 0 6px rgba(34,197,94,0.05); }
       }
 
       .hero-headline {
-        font-size: 56px;
+        font-size: clamp(36px, 7vw, 68px);
         font-weight: 800;
-        line-height: 1.1;
-        margin: 0 0 16px 0;
-        background: linear-gradient(135deg, var(--text) 0%, var(--text) 60%, var(--accent) 100%);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        margin: 0 0 18px 0;
+        background: linear-gradient(180deg, var(--text) 0%, var(--text) 70%, color-mix(in oklab, var(--text) 60%, transparent) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         contain: layout style;
-        font-variant-numeric: tabular-nums;
+      }
+      .hero-headline .accent-word {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        display: inline-block;
+      }
+      .hero-headline .accent-word::after {
+        content: '';
+        position: absolute;
+        left: 4%; right: 4%;
+        bottom: -2px;
+        height: 8px;
+        background: linear-gradient(90deg, transparent, rgba(139,92,246,0.35), transparent);
+        border-radius: 8px;
+        z-index: -1;
+        filter: blur(4px);
       }
 
       .hero-subheadline {
-        font-size: 18px;
+        font-size: clamp(15px, 1.6vw, 19px);
         font-weight: 500;
         color: var(--text-secondary);
-        margin-bottom: 48px;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto 36px;
+        max-width: 640px;
         line-height: 1.6;
       }
-      
+
       .hats-showcase {
         display: flex;
         justify-content: center;
-        gap: 12px;
-        margin-bottom: 32px;
-        flex-wrap: wrap;
-      }
-      
-      .hat-showcase-item {
-        display: flex;
-        align-items: center;
         gap: 8px;
-        padding: 10px 16px;
-        background: var(--bg);
+        margin: 0 auto 28px;
+        flex-wrap: wrap;
+        max-width: 720px;
+      }
+
+      .hat-showcase-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 14px;
+        background: rgba(255,255,255,0.55);
         border: 1px solid var(--border);
         border-radius: 100px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s;
+        font-size: 13px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
       }
-      
+      @media (prefers-color-scheme: dark) {
+        .hat-showcase-item { background: rgba(24,24,27,0.55); }
+      }
+
       .hat-showcase-item:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
       }
 
       .hat-designer { border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.04); }
@@ -995,95 +1060,173 @@
         line-height: 1.6;
       }
 
-      .contact-form { text-align: left; }
-      
-      .form-section {
-        margin-bottom: 32px;
-        padding: 28px;
-        background: var(--bg-elevated);
-        border-radius: 16px;
+      .contact-form {
+        text-align: left;
+        background: var(--bg);
         border: 1px solid var(--border);
-        transition: all 0.3s ease;
+        border-radius: 20px;
+        padding: clamp(20px, 3vw, 36px);
+        box-shadow: 0 20px 60px -30px rgba(139, 92, 246, 0.18);
       }
 
-      .form-section:hover {
-        border-color: rgba(139,92,246,0.3);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      .form-section {
+        margin-bottom: 26px;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+      }
+      .form-section + .form-section {
+        padding-top: 22px;
+        border-top: 1px dashed var(--border);
       }
 
       .form-section > .form-section-title {
         font-size: 11px;
         font-weight: 800;
-        letter-spacing: 1.5px;
+        letter-spacing: 1.4px;
         text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 20px;
+        color: var(--text-secondary);
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
         gap: 8px;
       }
-
       .form-section > .form-section-title::before {
         content: '';
-        width: 2px;
-        height: 14px;
-        background: var(--accent);
-        border-radius: 1px;
+        width: 14px;
+        height: 2px;
+        background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+        border-radius: 2px;
       }
 
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 14px;
       }
-      
-      .form-group { margin-bottom: 0; }
-      .form-group > label {
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        color: var(--text-secondary);
-      }
-      
+
+      .form-group { margin-bottom: 0; position: relative; }
+
+      /* Floating-label inputs.
+         Trick: input has placeholder=" " (one space) so :placeholder-shown
+         is true only when empty. Label sits inside the input area and
+         floats up on focus or when filled. */
       .form-group input,
       .form-group select,
       .form-group textarea {
         width: 100%;
-        padding: 16px;
+        padding: 22px 16px 10px;
         border: 1.5px solid var(--border);
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--bg);
         color: var(--text);
         font-size: 15px;
         font-family: inherit;
-        transition: all 0.3s ease;
-      }
-
-      .form-group input,
-      .form-group textarea {
+        line-height: 1.4;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         -webkit-appearance: none;
         appearance: none;
       }
-
-      .form-group input::placeholder,
-      .form-group textarea::placeholder {
-        color: var(--text-secondary);
-        font-size: 15px;
+      .form-group select {
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239ca3af' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 40px;
       }
-      
+      .form-group textarea {
+        min-height: 120px;
+        padding-top: 26px;
+        resize: vertical;
+      }
+
+      /* Hide the placeholder visually — only used as the floating-label trigger. */
+      .form-group input::placeholder,
+      .form-group textarea::placeholder { color: transparent; }
+
+      .form-group .floating-label {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 15px;
+        color: var(--text-secondary);
+        pointer-events: none;
+        transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        background: transparent;
+        padding: 0 4px;
+        max-width: calc(100% - 32px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .form-group:has(textarea) .floating-label { top: 22px; transform: none; }
+
+      .form-group input:focus + .floating-label,
+      .form-group input:not(:placeholder-shown) + .floating-label,
+      .form-group textarea:focus + .floating-label,
+      .form-group textarea:not(:placeholder-shown) + .floating-label,
+      .form-group select:focus + .floating-label,
+      .form-group select:not([data-empty="true"]) + .floating-label {
+        top: 9px;
+        transform: none;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8b5cf6;
+      }
+
       .form-group input:focus,
       .form-group select:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: var(--accent);
-        background: rgba(139,92,246,0.02);
-        box-shadow: 0 0 0 3px rgba(139,92,246,0.1);
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.03);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12);
       }
-      
-      .form-group textarea { min-height: 100px; resize: vertical; }
+
+      /* Budget — segmented chip grid (replaces the select). */
+      .budget-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+      }
+      .budget-chip {
+        position: relative;
+        padding: 14px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg);
+        cursor: pointer;
+        transition: border-color 0.2s, transform 0.2s, background 0.2s, box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        text-align: left;
+      }
+      .budget-chip input { position: absolute; opacity: 0; pointer-events: none; }
+      .budget-chip:hover { border-color: #8b5cf6; transform: translateY(-2px); }
+      .budget-chip.selected {
+        border-color: #8b5cf6;
+        background: linear-gradient(135deg, rgba(139,92,246,0.10), rgba(59,130,246,0.06));
+        box-shadow: 0 8px 22px -10px rgba(139,92,246,0.4);
+      }
+      .budget-chip .budget-price {
+        font-weight: 800;
+        font-size: 14px;
+        color: var(--text);
+        font-variant-numeric: tabular-nums;
+      }
+      .budget-chip .budget-tier {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .budget-chip.selected .budget-tier { color: #8b5cf6; }
       
       .interest-options { display: flex; flex-wrap: wrap; gap: 8px; }
       
@@ -1139,30 +1282,191 @@
       .submit-btn {
         width: 100%;
         padding: 18px 32px;
-        background: linear-gradient(135deg, var(--accent), rgba(139,92,246,0.75));
-        color: var(--bg);
+        background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
+        color: #fff;
         border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 800;
+        border-radius: 14px;
+        font-size: 15.5px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
         cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        box-shadow: 0 12px 32px rgba(139,92,246,0.25);
-        margin-top: 8px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        box-shadow: 0 12px 32px -8px rgba(99, 102, 241, 0.45);
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
       }
-      
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .submit-btn:hover::before { transform: translateX(100%); }
+      .submit-btn .submit-arrow { transition: transform 0.25s ease; }
       .submit-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 16px 48px rgba(139,92,246,0.35);
+        transform: translateY(-3px);
+        box-shadow: 0 18px 48px -10px rgba(99, 102, 241, 0.55);
+        filter: brightness(1.05);
       }
-
-      .submit-btn:active {
-        transform: translateY(-1px);
-      }
-
+      .submit-btn:hover .submit-arrow { transform: translateX(4px); }
+      .submit-btn:active { transform: translateY(-1px); }
       .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+      /* === Journal "book notes" footer ============================== */
+      .journal-notes {
+        max-width: 1200px;
+        margin: 0 auto 48px;
+        padding: clamp(40px, 6vw, 72px) clamp(20px, 3vw, 40px) clamp(32px, 4vw, 48px);
+        position: relative;
+      }
+      .journal-notes-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .journal-notes-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: clamp(24px, 3vw, 32px);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      .journal-notes-title em {
+        font-style: italic;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .journal-notes-link {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        border-bottom: 1px dashed var(--text-secondary);
+        padding-bottom: 1px;
+      }
+      .journal-notes-link:hover { border-bottom-style: solid; }
+
+      .journal-notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      /* Each card looks like a torn notebook page. */
+      .journal-note {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background:
+          linear-gradient(180deg, rgba(255, 252, 240, 0.96), rgba(255, 252, 240, 0.92));
+        background-image:
+          linear-gradient(180deg, transparent 28px, rgba(139, 92, 246, 0.10) 28px, rgba(139, 92, 246, 0.10) 29px, transparent 29px),
+          repeating-linear-gradient(180deg, transparent 0, transparent 27px, rgba(15, 23, 42, 0.06) 28px);
+        background-color: #fffbe9;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 4px 14px 14px 4px;
+        padding: 22px 22px 20px 36px;
+        text-decoration: none;
+        color: #1f2937;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+      }
+      /* Red margin line, like ruled paper. */
+      .journal-note::before {
+        content: '';
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(239, 68, 68, 0.35);
+      }
+      /* Tape strip top-left for that pinned-note feel. */
+      .journal-note::after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 14px;
+        width: 48px;
+        height: 18px;
+        background: linear-gradient(180deg, rgba(250, 204, 21, 0.55), rgba(250, 204, 21, 0.30));
+        transform: rotate(-3deg);
+        border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      }
+      .journal-note:hover {
+        transform: translateY(-4px) rotate(-0.15deg);
+        box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 36px -16px rgba(0, 0, 0, 0.28);
+      }
+      .journal-note-meta {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(239, 68, 68, 0.85);
+        font-family: 'Georgia', serif;
+      }
+      .journal-note-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 18px;
+        line-height: 1.35;
+        font-weight: 700;
+        margin: 0;
+        color: #1f2937;
+      }
+      .journal-note-excerpt {
+        font-size: 13.5px;
+        line-height: 1.55;
+        color: #475569;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .journal-note-cta {
+        margin-top: auto;
+        padding-top: 6px;
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        font-size: 13px;
+        color: #6366f1;
+      }
+      .journal-note-cta::after {
+        content: ' →';
+        font-style: normal;
+        transition: margin-left 0.2s ease;
+        display: inline-block;
+      }
+      .journal-note:hover .journal-note-cta::after { margin-left: 4px; }
+
+      /* Dark mode: keep the paper warm/cream so it still looks like notes. */
+      @media (prefers-color-scheme: dark) {
+        .journal-note {
+          background-color: #f5efd9;
+          color: #1f2937;
+        }
+        .journal-note-title { color: #1f2937; }
+        .journal-note-excerpt { color: #475569; }
+      }
+
+      @media (max-width: 600px) {
+        .journal-note { padding: 22px 20px 20px 32px; }
+        .journal-note::before { left: 20px; }
+        .journal-note::after { left: 12px; }
+      }
       
       .form-success { padding: 40px; text-align: center; }
       .form-success h3 { font-size: 24px; margin-bottom: 8px; }
@@ -1558,12 +1862,12 @@
 
       /* Responsive */
       @media (max-width: 768px) {
-        .hero { padding: 48px 24px; }
-        .hero h1 { font-size: 40px; }
-        .hero .subtitle { font-size: 18px; }
-        .hero-benefits { gap: 16px; flex-direction: column; align-items: center; }
-        .hero-stats { flex-direction: column; gap: 4px; }
+        .hero { margin: 12px 0 64px; }
+        .hero-benefits { gap: 14px 18px; flex-wrap: wrap; justify-content: center; }
+        .hero-stats { flex-wrap: wrap; gap: 10px 14px; justify-content: center; }
         .hero-stats-dot { display: none; }
+        .hat-showcase-item { font-size: 12px; padding: 7px 12px; }
+        .hero-cta-group .cta-button { width: 100%; max-width: 320px; text-align: center; }
         .section-title { font-size: 24px; }
         .container { padding: 40px 20px; }
         .form-row { grid-template-columns: 1fr; }
@@ -1622,9 +1926,11 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero">
-        <h1 class="hero-headline">Ship Your MVP Like You Mean It</h1>
-        <p class="hero-subheadline">From zero to launch in 2-4 weeks. One expert team. No compromise on quality.</p>
-        
+        <div class="hero-aurora" aria-hidden="true"></div>
+        <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Booking April–May 2026 · 3 slots left</span>
+        <h1 class="hero-headline">Ship your MVP <span class="accent-word">like you mean it</span></h1>
+        <p class="hero-subheadline">From zero to launch in 2&ndash;4 weeks. One expert team wearing all five hats. No compromise on quality.</p>
+
         <!-- 5 Hats Showcase -->
         <div class="hats-showcase">
           <div class="hat-showcase-item hat-designer">
@@ -2544,35 +2850,49 @@
         <form class="contact-form" id="contactForm">
           <!-- Basic Info Section -->
           <div class="form-section">
-            <span class="form-section-title">Your Details</span>
+            <span class="form-section-title">Your details</span>
             <div class="form-row">
               <div class="form-group">
-                <input type="text" id="fullName" name="fullName" required placeholder="Full Name">
+                <input type="text" id="fullName" name="fullName" required placeholder=" " autocomplete="name">
+                <label for="fullName" class="floating-label">Full name</label>
               </div>
               <div class="form-group">
-                <input type="email" id="email" name="email" required placeholder="you@company.com">
+                <input type="email" id="email" name="email" required placeholder=" " autocomplete="email">
+                <label for="email" class="floating-label">Email address</label>
               </div>
             </div>
           </div>
 
           <!-- Budget Section -->
           <div class="form-section">
-            <span class="form-section-title">Project Budget</span>
-            <div class="form-group">
-              <select id="budget" name="budget">
-                <option value="">Select Your Budget Range</option>
-                <option value="starter">$459 - Starter</option>
-                <option value="prototype">$959 - Prototype</option>
-                <option value="production">$1.5k-$5k - Production</option>
-                <option value="custom">$7.5k+ - Custom</option>
-                <option value="enterprise">$75k+ - Enterprise</option>
-              </select>
+            <span class="form-section-title">Project budget</span>
+            <div class="budget-grid" id="budgetGrid">
+              <label class="budget-chip" data-budget="starter">
+                <input type="radio" name="budget" value="starter">
+                <span class="budget-price">$459</span><span class="budget-tier">Starter</span>
+              </label>
+              <label class="budget-chip" data-budget="prototype">
+                <input type="radio" name="budget" value="prototype">
+                <span class="budget-price">$959</span><span class="budget-tier">Prototype</span>
+              </label>
+              <label class="budget-chip" data-budget="production">
+                <input type="radio" name="budget" value="production">
+                <span class="budget-price">$1.5k–$5k</span><span class="budget-tier">Production</span>
+              </label>
+              <label class="budget-chip" data-budget="custom">
+                <input type="radio" name="budget" value="custom">
+                <span class="budget-price">$7.5k+</span><span class="budget-tier">Custom</span>
+              </label>
+              <label class="budget-chip" data-budget="enterprise">
+                <input type="radio" name="budget" value="enterprise">
+                <span class="budget-price">$75k+</span><span class="budget-tier">Enterprise</span>
+              </label>
             </div>
           </div>
 
           <!-- Interest Section -->
           <div class="form-section">
-            <span class="form-section-title">What You're Building</span>
+            <span class="form-section-title">What you're building</span>
             <div class="interest-scroll">
               <label class="interest-option" onclick="toggleInterest(event, this)">
                 <input type="checkbox" name="interest" value="landing">
@@ -2611,13 +2931,17 @@
 
           <!-- Message Section -->
           <div class="form-section">
-            <span class="form-section-title">Tell Us More</span>
+            <span class="form-section-title">Tell us more</span>
             <div class="form-group">
-              <textarea id="message" name="message" required placeholder="Describe your idea, goals, and timeline..."></textarea>
+              <textarea id="message" name="message" required placeholder=" "></textarea>
+              <label for="message" class="floating-label">Describe your idea, goals, and timeline&hellip;</label>
             </div>
           </div>
 
-          <button type="submit" class="submit-btn" id="submitBtn">Start Building →</button>
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span>Start building</span>
+            <svg class="submit-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
         </form>
         
         <div class="form-success" id="formSuccess" style="display: none;">
@@ -2629,6 +2953,36 @@
       </section>
     </div>
     
+    <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
+         with a static fallback baked in so SEO crawlers + no-JS visitors
+         still see the latest articles. -->
+    <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle">
+      <div class="journal-notes-header">
+        <h2 class="journal-notes-title" id="journalNotesTitle">From the Journal <em>— field notes</em></h2>
+        <a href="/journal" class="journal-notes-link">All notes &rarr;</a>
+      </div>
+      <div class="journal-notes-grid" id="journalNotesGrid">
+        <a class="journal-note" href="/journal/ai-overviews-citation-playbook-for-mvps">
+          <span class="journal-note-meta">Apr 17 · 6 min</span>
+          <h3 class="journal-note-title">The AI Overviews citation playbook for MVPs</h3>
+          <p class="journal-note-excerpt">Five patterns we see in pages pulled into Google AI Overviews — applied to three Start Apps Studio MVPs.</p>
+          <span class="journal-note-cta">Read the note</span>
+        </a>
+        <a class="journal-note" href="/journal/make-your-brand-visible-in-chatgpt">
+          <span class="journal-note-meta">Apr 16 · 7 min</span>
+          <h3 class="journal-note-title">How to make your brand visible in ChatGPT</h3>
+          <p class="journal-note-excerpt">A 12-point GEO checklist so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.</p>
+          <span class="journal-note-cta">Read the note</span>
+        </a>
+        <a class="journal-note" href="/journal/vibe-coded-apps-have-an-seo-problem">
+          <span class="journal-note-meta">Apr · Field note</span>
+          <h3 class="journal-note-title">Vibe-coded apps have an SEO problem</h3>
+          <p class="journal-note-excerpt">Lovable, Bolt and v0 ship empty divs to crawlers. Here's the Cloudflare Worker SSR pattern that fixes it.</p>
+          <span class="journal-note-cta">Read the note</span>
+        </a>
+      </div>
+    </section>
+
     <footer>
       <div class="footer-content">
         <div class="footer-brand">Start Apps Studio</div>
@@ -2658,6 +3012,57 @@
           checkbox.checked = el.classList.contains('selected');
         }
       }
+
+      // Budget chip selection (segmented radio group).
+      (function() {
+        var grid = document.getElementById('budgetGrid');
+        if (!grid) return;
+        grid.addEventListener('click', function(e) {
+          var chip = e.target.closest('.budget-chip');
+          if (!chip) return;
+          grid.querySelectorAll('.budget-chip').forEach(function(c) { c.classList.remove('selected'); });
+          chip.classList.add('selected');
+          var input = chip.querySelector('input');
+          if (input) input.checked = true;
+        });
+      })();
+
+      // Floating-label fetch the latest journal posts and render them as
+      // notebook cards. Falls back to the static cards already in the DOM
+      // if the fetch fails.
+      (function() {
+        var grid = document.getElementById('journalNotesGrid');
+        if (!grid) return;
+        function escapeHtml(s) {
+          return String(s).replace(/[&<>"']/g, function(c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+          });
+        }
+        function fmtDate(iso) {
+          if (!iso) return '';
+          var d = new Date(iso);
+          if (isNaN(d.getTime())) return '';
+          return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+        fetch('/api/journal/posts', { headers: { 'Accept': 'application/json' } })
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(data) {
+            if (!data || !Array.isArray(data.posts) || data.posts.length === 0) return;
+            var posts = data.posts.slice(0, 3);
+            grid.innerHTML = posts.map(function(p) {
+              var meta = [fmtDate(p.publishedAt), (p.readMinutes ? p.readMinutes + ' min' : '')]
+                .filter(Boolean).join(' · ');
+              var excerpt = p.excerpt || p.description || '';
+              return '<a class="journal-note" href="/journal/' + escapeHtml(p.slug) + '">' +
+                '<span class="journal-note-meta">' + escapeHtml(meta) + '</span>' +
+                '<h3 class="journal-note-title">' + escapeHtml(p.title) + '</h3>' +
+                '<p class="journal-note-excerpt">' + escapeHtml(excerpt) + '</p>' +
+                '<span class="journal-note-cta">Read the note</span>' +
+                '</a>';
+            }).join('');
+          })
+          .catch(function() { /* keep static fallback cards */ });
+      })();
       
       function switchTab(tab, el) {
         document.querySelectorAll('.service-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -2862,9 +3267,10 @@
       document.getElementById('contactForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
+        const btnLabel = btn.querySelector('span');
         btn.disabled = true;
-        btn.textContent = 'Sending...';
-        
+        if (btnLabel) btnLabel.textContent = 'Sending…';
+
         const formData = new FormData(this);
         const interests = [];
         document.querySelectorAll('input[name="interest"]:checked').forEach(cb => {
@@ -2897,7 +3303,7 @@
           }
         } catch (error) {
           btn.disabled = false;
-          btn.textContent = 'Send Message';
+          if (btnLabel) btnLabel.textContent = 'Start building';
           alert('Something went wrong. Please try again or email us directly at create@startappsstudio.com');
         }
       });
