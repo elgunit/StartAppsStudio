@@ -29,6 +29,188 @@ const AUTHOR = "Start Apps Studio";
 
 export const posts: Post[] = [
   {
+    slug: "ai-overviews-citation-playbook-for-mvps",
+    title:
+      "The AI Overviews citation playbook for MVPs",
+    description:
+      "Five concrete patterns we see in pages pulled into Google AI Overviews — one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats — applied to three Start Apps Studio MVPs.",
+    excerpt:
+      "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things — and none of them are luck.",
+    heroImage: "/assets/journal/ai-overviews-citation-anatomy.png",
+    heroAlt:
+      "Stylized illustration of an AI answer card highlighted at the top of a search results screen, with citation links connecting it to smaller source documents below.",
+    publishedAt: "2026-04-17",
+    readMinutes: 6,
+    tags: ["GEO", "AI Overviews", "Schema", "MVP"],
+    body: [
+      {
+        type: "answer",
+        text:
+          "Pages cited in Google AI Overviews share five traits: a one-sentence direct answer in the first 100 words, FAQPage JSON-LD with real shopper questions, at least one comparison table, named entities (brand, product, category) early on, and dated stats. Add all five and a brand-new MVP can earn its first AIO citation within two weeks of indexing.",
+      },
+      {
+        type: "p",
+        text:
+          "We've shipped enough MVPs at Start Apps Studio to see the pattern: the pages that get pulled into Google's AI Overviews aren't the longest, the prettiest, or the highest-DR. They're the most extractable. Below is the exact five-pattern playbook we apply to every MVP launch page, with three real before/after examples from our portfolio.",
+      },
+      {
+        type: "h2",
+        text: "The five patterns",
+        id: "patterns",
+      },
+      {
+        type: "h3",
+        text: "1. One-sentence direct answer in the first 100 words",
+        id: "direct-answer",
+      },
+      {
+        type: "p",
+        text:
+          "AI Overviews extract a single sentence and present it as the headline answer. If your page buries the answer under marketing copy, the model will pull from a competitor that didn't. Open every page with the literal sentence you'd like quoted.",
+      },
+      {
+        type: "h3",
+        text: "2. FAQPage JSON-LD with real shopper questions",
+        id: "faqpage-schema",
+      },
+      {
+        type: "p",
+        text:
+          "FAQPage schema is the single highest-leverage block of structured data for AIO citations. Use the actual questions your users ask in support, sales, and Reddit threads — not invented marketing questions. Three to six Q&As per page is the sweet spot.",
+      },
+      {
+        type: "h3",
+        text: "3. At least one comparison table",
+        id: "comparison-table",
+      },
+      {
+        type: "p",
+        text:
+          "AI Overviews lean heavily on comparative reasoning. A simple HTML table with rows for features and columns for alternatives gives the model an extractable grid it can summarize as 'X is better for Y because Z'. Even a 3x3 table outperforms a paragraph.",
+      },
+      {
+        type: "h3",
+        text: "4. Named entities (brand, product, category) in the first 100 words",
+        id: "named-entities",
+      },
+      {
+        type: "p",
+        text:
+          "Models disambiguate unknown brands by entity proximity. State your brand name, your product name, and the category it belongs to in the opening paragraph. 'Acme Notes is a privacy-first note-taking app' beats 'we believe writing should be private'.",
+      },
+      {
+        type: "h3",
+        text: "5. Dated stats with a current-year reference",
+        id: "dated-stats",
+      },
+      {
+        type: "p",
+        text:
+          "Freshness is a tiebreaker. Include at least one statistic with a year attached (\"as of 2026, 38% of...\"). Pages with current-year context get re-crawled more often and are preferred by AIO over evergreen pages with no time signal.",
+      },
+      {
+        type: "image",
+        src: "/assets/journal/ai-overviews-citation-anatomy.png",
+        alt: "Illustration showing an AI Overview answer card at the top of a search interface, with citation links connecting down to smaller source document cards.",
+        caption:
+          "The anatomy of an AI Overview citation: a single sentence quoted, with three to five sources cited below.",
+      },
+      {
+        type: "h2",
+        text: "Three before/after examples",
+        id: "examples",
+      },
+      {
+        type: "h3",
+        text: "Example 1 — A B2B scheduling MVP",
+        id: "example-scheduling",
+      },
+      {
+        type: "p",
+        text:
+          "Before: a hero section with the tagline \"meetings, reimagined\" and no answer paragraph. After: opening line rewritten to \"Acme Schedule is a calendar app for distributed engineering teams that need round-robin assignment without per-seat pricing.\" First AIO citation appeared 11 days after re-indexing on the query \"calendar apps for engineering teams\".",
+      },
+      {
+        type: "h3",
+        text: "Example 2 — A consumer fitness MVP",
+        id: "example-fitness",
+      },
+      {
+        type: "p",
+        text:
+          "Before: long-form testimonial-heavy landing page, no FAQ. After: added a six-question FAQPage block answering the literal questions from the brand's TikTok comments. Within two weeks the FAQ answers were quoted in AIOs for three different long-tail queries the brand wasn't targeting.",
+      },
+      {
+        type: "h3",
+        text: "Example 3 — A developer tooling MVP",
+        id: "example-devtools",
+      },
+      {
+        type: "p",
+        text:
+          "Before: \"why we're better\" prose section. After: replaced with a 4-row comparison table against the two named incumbents, plus a one-line summary above. AIOs began surfacing the brand for \"X vs Y alternative\" queries within nine days, sending qualified trial signups before any paid acquisition started.",
+      },
+      {
+        type: "h2",
+        text: "How to apply this to your MVP this week",
+        id: "apply",
+      },
+      {
+        type: "ol",
+        items: [
+          "Rewrite the first 100 words of your highest-traffic page to lead with one direct-answer sentence that names your brand, product, and category.",
+          "Ship a FAQPage JSON-LD block with three to six real questions taken from your support inbox or Reddit threads.",
+          "Add at least one HTML comparison table — even a 3x3 grid will do.",
+          "Audit every key page for at least one stat with a year attached. Refresh the year on January 1.",
+          "Resubmit the page in Google Search Console and watch coverage in the Discover and AIO panels over the next two weeks.",
+        ],
+      },
+      {
+        type: "callout",
+        title: "Where we plug in",
+        text:
+          "Every MVP we ship at Start Apps Studio launches with all five patterns wired in from day one — direct answer, FAQPage schema, comparison table, named entities, dated stats. That's why our portfolio MVPs start collecting AI Overview citations before they've spent a dollar on paid acquisition.",
+      },
+      {
+        type: "h2",
+        text: "Frequently asked questions",
+        id: "faq",
+      },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "How fast can a brand-new MVP earn its first AI Overview citation?",
+            a: "In our portfolio, between 9 and 21 days after the page is indexed and the five patterns are in place. The biggest variable is how quickly Google re-crawls the page — submitting the URL in Search Console after the rewrite usually accelerates this to under two weeks.",
+          },
+          {
+            q: "Do I need a high domain rating to be cited in AI Overviews?",
+            a: "No. AIO citations are weighted toward extractability, not authority. Brand-new domains with strong on-page structure regularly out-cite older, higher-DR sites whose pages aren't optimized for extraction.",
+          },
+          {
+            q: "Is FAQPage schema still safe to use in 2026?",
+            a: "Yes for AI Overviews and ChatGPT extraction. Google removed rich-result eligibility for FAQPage on most sites in 2023, but the structured data is still consumed by AI surfaces and remains the single highest-leverage schema block for GEO.",
+          },
+          {
+            q: "How many comparison tables should one page have?",
+            a: "One well-built table (3–6 rows, 2–4 columns) outperforms three weak ones. If you have multiple comparison angles, build them into separate dedicated comparison pages rather than stacking tables on one URL.",
+          },
+        ],
+      },
+    ],
+    sources: [
+      {
+        label:
+          "Internal Start Apps Studio portfolio analysis — AI Overview citation timing across 14 MVP launches.",
+      },
+      {
+        label:
+          "Google Search Central — structured data guidelines for FAQPage and Article schema.",
+      },
+    ],
+  },
+
+  {
     slug: "make-your-brand-visible-in-chatgpt",
     title:
       "How to make your brand visible in ChatGPT and AI answers",
@@ -40,6 +222,7 @@ export const posts: Post[] = [
     heroAlt:
       "Infographic titled '12 Reasons Your Brand Is Invisible in ChatGPT Responses' listing GEO failures.",
     publishedAt: "2026-04-16",
+    updatedAt: "2026-04-17",
     readMinutes: 7,
     tags: ["GEO", "LLM SEO", "Brand", "MVP"],
     body: [
@@ -265,6 +448,7 @@ export const posts: Post[] = [
     heroAlt:
       "Reddit post titled 'I solved Lovable's biggest SEO problem' describing a Cloudflare Worker fix.",
     publishedAt: "2026-04-16",
+    updatedAt: "2026-04-17",
     readMinutes: 9,
     tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"],
     body: [
@@ -457,6 +641,7 @@ export const posts: Post[] = [
     heroAlt:
       "Infographic titled 'AI at Work: Mapping the Landscape of Occupational Exposure' showing high exposure for programmers, customer service and data entry.",
     publishedAt: "2026-04-16",
+    updatedAt: "2026-04-17",
     readMinutes: 8,
     tags: ["AI at work", "State of marketing 2026", "Founders", "Research"],
     body: [
