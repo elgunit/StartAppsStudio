@@ -168,6 +168,65 @@ export function journalLeadNotification(opts: JournalLeadOpts): { subject: strin
   return { subject, html };
 }
 
+export interface JournalStatsReportOpts {
+  frequency: "weekly" | "monthly";
+  periodLabel: string;
+  from: string;
+  to: string;
+  totals: {
+    views: number;
+    ctaClicks: number;
+    createAccountChoices: number;
+    openContactChoices: number;
+    guestEmails: number;
+  };
+  topArticles: Array<{ title: string | null; slug: string; views: number; ctaClicks: number }>;
+}
+
+export function journalStatsReport(opts: JournalStatsReportOpts): { subject: string; html: string } {
+  const { frequency, periodLabel, from, to, totals, topArticles } = opts;
+  const subject = `Journal Stats Report — ${periodLabel}`;
+  const ctaPct = totals.views > 0 ? Math.round((totals.ctaClicks / totals.views) * 100) : 0;
+  const topRows = topArticles.slice(0, 5).map((a) =>
+    `<tr>
+      <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};">${escapeHtml(a.title || a.slug)}</td>
+      <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};text-align:right;">${a.views}</td>
+      <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};text-align:right;">${a.ctaClicks}</td>
+    </tr>`
+  ).join("");
+
+  const html = baseTemplate({
+    preheader: `${totals.views} views, ${totals.ctaClicks} CTA clicks for ${periodLabel}.`,
+    title: `${frequency === "weekly" ? "Weekly" : "Monthly"} Journal Stats`,
+    bodyHtml: `
+      <p style="margin:0 0 18px 0;">Here is your <strong style="color:${BRAND.text};">${frequency === "weekly" ? "weekly" : "monthly"}</strong> Journal performance report for <strong style="color:${BRAND.text};">${escapeHtml(periodLabel)}</strong>. The full CSV is attached.</p>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;padding:16px;margin-bottom:20px;">
+        ${row("Period", `${from} → ${to}`)}
+        ${row("Views", String(totals.views))}
+        ${row("CTA clicks", `${totals.ctaClicks} (${ctaPct}% of views)`)}
+        ${row("Create account", String(totals.createAccountChoices))}
+        ${row("Guest emails", String(totals.guestEmails))}
+        ${row("Open contact", String(totals.openContactChoices))}
+      </table>
+
+      ${topArticles.length > 0 ? `
+      <p style="margin:0 0 10px 0;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${BRAND.accentSoft};">Top Articles</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;overflow:hidden;">
+        <thead>
+          <tr style="background:${BRAND.card};">
+            <th style="padding:8px 12px;font-size:11px;text-align:left;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Article</th>
+            <th style="padding:8px 12px;font-size:11px;text-align:right;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Views</th>
+            <th style="padding:8px 12px;font-size:11px;text-align:right;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">CTA</th>
+          </tr>
+        </thead>
+        <tbody>${topRows}</tbody>
+      </table>` : ""}
+    `,
+  });
+  return { subject, html };
+}
+
 export function socialClickNotification(opts: SocialClickOpts): { subject: string; html: string } {
   const ts = opts.timestamp || new Date().toISOString();
   const subject = `${opts.platform} click from ${opts.pagePath}`;

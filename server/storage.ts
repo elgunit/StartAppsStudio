@@ -2,6 +2,7 @@ import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
   marketingServices, serviceOrders, sectionViews, visitorEvents, journalLeads,
+  journalReportSchedules,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
@@ -9,7 +10,8 @@ import {
   type ProjectHat, type HatType, type ContactSubmission, type InsertContactSubmission,
   type MarketingService, type InsertMarketingService, type ServiceOrder, type InsertServiceOrder,
   type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent,
-  type JournalLead, type InsertJournalLead
+  type JournalLead, type InsertJournalLead,
+  type JournalReportSchedule,
 } from "@shared/schema";
 
 export interface JournalConversionRow {
@@ -657,6 +659,30 @@ export class DatabaseStorage implements IStorage {
   async updateServiceOrder(id: string, data: Partial<ServiceOrder>): Promise<ServiceOrder | undefined> {
     const [order] = await db.update(serviceOrders).set({ ...data, updatedAt: new Date() }).where(eq(serviceOrders.id, id)).returning();
     return order || undefined;
+  }
+
+  async getJournalReportSchedule(): Promise<JournalReportSchedule | undefined> {
+    const [row] = await db.select().from(journalReportSchedules).limit(1);
+    return row || undefined;
+  }
+
+  async upsertJournalReportSchedule(data: { frequency: string; recipientEmail: string; enabled: boolean }): Promise<JournalReportSchedule> {
+    const existing = await this.getJournalReportSchedule();
+    if (existing) {
+      const [row] = await db
+        .update(journalReportSchedules)
+        .set({ frequency: data.frequency, recipientEmail: data.recipientEmail, enabled: data.enabled, updatedAt: new Date() })
+        .where(eq(journalReportSchedules.id, existing.id))
+        .returning();
+      return row;
+    } else {
+      const [row] = await db.insert(journalReportSchedules).values(data).returning();
+      return row;
+    }
+  }
+
+  async markJournalReportSent(id: string): Promise<void> {
+    await db.update(journalReportSchedules).set({ lastSentAt: new Date(), updatedAt: new Date() }).where(eq(journalReportSchedules.id, id));
   }
 }
 

@@ -8,6 +8,7 @@ import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
 import { activeVisitorNotification, socialClickNotification, journalLeadNotification } from "./email-templates";
+import { sendJournalStatsReport } from "./journal-report-sender";
 import {
   renderArticleHtml,
   renderIndexHtml,
@@ -983,6 +984,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("journal conversion trends error:", error);
       res.status(500).json({ error: "Failed to fetch journal conversion trends" });
+    }
+  });
+
+  // ── Journal report schedule ──────────────────────────────────────────────
+
+
+  app.get("/api/admin/journal/report-schedule", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      const schedule = await storage.getJournalReportSchedule();
+      res.json(schedule ?? null);
+    } catch (error) {
+      console.error("get journal report schedule error:", error);
+      res.status(500).json({ error: "Failed to fetch report schedule" });
+    }
+  });
+
+  app.post("/api/admin/journal/report-schedule", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      const { frequency, recipientEmail, enabled } = req.body;
+      if (!frequency || !["weekly", "monthly"].includes(frequency)) {
+        return res.status(400).json({ error: "frequency must be 'weekly' or 'monthly'" });
+      }
+      if (!recipientEmail || typeof recipientEmail !== "string" || !recipientEmail.trim()) {
+        return res.status(400).json({ error: "recipientEmail is required" });
+      }
+      const schedule = await storage.upsertJournalReportSchedule({
+        frequency,
+        recipientEmail: recipientEmail.trim(),
+        enabled: enabled !== false,
+      });
+      res.json(schedule);
+    } catch (error) {
+      console.error("save journal report schedule error:", error);
+      res.status(500).json({ error: "Failed to save report schedule" });
+    }
+  });
+
+  app.post("/api/admin/journal/report-schedule/send-now", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      const { frequency, recipientEmail } = req.body;
+      if (!recipientEmail || typeof recipientEmail !== "string" || !recipientEmail.trim()) {
+        return res.status(400).json({ error: "recipientEmail is required" });
+      }
+      const freq: "weekly" | "monthly" = frequency === "monthly" ? "monthly" : "weekly";
+      await sendJournalStatsReport(freq, recipientEmail.trim());
+      res.json({ ok: true });
+    } catch (error: any) {
+      console.error("send journal report now error:", error);
+      res.status(500).json({ error: error?.message || "Failed to send report" });
     }
   });
 

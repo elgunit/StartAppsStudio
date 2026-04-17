@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -9,6 +9,9 @@ import {
   Alert,
   Modal,
   ScrollView,
+  TextInput,
+  Switch,
+  ActivityIndicator,
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -41,6 +44,14 @@ interface JournalStatsResponse {
   from: string | null;
   to: string | null;
   stats: JournalConversionRow[];
+}
+
+interface ReportSchedule {
+  id: string;
+  frequency: string;
+  recipientEmail: string;
+  enabled: boolean;
+  lastSentAt: string | null;
 }
 
 interface TrendBucket {
@@ -328,6 +339,7 @@ export default function JournalStatsScreen() {
           <Totals label="Guest emails" value={totals.guestEmails} sub={pct(totals.guestEmails, totals.ctaClicks)} />
         </View>
       </Card>
+      {user?.sessionToken ? <ScheduleReportCard sessionToken={user.sessionToken} /> : null}
     </Animated.View>
   );
 
@@ -637,6 +649,198 @@ function FunnelStep({
   );
 }
 
+function ScheduleReportCard({ sessionToken }: { sessionToken: string }) {
+  const { theme } = useTheme();
+  const [frequency, setFrequency] = useState<"weekly" | "monthly">("weekly");
+  const [email, setEmail] = useState("");
+  const [enabled, setEnabled] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [savedOk, setSavedOk] = useState(false);
+
+  const { data: schedule, isLoading, refetch } = useQuery<ReportSchedule | null>({
+    queryKey: ["/api/admin/journal/report-schedule", sessionToken],
+    queryFn: async () => {
+      const url = new URL("/api/admin/journal/report-schedule", getApiUrl());
+      const res = await fetch(url.toString(), {
+        credentials: "include",
+        headers: { "x-session-token": sessionToken },
+      });
+      if (!res.ok) throw new Error(`${res.status}`);
+      return res.json();
+    },
+  });
+
+  useEffect(() => {
+    if (schedule) {
+      setFrequency(schedule.frequency === "monthly" ? "monthly" : "weekly");
+      setEmail(schedule.recipientEmail);
+      setEnabled(schedule.enabled);
+    }
+  }, [schedule]);
+
+  const authHeaders = { "x-session-token": sessionToken, "Content-Type": "application/json" };
+
+  const handleSave = async () => {
+    if (!email.trim()) {
+      Alert.alert("Email required", "Enter a recipient email address.");
+      return;
+    }
+    setSaving(true);
+    setSavedOk(false);
+    try {
+      const url = new URL("/api/admin/journal/report-schedule", getApiUrl());
+      const res = await fetch(url.toString(), {
+        method: "POST",
+        headers: authHeaders,
+        body: JSON.stringify({ frequency, recipientEmail: email.trim(), enabled }),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error || `${res.status}`);
+      }
+      setSavedOk(true);
+      refetch();
+      setTimeout(() => setSavedOk(false), 2500);
+    } catch (e: any) {
+      Alert.alert("Save failed", e?.message || "Could not save schedule.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleSendNow = async () => {
+    if (!email.trim()) {
+      Alert.alert("Email required", "Enter a recipient email address before sending.");
+      return;
+    }
+    setSending(true);
+    try {
+      const url = new URL("/api/admin/journal/report-schedule/send-now", getApiUrl());
+      const res = await fetch(url.toString(), {
+        method: "POST",
+        headers: authHeaders,
+        body: JSON.stringify({ frequency, recipientEmail: email.trim() }),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error || `${res.status}`);
+      }
+      Alert.alert("Report sent", `A ${frequency} report was emailed to ${email.trim()}.`);
+    } catch (e: any) {
+      Alert.alert("Send failed", e?.message || "Could not send report. Check the Resend integration.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  if (isLoading) return null;
+
+  return (
+    <Card style={styles.scheduleCard}>
+      <View style={styles.scheduleHeader}>
+        <View style={{ flex: 1 }}>
+          <ThemedText type="h4">Scheduled Report</ThemedText>
+          <ThemedText type="caption" style={{ color: theme.textSecondary, marginTop: 2 }}>
+            Deliver a CSV report by email
+          </ThemedText>
+        </View>
+        <Switch
+          testID="toggle-schedule-enabled"
+          value={enabled}
+          onValueChange={setEnabled}
+          thumbColor={enabled ? theme.text : theme.textTertiary}
+          trackColor={{ false: theme.backgroundSecondary, true: theme.border }}
+        />
+      </View>
+
+      <View style={[styles.freqRow, { opacity: enabled ? 1 : 0.45 }]} pointerEvents={enabled ? "auto" : "none"}>
+        {(["weekly", "monthly"] as const).map((f) => (
+          <Pressable
+            key={f}
+            testID={`freq-${f}`}
+            onPress={() => setFrequency(f)}
+            style={[
+              styles.freqPill,
+              { borderColor: theme.border, backgroundColor: theme.backgroundDefault },
+              frequency === f && { backgroundColor: theme.text },
+            ]}
+          >
+            <ThemedText
+              type="caption"
+              style={{ color: frequency === f ? theme.backgroundRoot : theme.textSecondary }}
+            >
+              {f === "weekly" ? "Weekly" : "Monthly"}
+            </ThemedText>
+          </Pressable>
+        ))}
+      </View>
+
+      <TextInput
+        testID="input-recipient-email"
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Recipient email"
+        placeholderTextColor={theme.textTertiary}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        editable={enabled}
+        style={[
+          styles.emailInput,
+          {
+            color: theme.text,
+            borderColor: theme.border,
+            backgroundColor: theme.backgroundDefault,
+            opacity: enabled ? 1 : 0.45,
+          },
+        ]}
+      />
+
+      {schedule?.lastSentAt ? (
+        <ThemedText type="caption" style={{ color: theme.textTertiary, marginTop: Spacing.xs }}>
+          Last sent {new Date(schedule.lastSentAt).toLocaleDateString()}
+        </ThemedText>
+      ) : null}
+
+      <View style={styles.scheduleActions}>
+        <Pressable
+          testID="button-send-now"
+          onPress={handleSendNow}
+          disabled={sending}
+          style={[styles.sendNowBtn, { borderColor: theme.border, backgroundColor: theme.backgroundDefault, opacity: sending ? 0.5 : 1 }]}
+        >
+          {sending ? (
+            <ActivityIndicator size="small" color={theme.textSecondary} />
+          ) : (
+            <Feather name="send" size={13} color={theme.textSecondary} />
+          )}
+          <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+            {sending ? "Sending..." : "Send now"}
+          </ThemedText>
+        </Pressable>
+
+        <Pressable
+          testID="button-save-schedule"
+          onPress={handleSave}
+          disabled={saving}
+          style={[styles.saveBtn, { backgroundColor: theme.text, opacity: saving ? 0.6 : 1 }]}
+        >
+          {saving ? (
+            <ActivityIndicator size="small" color={theme.backgroundRoot} />
+          ) : (
+            <Feather name={savedOk ? "check" : "save"} size={13} color={theme.backgroundRoot} />
+          )}
+          <ThemedText type="caption" style={{ color: theme.backgroundRoot }}>
+            {savedOk ? "Saved" : saving ? "Saving..." : "Save"}
+          </ThemedText>
+        </Pressable>
+      </View>
+    </Card>
+  );
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
   headerSection: {
@@ -785,5 +989,56 @@ const styles = StyleSheet.create({
   barFill: {
     width: "100%",
     borderRadius: BorderRadius.xs,
+  },
+  scheduleCard: {
+    marginBottom: Spacing.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  scheduleHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+  },
+  freqRow: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+  },
+  freqPill: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.full,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  emailInput: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: BorderRadius.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    fontSize: 14,
+  },
+  scheduleActions: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    marginTop: Spacing.xs,
+  },
+  sendNowBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  saveBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    flex: 1,
+    justifyContent: "center",
   },
 });

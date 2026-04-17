@@ -3,6 +3,8 @@ import type { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import * as fs from "fs";
 import * as path from "path";
+import { storage } from "./storage";
+import { sendJournalStatsReport } from "./journal-report-sender";
 
 const app = express();
 const log = console.log;
@@ -225,6 +227,27 @@ function setupErrorHandler(app: express.Application) {
   });
 }
 
+async function checkAndSendScheduledReport() {
+  try {
+    const schedule = await storage.getJournalReportSchedule();
+    if (!schedule || !schedule.enabled) return;
+
+    const now = new Date();
+    const intervalDays = schedule.frequency === "monthly" ? 30 : 7;
+    const intervalMs = intervalDays * 24 * 60 * 60 * 1000;
+    const lastSent = schedule.lastSentAt ? new Date(schedule.lastSentAt) : null;
+
+    if (lastSent && now.getTime() - lastSent.getTime() < intervalMs) return;
+
+    const freq = schedule.frequency === "monthly" ? "monthly" : "weekly";
+    await sendJournalStatsReport(freq, schedule.recipientEmail);
+    await storage.markJournalReportSent(schedule.id);
+    log(`Journal stats report sent to ${schedule.recipientEmail} (${freq})`);
+  } catch (err: any) {
+    console.error("Scheduled journal report failed:", err?.message || err);
+  }
+}
+
 (async () => {
   setupCors(app);
   setupBodyParsing(app);
@@ -245,6 +268,8 @@ function setupErrorHandler(app: express.Application) {
     },
     () => {
       log(`express server serving on port ${port}`);
+      // Check for due scheduled reports every hour
+      setInterval(checkAndSendScheduledReport, 60 * 60 * 1000);
     },
   );
 })();

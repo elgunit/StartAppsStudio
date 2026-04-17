@@ -345,6 +345,26 @@ export type HatType = "designer" | "developer" | "strategist" | "manager" | "ana
 export type ProjectStatus = "brief_submitted" | "hat_selection" | "discovery" | "design_build" | "client_review" | "iteration" | "completed";
 export type ServiceOrderStatus = "submitted" | "in_progress" | "delivered";
 
+// Journal report schedules — recurring CSV email delivery
+export const journalReportSchedules = pgTable("journal_report_schedules", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  frequency: text("frequency").notNull().default("weekly"), // "weekly" | "monthly"
+  recipientEmail: text("recipient_email").notNull(),
+  enabled: boolean("enabled").notNull().default(true),
+  lastSentAt: timestamp("last_sent_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertJournalReportScheduleSchema = createInsertSchema(journalReportSchedules).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  lastSentAt: true,
+});
+export type JournalReportSchedule = typeof journalReportSchedules.$inferSelect;
+export type InsertJournalReportSchedule = z.infer<typeof insertJournalReportScheduleSchema>;
+
 // Visitor analytics
 export const insertSectionViewSchema = createInsertSchema(sectionViews).omit({
   id: true,
