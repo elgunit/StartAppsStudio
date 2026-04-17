@@ -5,12 +5,16 @@ import {
   FlatList,
   RefreshControl,
   Pressable,
+  Platform,
+  Alert,
 } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 
 import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
@@ -50,12 +54,66 @@ function pct(numerator: number, denominator: number): string {
   return `${Math.round((numerator / denominator) * 100)}%`;
 }
 
+function buildCsvContent(
+  stats: JournalConversionRow[],
+  rangeLabel: string,
+  from: string | null,
+  to: string | null,
+): string {
+  const header = ["Range", "From", "To", "Slug", "Title", "Views", "CTA Clicks", "Create Account", "Open Contact", "Guest Emails"];
+  const fromStr = from ? new Date(from).toISOString().slice(0, 10) : "all";
+  const toStr = to ? new Date(to).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10);
+  const rows = stats.map((r) => [
+    rangeLabel,
+    fromStr,
+    toStr,
+    r.slug,
+    r.title ?? r.slug,
+    r.views,
+    r.ctaClicks,
+    r.createAccountChoices,
+    r.openContactChoices,
+    r.guestEmails,
+  ]);
+  const escape = (val: string | number) => {
+    const s = String(val);
+    return s.includes(",") || s.includes('"') || s.includes("\n")
+      ? `"${s.replace(/"/g, '""')}"`
+      : s;
+  };
+  return [header, ...rows].map((row) => row.map(escape).join(",")).join("\n");
+}
+
+async function exportCsvNative(csv: string, filename: string) {
+  const path = `${FileSystem.cacheDirectory}${filename}`;
+  await FileSystem.writeAsStringAsync(path, csv, { encoding: FileSystem.EncodingType.UTF8 });
+  const canShare = await Sharing.isAvailableAsync();
+  if (canShare) {
+    await Sharing.shareAsync(path, { mimeType: "text/csv", dialogTitle: "Export Journal Stats" });
+  } else {
+    Alert.alert("Sharing not available", "Your device does not support file sharing.");
+  }
+}
+
+function exportCsvWeb(csv: string, filename: string) {
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 export default function JournalStatsScreen() {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const { user } = useAuth();
   const [range, setRange] = useState<RangeKey>("30d");
+  const [exporting, setExporting] = useState(false);
 
   const fromDate = useMemo(() => {
     const opt = RANGE_OPTIONS.find((r) => r.key === range);
@@ -87,6 +145,25 @@ export default function JournalStatsScreen() {
   });
 
   const stats = data?.stats ?? [];
+
+  const handleExport = async () => {
+    if (stats.length === 0) return;
+    setExporting(true);
+    try {
+      const rangeLabel = RANGE_OPTIONS.find((r) => r.key === range)?.label ?? range;
+      const csv = buildCsvContent(stats, rangeLabel, data?.from ?? null, data?.to ?? null);
+      const filename = `journal-stats-${range}-${new Date().toISOString().slice(0, 10)}.csv`;
+      if (Platform.OS === "web") {
+        exportCsvWeb(csv, filename);
+      } else {
+        await exportCsvNative(csv, filename);
+      }
+    } catch (e) {
+      Alert.alert("Export failed", "Could not export CSV. Please try again.");
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const totals = useMemo(() => {
     return stats.reduce(
@@ -137,10 +214,27 @@ export default function JournalStatsScreen() {
   const renderHeader = () => (
     <Animated.View entering={FadeInDown.duration(400)}>
       <View style={styles.headerSection}>
-        <ThemedText type="h2">Journal Stats</ThemedText>
-        <ThemedText type="small" style={{ color: theme.textSecondary }}>
-          {stats.length} {stats.length === 1 ? "article" : "articles"}
-        </ThemedText>
+        <View>
+          <ThemedText type="h2">Journal Stats</ThemedText>
+          <ThemedText type="small" style={{ color: theme.textSecondary }}>
+            {stats.length} {stats.length === 1 ? "article" : "articles"}
+          </ThemedText>
+        </View>
+        <Pressable
+          testID="button-export-csv"
+          onPress={handleExport}
+          disabled={exporting || stats.length === 0}
+          style={[
+            styles.exportButton,
+            { borderColor: theme.border, backgroundColor: theme.backgroundDefault },
+            (exporting || stats.length === 0) && { opacity: 0.4 },
+          ]}
+        >
+          <Feather name="download" size={14} color={theme.textSecondary} />
+          <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+            {exporting ? "Exporting..." : "CSV"}
+          </ThemedText>
+        </Pressable>
       </View>
       {renderRangePicker()}
       <Card style={styles.totalsCard}>
@@ -276,8 +370,17 @@ const styles = StyleSheet.create({
   headerSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: Spacing.lg,
+  },
+  exportButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.full,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   rangeRow: {
     flexDirection: "row",
