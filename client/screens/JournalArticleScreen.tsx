@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -231,6 +231,17 @@ export default function JournalArticleScreen() {
   });
 
   const post = data?.post;
+
+  const viewTrackedRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (post?.slug && viewTrackedRef.current !== post.slug) {
+      viewTrackedRef.current = post.slug;
+      trackVisitorEvent("journal_article_view", {
+        slug: post.slug,
+        title: post.title,
+      });
+    }
+  }, [post?.slug, post?.title]);
 
   if (isLoading) {
     return (

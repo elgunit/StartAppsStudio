@@ -14,6 +14,7 @@ import RequestServiceScreen from "@/screens/RequestServiceScreen";
 import JournalListScreen from "@/screens/JournalListScreen";
 import JournalArticleScreen from "@/screens/JournalArticleScreen";
 import JournalSignupScreen from "@/screens/JournalSignupScreen";
+import JournalStatsScreen from "@/screens/JournalStatsScreen";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
 import { useAuth } from "@/lib/auth";
 import { apiRequest } from "@/lib/query-client";
@@ -31,6 +32,7 @@ export type RootStackParamList = {
   JournalList: undefined;
   JournalArticle: { slug: string };
   JournalSignup: { slug: string; title?: string };
+  JournalStats: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -117,6 +119,11 @@ export default function RootStackNavigator() {
             name="JournalArticle"
             component={JournalArticleScreen}
             options={{ headerTitle: "" }}
+          />
+          <Stack.Screen
+            name="JournalStats"
+            component={JournalStatsScreen}
+            options={{ headerTitle: "Journal Stats" }}
           />
         </>
       ) : (

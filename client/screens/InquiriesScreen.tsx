@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { StyleSheet, View, FlatList, RefreshControl, Linking } from "react-native";
-import { useHeaderHeight } from "@react-navigation/elements";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { HeaderButton, useHeaderHeight } from "@react-navigation/elements";
+import type { RootStackParamList } from "@/navigation/RootStackNavigator";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
@@ -49,6 +52,21 @@ export default function InquiriesScreen() {
   const tabBarHeight = useBottomTabBarHeight();
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButton
+          testID="button-journal-stats"
+          onPress={() => navigation.navigate("JournalStats")}
+          accessibilityLabel="Journal stats"
+        >
+          <Feather name="bar-chart-2" size={20} color={theme.text} />
+        </HeaderButton>
+      ),
+    });
+  }, [navigation, theme.text]);
 
   const { data: submissions = [], isLoading, refetch } = useQuery<ContactSubmission[]>({
     queryKey: ["/api/contact-submissions"],

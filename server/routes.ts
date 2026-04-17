@@ -898,6 +898,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/admin/journal/conversion-stats", async (req, res) => {
+    try {
+      if (!(await requireAdmin(req.query.adminId))) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const parseDate = (v: unknown): Date | undefined => {
+        if (typeof v !== "string" || !v) return undefined;
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? undefined : d;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      const stats = await storage.getJournalConversionStats(from, to);
+      res.json({ from: from?.toISOString() ?? null, to: to?.toISOString() ?? null, stats });
+    } catch (error) {
+      console.error("journal conversion stats error:", error);
+      res.status(500).json({ error: "Failed to fetch journal conversion stats" });
+    }
+  });
+
   // Contact submissions (for designer dashboard)
   app.get("/api/contact-submissions", async (req, res) => {
     try {

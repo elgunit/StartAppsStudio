@@ -11,6 +11,16 @@ import {
   type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent,
   type JournalLead, type InsertJournalLead
 } from "@shared/schema";
+
+export interface JournalConversionRow {
+  slug: string;
+  title: string | null;
+  views: number;
+  ctaClicks: number;
+  createAccountChoices: number;
+  openContactChoices: number;
+  guestEmails: number;
+}
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
 
@@ -80,6 +90,7 @@ export interface IStorage {
   createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent>;
   getSectionViews(limit?: number): Promise<SectionView[]>;
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
+  getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
 
   // Marketing Services
   getMarketingServices(): Promise<MarketingService[]>;
@@ -386,6 +397,76 @@ export class DatabaseStorage implements IStorage {
 
   async getVisitorEvents(limit: number = 200): Promise<VisitorEvent[]> {
     return await db.select().from(visitorEvents).orderBy(desc(visitorEvents.createdAt)).limit(limit);
+  }
+
+  async getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]> {
+    const conditions = [
+      sql`${visitorEvents.eventType} IN ('journal_article_view','journal_cta_click','journal_signup_choose','journal_guest_email')`,
+    ];
+    if (from) conditions.push(sql`${visitorEvents.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${visitorEvents.createdAt} <= ${to}`);
+
+    const rows = await db
+      .select({
+        eventType: visitorEvents.eventType,
+        eventData: visitorEvents.eventData,
+      })
+      .from(visitorEvents)
+      .where(and(...conditions));
+
+    const map = new Map<string, JournalConversionRow>();
+    const get = (slug: string, title: string | null): JournalConversionRow => {
+      let row = map.get(slug);
+      if (!row) {
+        row = {
+          slug,
+          title,
+          views: 0,
+          ctaClicks: 0,
+          createAccountChoices: 0,
+          openContactChoices: 0,
+          guestEmails: 0,
+        };
+        map.set(slug, row);
+      } else if (!row.title && title) {
+        row.title = title;
+      }
+      return row;
+    };
+
+    for (const r of rows) {
+      if (!r.eventData) continue;
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(r.eventData);
+      } catch {
+        continue;
+      }
+      if (!parsed || typeof parsed !== "object") continue;
+      const data = parsed as Record<string, unknown>;
+      const slug = typeof data.slug === "string" ? data.slug : null;
+      if (!slug) continue;
+      const title = typeof data.title === "string" ? data.title : null;
+      const choice = typeof data.choice === "string" ? data.choice : null;
+      const row = get(slug, title);
+      switch (r.eventType) {
+        case "journal_article_view":
+          row.views += 1;
+          break;
+        case "journal_cta_click":
+          row.ctaClicks += 1;
+          break;
+        case "journal_signup_choose":
+          if (choice === "create_account") row.createAccountChoices += 1;
+          else if (choice === "open_contact") row.openContactChoices += 1;
+          break;
+        case "journal_guest_email":
+          row.guestEmails += 1;
+          break;
+      }
+    }
+
+    return Array.from(map.values()).sort((a, b) => b.views - a.views || b.ctaClicks - a.ctaClicks);
   }
 
   // Marketing Services
