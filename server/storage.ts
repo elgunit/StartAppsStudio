@@ -21,6 +21,22 @@ export interface JournalConversionRow {
   openContactChoices: number;
   guestEmails: number;
 }
+
+export interface TrendBucket {
+  label: string;
+  views: number;
+  ctaClicks: number;
+  createAccountChoices: number;
+  openContactChoices: number;
+  guestEmails: number;
+}
+
+export interface JournalTrendRow {
+  slug: string;
+  title: string | null;
+  bucketSize: "day" | "week" | "month";
+  buckets: TrendBucket[];
+}
 import { db } from "./db";
 import { eq, desc, and, or, sql } from "drizzle-orm";
 
@@ -91,6 +107,7 @@ export interface IStorage {
   getSectionViews(limit?: number): Promise<SectionView[]>;
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
   getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
+  getJournalConversionTrends(from?: Date, to?: Date): Promise<JournalTrendRow[]>;
 
   // Marketing Services
   getMarketingServices(): Promise<MarketingService[]>;
@@ -489,6 +506,115 @@ export class DatabaseStorage implements IStorage {
     }
 
     return Array.from(map.values()).sort((a, b) => b.views - a.views || b.ctaClicks - a.ctaClicks);
+  }
+
+  async getJournalConversionTrends(from?: Date, to?: Date): Promise<JournalTrendRow[]> {
+    const now = new Date();
+    const endDate = to ?? now;
+    const startDate = from ?? new Date(0);
+    const diffDays = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+
+    let bucketSize: "day" | "week" | "month";
+    if (!from || diffDays > 90) {
+      bucketSize = "month";
+    } else if (diffDays <= 14) {
+      bucketSize = "day";
+    } else {
+      bucketSize = "week";
+    }
+
+    const getBucketKey = (date: Date): string => {
+      if (bucketSize === "day") {
+        return date.toISOString().slice(0, 10);
+      } else if (bucketSize === "week") {
+        const d = new Date(date);
+        const day = d.getDay();
+        d.setDate(d.getDate() - day);
+        return d.toISOString().slice(0, 10);
+      } else {
+        return date.toISOString().slice(0, 7);
+      }
+    };
+
+    const conditions = [
+      sql`${visitorEvents.eventType} IN ('journal_article_view','journal_cta_click','journal_signup_choose','journal_guest_email')`,
+    ];
+    if (from) conditions.push(sql`${visitorEvents.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${visitorEvents.createdAt} <= ${to}`);
+
+    const rows = await db
+      .select({
+        eventType: visitorEvents.eventType,
+        eventData: visitorEvents.eventData,
+        createdAt: visitorEvents.createdAt,
+      })
+      .from(visitorEvents)
+      .where(and(...conditions))
+      .orderBy(visitorEvents.createdAt);
+
+    const slugMap = new Map<string, { title: string | null; buckets: Map<string, TrendBucket> }>();
+
+    for (const r of rows) {
+      if (!r.eventData || !r.createdAt) continue;
+      let parsed: unknown;
+      try { parsed = JSON.parse(r.eventData); } catch { continue; }
+      if (!parsed || typeof parsed !== "object") continue;
+      const data = parsed as Record<string, unknown>;
+      const slug = typeof data.slug === "string" ? data.slug : null;
+      if (!slug) continue;
+      const title = typeof data.title === "string" ? data.title : null;
+
+      if (!slugMap.has(slug)) {
+        slugMap.set(slug, { title, buckets: new Map() });
+      }
+      const slugEntry = slugMap.get(slug)!;
+      if (!slugEntry.title && title) slugEntry.title = title;
+
+      const bucketKey = getBucketKey(new Date(r.createdAt));
+      if (!slugEntry.buckets.has(bucketKey)) {
+        slugEntry.buckets.set(bucketKey, {
+          label: bucketKey,
+          views: 0,
+          ctaClicks: 0,
+          createAccountChoices: 0,
+          openContactChoices: 0,
+          guestEmails: 0,
+        });
+      }
+      const bucket = slugEntry.buckets.get(bucketKey)!;
+      const choice = typeof data.choice === "string" ? data.choice : null;
+      switch (r.eventType) {
+        case "journal_article_view":
+          bucket.views++;
+          break;
+        case "journal_cta_click":
+          bucket.ctaClicks++;
+          break;
+        case "journal_signup_choose":
+          if (choice === "create_account") bucket.createAccountChoices++;
+          else if (choice === "open_contact") bucket.openContactChoices++;
+          break;
+        case "journal_guest_email":
+          bucket.guestEmails++;
+          break;
+      }
+    }
+
+    const result: JournalTrendRow[] = [];
+    for (const [slug, entry] of slugMap) {
+      const sortedBuckets = Array.from(entry.buckets.values()).sort((a, b) =>
+        a.label.localeCompare(b.label),
+      );
+      result.push({ slug, title: entry.title, bucketSize, buckets: sortedBuckets });
+    }
+
+    result.sort((a, b) => {
+      const aViews = a.buckets.reduce((s, bkt) => s + bkt.views, 0);
+      const bViews = b.buckets.reduce((s, bkt) => s + bkt.views, 0);
+      return bViews - aViews;
+    });
+
+    return result;
   }
 
   // Marketing Services
