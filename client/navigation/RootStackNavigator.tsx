@@ -13,6 +13,7 @@ import CreditsScreen from "@/screens/CreditsScreen";
 import RequestServiceScreen from "@/screens/RequestServiceScreen";
 import JournalListScreen from "@/screens/JournalListScreen";
 import JournalArticleScreen from "@/screens/JournalArticleScreen";
+import JournalSignupScreen from "@/screens/JournalSignupScreen";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
 import { useAuth } from "@/lib/auth";
 import { apiRequest } from "@/lib/query-client";
@@ -29,6 +30,7 @@ export type RootStackParamList = {
   RequestService: { serviceId: string };
   JournalList: undefined;
   JournalArticle: { slug: string };
+  JournalSignup: { slug: string; title?: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -74,6 +76,14 @@ export default function RootStackNavigator() {
             name="JournalArticle"
             component={JournalArticleScreen}
             options={{ headerTitle: "" }}
+          />
+          <Stack.Screen
+            name="JournalSignup"
+            component={JournalSignupScreen}
+            options={{
+              presentation: "modal",
+              headerTitle: "Get Started",
+            }}
           />
         </>
       ) : isDesigner ? (

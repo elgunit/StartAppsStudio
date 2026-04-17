@@ -5,8 +5,6 @@ import {
   Image,
   ActivityIndicator,
   Pressable,
-  Linking,
-  Platform,
   ScrollView,
 } from "react-native";
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
@@ -23,6 +21,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import { resolveAssetUrl } from "@/screens/JournalListScreen";
+import { trackVisitorEvent } from "@/lib/tracking";
 
 type Block =
   | { type: "p"; text: string }
@@ -292,16 +291,29 @@ export default function JournalArticleScreen() {
 
   const handleCta = () => {
     if (isAuthenticated && user?.role === "client") {
+      trackVisitorEvent("journal_cta_click", {
+        slug: post.slug,
+        title: post.title,
+        destination: "new_project",
+      });
       navigation.navigate("NewProject");
     } else if (isAuthenticated) {
+      trackVisitorEvent("journal_cta_click", {
+        slug: post.slug,
+        title: post.title,
+        destination: "client_main",
+      });
       navigation.navigate("ClientMain");
     } else {
-      const url = "https://startappsstudio.com/#contact";
-      if (Platform.OS === "web") {
-        Linking.openURL(url);
-      } else {
-        Linking.openURL(url).catch(() => {});
-      }
+      trackVisitorEvent("journal_cta_click", {
+        slug: post.slug,
+        title: post.title,
+        destination: "journal_signup",
+      });
+      navigation.navigate("JournalSignup", {
+        slug: post.slug,
+        title: post.title,
+      });
     }
   };
 

@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { getApiUrl } from "@/lib/query-client";
+import { apiRequest, getApiUrl } from "@/lib/query-client";
 import { getVisitorId } from "@/lib/visitor-id";
 
 export type TrackEndpoint =
@@ -70,4 +70,33 @@ export function postTracking(endpoint: TrackEndpoint, payload: TrackPayload): vo
 
 export function getCurrentUserIdSafe(): string | null {
   return null;
+}
+
+/**
+ * Cross-platform visitor event tracker. On web this uses postTracking
+ * (keepalive fetch / sendBeacon). On native it falls back to apiRequest
+ * since navigator/fetch keepalive aren't applicable. Fire-and-forget.
+ */
+export function trackVisitorEvent(
+  eventType: string,
+  eventData?: Record<string, unknown>,
+  pagePath?: string,
+): void {
+  if (Platform.OS === "web") {
+    postTracking("/api/track/visitor-event", {
+      eventType,
+      pagePath,
+      eventData,
+    });
+    return;
+  }
+
+  apiRequest("POST", "/api/track/visitor-event", {
+    eventType,
+    visitorId: getVisitorId(),
+    pagePath,
+    eventData,
+  }).catch(() => {
+    /* fire-and-forget */
+  });
 }
