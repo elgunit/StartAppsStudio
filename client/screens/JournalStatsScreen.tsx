@@ -105,11 +105,20 @@ function buildCsvContent(
   rangeLabel: string,
   from: string | null,
   to: string | null,
+  trends?: JournalTrendRow[],
 ): string {
-  const header = ["Range", "From", "To", "Slug", "Title", "Views", "CTA Clicks", "Create Account", "Open Contact", "Guest Emails"];
+  const escape = (val: string | number) => {
+    const s = String(val);
+    return s.includes(",") || s.includes('"') || s.includes("\n")
+      ? `"${s.replace(/"/g, '""')}"`
+      : s;
+  };
+
   const fromStr = from ? new Date(from).toISOString().slice(0, 10) : "all";
   const toStr = to ? new Date(to).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10);
-  const rows = stats.map((r) => [
+
+  const summaryHeader = ["Range", "From", "To", "Slug", "Title", "Views", "CTA Clicks", "Create Account", "Open Contact", "Guest Emails"];
+  const summaryRows = stats.map((r) => [
     rangeLabel,
     fromStr,
     toStr,
@@ -127,13 +136,36 @@ function buildCsvContent(
   const totalOpenContact = stats.reduce((sum, r) => sum + r.openContactChoices, 0);
   const totalGuestEmails = stats.reduce((sum, r) => sum + r.guestEmails, 0);
   const totalRow = ["TOTAL", "", "", "", "", totalViews, totalCtaClicks, totalCreateAccount, totalOpenContact, totalGuestEmails];
-  const escape = (val: string | number) => {
-    const s = String(val);
-    return s.includes(",") || s.includes('"') || s.includes("\n")
-      ? `"${s.replace(/"/g, '""')}"`
-      : s;
-  };
-  return [header, ...rows, totalRow].map((row) => row.map(escape).join(",")).join("\n");
+
+  const summarySection = [summaryHeader, ...summaryRows, totalRow]
+    .map((row) => row.map(escape).join(","))
+    .join("\n");
+
+  if (!trends || trends.length === 0) return summarySection;
+
+  const trendHeader = ["Slug", "Title", "Bucket", "Bucket Size", "Views", "CTA Clicks", "Create Account", "Open Contact", "Guest Emails"];
+  const trendRows: (string | number)[][] = [];
+  for (const t of trends) {
+    for (const b of t.buckets) {
+      trendRows.push([
+        t.slug,
+        t.title ?? t.slug,
+        b.label,
+        t.bucketSize,
+        b.views,
+        b.ctaClicks,
+        b.createAccountChoices,
+        b.openContactChoices,
+        b.guestEmails,
+      ]);
+    }
+  }
+
+  const trendSection = [trendHeader, ...trendRows]
+    .map((row) => row.map(escape).join(","))
+    .join("\n");
+
+  return `${summarySection}\n\n${trendSection}`;
 }
 
 async function exportCsvNative(csv: string, filename: string) {
@@ -267,7 +299,7 @@ export default function JournalStatsScreen() {
     setExporting(true);
     try {
       const rangeLabel = RANGE_OPTIONS.find((r) => r.key === range)?.label ?? range;
-      const csv = buildCsvContent(stats, rangeLabel, data?.from ?? null, data?.to ?? null);
+      const csv = buildCsvContent(stats, rangeLabel, data?.from ?? null, data?.to ?? null, trendsData?.trends);
       const filename = `journal-stats-${range}-${new Date().toISOString().slice(0, 10)}.csv`;
       if (Platform.OS === "web") {
         exportCsvWeb(csv, filename);
@@ -358,16 +390,16 @@ export default function JournalStatsScreen() {
           <Pressable
             testID="button-export-csv"
             onPress={handleExport}
-            disabled={exporting || stats.length === 0}
+            disabled={exporting || stats.length === 0 || trendsLoading}
             style={[
               styles.exportButton,
               { borderColor: theme.border, backgroundColor: theme.backgroundDefault },
-              (exporting || stats.length === 0) && { opacity: 0.4 },
+              (exporting || stats.length === 0 || trendsLoading) && { opacity: 0.4 },
             ]}
           >
             <Feather name="download" size={14} color={theme.textSecondary} />
             <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-              {exporting ? "Exporting..." : "CSV"}
+              {exporting ? "Exporting..." : trendsLoading ? "Loading..." : "CSV"}
             </ThemedText>
           </Pressable>
         </View>
