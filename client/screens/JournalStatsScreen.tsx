@@ -478,6 +478,83 @@ export default function JournalStatsScreen() {
   );
 }
 
+function MetricSection({
+  metricKey,
+  label,
+  color,
+  values,
+  total,
+  bucketLabels,
+  maxViews,
+}: {
+  metricKey: string;
+  label: string;
+  color: string;
+  values: number[];
+  total: number;
+  bucketLabels: string[];
+  maxViews: number;
+}) {
+  const { theme } = useTheme();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const handleSelect = (index: number) => {
+    setSelectedIndex((prev) => (prev === index ? null : index));
+  };
+
+  return (
+    <View>
+      <View style={styles.metricHeader}>
+        <View style={[styles.metricDot, { backgroundColor: color }]} />
+        <ThemedText type="small" style={{ fontWeight: "600" }}>{label}</ThemedText>
+        <ThemedText type="caption" style={{ color: theme.textSecondary, marginLeft: "auto" }}>
+          {total} total
+        </ThemedText>
+      </View>
+
+      {selectedIndex !== null ? (
+        <View style={[styles.tooltip, { backgroundColor: color + "18", borderColor: color + "44" }]}>
+          <ThemedText type="caption" style={{ color, fontWeight: "700", fontSize: 15 }}>
+            {values[selectedIndex]}
+          </ThemedText>
+          <ThemedText type="caption" style={{ color: theme.textSecondary, marginLeft: Spacing.xs }}>
+            {bucketLabels[selectedIndex]}
+          </ThemedText>
+          <Pressable onPress={() => setSelectedIndex(null)} style={styles.tooltipClose}>
+            <Feather name="x" size={12} color={theme.textTertiary} />
+          </Pressable>
+        </View>
+      ) : null}
+
+      <Sparkline
+        width={320}
+        height={56}
+        showDots
+        series={[{ values, color, fillColor: color }]}
+        onDotPress={handleSelect}
+        selectedIndex={selectedIndex ?? undefined}
+      />
+      <View style={styles.bucketLabels}>
+        {bucketLabels.map((lbl, i) =>
+          i % Math.max(1, Math.ceil(bucketLabels.length / 6)) === 0 ? (
+            <ThemedText key={i} type="caption" style={{ color: theme.textTertiary, fontSize: 10 }}>
+              {lbl}
+            </ThemedText>
+          ) : null,
+        )}
+      </View>
+      <BarChart
+        values={values}
+        color={color}
+        maxVal={maxViews}
+        bucketLabels={bucketLabels}
+        onBarPress={handleSelect}
+        selectedIndex={selectedIndex ?? undefined}
+      />
+    </View>
+  );
+}
+
 function ArticleDetailModal({
   trend,
   onClose,
@@ -539,31 +616,16 @@ function ArticleDetailModal({
             if (total === 0) return null;
 
             return (
-              <View key={m.key}>
-                <View style={styles.metricHeader}>
-                  <View style={[styles.metricDot, { backgroundColor: m.color }]} />
-                  <ThemedText type="small" style={{ fontWeight: "600" }}>{m.label}</ThemedText>
-                  <ThemedText type="caption" style={{ color: theme.textSecondary, marginLeft: "auto" }}>
-                    {total} total
-                  </ThemedText>
-                </View>
-                <Sparkline
-                  width={320}
-                  height={56}
-                  showDots
-                  series={[{ values, color: m.color, fillColor: m.color }]}
-                />
-                <View style={styles.bucketLabels}>
-                  {bucketLabels.map((lbl, i) =>
-                    i % Math.max(1, Math.ceil(bucketLabels.length / 6)) === 0 ? (
-                      <ThemedText key={i} type="caption" style={{ color: theme.textTertiary, fontSize: 10 }}>
-                        {lbl}
-                      </ThemedText>
-                    ) : null,
-                  )}
-                </View>
-                <BarChart values={values} color={m.color} maxVal={maxViews} bucketLabels={bucketLabels} />
-              </View>
+              <MetricSection
+                key={m.key}
+                metricKey={m.key}
+                label={m.label}
+                color={m.color}
+                values={values}
+                total={total}
+                bucketLabels={bucketLabels}
+                maxViews={maxViews}
+              />
             );
           })}
         </ScrollView>
@@ -577,11 +639,15 @@ function BarChart({
   color,
   maxVal,
   bucketLabels,
+  onBarPress,
+  selectedIndex,
 }: {
   values: number[];
   color: string;
   maxVal: number;
   bucketLabels: string[];
+  onBarPress?: (index: number) => void;
+  selectedIndex?: number;
 }) {
   const { theme } = useTheme();
   const BAR_HEIGHT = 80;
@@ -590,23 +656,48 @@ function BarChart({
     <View style={styles.barChart}>
       {values.map((v, i) => {
         const heightPct = maxVal > 0 ? v / maxVal : 0;
+        const isSelected = selectedIndex === i;
         return (
-          <View key={i} style={styles.barColumn}>
-            <ThemedText type="caption" style={{ color: theme.textSecondary, fontSize: 10, minWidth: 14, textAlign: "center" }}>
+          <Pressable
+            key={i}
+            style={styles.barColumn}
+            onPress={() => onBarPress?.(i)}
+            testID={`bar-${i}`}
+          >
+            <ThemedText
+              type="caption"
+              style={{
+                color: isSelected ? color : theme.textSecondary,
+                fontSize: 10,
+                minWidth: 14,
+                textAlign: "center",
+                fontWeight: isSelected ? "700" : "400",
+              }}
+            >
               {v > 0 ? v : ""}
             </ThemedText>
-            <View style={[styles.barTrack, { height: BAR_HEIGHT, backgroundColor: theme.backgroundSecondary }]}>
+            <View
+              style={[
+                styles.barTrack,
+                {
+                  height: BAR_HEIGHT,
+                  backgroundColor: isSelected ? color + "22" : theme.backgroundSecondary,
+                  borderWidth: isSelected ? 1 : 0,
+                  borderColor: isSelected ? color + "66" : "transparent",
+                },
+              ]}
+            >
               <View
                 style={[
                   styles.barFill,
-                  { height: BAR_HEIGHT * heightPct, backgroundColor: color, opacity: 0.8 },
+                  { height: BAR_HEIGHT * heightPct, backgroundColor: color, opacity: isSelected ? 1 : 0.8 },
                 ]}
               />
             </View>
-            <ThemedText type="caption" style={{ color: theme.textTertiary, fontSize: 9, textAlign: "center" }}>
+            <ThemedText type="caption" style={{ color: isSelected ? color : theme.textTertiary, fontSize: 9, textAlign: "center", fontWeight: isSelected ? "600" : "400" }}>
               {bucketLabels[i]}
             </ThemedText>
-          </View>
+          </Pressable>
         );
       })}
     </View>
@@ -1040,5 +1131,18 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     flex: 1,
     justifyContent: "center",
+  },
+  tooltip: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.sm,
+    borderWidth: 1,
+    marginBottom: Spacing.sm,
+  },
+  tooltipClose: {
+    marginLeft: "auto",
+    padding: 4,
   },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import Svg, { Path, Circle, Defs, LinearGradient, Stop } from "react-native-svg";
+import Svg, { Path, Circle, Defs, LinearGradient, Stop, G, Rect } from "react-native-svg";
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -15,6 +15,8 @@ interface SparklineProps {
   width?: number;
   height?: number;
   showDots?: boolean;
+  onDotPress?: (index: number) => void;
+  selectedIndex?: number;
 }
 
 function buildPath(values: number[], maxVal: number, width: number, height: number): string {
@@ -39,7 +41,7 @@ function buildAreaPath(values: number[], maxVal: number, width: number, height: 
   return `${linePath} L${lastX},${height} L0,${height} Z`;
 }
 
-export function Sparkline({ series, width = 120, height = 36, showDots = false }: SparklineProps) {
+export function Sparkline({ series, width = 120, height = 36, showDots = false, onDotPress, selectedIndex }: SparklineProps) {
   const allValues = series.flatMap((s) => s.values);
   const maxVal = Math.max(...allValues, 1);
 
@@ -76,12 +78,32 @@ export function Sparkline({ series, width = 120, height = 36, showDots = false }
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            {showDots
+            {(showDots || onDotPress)
               ? s.values.map((v, j) => {
                   const x = j * step;
                   const y = pad + (maxVal > 0 ? (1 - v / maxVal) * drawHeight : drawHeight);
+                  const isSelected = selectedIndex === j;
                   return (
-                    <Circle key={j} cx={x} cy={y} r={2} fill={s.color} />
+                    <G key={j}>
+                      {onDotPress ? (
+                        <Rect
+                          x={x - 12}
+                          y={y - 12}
+                          width={24}
+                          height={24}
+                          fill="transparent"
+                          onPress={() => onDotPress(j)}
+                        />
+                      ) : null}
+                      <Circle
+                        cx={x}
+                        cy={y}
+                        r={isSelected ? 4.5 : 2}
+                        fill={isSelected ? "#fff" : s.color}
+                        stroke={isSelected ? s.color : "none"}
+                        strokeWidth={isSelected ? 2 : 0}
+                      />
+                    </G>
                   );
                 })
               : null}
