@@ -96,7 +96,6 @@ export default function WelcomeScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [expandedSection, setExpandedSection] = React.useState<MenuSection>(null);
   const [showAllProjects, setShowAllProjects] = React.useState(false);
-  const [menuVisible, setMenuVisible] = React.useState(false);
   const [floatingMenuVisible, setFloatingMenuVisible] = React.useState(false);
   const scrollRef = React.useRef<ScrollView>(null);
   const heroLayout = React.useRef(0);
@@ -107,7 +106,6 @@ export default function WelcomeScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      setMenuVisible(false);
       setFloatingMenuVisible(false);
     }, []),
   );
@@ -126,9 +124,7 @@ export default function WelcomeScreen() {
       scrollEventThrottle={16}
       onScroll={(event) => {
         const y = event.nativeEvent.contentOffset.y;
-        const showMenu = y > Math.max(120, heroLayout.current - 20);
-        setMenuVisible(showMenu);
-        setFloatingMenuVisible(showMenu);
+        setFloatingMenuVisible(y > Math.max(120, heroLayout.current - 20));
       }}
       showsVerticalScrollIndicator={false}
     >
@@ -184,140 +180,6 @@ export default function WelcomeScreen() {
       </Animated.View>
 
       {/* Menu Sections */}
-      {menuVisible ? (
-        <Animated.View entering={FadeInDown.delay(300).duration(500)} style={styles.menuSection}>
-        <ThemedText type="caption" style={[styles.menuLabel, { color: theme.textTertiary }]}>
-          EXPLORE
-        </ThemedText>
-        
-        {menuItems.map((item, index) => (
-          <Animated.View
-            key={item.id}
-            entering={FadeInDown.delay(350 + index * 50).duration(400)}
-          >
-            <Pressable onPress={() => toggleSection(item.id)}>
-              <Card style={{...styles.menuCard, ...(expandedSection === item.id ? { borderColor: theme.text } : {})}}>
-                <View style={styles.menuHeader}>
-                  <View style={[styles.menuIcon, { backgroundColor: theme.backgroundDefault }]}>
-                    <Feather name={item.icon} size={18} color={theme.text} />
-                  </View>
-                  <View style={styles.menuInfo}>
-                    <ThemedText type="body" style={{ fontWeight: "600" }}>{item.label}</ThemedText>
-                    <ThemedText type="caption" style={{ color: theme.textSecondary }}>{item.subtitle}</ThemedText>
-                  </View>
-                  <Feather 
-                    name={expandedSection === item.id ? "chevron-up" : "chevron-down"} 
-                    size={18} 
-                    color={theme.textSecondary} 
-                  />
-                </View>
-
-                {/* Expanded Content */}
-                {expandedSection === item.id ? (
-                  <View style={styles.expandedContent}>
-                    {item.id === "services" ? (
-                      <View style={styles.gridContent}>
-                        {services.map((service, i) => (
-                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
-                            <Feather name={service.icon} size={16} color={theme.text} />
-                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
-                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
-                          </View>
-                        ))}
-                      </View>
-                    ) : null}
-
-                    {item.id === "grow" ? (
-                      <View style={styles.gridContent}>
-                        {growthServices.map((service, i) => (
-                          <View key={i} style={[styles.gridItem, { backgroundColor: theme.backgroundDefault }]}>
-                            <View style={styles.growIconRow}>
-                              <Feather name={service.icon} size={14} color={service.color} />
-                            </View>
-                            <ThemedText type="small" style={{ fontWeight: "500" }}>{service.title}</ThemedText>
-                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{service.desc}</ThemedText>
-                          </View>
-                        ))}
-                      </View>
-                    ) : null}
-
-                    {item.id === "expertise" ? (
-                      <View style={styles.listContent}>
-                        {hats.map((hat, i) => (
-                          <View key={i} style={styles.listItem}>
-                            <Feather name={hatIcons[hat.type]} size={16} color={theme.text} />
-                            <ThemedText type="small" style={{ fontWeight: "500", flex: 1 }}>{hat.label}</ThemedText>
-                            <ThemedText type="caption" style={{ color: theme.textSecondary }}>{hat.desc}</ThemedText>
-                          </View>
-                        ))}
-                      </View>
-                    ) : null}
-
-                    {item.id === "work" ? (
-                      <View style={styles.listContent}>
-                        {loopingCaseStudies.map((study, i) => (
-                          <View key={i} style={styles.workItem}>
-                            <View style={styles.workInfo}>
-                              <ThemedText type="small" style={{ fontWeight: "500" }}>{study.title}</ThemedText>
-                              <ThemedText type="caption" style={{ color: theme.textSecondary }}>{study.industry}</ThemedText>
-                            </View>
-                            <View style={[styles.resultBadge, { backgroundColor: theme.success + "20" }]}>
-                              <ThemedText type="caption" style={{ color: theme.success }}>{study.result}</ThemedText>
-                            </View>
-                          </View>
-                        ))}
-                        <Pressable 
-                          onPress={() => setShowAllProjects(!showAllProjects)}
-                          style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-                        >
-                          <ThemedText type="caption" style={{ color: theme.link, textAlign: "center", marginTop: Spacing.sm, textDecorationLine: "underline" }}>
-                            {showAllProjects ? "Show less" : "+8 more projects →"}
-                          </ThemedText>
-                        </Pressable>
-                      </View>
-                    ) : null}
-
-                    {item.id === "packages" ? (
-                      <View style={styles.listContent}>
-                        {packages.map((pkg, i) => (
-                          <View key={i} style={[styles.packageItem, pkg.popular && { backgroundColor: theme.backgroundDefault }]}>
-                            <View style={styles.packageInfo}>
-                              <View style={styles.packageNameRow}>
-                                <ThemedText type="small" style={{ fontWeight: "600" }}>{pkg.name}</ThemedText>
-                                {pkg.popular ? (
-                                  <View style={[styles.popularBadge, { backgroundColor: theme.text }]}>
-                                    <ThemedText type="caption" style={{ color: theme.backgroundRoot, fontSize: 9 }}>Popular</ThemedText>
-                                  </View>
-                                ) : null}
-                              </View>
-                              <ThemedText type="caption" style={{ color: theme.info, fontWeight: "500" }}>
-                                {pkg.credits}
-                              </ThemedText>
-                              <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-                                {pkg.time}{pkg.note ? ` · ${pkg.note}` : ""}
-                              </ThemedText>
-                            </View>
-                            <View style={styles.packagePricing}>
-                              <ThemedText type="body" style={{ fontWeight: "600" }}>{pkg.price}</ThemedText>
-                              <View style={[styles.methodBadge, { backgroundColor: pkg.badge === "No AI" ? theme.text : theme.success + "20" }]}>
-                                <ThemedText type="caption" style={{ color: pkg.badge === "No AI" ? theme.backgroundRoot : theme.success, fontSize: 9 }}>
-                                  {pkg.badge}
-                                </ThemedText>
-                              </View>
-                            </View>
-                          </View>
-                        ))}
-                      </View>
-                    ) : null}
-                  </View>
-                ) : null}
-              </Card>
-            </Pressable>
-          </Animated.View>
-        ))}
-        </Animated.View>
-      ) : null}
-
       <Footer />
 
       {floatingMenuVisible ? (
