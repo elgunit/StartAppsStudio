@@ -105,13 +105,19 @@ function buildCsvContent(
     r.openContactChoices,
     r.guestEmails,
   ]);
+  const totalViews = stats.reduce((sum, r) => sum + r.views, 0);
+  const totalCtaClicks = stats.reduce((sum, r) => sum + r.ctaClicks, 0);
+  const totalCreateAccount = stats.reduce((sum, r) => sum + r.createAccountChoices, 0);
+  const totalOpenContact = stats.reduce((sum, r) => sum + r.openContactChoices, 0);
+  const totalGuestEmails = stats.reduce((sum, r) => sum + r.guestEmails, 0);
+  const totalRow = ["TOTAL", "", "", "", "", totalViews, totalCtaClicks, totalCreateAccount, totalOpenContact, totalGuestEmails];
   const escape = (val: string | number) => {
     const s = String(val);
     return s.includes(",") || s.includes('"') || s.includes("\n")
       ? `"${s.replace(/"/g, '""')}"`
       : s;
   };
-  return [header, ...rows].map((row) => row.map(escape).join(",")).join("\n");
+  return [header, ...rows, totalRow].map((row) => row.map(escape).join(",")).join("\n");
 }
 
 async function exportCsvNative(csv: string, filename: string) {
