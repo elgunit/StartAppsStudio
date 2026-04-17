@@ -18,7 +18,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { ThemedText } from "@/components/ThemedText";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import Footer from "@/components/Footer";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
@@ -178,9 +177,6 @@ export default function WelcomeScreen() {
           Sign In
         </Button>
       </Animated.View>
-
-      {/* Menu Sections */}
-      <Footer />
 
       {floatingMenuVisible ? (
         <View style={[styles.floatingMenu, { top: insets.top + Spacing.md }]}>
@@ -362,10 +358,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: "center" as const,
     justifyContent: "center" as const,
-  },
-  footer: {
-    marginTop: Spacing["2xl"],
-    paddingHorizontal: Spacing.xl,
   },
   floatingMenu: {
     position: "absolute",
