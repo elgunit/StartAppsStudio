@@ -28,6 +28,23 @@ function safeJson(data: unknown): string {
   return JSON.stringify(data).replace(/<\/script/gi, "<\\/script");
 }
 
+const ACCENT_PALETTE = [
+  "#6366f1",
+  "#10b981",
+  "#f59e0b",
+  "#f43f5e",
+  "#06b6d4",
+  "#8b5cf6",
+];
+
+function accentColor(key: string): string {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  }
+  return ACCENT_PALETTE[hash % ACCENT_PALETTE.length];
+}
+
 function slugify(s: string): string {
   return s
     .toLowerCase()
@@ -396,6 +413,7 @@ const STYLE = `
     border-color: var(--text-secondary);
     text-decoration: none;
   }
+  .post-card-accent { height: 4px; width: 100%; }
   .post-card-body { padding: 18px 20px 22px; }
   .post-card h2 {
     font-size: 19px;
@@ -556,6 +574,7 @@ export function renderIndexHtml(origin: string): string {
     .map(
       (p) => `
     <a href="/journal/${esc(p.slug)}" class="post-card">
+      <div class="post-card-accent" style="background:${accentColor(p.slug)}"></div>
       <div class="post-card-body">
         <h2>${esc(p.title)}</h2>
         <p>${esc(p.excerpt)}</p>

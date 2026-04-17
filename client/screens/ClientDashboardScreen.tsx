@@ -13,7 +13,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { ProjectCard } from "@/components/ProjectCard";
-import { type JournalPostSummary } from "@/lib/journal";
+import { journalAccentColor, type JournalPostSummary } from "@/lib/journal";
 import { OnlineIndicator } from "@/components/OnlineIndicator";
 import { EmptyState } from "@/components/EmptyState";
 import { useTheme } from "@/hooks/useTheme";
@@ -174,6 +174,12 @@ export default function ClientDashboardScreen() {
               }
               style={styles.journalCard}
             >
+              <View
+                style={[
+                  styles.journalAccentStripe,
+                  { backgroundColor: journalAccentColor(post.slug) },
+                ]}
+              />
               <View style={styles.journalCardBody}>
                 <ThemedText type="caption" style={{ color: theme.textTertiary }}>
                   {new Date(post.publishedAt).toLocaleDateString(undefined, {
@@ -300,5 +306,6 @@ const styles = StyleSheet.create({
   },
   journalCardWrap: { marginBottom: Spacing.lg },
   journalCard: { padding: 0, overflow: "hidden" },
+  journalAccentStripe: { height: 4, width: "100%" },
   journalCardBody: { padding: Spacing.lg },
 });

@@ -12,6 +12,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import {
   formatJournalDate as formatDate,
+  journalAccentColor,
   type JournalPostSummary,
 } from "@/lib/journal";
 
@@ -90,6 +91,12 @@ export default function JournalListScreen() {
               }
               style={styles.card}
             >
+              <View
+                style={[
+                  styles.accentStripe,
+                  { backgroundColor: journalAccentColor(item.slug) },
+                ]}
+              />
               <View style={styles.cardBody}>
                 <ThemedText type="caption" style={{ color: theme.textTertiary }}>
                   {formatDate(item.publishedAt)} · {item.readMinutes} min read
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
   intro: { marginBottom: Spacing.lg },
   cardWrap: { marginBottom: Spacing.lg },
   card: { padding: 0, overflow: "hidden" },
+  accentStripe: { height: 4, width: "100%" },
   cardBody: { padding: Spacing.lg },
   tagRow: {
     flexDirection: "row",
