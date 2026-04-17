@@ -90,6 +90,11 @@ const CTA_COLOR = "#10B981";
 const ACCOUNT_COLOR = "#8B5CF6";
 const EMAIL_COLOR = "#F59E0B";
 
+const COMPARE_A_VIEWS = "#3B82F6";
+const COMPARE_A_CTA = "#10B981";
+const COMPARE_B_VIEWS = "#F97316";
+const COMPARE_B_CTA = "#EC4899";
+
 function pct(numerator: number, denominator: number): string {
   if (!denominator) return "—";
   return `${Math.round((numerator / denominator) * 100)}%`;
@@ -174,6 +179,31 @@ export default function JournalStatsScreen() {
   const [range, setRange] = useState<RangeKey>("30d");
   const [exporting, setExporting] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<JournalTrendRow | null>(null);
+  const [compareMode, setCompareMode] = useState(false);
+  const [compareSelection, setCompareSelection] = useState<string[]>([]);
+  const [showCompare, setShowCompare] = useState(false);
+
+  const toggleCompareMode = () => {
+    setCompareMode((prev) => {
+      if (prev) {
+        setCompareSelection([]);
+        setShowCompare(false);
+      }
+      return !prev;
+    });
+  };
+
+  const toggleCompareSelection = (slug: string) => {
+    setCompareSelection((prev) => {
+      if (prev.includes(slug)) {
+        return prev.filter((s) => s !== slug);
+      }
+      if (prev.length >= 2) {
+        return [prev[1], slug];
+      }
+      return [...prev, slug];
+    });
+  };
 
   const fromDate = useMemo(() => {
     const opt = RANGE_OPTIONS.find((r) => r.key === range);
@@ -311,22 +341,60 @@ export default function JournalStatsScreen() {
             {stats.length} {stats.length === 1 ? "article" : "articles"}
           </ThemedText>
         </View>
-        <Pressable
-          testID="button-export-csv"
-          onPress={handleExport}
-          disabled={exporting || stats.length === 0}
-          style={[
-            styles.exportButton,
-            { borderColor: theme.border, backgroundColor: theme.backgroundDefault },
-            (exporting || stats.length === 0) && { opacity: 0.4 },
-          ]}
-        >
-          <Feather name="download" size={14} color={theme.textSecondary} />
-          <ThemedText type="caption" style={{ color: theme.textSecondary }}>
-            {exporting ? "Exporting..." : "CSV"}
-          </ThemedText>
-        </Pressable>
+        <View style={styles.headerActions}>
+          <Pressable
+            testID="button-compare-mode"
+            onPress={toggleCompareMode}
+            style={[
+              styles.exportButton,
+              { borderColor: compareMode ? theme.text : theme.border, backgroundColor: compareMode ? theme.text : theme.backgroundDefault },
+            ]}
+          >
+            <Feather name="bar-chart-2" size={14} color={compareMode ? theme.backgroundRoot : theme.textSecondary} />
+            <ThemedText type="caption" style={{ color: compareMode ? theme.backgroundRoot : theme.textSecondary }}>
+              Compare
+            </ThemedText>
+          </Pressable>
+          <Pressable
+            testID="button-export-csv"
+            onPress={handleExport}
+            disabled={exporting || stats.length === 0}
+            style={[
+              styles.exportButton,
+              { borderColor: theme.border, backgroundColor: theme.backgroundDefault },
+              (exporting || stats.length === 0) && { opacity: 0.4 },
+            ]}
+          >
+            <Feather name="download" size={14} color={theme.textSecondary} />
+            <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+              {exporting ? "Exporting..." : "CSV"}
+            </ThemedText>
+          </Pressable>
+        </View>
       </View>
+      {compareMode ? (
+        <View style={[styles.compareBanner, { backgroundColor: theme.backgroundSecondary, borderColor: theme.border }]}>
+          <Feather name="info" size={13} color={theme.textSecondary} />
+          <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
+            {compareSelection.length === 0
+              ? "Select 2 articles to compare"
+              : compareSelection.length === 1
+              ? "Select 1 more article"
+              : `${compareSelection.length} selected — ready to compare`}
+          </ThemedText>
+          {compareSelection.length === 2 ? (
+            <Pressable
+              testID="button-open-compare"
+              onPress={() => setShowCompare(true)}
+              style={[styles.compareGoBtn, { backgroundColor: theme.text }]}
+            >
+              <ThemedText type="caption" style={{ color: theme.backgroundRoot, fontWeight: "600" }}>
+                Compare
+              </ThemedText>
+            </Pressable>
+          ) : null}
+        </View>
+      ) : null}
       {renderRangePicker()}
       <Card style={styles.totalsCard}>
         <ThemedText type="caption" style={{ color: theme.textSecondary, marginBottom: Spacing.sm }}>
@@ -346,17 +414,25 @@ export default function JournalStatsScreen() {
   const renderRow = ({ item, index }: { item: JournalConversionRow; index: number }) => {
     const trend = trendsMap.get(item.slug);
     const hasTrend = trend && trend.buckets.length >= 2;
+    const selectedIndex = compareSelection.indexOf(item.slug);
+    const isSelected = selectedIndex !== -1;
+    const isDisabled = compareMode && compareSelection.length === 2 && !isSelected;
+    const selectedColor = selectedIndex === 0 ? COMPARE_A_VIEWS : COMPARE_B_VIEWS;
 
     return (
       <Animated.View entering={FadeInDown.delay(80 + index * 40).duration(350)}>
         <Pressable
           testID={`article-card-${item.slug}`}
           onPress={() => {
-            if (hasTrend) setSelectedArticle(trend);
+            if (compareMode) {
+              toggleCompareSelection(item.slug);
+            } else if (hasTrend) {
+              setSelectedArticle(trend);
+            }
           }}
-          style={({ pressed }) => ({ opacity: pressed && hasTrend ? 0.75 : 1 })}
+          style={({ pressed }) => ({ opacity: pressed ? 0.75 : isDisabled ? 0.4 : 1 })}
         >
-          <Card style={styles.card}>
+          <Card style={[styles.card, isSelected && { borderWidth: 2, borderColor: selectedColor }]}>
             <View style={styles.titleRow}>
               <View style={styles.titleTextRow}>
                 <ThemedText type="h4" testID={`stat-title-${item.slug}`}>
@@ -366,7 +442,20 @@ export default function JournalStatsScreen() {
                   {item.slug}
                 </ThemedText>
               </View>
-              {hasTrend ? (
+              {compareMode ? (
+                <View
+                  testID={`compare-checkbox-${item.slug}`}
+                  style={[
+                    styles.compareCheckbox,
+                    {
+                      borderColor: isSelected ? selectedColor : theme.border,
+                      backgroundColor: isSelected ? selectedColor : theme.backgroundDefault,
+                    },
+                  ]}
+                >
+                  {isSelected ? <Feather name="check" size={12} color="#fff" /> : null}
+                </View>
+              ) : hasTrend ? (
                 <Feather name="chevron-right" size={16} color={theme.textTertiary} />
               ) : null}
             </View>
@@ -452,6 +541,11 @@ export default function JournalStatsScreen() {
     />
   );
 
+  const compareTrendA = compareSelection.length >= 1 ? trendsMap.get(compareSelection[0]) ?? null : null;
+  const compareTrendB = compareSelection.length >= 2 ? trendsMap.get(compareSelection[1]) ?? null : null;
+  const compareStatA = compareSelection.length >= 1 ? stats.find((s) => s.slug === compareSelection[0]) ?? null : null;
+  const compareStatB = compareSelection.length >= 2 ? stats.find((s) => s.slug === compareSelection[1]) ?? null : null;
+
   return (
     <>
       <FlatList
@@ -473,6 +567,14 @@ export default function JournalStatsScreen() {
       <ArticleDetailModal
         trend={selectedArticle}
         onClose={() => setSelectedArticle(null)}
+      />
+      <CompareModal
+        visible={showCompare && compareSelection.length === 2}
+        trendA={compareTrendA}
+        trendB={compareTrendB}
+        statA={compareStatA}
+        statB={compareStatB}
+        onClose={() => setShowCompare(false)}
       />
     </>
   );
@@ -552,6 +654,261 @@ function MetricSection({
         selectedIndex={selectedIndex ?? undefined}
       />
     </View>
+  );
+}
+
+function CompareModal({
+  visible,
+  trendA,
+  trendB,
+  statA,
+  statB,
+  onClose,
+}: {
+  visible: boolean;
+  trendA: JournalTrendRow | null;
+  trendB: JournalTrendRow | null;
+  statA: JournalConversionRow | null;
+  statB: JournalConversionRow | null;
+  onClose: () => void;
+}) {
+  const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  if (!trendA || !trendB || !statA || !statB) return null;
+
+  const hasTrendDataA = trendA.buckets.length >= 2;
+  const hasTrendDataB = trendB.buckets.length >= 2;
+
+  const alignBuckets = (
+    bucketsA: TrendBucket[],
+    bucketsB: TrendBucket[],
+  ): { labelsA: string[]; labelsB: string[]; viewsA: number[]; viewsB: number[]; ctaA: number[]; ctaB: number[] } => {
+    return {
+      labelsA: bucketsA.map((b) => formatBucketLabel(b.label, trendA.bucketSize)),
+      labelsB: bucketsB.map((b) => formatBucketLabel(b.label, trendB.bucketSize)),
+      viewsA: bucketsA.map((b) => b.views),
+      viewsB: bucketsB.map((b) => b.views),
+      ctaA: bucketsA.map((b) => b.ctaClicks),
+      ctaB: bucketsB.map((b) => b.ctaClicks),
+    };
+  };
+
+  const { viewsA, viewsB, ctaA, ctaB } = alignBuckets(trendA.buckets, trendB.buckets);
+
+  const CHART_WIDTH = 300;
+  const CHART_HEIGHT = 72;
+
+  const metricsCompare: { label: string; valueA: number; valueB: number; subA?: string; subB?: string }[] = [
+    { label: "Views", valueA: statA.views, valueB: statB.views },
+    {
+      label: "CTA clicks",
+      valueA: statA.ctaClicks,
+      valueB: statB.ctaClicks,
+      subA: pct(statA.ctaClicks, statA.views),
+      subB: pct(statB.ctaClicks, statB.views),
+    },
+    {
+      label: "Create account",
+      valueA: statA.createAccountChoices,
+      valueB: statB.createAccountChoices,
+      subA: pct(statA.createAccountChoices, statA.ctaClicks),
+      subB: pct(statB.createAccountChoices, statB.ctaClicks),
+    },
+    {
+      label: "Guest emails",
+      valueA: statA.guestEmails,
+      valueB: statB.guestEmails,
+      subA: pct(statA.guestEmails, statA.ctaClicks),
+      subB: pct(statB.guestEmails, statB.ctaClicks),
+    },
+  ];
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+    >
+      <View style={[styles.modalRoot, { backgroundColor: theme.backgroundRoot, paddingTop: insets.top + Spacing.lg }]}>
+        <View style={styles.modalHeader}>
+          <View style={styles.modalTitleBlock}>
+            <ThemedText type="h3">Article Comparison</ThemedText>
+            <ThemedText type="caption" style={{ color: theme.textTertiary }}>
+              Side-by-side performance
+            </ThemedText>
+          </View>
+          <Pressable
+            onPress={onClose}
+            testID="compare-modal-close"
+            style={[styles.closeBtn, { backgroundColor: theme.backgroundSecondary }]}
+          >
+            <Feather name="x" size={18} color={theme.textSecondary} />
+          </Pressable>
+        </View>
+
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: Spacing.lg,
+            paddingBottom: insets.bottom + Spacing.xl,
+            gap: Spacing.lg,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={[styles.compareLegendRow, { borderColor: theme.border }]}>
+            <View style={styles.compareLegendItem}>
+              <View style={[styles.compareLegendSwatch, { backgroundColor: COMPARE_A_VIEWS }]} />
+              <View style={{ flex: 1 }}>
+                <ThemedText type="small" style={{ fontWeight: "600" }} numberOfLines={2}>
+                  {trendA.title || trendA.slug}
+                </ThemedText>
+                <ThemedText type="caption" style={{ color: theme.textTertiary }}>{trendA.slug}</ThemedText>
+              </View>
+            </View>
+            <View style={[styles.compareLegendDivider, { backgroundColor: theme.border }]} />
+            <View style={styles.compareLegendItem}>
+              <View style={[styles.compareLegendSwatch, { backgroundColor: COMPARE_B_VIEWS }]} />
+              <View style={{ flex: 1 }}>
+                <ThemedText type="small" style={{ fontWeight: "600" }} numberOfLines={2}>
+                  {trendB.title || trendB.slug}
+                </ThemedText>
+                <ThemedText type="caption" style={{ color: theme.textTertiary }}>{trendB.slug}</ThemedText>
+              </View>
+            </View>
+          </View>
+
+          {hasTrendDataA && hasTrendDataB ? (
+            <>
+              <Card style={styles.compareChartCard}>
+                <View style={styles.compareChartHeader}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>Views over time</ThemedText>
+                  <View style={styles.compareChartLegend}>
+                    <View style={styles.legendItem}>
+                      <View style={[styles.legendDot, { backgroundColor: COMPARE_A_VIEWS }]} />
+                      <ThemedText type="caption" style={{ color: theme.textTertiary }}>A</ThemedText>
+                    </View>
+                    <View style={styles.legendItem}>
+                      <View style={[styles.legendDot, { backgroundColor: COMPARE_B_VIEWS }]} />
+                      <ThemedText type="caption" style={{ color: theme.textTertiary }}>B</ThemedText>
+                    </View>
+                  </View>
+                </View>
+                <Sparkline
+                  width={CHART_WIDTH}
+                  height={CHART_HEIGHT}
+                  showDots={false}
+                  series={[
+                    { values: viewsA, color: COMPARE_A_VIEWS, fillColor: COMPARE_A_VIEWS },
+                    { values: viewsB, color: COMPARE_B_VIEWS, fillColor: COMPARE_B_VIEWS },
+                  ]}
+                />
+              </Card>
+
+              <Card style={styles.compareChartCard}>
+                <View style={styles.compareChartHeader}>
+                  <ThemedText type="small" style={{ fontWeight: "600" }}>CTA clicks over time</ThemedText>
+                  <View style={styles.compareChartLegend}>
+                    <View style={styles.legendItem}>
+                      <View style={[styles.legendDot, { backgroundColor: COMPARE_A_CTA }]} />
+                      <ThemedText type="caption" style={{ color: theme.textTertiary }}>A</ThemedText>
+                    </View>
+                    <View style={styles.legendItem}>
+                      <View style={[styles.legendDot, { backgroundColor: COMPARE_B_CTA }]} />
+                      <ThemedText type="caption" style={{ color: theme.textTertiary }}>B</ThemedText>
+                    </View>
+                  </View>
+                </View>
+                <Sparkline
+                  width={CHART_WIDTH}
+                  height={CHART_HEIGHT}
+                  showDots={false}
+                  series={[
+                    { values: ctaA, color: COMPARE_A_CTA, fillColor: COMPARE_A_CTA },
+                    { values: ctaB, color: COMPARE_B_CTA, fillColor: COMPARE_B_CTA },
+                  ]}
+                />
+              </Card>
+            </>
+          ) : null}
+
+          <Card style={styles.compareTableCard}>
+            <View style={styles.compareTableHeader}>
+              <ThemedText type="caption" style={[styles.compareTableMetricCol, { color: theme.textSecondary }]}>
+                Metric
+              </ThemedText>
+              <View style={styles.compareTableValueCols}>
+                <View style={styles.compareTableValueCol}>
+                  <View style={[styles.compareLegendSwatchSmall, { backgroundColor: COMPARE_A_VIEWS }]} />
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }} numberOfLines={1}>
+                    A
+                  </ThemedText>
+                </View>
+                <View style={styles.compareTableValueCol}>
+                  <View style={[styles.compareLegendSwatchSmall, { backgroundColor: COMPARE_B_VIEWS }]} />
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }} numberOfLines={1}>
+                    B
+                  </ThemedText>
+                </View>
+                <View style={[styles.compareTableValueCol, { minWidth: 52 }]}>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary }}>Winner</ThemedText>
+                </View>
+              </View>
+            </View>
+
+            <View style={[styles.compareTableDivider, { backgroundColor: theme.border }]} />
+
+            {metricsCompare.map((m, i) => {
+              const aWins = m.valueA > m.valueB;
+              const bWins = m.valueB > m.valueA;
+              const tie = m.valueA === m.valueB;
+              return (
+                <View key={m.label} style={[styles.compareTableRow, i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: theme.border }]}>
+                  <ThemedText type="caption" style={[styles.compareTableMetricCol, { color: theme.textSecondary }]}>
+                    {m.label}
+                  </ThemedText>
+                  <View style={styles.compareTableValueCols}>
+                    <View style={[styles.compareTableValueCol, aWins && styles.compareWinnerCell]}>
+                      <ThemedText type="small" style={{ fontWeight: aWins ? "700" : "400" }}>
+                        {m.valueA}
+                      </ThemedText>
+                      {m.subA ? (
+                        <ThemedText type="caption" style={{ color: theme.textTertiary, fontSize: 10 }}>
+                          {m.subA}
+                        </ThemedText>
+                      ) : null}
+                    </View>
+                    <View style={[styles.compareTableValueCol, bWins && styles.compareWinnerCell]}>
+                      <ThemedText type="small" style={{ fontWeight: bWins ? "700" : "400" }}>
+                        {m.valueB}
+                      </ThemedText>
+                      {m.subB ? (
+                        <ThemedText type="caption" style={{ color: theme.textTertiary, fontSize: 10 }}>
+                          {m.subB}
+                        </ThemedText>
+                      ) : null}
+                    </View>
+                    <View style={[styles.compareTableValueCol, { minWidth: 52 }]}>
+                      {tie ? (
+                        <ThemedText type="caption" style={{ color: theme.textTertiary }}>Tie</ThemedText>
+                      ) : aWins ? (
+                        <View style={[styles.winnerBadge, { backgroundColor: COMPARE_A_VIEWS + "22" }]}>
+                          <ThemedText type="caption" style={{ color: COMPARE_A_VIEWS, fontWeight: "600", fontSize: 10 }}>A wins</ThemedText>
+                        </View>
+                      ) : (
+                        <View style={[styles.winnerBadge, { backgroundColor: COMPARE_B_VIEWS + "22" }]}>
+                          <ThemedText type="caption" style={{ color: COMPARE_B_VIEWS, fontWeight: "600", fontSize: 10 }}>B wins</ThemedText>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </Card>
+        </ScrollView>
+      </View>
+    </Modal>
   );
 }
 
@@ -1144,5 +1501,115 @@ const styles = StyleSheet.create({
   tooltipClose: {
     marginLeft: "auto",
     padding: 4,
+  },
+  headerActions: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    alignItems: "center",
+  },
+  compareBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: Spacing.md,
+  },
+  compareGoBtn: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: BorderRadius.full,
+  },
+  compareCheckbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  compareLegendRow: {
+    flexDirection: "row",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: BorderRadius.md,
+    overflow: "hidden",
+  },
+  compareLegendItem: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    padding: Spacing.md,
+  },
+  compareLegendSwatch: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  compareLegendSwatchSmall: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  compareLegendDivider: {
+    width: StyleSheet.hairlineWidth,
+  },
+  compareChartCard: {
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  compareChartHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: Spacing.xs,
+  },
+  compareChartLegend: {
+    flexDirection: "row",
+    gap: Spacing.md,
+  },
+  compareTableCard: {
+    padding: Spacing.lg,
+    overflow: "hidden",
+  },
+  compareTableHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingBottom: Spacing.sm,
+  },
+  compareTableDivider: {
+    height: StyleSheet.hairlineWidth,
+    marginBottom: Spacing.xs,
+  },
+  compareTableRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: Spacing.sm,
+  },
+  compareTableMetricCol: {
+    width: 90,
+  },
+  compareTableValueCols: {
+    flex: 1,
+    flexDirection: "row",
+    gap: Spacing.sm,
+  },
+  compareTableValueCol: {
+    flex: 1,
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 4,
+    alignSelf: "center",
+    flexWrap: "wrap",
+  },
+  compareWinnerCell: {
+    opacity: 1,
+  },
+  winnerBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.full,
   },
 });
