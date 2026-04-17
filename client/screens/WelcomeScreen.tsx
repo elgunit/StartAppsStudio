@@ -101,6 +101,7 @@ export default function WelcomeScreen() {
   };
 
   const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
+  const loopingCaseStudies = [...displayedCaseStudies, ...displayedCaseStudies];
 
   return (
     <ScrollView
@@ -227,7 +228,7 @@ export default function WelcomeScreen() {
 
                     {item.id === "work" ? (
                       <View style={styles.listContent}>
-                        {displayedCaseStudies.map((study, i) => (
+                        {loopingCaseStudies.map((study, i) => (
                           <View key={i} style={styles.workItem}>
                             <View style={styles.workInfo}>
                               <ThemedText type="small" style={{ fontWeight: "500" }}>{study.title}</ThemedText>
