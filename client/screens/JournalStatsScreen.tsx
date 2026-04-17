@@ -17,7 +17,16 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { Feather } from "@expo/vector-icons";
-import Animated, { FadeInDown, FadeIn, FadeOut } from "react-native-reanimated";
+import Animated, {
+  FadeInDown,
+  FadeIn,
+  FadeOut,
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from "react-native-reanimated";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 
@@ -210,7 +219,7 @@ export default function JournalStatsScreen() {
   const { user } = useAuth();
   const [range, setRange] = useState<RangeKey>("30d");
   const [exporting, setExporting] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState<JournalTrendRow | null>(null);
+  const [selectedArticleIndex, setSelectedArticleIndex] = useState<number | null>(null);
   const [compareMode, setCompareMode] = useState(false);
   const [compareSelection, setCompareSelection] = useState<string[]>([]);
   const [showCompare, setShowCompare] = useState(false);
@@ -293,6 +302,12 @@ export default function JournalStatsScreen() {
     }
     return m;
   }, [trendsData]);
+
+  const navigableTrends = useMemo(() => {
+    return stats
+      .map((s) => trendsMap.get(s.slug))
+      .filter((t): t is JournalTrendRow => Boolean(t) && t!.buckets.length >= 2);
+  }, [stats, trendsMap]);
 
   const handleExport = async () => {
     if (stats.length === 0) return;
@@ -459,7 +474,8 @@ export default function JournalStatsScreen() {
             if (compareMode) {
               toggleCompareSelection(item.slug);
             } else if (hasTrend) {
-              setSelectedArticle(trend);
+              const idx = navigableTrends.findIndex((t) => t.slug === item.slug);
+              if (idx !== -1) setSelectedArticleIndex(idx);
             }
           }}
           style={({ pressed }) => ({ opacity: pressed ? 0.75 : isDisabled ? 0.4 : 1 })}
@@ -597,8 +613,10 @@ export default function JournalStatsScreen() {
         refreshControl={<RefreshControl refreshing={isLoading || trendsLoading} onRefresh={handleRefresh} />}
       />
       <ArticleDetailModal
-        trend={selectedArticle}
-        onClose={() => setSelectedArticle(null)}
+        trends={navigableTrends}
+        currentIndex={selectedArticleIndex}
+        onClose={() => setSelectedArticleIndex(null)}
+        onNavigate={setSelectedArticleIndex}
       />
       <CompareModal
         visible={showCompare && compareSelection.length === 2}
@@ -949,18 +967,64 @@ function CompareModal({
 }
 
 function ArticleDetailModal({
-  trend,
+  trends,
+  currentIndex,
   onClose,
+  onNavigate,
 }: {
-  trend: JournalTrendRow | null;
+  trends: JournalTrendRow[];
+  currentIndex: number | null;
   onClose: () => void;
+  onNavigate: (index: number) => void;
 }) {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
-  if (!trend) return null;
+  const translateX = useSharedValue(0);
+  const SWIPE_THRESHOLD = 60;
 
+  const navigateTo = (newIndex: number) => {
+    onNavigate(newIndex);
+  };
+
+  const panGesture = Gesture.Pan()
+    .activeOffsetX([-12, 12])
+    .failOffsetY([-20, 20])
+    .onUpdate((e) => {
+      const canGoNext = currentIndex !== null && currentIndex < trends.length - 1;
+      const canGoPrev = currentIndex !== null && currentIndex > 0;
+      if ((!canGoPrev && e.translationX > 0) || (!canGoNext && e.translationX < 0)) {
+        translateX.value = e.translationX * 0.15;
+      } else {
+        translateX.value = e.translationX * 0.35;
+      }
+    })
+    .onEnd((e) => {
+      if (currentIndex === null) {
+        translateX.value = withSpring(0);
+        return;
+      }
+      if (e.translationX < -SWIPE_THRESHOLD && currentIndex < trends.length - 1) {
+        translateX.value = withSpring(0);
+        runOnJS(navigateTo)(currentIndex + 1);
+      } else if (e.translationX > SWIPE_THRESHOLD && currentIndex > 0) {
+        translateX.value = withSpring(0);
+        runOnJS(navigateTo)(currentIndex - 1);
+      } else {
+        translateX.value = withSpring(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
+  if (currentIndex === null || currentIndex < 0 || currentIndex >= trends.length) return null;
+
+  const trend = trends[currentIndex];
   const bucketLabels = trend.buckets.map((b) => formatBucketLabel(b.label, trend.bucketSize));
   const maxViews = Math.max(...trend.buckets.map((b) => b.views), 1);
+  const canGoPrev = currentIndex > 0;
+  const canGoNext = currentIndex < trends.length - 1;
 
   const METRICS: { key: keyof TrendBucket; label: string; color: string }[] = [
     { key: "views", label: "Views", color: VIEWS_COLOR },
@@ -976,53 +1040,80 @@ function ArticleDetailModal({
       presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <View style={[styles.modalRoot, { backgroundColor: theme.backgroundRoot, paddingTop: insets.top + Spacing.lg }]}>
-        <View style={styles.modalHeader}>
-          <View style={styles.modalTitleBlock}>
-            <ThemedText type="h3" numberOfLines={1}>{trend.title || trend.slug}</ThemedText>
-            <ThemedText type="caption" style={{ color: theme.textTertiary }}>{trend.slug}</ThemedText>
+      <GestureHandlerRootView style={styles.modalRoot}>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View style={[styles.modalRoot, animatedStyle, { backgroundColor: theme.backgroundRoot, paddingTop: insets.top + Spacing.lg }]}>
+          <View style={styles.modalHeader}>
+            <View style={styles.modalNavBtn}>
+              <Pressable
+                testID="modal-prev"
+                onPress={() => canGoPrev && onNavigate(currentIndex - 1)}
+                style={[styles.navArrowBtn, { opacity: canGoPrev ? 1 : 0.2, backgroundColor: theme.backgroundSecondary }]}
+              >
+                <Feather name="chevron-left" size={18} color={theme.textSecondary} />
+              </Pressable>
+            </View>
+
+            <View style={styles.modalTitleBlock}>
+              <ThemedText type="h3" numberOfLines={1} style={{ textAlign: "center" }}>{trend.title || trend.slug}</ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textTertiary, textAlign: "center" }}>
+                {currentIndex + 1} of {trends.length}
+              </ThemedText>
+            </View>
+
+            <View style={styles.modalNavBtn}>
+              <Pressable
+                testID="modal-next"
+                onPress={() => canGoNext && onNavigate(currentIndex + 1)}
+                style={[styles.navArrowBtn, { opacity: canGoNext ? 1 : 0.2, backgroundColor: theme.backgroundSecondary }]}
+              >
+                <Feather name="chevron-right" size={18} color={theme.textSecondary} />
+              </Pressable>
+              <Pressable
+                onPress={onClose}
+                testID="modal-close"
+                style={[styles.closeBtn, { backgroundColor: theme.backgroundSecondary }]}
+              >
+                <Feather name="x" size={18} color={theme.textSecondary} />
+              </Pressable>
+            </View>
           </View>
-          <Pressable
-            onPress={onClose}
-            testID="modal-close"
-            style={[styles.closeBtn, { backgroundColor: theme.backgroundSecondary }]}
+
+          <ThemedText type="caption" style={{ color: theme.textTertiary, marginHorizontal: Spacing.lg, marginBottom: Spacing.lg, textAlign: "center" }}>
+            {trend.bucketSize === "day" ? "Daily" : trend.bucketSize === "week" ? "Weekly" : "Monthly"} breakdown — {trend.buckets.length} {trend.bucketSize === "day" ? "days" : trend.bucketSize === "week" ? "weeks" : "months"}
+          </ThemedText>
+
+          <ScrollView
+            key={trend.slug}
+            contentContainerStyle={{
+              paddingHorizontal: Spacing.lg,
+              paddingBottom: insets.bottom + Spacing.xl,
+              gap: Spacing.lg,
+            }}
+            showsVerticalScrollIndicator={false}
           >
-            <Feather name="x" size={18} color={theme.textSecondary} />
-          </Pressable>
-        </View>
+            {METRICS.map((m) => {
+              const values = trend.buckets.map((b) => b[m.key] as number);
+              const total = values.reduce((s, v) => s + v, 0);
+              if (total === 0) return null;
 
-        <ThemedText type="caption" style={{ color: theme.textTertiary, marginHorizontal: Spacing.lg, marginBottom: Spacing.lg }}>
-          {trend.bucketSize === "day" ? "Daily" : trend.bucketSize === "week" ? "Weekly" : "Monthly"} breakdown — {trend.buckets.length} {trend.bucketSize === "day" ? "days" : trend.bucketSize === "week" ? "weeks" : "months"}
-        </ThemedText>
-
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: Spacing.lg,
-            paddingBottom: insets.bottom + Spacing.xl,
-            gap: Spacing.lg,
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          {METRICS.map((m) => {
-            const values = trend.buckets.map((b) => b[m.key] as number);
-            const total = values.reduce((s, v) => s + v, 0);
-            if (total === 0) return null;
-
-            return (
-              <MetricSection
-                key={m.key}
-                metricKey={m.key}
-                label={m.label}
-                color={m.color}
-                values={values}
-                total={total}
-                bucketLabels={bucketLabels}
-                maxViews={maxViews}
-              />
-            );
-          })}
-        </ScrollView>
-      </View>
+              return (
+                <MetricSection
+                  key={m.key}
+                  metricKey={m.key}
+                  label={m.label}
+                  color={m.color}
+                  values={values}
+                  total={total}
+                  bucketLabels={bucketLabels}
+                  maxViews={maxViews}
+                />
+              );
+            })}
+          </ScrollView>
+        </Animated.View>
+      </GestureDetector>
+      </GestureHandlerRootView>
     </Modal>
   );
 }
@@ -1419,14 +1510,27 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    paddingHorizontal: Spacing.lg,
+    alignItems: "center",
+    paddingHorizontal: Spacing.md,
     marginBottom: Spacing.sm,
-    gap: Spacing.md,
+    gap: Spacing.sm,
   },
   modalTitleBlock: {
     flex: 1,
     gap: Spacing.xs,
+    alignItems: "center",
+  },
+  modalNavBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+  },
+  navArrowBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: "center",
+    justifyContent: "center",
   },
   closeBtn: {
     width: 34,
@@ -1434,7 +1538,6 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 2,
   },
   metricHeader: {
     flexDirection: "row",
