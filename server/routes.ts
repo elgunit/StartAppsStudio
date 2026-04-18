@@ -2,7 +2,7 @@ import type { Express, Request } from "express";
 import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
 import { db } from "./db";
-import { users as usersTable, type User } from "@shared/schema";
+import { users as usersTable, appWaitlist, type User } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import crypto from "crypto";
@@ -98,6 +98,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(404).json({ error: "Post not found" });
     }
     res.json({ post });
+  });
+
+  // App launch waitlist — pre-register email capture from the landing page.
+  app.post("/api/waitlist", async (req, res) => {
+    try {
+      const { email } = req.body || {};
+      const cleanEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+      if (!cleanEmail || !/\S+@\S+\.\S+/.test(cleanEmail)) {
+        return res.status(400).json({ error: "valid email is required" });
+      }
+      const existing = await db.select({ id: appWaitlist.id })
+        .from(appWaitlist)
+        .where(eq(appWaitlist.email, cleanEmail))
+        .limit(1);
+      if (existing.length > 0) {
+        return res.status(409).json({ ok: true, message: "already registered" });
+      }
+      await db.insert(appWaitlist).values({ email: cleanEmail, source: "landing" });
+      return res.json({ ok: true });
+    } catch (err) {
+      console.error("[waitlist]", err);
+      return res.status(500).json({ error: "server error" });
+    }
   });
 
   // Capture a guest email from an in-app Journal article CTA.

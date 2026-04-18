@@ -345,6 +345,15 @@ export type HatType = "designer" | "developer" | "strategist" | "manager" | "ana
 export type ProjectStatus = "brief_submitted" | "hat_selection" | "discovery" | "design_build" | "client_review" | "iteration" | "completed";
 export type ServiceOrderStatus = "submitted" | "in_progress" | "delivered";
 
+// App launch waitlist — pre-registration emails
+export const appWaitlist = pgTable("app_waitlist", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email").notNull().unique(),
+  source: text("source").default("landing"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+export type AppWaitlist = typeof appWaitlist.$inferSelect;
+
 // Journal report schedules — recurring CSV email delivery
 export const journalReportSchedules = pgTable("journal_report_schedules", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
