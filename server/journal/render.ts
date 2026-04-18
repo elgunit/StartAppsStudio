@@ -240,7 +240,7 @@ const STYLE = `
     font-size: 14px;
     margin-bottom: 32px;
   }
-  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; margin-bottom: 24px; }
   .tag {
     display: inline-block;
     padding: 2px 10px;
