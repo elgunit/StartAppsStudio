@@ -1376,7 +1376,7 @@
         background-color: #fffbe9;
         border: 1px solid rgba(15, 23, 42, 0.08);
         border-radius: 4px 14px 14px 4px;
-        padding: 22px 22px 20px 36px;
+        padding: 30px 22px 20px 36px;
         text-decoration: none;
         color: #1f2937;
         transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -1397,7 +1397,7 @@
       .journal-note::after {
         content: '';
         position: absolute;
-        top: -8px;
+        top: -6px;
         left: 14px;
         width: 48px;
         height: 18px;
@@ -1463,9 +1463,9 @@
       }
 
       @media (max-width: 600px) {
-        .journal-note { padding: 22px 20px 20px 32px; }
+        .journal-note { padding: 30px 20px 20px 32px; }
         .journal-note::before { left: 20px; }
-        .journal-note::after { left: 12px; }
+        .journal-note::after { left: 12px; top: -6px; }
       }
       
       .form-success { padding: 40px; text-align: center; }
