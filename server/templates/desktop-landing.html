@@ -1258,8 +1258,10 @@
 
       .form-group input:focus + .floating-label,
       .form-group input:not(:placeholder-shown) + .floating-label,
+      .form-group input:-webkit-autofill + .floating-label,
       .form-group textarea:focus + .floating-label,
       .form-group textarea:not(:placeholder-shown) + .floating-label,
+      .form-group textarea:-webkit-autofill + .floating-label,
       .form-group select:focus + .floating-label,
       .form-group select:not([data-empty="true"]) + .floating-label {
         top: 9px;
@@ -3452,6 +3454,20 @@
         belt.addEventListener('pointercancel', function() { dragging = false; belt.style.cursor = 'grab'; });
         belt.addEventListener('mouseenter', function() { paused = true; });
         belt.addEventListener('mouseleave', function() { paused = false; });
+      })();
+
+      // iOS Safari: reset zoom after input blur so page doesn't stay zoomed
+      (function() {
+        var vp = document.querySelector('meta[name="viewport"]');
+        if (!vp) return;
+        var base = 'width=device-width, initial-scale=1';
+        document.addEventListener('blur', function(e) {
+          var t = e.target;
+          if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA')) {
+            vp.setAttribute('content', base + ', maximum-scale=1');
+            setTimeout(function() { vp.setAttribute('content', base); }, 300);
+          }
+        }, true);
       })();
 
       function switchCmpTab(side, btn) {
