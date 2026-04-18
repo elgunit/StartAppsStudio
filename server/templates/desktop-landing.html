@@ -939,57 +939,150 @@
       
       
       
-      .comparison-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        margin-top: 40px;
-      }
-      
-      .comparison-card {
-        background: var(--bg-elevated);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 24px;
-      }
-      
-      .comparison-card.highlight {
-        border-color: var(--accent);
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
-      }
-      
-      .comparison-card h4 {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      
-      .comparison-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .comparison-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 14px;
-        color: var(--text-secondary);
-      }
-      
-      .comparison-item.positive { color: #10b981; }
-      .comparison-item.negative { color: #ef4444; }
-      
       @media (max-width: 960px) {
         .why-grid { grid-template-columns: repeat(2, 1fr); }
       }
 
-      @media (max-width: 768px) {
-        .comparison-section { grid-template-columns: 1fr; }
+      /* ── Comparison modal tabbed design ─────────────────── */
+      .cmp-header {
+        text-align: center;
+        padding: 4px 48px 0;
+        margin-bottom: 20px;
+      }
+      .cmp-eyebrow {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .cmp-title {
+        font-size: clamp(18px, 3vw, 22px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1.25;
+      }
+      .cmp-tabs {
+        display: flex;
+        gap: 6px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 4px;
+        margin-bottom: 20px;
+      }
+      .cmp-tab {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 10px 14px;
+        border: none;
+        border-radius: 9px;
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .cmp-tab.active {
+        background: var(--bg);
+        color: var(--text);
+        box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+      }
+      .cmp-tab.us.active { color: #10b981; }
+      .cmp-tab.them.active { color: #f87171; }
+      .cmp-panel { display: none; }
+      .cmp-panel.active {
+        display: block;
+        animation: cmp-in 0.2s ease;
+      }
+      @keyframes cmp-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .cmp-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .cmp-benefit, .cmp-pain {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        padding: 13px;
+        border-radius: 11px;
+      }
+      .cmp-benefit {
+        background: rgba(16, 185, 129, 0.06);
+        border: 1px solid rgba(16, 185, 129, 0.14);
+      }
+      .cmp-pain {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.12);
+      }
+      .cmp-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .cmp-benefit .cmp-icon {
+        background: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+      }
+      .cmp-pain .cmp-icon {
+        background: rgba(239, 68, 68, 0.10);
+        color: #ef4444;
+      }
+      .cmp-item-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 2px;
+        line-height: 1.3;
+      }
+      .cmp-item-desc {
+        font-size: 11px;
+        color: var(--text-secondary);
+        line-height: 1.4;
+      }
+      .cmp-action {
+        display: block;
+        text-align: center;
+        padding: 14px;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: opacity 0.2s, transform 0.15s;
+      }
+      .cmp-action:hover { opacity: 0.88; transform: translateY(-1px); }
+      .cmp-footnote {
+        text-align: center;
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 10px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+      }
+      @media (max-width: 560px) {
+        .cmp-grid { grid-template-columns: 1fr; }
+        .cmp-tab  { font-size: 12px; padding: 9px 10px; }
+        .cmp-header { padding: 4px 32px 0; }
       }
       
       /* Contact */
@@ -1857,19 +1950,14 @@
 
       /* Industries horizontal scroll */
       .industries-scroll {
-        overflow-x: scroll;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        overflow: hidden;
         padding: 8px 0;
         max-width: 100vw;
         cursor: grab;
         -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
         mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-        -webkit-overflow-scrolling: touch;
         user-select: none;
       }
-
-      .industries-scroll::-webkit-scrollbar { display: none; }
 
       .industries-scroll:active { cursor: grabbing; }
 
@@ -1877,6 +1965,7 @@
         display: flex;
         gap: 12px;
         width: max-content;
+        will-change: transform;
       }
 
       .industries-scroll .industry-chip {
@@ -2305,40 +2394,86 @@
       <div class="modal-overlay" id="whyModal">
         <div class="modal-content">
           <button class="modal-close" onclick="closeWhyModal()">&times;</button>
-          <h3>Start Apps Studio vs Traditional Agencies</h3>
-          <p>See why founders choose us over traditional development shops</p>
-        
-        <div class="comparison-section">
-          <div class="comparison-card highlight">
-            <h4>
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+
+          <div class="cmp-header">
+            <div class="cmp-eyebrow">Why founders choose us</div>
+            <h3 class="cmp-title">Start Apps Studio<br>vs Traditional Agencies</h3>
+          </div>
+
+          <div class="cmp-tabs" role="tablist">
+            <button class="cmp-tab us active" id="cmpTabUs" onclick="switchCmpTab('us',this)" role="tab" aria-selected="true">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
               Start Apps Studio
-            </h4>
-            <div class="comparison-list">
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Fixed pricing, no surprises</div>
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> All features included</div>
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Free lifetime updates</div>
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Real-time app updates</div>
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Self-host your codebase</div>
-              <div class="comparison-item positive"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> No vendor lock-in</div>
-            </div>
-          </div>
-          
-          <div class="comparison-card">
-            <h4>
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            </button>
+            <button class="cmp-tab them" id="cmpTabThem" onclick="switchCmpTab('them',this)" role="tab" aria-selected="false">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
               Traditional Agencies
-            </h4>
-            <div class="comparison-list">
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Setup fee + annual plans</div>
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Expensive paid add-ons</div>
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Paid submission service</div>
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Annual plan for updates</div>
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Partial vendor lock-in</div>
-              <div class="comparison-item negative"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Outdated codebase</div>
+            </button>
+          </div>
+
+          <!-- Start Apps Studio panel -->
+          <div class="cmp-panel active" id="cmp-us" role="tabpanel">
+            <div class="cmp-grid">
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <div><div class="cmp-item-title">Fixed pricing</div><div class="cmp-item-desc">No surprises, no overages</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <div><div class="cmp-item-title">Everything included</div><div class="cmp-item-desc">All features, no paid add-ons</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                <div><div class="cmp-item-title">Free lifetime updates</div><div class="cmp-item-desc">Stay current, always</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+                <div><div class="cmp-item-title">2–4 week delivery</div><div class="cmp-item-desc">Ship fast, iterate faster</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                <div><div class="cmp-item-title">Real-time updates</div><div class="cmp-item-desc">Live progress as we build</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div><div class="cmp-item-title">Zero vendor lock-in</div><div class="cmp-item-desc">You own 100% of the code</div></div>
+              </div>
+            </div>
+            <a class="cmp-action" href="#contact" onclick="closeWhyModal()">Start building your MVP &rarr;</a>
+          </div>
+
+          <!-- Traditional Agencies panel -->
+          <div class="cmp-panel" id="cmp-them" role="tabpanel">
+            <div class="cmp-grid">
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <div><div class="cmp-item-title">Setup fee + annual plans</div><div class="cmp-item-desc">Pay before you even start</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                <div><div class="cmp-item-title">Paid add-ons</div><div class="cmp-item-desc">Every feature costs extra</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+                <div><div class="cmp-item-title">Paid submission service</div><div class="cmp-item-desc">Charge extra to ship to stores</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <div><div class="cmp-item-title">Annual plan for updates</div><div class="cmp-item-desc">Updates are gated behind a paywall</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+                <div><div class="cmp-item-title">Vendor lock-in</div><div class="cmp-item-desc">Hard to migrate away later</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                <div><div class="cmp-item-title">Outdated codebase</div><div class="cmp-item-desc">Left behind on old frameworks</div></div>
+              </div>
+            </div>
+            <div class="cmp-footnote">
+              Ready to do it right? <a href="#contact" onclick="closeWhyModal()" style="color:var(--accent);text-decoration:none;font-weight:600;">Talk to our team &rarr;</a>
             </div>
           </div>
-        </div>
         </div>
       </div>
       
@@ -3266,46 +3401,69 @@
         var belt = document.getElementById('industriesBelt');
         if (!belt) return;
         var track = belt.querySelector('.industries-track');
-        var speed = 0.55;
+        var currentX = 0;
+        var speed = 0.5;
         var dragging = false;
-        var dragX = 0;
-        var dragScrollLeft = 0;
+        var pointerStartX = 0;
+        var startX = 0;
         var paused = false;
+        var half = 0;
 
-        function half() { return Math.floor(track.scrollWidth / 2); }
+        function getHalf() {
+          return Math.floor(track.scrollWidth / 2);
+        }
 
-        function wrapScroll() {
-          var h = half();
-          if (!h) return;
-          if (belt.scrollLeft >= h) belt.scrollLeft -= h;
-          else if (belt.scrollLeft < 0) belt.scrollLeft += h;
+        function wrap() {
+          if (half <= 0) return;
+          while (currentX <= -half) currentX += half;
+          while (currentX > 0) currentX -= half;
         }
 
         function tick() {
           if (!dragging && !paused) {
-            belt.scrollLeft += speed;
-            wrapScroll();
+            currentX -= speed;
+            wrap();
           }
+          track.style.transform = 'translateX(' + currentX + 'px)';
           requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
+
+        function init() {
+          half = getHalf();
+          if (half <= 0) { requestAnimationFrame(init); return; }
+          requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(init);
 
         belt.addEventListener('pointerdown', function(e) {
           dragging = true;
-          dragX = e.clientX;
-          dragScrollLeft = belt.scrollLeft;
+          pointerStartX = e.clientX;
+          startX = currentX;
           belt.setPointerCapture(e.pointerId);
+          belt.style.cursor = 'grabbing';
         });
         belt.addEventListener('pointermove', function(e) {
           if (!dragging) return;
-          belt.scrollLeft = dragScrollLeft - (e.clientX - dragX);
-          wrapScroll();
+          currentX = startX + (e.clientX - pointerStartX);
+          wrap();
         });
-        belt.addEventListener('pointerup',     function() { dragging = false; });
-        belt.addEventListener('pointercancel', function() { dragging = false; });
+        belt.addEventListener('pointerup',     function() { dragging = false; belt.style.cursor = 'grab'; });
+        belt.addEventListener('pointercancel', function() { dragging = false; belt.style.cursor = 'grab'; });
         belt.addEventListener('mouseenter', function() { paused = true; });
         belt.addEventListener('mouseleave', function() { paused = false; });
       })();
+
+      function switchCmpTab(side, btn) {
+        document.querySelectorAll('.cmp-tab').forEach(function(t) {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.cmp-panel').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById('cmp-' + side).classList.add('active');
+      }
 
       function submitWaitlist(e) {
         e.preventDefault();
