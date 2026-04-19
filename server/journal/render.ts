@@ -160,10 +160,10 @@ const STYLE = `
     --text-muted: #9ca3af;
     --border: #e5e7eb;
     --accent: #0a0a0a;
-    --link: #4f46e5;
+    --link: #0d9488;
     --success: #16a34a;
-    --callout-bg: rgba(139, 92, 246, 0.06);
-    --callout-border: rgba(139, 92, 246, 0.25);
+    --callout-bg: rgba(13, 148, 136, 0.06);
+    --callout-border: rgba(13, 148, 136, 0.25);
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -175,10 +175,10 @@ const STYLE = `
       --text-muted: #6b7280;
       --border: #27272a;
       --accent: #fafafa;
-      --link: #a78bfa;
+      --link: #2dd4bf;
       --success: #22c55e;
-      --callout-bg: rgba(139, 92, 246, 0.1);
-      --callout-border: rgba(139, 92, 246, 0.35);
+      --callout-bg: rgba(45, 212, 191, 0.08);
+      --callout-border: rgba(45, 212, 191, 0.35);
     }
   }
   html { -webkit-text-size-adjust: 100%; }
