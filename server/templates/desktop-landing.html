@@ -3560,15 +3560,50 @@
       })();
 
       function switchCmpTab(side, btn) {
+        if (!btn) {
+          btn = document.getElementById(side === 'us' ? 'cmpTabUs' : 'cmpTabThem');
+        }
         document.querySelectorAll('.cmp-tab').forEach(function(t) {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
         });
         document.querySelectorAll('.cmp-panel').forEach(function(p) { p.classList.remove('active'); });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
+        if (btn) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+        }
         document.getElementById('cmp-' + side).classList.add('active');
       }
+
+      (function attachCmpSwipe() {
+        var panels = document.querySelectorAll('.cmp-panel');
+        if (!panels.length) return;
+        var startX = 0, startY = 0, startT = 0, tracking = false;
+        function onStart(e) {
+          var t = e.touches ? e.touches[0] : e;
+          startX = t.clientX; startY = t.clientY; startT = Date.now();
+          tracking = true;
+        }
+        function onEnd(e) {
+          if (!tracking) return;
+          tracking = false;
+          var t = (e.changedTouches && e.changedTouches[0]) || e;
+          var dx = t.clientX - startX;
+          var dy = t.clientY - startY;
+          var dt = Date.now() - startT;
+          if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2 || dt > 600) return;
+          var current = document.querySelector('.cmp-panel.active');
+          if (!current) return;
+          var isUs = current.id === 'cmp-us';
+          if (dx < 0 && isUs) switchCmpTab('them');
+          else if (dx > 0 && !isUs) switchCmpTab('us');
+        }
+        panels.forEach(function(p) {
+          p.addEventListener('touchstart', onStart, { passive: true });
+          p.addEventListener('touchend', onEnd, { passive: true });
+          p.addEventListener('touchcancel', function() { tracking = false; }, { passive: true });
+        });
+      })();
 
       function submitWaitlist(e) {
         e.preventDefault();
