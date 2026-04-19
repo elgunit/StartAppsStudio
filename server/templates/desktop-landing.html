@@ -1209,7 +1209,7 @@
       .form-group select,
       .form-group textarea {
         width: 100%;
-        padding: 22px 16px 10px;
+        padding: 28px 16px 10px;
         border: 1.5px solid var(--border);
         border-radius: 12px;
         background: var(--bg);
@@ -1221,6 +1221,17 @@
         -webkit-appearance: none;
         appearance: none;
       }
+
+      /* Override browser autofill yellow with brand purple tint */
+      .form-group input:-webkit-autofill,
+      .form-group input:-webkit-autofill:hover,
+      .form-group input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px rgba(139, 92, 246, 0.07) inset !important;
+        box-shadow: 0 0 0 1000px rgba(139, 92, 246, 0.07) inset !important;
+        -webkit-text-fill-color: var(--text) !important;
+        border-color: rgba(139, 92, 246, 0.28) !important;
+        caret-color: var(--text);
+      }
       .form-group select {
         background-image:
           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239ca3af' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -1230,7 +1241,7 @@
       }
       .form-group textarea {
         min-height: 120px;
-        padding-top: 26px;
+        padding-top: 32px;
         resize: vertical;
       }
 
@@ -1254,7 +1265,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .form-group:has(textarea) .floating-label { top: 22px; transform: none; }
+      .form-group:has(textarea) .floating-label { top: 10px; transform: none; }
 
       .form-group input:focus + .floating-label,
       .form-group input:not(:placeholder-shown) + .floating-label,
@@ -2051,7 +2062,8 @@
         .form-section { padding: 20px; margin-bottom: 20px; }
         .form-section > .form-section-title { margin-bottom: 14px; }
         .form-row { gap: 12px; }
-        .form-group input, .form-group select, .form-group textarea { padding: 14px; font-size: 16px; }
+        .form-group input, .form-group select { padding: 28px 14px 10px; font-size: 16px; }
+        .form-group textarea { padding: 32px 14px 10px; font-size: 16px; }
         .submit-btn { padding: 16px 20px; font-size: 15px; }
         .why-grid { grid-template-columns: 1fr; }
         .growth-grid { grid-template-columns: 1fr; }
