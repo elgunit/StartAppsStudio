@@ -3403,27 +3403,49 @@
         var belt = document.getElementById('industriesBelt');
         if (!belt) return;
         var track = belt.querySelector('.industries-track');
-        var currentX = 0;
-        var speed = 0.5;
-        var dragging = false;
-        var pointerStartX = 0;
-        var startX = 0;
-        var paused = false;
-        var half = 0;
 
-        function getHalf() {
-          return Math.floor(track.scrollWidth / 2);
+        var AUTO_SPEED = 0.5;   // px / frame when idle
+        var FRICTION   = 0.92;  // velocity multiplier per frame (inertia decay)
+        var MIN_VEL    = 0.08;  // below this velocity, inertia is considered done
+
+        var currentX  = 0;
+        var velocity  = 0;
+        var half      = 0;
+        var dragging  = false;
+        var paused    = false;
+
+        // Drag tracking
+        var ptrStartX   = 0;
+        var dragOriginX = 0;
+        var lastPtrX    = 0;
+        var lastPtrT    = 0;
+        var sampleVel   = 0; // running velocity sample during drag
+
+        // Use exact float half so the seam is pixel-perfect
+        function measureHalf() {
+          var w = track.scrollWidth;
+          return w > 0 ? w / 2 : 0;
         }
 
         function wrap() {
           if (half <= 0) return;
-          while (currentX <= -half) currentX += half;
-          while (currentX > 0) currentX -= half;
+          // modulo wrap, keeping value in (-half, 0]
+          currentX = currentX % half;
+          if (currentX > 0) currentX -= half;
         }
 
         function tick() {
-          if (!dragging && !paused) {
-            currentX -= speed;
+          if (!dragging) {
+            if (Math.abs(velocity) > MIN_VEL) {
+              // Inertia: consume velocity, suppress auto-scroll
+              currentX += velocity;
+              velocity *= FRICTION;
+              if (Math.abs(velocity) <= MIN_VEL) velocity = 0;
+            } else if (!paused) {
+              // Auto-scroll
+              velocity = 0;
+              currentX -= AUTO_SPEED;
+            }
             wrap();
           }
           track.style.transform = 'translateX(' + currentX + 'px)';
@@ -3431,7 +3453,7 @@
         }
 
         function init() {
-          half = getHalf();
+          half = measureHalf();
           if (half <= 0) { requestAnimationFrame(init); return; }
           requestAnimationFrame(tick);
         }
@@ -3439,19 +3461,43 @@
         requestAnimationFrame(init);
 
         belt.addEventListener('pointerdown', function(e) {
-          dragging = true;
-          pointerStartX = e.clientX;
-          startX = currentX;
+          half = measureHalf(); // re-measure in case fonts loaded late
+          dragging  = true;
+          velocity  = 0;
+          sampleVel = 0;
+          ptrStartX   = e.clientX;
+          dragOriginX = currentX;
+          lastPtrX    = e.clientX;
+          lastPtrT    = performance.now();
           belt.setPointerCapture(e.pointerId);
           belt.style.cursor = 'grabbing';
         });
+
         belt.addEventListener('pointermove', function(e) {
           if (!dragging) return;
-          currentX = startX + (e.clientX - pointerStartX);
+          var now = performance.now();
+          var dt  = now - lastPtrT;
+          if (dt > 0) {
+            // Exponential moving average for smooth velocity
+            var inst = (e.clientX - lastPtrX) / dt * 16; // scale to ~60fps
+            sampleVel = sampleVel * 0.6 + inst * 0.4;
+          }
+          lastPtrX = e.clientX;
+          lastPtrT = now;
+
+          currentX = dragOriginX + (e.clientX - ptrStartX);
           wrap();
         });
-        belt.addEventListener('pointerup',     function() { dragging = false; belt.style.cursor = 'grab'; });
-        belt.addEventListener('pointercancel', function() { dragging = false; belt.style.cursor = 'grab'; });
+
+        function endDrag() {
+          dragging  = false;
+          velocity  = sampleVel; // hand off drag velocity to inertia
+          sampleVel = 0;
+          belt.style.cursor = 'grab';
+        }
+
+        belt.addEventListener('pointerup',     endDrag);
+        belt.addEventListener('pointercancel', function() { velocity = 0; endDrag(); });
         belt.addEventListener('mouseenter', function() { paused = true; });
         belt.addEventListener('mouseleave', function() { paused = false; });
       })();
