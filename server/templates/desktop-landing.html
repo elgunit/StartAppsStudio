@@ -3636,6 +3636,69 @@
           btn.textContent = 'Notify me';
         });
       }
+
+      // Active visitor notification — fires once per session when the user
+      // genuinely scrolls (not just a tap or a momentum bounce).
+      (function trackActiveVisitor() {
+        try {
+          var SENT_KEY = 'sas_active_sent_v1';
+          var ID_KEY   = 'sas_visitor_id_v1';
+          if (sessionStorage.getItem(SENT_KEY)) return;
+
+          var visitorId = localStorage.getItem(ID_KEY);
+          if (!visitorId) {
+            visitorId = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+            try { localStorage.setItem(ID_KEY, visitorId); } catch (_) {}
+          }
+
+          var startY = window.scrollY || window.pageYOffset || 0;
+          var fired = false;
+
+          function maybeFire() {
+            if (fired) return;
+            var y = window.scrollY || window.pageYOffset || 0;
+            var doc = document.documentElement;
+            var max = Math.max(1, (doc.scrollHeight || 0) - (window.innerHeight || 0));
+            var pct = Math.min(100, Math.round((y / max) * 100));
+            // Require a meaningful scroll: 250px past start OR >=15% of page.
+            if ((y - startY) < 250 && pct < 15) return;
+
+            fired = true;
+            window.removeEventListener('scroll', onScroll);
+
+            try { sessionStorage.setItem(SENT_KEY, '1'); } catch (_) {}
+
+            var payload = {
+              visitorId: visitorId,
+              pagePath: location.pathname + location.search,
+              scrollPercent: pct,
+              userAgent: navigator.userAgent,
+              referrer: document.referrer || ''
+            };
+
+            try {
+              var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+              if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track/active-visitor', blob))) {
+                fetch('/api/track/active-visitor', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                  keepalive: true
+                }).catch(function(){});
+              }
+            } catch (_) {}
+          }
+
+          var ticking = false;
+          function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () { ticking = false; maybeFire(); });
+          }
+
+          window.addEventListener('scroll', onScroll, { passive: true });
+        } catch (_) {}
+      })();
     </script>
   </body>
 </html>
