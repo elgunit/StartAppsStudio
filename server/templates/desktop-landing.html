@@ -163,10 +163,14 @@
         line-height: 1.08;
         letter-spacing: -0.025em;
         margin: 0 0 14px 0;
-        color: var(--text);
+        color: #0a0a0a;
+        -webkit-text-fill-color: #0a0a0a;
         contain: layout style;
       }
-      .hero-line { display: inline; }
+      @media (prefers-color-scheme: dark) {
+        .hero-headline { color: #fafafa; -webkit-text-fill-color: #fafafa; }
+      }
+      .hero-line { display: inline; color: inherit; -webkit-text-fill-color: inherit; }
 
       .hero-headline .accent-word {
         background: linear-gradient(135deg, #0d9488 0%, #0891b2 50%, #06b6d4 100%);
@@ -2047,7 +2051,7 @@
           border-radius: 20px;
         }
         .hero-eyebrow { margin-bottom: 18px; font-size: 12px; padding: 6px 12px 6px 9px; }
-        .hero-headline { font-size: clamp(20px, 6.2vw, 26px); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; }
+        .hero-headline { font-size: clamp(18px, 5.4vw, 22px); line-height: 1.18; letter-spacing: -0.02em; margin-bottom: 12px; }
         .hero-headline .hero-line { display: block; }
         .hero-headline .hero-line-nowrap { white-space: nowrap; }
         .hero-subheadline { font-size: 14.5px; margin-bottom: 22px; line-height: 1.55; }
