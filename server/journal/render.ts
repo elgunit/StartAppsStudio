@@ -29,12 +29,12 @@ function safeJson(data: unknown): string {
 }
 
 const ACCENT_PALETTE = [
-  "#6366f1",
-  "#10b981",
-  "#f59e0b",
-  "#f43f5e",
-  "#06b6d4",
-  "#8b5cf6",
+  "#0d9488", // teal
+  "#10b981", // emerald
+  "#f59e0b", // amber
+  "#f43f5e", // rose
+  "#06b6d4", // cyan
+  "#14b8a6", // teal-mint
 ];
 
 function accentColor(key: string): string {

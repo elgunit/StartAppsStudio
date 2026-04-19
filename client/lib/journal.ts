@@ -10,12 +10,12 @@ export type JournalPostSummary = {
 };
 
 const ACCENT_PALETTE = [
-  "#6366f1", // indigo
+  "#0d9488", // teal
   "#10b981", // emerald
   "#f59e0b", // amber
   "#f43f5e", // rose
   "#06b6d4", // cyan
-  "#8b5cf6", // violet
+  "#14b8a6", // teal-mint
 ];
 
 export function journalAccentColor(key: string): string {
