@@ -3478,10 +3478,23 @@
         var lastPtrT    = 0;
         var sampleVel   = 0; // running velocity sample during drag
 
-        // Use exact float half so the seam is pixel-perfect
+        // Use exact float half so the seam is pixel-perfect.
+        // scrollWidth/2 is wrong because flex `gap` only sits BETWEEN items,
+        // not after the last one — so it under-counts by one gap.
+        // Instead, measure from the first original chip to the first duplicate
+        // chip (same chip in the duplicated set). That distance equals one
+        // complete "set + gap" and gives a perfect seam.
         function measureHalf() {
-          var w = track.scrollWidth;
-          return w > 0 ? w / 2 : 0;
+          var chips = track.children;
+          if (chips.length < 2 || chips.length % 2 !== 0) {
+            // fallback if duplicate set is missing
+            return track.scrollWidth > 0 ? track.scrollWidth / 2 : 0;
+          }
+          var n = chips.length / 2;
+          var firstRect = chips[0].getBoundingClientRect();
+          var dupRect   = chips[n].getBoundingClientRect();
+          var d = dupRect.left - firstRect.left;
+          return d > 0 ? d : (track.scrollWidth / 2);
         }
 
         function wrap() {
