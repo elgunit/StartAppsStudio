@@ -1985,11 +1985,17 @@
       .expertise-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        align-items: start;
         gap: 12px;
       }
 
       .expertise-grid .expandable-card {
         margin-bottom: 0;
+        transition: border-color 0.2s, grid-column 0.2s;
+      }
+
+      .expertise-grid .expandable-card.expanded {
+        grid-column: 1 / -1;
       }
 
       /* Industries horizontal scroll */
