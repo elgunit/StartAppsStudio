@@ -890,14 +890,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userAgent: userAgent ? String(userAgent) : undefined,
           referrer: referrer ? String(referrer) : undefined,
         });
-        await client.emails.send({
+        const sendResult: any = await client.emails.send({
           from: fromEmail,
           to: "elgunit@gmail.com",
           subject,
           html,
         });
+        if (sendResult?.error) {
+          console.error("active-visitor email rejected by Resend:", JSON.stringify(sendResult.error));
+        } else {
+          console.log("active-visitor email sent ok. id=", sendResult?.data?.id, "from=", fromEmail);
+        }
       } catch (emailError: any) {
-        console.error("active-visitor email failed:", emailError?.message || emailError);
+        console.error("active-visitor email threw:", emailError?.message || emailError);
       }
       res.json({ ok: true });
     } catch (error) {
