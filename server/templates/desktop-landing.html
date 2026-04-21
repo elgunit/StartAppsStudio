@@ -577,7 +577,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        margin: -16px auto 24px;
+        margin: -16px auto 36px;
         padding: 6px 14px;
         width: fit-content;
         background: var(--bg-elevated);
@@ -601,32 +601,75 @@
         70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
         100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
       }
+      .toolkit-stack {
+        max-width: 940px;
+        margin: 0 auto 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+      .toolkit-group-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .toolkit-group-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
       .toolkit-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 12px;
-        max-width: 920px;
-        margin: 0 auto 28px;
       }
       .toolkit-chip {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 14px 16px;
+        padding: 12px 14px;
         background: var(--bg-elevated);
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 14px;
         color: var(--text-primary);
         text-align: left;
         min-width: 0;
+        transition: transform 0.18s ease, border-color 0.18s ease;
       }
-      .toolkit-chip-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--accent);
+      .toolkit-chip:hover {
+        transform: translateY(-1px);
+        border-color: rgba(13,148,136,0.4);
+      }
+      .toolkit-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.02em;
         flex-shrink: 0;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
       }
+      .toolkit-avatar.av-claude    { background: linear-gradient(135deg, #e8956b, #c4623a); }
+      .toolkit-avatar.av-gemini    { background: linear-gradient(135deg, #4285f4, #9b72cb); }
+      .toolkit-avatar.av-gpt       { background: linear-gradient(135deg, #10a37f, #0d7a5f); }
+      .toolkit-avatar.av-llama     { background: linear-gradient(135deg, #7c4dff, #5e35b1); }
+      .toolkit-avatar.av-figma     { background: linear-gradient(135deg, #f24e1e, #a259ff); }
+      .toolkit-avatar.av-webflow   { background: linear-gradient(135deg, #4353ff, #2c39c2); }
+      .toolkit-avatar.av-eleven    { background: linear-gradient(135deg, #2a2a2a, #0a0a0a); }
+      .toolkit-avatar.av-higgs     { background: linear-gradient(135deg, #ff5d8f, #c5179e); }
+      .toolkit-avatar.av-hooks     { background: linear-gradient(135deg, #0d9488, #06b6d4); }
       .toolkit-chip-text {
         display: flex;
         flex-direction: column;
@@ -638,7 +681,7 @@
         font-weight: 700;
       }
       .toolkit-chip-version {
-        font-size: 11px;
+        font-size: 11.5px;
         font-weight: 500;
         color: var(--text-secondary);
         margin-top: 3px;
@@ -658,14 +701,25 @@
           gap: 10px;
         }
         .toolkit-chip {
-          padding: 12px 12px;
+          padding: 10px 12px;
           gap: 10px;
         }
+        .toolkit-avatar {
+          width: 34px;
+          height: 34px;
+          font-size: 14px;
+          border-radius: 9px;
+        }
+        .toolkit-chip-name { font-size: 13px; }
+        .toolkit-chip-version { font-size: 11px; }
         .toolkit-meta {
           margin-top: -8px;
+          margin-bottom: 28px;
           font-size: 11px;
           padding: 5px 12px;
         }
+        .toolkit-stack { gap: 22px; }
+        .toolkit-group-label { font-size: 10px; }
       }
 
       /* Industries */
@@ -3064,37 +3118,64 @@
           <span class="toolkit-meta-pulse" aria-hidden="true"></span>
           <span>Stack current as of April 2026 · we swap in new model versions the week they ship.</span>
         </div>
-        <div class="toolkit-grid">
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Claude</span><span class="toolkit-chip-version">Sonnet 4.7 · primary builder</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Gemini</span><span class="toolkit-chip-version">2.5 Pro · long-context review</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">GPT</span><span class="toolkit-chip-version">5 · creative + copy</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama</span><span class="toolkit-chip-version">4 · self-hosted fallback</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Figma</span><span class="toolkit-chip-version">Dev Mode + design system</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Webflow</span><span class="toolkit-chip-version">marketing + landing builds</span></span>
-          </span>
-          <span class="toolkit-chip">
-            <span class="toolkit-chip-dot"></span>
-            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Automation Hooks</span><span class="toolkit-chip-version">n8n + Make + custom webhooks</span></span>
-          </span>
+
+        <div class="toolkit-stack">
+          <div class="toolkit-group">
+            <div class="toolkit-group-label">Reasoning &amp; Code</div>
+            <div class="toolkit-grid">
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-claude">C</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Claude Sonnet 4.7</span><span class="toolkit-chip-version">primary builder</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-gemini">G</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Gemini 2.5 Pro</span><span class="toolkit-chip-version">long-context review</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-gpt">G</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GPT-5</span><span class="toolkit-chip-version">creative &amp; copy</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-llama">L</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama 4</span><span class="toolkit-chip-version">self-hosted fallback</span></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="toolkit-group">
+            <div class="toolkit-group-label">Design &amp; Build</div>
+            <div class="toolkit-grid">
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-figma">F</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Figma</span><span class="toolkit-chip-version">design system + Dev Mode</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-webflow">W</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Webflow</span><span class="toolkit-chip-version">marketing site builds</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-hooks">A</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Automation Hooks</span><span class="toolkit-chip-version">n8n + Make + webhooks</span></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="toolkit-group">
+            <div class="toolkit-group-label">Content &amp; Media</div>
+            <div class="toolkit-grid">
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-eleven">E</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">ElevenLabs</span><span class="toolkit-chip-version">voiceover &amp; speech</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-higgs">H</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Higgsfield</span><span class="toolkit-chip-version">video &amp; motion</span></span>
+              </span>
+            </div>
+          </div>
         </div>
-        <p class="toolkit-footnote">Every build is paired with multiple AI models acting as a second set of eyes: brainstorming alternative directions, stress-testing flows, and quietly playing tester and QA before you ever see the work. The result is more creative options, fewer surprises, and a product that adapts to the people you're actually building for.</p>
+
+        <p class="toolkit-footnote">These models don't just build for us. They critique each other's output, flag weak flows, and spot edge cases before you do. The result is more creative options, fewer surprises, and a product that adapts to the people you're actually building for.</p>
       </section>
 
       <!-- Pricing -->
