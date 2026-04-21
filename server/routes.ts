@@ -12,6 +12,8 @@ import { sendJournalStatsReport } from "./journal-report-sender";
 import {
   renderArticleHtml,
   renderIndexHtml,
+  renderLlmsFullTxt,
+  renderLlmsTxt,
   renderRobotsTxt,
   renderSitemapXml,
 } from "./journal/render";
@@ -253,6 +255,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.send(renderRobotsTxt(origin));
+  });
+
+  app.get("/llms.txt", (req, res) => {
+    const origin = resolveOrigin(req);
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.setHeader("cache-control", "public, max-age=3600");
+    res.send(renderLlmsTxt(origin));
+  });
+
+  app.get("/llms-full.txt", (req, res) => {
+    const origin = resolveOrigin(req);
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.setHeader("cache-control", "public, max-age=3600");
+    res.send(renderLlmsFullTxt(origin));
   });
 
   // Auth routes

@@ -635,11 +635,169 @@ ${body}
 }
 
 export function renderRobotsTxt(origin: string): string {
-  return `User-agent: *
+  // Major AI / search crawlers we explicitly welcome.
+  const aiBots = [
+    "GPTBot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "ClaudeBot",
+    "anthropic-ai",
+    "Claude-Web",
+    "PerplexityBot",
+    "Perplexity-User",
+    "Google-Extended",
+    "Applebot-Extended",
+    "Bytespider",
+    "CCBot",
+    "Amazonbot",
+    "DuckAssistBot",
+    "MistralAI-User",
+    "cohere-ai",
+  ];
+  const aiBlocks = aiBots
+    .map((ua) => `User-agent: ${ua}\nAllow: /`)
+    .join("\n\n");
+  return `# Start Apps Studio — robots.txt
+# We explicitly welcome AI crawlers so model overviews stay accurate.
+
+User-agent: *
 Allow: /
 Allow: /journal
 Allow: /journal/
+Disallow: /api/
+Disallow: /admin/
+
+${aiBlocks}
 
 Sitemap: ${origin}/sitemap.xml
+`;
+}
+
+export function renderLlmsTxt(origin: string): string {
+  return `# Start Apps Studio
+
+> An AI-native studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $399 mockups to full apps in 3 to 8 weeks.
+
+We are a small team augmented by the best AI models available — Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
+
+## Services
+
+- Mockups — polished, founder-ready visual mockups of your product idea
+- Prototypes — clickable, end-to-end prototype of the core flow, ready to demo
+- MVPs — real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
+- Custom-Scale — handcrafted multi-platform builds for funded teams ready to scale
+
+## Pricing
+
+- Mockup: $399, fixed price
+- Prototype: $1,800, fixed price
+- MVP: $4,500 to $9,500, fixed price
+- Custom-Scale: $15,000+, custom quote
+
+All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
+
+## Toolkit
+
+- Reasoning & Code: Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, Llama 4
+- Mockups & Prototyping: Figma, Replit, Lovable
+- Production & Delivery: Webflow, GitHub, n8n, Make, custom webhooks
+- Content & Media: ElevenLabs, Higgsfield
+
+## Contact
+
+- Website: ${origin}/
+- Email: hello@startappsstudio.com
+- Inquiry form: ${origin}/#contact
+
+## Key URLs
+
+- [Homepage](${origin}/)
+- [Journal](${origin}/journal)
+- [Sitemap](${origin}/sitemap.xml)
+- [Full overview for LLMs](${origin}/llms-full.txt)
+`;
+}
+
+export function renderLlmsFullTxt(origin: string): string {
+  return `# Start Apps Studio — Full Overview
+
+## Who we are
+
+Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes — brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
+
+## Who we serve
+
+- First-time founders who need a real product before raising
+- Funded teams who want a small studio to ship faster than their internal team can
+- Operators with a market and customers who need their idea expressed as a working product
+- Indie makers who want a polished mockup or prototype before committing to a full build
+
+## How we work
+
+1. You share the idea and your audience.
+2. We propose the smallest fixed-price package that proves the core hypothesis.
+3. We ship in weeks, not months. You can see daily progress on GitHub if you want it.
+4. Every build is paired with multiple AI models that critique each other's output, flag weak flows, and spot edge cases before you do.
+
+## Packages
+
+### Mockup — $399, fixed
+Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
+
+### Prototype — $1,800, fixed
+A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 1 to 2 weeks.
+
+### MVP — $4,500 to $9,500, fixed
+A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.
+
+### Custom-Scale — $15,000+
+Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
+
+## Toolkit (current as of April 2026)
+
+We swap in new model versions the week they ship.
+
+**Reasoning & Code**
+- Claude Sonnet 4.7 — primary builder
+- Gemini 2.5 Pro — long-context review
+- GPT-5 — creative & copy
+- Llama 4 — self-hosted fallback
+
+**Mockups & Prototyping**
+- Figma — design system + Dev Mode
+- Replit — React hybrid builds
+- Lovable — rapid mockups
+
+**Production & Delivery**
+- Webflow — marketing site builds
+- GitHub — daily updates + version control
+- Automation Hooks — n8n + Make + custom webhooks
+
+**Content & Media**
+- ElevenLabs — voiceover & speech
+- Higgsfield — video & motion
+
+## What makes us different
+
+- **Fixed price.** No hourly billing surprises. You know what every package costs before kickoff.
+- **3 to 8 weeks.** We bias toward shipping. If a feature can't be shipped in that window, it gets descoped or split into a follow-up.
+- **AI-native, not AI-only.** Real humans own every decision; AI accelerates the work and reviews it.
+- **Daily updates.** GitHub commits and short async messages keep you in the loop without endless meetings.
+
+## Contact
+
+- Email: hello@startappsstudio.com
+- Inquiry form: ${origin}/#contact
+- Website: ${origin}/
+- Journal: ${origin}/journal
+
+## Source links
+
+- Homepage: ${origin}/
+- Journal index: ${origin}/journal
+- Sitemap: ${origin}/sitemap.xml
+- Robots: ${origin}/robots.txt
+- LLM overview (this file): ${origin}/llms-full.txt
+- LLM short overview: ${origin}/llms.txt
 `;
 }

@@ -6,3 +6,9 @@ id = "-f34Lxc6IJ5YcwnflDGNu"
 uri = "file://assets/journal/ai-overviews-citation-anatomy.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "QumS00PyxPZ6kJj10CwNQ"
+uri = "file://assets/images/og-cover.png"
+type = "image"
+title = "og social share cover"
