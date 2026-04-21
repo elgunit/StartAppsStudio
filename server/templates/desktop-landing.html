@@ -4314,6 +4314,41 @@
         });
       }
 
+      // FAQ open tracking — fires an event to Clarity and GA each time a
+      // visitor expands a question, tagged with the question text. Every
+      // open transition reports an event so reopens are not undercounted.
+      (function trackFaqOpens() {
+        try {
+          var items = document.querySelectorAll('#faq .faq-item');
+          if (!items.length) return;
+          items.forEach(function (item, index) {
+            item.addEventListener('toggle', function () {
+              if (!item.open) return;
+              var summary = item.querySelector('summary');
+              var question = (summary && summary.textContent || '').trim();
+              if (!question) return;
+              var position = index + 1;
+              try {
+                if (typeof window.clarity === 'function') {
+                  window.clarity('event', 'faq_open');
+                  window.clarity('set', 'faq_question', question);
+                }
+              } catch (_) {}
+              try {
+                if (typeof window.gtag === 'function') {
+                  window.gtag('event', 'faq_open', {
+                    event_category: 'FAQ',
+                    event_label: question,
+                    faq_question: question,
+                    faq_position: position
+                  });
+                }
+              } catch (_) {}
+            });
+          });
+        } catch (_) {}
+      })();
+
       // Active visitor notification — fires once per session when the user
       // genuinely scrolls (not just a tap or a momentum bounce).
       (function trackActiveVisitor() {
