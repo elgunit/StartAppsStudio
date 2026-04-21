@@ -72,6 +72,7 @@ export interface IStorage {
   getAllProjects(): Promise<Project[]>;
   createProject(project: InsertProject): Promise<Project>;
   updateProject(id: string, data: Partial<Project>): Promise<Project | undefined>;
+  deleteProject(id: string): Promise<void>;
   getProjectWithDetails(id: string): Promise<any>;
 
   // Project Hats
@@ -197,6 +198,16 @@ export class DatabaseStorage implements IStorage {
   async updateProject(id: string, data: Partial<Project>): Promise<Project | undefined> {
     const [project] = await db.update(projects).set({ ...data, updatedAt: new Date() }).where(eq(projects.id, id)).returning();
     return project || undefined;
+  }
+
+  async deleteProject(id: string): Promise<void> {
+    // Cascade-delete child rows in FK-safe order before removing the project itself.
+    await db.delete(messages).where(eq(messages.projectId, id));
+    await db.delete(projectHats).where(eq(projectHats.projectId, id));
+    await db.delete(workSessions).where(eq(workSessions.projectId, id));
+    await db.delete(projectVersions).where(eq(projectVersions.projectId, id));
+    await db.update(creditTransactions).set({ projectId: null }).where(eq(creditTransactions.projectId, id));
+    await db.delete(projects).where(eq(projects.id, id));
   }
 
   async getProjectWithDetails(id: string): Promise<any> {

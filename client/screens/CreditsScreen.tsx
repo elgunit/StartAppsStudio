@@ -116,6 +116,7 @@ export default function CreditsScreen() {
     },
   });
 
+  // Project-attached top-up (used when a project is selected and active).
   const purchaseAdditionalMutation = useMutation({
     mutationFn: async () => {
       if (!selectedProject) throw new Error("No project selected");
@@ -124,6 +125,21 @@ export default function CreditsScreen() {
         amount: 400,
         description: `Additional Credits for ${selectedProject.name}`,
         projectId: selectedProject.id,
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      refreshUser();
+      queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    },
+  });
+
+  // Project-agnostic top-up — anyone can buy this regardless of project state.
+  const topupMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/credits/topup", {
+        userId: user?.id,
       });
       return res.json();
     },
@@ -187,16 +203,21 @@ export default function CreditsScreen() {
   };
 
   const renderAdditionalCreditsCard = () => {
-    if (!hasPlan) return null;
+    // Show the top-up card to every client. If a project is selected and active,
+    // attribute the top-up to that project; otherwise it goes to the user balance.
+    const attachable = !!selectedProject && hasPlan;
+    const isPending = attachable
+      ? purchaseAdditionalMutation.isPending
+      : topupMutation.isPending;
 
     return (
       <Animated.View entering={FadeInDown.delay(150).duration(400)}>
         <Card style={styles.packageCard}>
           <View style={styles.packageHeader}>
-            <ThemedText type="h3">Additional Credits</ThemedText>
+            <ThemedText type="h3">Credit top-up</ThemedText>
             <View style={[styles.methodBadge, { backgroundColor: theme.success + "20" }]}>
               <ThemedText type="caption" style={{ color: theme.success, fontSize: 10 }}>
-                Top-up
+                Always available
               </ThemedText>
             </View>
           </View>
@@ -210,7 +231,9 @@ export default function CreditsScreen() {
             </ThemedText>
           </View>
           <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
-            Top up your balance with additional credits anytime. Perfect for extending your current project scope.
+            {attachable
+              ? `Top up ${selectedProject!.name} with extra credits whenever scope grows.`
+              : "Add credits to your account now. They'll attach to your next project automatically, or to any project you pick later."}
           </ThemedText>
           <View style={styles.detailsRow}>
             <View style={styles.detailItem}>
@@ -227,13 +250,16 @@ export default function CreditsScreen() {
             </View>
           </View>
           <Button
-            onPress={() => purchaseAdditionalMutation.mutate()}
-            loading={purchaseAdditionalMutation.isPending}
-            variant="outline"
+            onPress={() => {
+              if (attachable) purchaseAdditionalMutation.mutate();
+              else topupMutation.mutate();
+            }}
+            loading={isPending}
+            variant={allProjects.length === 0 ? "primary" : "outline"}
             style={styles.purchaseButton}
             testID="button-purchase-additional"
           >
-            Purchase
+            Purchase top-up
           </Button>
         </Card>
       </Animated.View>

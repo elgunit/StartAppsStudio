@@ -1,17 +1,21 @@
 import React from "react";
-import { StyleSheet, View, Image, ImageSourcePropType } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
 type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
 
-const hatImages: Record<HatType, ImageSourcePropType> = {
-  designer: require("../../assets/images/hat-designer.png"),
-  developer: require("../../assets/images/hat-developer.png"),
-  strategist: require("../../assets/images/hat-strategist.png"),
-  manager: require("../../assets/images/hat-manager.png"),
-  analyst: require("../../assets/images/hat-analyst.png"),
+export const HAT_META: Record<
+  HatType,
+  { label: string; title: string; icon: keyof typeof Feather.glyphMap; color: string }
+> = {
+  designer: { label: "Designer", title: "CDO", icon: "pen-tool", color: "#FF2D55" },
+  developer: { label: "Developer", title: "CTO", icon: "code", color: "#007AFF" },
+  strategist: { label: "Strategist", title: "CSO", icon: "target", color: "#AF52DE" },
+  manager: { label: "Manager", title: "PM", icon: "clipboard", color: "#FF9500" },
+  analyst: { label: "Analyst", title: "Data", icon: "bar-chart-2", color: "#10B981" },
 };
 
 const hatLabels: Record<HatType, string> = {
@@ -46,17 +50,26 @@ export function HatBadge({ type, size = "md", showLabel = true, selected = false
   };
 
   const imageSize = getSize();
+  const meta = HAT_META[type];
 
   return (
     <View style={[
       styles.container,
       selected && { backgroundColor: theme.backgroundDefault, borderColor: theme.text },
     ]}>
-      <Image
-        source={hatImages[type]}
-        style={[styles.image, { width: imageSize, height: imageSize }]}
-        resizeMode="cover"
-      />
+      <View
+        style={[
+          styles.iconWrap,
+          {
+            width: imageSize,
+            height: imageSize,
+            borderRadius: imageSize / 2,
+            backgroundColor: meta.color + "22",
+          },
+        ]}
+      >
+        <Feather name={meta.icon} size={Math.round(imageSize * 0.5)} color={meta.color} />
+      </View>
       {showLabel ? (
         <ThemedText type="caption" style={styles.label}>
           {hatLabels[type]}
@@ -72,12 +85,20 @@ interface HatIconProps {
 }
 
 export function HatIcon({ type, size = 24 }: HatIconProps) {
+  const meta = HAT_META[type];
   return (
-    <Image
-      source={hatImages[type]}
-      style={{ width: size, height: size }}
-      resizeMode="cover"
-    />
+    <View
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: meta.color + "22",
+      }}
+    >
+      <Feather name={meta.icon} size={Math.round(size * 0.55)} color={meta.color} />
+    </View>
   );
 }
 
@@ -89,7 +110,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "transparent",
   },
-  image: {
+  iconWrap: {
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: Spacing.xs,
   },
   label: {

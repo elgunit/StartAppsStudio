@@ -384,14 +384,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/users/:id", async (req, res) => {
     try {
+      // Require a valid session token and only allow users to mutate their own
+      // profile. Designers may edit any profile.
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+      if (caller.id !== req.params.id && caller.role !== "designer") {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
       // Disallow client-driven mutation of auth-sensitive fields. Anything
-      // sensitive (password rotation, session token rotation, role changes)
-      // must go through dedicated server-controlled flows.
+      // sensitive (password rotation, session token rotation, role changes,
+      // credit balance) must go through dedicated server-controlled flows.
       const body = (req.body ?? {}) as Record<string, unknown>;
-      const { password, sessionToken, role, ...safe } = body;
+      const {
+        password,
+        sessionToken,
+        role,
+        credits,
+        ...safe
+      } = body;
       void password;
       void sessionToken;
       void role;
+      void credits;
+
+      // Validate avatar payload server-side to prevent oversized data URIs
+      // bloating the database.
+      if ("avatarUrl" in safe) {
+        const validated = validateAvatarUrl(safe.avatarUrl);
+        if (validated === null) {
+          return res.status(400).json({
+            error: "avatarUrl must be an HTTPS URL or a JPEG/PNG/WebP data URI under 1.5MB.",
+          });
+        }
+        safe.avatarUrl = validated;
+      }
+
       const user = await storage.updateUser(req.params.id, safe as Partial<User>);
       if (!user) {
         return res.status(404).json({ error: "User not found" });
@@ -471,6 +499,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(project);
     } catch (error) {
       res.status(500).json({ error: "Failed to update project" });
+    }
+  });
+
+  app.delete("/api/projects/:id", async (req, res) => {
+    try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      const project = await storage.getProject(req.params.id);
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+      // Only the owning client (or a designer) may cancel.
+      if (caller.role !== "designer" && project.clientId !== caller.id) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      // Clients can only cancel a project before the studio has accepted it.
+      if (project.status !== "brief_submitted") {
+        return res.status(409).json({
+          error: "Project can only be cancelled while in Brief Submitted state.",
+        });
+      }
+      await storage.deleteProject(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Delete project error:", error);
+      res.status(500).json({ error: "Failed to delete project" });
     }
   });
 
@@ -725,6 +780,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Project-agnostic credit top-up: 400 credits for $99. Any logged-in client can buy.
+  app.post("/api/credits/topup", async (req, res) => {
+    try {
+      // Identify the user from their session token; never trust a body-supplied
+      // userId for a credit-minting flow. (Real payment confirmation should be
+      // wired via the payments provider before granting credits — this stops
+      // unauthenticated callers from awarding credits to anyone.)
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+      if (caller.role !== "client") {
+        return res.status(403).json({ error: "Only clients can top up credits." });
+      }
+      await storage.addCreditsToUser(caller.id, 400, "Credit top-up (400 credits / $99)");
+      const updated = await storage.getUser(caller.id);
+      res.json({ credits: updated?.credits || 0 });
+    } catch (error) {
+      console.error("Topup error:", error);
+      res.status(500).json({ error: "Failed to top up credits" });
+    }
+  });
+
   app.post("/api/credits/purchase", async (req, res) => {
     try {
       const { userId, projectId, packageId, tier } = req.body;
@@ -842,6 +918,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       .where(eq(usersTable.sessionToken, token));
     if (!u || u.role !== "designer") return null;
     return u;
+  };
+
+  const requireUserFromToken = async (req: Request) => {
+    const raw = req.header("x-session-token");
+    const token = typeof raw === "string" ? raw.trim() : "";
+    if (!token || token.length < 16) return null;
+    const [u] = await db
+      .select()
+      .from(usersTable)
+      .where(eq(usersTable.sessionToken, token));
+    return u || null;
+  };
+
+  // Allow only inline data URIs of common image MIME types and cap their
+  // base64 payload to ~1.5 MB (~2 MB raw) to prevent unbounded DB growth.
+  const MAX_AVATAR_BASE64_BYTES = 1_500_000;
+  const validateAvatarUrl = (value: unknown): string | null => {
+    if (typeof value !== "string") return null;
+    const v = value.trim();
+    if (v === "") return "";
+    if (/^https:\/\//i.test(v) && v.length <= 1000) return v;
+    const m = v.match(/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/);
+    if (!m) return null;
+    if (m[2].length > MAX_AVATAR_BASE64_BYTES) return null;
+    return v;
   };
 
   app.post("/api/track/section-view", async (req, res) => {

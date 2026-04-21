@@ -1,4 +1,18 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const USER_STORAGE_KEY = "@startapps_user";
+
+async function getSessionToken(): Promise<string | null> {
+  try {
+    const raw = await AsyncStorage.getItem(USER_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return typeof parsed?.sessionToken === "string" ? parsed.sessionToken : null;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Gets the base URL for the Express API server (e.g., "http://localhost:3000")
@@ -31,9 +45,14 @@ export async function apiRequest(
   const baseUrl = getApiUrl();
   const url = new URL(route, baseUrl);
 
+  const headers: Record<string, string> = {};
+  if (data) headers["Content-Type"] = "application/json";
+  const token = await getSessionToken();
+  if (token) headers["x-session-token"] = token;
+
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });

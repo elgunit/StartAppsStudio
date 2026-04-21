@@ -120,12 +120,78 @@ export default function ChatScreen() {
     );
   };
 
+  const STARTERS: { icon: keyof typeof Feather.glyphMap; label: string; prompt: string }[] = [
+    {
+      icon: "target",
+      label: "Problem",
+      prompt: "The core problem I'm trying to solve is ",
+    },
+    {
+      icon: "users",
+      label: "Audience",
+      prompt: "My main users are ",
+    },
+    {
+      icon: "link",
+      label: "References",
+      prompt: "Some products I love that feel close to this: ",
+    },
+    {
+      icon: "calendar",
+      label: "Timeline & budget",
+      prompt: "I'd like to launch by ___ and my budget is around ",
+    },
+    {
+      icon: "check-circle",
+      label: "Must-have vs nice-to-have",
+      prompt: "Must-have for v1: \nNice-to-have for later: ",
+    },
+    {
+      icon: "trending-up",
+      label: "Success metric",
+      prompt: "I'll know this is working if ",
+    },
+  ];
+
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
-      <Feather name="message-circle" size={48} color={theme.textTertiary} />
-      <ThemedText type="body" style={[styles.emptyText, { color: theme.textSecondary }]}>
-        Start the conversation
+      <View style={[styles.emptyIcon, { backgroundColor: theme.backgroundDefault }]}>
+        <Feather name="message-circle" size={28} color={theme.text} />
+      </View>
+      <ThemedText type="h3" style={styles.emptyHeading}>
+        Let's scope your build
       </ThemedText>
+      <ThemedText
+        type="small"
+        style={[styles.emptyDesc, { color: theme.textSecondary }]}
+      >
+        We use this chat to qualify the project, agree on what v1 looks like, and lock the timeline. Tap a starter to drop it into the composer.
+      </ThemedText>
+      <View style={styles.starterGrid}>
+        {STARTERS.map((s) => (
+          <Pressable
+            key={s.label}
+            onPress={() => {
+              Haptics.selectionAsync();
+              setMessage(s.prompt);
+            }}
+            testID={`starter-${s.label.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+            style={({ pressed }) => [
+              styles.starterChip,
+              {
+                backgroundColor: theme.backgroundDefault,
+                borderColor: theme.border,
+                opacity: pressed ? 0.7 : 1,
+              },
+            ]}
+          >
+            <Feather name={s.icon} size={14} color={theme.text} />
+            <ThemedText type="caption" style={{ fontWeight: "600" }}>
+              {s.label}
+            </ThemedText>
+          </Pressable>
+        ))}
+      </View>
     </View>
   );
 
@@ -216,9 +282,41 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: Spacing.md,
+    paddingHorizontal: Spacing.lg,
   },
-  emptyText: {},
+  emptyIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: Spacing.lg,
+  },
+  emptyHeading: {
+    textAlign: "center",
+    marginBottom: Spacing.sm,
+  },
+  emptyDesc: {
+    textAlign: "center",
+    marginBottom: Spacing.xl,
+    maxWidth: 320,
+  },
+  starterGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: Spacing.sm,
+    maxWidth: 360,
+  },
+  starterChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.full,
+    borderWidth: 1,
+  },
   messageContainer: {
     marginBottom: Spacing.md,
     maxWidth: "80%",

@@ -1,11 +1,13 @@
-import React from "react";
-import { StyleSheet, View, Image, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Image, Alert, Pressable, Platform, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import * as Haptics from "expo-haptics";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
@@ -14,6 +16,7 @@ import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { useTheme } from "@/hooks/useTheme";
 import { useAuth } from "@/lib/auth";
+import { apiRequest } from "@/lib/query-client";
 import { Spacing, BorderRadius } from "@/constants/theme";
 
 export default function AccountScreen() {
@@ -22,7 +25,8 @@ export default function AccountScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const { user, logout } = useAuth();
+  const { user, logout, refreshUser } = useAuth();
+  const [uploading, setUploading] = useState(false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -37,6 +41,56 @@ export default function AccountScreen() {
         },
       ]
     );
+  };
+
+  const handleAvatarPress = async () => {
+    if (!user || uploading) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+    let permission = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      if (permission.status === "denied" && !permission.canAskAgain) {
+        if (Platform.OS !== "web") {
+          try {
+            await Linking.openSettings();
+          } catch {
+            // ignore
+          }
+        }
+        return;
+      }
+      permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permission.granted) return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.6,
+      base64: true,
+    });
+
+    if (result.canceled || !result.assets?.[0]) return;
+    const asset = result.assets[0];
+
+    try {
+      setUploading(true);
+      // Persist as a data URI so the avatar shows everywhere immediately
+      // without needing a separate file-hosting step.
+      const dataUri =
+        asset.base64
+          ? `data:image/jpeg;base64,${asset.base64}`
+          : asset.uri;
+      await apiRequest("PATCH", `/api/users/${user.id}`, { avatarUrl: dataUri });
+      await refreshUser();
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (error) {
+      console.error("Avatar upload failed", error);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const menuItems = [
@@ -55,13 +109,13 @@ export default function AccountScreen() {
     {
       icon: "bell" as const,
       label: "Notifications",
-      onPress: () => {},
+      onPress: () => navigation.navigate("Notifications"),
       visible: true,
     },
     {
       icon: "help-circle" as const,
       label: "Help & Support",
-      onPress: () => {},
+      onPress: () => navigation.navigate("Help"),
       visible: true,
     },
   ];
@@ -78,14 +132,36 @@ export default function AccountScreen() {
     >
       {/* Profile Section */}
       <Animated.View entering={FadeInDown.duration(500)} style={styles.profileSection}>
-        <Image
-          source={
-            user?.avatarUrl
-              ? { uri: user.avatarUrl }
-              : require("../../assets/images/avatar-default.png")
-          }
-          style={styles.avatar}
-        />
+        <Pressable
+          onPress={handleAvatarPress}
+          disabled={uploading}
+          testID="button-edit-avatar"
+          style={({ pressed }) => [
+            styles.avatarPress,
+            { opacity: pressed || uploading ? 0.85 : 1 },
+          ]}
+        >
+          <Image
+            source={
+              user?.avatarUrl
+                ? { uri: user.avatarUrl }
+                : require("../../assets/images/avatar-default.png")
+            }
+            style={styles.avatar}
+          />
+          <View
+            style={[
+              styles.avatarEdit,
+              { backgroundColor: theme.text, borderColor: theme.backgroundRoot },
+            ]}
+          >
+            <Feather
+              name={uploading ? "loader" : "camera"}
+              size={14}
+              color={theme.backgroundRoot}
+            />
+          </View>
+        </Pressable>
         <ThemedText type="h2">{user?.name}</ThemedText>
         <ThemedText type="small" style={{ color: theme.textSecondary }}>
           {user?.email}
@@ -114,6 +190,7 @@ export default function AccountScreen() {
                 variant="outline"
                 size="sm"
                 onPress={() => navigation.navigate("Credits")}
+                testID="button-account-add-more"
               >
                 Add More
               </Button>
@@ -127,7 +204,12 @@ export default function AccountScreen() {
         {menuItems
           .filter((item) => item.visible)
           .map((item, index) => (
-            <Card key={index} onPress={item.onPress} style={styles.menuItem}>
+            <Card
+              key={index}
+              onPress={item.onPress}
+              style={styles.menuItem}
+              testID={`menu-${item.icon}`}
+            >
               <View style={styles.menuItemContent}>
                 <View style={[styles.iconContainer, { backgroundColor: theme.backgroundDefault }]}>
                   <Feather name={item.icon} size={20} color={theme.text} />
@@ -161,11 +243,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: Spacing.xl,
   },
+  avatarPress: {
+    marginBottom: Spacing.md,
+    position: "relative",
+  },
   avatar: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    marginBottom: Spacing.md,
+  },
+  avatarEdit: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
   },
   roleBadge: {
     marginTop: Spacing.sm,

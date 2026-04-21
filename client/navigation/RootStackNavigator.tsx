@@ -13,6 +13,8 @@ import CreditsScreen from "@/screens/CreditsScreen";
 import RequestServiceScreen from "@/screens/RequestServiceScreen";
 import JournalListScreen from "@/screens/JournalListScreen";
 import JournalArticleScreen from "@/screens/JournalArticleScreen";
+import NotificationsScreen from "@/screens/NotificationsScreen";
+import HelpScreen from "@/screens/HelpScreen";
 import JournalSignupScreen from "@/screens/JournalSignupScreen";
 import JournalStatsScreen from "@/screens/JournalStatsScreen";
 import AiTrafficScreen from "@/screens/AiTrafficScreen";
@@ -180,6 +182,16 @@ export default function RootStackNavigator() {
             name="JournalArticle"
             component={JournalArticleScreen}
             options={{ headerTitle: "" }}
+          />
+          <Stack.Screen
+            name="Notifications"
+            component={NotificationsScreen}
+            options={{ headerTitle: "Notifications" }}
+          />
+          <Stack.Screen
+            name="Help"
+            component={HelpScreen}
+            options={{ headerTitle: "Help & Support" }}
           />
         </>
       )}
