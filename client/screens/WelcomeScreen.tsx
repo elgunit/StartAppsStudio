@@ -308,7 +308,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Build"
           title="What we ship"
-          subtitle="One landing page or a full multi-platform product — we cover both."
+          subtitle="One landing page or a full multi-platform product. We cover both."
         />
         <View style={styles.gridTwo}>
           {services.map((s) => (
@@ -500,7 +500,7 @@ export default function WelcomeScreen() {
             type="body"
             style={[styles.ctaSubtitle, { color: theme.textSecondary }]}
           >
-            Describe it in plain English. You'll get a plan, a price, and a timeline back — usually within 24 hours.
+            Describe it in plain English. You'll get a plan, a price, and a timeline back, usually within 24 hours.
           </ThemedText>
           <Pressable
             onPress={openContact}

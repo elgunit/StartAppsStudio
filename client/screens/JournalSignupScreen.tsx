@@ -122,7 +122,7 @@ export default function JournalSignupScreen() {
         >
           {title
             ? `Liked "${title}"? Take the next step in seconds.`
-            : "Take the next step in seconds — no website detour required."}
+            : "Take the next step in seconds, no website detour required."}
         </ThemedText>
       </Animated.View>
 
@@ -168,7 +168,7 @@ export default function JournalSignupScreen() {
                 type="body"
                 style={{ color: theme.success, flex: 1 }}
               >
-                Got it — we'll be in touch shortly.
+                Got it. We'll be in touch shortly.
               </ThemedText>
             </View>
           ) : (

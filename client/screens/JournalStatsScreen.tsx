@@ -105,7 +105,7 @@ const COMPARE_B_VIEWS = "#F97316";
 const COMPARE_B_CTA = "#EC4899";
 
 function pct(numerator: number, denominator: number): string {
-  if (!denominator) return "—";
+  if (!denominator) return "N/A";
   return `${Math.round((numerator / denominator) * 100)}%`;
 }
 
@@ -427,7 +427,7 @@ export default function JournalStatsScreen() {
               ? "Select 2 articles to compare"
               : compareSelection.length === 1
               ? "Select 1 more article"
-              : `${compareSelection.length} selected — ready to compare`}
+              : `${compareSelection.length} selected, ready to compare`}
           </ThemedText>
           {compareSelection.length === 2 ? (
             <Pressable
@@ -1080,7 +1080,7 @@ function ArticleDetailModal({
           </View>
 
           <ThemedText type="caption" style={{ color: theme.textTertiary, marginHorizontal: Spacing.lg, marginBottom: Spacing.lg, textAlign: "center" }}>
-            {trend.bucketSize === "day" ? "Daily" : trend.bucketSize === "week" ? "Weekly" : "Monthly"} breakdown — {trend.buckets.length} {trend.bucketSize === "day" ? "days" : trend.bucketSize === "week" ? "weeks" : "months"}
+            {trend.bucketSize === "day" ? "Daily" : trend.bucketSize === "week" ? "Weekly" : "Monthly"} breakdown, {trend.buckets.length} {trend.bucketSize === "day" ? "days" : trend.bucketSize === "week" ? "weeks" : "months"}
           </ThemedText>
 
           <ScrollView

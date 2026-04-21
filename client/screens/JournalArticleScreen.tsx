@@ -186,7 +186,7 @@ function BlockView({ block }: { block: Block }) {
               type="caption"
               style={{ color: theme.textSecondary, marginTop: Spacing.xs }}
             >
-              — {block.cite}
+              {block.cite}
             </ThemedText>
           ) : null}
         </View>
