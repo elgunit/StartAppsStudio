@@ -75,7 +75,7 @@ const IP_HASH_SALT =
   process.env.SESSION_SECRET ||
   "ai-crawler-default-salt";
 
-function hashIp(ip: string | undefined | null): string | null {
+export function hashIp(ip: string | undefined | null): string | null {
   if (!ip) return null;
   const day = new Date().toISOString().slice(0, 10);
   return crypto

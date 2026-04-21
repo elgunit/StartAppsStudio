@@ -1031,6 +1031,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ── Toolkit reveals (visitors unblurring tool names on the landing page) ──
+  app.post("/api/toolkit-reveal", async (req, res) => {
+    try {
+      const body = req.body || {};
+      const toolName = typeof body.toolName === "string" ? body.toolName.trim().slice(0, 80) : "";
+      if (!toolName) return res.status(400).json({ error: "toolName required" });
+      const toolGroup = typeof body.toolGroup === "string" ? body.toolGroup.trim().slice(0, 80) : null;
+      const source = typeof body.source === "string" ? body.source.trim().slice(0, 40) : null;
+      const userAgent = (req.header("user-agent") || "").slice(0, 500) || null;
+      const ipRaw =
+        (req.header("x-forwarded-for") || "").split(",")[0]?.trim() ||
+        req.socket.remoteAddress ||
+        "";
+      const { hashIp } = await import("./index");
+      // Fire-and-forget so we never block the visitor's page on logging
+      storage
+        .recordToolkitReveal({
+          toolName,
+          toolGroup,
+          source,
+          userAgent,
+          ipHash: hashIp(ipRaw),
+        })
+        .catch((err) => console.error("toolkit-reveal log failed:", err));
+      res.status(204).end();
+    } catch (err) {
+      console.error("toolkit-reveal route error:", err);
+      res.status(500).json({ error: "Failed to log reveal" });
+    }
+  });
+
+  app.get("/api/admin/toolkit-reveals", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      const parseDate = (v: unknown): Date | undefined => {
+        if (typeof v !== "string" || !v) return undefined;
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? undefined : d;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      const stats = await storage.getToolkitRevealStats(from, to);
+      const total = stats.reduce((acc, r) => acc + r.reveals, 0);
+      res.json({ totalReveals: total, stats });
+    } catch (err) {
+      console.error("toolkit-reveals admin error:", err);
+      res.status(500).json({ error: "Failed to fetch toolkit reveals" });
+    }
+  });
+
   // ── AI assistant traffic ─────────────────────────────────────────────────
   // Returns aggregated counts per detected AI bot (GPTBot, ClaudeBot, etc.)
   // alongside the recent raw hit log, so the studio can see which assistants

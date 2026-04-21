@@ -2,7 +2,7 @@ import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
   marketingServices, serviceOrders, sectionViews, visitorEvents, journalLeads,
-  journalReportSchedules, aiCrawlerHits,
+  journalReportSchedules, aiCrawlerHits, toolkitReveals,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
@@ -13,6 +13,7 @@ import {
   type JournalLead, type InsertJournalLead,
   type JournalReportSchedule,
   type AiCrawlerHit, type InsertAiCrawlerHit,
+  type ToolkitReveal, type InsertToolkitReveal,
 } from "@shared/schema";
 
 export interface JournalConversionRow {
@@ -124,6 +125,10 @@ export interface IStorage {
   recordAiCrawlerHit(hit: InsertAiCrawlerHit): Promise<AiCrawlerHit>;
   getAiCrawlerStats(from?: Date, to?: Date): Promise<AiCrawlerStatRow[]>;
   getRecentAiCrawlerHits(limit?: number): Promise<AiCrawlerHit[]>;
+
+  // Toolkit reveals (which tools visitors hovered/tapped to unblur)
+  recordToolkitReveal(reveal: InsertToolkitReveal): Promise<ToolkitReveal>;
+  getToolkitRevealStats(from?: Date, to?: Date): Promise<{ toolName: string; toolGroup: string | null; reveals: number; lastSeen: Date }[]>;
 
   // Marketing Services
   getMarketingServices(): Promise<MarketingService[]>;
@@ -706,6 +711,38 @@ export class DatabaseStorage implements IStorage {
     const query = db.select().from(aiCrawlerHits);
     const filtered = conditions.length > 0 ? query.where(and(...conditions)) : query;
     return await filtered.orderBy(desc(aiCrawlerHits.createdAt)).limit(limit);
+  }
+
+  // Toolkit reveals
+  async recordToolkitReveal(reveal: InsertToolkitReveal): Promise<ToolkitReveal> {
+    const [row] = await db.insert(toolkitReveals).values(reveal).returning();
+    return row;
+  }
+
+  async getToolkitRevealStats(
+    from?: Date,
+    to?: Date,
+  ): Promise<{ toolName: string; toolGroup: string | null; reveals: number; lastSeen: Date }[]> {
+    const conditions = [] as ReturnType<typeof sql>[];
+    if (from) conditions.push(sql`${toolkitReveals.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${toolkitReveals.createdAt} <= ${to}`);
+    const rows = await db
+      .select({
+        toolName: toolkitReveals.toolName,
+        toolGroup: toolkitReveals.toolGroup,
+        reveals: sql<number>`count(*)::int`,
+        lastSeen: sql<Date>`max(${toolkitReveals.createdAt})`,
+      })
+      .from(toolkitReveals)
+      .where(conditions.length > 0 ? and(...conditions) : sql`true`)
+      .groupBy(toolkitReveals.toolName, toolkitReveals.toolGroup)
+      .orderBy(desc(sql`count(*)`));
+    return rows.map((r) => ({
+      toolName: r.toolName,
+      toolGroup: r.toolGroup,
+      reveals: Number(r.reveals),
+      lastSeen: r.lastSeen,
+    }));
   }
 
   // Marketing Services

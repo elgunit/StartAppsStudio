@@ -395,6 +395,26 @@ export const insertAiCrawlerHitSchema = createInsertSchema(aiCrawlerHits).omit({
 export type AiCrawlerHit = typeof aiCrawlerHits.$inferSelect;
 export type InsertAiCrawlerHit = z.infer<typeof insertAiCrawlerHitSchema>;
 
+// Toolkit reveals — visitors hover/tap a blurred toolkit chip to reveal
+// the tool name. We log each reveal so we can see which tools founders are
+// curious about.
+export const toolkitReveals = pgTable("toolkit_reveals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  toolName: text("tool_name").notNull(),
+  toolGroup: text("tool_group"),
+  source: text("source"),
+  userAgent: text("user_agent"),
+  ipHash: text("ip_hash"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertToolkitRevealSchema = createInsertSchema(toolkitReveals).omit({
+  id: true,
+  createdAt: true,
+});
+export type ToolkitReveal = typeof toolkitReveals.$inferSelect;
+export type InsertToolkitReveal = z.infer<typeof insertToolkitRevealSchema>;
+
 // Visitor analytics
 export const insertSectionViewSchema = createInsertSchema(sectionViews).omit({
   id: true,
