@@ -38,6 +38,7 @@ interface ProjectCardProps {
   usedCredits?: number;
   lastActivity?: string;
   onPress?: () => void;
+  onLongPress?: () => void;
   testID?: string;
 }
 
@@ -51,6 +52,7 @@ export function ProjectCard({
   usedCredits = 0,
   lastActivity,
   onPress,
+  onLongPress,
   testID,
 }: ProjectCardProps) {
   const { theme, isDark } = useTheme();

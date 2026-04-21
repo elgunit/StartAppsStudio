@@ -1,7 +1,7 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const USER_STORAGE_KEY = "@startapps_user";
+const USER_STORAGE_KEY = "@auth_user";
 
 async function getSessionToken(): Promise<string | null> {
   try {

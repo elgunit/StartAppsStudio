@@ -18,6 +18,7 @@ interface CardProps {
   description?: string;
   children?: React.ReactNode;
   onPress?: () => void;
+  onLongPress?: () => void;
   style?: ViewStyle;
   testID?: string;
 }
@@ -54,6 +55,7 @@ export function Card({
   description,
   children,
   onPress,
+  onLongPress,
   style,
   testID,
 }: CardProps) {
@@ -101,10 +103,18 @@ export function Card({
     </>
   );
 
-  if (onPress) {
+  const handleLongPress = () => {
+    if (onLongPress) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      onLongPress();
+    }
+  };
+
+  if (onPress || onLongPress) {
     return (
       <AnimatedPressable
         onPress={handlePress}
+        onLongPress={onLongPress ? handleLongPress : undefined}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         testID={testID}

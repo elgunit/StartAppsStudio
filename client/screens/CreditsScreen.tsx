@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -51,6 +53,7 @@ export default function CreditsScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const { user, refreshUser } = useAuth();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const queryClient = useQueryClient();
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
@@ -474,13 +477,32 @@ export default function CreditsScreen() {
         </View>
       ) : null}
 
-      {/* No projects message */}
+      {/* No projects upsell */}
       {allProjects.length === 0 ? (
         <View style={styles.emptyState}>
-          <Feather name="folder" size={48} color={theme.textSecondary} />
-          <ThemedText type="body" style={{ color: theme.textSecondary, textAlign: "center", marginTop: Spacing.md }}>
-            Submit a project first, then purchase a plan for it here.
+          <Feather name="folder-plus" size={40} color={theme.textSecondary} />
+          <ThemedText type="h3" style={{ textAlign: "center", marginTop: Spacing.md }}>
+            Pick a plan when you're ready
           </ThemedText>
+          <ThemedText
+            type="small"
+            style={{
+              color: theme.textSecondary,
+              textAlign: "center",
+              marginTop: Spacing.xs,
+              marginBottom: Spacing.lg,
+              maxWidth: 320,
+            }}
+          >
+            Plans attach to a specific project, so start one and you'll be able to choose Mockup, Prototype, MVP, or Custom right after submitting your brief. Need credits for a future project? The top-up above adds them to your account.
+          </ThemedText>
+          <Button
+            onPress={() => navigation.navigate("NewProject")}
+            testID="button-empty-start-project"
+            style={{ minWidth: 220 }}
+          >
+            Start a new project
+          </Button>
         </View>
       ) : null}
 

@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, FlatList, RefreshControl, Pressable, Modal } from "react-native";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/query-client";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -28,6 +30,19 @@ export default function ClientDashboardScreen() {
   const { theme, isDark } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const { user, refreshUser } = useAuth();
+  const queryClient = useQueryClient();
+  const [cancelTarget, setCancelTarget] = useState<{ id: string; name: string } | null>(null);
+
+  const cancelMutation = useMutation({
+    mutationFn: async (projectId: string) => {
+      const res = await apiRequest("DELETE", `/api/projects/${projectId}`);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      setCancelTarget(null);
+    },
+  });
 
   const { data: projects = [], isLoading, refetch } = useQuery<any[]>({
     queryKey: ["/api/projects", `?clientId=${user?.id}`],
@@ -141,6 +156,11 @@ export default function ClientDashboardScreen() {
           addSuffix: true,
         })}
         onPress={() => navigation.navigate("ProjectDetail", { projectId: item.id })}
+        onLongPress={
+          item.status === "brief_submitted"
+            ? () => setCancelTarget({ id: item.id, name: item.name })
+            : undefined
+        }
         testID={`card-project-${item.id}`}
       />
     </Animated.View>
@@ -237,6 +257,11 @@ export default function ClientDashboardScreen() {
                   onPress={() =>
                     navigation.navigate("ProjectDetail", { projectId: item.id })
                   }
+                  onLongPress={
+                    item.status === "brief_submitted"
+                      ? () => setCancelTarget({ id: item.id, name: item.name })
+                      : undefined
+                  }
                   testID={`card-project-${item.id}`}
                 />
               </Animated.View>
@@ -249,25 +274,77 @@ export default function ClientDashboardScreen() {
   };
 
   return (
-    <FlatList
-      style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
-      contentContainerStyle={{
-        paddingTop: headerHeight + Spacing.xl,
-        paddingBottom: tabBarHeight + Spacing.xl,
-        paddingHorizontal: Spacing.lg,
-        flexGrow: 1,
-      }}
-      scrollIndicatorInsets={{ bottom: insets.bottom }}
-      data={activeProjects}
-      keyExtractor={(item) => item.id}
-      renderItem={renderProject}
-      ListHeaderComponent={renderHeader}
-      ListEmptyComponent={isLoading ? null : renderEmptyState}
-      ListFooterComponent={renderFooter}
-      refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
-      }
-    />
+    <>
+      <FlatList
+        style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
+        contentContainerStyle={{
+          paddingTop: headerHeight + Spacing.xl,
+          paddingBottom: tabBarHeight + Spacing.xl,
+          paddingHorizontal: Spacing.lg,
+          flexGrow: 1,
+        }}
+        scrollIndicatorInsets={{ bottom: insets.bottom }}
+        data={activeProjects}
+        keyExtractor={(item) => item.id}
+        renderItem={renderProject}
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={isLoading ? null : renderEmptyState}
+        ListFooterComponent={renderFooter}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
+      />
+      <Modal
+        visible={!!cancelTarget}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setCancelTarget(null)}
+      >
+        <Pressable
+          style={styles.modalBackdrop}
+          onPress={() => setCancelTarget(null)}
+        >
+          <Pressable
+            style={[
+              styles.modalCard,
+              { backgroundColor: theme.backgroundDefault, borderColor: theme.border },
+            ]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <ThemedText type="h3" style={{ marginBottom: Spacing.sm }}>
+              Cancel this project?
+            </ThemedText>
+            <ThemedText
+              type="small"
+              style={{ color: theme.textSecondary, marginBottom: Spacing.lg }}
+            >
+              {cancelTarget
+                ? `"${cancelTarget.name}" will be permanently removed along with its messages and any work logged so far. This can't be undone.`
+                : ""}
+            </ThemedText>
+            <View style={styles.modalActions}>
+              <Button
+                variant="outline"
+                onPress={() => setCancelTarget(null)}
+                testID="button-cancel-keep"
+                style={{ flex: 1 }}
+              >
+                Keep project
+              </Button>
+              <Button
+                variant="primary"
+                loading={cancelMutation.isPending}
+                onPress={() => cancelTarget && cancelMutation.mutate(cancelTarget.id)}
+                testID="button-cancel-confirm"
+                style={{ flex: 1 }}
+              >
+                Cancel project
+              </Button>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+    </>
   );
 }
 
@@ -308,4 +385,22 @@ const styles = StyleSheet.create({
   journalCard: { padding: 0, overflow: "hidden" },
   journalAccentStripe: { height: 4, width: "100%" },
   journalCardBody: { padding: Spacing.lg },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: Spacing.lg,
+  },
+  modalCard: {
+    width: "100%",
+    maxWidth: 380,
+    borderRadius: BorderRadius.xl,
+    borderWidth: 1,
+    padding: Spacing.xl,
+  },
+  modalActions: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+  },
 });
