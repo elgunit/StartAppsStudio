@@ -74,23 +74,43 @@ export default function AccountScreen() {
     if (result.canceled || !result.assets?.[0]) return;
     const asset = result.assets[0];
 
+    setUploading(true);
+    let base64: string | undefined;
     try {
-      setUploading(true);
-      // Downscale to 512px and re-encode as JPEG so even very large source
-      // photos comfortably fit under the server's 1.5MB data-URI cap.
+      // Downscale aggressively to 256px JPEG so the resulting data URI is well
+      // under any reverse-proxy body limit (typical result: 20-60KB raw, ~30-80KB base64).
       const manipulated = await ImageManipulator.manipulateAsync(
         asset.uri,
-        [{ resize: { width: 512, height: 512 } }],
+        [{ resize: { width: 256, height: 256 } }],
         {
-          compress: 0.7,
+          compress: 0.6,
           format: ImageManipulator.SaveFormat.JPEG,
           base64: true,
         },
       );
-      const base64 = manipulated.base64 ?? "";
-      if (!base64) {
-        throw new Error("Image processing failed");
-      }
+      base64 = manipulated.base64 ?? "";
+    } catch (error) {
+      console.error("Image processing failed", error);
+      setUploading(false);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert(
+        "Couldn't read that photo",
+        "We weren't able to process that image. Try picking a different one.",
+      );
+      return;
+    }
+
+    if (!base64) {
+      setUploading(false);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      Alert.alert(
+        "Couldn't read that photo",
+        "We weren't able to process that image. Try picking a different one.",
+      );
+      return;
+    }
+
+    try {
       const dataUri = `data:image/jpeg;base64,${base64}`;
       await updateUser({ avatarUrl: dataUri });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -103,11 +123,17 @@ export default function AccountScreen() {
         Alert.alert(
           "Please sign in again",
           "Your session has expired. Sign back in and try uploading your photo again.",
+          [{ text: "OK", onPress: () => logout() }],
+        );
+      } else if (/^413:/.test(message) || /too large/i.test(message)) {
+        Alert.alert(
+          "Photo is too large",
+          "That image was too big to upload. Try a different photo.",
         );
       } else {
         Alert.alert(
           "Couldn't update your photo",
-          "We couldn't save that picture. Try a smaller image, or check your connection and try again.",
+          `Something went wrong saving your picture. Please try again.\n\nDetails: ${message.slice(0, 140)}`,
         );
       }
     } finally {
