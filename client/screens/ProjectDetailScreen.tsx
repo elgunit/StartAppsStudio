@@ -56,7 +56,9 @@ export default function ProjectDetailScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
       setConfirmCancel(false);
-      navigation.goBack();
+      // Always land back on the dashboard, regardless of how the user got
+      // to this detail screen.
+      navigation.navigate("Dashboard" as never);
     },
     onError: () => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
