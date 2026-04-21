@@ -120,8 +120,8 @@ const caseStudies = [
 ];
 
 const packages = [
-  { name: "Mockup", price: "$399", credits: "Founder-ready visuals", time: "Under 1 week", badge: "AI + Figma" },
-  { name: "Prototype", price: "$1,800", credits: "Clickable end-to-end demo", time: "1-2 weeks", badge: "AI + Figma", popular: true },
+  { name: "Mockup", price: "$699", credits: "Founder-ready visuals + starter functions", time: "3-5 days", badge: "AI + Figma" },
+  { name: "Prototype", price: "$2,399", credits: "Clickable end-to-end demo", time: "5-10 days", badge: "AI + Figma", popular: true },
   { name: "MVP", price: "$4,500-$9,500", credits: "Shippable iOS, Android or web", time: "3-8 weeks", badge: "AI + Figma" },
   { name: "Custom", price: "$15,000+", credits: "Multi-platform & scale", time: "1-6 months", badge: "Hybrid", note: "10k+ users" },
 ];

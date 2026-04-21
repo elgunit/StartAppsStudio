@@ -51,9 +51,9 @@ const PLANS: PlanConfig[] = [
   {
     tier: "starter",
     name: "Mockup",
-    tagline: "Founder-ready visuals · under 1 week",
+    tagline: "Founder-ready visuals + starter functions · 3-5 days",
     totalCredits: 400,
-    price: "$399",
+    price: "$699",
     icon: "image",
     roles: [
       { hat: "designer", label: "Designer", title: "CDO", icon: "pen-tool", credits: 250 },
@@ -63,9 +63,9 @@ const PLANS: PlanConfig[] = [
   {
     tier: "prototype",
     name: "Prototype",
-    tagline: "Clickable end-to-end demo · 1-2 weeks",
+    tagline: "Clickable end-to-end demo · 5-10 days",
     totalCredits: 1800,
-    price: "$1,800",
+    price: "$2,399",
     icon: "layers",
     highlight: true,
     roles: [

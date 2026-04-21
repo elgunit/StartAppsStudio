@@ -676,7 +676,7 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
-> An AI-native studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $399 mockups to full apps in 3 to 8 weeks.
+> An AI-native studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $699 mockups to full apps in 3 to 8 weeks.
 
 We are a small team augmented by the best AI models available — Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
 
@@ -689,8 +689,8 @@ We are a small team augmented by the best AI models available — Claude Sonnet 
 
 ## Pricing
 
-- Mockup: $399, fixed price
-- Prototype: $1,800, fixed price
+- Mockup: $699, fixed price
+- Prototype: $2,399, fixed price
 - MVP: $4,500 to $9,500, fixed price
 - Custom-Scale: $15,000+, custom quote
 
@@ -741,11 +741,11 @@ Start Apps Studio is an AI-native product studio for early-stage founders. We de
 
 ## Packages
 
-### Mockup — $399, fixed
+### Mockup — $699, fixed
 Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
 
-### Prototype — $1,800, fixed
-A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 1 to 2 weeks.
+### Prototype — $2,399, fixed
+A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 5 to 10 days.
 
 ### MVP — $4,500 to $9,500, fixed
 A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.

@@ -23,7 +23,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How long does a project take?",
-    a: "Mockups land in 2-5 days, prototypes in 5-10 days, and MVPs in 3-10 weeks. Custom builds run 1-6 months depending on scope. We share a delivery date the moment we accept the brief.",
+    a: "Mockups land in 3-5 days, prototypes in 5-10 days, and MVPs in 3-10 weeks. Custom builds run 1-6 months depending on scope. We share a delivery date the moment we accept the brief.",
   },
   {
     q: "Can I cancel a project?",

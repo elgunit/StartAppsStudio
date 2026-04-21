@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { StyleSheet, View, ScrollView, Pressable } from "react-native";
+import { StyleSheet, View, ScrollView, Pressable, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -52,7 +52,7 @@ export default function CreditsScreen() {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
-  const { user, refreshUser } = useAuth();
+  const { user, refreshUser, logout } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const queryClient = useQueryClient();
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
@@ -101,6 +101,23 @@ export default function CreditsScreen() {
     });
   }, [packages, currentTierIndex]);
 
+  const handlePurchaseError = (err: unknown) => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    const message = err instanceof Error ? err.message : String(err);
+    if (/^401:/.test(message)) {
+      Alert.alert(
+        "Please sign in again",
+        "Your session has expired. Sign back in to continue your purchase.",
+        [{ text: "OK", onPress: () => logout() }],
+      );
+      return;
+    }
+    Alert.alert(
+      "Purchase couldn't go through",
+      "We couldn't complete the purchase. Please try again, and contact support if it keeps happening.",
+    );
+  };
+
   const purchaseMutation = useMutation({
     mutationFn: async (packageData: CreditPackage) => {
       if (!selectedProject) throw new Error("No project selected");
@@ -117,6 +134,7 @@ export default function CreditsScreen() {
       queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     },
+    onError: handlePurchaseError,
   });
 
   // Project-attached top-up (used when a project is selected and active).
@@ -136,6 +154,7 @@ export default function CreditsScreen() {
       queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     },
+    onError: handlePurchaseError,
   });
 
   // Project-agnostic top-up — anyone can buy this regardless of project state.
@@ -151,6 +170,7 @@ export default function CreditsScreen() {
       queryClient.invalidateQueries({ queryKey: ["/api/credit-transactions"] });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     },
+    onError: handlePurchaseError,
   });
 
   const formatPrice = (cents: number) => {
@@ -163,7 +183,7 @@ export default function CreditsScreen() {
 
   const getDeliveryTime = (name: string) => {
     switch (name) {
-      case "Starter": return "2-5 days";
+      case "Starter": return "3-5 days";
       case "Prototype": return "5-10 days";
       case "Production": return "3-10 weeks";
       case "Custom": return "1-6 months";

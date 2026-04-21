@@ -737,14 +737,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await storage.createCreditPackage({
           name: "Starter",
           credits: 450,
-          priceInCents: 45900,
-          description: "Quick validation with concept exploration, initial wireframes and strategy consultation. Delivered in 2-5 days.",
+          priceInCents: 69900,
+          description: "Mockup application with starter functions: founder-ready visuals plus the core working pieces stitched together. Delivered in 3-5 days.",
           isPopular: false,
         });
         await storage.createCreditPackage({
           name: "Prototype",
           credits: 1000,
-          priceInCents: 95900,
+          priceInCents: 239900,
           description: "Investor-ready with full UI/UX design, functional prototype and user testing. Delivered in 5-10 days.",
           isPopular: true,
         });
