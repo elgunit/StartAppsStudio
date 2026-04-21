@@ -775,7 +775,7 @@ We swap in new model versions the week they ship.
 - GitHub — daily updates + version control
 - Swift — native iOS apps
 - Kotlin — native Android apps
-- Automation Hooks — n8n + Make + custom webhooks
+- Automation — n8n + Make + custom webhooks
 
 **Content & Media**
 - ElevenLabs — voiceover & speech

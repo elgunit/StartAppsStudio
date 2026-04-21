@@ -91,7 +91,7 @@ const toolkitGroups: ToolkitGroup[] = [
       { name: "GitHub", role: "daily updates + version control", letter: "G", color: "#24292E" },
       { name: "Swift", role: "native iOS apps", letter: "S", color: "#F05138" },
       { name: "Kotlin", role: "native Android apps", letter: "K", color: "#7F52FF" },
-      { name: "Automation Hooks", role: "n8n + Make + webhooks", letter: "A", color: "#0d9488" },
+      { name: "Automation", role: "n8n + Make + webhooks", letter: "A", color: "#0d9488" },
     ],
   },
   {
