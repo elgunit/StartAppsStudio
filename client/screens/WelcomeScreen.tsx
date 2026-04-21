@@ -181,22 +181,23 @@ function ToolkitChip({
       <View style={styles.toolkitChipText}>
         <ThemedText
           type="body"
+          style={styles.toolkitChipName}
+          numberOfLines={1}
+        >
+          {name}
+        </ThemedText>
+        <ThemedText
+          type="caption"
           style={[
-            styles.toolkitChipName,
+            styles.toolkitChipRole,
+            { color: theme.textSecondary },
             !revealed && { color: theme.textTertiary, letterSpacing: 2 },
           ]}
           numberOfLines={1}
           accessibilityElementsHidden={!revealed}
           importantForAccessibility={revealed ? "yes" : "no-hide-descendants"}
         >
-          {revealed ? name : "•".repeat(Math.min(name.length, 14))}
-        </ThemedText>
-        <ThemedText
-          type="caption"
-          style={[styles.toolkitChipRole, { color: theme.textSecondary }]}
-          numberOfLines={1}
-        >
-          {role}
+          {revealed ? role : "•".repeat(Math.min(role.length, 18))}
         </ThemedText>
       </View>
     </Pressable>
@@ -363,7 +364,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Toolkit"
           title="Backed by the best models"
-          subtitle="A small team that moves like a big one. Tap a tile to reveal the tool."
+          subtitle="A small team that moves like a big one. Tap a tile to reveal what each tool does for you."
         />
         {toolkitGroups.map((group) => (
           <View key={group.label} style={{ marginBottom: Spacing.lg }}>
