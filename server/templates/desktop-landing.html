@@ -572,23 +572,53 @@
       }
 
       /* Toolkit */
-      .toolkit-grid {
+      .toolkit-meta {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 24px;
-      }
-      .toolkit-chip {
-        display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 10px 16px 10px 14px;
+        justify-content: center;
+        gap: 8px;
+        margin: -16px auto 24px;
+        padding: 6px 14px;
+        width: fit-content;
         background: var(--bg-elevated);
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .toolkit-meta-pulse {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #10B981;
+        flex-shrink: 0;
+        box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+        animation: toolkitPulse 2s infinite;
+      }
+      @keyframes toolkitPulse {
+        0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
+        70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+        100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+      }
+      .toolkit-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 12px;
+        max-width: 920px;
+        margin: 0 auto 28px;
+      }
+      .toolkit-chip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         color: var(--text-primary);
         text-align: left;
+        min-width: 0;
       }
       .toolkit-chip-dot {
         width: 8px;
@@ -600,7 +630,8 @@
       .toolkit-chip-text {
         display: flex;
         flex-direction: column;
-        line-height: 1.15;
+        line-height: 1.2;
+        min-width: 0;
       }
       .toolkit-chip-name {
         font-size: 14px;
@@ -610,39 +641,31 @@
         font-size: 11px;
         font-weight: 500;
         color: var(--text-secondary);
-        margin-top: 2px;
+        margin-top: 3px;
         letter-spacing: 0.01em;
       }
-      .toolkit-meta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin-bottom: 22px;
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--text-secondary);
-      }
-      .toolkit-meta-pulse {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #10B981;
-        box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
-        animation: toolkitPulse 2s infinite;
-      }
-      @keyframes toolkitPulse {
-        0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
-        70% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
-        100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
-      }
       .toolkit-footnote {
-        max-width: 720px;
+        max-width: 680px;
         margin: 0 auto;
         text-align: center;
         color: var(--text-secondary);
         font-size: 15px;
         line-height: 1.65;
+      }
+      @media (max-width: 600px) {
+        .toolkit-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .toolkit-chip {
+          padding: 12px 12px;
+          gap: 10px;
+        }
+        .toolkit-meta {
+          margin-top: -8px;
+          font-size: 11px;
+          padding: 5px 12px;
+        }
       }
 
       /* Industries */
