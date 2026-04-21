@@ -114,45 +114,45 @@ export default function JournalSignupScreen() {
           <Feather name="zap" size={22} color={theme.text} />
         </View>
         <ThemedText type="h1" style={styles.title}>
-          Ready to ship your MVP?
+          Let's build the thing.
         </ThemedText>
         <ThemedText
           type="body"
           style={[styles.subtitle, { color: theme.textSecondary }]}
         >
           {title
-            ? `Liked "${title}"? Take the next step in seconds.`
-            : "Take the next step in seconds, no website detour required."}
+            ? `Enjoyed "${title}"? Pick how you want to start working with the studio. Both take under a minute.`
+            : "Pick how you want to start working with the studio. Both take under a minute, no sales call required."}
         </ThemedText>
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(100).duration(400)}>
         <Card style={styles.section} elevation={2}>
-          <ThemedText type="h3">Create your account</ThemedText>
+          <ThemedText type="h3">Start a project (recommended)</ThemedText>
           <ThemedText
             type="body"
             style={{ color: theme.textSecondary, marginTop: Spacing.xs }}
           >
-            Get a project space, message the studio, and track delivery.
+            Spin up a private project space, message the studio directly, and watch your build progress in real time. New accounts unlock the $99 top-up with the 2x bonus, so your first 200 credits are ready when you are.
           </ThemedText>
           <Button
             onPress={handleCreateAccount}
             style={styles.primaryButton}
             testID="button-journal-signup-create"
           >
-            Create account
+            Create my account
           </Button>
         </Card>
       </Animated.View>
 
       <Animated.View entering={FadeInDown.delay(150).duration(400)}>
         <Card style={styles.section} elevation={1}>
-          <ThemedText type="h3">Continue as guest</ThemedText>
+          <ThemedText type="h3">Just send me a recap</ThemedText>
           <ThemedText
             type="body"
             style={{ color: theme.textSecondary, marginTop: Spacing.xs }}
           >
-            Drop your email and we'll reach out with a tailored next step.
+            Not ready yet? Drop your email and we'll send a short recap of what we'd build for you, plus a link back here whenever you want to pick it up.
           </ThemedText>
 
           {submitted ? (
@@ -168,7 +168,7 @@ export default function JournalSignupScreen() {
                 type="body"
                 style={{ color: theme.success, flex: 1 }}
               >
-                Got it. We'll be in touch shortly.
+                Got it. Check your inbox in the next day or two.
               </ThemedText>
             </View>
           ) : (
@@ -194,7 +194,7 @@ export default function JournalSignupScreen() {
                 style={styles.primaryButton}
                 testID="button-journal-signup-guest"
               >
-                Continue as guest
+                Send me the recap
               </Button>
             </>
           )}
@@ -210,7 +210,7 @@ export default function JournalSignupScreen() {
           testID="link-journal-signup-contact"
         >
           <ThemedText type="link" style={{ textAlign: "center" }}>
-            Prefer to talk first? Visit our contact page
+            Rather chat first? Book a quick intro on our contact page
           </ThemedText>
         </Pressable>
       </Animated.View>
