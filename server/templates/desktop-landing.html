@@ -582,20 +582,59 @@
       .toolkit-chip {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 18px;
+        gap: 10px;
+        padding: 10px 16px 10px 14px;
         background: var(--bg-elevated);
         border: 1px solid var(--border);
-        border-radius: 100px;
-        font-size: 14px;
-        font-weight: 600;
+        border-radius: 14px;
         color: var(--text-primary);
+        text-align: left;
       }
       .toolkit-chip-dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
         background: var(--accent);
+        flex-shrink: 0;
+      }
+      .toolkit-chip-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .toolkit-chip-name {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .toolkit-chip-version {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-top: 2px;
+        letter-spacing: 0.01em;
+      }
+      .toolkit-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 22px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .toolkit-meta-pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10B981;
+        box-shadow: 0 0 0 0 rgba(16,185,129,0.6);
+        animation: toolkitPulse 2s infinite;
+      }
+      @keyframes toolkitPulse {
+        0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); }
+        70% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+        100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
       }
       .toolkit-footnote {
         max-width: 720px;
@@ -2998,13 +3037,39 @@
       <section class="section" id="toolkit">
         <h2 class="section-title">Our Toolkit</h2>
         <p class="section-subtitle">A small team backed by the best models on the planet, so we move like a big one.</p>
+        <div class="toolkit-meta">
+          <span class="toolkit-meta-pulse" aria-hidden="true"></span>
+          <span>Stack current as of April 2026 · we swap in new model versions the week they ship.</span>
+        </div>
         <div class="toolkit-grid">
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Claude 4.7</span>
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Latest Gemini</span>
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Multiple LLM models</span>
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Figma</span>
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Webflow</span>
-          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Automation Hooks</span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Claude</span><span class="toolkit-chip-version">Sonnet 4.7 · primary builder</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Gemini</span><span class="toolkit-chip-version">2.5 Pro · long-context review</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">GPT</span><span class="toolkit-chip-version">5 · creative + copy</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama</span><span class="toolkit-chip-version">4 · self-hosted fallback</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Figma</span><span class="toolkit-chip-version">Dev Mode + design system</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Webflow</span><span class="toolkit-chip-version">marketing + landing builds</span></span>
+          </span>
+          <span class="toolkit-chip">
+            <span class="toolkit-chip-dot"></span>
+            <span class="toolkit-chip-text"><span class="toolkit-chip-name">Automation Hooks</span><span class="toolkit-chip-version">n8n + Make + custom webhooks</span></span>
+          </span>
         </div>
         <p class="toolkit-footnote">Every build is paired with multiple AI models acting as a second set of eyes: brainstorming alternative directions, stress-testing flows, and quietly playing tester and QA before you ever see the work. The result is more creative options, fewer surprises, and a product that adapts to the people you're actually building for.</p>
       </section>
