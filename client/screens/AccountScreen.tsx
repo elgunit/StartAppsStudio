@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Alert, Pressable, Platform, Linking } from "react-native";
+import { StyleSheet, View, Image, Alert, Pressable, Platform, Linking, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -26,7 +26,7 @@ export default function AccountScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const { user, logout, refreshUser } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const [uploading, setUploading] = useState(false);
 
   const handleLogout = () => {
@@ -92,9 +92,9 @@ export default function AccountScreen() {
         throw new Error("Image processing failed");
       }
       const dataUri = `data:image/jpeg;base64,${base64}`;
-      await apiRequest("PATCH", `/api/users/${user.id}`, { avatarUrl: dataUri });
-      await refreshUser();
+      await updateUser({ avatarUrl: dataUri });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      Alert.alert("Photo updated", "Your new profile picture has been saved.");
     } catch (error) {
       console.error("Avatar upload failed", error);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -171,6 +171,11 @@ export default function AccountScreen() {
             }
             style={styles.avatar}
           />
+          {uploading ? (
+            <View style={[styles.avatarOverlay, { backgroundColor: "rgba(0,0,0,0.45)" }]}>
+              <ActivityIndicator color="#fff" />
+            </View>
+          ) : null}
           <View
             style={[
               styles.avatarEdit,
@@ -178,7 +183,7 @@ export default function AccountScreen() {
             ]}
           >
             <Feather
-              name={uploading ? "loader" : "camera"}
+              name="camera"
               size={14}
               color={theme.backgroundRoot}
             />
@@ -273,6 +278,16 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
+  },
+  avatarOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   avatarEdit: {
     position: "absolute",
