@@ -98,6 +98,18 @@ export default function AccountScreen() {
     } catch (error) {
       console.error("Avatar upload failed", error);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      const message = error instanceof Error ? error.message : String(error);
+      if (/^401:/.test(message)) {
+        Alert.alert(
+          "Please sign in again",
+          "Your session has expired. Sign back in and try uploading your photo again.",
+        );
+      } else {
+        Alert.alert(
+          "Couldn't update your photo",
+          "We couldn't save that picture. Try a smaller image, or check your connection and try again.",
+        );
+      }
     } finally {
       setUploading(false);
     }

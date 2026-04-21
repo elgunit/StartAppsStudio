@@ -63,13 +63,17 @@ function setupCors(app: express.Application) {
 function setupBodyParsing(app: express.Application) {
   app.use(
     express.json({
+      // Avatar uploads are sent inline as base64 data URIs (capped at ~1.5MB
+      // by the avatar validator). The default 100KB JSON limit rejects them
+      // before they reach the route handler, so allow up to 2MB here.
+      limit: "2mb",
       verify: (req, _res, buf) => {
         req.rawBody = buf;
       },
     }),
   );
 
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.urlencoded({ extended: false, limit: "2mb" }));
 }
 
 // Stable, salted, day-bucketed hash of the visitor IP — gives us a way to
