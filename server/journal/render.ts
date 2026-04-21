@@ -699,8 +699,8 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 ## Toolkit
 
 - Reasoning & Code: Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, Llama 4
-- Mockups & Prototyping: Figma, Replit, Lovable
-- Production & Delivery: Webflow, WordPress, GitHub, n8n, Make, custom webhooks
+- Mockups & Prototyping: Figma, Replit, Lovable, Rork
+- Production & Delivery: Webflow, WordPress, GitHub, Swift (iOS), Kotlin (Android), n8n, Make, custom webhooks
 - Content & Media: ElevenLabs, Higgsfield
 
 ## Contact
@@ -767,11 +767,14 @@ We swap in new model versions the week they ship.
 - Figma — design system + Dev Mode
 - Replit — React hybrid builds
 - Lovable — rapid mockups
+- Rork — iOS & Android prototypes
 
 **Production & Delivery**
 - Webflow — marketing site builds
 - WordPress — content sites & blogs
 - GitHub — daily updates + version control
+- Swift — native iOS apps
+- Kotlin — native Android apps
 - Automation Hooks — n8n + Make + custom webhooks
 
 **Content & Media**
