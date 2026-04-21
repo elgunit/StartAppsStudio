@@ -286,7 +286,7 @@ export default function WelcomeScreen() {
           style={[styles.heroCta, { backgroundColor: theme.text }]}
           testID="button-hero-contact"
         >
-          <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Start a project</ThemedText>
+          <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Get a free plan</ThemedText>
           <Feather name="arrow-right" size={16} color={theme.buttonText} />
         </Pressable>
       </View>
@@ -296,7 +296,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Build"
           title="What we ship"
-          subtitle="From a single landing page to a full multi-platform product."
+          subtitle="One landing page or a full multi-platform product — we cover both."
         />
         <View style={styles.gridTwo}>
           {services.map((s) => (
@@ -320,7 +320,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Expertise"
           title="Five hats, one partner"
-          subtitle="A small team that swaps roles based on what your project needs next."
+          subtitle="One team that swaps roles as your project moves from idea to launch."
         />
         <View style={{ gap: Spacing.sm }}>
           {hats.map((h) => (
@@ -346,7 +346,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Grow"
           title="Marketing & SEO"
-          subtitle="The same studio that built it can also bring people to it."
+          subtitle="The studio that built it can also bring people to it."
         />
         <View style={styles.gridTwo}>
           {growthServices.map((g) => (
@@ -370,7 +370,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Toolkit"
           title="Backed by the best models"
-          subtitle="A small team that moves like a big one. Tap a tile to reveal what each tool does for you."
+          subtitle="A small team that ships like a big one. Tap any tile to see what that tool does for you."
         />
         {toolkitGroups.map((group) => (
           <View key={group.label} style={{ marginBottom: Spacing.lg }}>
@@ -404,7 +404,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Packages"
           title="Pricing & timelines"
-          subtitle="Pick the lane that matches your stage. All include unlimited revisions during the build."
+          subtitle="Pick the lane that fits your stage. Every package includes unlimited revisions while we build."
         />
         <View style={{ gap: Spacing.md }}>
           {packages.map((p) => (
@@ -446,7 +446,7 @@ export default function WelcomeScreen() {
         <SectionHeading
           kicker="Work"
           title="Selected projects"
-          subtitle={`${caseStudies.length} shipped products across healthcare, fintech, retail and more.`}
+          subtitle={`${caseStudies.length} products shipped across healthcare, fintech, retail and more.`}
         />
         <View style={{ gap: Spacing.sm }}>
           {displayedCaseStudies.map((c) => (
@@ -482,20 +482,20 @@ export default function WelcomeScreen() {
       <View style={styles.section}>
         <View style={[styles.ctaCard, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
           <ThemedText type="h2" style={{ textAlign: "center", marginBottom: Spacing.sm }}>
-            Have an idea?
+            Have an idea? Let's scope it.
           </ThemedText>
           <ThemedText
             type="body"
             style={[styles.ctaSubtitle, { color: theme.textSecondary }]}
           >
-            Tell us in plain English. We'll come back with a plan, a price, and a timeline.
+            Describe it in plain English. You'll get a plan, a price, and a timeline back — usually within 24 hours.
           </ThemedText>
           <Pressable
             onPress={openContact}
             style={[styles.heroCta, { backgroundColor: theme.text, alignSelf: "center", marginTop: Spacing.lg }]}
             testID="button-footer-contact"
           >
-            <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Get in touch</ThemedText>
+            <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Get my free plan</ThemedText>
             <Feather name="arrow-right" size={16} color={theme.buttonText} />
           </Pressable>
         </View>
