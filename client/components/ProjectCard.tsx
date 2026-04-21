@@ -63,7 +63,7 @@ export function ProjectCard({
   const plan = planTier ? PLAN_META[planTier] : null;
 
   return (
-    <Card onPress={onPress} style={styles.card} testID={testID}>
+    <Card onPress={onPress} onLongPress={onLongPress} style={styles.card} testID={testID}>
       <View style={styles.header}>
         <ThemedText type="h4" numberOfLines={1} style={styles.title}>
           {name}
