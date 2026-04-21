@@ -60,9 +60,16 @@ export default function ProjectDetailScreen() {
       // got to this detail screen.
       navigation.navigate("ClientMain" as never, { screen: "Dashboard" } as never);
     },
-    onError: () => {
+    onError: (err: unknown) => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setConfirmCancel(false);
+      const message = err instanceof Error ? err.message : String(err);
+      Alert.alert(
+        "Couldn't cancel project",
+        /^4\d\d:/.test(message)
+          ? message.replace(/^4\d\d:\s*/, "").replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
+          : "Something went wrong cancelling that project. Please try again.",
+      );
     },
   });
 
@@ -75,7 +82,7 @@ export default function ProjectDetailScreen() {
   }
 
   const isDesigner = user?.role === "designer";
-  const canCancel = !isDesigner && project.status === "brief_submitted";
+  const canCancel = !isDesigner && project.status !== "completed";
 
   const currentHatMeta = project.currentHat ? HAT_META[project.currentHat as HatType] : null;
 

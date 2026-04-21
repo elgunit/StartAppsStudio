@@ -527,10 +527,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (caller.role !== "designer" && project.clientId !== caller.id) {
         return res.status(403).json({ error: "Forbidden" });
       }
-      // Clients can only cancel a project before the studio has accepted it.
-      if (project.status !== "brief_submitted") {
+      // Clients can cancel any time before the project is completed. Once
+      // it's marked completed, it stays for accounting/portfolio reasons.
+      if (project.status === "completed" && caller.role !== "designer") {
         return res.status(409).json({
-          error: "Project can only be cancelled while in Brief Submitted state.",
+          error: "Completed projects can't be cancelled. Reach out to the studio if you need it removed.",
         });
       }
       await storage.deleteProject(req.params.id);

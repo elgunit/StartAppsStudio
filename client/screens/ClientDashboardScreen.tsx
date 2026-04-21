@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Pressable, Modal } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Pressable, Modal, Alert } from "react-native";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/query-client";
 import { useNavigation } from "@react-navigation/native";
@@ -41,6 +41,16 @@ export default function ClientDashboardScreen() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
       setCancelTarget(null);
+    },
+    onError: (err: unknown) => {
+      const message = err instanceof Error ? err.message : String(err);
+      setCancelTarget(null);
+      Alert.alert(
+        "Couldn't cancel project",
+        /^4\d\d:/.test(message)
+          ? message.replace(/^4\d\d:\s*/, "").replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
+          : "Something went wrong cancelling that project. Please try again.",
+      );
     },
   });
 
@@ -157,7 +167,7 @@ export default function ClientDashboardScreen() {
         })}
         onPress={() => navigation.navigate("ProjectDetail", { projectId: item.id })}
         onLongPress={
-          item.status === "brief_submitted"
+          item.status !== "completed"
             ? () => setCancelTarget({ id: item.id, name: item.name })
             : undefined
         }
@@ -258,7 +268,7 @@ export default function ClientDashboardScreen() {
                     navigation.navigate("ProjectDetail", { projectId: item.id })
                   }
                   onLongPress={
-                    item.status === "brief_submitted"
+                    item.status !== "completed"
                       ? () => setCancelTarget({ id: item.id, name: item.name })
                       : undefined
                   }
