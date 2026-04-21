@@ -6,6 +6,10 @@ import * as path from "path";
 import { storage } from "./storage";
 import { sendJournalStatsReport } from "./journal-report-sender";
 import { detectAiBot } from "./ai-crawlers";
+import {
+  startAiBotVerifierAutoRefresh,
+  verifyAiBot,
+} from "./ai-bot-verifier";
 import crypto from "node:crypto";
 
 const app = express();
@@ -85,6 +89,32 @@ export function hashIp(ip: string | undefined | null): string | null {
     .slice(0, 16);
 }
 
+// Returns the client IP we can actually trust for IP-based bot verification.
+//
+// `X-Forwarded-For` is a CSV the client can almost entirely control: if a
+// client sends `XFF: 20.171.207.5`, our reverse proxy appends the real TCP
+// peer to the right, producing `XFF: 20.171.207.5, real_client_ip`. The
+// proxy-supplied rightmost entry is the only value the client cannot spoof,
+// so we take that. This deliberately ignores Express's `req.ip` because the
+// `trust proxy=N` algorithm walks back N hops and returns the leftmost
+// remaining entry — which is still attacker-controlled when N=1.
+//
+// If no `X-Forwarded-For` is present (e.g. direct localhost requests in
+// dev), we fall back to the socket peer address.
+function getClientIp(req: Request): string {
+  const xff = req.header("x-forwarded-for");
+  if (xff) {
+    const parts = xff
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (parts.length > 0) {
+      return parts[parts.length - 1].replace(/^::ffff:/i, "");
+    }
+  }
+  return (req.socket.remoteAddress || "").replace(/^::ffff:/i, "");
+}
+
 function setupAiCrawlerLogging(app: express.Application) {
   app.use((req, _res, next) => {
     // Only log GET requests so we don't log internal API mutations.
@@ -105,28 +135,37 @@ function setupAiCrawlerLogging(app: express.Application) {
     const match = detectAiBot(ua, referrer);
     if (!match) return next();
 
-    // Fire-and-forget — never block the actual response on logging.
-    const ipRaw =
-      (req.header("x-forwarded-for") || "").split(",")[0].trim() ||
-      req.socket.remoteAddress ||
-      "";
-    const hit = {
-      botName: match.botName,
-      pagePath: req.path.slice(0, 500),
-      userAgent: ua ? ua.slice(0, 500) : null,
-      referrerUrl: referrer ? String(referrer).slice(0, 500) : null,
-      ipHash: hashIp(ipRaw),
-    };
-    storage
-      .recordAiCrawlerHit(hit)
-      .catch((err: unknown) => {
+    const ipTrusted = getClientIp(req);
+
+    // Fire-and-forget — verification (especially reverse DNS) can take a
+    // few hundred ms, so we never block the actual response on it.
+    (async () => {
+      try {
+        // Referrer-attributed hits are real human visits clicking through
+        // from an AI assistant, not bots claiming to be one — IP
+        // verification doesn't apply, so they're recorded as
+        // "unverifiable" rather than "spoofed".
+        const verification =
+          match.source === "user-agent"
+            ? await verifyAiBot(match.botName, ipTrusted)
+            : "unverifiable";
+        await storage.recordAiCrawlerHit({
+          botName: match.botName,
+          pagePath: req.path.slice(0, 500),
+          userAgent: ua ? ua.slice(0, 500) : null,
+          referrerUrl: referrer ? String(referrer).slice(0, 500) : null,
+          ipHash: hashIp(ipTrusted),
+          verification,
+        });
+        log(
+          `[ai-crawler] ${match.botName} (${match.source}, ${verification}) → ${req.path}`,
+        );
+      } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error("[ai-crawler] failed to record hit:", msg);
-      });
+      }
+    })();
 
-    log(
-      `[ai-crawler] ${match.botName} (${match.source}) → ${req.path}`,
-    );
     next();
   });
 }
@@ -319,6 +358,7 @@ async function checkAndSendScheduledReport() {
 (async () => {
   setupCors(app);
   setupBodyParsing(app);
+  startAiBotVerifierAutoRefresh();
   setupAiCrawlerLogging(app);
   setupRequestLogging(app);
 

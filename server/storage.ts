@@ -37,7 +37,13 @@ export interface TrendBucket {
 
 export interface AiCrawlerStatRow {
   botName: string;
+  // `hits` excludes suspected spoofs so it's the trustworthy headline.
+  // `spoofedHits` is reported separately so designers can see attempted
+  // impersonation without it polluting the main count.
   hits: number;
+  verifiedHits: number;
+  unverifiableHits: number;
+  spoofedHits: number;
   uniquePages: number;
   lastSeenAt: Date | null;
   topPagePath: string | null;
@@ -654,24 +660,44 @@ export class DatabaseStorage implements IStorage {
         botName: aiCrawlerHits.botName,
         pagePath: aiCrawlerHits.pagePath,
         createdAt: aiCrawlerHits.createdAt,
+        verification: aiCrawlerHits.verification,
       })
       .from(aiCrawlerHits)
       .where(conditions.length > 0 ? and(...conditions) : undefined);
 
     const byBot = new Map<
       string,
-      { hits: number; pages: Map<string, number>; lastSeenAt: Date | null }
+      {
+        verifiedHits: number;
+        unverifiableHits: number;
+        spoofedHits: number;
+        pages: Map<string, number>;
+        lastSeenAt: Date | null;
+      }
     >();
     for (const r of rows) {
       let entry = byBot.get(r.botName);
       if (!entry) {
-        entry = { hits: 0, pages: new Map(), lastSeenAt: null };
+        entry = {
+          verifiedHits: 0,
+          unverifiableHits: 0,
+          spoofedHits: 0,
+          pages: new Map(),
+          lastSeenAt: null,
+        };
         byBot.set(r.botName, entry);
       }
-      entry.hits += 1;
-      entry.pages.set(r.pagePath, (entry.pages.get(r.pagePath) ?? 0) + 1);
+      if (r.verification === "verified") entry.verifiedHits += 1;
+      else if (r.verification === "spoofed") entry.spoofedHits += 1;
+      else entry.unverifiableHits += 1;
+      // Spoofed pages shouldn't count toward "pages crawled" either —
+      // they're attempts, not real visits.
+      if (r.verification !== "spoofed") {
+        entry.pages.set(r.pagePath, (entry.pages.get(r.pagePath) ?? 0) + 1);
+      }
       if (
         r.createdAt &&
+        r.verification !== "spoofed" &&
         (!entry.lastSeenAt || new Date(r.createdAt) > entry.lastSeenAt)
       ) {
         entry.lastSeenAt = new Date(r.createdAt);
@@ -690,7 +716,10 @@ export class DatabaseStorage implements IStorage {
       }
       out.push({
         botName,
-        hits: entry.hits,
+        hits: entry.verifiedHits + entry.unverifiableHits,
+        verifiedHits: entry.verifiedHits,
+        unverifiableHits: entry.unverifiableHits,
+        spoofedHits: entry.spoofedHits,
         uniquePages: entry.pages.size,
         lastSeenAt: entry.lastSeenAt,
         topPagePath,

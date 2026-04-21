@@ -385,6 +385,11 @@ export const aiCrawlerHits = pgTable("ai_crawler_hits", {
   userAgent: text("user_agent"),
   referrerUrl: text("referrer_url"),
   ipHash: text("ip_hash"),
+  // "verified" = source IP matched the vendor's published crawler ranges,
+  // "spoofed" = source IP did NOT match (likely fake UA),
+  // "unverifiable" = no published list / referrer-attributed visit.
+  // Headline counts should exclude "spoofed" so they remain trustworthy.
+  verification: text("verification").notNull().default("unverifiable"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

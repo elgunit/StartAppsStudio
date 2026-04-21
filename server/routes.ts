@@ -10,6 +10,10 @@ import { getUncachableResendClient } from "./resend";
 import { activeVisitorNotification, socialClickNotification, journalLeadNotification } from "./email-templates";
 import { sendJournalStatsReport } from "./journal-report-sender";
 import {
+  refreshAiBotIpRanges,
+  getAiBotVerifierStatus,
+} from "./ai-bot-verifier";
+import {
   renderArticleHtml,
   renderIndexHtml,
   renderLlmsFullTxt,
@@ -1107,18 +1111,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         storage.getAiCrawlerStats(from, to),
         storage.getRecentAiCrawlerHits(limit, from, to),
       ]);
+      // `totalHits` is the trustworthy headline (verified + unverifiable).
+      // Spoofed hits are still counted but reported separately so the
+      // designer can see attempted impersonation without it inflating the
+      // main number.
       const totalHits = stats.reduce((acc, r) => acc + r.hits, 0);
+      const verifiedHits = stats.reduce((acc, r) => acc + r.verifiedHits, 0);
+      const unverifiableHits = stats.reduce(
+        (acc, r) => acc + r.unverifiableHits,
+        0,
+      );
+      const spoofedHits = stats.reduce((acc, r) => acc + r.spoofedHits, 0);
 
       res.json({
         from: from?.toISOString() ?? null,
         to: to?.toISOString() ?? null,
         totalHits,
+        verifiedHits,
+        unverifiableHits,
+        spoofedHits,
         stats,
         recent,
+        verification: getAiBotVerifierStatus(),
       });
     } catch (error) {
       console.error("ai traffic stats error:", error);
       res.status(500).json({ error: "Failed to fetch AI traffic stats" });
+    }
+  });
+
+  // Manual refresh of vendor IP ranges. Auto-refreshes every 24h, but this
+  // lets the designer force a pull when a vendor publishes a new range.
+  app.post("/api/admin/ai-traffic/refresh-verification", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      const result = await refreshAiBotIpRanges();
+      res.json({ ...result, status: getAiBotVerifierStatus() });
+    } catch (error) {
+      console.error("ai traffic refresh error:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to refresh AI bot verification list" });
     }
   });
 

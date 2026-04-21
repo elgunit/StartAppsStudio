@@ -18,6 +18,9 @@ import { Spacing, BorderRadius } from "@/constants/theme";
 interface AiTrafficStatRow {
   botName: string;
   hits: number;
+  verifiedHits: number;
+  unverifiableHits: number;
+  spoofedHits: number;
   uniquePages: number;
   topPagePath: string | null;
   lastSeenAt: string | null;
@@ -29,6 +32,7 @@ interface AiTrafficHit {
   pagePath: string;
   userAgent: string | null;
   referrerUrl: string | null;
+  verification: "verified" | "spoofed" | "unverifiable";
   createdAt: string;
 }
 
@@ -36,8 +40,16 @@ interface AiTrafficResponse {
   from: string | null;
   to: string | null;
   totalHits: number;
+  verifiedHits: number;
+  unverifiableHits: number;
+  spoofedHits: number;
   stats: AiTrafficStatRow[];
   recent: AiTrafficHit[];
+  verification?: {
+    lastRefreshAt: string | null;
+    lastError: string | null;
+    botRangeCounts: Record<string, number>;
+  };
 }
 
 type RangeKey = "7d" | "30d" | "90d" | "all";
@@ -88,6 +100,8 @@ export default function AiTrafficScreen() {
   );
   const recent = data?.recent ?? [];
   const totalHits = data?.totalHits ?? 0;
+  const verifiedHits = data?.verifiedHits ?? 0;
+  const spoofedHits = data?.spoofedHits ?? 0;
   const uniqueBots = stats.length;
   const totalPages = useMemo(() => {
     const s = new Set<string>();
@@ -143,9 +157,26 @@ export default function AiTrafficScreen() {
           Totals in range
         </ThemedText>
         <View style={styles.totalsGrid}>
-          <Totals label="Hits" value={totalHits} />
-          <Totals label="Assistants" value={uniqueBots} />
-          <Totals label="Pages" value={totalPages} />
+          <Totals label="Hits" value={totalHits} testID="totals-hits" />
+          <Totals label="Assistants" value={uniqueBots} testID="totals-assistants" />
+          <Totals label="Pages" value={totalPages} testID="totals-pages" />
+        </View>
+        <View style={styles.spoofRow}>
+          <Feather
+            name={spoofedHits > 0 ? "alert-triangle" : "shield"}
+            size={13}
+            color={spoofedHits > 0 ? "#c2410c" : theme.textTertiary}
+          />
+          <ThemedText
+            type="caption"
+            style={{ color: theme.textSecondary }}
+            testID="text-spoof-summary"
+          >
+            {verifiedHits} verified by IP
+            {spoofedHits > 0
+              ? ` · ${spoofedHits} suspected spoof${spoofedHits === 1 ? "" : "s"} excluded`
+              : " · no suspected spoofs"}
+          </ThemedText>
         </View>
       </Card>
       <View style={styles.sectionHeader}>
@@ -190,6 +221,26 @@ export default function AiTrafficScreen() {
               {item.uniquePages} {item.uniquePages === 1 ? "page" : "pages"}
             </ThemedText>
           </View>
+          {item.verifiedHits > 0 ? (
+            <View style={styles.metaItem}>
+              <Feather name="shield" size={13} color="#15803d" />
+              <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+                {item.verifiedHits} verified
+              </ThemedText>
+            </View>
+          ) : null}
+          {item.spoofedHits > 0 ? (
+            <View style={styles.metaItem}>
+              <Feather name="alert-triangle" size={13} color="#c2410c" />
+              <ThemedText
+                type="caption"
+                style={{ color: "#c2410c" }}
+                testID={`ai-bot-spoofed-${item.botName}`}
+              >
+                {item.spoofedHits} spoofed
+              </ThemedText>
+            </View>
+          ) : null}
         </View>
 
         {item.topPagePath ? (
@@ -287,14 +338,24 @@ export default function AiTrafficScreen() {
   );
 }
 
-function Totals({ label, value }: { label: string; value: number }) {
+function Totals({
+  label,
+  value,
+  testID,
+}: {
+  label: string;
+  value: number;
+  testID?: string;
+}) {
   const { theme } = useTheme();
   return (
     <View style={{ flex: 1 }}>
       <ThemedText type="caption" style={{ color: theme.textTertiary }}>
         {label}
       </ThemedText>
-      <ThemedText type="h3">{value}</ThemedText>
+      <ThemedText type="h3" testID={testID}>
+        {value}
+      </ThemedText>
     </View>
   );
 }
@@ -328,6 +389,12 @@ const styles = StyleSheet.create({
   totalsGrid: {
     flexDirection: "row",
     gap: Spacing.md,
+  },
+  spoofRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: Spacing.md,
   },
   sectionHeader: {
     marginBottom: Spacing.md,
