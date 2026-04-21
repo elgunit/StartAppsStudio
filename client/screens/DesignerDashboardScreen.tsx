@@ -73,6 +73,26 @@ export default function DesignerDashboardScreen() {
         </Card>
       ) : null}
 
+      {/* AI Traffic shortcut */}
+      <Card
+        style={styles.aiTrafficCard}
+        onPress={() => navigation.navigate("AiTraffic")}
+        testID="card-ai-traffic"
+      >
+        <View style={styles.aiTrafficHeader}>
+          <View style={[styles.aiIcon, { backgroundColor: theme.text }]}>
+            <Feather name="cpu" size={16} color={theme.backgroundRoot} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <ThemedText type="h4">AI Assistant Traffic</ThemedText>
+            <ThemedText type="small" style={{ color: theme.textSecondary }}>
+              See which AI assistants are visiting the site
+            </ThemedText>
+          </View>
+          <Feather name="chevron-right" size={18} color={theme.textTertiary} />
+        </View>
+      </Card>
+
       {/* Section Header */}
       <View style={styles.sectionHeader}>
         <ThemedText type="h3">All Projects</ThemedText>
@@ -162,5 +182,20 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     marginBottom: Spacing.lg,
+  },
+  aiTrafficCard: {
+    marginBottom: Spacing.xl,
+  },
+  aiTrafficHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+  },
+  aiIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
