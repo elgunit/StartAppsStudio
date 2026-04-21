@@ -792,7 +792,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Project-agnostic credit top-up: 400 credits for $99. Any logged-in client can buy.
+  // Project-agnostic credit top-up: $99 for 100 base credits, doubled to 200
+  // by the active 2x promo. Any logged-in client can buy.
   app.post("/api/credits/topup", async (req, res) => {
     try {
       // Identify the user from their session token; never trust a body-supplied
@@ -804,7 +805,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (caller.role !== "client") {
         return res.status(403).json({ error: "Only clients can top up credits." });
       }
-      await storage.addCreditsToUser(caller.id, 400, "Credit top-up (400 credits / $99)");
+      await storage.addCreditsToUser(caller.id, 200, "Credit top-up ($99 / 100 credits + 2x promo bonus = 200)");
       const updated = await storage.getUser(caller.id);
       res.json({ credits: updated?.credits || 0 });
     } catch (error) {

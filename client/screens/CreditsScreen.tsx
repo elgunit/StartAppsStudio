@@ -240,7 +240,7 @@ export default function CreditsScreen() {
             <ThemedText type="h3">Credit top-up</ThemedText>
             <View style={[styles.methodBadge, { backgroundColor: theme.success + "20" }]}>
               <ThemedText type="caption" style={{ color: theme.success, fontSize: 10 }}>
-                Always available
+                2x bonus active
               </ThemedText>
             </View>
           </View>
@@ -249,20 +249,32 @@ export default function CreditsScreen() {
           </View>
           <View style={styles.creditsRow}>
             <Feather name="zap" size={14} color={theme.text} />
-            <ThemedText type="body" style={{ color: theme.text, fontWeight: "600" }}>
-              400 credits
+            <ThemedText
+              type="small"
+              style={{
+                color: theme.textSecondary,
+                textDecorationLine: "line-through",
+                marginRight: 6,
+              }}
+            >
+              100 credits
+            </ThemedText>
+            <ThemedText type="body" style={{ color: theme.success, fontWeight: "700" }}>
+              200 credits
             </ThemedText>
           </View>
           <ThemedText type="small" style={[styles.description, { color: theme.textSecondary }]}>
+            Limited-time 2x promo: $99 normally buys 100 credits, but right now you get 200 dropped straight into your balance.
+            {"\n\n"}
             {attachable
               ? `Top up ${selectedProject!.name} with extra credits whenever scope grows.`
-              : "Add credits to your account now. They'll attach to your next project automatically, or to any project you pick later."}
+              : "They'll attach to your next project automatically, or to any project you pick later."}
           </ThemedText>
           <View style={styles.detailsRow}>
             <View style={styles.detailItem}>
               <Feather name="check" size={14} color={theme.success} />
               <ThemedText type="small" style={{ color: theme.textSecondary }}>
-                $0.25/credit
+                $0.50/credit with promo
               </ThemedText>
             </View>
             <View style={styles.detailItem}>
