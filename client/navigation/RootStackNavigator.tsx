@@ -37,6 +37,8 @@ export type RootStackParamList = {
   JournalSignup: { slug: string; title?: string };
   JournalStats: undefined;
   AiTraffic: undefined;
+  Notifications: undefined;
+  Help: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
