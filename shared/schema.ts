@@ -374,6 +374,27 @@ export const insertJournalReportScheduleSchema = createInsertSchema(journalRepor
 export type JournalReportSchedule = typeof journalReportSchedules.$inferSelect;
 export type InsertJournalReportSchedule = z.infer<typeof insertJournalReportScheduleSchema>;
 
+// AI assistant / crawler traffic — request-level log of hits from AI bots
+// (GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, etc.). Used so we can
+// see which assistants actually drive traffic to the site, since GA4
+// lumps these into "Direct" or "Other" because they don't send referrers.
+export const aiCrawlerHits = pgTable("ai_crawler_hits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  botName: text("bot_name").notNull(),
+  pagePath: text("page_path").notNull(),
+  userAgent: text("user_agent"),
+  referrerUrl: text("referrer_url"),
+  ipHash: text("ip_hash"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertAiCrawlerHitSchema = createInsertSchema(aiCrawlerHits).omit({
+  id: true,
+  createdAt: true,
+});
+export type AiCrawlerHit = typeof aiCrawlerHits.$inferSelect;
+export type InsertAiCrawlerHit = z.infer<typeof insertAiCrawlerHitSchema>;
+
 // Visitor analytics
 export const insertSectionViewSchema = createInsertSchema(sectionViews).omit({
   id: true,

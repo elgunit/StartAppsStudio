@@ -1031,6 +1031,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ── AI assistant traffic ─────────────────────────────────────────────────
+  // Returns aggregated counts per detected AI bot (GPTBot, ClaudeBot, etc.)
+  // alongside the recent raw hit log, so the studio can see which assistants
+  // actually drive traffic. GA4 hides these in "Direct" / "Other".
+  app.get("/api/admin/ai-traffic", async (req, res) => {
+    try {
+      const designer = await requireDesignerFromToken(req);
+      if (!designer) return res.status(403).json({ error: "Forbidden" });
+
+      const parseDate = (v: unknown): Date | undefined => {
+        if (typeof v !== "string" || !v) return undefined;
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? undefined : d;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      const limit = Math.min(
+        500,
+        parseInt(String(req.query.limit ?? "100"), 10) || 100,
+      );
+
+      const [stats, recent] = await Promise.all([
+        storage.getAiCrawlerStats(from, to),
+        storage.getRecentAiCrawlerHits(limit, from, to),
+      ]);
+      const totalHits = stats.reduce((acc, r) => acc + r.hits, 0);
+
+      res.json({
+        from: from?.toISOString() ?? null,
+        to: to?.toISOString() ?? null,
+        totalHits,
+        stats,
+        recent,
+      });
+    } catch (error) {
+      console.error("ai traffic stats error:", error);
+      res.status(500).json({ error: "Failed to fetch AI traffic stats" });
+    }
+  });
+
   // ── Journal report schedule ──────────────────────────────────────────────
 
 

@@ -5,6 +5,8 @@ import * as fs from "fs";
 import * as path from "path";
 import { storage } from "./storage";
 import { sendJournalStatsReport } from "./journal-report-sender";
+import { detectAiBot } from "./ai-crawlers";
+import crypto from "node:crypto";
 
 const app = express();
 const log = console.log;
@@ -64,6 +66,69 @@ function setupBodyParsing(app: express.Application) {
   );
 
   app.use(express.urlencoded({ extended: false }));
+}
+
+// Stable, salted, day-bucketed hash of the visitor IP — gives us a way to
+// roughly count unique callers per AI assistant without persisting raw IPs.
+const IP_HASH_SALT =
+  process.env.AI_CRAWLER_IP_SALT ||
+  process.env.SESSION_SECRET ||
+  "ai-crawler-default-salt";
+
+function hashIp(ip: string | undefined | null): string | null {
+  if (!ip) return null;
+  const day = new Date().toISOString().slice(0, 10);
+  return crypto
+    .createHash("sha256")
+    .update(`${IP_HASH_SALT}|${day}|${ip}`)
+    .digest("hex")
+    .slice(0, 16);
+}
+
+function setupAiCrawlerLogging(app: express.Application) {
+  app.use((req, _res, next) => {
+    // Only log GET requests so we don't log internal API mutations.
+    if (req.method !== "GET") return next();
+    // Skip noisy static asset paths — we care about pages, not images/JS.
+    if (
+      req.path.startsWith("/assets") ||
+      req.path.startsWith("/static") ||
+      /\.(?:js|css|map|png|jpg|jpeg|gif|svg|webp|ico|woff2?|ttf)$/i.test(
+        req.path,
+      )
+    ) {
+      return next();
+    }
+
+    const ua = req.header("user-agent") || "";
+    const referrer = req.header("referer") || req.header("referrer") || "";
+    const match = detectAiBot(ua, referrer);
+    if (!match) return next();
+
+    // Fire-and-forget — never block the actual response on logging.
+    const ipRaw =
+      (req.header("x-forwarded-for") || "").split(",")[0].trim() ||
+      req.socket.remoteAddress ||
+      "";
+    const hit = {
+      botName: match.botName,
+      pagePath: req.path.slice(0, 500),
+      userAgent: ua ? ua.slice(0, 500) : null,
+      referrerUrl: referrer ? String(referrer).slice(0, 500) : null,
+      ipHash: hashIp(ipRaw),
+    };
+    storage
+      .recordAiCrawlerHit(hit)
+      .catch((err: unknown) => {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error("[ai-crawler] failed to record hit:", msg);
+      });
+
+    log(
+      `[ai-crawler] ${match.botName} (${match.source}) → ${req.path}`,
+    );
+    next();
+  });
 }
 
 function setupRequestLogging(app: express.Application) {
@@ -254,6 +319,7 @@ async function checkAndSendScheduledReport() {
 (async () => {
   setupCors(app);
   setupBodyParsing(app);
+  setupAiCrawlerLogging(app);
   setupRequestLogging(app);
 
   configureExpoAndLanding(app);

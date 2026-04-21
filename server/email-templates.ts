@@ -181,10 +181,14 @@ export interface JournalStatsReportOpts {
     guestEmails: number;
   };
   topArticles: Array<{ title: string | null; slug: string; views: number; ctaClicks: number }>;
+  aiTraffic?: {
+    totalHits: number;
+    topBots: Array<{ botName: string; hits: number; uniquePages: number; topPagePath: string | null }>;
+  };
 }
 
 export function journalStatsReport(opts: JournalStatsReportOpts): { subject: string; html: string } {
-  const { frequency, periodLabel, from, to, totals, topArticles } = opts;
+  const { frequency, periodLabel, from, to, totals, topArticles, aiTraffic } = opts;
   const subject = `Journal Stats Report — ${periodLabel}`;
   const ctaPct = totals.views > 0 ? Math.round((totals.ctaClicks / totals.views) * 100) : 0;
   const topRows = topArticles.slice(0, 5).map((a) =>
@@ -209,6 +213,29 @@ export function journalStatsReport(opts: JournalStatsReportOpts): { subject: str
         ${row("Guest emails", String(totals.guestEmails))}
         ${row("Open contact", String(totals.openContactChoices))}
       </table>
+
+      ${aiTraffic && aiTraffic.totalHits > 0 ? `
+      <p style="margin:0 0 10px 0;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${BRAND.accentSoft};">AI Assistants (${aiTraffic.totalHits} hits)</p>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;overflow:hidden;margin-bottom:20px;">
+        <thead>
+          <tr style="background:${BRAND.card};">
+            <th style="padding:8px 12px;font-size:11px;text-align:left;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Assistant</th>
+            <th style="padding:8px 12px;font-size:11px;text-align:right;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Hits</th>
+            <th style="padding:8px 12px;font-size:11px;text-align:right;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Pages</th>
+            <th style="padding:8px 12px;font-size:11px;text-align:left;text-transform:uppercase;letter-spacing:1px;color:${BRAND.textMuted};font-weight:600;">Top Page</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${aiTraffic.topBots.slice(0, 8).map((b) =>
+            `<tr>
+              <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};">${escapeHtml(b.botName)}</td>
+              <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};text-align:right;">${b.hits}</td>
+              <td style="padding:8px 12px;font-size:13px;color:${BRAND.text};border-bottom:1px solid ${BRAND.border};text-align:right;">${b.uniquePages}</td>
+              <td style="padding:8px 12px;font-size:13px;color:${BRAND.textMuted};border-bottom:1px solid ${BRAND.border};">${escapeHtml(b.topPagePath || "—")}</td>
+            </tr>`
+          ).join("")}
+        </tbody>
+      </table>` : ""}
 
       ${topArticles.length > 0 ? `
       <p style="margin:0 0 10px 0;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${BRAND.accentSoft};">Top Articles</p>

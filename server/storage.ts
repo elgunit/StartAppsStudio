@@ -2,7 +2,7 @@ import {
   users, projects, messages, workSessions, projectVersions,
   creditPackages, creditTransactions, projectHats, contactSubmissions,
   marketingServices, serviceOrders, sectionViews, visitorEvents, journalLeads,
-  journalReportSchedules,
+  journalReportSchedules, aiCrawlerHits,
   type User, type InsertUser, type Project, type InsertProject,
   type Message, type InsertMessage, type WorkSession, type InsertWorkSession,
   type ProjectVersion, type InsertProjectVersion, type CreditPackage,
@@ -12,6 +12,7 @@ import {
   type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent,
   type JournalLead, type InsertJournalLead,
   type JournalReportSchedule,
+  type AiCrawlerHit, type InsertAiCrawlerHit,
 } from "@shared/schema";
 
 export interface JournalConversionRow {
@@ -31,6 +32,14 @@ export interface TrendBucket {
   createAccountChoices: number;
   openContactChoices: number;
   guestEmails: number;
+}
+
+export interface AiCrawlerStatRow {
+  botName: string;
+  hits: number;
+  uniquePages: number;
+  lastSeenAt: Date | null;
+  topPagePath: string | null;
 }
 
 export interface JournalTrendRow {
@@ -110,6 +119,11 @@ export interface IStorage {
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
   getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
   getJournalConversionTrends(from?: Date, to?: Date): Promise<JournalTrendRow[]>;
+
+  // AI assistant traffic
+  recordAiCrawlerHit(hit: InsertAiCrawlerHit): Promise<AiCrawlerHit>;
+  getAiCrawlerStats(from?: Date, to?: Date): Promise<AiCrawlerStatRow[]>;
+  getRecentAiCrawlerHits(limit?: number): Promise<AiCrawlerHit[]>;
 
   // Marketing Services
   getMarketingServices(): Promise<MarketingService[]>;
@@ -617,6 +631,81 @@ export class DatabaseStorage implements IStorage {
     });
 
     return result;
+  }
+
+  // AI assistant / crawler traffic
+  async recordAiCrawlerHit(hit: InsertAiCrawlerHit): Promise<AiCrawlerHit> {
+    const [row] = await db.insert(aiCrawlerHits).values(hit).returning();
+    return row;
+  }
+
+  async getAiCrawlerStats(from?: Date, to?: Date): Promise<AiCrawlerStatRow[]> {
+    const conditions = [] as ReturnType<typeof sql>[];
+    if (from) conditions.push(sql`${aiCrawlerHits.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${aiCrawlerHits.createdAt} <= ${to}`);
+
+    const rows = await db
+      .select({
+        botName: aiCrawlerHits.botName,
+        pagePath: aiCrawlerHits.pagePath,
+        createdAt: aiCrawlerHits.createdAt,
+      })
+      .from(aiCrawlerHits)
+      .where(conditions.length > 0 ? and(...conditions) : undefined);
+
+    const byBot = new Map<
+      string,
+      { hits: number; pages: Map<string, number>; lastSeenAt: Date | null }
+    >();
+    for (const r of rows) {
+      let entry = byBot.get(r.botName);
+      if (!entry) {
+        entry = { hits: 0, pages: new Map(), lastSeenAt: null };
+        byBot.set(r.botName, entry);
+      }
+      entry.hits += 1;
+      entry.pages.set(r.pagePath, (entry.pages.get(r.pagePath) ?? 0) + 1);
+      if (
+        r.createdAt &&
+        (!entry.lastSeenAt || new Date(r.createdAt) > entry.lastSeenAt)
+      ) {
+        entry.lastSeenAt = new Date(r.createdAt);
+      }
+    }
+
+    const out: AiCrawlerStatRow[] = [];
+    for (const [botName, entry] of byBot) {
+      let topPagePath: string | null = null;
+      let topCount = -1;
+      for (const [path, count] of entry.pages) {
+        if (count > topCount) {
+          topCount = count;
+          topPagePath = path;
+        }
+      }
+      out.push({
+        botName,
+        hits: entry.hits,
+        uniquePages: entry.pages.size,
+        lastSeenAt: entry.lastSeenAt,
+        topPagePath,
+      });
+    }
+    out.sort((a, b) => b.hits - a.hits);
+    return out;
+  }
+
+  async getRecentAiCrawlerHits(
+    limit: number = 200,
+    from?: Date,
+    to?: Date,
+  ): Promise<AiCrawlerHit[]> {
+    const conditions = [] as ReturnType<typeof sql>[];
+    if (from) conditions.push(sql`${aiCrawlerHits.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${aiCrawlerHits.createdAt} <= ${to}`);
+    const query = db.select().from(aiCrawlerHits);
+    const filtered = conditions.length > 0 ? query.where(and(...conditions)) : query;
+    return await filtered.orderBy(desc(aiCrawlerHits.createdAt)).limit(limit);
   }
 
   // Marketing Services
