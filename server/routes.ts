@@ -298,7 +298,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isOnline: false,
       });
 
-      res.json({ user: publicUser(user) });
+      // Issue a session token immediately so the client lands fully
+      // authenticated (mirrors /api/auth/login). Without this, the new
+      // user has no token and any token-protected request (avatar upload,
+      // top-up, project cancel) would return 401.
+      const sessionToken = crypto.randomBytes(32).toString("hex");
+      const updated = await storage.updateUser(user.id, {
+        isOnline: true,
+        sessionToken,
+      });
+
+      res.json({
+        user: { ...publicUser(updated || user), isOnline: true, sessionToken },
+      });
     } catch (error) {
       console.error("Registration error:", error);
       res.status(500).json({ error: "Failed to register" });
