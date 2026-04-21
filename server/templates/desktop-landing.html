@@ -115,6 +115,80 @@
     }
     </script>
 
+    <!-- Structured data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does it cost to work with Start Apps Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We have four public packages: a $399 Mockup, a $1,800 Prototype, an MVP between $4,500 and $9,500, and a Custom-Scale build starting at $15,000. Most early-stage founders start with a Mockup or an MVP. Pricing is fixed up front, so you know the number before we start, and the project price covers design, build, and launch handoff."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to ship an MVP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MVPs ship in 3 to 8 weeks from kickoff, depending on scope. Mockups are typically delivered in under a week and prototypes in 1 to 2 weeks. We work in tight weekly cycles with shared previews so you see progress every few days, not at the end."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in an MVP build?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An MVP includes product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough of how everything is wired together so a future team can pick it up."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who owns the code, designs, and accounts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You do. All source code, design files, and third-party accounts (App Store, Google Play, hosting, database, payments) are created in your name and transferred to you. There is no lock-in to Start Apps Studio. You can keep building with us, take it to another team, or hire in-house."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What stack do you build on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We default to React and React Native (via Expo) on the front end, with Node and Postgres on the back end, deployed to Replit, Vercel, or your preferred host. We pick the stack to match the founder, not the other way around. If you have an existing codebase or a strong preference, we work in it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens after launch? Do you offer ongoing support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with non-technical founders?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Most of our founders are non-technical. We translate vague ideas into clear scopes, run the technical decisions for you, and write everything down in plain English. You get a real product without needing to learn the stack or manage engineers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you take over an existing project or vibe-coded prototype?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We frequently take over half-built apps from Lovable, Bolt, v0, Cursor, or freelance teams. We start with a short paid audit, give you an honest read on what is salvageable, and either rebuild the weak parts or finish the MVP. Either way, you walk away with a clean, shippable codebase you actually own."
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
       (function(c,l,a,r,i,t,y){
@@ -1865,6 +1939,87 @@
         .journal-note::after { left: 12px; top: -6px; }
       }
       
+      /* FAQ section */
+      .faq-section {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: clamp(56px, 8vw, 88px) clamp(20px, 3vw, 40px) clamp(24px, 4vw, 40px);
+      }
+      .faq-header {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+      .faq-title {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: clamp(28px, 3.4vw, 40px);
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        margin: 0 0 10px;
+      }
+      .faq-subtitle {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .faq-item {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--bg, #ffffff);
+        overflow: hidden;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .faq-item[open] {
+        border-color: rgba(13, 148, 136, 0.45);
+        box-shadow: 0 8px 24px -18px rgba(13, 148, 136, 0.5);
+      }
+      .faq-item > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.4;
+      }
+      .faq-item > summary::-webkit-details-marker { display: none; }
+      .faq-item > summary::after {
+        content: '+';
+        font-family: 'Georgia', serif;
+        font-size: 22px;
+        line-height: 1;
+        color: var(--text-secondary);
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+      }
+      .faq-item[open] > summary::after {
+        content: '−';
+        color: #0d9488;
+      }
+      .faq-answer {
+        padding: 0 22px 20px;
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      @media (prefers-color-scheme: dark) {
+        .faq-item { background: rgba(255, 255, 255, 0.02); }
+      }
+      @media (max-width: 600px) {
+        .faq-item > summary { padding: 16px 18px; font-size: 15px; }
+        .faq-answer { padding: 0 18px 18px; font-size: 14.5px; }
+      }
+
       .form-success { padding: 40px; text-align: center; }
       .form-success h3 { font-size: 24px; margin-bottom: 8px; }
       .form-success p { color: var(--text-secondary); }
@@ -3621,6 +3776,50 @@
       </section>
     </div>
     
+    <!-- FAQ section — answers to questions founders ask repeatedly.
+         Mirrors the FAQPage JSON-LD in <head> so Google can surface this
+         as a rich result. -->
+    <section class="faq-section" id="faq" aria-labelledby="faqTitle">
+      <header class="faq-header">
+        <h2 class="faq-title" id="faqTitle">Frequently asked questions</h2>
+        <p class="faq-subtitle">Pricing, timelines, scope, ownership, and what happens after launch.</p>
+      </header>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>How much does it cost to work with Start Apps Studio?</summary>
+          <p class="faq-answer">We have four public packages: a $399 Mockup, a $1,800 Prototype, an MVP between $4,500 and $9,500, and a Custom-Scale build starting at $15,000. Most early-stage founders start with a Mockup or an MVP. Pricing is fixed up front, so you know the number before we start, and the project price covers design, build, and launch handoff.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long does it take to ship an MVP?</summary>
+          <p class="faq-answer">MVPs ship in 3 to 8 weeks from kickoff, depending on scope. Mockups are typically delivered in under a week and prototypes in 1 to 2 weeks. We work in tight weekly cycles with shared previews so you see progress every few days, not at the end.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is included in an MVP build?</summary>
+          <p class="faq-answer">An MVP includes product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough of how everything is wired together so a future team can pick it up.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Who owns the code, designs, and accounts?</summary>
+          <p class="faq-answer">You do. All source code, design files, and third-party accounts (App Store, Google Play, hosting, database, payments) are created in your name and transferred to you. There is no lock-in to Start Apps Studio. You can keep building with us, take it to another team, or hire in-house.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What stack do you build on?</summary>
+          <p class="faq-answer">We default to React and React Native (via Expo) on the front end, with Node and Postgres on the back end, deployed to Replit, Vercel, or your preferred host. We pick the stack to match the founder, not the other way around. If you have an existing codebase or a strong preference, we work in it.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What happens after launch? Do you offer ongoing support?</summary>
+          <p class="faq-answer">Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you work with non-technical founders?</summary>
+          <p class="faq-answer">Yes. Most of our founders are non-technical. We translate vague ideas into clear scopes, run the technical decisions for you, and write everything down in plain English. You get a real product without needing to learn the stack or manage engineers.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can you take over an existing project or vibe-coded prototype?</summary>
+          <p class="faq-answer">Yes. We frequently take over half-built apps from Lovable, Bolt, v0, Cursor, or freelance teams. We start with a short paid audit, give you an honest read on what is salvageable, and either rebuild the weak parts or finish the MVP. Either way, you walk away with a clean, shippable codebase you actually own.</p>
+        </details>
+      </div>
+    </section>
+
     <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
          still see the latest articles. -->
