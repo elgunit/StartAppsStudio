@@ -22,9 +22,9 @@ const STATUS_ORDER: Status[] = [
 ];
 
 const PLAN_META: Record<PlanTier, { label: string; icon: keyof typeof Feather.glyphMap; color: string }> = {
-  starter: { label: "Starter", icon: "zap", color: "#FF9500" },
+  starter: { label: "Mockup", icon: "image", color: "#FF9500" },
   prototype: { label: "Prototype", icon: "layers", color: "#007AFF" },
-  production: { label: "Production", icon: "box", color: "#AF52DE" },
+  production: { label: "MVP", icon: "box", color: "#AF52DE" },
   custom: { label: "Custom", icon: "star", color: "#FF2D55" },
 };
 
