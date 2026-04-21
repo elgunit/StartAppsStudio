@@ -29,7 +29,7 @@ export default function ClientDashboardScreen() {
   const insets = useSafeAreaInsets();
   const { theme, isDark } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const { user, refreshUser } = useAuth();
+  const { user, refreshUser, logout } = useAuth();
   const queryClient = useQueryClient();
   const [cancelTarget, setCancelTarget] = useState<{ id: string; name: string } | null>(null);
 
@@ -45,12 +45,20 @@ export default function ClientDashboardScreen() {
     onError: (err: unknown) => {
       const message = err instanceof Error ? err.message : String(err);
       setCancelTarget(null);
-      Alert.alert(
-        "Couldn't cancel project",
-        /^4\d\d:/.test(message)
-          ? message.replace(/^4\d\d:\s*/, "").replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
-          : "Something went wrong cancelling that project. Please try again.",
-      );
+      if (/^401:/.test(message)) {
+        Alert.alert(
+          "Please sign in again",
+          "Your session has expired. Sign back in and the cancel will go through.",
+          [{ text: "OK", onPress: () => logout() }],
+        );
+        return;
+      }
+      const cleaned = /^4\d\d:/.test(message)
+        ? message
+            .replace(/^4\d\d:\s*/, "")
+            .replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
+        : "Something went wrong cancelling that project. Please try again.";
+      Alert.alert("Couldn't cancel project", cleaned);
     },
   });
 

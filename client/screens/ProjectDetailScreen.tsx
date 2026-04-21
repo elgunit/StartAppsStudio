@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, ScrollView, Modal, Pressable } from "react-native";
+import { StyleSheet, View, ScrollView, Modal, Pressable, Alert } from "react-native";
 import { useRoute, useNavigation, RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -32,7 +32,7 @@ export default function ProjectDetailScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const queryClient = useQueryClient();
   const [confirmCancel, setConfirmCancel] = useState(false);
 
@@ -64,12 +64,20 @@ export default function ProjectDetailScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setConfirmCancel(false);
       const message = err instanceof Error ? err.message : String(err);
-      Alert.alert(
-        "Couldn't cancel project",
-        /^4\d\d:/.test(message)
-          ? message.replace(/^4\d\d:\s*/, "").replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
-          : "Something went wrong cancelling that project. Please try again.",
-      );
+      if (/^401:/.test(message)) {
+        Alert.alert(
+          "Please sign in again",
+          "Your session has expired. Sign back in and the cancel will go through.",
+          [{ text: "OK", onPress: () => logout() }],
+        );
+        return;
+      }
+      const cleaned = /^4\d\d:/.test(message)
+        ? message
+            .replace(/^4\d\d:\s*/, "")
+            .replace(/^\{.*"error"\s*:\s*"([^"]+)".*\}$/, "$1")
+        : "Something went wrong cancelling that project. Please try again.";
+      Alert.alert("Couldn't cancel project", cleaned);
     },
   });
 
