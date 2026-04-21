@@ -571,6 +571,41 @@
         color: var(--text-secondary);
       }
 
+      /* Toolkit */
+      .toolkit-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+      .toolkit-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .toolkit-chip-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .toolkit-footnote {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
       /* Industries */
       .industries-grid {
         display: flex;
@@ -2959,6 +2994,21 @@
         </div>
       </section>
       
+      <!-- Our Toolkit -->
+      <section class="section" id="toolkit">
+        <h2 class="section-title">Our Toolkit</h2>
+        <p class="section-subtitle">A small team backed by the best models on the planet, so we move like a big one.</p>
+        <div class="toolkit-grid">
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Claude 4.7</span>
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Latest Gemini</span>
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Multiple LLM models</span>
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Figma</span>
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Webflow</span>
+          <span class="toolkit-chip"><span class="toolkit-chip-dot"></span>Automation Hooks</span>
+        </div>
+        <p class="toolkit-footnote">Every build is paired with multiple AI models acting as a second set of eyes: brainstorming alternative directions, stress-testing flows, and quietly playing tester and QA before you ever see the work. The result is more creative options, fewer surprises, and a product that adapts to the people you're actually building for.</p>
+      </section>
+
       <!-- Pricing -->
       <section class="section" id="pricing">
         <h2 class="section-title">Packages</h2>
