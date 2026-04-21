@@ -267,18 +267,30 @@ export default function WelcomeScreen() {
           style={[styles.logo, { borderRadius: 16 }]}
           resizeMode="contain"
         />
+        <View style={[styles.heroEyebrow, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
+          <View style={styles.heroEyebrowDot} />
+          <ThemedText type="caption" style={[styles.heroEyebrowText, { color: theme.text }]}>
+            Booking April-May 2026 · 3 slots left
+          </ThemedText>
+        </View>
         <ThemedText type="display" style={styles.heroTitle}>
-          Start Apps{"\n"}Studio
+          Your technical{"\n"}co-founder, without{"\n"}the equity split.
         </ThemedText>
         <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
-          Design, development & growth — all in one partnership.
+          A small AI-native studio building mockups, prototypes, and shippable MVPs in 3 to 8 weeks.
         </ThemedText>
         <View style={styles.statsRow}>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>145+ MVPs</ThemedText>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>~200</ThemedText> founders shipped
+          </ThemedText>
           <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>Since 2010</ThemedText>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>$50M+</ThemedText> raised
+          </ThemedText>
           <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>5 Roles</ThemedText>
+          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
+            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>3-8 weeks</ThemedText> to launch
+          </ThemedText>
         </View>
 
         <Pressable
@@ -512,13 +524,33 @@ const styles = StyleSheet.create({
     marginBottom: Spacing["2xl"],
   },
   logo: { width: 80, height: 80, marginBottom: Spacing.lg },
+  heroEyebrow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: BorderRadius.full,
+    borderWidth: 1,
+    marginBottom: Spacing.md,
+  },
+  heroEyebrowDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#0d9488",
+  },
+  heroEyebrowText: { fontWeight: "600" as const, fontSize: 12 },
   heroTitle: { textAlign: "center", marginBottom: Spacing.md },
-  heroSubtitle: { textAlign: "center", maxWidth: 280 },
+  heroSubtitle: { textAlign: "center", maxWidth: 320 },
   statsRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
     marginTop: Spacing.md,
+    flexWrap: "wrap",
+    justifyContent: "center",
+    paddingHorizontal: Spacing.lg,
   },
   statItem: { fontWeight: "500" as const },
   heroCta: {
