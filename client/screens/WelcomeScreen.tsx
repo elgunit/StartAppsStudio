@@ -5,9 +5,10 @@ import {
   ScrollView,
   Image,
   Pressable,
-  Linking,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Feather } from "@expo/vector-icons";
 
 import { ThemedText } from "@/components/ThemedText";
@@ -241,9 +242,14 @@ export default function WelcomeScreen() {
     [toolGroupLookup],
   );
 
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   const openContact = React.useCallback(() => {
-    Linking.openURL("mailto:hello@startapps.studio").catch(() => {});
-  }, []);
+    navigation.navigate("JournalSignup", {
+      slug: "welcome-cta",
+      title: "Start a project",
+    });
+  }, [navigation]);
 
   return (
     <ScrollView
