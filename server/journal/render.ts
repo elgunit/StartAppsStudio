@@ -700,7 +700,7 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 
 - Reasoning & Code: Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, Llama 4
 - Mockups & Prototyping: Figma, Replit, Lovable
-- Production & Delivery: Webflow, GitHub, n8n, Make, custom webhooks
+- Production & Delivery: Webflow, WordPress, GitHub, n8n, Make, custom webhooks
 - Content & Media: ElevenLabs, Higgsfield
 
 ## Contact
@@ -770,6 +770,7 @@ We swap in new model versions the week they ship.
 
 **Production & Delivery**
 - Webflow — marketing site builds
+- WordPress — content sites & blogs
 - GitHub — daily updates + version control
 - Automation Hooks — n8n + Make + custom webhooks
 
