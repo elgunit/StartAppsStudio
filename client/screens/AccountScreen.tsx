@@ -7,6 +7,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import * as Haptics from "expo-haptics";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
@@ -67,8 +68,7 @@ export default function AccountScreen() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.6,
-      base64: true,
+      quality: 0.8,
     });
 
     if (result.canceled || !result.assets?.[0]) return;
@@ -76,12 +76,22 @@ export default function AccountScreen() {
 
     try {
       setUploading(true);
-      // Persist as a data URI so the avatar shows everywhere immediately
-      // without needing a separate file-hosting step.
-      const dataUri =
-        asset.base64
-          ? `data:image/jpeg;base64,${asset.base64}`
-          : asset.uri;
+      // Downscale to 512px and re-encode as JPEG so even very large source
+      // photos comfortably fit under the server's 1.5MB data-URI cap.
+      const manipulated = await ImageManipulator.manipulateAsync(
+        asset.uri,
+        [{ resize: { width: 512, height: 512 } }],
+        {
+          compress: 0.7,
+          format: ImageManipulator.SaveFormat.JPEG,
+          base64: true,
+        },
+      );
+      const base64 = manipulated.base64 ?? "";
+      if (!base64) {
+        throw new Error("Image processing failed");
+      }
+      const dataUri = `data:image/jpeg;base64,${base64}`;
       await apiRequest("PATCH", `/api/users/${user.id}`, { avatarUrl: dataUri });
       await refreshUser();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
