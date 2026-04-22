@@ -3573,6 +3573,53 @@
       <!-- AI Efficiency & Value -->
       <style>
         #ai-efficiency { margin-bottom: 80px; }
+        #ai-efficiency .ae-teaser {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          text-align: left;
+          padding: 28px 32px;
+          border-radius: 18px;
+          border: 2px solid #14b8a6;
+          background: linear-gradient(180deg, rgba(20,184,166,0.06), rgba(20,184,166,0.02));
+          color: var(--text);
+          cursor: pointer;
+          font: inherit;
+          transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+        #ai-efficiency .ae-teaser:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(20,184,166,0.18);
+          background: linear-gradient(180deg, rgba(20,184,166,0.10), rgba(20,184,166,0.04));
+        }
+        #ai-efficiency .ae-teaser-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 6px 12px; border-radius: 999px;
+          background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.45);
+          color: #14b8a6; font-size: 12px; font-weight: 700;
+          letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        #ai-efficiency .ae-teaser-title {
+          font-size: 22px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25;
+        }
+        #ai-efficiency .ae-teaser-sub {
+          color: var(--text-secondary); font-size: 15px; line-height: 1.55; max-width: 720px;
+        }
+        #ai-efficiency .ae-teaser-sub b { color: #14b8a6; font-weight: 700; }
+        #ai-efficiency .ae-teaser-cta {
+          margin-top: 6px;
+          display: inline-flex; align-items: center; gap: 8px;
+          color: #14b8a6; font-weight: 600; font-size: 14px;
+        }
+        #aiEfficiencyModal .ae-modal-content { max-width: 1040px; padding: 48px; }
+        #aiEfficiencyModal .ae-header { margin-top: 4px; }
+        @media (max-width: 720px) {
+          #ai-efficiency .ae-teaser { padding: 22px; }
+          #ai-efficiency .ae-teaser-title { font-size: 19px; }
+          #aiEfficiencyModal .ae-modal-content { padding: 28px 18px; }
+        }
         #ai-efficiency .ae-eyebrow {
           display: inline-flex;
           align-items: center;
@@ -3785,13 +3832,28 @@
         }
       </style>
       <section class="section" id="ai-efficiency" data-section-name="ai-efficiency">
-        <div class="ae-header">
-          <span class="ae-eyebrow"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
-          <h2 class="section-title">Stop burning credits. Start shipping product.</h2>
-          <p class="ae-sub">Most founders quietly burn <strong>$10,000 or more</strong> on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We bring the know-how and the delivery, so the spend turns into a working product instead of a learning bill.</p>
-        </div>
+        <button class="ae-teaser" type="button" onclick="openAiEfficiencyModal()" aria-haspopup="dialog" aria-controls="aiEfficiencyModal">
+          <span class="ae-teaser-badge"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
+          <span class="ae-teaser-title">Stop burning credits. Start shipping product.</span>
+          <span class="ae-teaser-sub">Why a managed AI stack delivers <b>3-10x</b> the value of going it alone, with the math, the comparison, and the proof.</span>
+          <span class="ae-teaser-cta">
+            See the comparison
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </button>
+      </section>
 
-        <div class="ae-compare">
+      <div class="modal-overlay" id="aiEfficiencyModal" role="dialog" aria-modal="true" aria-labelledby="aiEfficiencyModalTitle">
+        <div class="modal-content ae-modal-content">
+          <button class="modal-close" onclick="closeAiEfficiencyModal()" aria-label="Close">&times;</button>
+
+          <div class="ae-header">
+            <span class="ae-eyebrow"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
+            <h2 class="section-title" id="aiEfficiencyModalTitle">Stop burning credits. Start shipping product.</h2>
+            <p class="ae-sub">Most founders quietly burn <strong>$10,000 or more</strong> on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We bring the know-how and the delivery, so the spend turns into a working product instead of a learning bill.</p>
+          </div>
+
+          <div class="ae-compare">
           <div class="ae-panel alone">
             <span class="ae-panel-tag">Going it alone</span>
             <h3>Trial, error, and a credit card on file</h3>
@@ -3902,7 +3964,8 @@
             <p>You agree the deliverables and the price up front. We absorb the model bills, the retries, and the late-night iterations.</p>
           </div>
         </div>
-      </section>
+        </div>
+      </div>
 
       <!-- Pricing -->
       <section class="section" id="pricing" data-section-name="pricing">
@@ -4367,6 +4430,27 @@
 
       document.getElementById('whyModal').addEventListener('click', function(e) {
         if (e.target === this) closeWhyModal();
+      });
+
+      function openAiEfficiencyModal() {
+        document.getElementById('aiEfficiencyModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeAiEfficiencyModal() {
+        document.getElementById('aiEfficiencyModal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('aiEfficiencyModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAiEfficiencyModal();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          var aeModal = document.getElementById('aiEfficiencyModal');
+          if (aeModal && aeModal.classList.contains('open')) closeAiEfficiencyModal();
+        }
       });
 
 
