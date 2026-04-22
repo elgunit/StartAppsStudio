@@ -119,6 +119,20 @@ const caseStudies = [
   { title: "Legal Tech Portal", result: "+45% efficiency", industry: "Legal" },
 ];
 
+const aloneBullets = [
+  "Thousands of credits spent on prompts that almost work",
+  "Generic outputs that ignore your niche, users, and voice",
+  "Half-built assets with no one to stitch them together",
+  "Open-ended bills that grow every month you delay shipping",
+];
+
+const managedBullets = [
+  "Proprietary in-house model stack tuned for product, code, and copy",
+  "Expert prompting and review, so outputs land your niche on the first pass",
+  "Full lifecycle of assets and code, from first mock to live product",
+  "Fixed scope, fixed budget, no surprise bills mid-build",
+];
+
 const packages = [
   { name: "Mockup", price: "$699", credits: "Founder-ready visuals + starter functions", time: "3-5 days", badge: "AI + Figma" },
   { name: "Prototype", price: "$2,399", credits: "Clickable end-to-end demo", time: "5-10 days", badge: "AI + Figma", popular: true },
@@ -411,6 +425,95 @@ export default function WelcomeScreen() {
         </ThemedText>
       </View>
 
+      {/* AI Efficiency */}
+      <View style={styles.section}>
+        <SectionHeading
+          kicker="AI Efficiency & Value"
+          title="Stop burning credits. Start shipping product."
+          subtitle="Most founders quietly burn $10,000+ on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We turn that spend into a working product instead of a learning bill."
+        />
+        <View style={{ gap: Spacing.md }}>
+          <View
+            style={[
+              styles.aePanel,
+              {
+                backgroundColor: theme.backgroundDefault,
+                borderColor: theme.border,
+              },
+            ]}
+            testID="card-ae-alone"
+          >
+            <View style={[styles.aeTag, { backgroundColor: "#f8717122", borderColor: "#f87171" }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>Going it alone</ThemedText>
+            </View>
+            <ThemedText type="h3" style={styles.aePanelTitle}>
+              Trial, error, and a credit card on file
+            </ThemedText>
+            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
+              The cost of figuring it out yourself, in public, on the clock.
+            </ThemedText>
+            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
+              {aloneBullets.map((b) => (
+                <View key={b} style={styles.aeBulletRow}>
+                  <View style={[styles.aeBulletIcon, { backgroundColor: "#f8717122" }]}>
+                    <Feather name="x" size={12} color="#f87171" />
+                  </View>
+                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
+                    {b}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
+              <ThemedText style={[styles.aeStatValue, { color: "#f87171" }]}>$10k+</ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
+                typical spend before a real launch
+              </ThemedText>
+            </View>
+          </View>
+
+          <View
+            style={[
+              styles.aePanel,
+              {
+                backgroundColor: theme.backgroundDefault,
+                borderColor: "#14b8a6",
+                borderWidth: 2,
+              },
+            ]}
+            testID="card-ae-managed"
+          >
+            <View style={[styles.aeTag, { backgroundColor: "#14b8a622", borderColor: "#14b8a6" }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>With Start Apps Studio</ThemedText>
+            </View>
+            <ThemedText type="h3" style={styles.aePanelTitle}>
+              Know-how, plus the delivery to back it up
+            </ThemedText>
+            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
+              A managed AI stack and a team that has done this hundreds of times.
+            </ThemedText>
+            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
+              {managedBullets.map((b) => (
+                <View key={b} style={styles.aeBulletRow}>
+                  <View style={[styles.aeBulletIcon, { backgroundColor: "#14b8a622" }]}>
+                    <Feather name="check" size={12} color="#14b8a6" />
+                  </View>
+                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
+                    {b}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
+              <ThemedText style={[styles.aeStatValue, { color: "#14b8a6" }]}>3-10x</ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
+                value per dollar versus going it alone
+              </ThemedText>
+            </View>
+          </View>
+        </View>
+      </View>
+
       {/* Packages */}
       <View style={styles.section}>
         <SectionHeading
@@ -682,4 +785,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   ctaSubtitle: { textAlign: "center", maxWidth: 320, lineHeight: 22 },
+  aePanel: {
+    padding: Spacing.lg,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 1,
+  },
+  aeTag: {
+    alignSelf: "flex-start",
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+    borderRadius: BorderRadius.full,
+    borderWidth: 1,
+    marginBottom: Spacing.sm,
+  },
+  aeTagText: { fontSize: 11, fontWeight: "700" as const, letterSpacing: 0.4 },
+  aePanelTitle: { marginBottom: 4 },
+  aePanelLede: { marginBottom: Spacing.md, lineHeight: 20 },
+  aeBulletRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: Spacing.sm,
+  },
+  aeBulletIcon: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+  },
+  aeBulletText: { flex: 1, lineHeight: 18 },
+  aeStatRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    paddingTop: Spacing.md,
+    borderTopWidth: 1,
+  },
+  aeStatValue: { fontSize: 22, fontWeight: "700" as const, letterSpacing: -0.5 },
 });
