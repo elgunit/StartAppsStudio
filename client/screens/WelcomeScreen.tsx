@@ -630,11 +630,8 @@ export default function WelcomeScreen() {
             ]}
             testID="card-ae-alone"
           >
-            <View style={styles.aePanelHead}>
-              <View style={[styles.aeTagV2, { backgroundColor: "#f8717118", borderColor: "#f8717155" }]}>
-                <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>GOING IT ALONE</ThemedText>
-              </View>
-              <ThemedText style={[styles.aeStatBig, { color: "#f87171" }]}>$10k+</ThemedText>
+            <View style={[styles.aeTagV2, { backgroundColor: "#f8717118", borderColor: "#f8717155", marginBottom: Spacing.sm }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>GOING IT ALONE</ThemedText>
             </View>
             <ThemedText type="h3" style={styles.aePanelTitle}>
               Trial, error, and a credit card on file
@@ -663,11 +660,8 @@ export default function WelcomeScreen() {
             ]}
             testID="card-ae-managed"
           >
-            <View style={styles.aePanelHead}>
-              <View style={[styles.aeTagV2, { backgroundColor: "#14b8a618", borderColor: "#14b8a655" }]}>
-                <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>WITH START APPS STUDIO</ThemedText>
-              </View>
-              <ThemedText style={[styles.aeStatBig, { color: "#14b8a6" }]}>3-10x</ThemedText>
+            <View style={[styles.aeTagV2, { backgroundColor: "#14b8a618", borderColor: "#14b8a655", marginBottom: Spacing.sm }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>WITH START APPS STUDIO</ThemedText>
             </View>
             <ThemedText type="h3" style={styles.aePanelTitle}>
               Know-how, plus the delivery to back it up
