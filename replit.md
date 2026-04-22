@@ -36,7 +36,8 @@ Key entities: Users (client/designer roles), Projects (with status workflow), Me
 
 ### Visitor Analytics
 - Anonymous-friendly tracking pipeline: `/api/track/section-view`, `/api/track/visitor-event`, `/api/track/active-visitor`, `/api/track/social-click`
-- Admin reads (designer-only via `?adminId=`): `/api/admin/section-views`, `/api/admin/visitor-events`
+- Admin reads (designer-only via `?adminId=`): `/api/admin/section-views`, `/api/admin/section-views/funnel`, `/api/admin/visitor-events`
+- Desktop landing page (`server/templates/desktop-landing.html`) tags every major `<section>` with `data-section-name` and pings `/api/track/section-view` once per session when the section is ≥50% visible (IntersectionObserver). Funnel endpoint reports unique visitors per section + % of hero viewers who reached each section.
 - Frontend hooks: `useSectionTracker`, `useScrollDepth`, `useVisitorEvent`, `useActiveVisitorNotification`
 - `ScrollToTopOnNavigate` (mounted in App.tsx with shared NavigationContainer ref) drives scroll-depth tracking and one-shot per-session active-visitor email at 15% scroll
 - `Footer` component (Instagram + LinkedIn) emits social-click email notifications via Resend

@@ -56,7 +56,7 @@ export interface JournalTrendRow {
   buckets: TrendBucket[];
 }
 import { db } from "./db";
-import { eq, desc, and, or, sql } from "drizzle-orm";
+import { eq, desc, and, or, sql, inArray } from "drizzle-orm";
 
 export interface IStorage {
   // Users
@@ -127,6 +127,17 @@ export interface IStorage {
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
   getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
   getJournalConversionTrends(from?: Date, to?: Date): Promise<JournalTrendRow[]>;
+  getSectionViewFunnel(from?: Date, to?: Date): Promise<{
+    totalVisitors: number;
+    heroVisitors: number;
+    sections: {
+      sectionName: string;
+      uniqueVisitors: number;
+      heroToSectionVisitors: number;
+      reachedFromHeroPct: number | null;
+      lastSeen: Date;
+    }[];
+  }>;
 
   // AI assistant traffic
   recordAiCrawlerHit(hit: InsertAiCrawlerHit): Promise<AiCrawlerHit>;
@@ -653,6 +664,102 @@ export class DatabaseStorage implements IStorage {
     });
 
     return result;
+  }
+
+  // Section-view funnel — for each section, how many unique visitors saw it
+  // and what % of hero viewers also reached it (true set intersection on
+  // visitor_id, so the percentage cannot exceed 100). Lets us see where
+  // founders actually bounce.
+  async getSectionViewFunnel(from?: Date, to?: Date): Promise<{
+    totalVisitors: number;
+    heroVisitors: number;
+    sections: {
+      sectionName: string;
+      uniqueVisitors: number;
+      heroToSectionVisitors: number;
+      reachedFromHeroPct: number | null;
+      lastSeen: Date;
+    }[];
+  }> {
+    const conditions = [] as ReturnType<typeof sql>[];
+    if (from) conditions.push(sql`${sectionViews.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${sectionViews.createdAt} <= ${to}`);
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+    // Per-section unique visitor counts and last-seen timestamp.
+    const rows = await db
+      .select({
+        sectionName: sectionViews.sectionName,
+        uniqueVisitors: sql<number>`count(distinct ${sectionViews.visitorId})`.as("uv"),
+        lastSeen: sql<Date>`max(${sectionViews.createdAt})`,
+      })
+      .from(sectionViews)
+      .where(whereClause)
+      .groupBy(sectionViews.sectionName);
+
+    // Total unique visitors across the window.
+    const totalVisitorsRow = await db
+      .select({ uv: sql<number>`count(distinct ${sectionViews.visitorId})` })
+      .from(sectionViews)
+      .where(whereClause);
+    const totalVisitors = Number(totalVisitorsRow[0]?.uv ?? 0);
+
+    // Set of visitor_ids that viewed the hero section in this window.
+    const heroVisitorRows = await db
+      .selectDistinct({ visitorId: sectionViews.visitorId })
+      .from(sectionViews)
+      .where(
+        whereClause
+          ? and(whereClause, sql`${sectionViews.sectionName} = 'hero'`)
+          : sql`${sectionViews.sectionName} = 'hero'`,
+      );
+    const heroVisitorIds = heroVisitorRows.map((r) => r.visitorId);
+    const heroVisitors = heroVisitorIds.length;
+
+    // For each section, count distinct visitors who ALSO viewed hero in the
+    // same window. We pass the hero visitor set explicitly so the date filter
+    // is honored on both sides of the intersection (numerator and denominator
+    // share the same window).
+    let heroToSectionMap = new Map<string, number>();
+    if (heroVisitors > 0) {
+      const intersectRows = await db
+        .select({
+          sectionName: sectionViews.sectionName,
+          c: sql<number>`count(distinct ${sectionViews.visitorId})`,
+        })
+        .from(sectionViews)
+        .where(
+          whereClause
+            ? and(
+                whereClause,
+                inArray(sectionViews.visitorId, heroVisitorIds),
+              )
+            : inArray(sectionViews.visitorId, heroVisitorIds),
+        )
+        .groupBy(sectionViews.sectionName);
+      heroToSectionMap = new Map(
+        intersectRows.map((r) => [r.sectionName, Number(r.c)]),
+      );
+    }
+
+    const sections = rows
+      .map((r) => {
+        const uv = Number(r.uniqueVisitors);
+        const intersection = heroToSectionMap.get(r.sectionName) ?? 0;
+        return {
+          sectionName: r.sectionName,
+          uniqueVisitors: uv,
+          heroToSectionVisitors: intersection,
+          reachedFromHeroPct:
+            heroVisitors > 0
+              ? Math.round((intersection / heroVisitors) * 1000) / 10
+              : null,
+          lastSeen: r.lastSeen,
+        };
+      })
+      .sort((a, b) => b.uniqueVisitors - a.uniqueVisitors);
+
+    return { totalVisitors, heroVisitors, sections };
   }
 
   // AI assistant / crawler traffic

@@ -2609,7 +2609,7 @@
   <body>
     <div class="container">
       <!-- Hero -->
-      <section class="hero">
+      <section class="hero" data-section-name="hero">
         <div class="hero-aurora" aria-hidden="true"></div>
         <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Booking April-May 2026 · 3 slots left</span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
@@ -2693,7 +2693,7 @@
       </div>
       
       <!-- What We Do -->
-      <section class="section">
+      <section class="section" data-section-name="what-we-ship">
         <h2 class="section-title">What we ship</h2>
         <p class="section-subtitle">One landing page or a full multi-platform product — we cover both.</p>
         <div class="service-tabs">
@@ -2827,7 +2827,7 @@
       </section>
 
       <!-- Why Start Apps Studio -->
-      <div class="why-section">
+      <div class="why-section" data-section-name="why">
         <div class="section-header">
           <h2>Why Start Apps Studio?</h2>
           <p>Everything you need to launch, nothing you don't</p>
@@ -2968,7 +2968,7 @@
       </div>
       
       <!-- Expertise -->
-      <section class="section">
+      <section class="section" data-section-name="expertise">
         <h2 class="section-title">Five hats, one partner</h2>
         <p class="section-subtitle">One team that swaps roles as your project moves from idea to launch.</p>
         
@@ -3076,7 +3076,7 @@
       </section>
       
       <!-- Industries -->
-      <section class="section">
+      <section class="section" data-section-name="industries">
         <h2 class="section-title">Industry Expertise</h2>
         <p class="section-subtitle">Deep experience across key sectors</p>
         <div class="industries-scroll" id="industriesBelt">
@@ -3111,7 +3111,7 @@
       </section>
       
       <!-- Recent Work -->
-      <section class="section">
+      <section class="section" data-section-name="case-studies">
         <h2 class="section-title">Selected projects</h2>
         <p class="section-subtitle">Shipped products across healthcare, fintech, retail and more.</p>
         
@@ -3343,7 +3343,7 @@
       </section>
       
       <!-- How It Works -->
-      <section class="section">
+      <section class="section" data-section-name="how-it-works">
         <h2 class="section-title">How It Works</h2>
         <p class="section-subtitle">Four steps. No technical background required.</p>
         <div class="how-bento" id="howItWorksGrid">
@@ -3391,7 +3391,7 @@
       </section>
       
       <!-- Our Toolkit -->
-      <section class="section" id="toolkit">
+      <section class="section" id="toolkit" data-section-name="toolkit">
         <h2 class="section-title">Backed by the best models</h2>
         <p class="section-subtitle">A small team that ships like a big one.</p>
         <div class="toolkit-meta">
@@ -3784,7 +3784,7 @@
           #ai-efficiency .ae-stat-value { font-size: 20px; }
         }
       </style>
-      <section class="section" id="ai-efficiency">
+      <section class="section" id="ai-efficiency" data-section-name="ai-efficiency">
         <div class="ae-header">
           <span class="ae-eyebrow"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
           <h2 class="section-title">Stop burning credits. Start shipping product.</h2>
@@ -3905,7 +3905,7 @@
       </section>
 
       <!-- Pricing -->
-      <section class="section" id="pricing">
+      <section class="section" id="pricing" data-section-name="pricing">
         <h2 class="section-title">Pricing & timelines</h2>
         <p class="section-subtitle">Pick the lane that fits your stage. Every package includes unlimited revisions while we build.</p>
         
@@ -4044,7 +4044,7 @@
       </section>
       
       <!-- Contact -->
-      <section class="contact" id="contact">
+      <section class="contact" id="contact" data-section-name="contact">
         <div class="contact-inner">
           <!-- Left panel -->
           <div class="contact-left" id="formHeader">
@@ -4201,7 +4201,7 @@
     <!-- FAQ section — answers to questions founders ask repeatedly.
          Mirrors the FAQPage JSON-LD in <head> so Google can surface this
          as a rich result. -->
-    <section class="faq-section" id="faq" aria-labelledby="faqTitle">
+    <section class="faq-section" id="faq" aria-labelledby="faqTitle" data-section-name="faq">
       <header class="faq-header">
         <h2 class="faq-title" id="faqTitle">Frequently asked questions</h2>
         <p class="faq-subtitle">Pricing, timelines, scope, ownership, and what happens after launch.</p>
@@ -4245,7 +4245,7 @@
     <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
          still see the latest articles. -->
-    <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle">
+    <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle" data-section-name="journal-notes">
       <div class="journal-notes-header">
         <h2 class="journal-notes-title" id="journalNotesTitle">From the Journal <em>· field notes</em></h2>
         <a href="/journal" class="journal-notes-link">All notes &rarr;</a>
@@ -4742,6 +4742,63 @@
           }
 
           window.addEventListener('scroll', onScroll, { passive: true });
+        } catch (_) {}
+      })();
+
+      // Section-view analytics — fires once per section per session when the
+      // section becomes >=50% visible. Lets us see how far visitors actually
+      // scroll and which sections are dead weight.
+      (function trackSectionViews() {
+        try {
+          if (!('IntersectionObserver' in window)) return;
+          var ID_KEY = 'sas_visitor_id_v1';
+          var SEEN_KEY = 'sas_section_seen_v1';
+          var visitorId = localStorage.getItem(ID_KEY);
+          if (!visitorId) {
+            visitorId = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+            try { localStorage.setItem(ID_KEY, visitorId); } catch (_) {}
+          }
+          var seen;
+          try { seen = new Set(JSON.parse(sessionStorage.getItem(SEEN_KEY) || '[]')); }
+          catch (_) { seen = new Set(); }
+          function persistSeen() {
+            try { sessionStorage.setItem(SEEN_KEY, JSON.stringify(Array.from(seen))); } catch (_) {}
+          }
+          function report(name) {
+            var payload = {
+              sectionName: name,
+              visitorId: visitorId,
+              userAgent: navigator.userAgent,
+              referrer: document.referrer || ''
+            };
+            try {
+              var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+              if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track/section-view', blob))) {
+                fetch('/api/track/section-view', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                  keepalive: true
+                }).catch(function () {});
+              }
+            } catch (_) {}
+          }
+          var sections = document.querySelectorAll('[data-section-name]');
+          if (!sections.length) return;
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              var name = entry.target.getAttribute('data-section-name');
+              if (!name) return;
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                if (seen.has(name)) return;
+                seen.add(name);
+                persistSeen();
+                report(name);
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: [0.5] });
+          sections.forEach(function (s) { observer.observe(s); });
         } catch (_) {}
       })();
     </script>

@@ -1110,6 +1110,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Section-view funnel — designer-only aggregated view answering
+  // "what % of hero viewers actually reach pricing/AI efficiency?".
+  app.get("/api/admin/section-views/funnel", async (req, res) => {
+    try {
+      if (!(await requireAdmin(req.query.adminId))) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const parseDate = (v: unknown): Date | undefined => {
+        if (typeof v !== "string" || !v) return undefined;
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? undefined : d;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      const funnel = await storage.getSectionViewFunnel(from, to);
+      res.json({
+        from: from?.toISOString() ?? null,
+        to: to?.toISOString() ?? null,
+        ...funnel,
+      });
+    } catch (error) {
+      console.error("section-views funnel error:", error);
+      res.status(500).json({ error: "Failed to fetch section-view funnel" });
+    }
+  });
+
   app.get("/api/admin/journal/conversion-stats", async (req, res) => {
     try {
       if (!(await requireAdmin(req.query.adminId))) {
