@@ -2655,7 +2655,7 @@
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
         <div class="hero-aurora" aria-hidden="true"></div>
-        <span class="hero-eyebrow" id="bookingPin" aria-live="polite"><span class="hero-eyebrow-dot"></span><span class="booking-pin-stage"><span class="booking-pin-text booking-pin-current" id="bookingPinCurrent">Booking April-May 2026 · 3 slots left</span><span class="booking-pin-text booking-pin-next" id="bookingPinNext" aria-hidden="true"></span></span></span>
+        <span class="hero-eyebrow" id="bookingPin" aria-live="polite"><span class="hero-eyebrow-dot"></span><span class="booking-pin-stage"><span class="booking-pin-text booking-pin-current" id="bookingPinCurrent">Two founder seats remain this April</span><span class="booking-pin-text booking-pin-next" id="bookingPinNext" aria-hidden="true"></span></span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">For founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
 
@@ -3633,10 +3633,13 @@
           font: inherit;
           transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
         }
-        #ai-efficiency .ae-teaser:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 32px rgba(20,184,166,0.18);
+        #ai-efficiency .ae-teaser:hover,
+        #ai-efficiency .ae-teaser:focus-visible,
+        #ai-efficiency .ae-teaser:active {
+          transform: none;
+          box-shadow: 0 0 0 2px rgba(20,184,166,0.28), 0 12px 32px rgba(20,184,166,0.18);
           background: linear-gradient(180deg, rgba(20,184,166,0.10), rgba(20,184,166,0.04));
+          outline: none;
         }
         #ai-efficiency .ae-teaser-badge {
           display: inline-flex; align-items: center; gap: 8px;
@@ -5212,18 +5215,19 @@
           var nextYear = nextMonthIdx === 0 ? year + 1 : year;
           var monthName = MONTHS[monthIdx];
           var nextMonthName = MONTHS[nextMonthIdx];
-          var clientsLine = CLIENTS_IN_COMPLETION + ' clients in completion this ' + monthName;
 
           if (daysToMonthEnd <= 10) {
+            // Departure-board cadence: urgency, proof, what comes next.
+            // Wording is tuned for founders evaluating a build studio; no shared words across tiles.
             return [
-              SLOTS_REMAINING + ' slots left this ' + monthName,
-              clientsLine,
-              'Booking ' + nextMonthName + ' ' + nextYear,
+              'Two founder seats remain this ' + monthName,
+              'Currently shipping with active clients',
+              nextMonthName + ' intake opens after handoff',
             ];
           }
           return [
             'Booking ' + monthName + ' ' + year,
-            clientsLine,
+            'Currently shipping with active clients',
           ];
         }
 
