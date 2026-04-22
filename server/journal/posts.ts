@@ -854,12 +854,6 @@ export const posts: Post[] = [
         ],
       },
     ],
-    sources: [
-      {
-        label: "Backlink Management — managed link acquisition platform.",
-        url: "https://backlinkmanagement.io",
-      },
-    ],
   },
 ];
 
