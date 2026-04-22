@@ -3613,8 +3613,54 @@
           display: inline-flex; align-items: center; gap: 8px;
           color: #14b8a6; font-weight: 600; font-size: 14px;
         }
-        #aiEfficiencyModal .ae-modal-content { max-width: 1040px; padding: 48px; }
-        #aiEfficiencyModal .ae-header { margin-top: 4px; }
+        #aiEfficiencyModal .ae-modal-content { max-width: 880px; padding: 48px; }
+        #aiEfficiencyModal .ae-modal-hero {
+          text-align: center;
+          max-width: 640px;
+          margin: 0 auto 28px;
+          display: flex; flex-direction: column; align-items: center; gap: 14px;
+        }
+        #aiEfficiencyModal .ae-modal-hero .ae-eyebrow {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 6px 12px; border-radius: 999px;
+          background: rgba(20, 184, 166, 0.10);
+          border: 1px solid rgba(20, 184, 166, 0.40);
+          color: #14b8a6;
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase;
+        }
+        #aiEfficiencyModal .ae-modal-hero h2 {
+          font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em;
+          margin: 0;
+        }
+        #aiEfficiencyModal .ae-modal-hero .ae-modal-lede {
+          color: var(--text-secondary); font-size: 15px; line-height: 1.6;
+          max-width: 520px; margin: 0;
+        }
+        #aiEfficiencyModal .ae-section-label {
+          display: block;
+          text-align: center;
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--text-secondary);
+          margin: 8px auto 4px;
+        }
+        #aiEfficiencyModal .ae-modal-cta {
+          display: inline-flex; align-items: center; gap: 10px;
+          margin: 24px auto 0;
+          padding: 14px 28px;
+          border-radius: 999px;
+          background: var(--text);
+          color: var(--bg);
+          font-size: 15px; font-weight: 700;
+          border: none; cursor: pointer;
+          text-decoration: none;
+          transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        #aiEfficiencyModal .ae-modal-cta:hover { transform: translateY(-1px); opacity: 0.92; }
+        #aiEfficiencyModal .ae-modal-cta-wrap { text-align: center; }
+        @media (max-width: 600px) {
+          #aiEfficiencyModal .ae-modal-hero h2 { font-size: 26px; }
+        }
         @media (max-width: 720px) {
           #ai-efficiency .ae-teaser { padding: 22px; }
           #ai-efficiency .ae-teaser-title { font-size: 19px; }
@@ -3674,12 +3720,14 @@
         }
         #ai-efficiency .ae-panel.alone {
           border-color: rgba(248, 113, 113, 0.30);
+          border-left: 4px solid #f87171;
           background:
             radial-gradient(120% 90% at 0% 0%, rgba(248, 113, 113, 0.10), transparent 55%),
             var(--bg-elevated);
         }
         #ai-efficiency .ae-panel.managed {
           border-color: rgba(45, 212, 191, 0.40);
+          border-left: 4px solid #14b8a6;
           background:
             radial-gradient(120% 90% at 100% 0%, rgba(45, 212, 191, 0.14), transparent 55%),
             var(--bg-elevated);
@@ -3687,12 +3735,21 @@
             0 0 0 1px rgba(45, 212, 191, 0.10),
             0 18px 50px -28px rgba(20, 184, 166, 0.55);
         }
+        #ai-efficiency .ae-panel-head {
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 12px; margin-bottom: 14px; flex-wrap: wrap;
+        }
+        #ai-efficiency .ae-panel-head .ae-stat-value {
+          font-size: 26px; font-weight: 800; letter-spacing: -0.02em;
+        }
+        #ai-efficiency .ae-panel.alone .ae-panel-head .ae-stat-value { color: #f87171; }
+        #ai-efficiency .ae-panel.managed .ae-panel-head .ae-stat-value { color: #14b8a6; }
         #ai-efficiency .ae-panel-tag {
           display: inline-flex; align-items: center; gap: 8px;
           font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
           text-transform: uppercase;
           padding: 5px 10px; border-radius: 999px;
-          margin-bottom: 14px;
+          margin: 0;
         }
         #ai-efficiency .ae-panel.alone .ae-panel-tag {
           color: #fca5a5;
@@ -3784,17 +3841,18 @@
         }
         #ai-efficiency .ae-ratio-legend span b { color: var(--text); font-weight: 600; }
 
-        /* Value proof cards */
+        /* Value proof cards (vertical stack, horizontal row layout) */
         #ai-efficiency .ae-proof {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
           max-width: 1040px;
           margin: 0 auto;
         }
         #ai-efficiency .ae-proof-card {
-          padding: 22px;
-          border-radius: 18px;
+          display: flex; align-items: flex-start; gap: 16px;
+          padding: 18px 20px;
+          border-radius: 16px;
           border: 1px solid var(--border);
           background: var(--bg-elevated);
           backdrop-filter: blur(16px);
@@ -3802,20 +3860,27 @@
           transition: transform 0.18s ease, border-color 0.18s ease;
         }
         #ai-efficiency .ae-proof-card:hover {
-          transform: translateY(-2px);
+          transform: translateY(-1px);
           border-color: rgba(45, 212, 191, 0.45);
         }
         #ai-efficiency .ae-proof-icon {
-          width: 36px; height: 36px;
+          flex-shrink: 0;
+          width: 40px; height: 40px;
           border-radius: 10px;
           display: inline-flex; align-items: center; justify-content: center;
-          margin-bottom: 12px;
+          margin-bottom: 0;
           color: #14b8a6;
           background: rgba(20, 184, 166, 0.12);
           border: 1px solid rgba(94, 234, 212, 0.30);
         }
-        #ai-efficiency .ae-proof-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-        #ai-efficiency .ae-proof-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+        #ai-efficiency .ae-proof-body { flex: 1; }
+        #ai-efficiency .ae-proof-card h4 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+        #ai-efficiency .ae-proof-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+        /* Ratio legend with swatches */
+        #ai-efficiency .ae-ratio-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        #ai-efficiency .ae-ratio-legend .ae-ratio-swatch {
+          display: inline-block; width: 10px; height: 10px; border-radius: 3px;
+        }
 
         @media (max-width: 720px) {
           #ai-efficiency .ae-compare { grid-template-columns: 1fr; }
@@ -3847,123 +3912,136 @@
         <div class="modal-content ae-modal-content">
           <button class="modal-close" onclick="closeAiEfficiencyModal()" aria-label="Close">&times;</button>
 
-          <div class="ae-header">
+          <div class="ae-modal-hero">
             <span class="ae-eyebrow"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
-            <h2 class="section-title" id="aiEfficiencyModalTitle">Stop burning credits. Start shipping product.</h2>
-            <p class="ae-sub">Most founders quietly burn <strong>$10,000 or more</strong> on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We bring the know-how and the delivery, so the spend turns into a working product instead of a learning bill.</p>
+            <h2 id="aiEfficiencyModalTitle">Stop burning credits.<br>Start shipping product.</h2>
+            <p class="ae-modal-lede">Most founders quietly burn $10,000+ on AI credits and tools that never quite fit their niche before they ship anything real. We turn that spend into working product.</p>
           </div>
 
           <div class="ae-compare">
-          <div class="ae-panel alone">
-            <span class="ae-panel-tag">Going it alone</span>
-            <h3>Trial, error, and a credit card on file</h3>
-            <p class="ae-panel-lede">The cost of figuring it out yourself, in public, on the clock.</p>
-            <ul class="ae-list">
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </span>
-                Thousands of credits spent on prompts that almost work
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </span>
-                Generic outputs that ignore your niche, your users, and your voice
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </span>
-                Five tabs of half-built assets with no one to stitch them together
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </span>
-                Open-ended bills that grow every month you delay shipping
-              </li>
-            </ul>
-            <div class="ae-stat">
-              <span class="ae-stat-value">$10k+</span>
-              <span class="ae-stat-label">typical spend before a real launch</span>
+            <div class="ae-panel alone">
+              <div class="ae-panel-head">
+                <span class="ae-panel-tag">Going it alone</span>
+                <span class="ae-stat-value">$10k+</span>
+              </div>
+              <h3>Trial, error, and a credit card on file</h3>
+              <p class="ae-panel-lede">The cost of figuring it out yourself, in public, on the clock.</p>
+              <ul class="ae-list">
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                  Thousands of credits spent on prompts that almost work
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                  Generic outputs that ignore your niche, your users, and your voice
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                  Half-built assets with no one to stitch them together
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                  Open-ended bills that grow every month you delay shipping
+                </li>
+              </ul>
+            </div>
+
+            <div class="ae-panel managed">
+              <div class="ae-panel-head">
+                <span class="ae-panel-tag">With Start Apps Studio</span>
+                <span class="ae-stat-value">3-10x</span>
+              </div>
+              <h3>Know-how, plus the delivery to back it up</h3>
+              <p class="ae-panel-lede">A managed AI stack and a team that has done this hundreds of times.</p>
+              <ul class="ae-list">
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  Proprietary in-house model stack tuned for product, code, and copy
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  Expert prompting and review, so outputs land your niche on the first pass
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  Full lifecycle of assets and code, from first mock to live product
+                </li>
+                <li>
+                  <span class="ae-bullet">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  Fixed scope, fixed budget, no surprise bills mid-build
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div class="ae-panel managed">
-            <span class="ae-panel-tag">With Start Apps Studio</span>
-            <h3>Know-how, plus the delivery to back it up</h3>
-            <p class="ae-panel-lede">A managed AI stack and a team that has done this hundreds of times.</p>
-            <ul class="ae-list">
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                Proprietary in-house model stack tuned for product, code, and copy
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                Expert prompting and review, so outputs land your niche on the first pass
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                Full lifecycle of assets and code, from first mock to live product
-              </li>
-              <li>
-                <span class="ae-bullet">
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </span>
-                Fixed scope, fixed budget, no surprise bills mid-build
-              </li>
-            </ul>
-            <div class="ae-stat">
-              <span class="ae-stat-value">3-10x</span>
-              <span class="ae-stat-label">value per dollar versus going it alone</span>
+          <div class="ae-ratio" role="img" aria-label="Credit waste reduction: 68 percent of typical AI spend turns into wasted credits when going alone, versus the managed Start Apps Studio stack which directs spend to shipped product.">
+            <div class="ae-ratio-head">
+              <span class="ae-ratio-title">Credit waste, at a glance</span>
+              <span class="ae-ratio-caption">Managed delivery converts about <b>3x</b> more spend into shipped product.</span>
+            </div>
+            <div class="ae-ratio-track">
+              <div class="ae-ratio-fill"></div>
+            </div>
+            <div class="ae-ratio-legend">
+              <span><span class="ae-ratio-swatch" style="background:#14b8a6"></span><b>Managed</b> · ~32% iteration</span>
+              <span><span class="ae-ratio-swatch" style="background:#f87171"></span><b>Solo</b> · ~68% lost</span>
             </div>
           </div>
-        </div>
 
-        <div class="ae-ratio" role="img" aria-label="Credit waste reduction: 68 percent of typical AI spend turns into wasted credits when going alone, versus the managed Start Apps Studio stack which directs spend to shipped product.">
-          <div class="ae-ratio-head">
-            <span class="ae-ratio-title">Credit waste, at a glance</span>
-            <span class="ae-ratio-caption">Managed delivery converts about <b>3x</b> more of the same spend into shipped product.</span>
-          </div>
-          <div class="ae-ratio-track">
-            <div class="ae-ratio-fill"></div>
-          </div>
-          <div class="ae-ratio-legend">
-            <span><b>Managed</b> · ~32% spend on iteration</span>
-            <span><b>Solo</b> · ~68% lost to trial and error</span>
-          </div>
-        </div>
+          <span class="ae-section-label">What managed delivery gives you</span>
 
-        <div class="ae-proof">
-          <div class="ae-proof-card">
-            <div class="ae-proof-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <div class="ae-proof">
+            <div class="ae-proof-card">
+              <div class="ae-proof-icon">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+              </div>
+              <div class="ae-proof-body">
+                <h4>Proprietary AI stack</h4>
+                <p>A curated mix of frontier and in-house models, picked per task so you pay for output, not experimentation.</p>
+              </div>
             </div>
-            <h4>Proprietary AI stack</h4>
-            <p>A curated mix of frontier and in-house models, picked per task so you pay for output, not experimentation.</p>
-          </div>
-          <div class="ae-proof-card">
-            <div class="ae-proof-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <div class="ae-proof-card">
+              <div class="ae-proof-icon">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              </div>
+              <div class="ae-proof-body">
+                <h4>Full asset and code lifecycle</h4>
+                <p>One team owns the brand, the design system, the copy, the code, and the launch, so nothing gets dropped between tools.</p>
+              </div>
             </div>
-            <h4>Full asset and code lifecycle</h4>
-            <p>One team owns the brand, the design system, the copy, the code, and the launch, so nothing gets dropped between tools.</p>
-          </div>
-          <div class="ae-proof-card">
-            <div class="ae-proof-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+            <div class="ae-proof-card">
+              <div class="ae-proof-icon">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div class="ae-proof-body">
+                <h4>Fixed scope, fixed budget</h4>
+                <p>You agree the deliverables and the price up front. We absorb the model bills, the retries, and the late-night iterations.</p>
+              </div>
             </div>
-            <h4>Fixed scope, fixed budget</h4>
-            <p>You agree the deliverables and the price up front. We absorb the model bills, the retries, and the late-night iterations.</p>
           </div>
-        </div>
+
+          <div class="ae-modal-cta-wrap">
+            <a class="ae-modal-cta" href="#contact" onclick="closeAiEfficiencyModal()">
+              Start your build
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
       </div>
 
