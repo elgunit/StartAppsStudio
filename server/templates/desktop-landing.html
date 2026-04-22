@@ -3895,6 +3895,188 @@
           #ai-efficiency .ae-panel h3 { font-size: 18px; }
           #ai-efficiency .ae-stat-value { font-size: 20px; }
         }
+
+        /* Modal-scoped mirrors of the AE styles (panels, bullets, ratio, proof) */
+        #aiEfficiencyModal .ae-compare {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+          max-width: 100%;
+          margin: 0 0 24px;
+        }
+        #aiEfficiencyModal .ae-panel {
+          position: relative;
+          padding: 26px;
+          border-radius: 22px;
+          border: 1px solid var(--border);
+          background: var(--bg-elevated);
+          backdrop-filter: blur(24px) saturate(140%);
+          -webkit-backdrop-filter: blur(24px) saturate(140%);
+          overflow: hidden;
+          isolation: isolate;
+        }
+        #aiEfficiencyModal .ae-panel::before {
+          content: "";
+          position: absolute; inset: 0;
+          background: radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.05), transparent 60%);
+          pointer-events: none;
+          z-index: -1;
+        }
+        #aiEfficiencyModal .ae-panel.alone {
+          border-color: rgba(248, 113, 113, 0.30);
+          border-left: 4px solid #f87171;
+          background:
+            radial-gradient(120% 90% at 0% 0%, rgba(248, 113, 113, 0.10), transparent 55%),
+            var(--bg-elevated);
+        }
+        #aiEfficiencyModal .ae-panel.managed {
+          border-color: rgba(45, 212, 191, 0.40);
+          border-left: 4px solid #14b8a6;
+          background:
+            radial-gradient(120% 90% at 100% 0%, rgba(45, 212, 191, 0.14), transparent 55%),
+            var(--bg-elevated);
+          box-shadow:
+            0 0 0 1px rgba(45, 212, 191, 0.10),
+            0 18px 50px -28px rgba(20, 184, 166, 0.55);
+        }
+        #aiEfficiencyModal .ae-panel-tag {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+          text-transform: uppercase;
+          padding: 5px 10px; border-radius: 999px;
+          margin: 0 0 12px;
+        }
+        #aiEfficiencyModal .ae-panel.alone .ae-panel-tag {
+          color: #fca5a5;
+          background: rgba(248, 113, 113, 0.10);
+          border: 1px solid rgba(248, 113, 113, 0.28);
+        }
+        #aiEfficiencyModal .ae-panel.managed .ae-panel-tag {
+          color: #5eead4;
+          background: rgba(20, 184, 166, 0.12);
+          border: 1px solid rgba(94, 234, 212, 0.32);
+        }
+        #aiEfficiencyModal .ae-panel h3 {
+          font-size: 20px; font-weight: 700; line-height: 1.3;
+          margin: 0 0 6px;
+        }
+        #aiEfficiencyModal .ae-panel-lede {
+          color: var(--text-secondary); font-size: 14px; margin: 0 0 18px; line-height: 1.55;
+        }
+        #aiEfficiencyModal .ae-list {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-direction: column; gap: 10px;
+        }
+        #aiEfficiencyModal .ae-list li {
+          display: flex; gap: 12px; align-items: flex-start;
+          font-size: 14.5px; color: var(--text-secondary); line-height: 1.55;
+        }
+        #aiEfficiencyModal .ae-list li .ae-bullet {
+          flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px;
+          display: inline-flex; align-items: center; justify-content: center;
+          margin-top: 1px;
+        }
+        #aiEfficiencyModal .ae-panel.alone .ae-bullet {
+          background: rgba(248, 113, 113, 0.12);
+          color: #f87171;
+          border: 1px solid rgba(248, 113, 113, 0.30);
+        }
+        #aiEfficiencyModal .ae-panel.managed .ae-bullet {
+          background: rgba(20, 184, 166, 0.14);
+          color: #14b8a6;
+          border: 1px solid rgba(94, 234, 212, 0.36);
+        }
+
+        #aiEfficiencyModal .ae-ratio {
+          margin: 0 0 24px;
+          padding: 22px 24px;
+          border-radius: 22px;
+          border: 1px solid var(--border);
+          background:
+            linear-gradient(180deg, rgba(20, 184, 166, 0.05), transparent 80%),
+            var(--bg-elevated);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+        }
+        #aiEfficiencyModal .ae-ratio-head {
+          display: flex; justify-content: space-between; align-items: baseline;
+          gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
+        }
+        #aiEfficiencyModal .ae-ratio-title {
+          font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--text-secondary);
+        }
+        #aiEfficiencyModal .ae-ratio-caption { font-size: 13px; color: var(--text-secondary); }
+        #aiEfficiencyModal .ae-ratio-caption b { color: #14b8a6; font-weight: 700; }
+        #aiEfficiencyModal .ae-ratio-track {
+          position: relative;
+          height: 14px;
+          border-radius: 999px;
+          background: rgba(248, 113, 113, 0.18);
+          overflow: hidden;
+          border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+        #aiEfficiencyModal .ae-ratio-fill {
+          position: absolute; top: 0; left: 0; bottom: 0;
+          width: 32%;
+          border-radius: 999px;
+          background: linear-gradient(90deg, #14b8a6, #22d3ee);
+          box-shadow: 0 0 18px rgba(34, 211, 238, 0.45);
+        }
+        #aiEfficiencyModal .ae-ratio-legend {
+          margin-top: 10px;
+          display: flex; justify-content: space-between;
+          font-size: 12px; color: var(--text-secondary);
+          flex-wrap: wrap; gap: 8px;
+        }
+        #aiEfficiencyModal .ae-ratio-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        #aiEfficiencyModal .ae-ratio-legend span b { color: var(--text); font-weight: 600; }
+        #aiEfficiencyModal .ae-ratio-legend .ae-ratio-swatch {
+          display: inline-block; width: 10px; height: 10px; border-radius: 3px;
+        }
+
+        #aiEfficiencyModal .ae-proof {
+          display: flex; flex-direction: column; gap: 12px;
+          margin: 0 0 8px;
+        }
+        #aiEfficiencyModal .ae-proof-card {
+          display: flex; align-items: flex-start; gap: 16px;
+          padding: 16px 18px;
+          border-radius: 16px;
+          border: 1px solid var(--border);
+          background: var(--bg-elevated);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          transition: transform 0.18s ease, border-color 0.18s ease;
+        }
+        #aiEfficiencyModal .ae-proof-card:hover {
+          transform: translateY(-1px);
+          border-color: rgba(45, 212, 191, 0.45);
+        }
+        #aiEfficiencyModal .ae-proof-icon {
+          flex-shrink: 0;
+          width: 40px; height: 40px;
+          border-radius: 10px;
+          display: inline-flex; align-items: center; justify-content: center;
+          color: #14b8a6;
+          background: rgba(20, 184, 166, 0.12);
+          border: 1px solid rgba(94, 234, 212, 0.30);
+        }
+        #aiEfficiencyModal .ae-proof-body { flex: 1; }
+        #aiEfficiencyModal .ae-proof-card h4 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+        #aiEfficiencyModal .ae-proof-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+
+        @media (max-width: 720px) {
+          #aiEfficiencyModal .ae-compare { grid-template-columns: 1fr; }
+          #aiEfficiencyModal .ae-ratio-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+          #aiEfficiencyModal .ae-ratio-legend { flex-direction: column; gap: 4px; }
+        }
+        @media (max-width: 480px) {
+          #aiEfficiencyModal .ae-panel { padding: 22px; }
+          #aiEfficiencyModal .ae-ratio { padding: 18px; }
+          #aiEfficiencyModal .ae-proof-card { padding: 16px; }
+          #aiEfficiencyModal .ae-panel h3 { font-size: 18px; }
+        }
       </style>
       <section class="section" id="ai-efficiency" data-section-name="ai-efficiency">
         <button class="ae-teaser" type="button" onclick="openAiEfficiencyModal()" aria-haspopup="dialog" aria-controls="aiEfficiencyModal">
