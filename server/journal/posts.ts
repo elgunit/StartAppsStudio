@@ -729,6 +729,138 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "backlinks-still-decide-who-gets-recommended",
+    title:
+      "Backlinks still decide who gets recommended in 2026",
+    description:
+      "Why backlinks remain the single biggest off-page signal for both Google and AI answer engines, what a healthy MVP backlink profile actually looks like, and the four-step outreach loop we run for every Start Apps Studio launch.",
+    excerpt:
+      "Schema and answer-first writing get you eligible to be cited. Backlinks are what tip a brand-new MVP from eligible to actually recommended.",
+    publishedAt: "2026-04-22",
+    readMinutes: 6,
+    tags: ["SEO", "Backlinks", "Off-page", "MVP"],
+    body: [
+      {
+        type: "answer",
+        text:
+          "Backlinks are still the strongest off-page signal a new MVP can earn. Google uses them to rank, and large language models use the same link graph to decide which brands are trustworthy enough to name in an answer. A small, clean profile of 15 to 30 relevant links beats a large profile of generic ones, every time.",
+      },
+      {
+        type: "p",
+        text:
+          "Founders ask us all the time whether backlinks still matter in a world where ChatGPT, Perplexity and Google AI Overviews answer most product questions directly. The short answer is yes, more than ever. Both classical search and the new AI answer layer lean on the open web link graph to decide who is credible. Without inbound links, an MVP can have perfect on-page SEO and still never be named.",
+      },
+      {
+        type: "h2",
+        text: "Why backlinks still move the needle",
+        id: "why",
+      },
+      {
+        type: "p",
+        text:
+          "A backlink is a public vote from one site to another. Search engines treat each one as a tiny endorsement, and AI models trained on the open web inherit those endorsements. When a model has to pick between two brands it has never heard of, the one with more high-quality inbound links wins almost every time. For an MVP this is the single fastest way to earn the trust larger competitors already have.",
+      },
+      {
+        type: "h2",
+        text: "What a healthy MVP backlink profile looks like",
+        id: "profile",
+      },
+      {
+        type: "ul",
+        items: [
+          "15 to 30 inbound links from sites in or adjacent to your niche, not generic directories",
+          "A mix of editorial mentions, guest posts, podcasts, partner pages and resource lists",
+          "Anchor text that uses your brand name far more often than exact-match keywords",
+          "At least one link from a recognised industry publication or a respected community hub",
+          "A natural growth curve, never 200 links in a single week from sites that have nothing in common",
+        ],
+      },
+      {
+        type: "h2",
+        text: "The four-step outreach loop",
+        id: "loop",
+      },
+      {
+        type: "h3",
+        text: "1. Map the competitor link graph",
+        id: "map",
+      },
+      {
+        type: "p",
+        text:
+          "Pull the inbound links of three direct competitors and three adjacent leaders. The overlap is your shortlist: sites that already link to brands like yours and are statistically the most likely to link to you too.",
+      },
+      {
+        type: "h3",
+        text: "2. Build a link-worthy asset",
+        id: "asset",
+      },
+      {
+        type: "p",
+        text:
+          "Outreach without an asset is begging. Ship one piece of original content per quarter that another editor would actually want to cite, such as a benchmark, a survey, a comparison table, or a free tool. Every email after that has something concrete to point to.",
+      },
+      {
+        type: "h3",
+        text: "3. Run small, personal outreach",
+        id: "outreach",
+      },
+      {
+        type: "p",
+        text:
+          "Twenty-five tailored emails a week beat a thousand templated ones. Reference a specific piece the editor wrote, explain in one line why your asset deepens it, and make the link easy to add. Reply rates above 10 percent are realistic when the asset is good.",
+      },
+      {
+        type: "h3",
+        text: "4. Recycle wins into new wins",
+        id: "recycle",
+      },
+      {
+        type: "p",
+        text:
+          "Every time you land a link, screenshot it and add it to a public press page. New editors are far more likely to link to a brand that other editors already linked to. Social proof compounds and shortens the next outreach cycle.",
+      },
+      {
+        type: "callout",
+        title: "Where we plug in",
+        text:
+          "Inside the Start Apps Studio app, the Grow tab now includes a Backlink Strategy and Outreach service. We map your competitor link graph, ship a quarterly link-worthy asset, and run the personal outreach loop on your behalf so backlinks become a steady drumbeat rather than a one-off scramble.",
+      },
+      {
+        type: "h2",
+        text: "Frequently asked questions",
+        id: "faq",
+      },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Do backlinks still matter for SEO in 2026?",
+            a: "Yes. Backlinks remain the strongest off-page ranking signal for Google and one of the most important trust signals for AI answer engines that draw on the open web. Sites with no inbound links are systematically under-recommended.",
+          },
+          {
+            q: "How many backlinks does a new MVP actually need?",
+            a: "For most niches, 15 to 30 links from relevant, real sites are enough to start moving rankings and AI mentions. Quality and topical relevance matter far more than raw count.",
+          },
+          {
+            q: "Are paid links worth it?",
+            a: "Almost never for an MVP. Paid link networks are easy for Google to detect and can trigger ranking penalties. Earned links from outreach, partnerships and original content are slower but durable.",
+          },
+          {
+            q: "How long until new backlinks affect rankings?",
+            a: "Two to eight weeks for Google, sometimes faster for AI answer engines that re-ingest the open web more often. The compounding effect shows up around month three when a critical mass of links is in place.",
+          },
+        ],
+      },
+    ],
+    sources: [
+      {
+        label: "Backlink Management — managed link acquisition platform.",
+        url: "https://backlinkmanagement.io",
+      },
+    ],
+  },
 ];
 
 export const AUTHOR_NAME = AUTHOR;

@@ -1447,6 +1447,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
             isActive: true,
           },
           {
+            category: "SEO",
+            name: "Backlink Strategy & Outreach",
+            description: "Earn 15-30 high-quality backlinks per quarter through competitor link mapping, a link-worthy asset, and personal outreach.",
+            creditsRequired: 320,
+            deliverables: [
+              "Competitor backlink gap analysis with target shortlist",
+              "One link-worthy asset per quarter (benchmark, survey or tool)",
+              "Personal outreach to 100+ editors and managed reply handling",
+              "Monthly link-acquisition report with anchor text and DR",
+            ],
+            isActive: true,
+          },
+          {
             category: "Content",
             name: "Content Plan & Copywriting",
             description: "Strategic content plan with professionally written copy for your MVP.",
