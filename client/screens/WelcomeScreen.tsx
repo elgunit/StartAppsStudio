@@ -134,6 +134,24 @@ const managedBullets = [
   "Fixed scope, fixed budget, no surprise bills mid-build",
 ];
 
+const proofCards: { icon: keyof typeof Feather.glyphMap; title: string; desc: string }[] = [
+  {
+    icon: "star",
+    title: "Proprietary AI stack",
+    desc: "A curated mix of frontier and in-house models, picked per task so you pay for output, not experimentation.",
+  },
+  {
+    icon: "package",
+    title: "Full asset & code lifecycle",
+    desc: "One team owns the brand, design system, copy, code, and launch, so nothing gets dropped between tools.",
+  },
+  {
+    icon: "check-square",
+    title: "Fixed scope, fixed budget",
+    desc: "Clear deliverables and a flat price agreed up front, so there are no surprise bills mid-build.",
+  },
+];
+
 const packages = [
   { name: "Mockup", price: "$699", credits: "Founder-ready visuals + starter functions", time: "3-5 days", badge: "AI + Figma" },
   { name: "Prototype", price: "$2,399", credits: "Clickable end-to-end demo", time: "5-10 days", badge: "AI + Figma", popular: true },
@@ -672,6 +690,58 @@ export default function WelcomeScreen() {
             </View>
           </View>
 
+          <View
+            style={[
+              styles.aeRatio,
+              { backgroundColor: theme.backgroundDefault, borderColor: theme.border },
+            ]}
+            testID="card-ae-ratio"
+            accessibilityLabel="Credit waste comparison: managed delivery uses about 32 percent on iteration while solo founders lose about 68 percent to trial and error."
+          >
+            <View style={styles.aeRatioHead}>
+              <ThemedText type="caption" style={[styles.aeRatioTitle, { color: theme.textSecondary }]}>
+                CREDIT WASTE, AT A GLANCE
+              </ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+                Managed delivery converts about <ThemedText type="caption" style={{ color: "#14b8a6", fontWeight: "700" }}>3x</ThemedText> more spend into shipped product.
+              </ThemedText>
+            </View>
+            <View style={[styles.aeRatioTrack, { borderColor: "#f8717140", backgroundColor: "#f8717122" }]}>
+              <View style={styles.aeRatioFill} />
+            </View>
+            <View style={styles.aeRatioLegend}>
+              <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+                <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>Managed</ThemedText> · ~32% spend on iteration
+              </ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary }}>
+                <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>Solo</ThemedText> · ~68% lost to trial and error
+              </ThemedText>
+            </View>
+          </View>
+
+          <View style={{ gap: Spacing.sm }}>
+            {proofCards.map((p) => (
+              <View
+                key={p.title}
+                style={[
+                  styles.aeProofCard,
+                  { backgroundColor: theme.backgroundDefault, borderColor: theme.border },
+                ]}
+                testID={`card-ae-proof-${p.title}`}
+              >
+                <View style={[styles.aeProofIcon, { backgroundColor: "#14b8a622", borderColor: "#14b8a655" }]}>
+                  <Feather name={p.icon} size={16} color="#14b8a6" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <ThemedText type="h4" style={{ marginBottom: 2 }}>{p.title}</ThemedText>
+                  <ThemedText type="caption" style={{ color: theme.textSecondary, lineHeight: 18 }}>
+                    {p.desc}
+                  </ThemedText>
+                </View>
+              </View>
+            ))}
+          </View>
+
           <Pressable
             onPress={() => {
               setShowAiEfficiency(false);
@@ -897,6 +967,51 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   aeStatValue: { fontSize: 22, fontWeight: "700" as const, letterSpacing: -0.5 },
+  aeRatio: {
+    padding: Spacing.lg,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 1,
+  },
+  aeRatioHead: { gap: 4, marginBottom: Spacing.md },
+  aeRatioTitle: { letterSpacing: 1.4, fontWeight: "700" as const, fontSize: 11 },
+  aeRatioTrack: {
+    height: 14,
+    borderRadius: 999,
+    borderWidth: 1,
+    overflow: "hidden",
+  },
+  aeRatioFill: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: "32%",
+    borderRadius: 999,
+    backgroundColor: "#14b8a6",
+  },
+  aeRatioLegend: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 4,
+    marginTop: Spacing.sm,
+  },
+  aeProofCard: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: Spacing.md,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.lg,
+    borderWidth: 1,
+  },
+  aeProofIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: BorderRadius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+  },
   aeTeaser: {
     borderRadius: BorderRadius.xl,
     borderWidth: 2,
