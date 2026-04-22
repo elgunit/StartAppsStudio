@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   Pressable,
+  Modal,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -223,6 +224,7 @@ export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
   const { theme, isDark } = useTheme();
   const [showAllProjects, setShowAllProjects] = React.useState(false);
+  const [showAiEfficiency, setShowAiEfficiency] = React.useState(false);
   const displayedCaseStudies = showAllProjects ? caseStudies : caseStudies.slice(0, 5);
   const loggedRevealsRef = React.useRef<Set<string>>(new Set());
 
@@ -266,6 +268,7 @@ export default function WelcomeScreen() {
   }, [navigation]);
 
   return (
+    <>
     <ScrollView
       style={[styles.container, { backgroundColor: theme.backgroundRoot }]}
       contentContainerStyle={{
@@ -425,93 +428,38 @@ export default function WelcomeScreen() {
         </ThemedText>
       </View>
 
-      {/* AI Efficiency */}
+      {/* AI Efficiency teaser */}
       <View style={styles.section}>
-        <SectionHeading
-          kicker="AI Efficiency & Value"
-          title="Stop burning credits. Start shipping product."
-          subtitle="Most founders quietly burn $10,000+ on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We turn that spend into a working product instead of a learning bill."
-        />
-        <View style={{ gap: Spacing.md }}>
-          <View
-            style={[
-              styles.aePanel,
-              {
-                backgroundColor: theme.backgroundDefault,
-                borderColor: theme.border,
-              },
-            ]}
-            testID="card-ae-alone"
-          >
-            <View style={[styles.aeTag, { backgroundColor: "#f8717122", borderColor: "#f87171" }]}>
-              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>Going it alone</ThemedText>
+        <Pressable
+          onPress={() => setShowAiEfficiency(true)}
+          style={({ pressed }) => [
+            styles.aeTeaser,
+            {
+              backgroundColor: theme.backgroundDefault,
+              borderColor: "#14b8a6",
+              opacity: pressed ? 0.85 : 1,
+            },
+          ]}
+          testID="button-open-ae-modal"
+        >
+          <View style={styles.aeTeaserHeader}>
+            <View style={[styles.aeTeaserBadge, { backgroundColor: "#14b8a622", borderColor: "#14b8a6" }]}>
+              <View style={styles.aeTeaserDot} />
+              <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>AI Efficiency & Value</ThemedText>
             </View>
-            <ThemedText type="h3" style={styles.aePanelTitle}>
-              Trial, error, and a credit card on file
-            </ThemedText>
-            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
-              The cost of figuring it out yourself, in public, on the clock.
-            </ThemedText>
-            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
-              {aloneBullets.map((b) => (
-                <View key={b} style={styles.aeBulletRow}>
-                  <View style={[styles.aeBulletIcon, { backgroundColor: "#f8717122" }]}>
-                    <Feather name="x" size={12} color="#f87171" />
-                  </View>
-                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
-                    {b}
-                  </ThemedText>
-                </View>
-              ))}
-            </View>
-            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
-              <ThemedText style={[styles.aeStatValue, { color: "#f87171" }]}>$10k+</ThemedText>
-              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
-                typical spend before a real launch
-              </ThemedText>
-            </View>
+            <Feather name="arrow-up-right" size={18} color={theme.textSecondary} />
           </View>
-
-          <View
-            style={[
-              styles.aePanel,
-              {
-                backgroundColor: theme.backgroundDefault,
-                borderColor: "#14b8a6",
-                borderWidth: 2,
-              },
-            ]}
-            testID="card-ae-managed"
-          >
-            <View style={[styles.aeTag, { backgroundColor: "#14b8a622", borderColor: "#14b8a6" }]}>
-              <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>With Start Apps Studio</ThemedText>
-            </View>
-            <ThemedText type="h3" style={styles.aePanelTitle}>
-              Know-how, plus the delivery to back it up
-            </ThemedText>
-            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
-              A managed AI stack and a team that has done this hundreds of times.
-            </ThemedText>
-            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
-              {managedBullets.map((b) => (
-                <View key={b} style={styles.aeBulletRow}>
-                  <View style={[styles.aeBulletIcon, { backgroundColor: "#14b8a622" }]}>
-                    <Feather name="check" size={12} color="#14b8a6" />
-                  </View>
-                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
-                    {b}
-                  </ThemedText>
-                </View>
-              ))}
-            </View>
-            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
-              <ThemedText style={[styles.aeStatValue, { color: "#14b8a6" }]}>3-10x</ThemedText>
-              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
-                value per dollar versus going it alone
-              </ThemedText>
-            </View>
+          <ThemedText type="h3" style={{ marginBottom: 4 }}>
+            Stop burning credits. Start shipping product.
+          </ThemedText>
+          <ThemedText type="caption" style={{ color: theme.textSecondary, marginBottom: Spacing.md }}>
+            Why a managed AI stack delivers 3-10x the value of going it alone.
+          </ThemedText>
+          <View style={[styles.aeTeaserCta, { borderTopColor: theme.border }]}>
+            <ThemedText style={[styles.aeTeaserCtaText, { color: "#14b8a6" }]}>See the comparison</ThemedText>
+            <Feather name="chevron-right" size={16} color="#14b8a6" />
           </View>
-        </View>
+        </Pressable>
       </View>
 
       {/* Packages */}
@@ -616,6 +564,132 @@ export default function WelcomeScreen() {
         </View>
       </View>
     </ScrollView>
+
+    <Modal
+      visible={showAiEfficiency}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={() => setShowAiEfficiency(false)}
+    >
+      <View style={[styles.aeModalRoot, { backgroundColor: theme.backgroundRoot }]}>
+        <View style={[styles.aeModalHeader, { borderBottomColor: theme.border }]}>
+          <View style={{ flex: 1 }}>
+            <ThemedText style={[styles.aeTagText, { color: "#14b8a6", marginBottom: 2 }]}>
+              AI Efficiency & Value
+            </ThemedText>
+            <ThemedText type="h3">Stop burning credits.</ThemedText>
+          </View>
+          <Pressable
+            onPress={() => setShowAiEfficiency(false)}
+            hitSlop={12}
+            style={({ pressed }) => [
+              styles.aeModalClose,
+              { backgroundColor: theme.backgroundDefault, borderColor: theme.border, opacity: pressed ? 0.7 : 1 },
+            ]}
+            testID="button-close-ae-modal"
+          >
+            <Feather name="x" size={20} color={theme.text} />
+          </Pressable>
+        </View>
+
+        <ScrollView
+          contentContainerStyle={{ padding: Spacing.xl, paddingBottom: insets.bottom + Spacing["2xl"], gap: Spacing.md }}
+          showsVerticalScrollIndicator={false}
+        >
+          <ThemedText type="caption" style={{ color: theme.textSecondary, lineHeight: 20, marginBottom: Spacing.sm }}>
+            Most founders quietly burn $10,000+ on AI credits, half-finished prompts, and tools that never quite fit their niche, before they ship anything real. We turn that spend into a working product instead of a learning bill.
+          </ThemedText>
+
+          <View
+            style={[
+              styles.aePanel,
+              { backgroundColor: theme.backgroundDefault, borderColor: theme.border },
+            ]}
+            testID="card-ae-alone"
+          >
+            <View style={[styles.aeTag, { backgroundColor: "#f8717122", borderColor: "#f87171" }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>Going it alone</ThemedText>
+            </View>
+            <ThemedText type="h3" style={styles.aePanelTitle}>
+              Trial, error, and a credit card on file
+            </ThemedText>
+            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
+              The cost of figuring it out yourself, in public, on the clock.
+            </ThemedText>
+            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
+              {aloneBullets.map((b) => (
+                <View key={b} style={styles.aeBulletRow}>
+                  <View style={[styles.aeBulletIcon, { backgroundColor: "#f8717122" }]}>
+                    <Feather name="x" size={12} color="#f87171" />
+                  </View>
+                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
+                    {b}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
+              <ThemedText style={[styles.aeStatValue, { color: "#f87171" }]}>$10k+</ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
+                typical spend before a real launch
+              </ThemedText>
+            </View>
+          </View>
+
+          <View
+            style={[
+              styles.aePanel,
+              { backgroundColor: theme.backgroundDefault, borderColor: "#14b8a6", borderWidth: 2 },
+            ]}
+            testID="card-ae-managed"
+          >
+            <View style={[styles.aeTag, { backgroundColor: "#14b8a622", borderColor: "#14b8a6" }]}>
+              <ThemedText style={[styles.aeTagText, { color: "#14b8a6" }]}>With Start Apps Studio</ThemedText>
+            </View>
+            <ThemedText type="h3" style={styles.aePanelTitle}>
+              Know-how, plus the delivery to back it up
+            </ThemedText>
+            <ThemedText type="caption" style={[styles.aePanelLede, { color: theme.textSecondary }]}>
+              A managed AI stack and a team that has done this hundreds of times.
+            </ThemedText>
+            <View style={{ gap: Spacing.sm, marginBottom: Spacing.md }}>
+              {managedBullets.map((b) => (
+                <View key={b} style={styles.aeBulletRow}>
+                  <View style={[styles.aeBulletIcon, { backgroundColor: "#14b8a622" }]}>
+                    <Feather name="check" size={12} color="#14b8a6" />
+                  </View>
+                  <ThemedText type="caption" style={[styles.aeBulletText, { color: theme.textSecondary }]}>
+                    {b}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+            <View style={[styles.aeStatRow, { borderTopColor: theme.border }]}>
+              <ThemedText style={[styles.aeStatValue, { color: "#14b8a6" }]}>3-10x</ThemedText>
+              <ThemedText type="caption" style={{ color: theme.textSecondary, flex: 1 }}>
+                value per dollar versus going it alone
+              </ThemedText>
+            </View>
+          </View>
+
+          <Pressable
+            onPress={() => {
+              setShowAiEfficiency(false);
+              openContact();
+            }}
+            style={({ pressed }) => [
+              styles.heroCta,
+              { backgroundColor: theme.text, alignSelf: "stretch", justifyContent: "center", marginTop: Spacing.md, opacity: pressed ? 0.85 : 1 },
+            ]}
+            testID="button-ae-modal-cta"
+          >
+            <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Get my free plan</ThemedText>
+            <Feather name="arrow-right" size={16} color={theme.buttonText} />
+          </Pressable>
+        </ScrollView>
+      </View>
+    </Modal>
+    </>
   );
 }
 
@@ -823,4 +897,56 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   aeStatValue: { fontSize: 22, fontWeight: "700" as const, letterSpacing: -0.5 },
+  aeTeaser: {
+    borderRadius: BorderRadius.xl,
+    borderWidth: 2,
+    padding: Spacing.lg,
+  },
+  aeTeaserHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: Spacing.md,
+  },
+  aeTeaserBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  aeTeaserDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#14b8a6",
+  },
+  aeTeaserCta: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: Spacing.md,
+    borderTopWidth: 1,
+  },
+  aeTeaserCtaText: { fontSize: 14, fontWeight: "600" as const },
+  aeModalRoot: { flex: 1 },
+  aeModalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    paddingHorizontal: Spacing.xl,
+    paddingTop: Spacing.lg,
+    paddingBottom: Spacing.md,
+    borderBottomWidth: 1,
+  },
+  aeModalClose: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
