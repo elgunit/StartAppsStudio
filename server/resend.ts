@@ -1,14 +1,16 @@
 // Resend integration for sending emails
 import { Resend } from 'resend';
 
+export const RESEND_FROM_ADDRESS = 'Start Apps Studio <notifications@contact.startappsstudio.com>';
+
 let connectionSettings: any;
 
 async function getCredentials() {
   const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
-  const xReplitToken = process.env.REPL_IDENTITY 
-    ? 'repl ' + process.env.REPL_IDENTITY 
-    : process.env.WEB_REPL_RENEWAL 
-    ? 'depl ' + process.env.WEB_REPL_RENEWAL 
+  const xReplitToken = process.env.REPL_IDENTITY
+    ? 'repl ' + process.env.REPL_IDENTITY
+    : process.env.WEB_REPL_RENEWAL
+    ? 'depl ' + process.env.WEB_REPL_RENEWAL
     : null;
 
   if (!xReplitToken) {
@@ -30,14 +32,13 @@ async function getCredentials() {
   }
   return {
     apiKey: connectionSettings.settings.api_key,
-    fromEmail: connectionSettings.settings.from_email
   };
 }
 
 export async function getUncachableResendClient() {
-  const { apiKey, fromEmail } = await getCredentials();
+  const { apiKey } = await getCredentials();
   return {
     client: new Resend(apiKey),
-    fromEmail
+    fromEmail: RESEND_FROM_ADDRESS,
   };
 }
