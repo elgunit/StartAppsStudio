@@ -5182,28 +5182,41 @@
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         var DWELL_MS = 4000;
         var SCRAMBLE_FRAME_MS = 45;
-        var REVEAL_PER_FRAME = 1; // characters that lock in per frame
+        var REVEAL_PER_FRAME = 2; // characters that lock in per frame (halved scramble time)
 
+        // Studio status board: each line is one concrete signal a founder cares
+        // about (scarcity, proof, responsiveness, urgency). Numbers and timing
+        // are computed live where possible so the pin always feels current.
         function buildMessages() {
           var now = new Date();
-          var year = now.getFullYear();
           var monthIdx = now.getMonth();
-          var lastDay = new Date(year, monthIdx + 1, 0).getDate();
+          var lastDay = new Date(now.getFullYear(), monthIdx + 1, 0).getDate();
           var daysToMonthEnd = lastDay - now.getDate();
           var nextMonthIdx = (monthIdx + 1) % 12;
           var monthName = MONTHS[monthIdx];
           var nextMonthName = MONTHS[nextMonthIdx];
 
+          var ACTIVE_BUILDS = 3;
+          var SEATS_OPEN = 2;
+
+          var seatsLine = SEATS_OPEN + ' founder seat' + (SEATS_OPEN === 1 ? '' : 's') + ' open for ';
+          var shippingLine = ACTIVE_BUILDS + ' founder' + (ACTIVE_BUILDS === 1 ? '' : 's') + ' shipping with us this week';
+          var callLine = 'Discovery call within 24 hours';
+
           if (daysToMonthEnd <= 10) {
+            var dayWord = daysToMonthEnd === 1 ? 'day' : 'days';
             return [
-              'Two founder seats remain this ' + monthName,
-              'Currently shipping with active clients',
-              nextMonthName + ' intake opens after handoff',
+              seatsLine + nextMonthName,
+              shippingLine,
+              callLine,
+              monthName + ' intake closes in ' + daysToMonthEnd + ' ' + dayWord,
             ];
           }
           return [
-            'Booking ' + monthName + ' ' + year,
-            'Currently shipping with active clients',
+            seatsLine + monthName,
+            shippingLine,
+            callLine,
+            'Next handoff in 2 weeks',
           ];
         }
 
