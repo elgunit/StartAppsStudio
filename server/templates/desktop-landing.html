@@ -335,48 +335,22 @@
         animation: hero-dot-pulse 2.4s ease-in-out infinite;
       }
       .booking-pin-stage {
-        position: relative;
         display: inline-block;
-        height: 1.15em;
-        line-height: 1.15em;
-        overflow: hidden;
+        white-space: nowrap;
         vertical-align: middle;
-        perspective: 320px;
+        font-variant-numeric: tabular-nums;
       }
       .booking-pin-text {
         display: inline-block;
-        white-space: nowrap;
-        transform-origin: 50% 0%;
-        backface-visibility: hidden;
-        will-change: transform, opacity;
+        white-space: pre;
       }
-      .booking-pin-next {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        transform: rotateX(-90deg);
+      .booking-pin-text .bp-char {
+        display: inline-block;
+        transition: color 180ms ease;
       }
-      .booking-pin-stage.flipping .booking-pin-current {
-        animation: booking-flap-out 420ms cubic-bezier(0.55, 0, 0.65, 0.2) forwards;
-      }
-      .booking-pin-stage.flipping .booking-pin-next {
-        animation: booking-flap-in 420ms cubic-bezier(0.2, 0.7, 0.3, 1) 60ms forwards;
-      }
-      @keyframes booking-flap-out {
-        0%   { transform: rotateX(0);    opacity: 1; }
-        100% { transform: rotateX(90deg); opacity: 0; }
-      }
-      @keyframes booking-flap-in {
-        0%   { transform: rotateX(-90deg); opacity: 0; }
-        60%  { opacity: 1; }
-        100% { transform: rotateX(0);     opacity: 1; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .booking-pin-stage.flipping .booking-pin-current,
-        .booking-pin-stage.flipping .booking-pin-next { animation: none; }
-        .booking-pin-stage.flipping .booking-pin-current { opacity: 0; }
-        .booking-pin-stage.flipping .booking-pin-next { opacity: 1; transform: none; }
+      .booking-pin-text .bp-char.scrambling {
+        color: #14b8a6;
+        text-shadow: 0 0 6px rgba(20,184,166,0.35);
       }
       @keyframes hero-dot-pulse {
         0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.20); }
@@ -2655,7 +2629,7 @@
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
         <div class="hero-aurora" aria-hidden="true"></div>
-        <span class="hero-eyebrow" id="bookingPin" aria-live="polite"><span class="hero-eyebrow-dot"></span><span class="booking-pin-stage"><span class="booking-pin-text booking-pin-current" id="bookingPinCurrent">Two founder seats remain this April</span><span class="booking-pin-text booking-pin-next" id="bookingPinNext" aria-hidden="true"></span></span></span>
+        <span class="hero-eyebrow" id="bookingPin" aria-live="polite"><span class="hero-eyebrow-dot"></span><span class="booking-pin-stage"><span class="booking-pin-text" id="bookingPinText">Two founder seats remain this April</span></span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">For founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
 
@@ -5200,18 +5174,15 @@
         } catch (_) {}
       })();
 
-      // Smart Booking Pin: airline-board flap rotator
+      // Smart Booking Pin: letter-scramble rotator
       (function () {
-        var stage = document.querySelector('#bookingPin .booking-pin-stage');
-        var current = document.getElementById('bookingPinCurrent');
-        var next = document.getElementById('bookingPinNext');
-        if (!stage || !current || !next) return;
+        var el = document.getElementById('bookingPinText');
+        if (!el) return;
 
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        var SLOTS_REMAINING = 2;
-        var CLIENTS_IN_COMPLETION = 2;
-        var FLIP_DURATION_MS = 480;
-        var DWELL_MS = 3000;
+        var DWELL_MS = 4000;
+        var SCRAMBLE_FRAME_MS = 45;
+        var REVEAL_PER_FRAME = 1; // characters that lock in per frame
 
         function buildMessages() {
           var now = new Date();
@@ -5220,13 +5191,10 @@
           var lastDay = new Date(year, monthIdx + 1, 0).getDate();
           var daysToMonthEnd = lastDay - now.getDate();
           var nextMonthIdx = (monthIdx + 1) % 12;
-          var nextYear = nextMonthIdx === 0 ? year + 1 : year;
           var monthName = MONTHS[monthIdx];
           var nextMonthName = MONTHS[nextMonthIdx];
 
           if (daysToMonthEnd <= 10) {
-            // Departure-board cadence: urgency, proof, what comes next.
-            // Wording is tuned for founders evaluating a build studio; no shared words across tiles.
             return [
               'Two founder seats remain this ' + monthName,
               'Currently shipping with active clients',
@@ -5239,32 +5207,78 @@
           ];
         }
 
-        var messages = buildMessages();
-        if (!messages.length) return;
-        current.textContent = messages[0];
-        var idx = 0;
-        var animating = false;
-
-        function step() {
-          if (animating) return;
-          animating = true;
-          var nextIdx = (idx + 1) % messages.length;
-          next.textContent = messages[nextIdx];
-          stage.classList.add('flipping');
-          window.setTimeout(function () {
-            current.textContent = messages[nextIdx];
-            stage.classList.remove('flipping');
-            next.textContent = '';
-            idx = nextIdx;
-            animating = false;
-          }, FLIP_DURATION_MS);
+        var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        function randomGlyph() {
+          return GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
         }
 
-        // First flip after the initial 3-second dwell, then continue cycling.
-        window.setTimeout(function tick() {
-          step();
-          window.setTimeout(tick, DWELL_MS + FLIP_DURATION_MS);
-        }, DWELL_MS);
+        // Render a string as one <span class="bp-char"> per character so we can
+        // tag in-flight scrambling characters with a teal accent.
+        function render(chars, lockedCount) {
+          var html = '';
+          for (var i = 0; i < chars.length; i++) {
+            var c = chars[i];
+            var safe = c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '&' ? '&amp;' : (c === ' ' ? '\u00a0' : c);
+            var cls = i < lockedCount || c === ' ' || c === '\u00a0' ? 'bp-char' : 'bp-char scrambling';
+            html += '<span class="' + cls + '">' + safe + '</span>';
+          }
+          el.innerHTML = html;
+        }
+
+        var messages = buildMessages();
+        if (!messages.length) return;
+        var idx = 0;
+        // Initial render uses one span per char so the resting style matches.
+        render(messages[0].split(''), messages[0].length);
+
+        var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function scrambleTo(target, done) {
+          if (prefersReducedMotion) {
+            render(target.split(''), target.length);
+            done && done();
+            return;
+          }
+          var src = el.textContent || '';
+          var maxLen = Math.max(src.length, target.length);
+          // Build an array sized to the longer string. Locked chars come from target.
+          // Unlocked positions show random glyphs each frame until they lock in.
+          var locked = 0;
+          var current = target.split('');
+
+          function tick() {
+            // Compose what to render this frame: locked prefix from target,
+            // remaining slots show random glyphs (matching target length).
+            var frame = new Array(target.length);
+            for (var i = 0; i < target.length; i++) {
+              if (i < locked) {
+                frame[i] = target.charAt(i);
+              } else if (target.charAt(i) === ' ') {
+                frame[i] = ' ';
+              } else {
+                frame[i] = randomGlyph();
+              }
+            }
+            render(frame, locked);
+            if (locked >= target.length) {
+              done && done();
+              return;
+            }
+            locked = Math.min(target.length, locked + REVEAL_PER_FRAME);
+            window.setTimeout(tick, SCRAMBLE_FRAME_MS);
+          }
+          tick();
+        }
+
+        function cycle() {
+          idx = (idx + 1) % messages.length;
+          scrambleTo(messages[idx], function () {
+            window.setTimeout(cycle, DWELL_MS);
+          });
+        }
+
+        // Hold the first message for the full dwell, then start cycling.
+        window.setTimeout(cycle, DWELL_MS);
       })();
     </script>
   </body>
