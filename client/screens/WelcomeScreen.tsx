@@ -45,6 +45,7 @@ const services = [
 const growthServices = [
   { icon: "search" as const, title: "SEO Audit", desc: "Site analysis & fixes", color: "#10B981" },
   { icon: "trending-up" as const, title: "Keyword Strategy", desc: "Rankings & traffic", color: "#10B981" },
+  { icon: "link" as const, title: "Backlink Outreach", desc: "Earned links from real editors", color: "#10B981" },
   { icon: "file-text" as const, title: "Content Plan", desc: "Blog & copy strategy", color: "#3B82F6" },
   { icon: "target" as const, title: "Paid Ads", desc: "Google & Meta ads", color: "#F59E0B" },
   { icon: "share-2" as const, title: "Social Media Kit", desc: "Templates & calendar", color: "#8B5CF6" },
