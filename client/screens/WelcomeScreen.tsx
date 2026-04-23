@@ -6,6 +6,8 @@ import {
   Image,
   Pressable,
   Modal,
+  Animated,
+  AccessibilityInfo,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +18,87 @@ import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
 import { Spacing, BorderRadius } from "@/constants/theme";
 import { getApiUrl } from "@/lib/query-client";
+
+const STATUS_MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function buildStudioStatusMessages() {
+  const now = new Date();
+  const monthIdx = now.getMonth();
+  const lastDay = new Date(now.getFullYear(), monthIdx + 1, 0).getDate();
+  const daysToMonthEnd = lastDay - now.getDate();
+  const monthName = STATUS_MONTHS[monthIdx];
+  const nextMonthName = STATUS_MONTHS[(monthIdx + 1) % 12];
+  const ACTIVE_BUILDS: number = 3;
+  const SEATS_OPEN: number = 2;
+  const seatsLine = `${SEATS_OPEN} founder seat${SEATS_OPEN === 1 ? "" : "s"} open for `;
+  const shippingLine = `${ACTIVE_BUILDS} founder${ACTIVE_BUILDS === 1 ? "" : "s"} shipping with us this week`;
+  const callLine = "Discovery call within 24 hours";
+  if (daysToMonthEnd <= 10) {
+    const dayWord = daysToMonthEnd === 1 ? "day" : "days";
+    return [
+      seatsLine + nextMonthName,
+      shippingLine,
+      callLine,
+      `${monthName} intake closes in ${daysToMonthEnd} ${dayWord}`,
+    ];
+  }
+  return [seatsLine + monthName, shippingLine, callLine, "Next handoff in 2 weeks"];
+}
+
+function StudioStatusStrip() {
+  const { theme } = useTheme();
+  const messages = React.useMemo(buildStudioStatusMessages, []);
+  const [idx, setIdx] = React.useState(0);
+  const [reduceMotion, setReduceMotion] = React.useState(false);
+  const fade = React.useRef(new Animated.Value(1)).current;
+
+  React.useEffect(() => {
+    let mounted = true;
+    AccessibilityInfo.isReduceMotionEnabled().then((v) => { if (mounted) setReduceMotion(v); });
+    return () => { mounted = false; };
+  }, []);
+
+  React.useEffect(() => {
+    if (messages.length <= 1) return;
+    const timer = setInterval(() => {
+      if (reduceMotion) {
+        setIdx((i) => (i + 1) % messages.length);
+        return;
+      }
+      Animated.timing(fade, { toValue: 0, duration: 250, useNativeDriver: true }).start(() => {
+        setIdx((i) => (i + 1) % messages.length);
+        Animated.timing(fade, { toValue: 1, duration: 250, useNativeDriver: true }).start();
+      });
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [reduceMotion, messages.length, fade]);
+
+  return (
+    <View
+      style={[
+        styles.studioStatus,
+        { borderColor: "#14b8a655", backgroundColor: "#14b8a610" },
+      ]}
+      accessibilityLiveRegion="polite"
+      testID="strip-studio-status"
+    >
+      <View style={styles.studioStatusDot} />
+      <Animated.View style={{ opacity: fade, flex: 1 }}>
+        <ThemedText
+          type="caption"
+          style={[styles.studioStatusText, { color: theme.text }]}
+          numberOfLines={1}
+          testID="text-studio-status"
+        >
+          {messages[idx]}
+        </ThemedText>
+      </Animated.View>
+    </View>
+  );
+}
 
 type HatType = "designer" | "developer" | "strategist" | "manager" | "analyst";
 
@@ -306,7 +389,7 @@ export default function WelcomeScreen() {
         <View style={[styles.heroEyebrow, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
           <View style={styles.heroEyebrowDot} />
           <ThemedText type="caption" style={[styles.heroEyebrowText, { color: theme.text }]}>
-            Booking April-May 2026 · 3 slots left
+            {buildStudioStatusMessages()[0]}
           </ThemedText>
         </View>
         <ThemedText type="display" style={styles.heroTitle}>
@@ -479,6 +562,11 @@ export default function WelcomeScreen() {
             <Feather name="chevron-right" size={16} color="#14b8a6" />
           </View>
         </Pressable>
+      </View>
+
+      {/* Studio Status — live availability strip directly above Packages */}
+      <View style={{ paddingHorizontal: Spacing.xl, marginBottom: Spacing.xl }}>
+        <StudioStatusStrip />
       </View>
 
       {/* Packages */}
@@ -823,6 +911,26 @@ const styles = StyleSheet.create({
   section: {
     paddingHorizontal: Spacing.xl,
     marginBottom: Spacing["2xl"],
+  },
+  studioStatus: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    borderRadius: 999,
+    borderWidth: 1,
+    alignSelf: "center",
+    maxWidth: 560,
+  },
+  studioStatusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#22c55e",
+  },
+  studioStatusText: {
+    fontWeight: "500" as const,
   },
   sectionHeading: { marginBottom: Spacing.lg },
   kicker: { letterSpacing: 1.5, fontWeight: "700" as const, marginBottom: 6 },

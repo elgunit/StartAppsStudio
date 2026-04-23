@@ -334,27 +334,58 @@
         box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
         animation: hero-dot-pulse 2.4s ease-in-out infinite;
       }
-      .booking-pin-stage {
+      @keyframes hero-dot-pulse {
+        0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.20); }
+        50%     { box-shadow: 0 0 0 6px rgba(34,197,94,0.05); }
+      }
+
+      /* Studio status strip — rotating availability board placed above Pricing.
+         The hero eyebrow is intentionally static; the motion lives here, where
+         buying intent is highest. */
+      .studio-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 20px;
+        margin: 0 auto 28px auto;
+        max-width: 720px;
+        border-radius: 999px;
+        background: rgba(20, 184, 166, 0.06);
+        border: 1px solid rgba(20, 184, 166, 0.22);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      @media (prefers-color-scheme: dark) {
+        .studio-status { background: rgba(20, 184, 166, 0.10); border-color: rgba(20, 184, 166, 0.30); }
+      }
+      .studio-status-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+        animation: hero-dot-pulse 2.4s ease-in-out infinite;
+        flex: 0 0 auto;
+      }
+      .studio-status-stage {
         display: inline-block;
         white-space: nowrap;
         vertical-align: middle;
         font-variant-numeric: tabular-nums;
+        min-width: 0;
       }
-      .booking-pin-text {
+      .studio-status-text {
         display: inline-block;
         white-space: pre;
       }
-      .booking-pin-text .bp-char {
+      .studio-status-text .ss-char {
         display: inline-block;
         transition: color 180ms ease;
       }
-      .booking-pin-text .bp-char.scrambling {
+      .studio-status-text .ss-char.scrambling {
         color: #14b8a6;
         text-shadow: 0 0 6px rgba(20,184,166,0.35);
-      }
-      @keyframes hero-dot-pulse {
-        0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.20); }
-        50%     { box-shadow: 0 0 0 6px rgba(34,197,94,0.05); }
       }
 
       .hero-headline {
@@ -2629,7 +2660,7 @@
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
         <div class="hero-aurora" aria-hidden="true"></div>
-        <span class="hero-eyebrow" id="bookingPin" aria-live="polite"><span class="hero-eyebrow-dot"></span><span class="booking-pin-stage"><span class="booking-pin-text" id="bookingPinText">Two founder seats remain this April</span></span></span>
+        <span class="hero-eyebrow" id="bookingPin"><span class="hero-eyebrow-dot"></span><span id="bookingPinStatic">2 founder seats open this month</span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">For founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
 
@@ -4255,6 +4286,12 @@
         </div>
       </div>
 
+      <!-- Studio Status — live availability board above Pricing -->
+      <div class="studio-status" id="studioStatus" aria-live="polite">
+        <span class="studio-status-dot" aria-hidden="true"></span>
+        <span class="studio-status-stage"><span class="studio-status-text" id="studioStatusText">2 founder seats open this month</span></span>
+      </div>
+
       <!-- Pricing -->
       <section class="section" id="pricing" data-section-name="pricing">
         <h2 class="section-title">Pricing & timelines</h2>
@@ -5174,10 +5211,13 @@
         } catch (_) {}
       })();
 
-      // Smart Booking Pin: letter-scramble rotator
+      // Studio Status: letter-scramble rotator (placed above Pricing).
+      // The hero booking pin is static; the static line is also computed here
+      // from the same calendar logic so both surfaces stay in sync.
       (function () {
-        var el = document.getElementById('bookingPinText');
-        if (!el) return;
+        var el = document.getElementById('studioStatusText');
+        var heroStatic = document.getElementById('bookingPinStatic');
+        if (!el && !heroStatic) return;
 
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         var DWELL_MS = 4000;
@@ -5225,14 +5265,14 @@
           return GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
         }
 
-        // Render a string as one <span class="bp-char"> per character so we can
+        // Render a string as one <span class="ss-char"> per character so we can
         // tag in-flight scrambling characters with a teal accent.
         function render(chars, lockedCount) {
           var html = '';
           for (var i = 0; i < chars.length; i++) {
             var c = chars[i];
             var safe = c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '&' ? '&amp;' : (c === ' ' ? '\u00a0' : c);
-            var cls = i < lockedCount || c === ' ' || c === '\u00a0' ? 'bp-char' : 'bp-char scrambling';
+            var cls = i < lockedCount || c === ' ' || c === '\u00a0' ? 'ss-char' : 'ss-char scrambling';
             html += '<span class="' + cls + '">' + safe + '</span>';
           }
           el.innerHTML = html;
@@ -5240,6 +5280,11 @@
 
         var messages = buildMessages();
         if (!messages.length) return;
+
+        // Hero pin: pick the seats line and render once. No animation.
+        if (heroStatic) heroStatic.textContent = messages[0];
+
+        if (!el) return;
         var idx = 0;
         // Initial render uses one span per char so the resting style matches.
         render(messages[0].split(''), messages[0].length);
