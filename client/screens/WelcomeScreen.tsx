@@ -472,7 +472,7 @@ export default function WelcomeScreen() {
             Stop burning credits. Start shipping product.
           </ThemedText>
           <ThemedText type="caption" style={{ color: theme.textSecondary, marginBottom: Spacing.md }}>
-            Why a managed AI stack delivers 3-10x the value of going it alone.
+            Why a managed AI stack delivers 3-10x the value of a raw one.
           </ThemedText>
           <View style={[styles.aeTeaserCta, { borderTopColor: theme.border }]}>
             <ThemedText style={[styles.aeTeaserCtaText, { color: "#14b8a6" }]}>See the comparison</ThemedText>
@@ -632,7 +632,7 @@ export default function WelcomeScreen() {
             testID="card-ae-alone"
           >
             <View style={[styles.aeTagV2, { backgroundColor: "#f8717118", borderColor: "#f8717155", marginBottom: Spacing.sm }]}>
-              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>GOING IT ALONE</ThemedText>
+              <ThemedText style={[styles.aeTagText, { color: "#f87171" }]}>RAW AI STACK</ThemedText>
             </View>
             <ThemedText type="h3" style={styles.aePanelTitle}>
               Trial, error, and a credit card on file
