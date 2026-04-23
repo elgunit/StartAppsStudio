@@ -73,11 +73,11 @@ function StudioStatusStrip() {
         setIdx((i) => (i + 1) % messages.length);
         return;
       }
-      Animated.timing(fade, { toValue: 0, duration: 250, useNativeDriver: true }).start(() => {
+      Animated.timing(fade, { toValue: 0, duration: 520, useNativeDriver: true }).start(() => {
         setIdx((i) => (i + 1) % messages.length);
-        Animated.timing(fade, { toValue: 1, duration: 250, useNativeDriver: true }).start();
+        Animated.timing(fade, { toValue: 1, duration: 520, useNativeDriver: true }).start();
       });
-    }, 4000);
+    }, 6500);
     return () => clearInterval(timer);
   }, [reduceMotion, messages.length, fade]);
 

@@ -378,14 +378,14 @@
       .studio-status-text {
         display: inline-block;
         white-space: pre;
+        opacity: 1;
+        transition: opacity 520ms ease;
       }
-      .studio-status-text .ss-char {
-        display: inline-block;
-        transition: color 180ms ease;
+      .studio-status-text.is-fading {
+        opacity: 0;
       }
-      .studio-status-text .ss-char.scrambling {
-        color: #14b8a6;
-        text-shadow: 0 0 6px rgba(20,184,166,0.35);
+      @media (prefers-reduced-motion: reduce) {
+        .studio-status-text { transition: none; }
       }
 
       .hero-headline {
@@ -5211,7 +5211,7 @@
         } catch (_) {}
       })();
 
-      // Studio Status: letter-scramble rotator (placed above Pricing).
+      // Studio Status: gentle crossfade rotator (placed above Pricing).
       // The hero booking pin is static; the static line is also computed here
       // from the same calendar logic so both surfaces stay in sync.
       (function () {
@@ -5220,9 +5220,8 @@
         if (!el && !heroStatic) return;
 
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        var DWELL_MS = 4000;
-        var SCRAMBLE_FRAME_MS = 45;
-        var REVEAL_PER_FRAME = 2; // characters that lock in per frame (halved scramble time)
+        var DWELL_MS = 6500;
+        var FADE_MS = 520;
 
         // Studio status board: each line is one concrete signal a founder cares
         // about (scarcity, proof, responsiveness, urgency). Numbers and timing
@@ -5260,24 +5259,6 @@
           ];
         }
 
-        var GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        function randomGlyph() {
-          return GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
-        }
-
-        // Render a string as one <span class="ss-char"> per character so we can
-        // tag in-flight scrambling characters with a teal accent.
-        function render(chars, lockedCount) {
-          var html = '';
-          for (var i = 0; i < chars.length; i++) {
-            var c = chars[i];
-            var safe = c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '&' ? '&amp;' : (c === ' ' ? '\u00a0' : c);
-            var cls = i < lockedCount || c === ' ' || c === '\u00a0' ? 'ss-char' : 'ss-char scrambling';
-            html += '<span class="' + cls + '">' + safe + '</span>';
-          }
-          el.innerHTML = html;
-        }
-
         var messages = buildMessages();
         if (!messages.length) return;
 
@@ -5291,51 +5272,28 @@
 
         if (!el) return;
         var idx = 0;
-        // Initial render uses one span per char so the resting style matches.
-        render(messages[0].split(''), messages[0].length);
+        el.textContent = messages[0];
 
         var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        function scrambleTo(target, done) {
+        function fadeSwap(target, done) {
           if (prefersReducedMotion) {
-            render(target.split(''), target.length);
+            el.textContent = target;
             done && done();
             return;
           }
-          var src = el.textContent || '';
-          var maxLen = Math.max(src.length, target.length);
-          // Build an array sized to the longer string. Locked chars come from target.
-          // Unlocked positions show random glyphs each frame until they lock in.
-          var locked = 0;
-          var current = target.split('');
-
-          function tick() {
-            // Compose what to render this frame: locked prefix from target,
-            // remaining slots show random glyphs (matching target length).
-            var frame = new Array(target.length);
-            for (var i = 0; i < target.length; i++) {
-              if (i < locked) {
-                frame[i] = target.charAt(i);
-              } else if (target.charAt(i) === ' ') {
-                frame[i] = ' ';
-              } else {
-                frame[i] = randomGlyph();
-              }
-            }
-            render(frame, locked);
-            if (locked >= target.length) {
-              done && done();
-              return;
-            }
-            locked = Math.min(target.length, locked + REVEAL_PER_FRAME);
-            window.setTimeout(tick, SCRAMBLE_FRAME_MS);
-          }
-          tick();
+          // Fade out, swap text mid-fade, fade back in. CSS handles the easing.
+          el.classList.add('is-fading');
+          window.setTimeout(function () {
+            el.textContent = target;
+            el.classList.remove('is-fading');
+            window.setTimeout(function () { done && done(); }, FADE_MS);
+          }, FADE_MS);
         }
 
         function cycle() {
           idx = (idx + 1) % messages.length;
-          scrambleTo(messages[idx], function () {
+          fadeSwap(messages[idx], function () {
             window.setTimeout(cycle, DWELL_MS);
           });
         }
