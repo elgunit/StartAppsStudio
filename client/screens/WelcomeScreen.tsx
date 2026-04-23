@@ -48,6 +48,11 @@ function buildStudioStatusMessages() {
   return [seatsLine + monthName, shippingLine, callLine, "Next handoff in 2 weeks"];
 }
 
+function buildHeroPinLine() {
+  const now = new Date();
+  return `Booking ${STATUS_MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+}
+
 function StudioStatusStrip() {
   const { theme } = useTheme();
   const messages = React.useMemo(buildStudioStatusMessages, []);
@@ -389,7 +394,7 @@ export default function WelcomeScreen() {
         <View style={[styles.heroEyebrow, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
           <View style={styles.heroEyebrowDot} />
           <ThemedText type="caption" style={[styles.heroEyebrowText, { color: theme.text }]}>
-            {buildStudioStatusMessages()[0]}
+            {buildHeroPinLine()}
           </ThemedText>
         </View>
         <ThemedText type="display" style={styles.heroTitle}>

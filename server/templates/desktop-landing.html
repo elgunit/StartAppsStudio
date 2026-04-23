@@ -2660,7 +2660,7 @@
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
         <div class="hero-aurora" aria-hidden="true"></div>
-        <span class="hero-eyebrow" id="bookingPin"><span class="hero-eyebrow-dot"></span><span id="bookingPinStatic">2 founder seats open this month</span></span>
+        <span class="hero-eyebrow" id="bookingPin"><span class="hero-eyebrow-dot"></span><span id="bookingPinStatic">Booking April 2026</span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">For founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
 
@@ -5281,8 +5281,13 @@
         var messages = buildMessages();
         if (!messages.length) return;
 
-        // Hero pin: pick the seats line and render once. No animation.
-        if (heroStatic) heroStatic.textContent = messages[0];
+        // Hero pin: a calmer, distinct line so it never duplicates anything in
+        // the rotating studio-status strip below. Computed live so the month
+        // and year stay current.
+        if (heroStatic) {
+          var nowH = new Date();
+          heroStatic.textContent = 'Booking ' + MONTHS[nowH.getMonth()] + ' ' + nowH.getFullYear();
+        }
 
         if (!el) return;
         var idx = 0;
