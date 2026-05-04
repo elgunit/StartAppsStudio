@@ -188,7 +188,7 @@ const toolkitGroups: ToolkitGroup[] = [
     label: "Content & Media",
     tools: [
       { name: "ElevenLabs", role: "voiceover & speech", letter: "E", color: "#000000" },
-      { name: "Higgsfield", role: "video & motion", letter: "H", color: "#7C3AED" },
+      { name: "Seedance 2.0", role: "video & image gen", letter: "S", color: "#7C3AED" },
     ],
   },
 ];

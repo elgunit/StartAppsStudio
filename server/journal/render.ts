@@ -701,7 +701,7 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 - Reasoning & Code: Claude Sonnet 4.7, Gemini 2.5 Pro, GPT-5, Llama 4
 - Mockups & Prototyping: Figma, Replit, Lovable, Rork
 - Production & Delivery: Webflow, WordPress, GitHub, Swift (iOS), Kotlin (Android), n8n, Make, custom webhooks
-- Content & Media: ElevenLabs, Higgsfield
+- Content & Media: ElevenLabs, Seedance 2.0
 
 ## Contact
 
@@ -779,7 +779,7 @@ We swap in new model versions the week they ship.
 
 **Content & Media**
 - ElevenLabs — voiceover & speech
-- Higgsfield — video & motion
+- Seedance 2.0 — video & image gen
 
 ## What makes us different
 
