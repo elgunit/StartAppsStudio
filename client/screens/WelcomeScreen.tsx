@@ -158,7 +158,7 @@ const toolkitGroups: ToolkitGroup[] = [
   {
     label: "Reasoning & Code",
     tools: [
-      { name: "Claude Sonnet 4.7", role: "primary builder", letter: "C", color: "#D97757" },
+      { name: "Claude Opus 4.7", role: "primary builder", letter: "C", color: "#D97757" },
       { name: "Gemini 2.5 Pro", role: "long-context review", letter: "G", color: "#4285F4" },
       { name: "GPT-5", role: "creative & copy", letter: "G", color: "#10A37F" },
       { name: "Llama 4", role: "self-hosted fallback", letter: "L", color: "#0866FF" },
