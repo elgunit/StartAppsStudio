@@ -2725,14 +2725,14 @@
         text-align: left !important;
         border-radius: 0 !important;
         border: none !important;
-        background: none !important;
+        background: radial-gradient(ellipse 100% 65% at 50% 0%, rgba(13, 148, 136, 0.08), transparent 65%) !important;
         padding: 56px 0 48px !important;
         margin: 0 0 8px !important;
         border-top: 2px solid var(--ed-rule) !important;
         border-bottom: 1px solid var(--ed-hair) !important;
         overflow: visible !important;
       }
-      .hero::before, .hero-aurora { display: none !important; }
+      .hero::before, .hero-aurora { display: none !important; visibility: hidden !important; opacity: 0 !important; }
 
       .hero-eyebrow {
         background: var(--ed-yellow) !important;
@@ -3732,7 +3732,6 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
-        <div class="hero-aurora" aria-hidden="true"></div>
         <span class="hero-eyebrow" id="bookingPin"><span class="hero-eyebrow-dot"></span><span id="bookingPinStatic">Booking April 2026</span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Your technical</span> <span class="hero-line hero-line-nowrap"><span class="accent-word">co-founder</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">For founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
