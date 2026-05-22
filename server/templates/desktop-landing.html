@@ -2754,29 +2754,23 @@
         margin: 0 0 24px 0 !important;
         font-variation-settings: "opsz" 144, "SOFT" 0;
       }
+      /* Match the 3-level specificity of the base transparent rule so it can't win. */
+      .hero-headline .hero-line .accent-word,
       .hero-headline .accent-word {
-        position: relative;
-        display: inline-block;
-        background: transparent !important;
-        -webkit-text-fill-color: var(--ed-ink) !important;
-        color: var(--ed-ink) !important;
-        padding: 0 0.06em !important;
-        margin: 0 -0.02em !important;
-        box-shadow: none !important;
+        background: var(--ed-yellow) !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        -webkit-text-fill-color: var(--ed-on-yellow) !important;
+        color: var(--ed-on-yellow) !important;
+        padding: 0 0.12em 0.04em !important;
+        border-radius: 0 !important;
         animation: none !important;
         filter: none !important;
+        text-shadow: none !important;
+        display: inline !important;
+        position: static !important;
       }
-      .hero-headline .accent-word::after {
-        content: "";
-        position: absolute;
-        left: -0.01em;
-        right: -0.01em;
-        bottom: 0.12em;
-        height: 0.58em;
-        background: var(--ed-yellow);
-        z-index: -1;
-        pointer-events: none;
-      }
+      .hero-headline .accent-word::after { display: none !important; }
 
       .hero-subheadline {
         font-family: var(--ed-display) !important;
