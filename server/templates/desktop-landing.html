@@ -2768,12 +2768,20 @@
       /* Match the 3-level specificity of the base transparent rule so it can't win. */
       .hero-headline .hero-line .accent-word,
       .hero-headline .accent-word {
-        background: var(--ed-yellow) !important;
+        /* Trimmed highlight: gradient fades out the top 10% and bottom 10% so
+           the yellow bar sits mid-line without bleeding over adjacent lines */
+        background: linear-gradient(
+          transparent 10%,
+          var(--ed-yellow) 10%,
+          var(--ed-yellow) 90%,
+          transparent 90%
+        ) !important;
         -webkit-background-clip: unset !important;
         background-clip: unset !important;
-        -webkit-text-fill-color: var(--ed-ink) !important;
-        color: var(--ed-ink) !important;
-        padding: 0 0.06em !important;
+        /* Always dark text — ed-ink flips to white in dark mode, so hardcode */
+        -webkit-text-fill-color: #0a0a0a !important;
+        color: #0a0a0a !important;
+        padding: 0 0.08em !important;
         line-height: 1 !important;
         border-radius: 0 !important;
         animation: none !important;
