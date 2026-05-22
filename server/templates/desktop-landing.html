@@ -274,16 +274,17 @@
       /* Animated aurora — GPU-only (transform/opacity), behind everything. */
       .hero-aurora {
         position: absolute;
-        inset: -40%;
+        inset: -20%;
         z-index: -2;
         pointer-events: none;
         filter: blur(60px) saturate(140%);
         opacity: 0.55;
+        /* Orbs centered so they don't clip at the left edge on narrow screens */
         background:
-          radial-gradient(circle at 30% 30%, rgba(13, 148, 136, 0.55), transparent 38%),
-          radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.45), transparent 36%),
-          radial-gradient(circle at 60% 80%, rgba(16, 185, 129, 0.35), transparent 38%),
-          radial-gradient(circle at 20% 75%, rgba(236, 72, 153, 0.30), transparent 38%);
+          radial-gradient(circle at 50% 30%, rgba(13, 148, 136, 0.55), transparent 38%),
+          radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.45), transparent 36%),
+          radial-gradient(circle at 65% 75%, rgba(16, 185, 129, 0.35), transparent 38%),
+          radial-gradient(circle at 25% 70%, rgba(236, 72, 153, 0.30), transparent 38%);
         animation: hero-aurora-drift 22s ease-in-out infinite alternate;
         will-change: transform;
       }
