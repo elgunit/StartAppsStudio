@@ -5594,9 +5594,10 @@
         });
         // Open the target card
         card.classList.add('expanded');
-        // Smooth scroll so the card lands near the top of the viewport
+        // Smooth scroll to the section start so the heading is visible
         setTimeout(function() {
-          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var section = document.getElementById('expertise');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 50);
       }
       
