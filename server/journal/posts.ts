@@ -17,6 +17,7 @@ export interface Post {
   publishedAt: string; // ISO date
   updatedAt?: string;
   readMinutes: number;
+  category: string;
   tags: string[];
   body: Block[];
   sources?: { label: string; url?: string }[];
@@ -35,6 +36,7 @@ export const posts: Post[] = [
       "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things — and none of them are luck.",
     publishedAt: "2026-04-17",
     readMinutes: 6,
+    category: "Playbook",
     tags: ["GEO", "AI Overviews", "Schema", "MVP"],
     body: [
       {
@@ -208,6 +210,7 @@ export const posts: Post[] = [
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 7,
+    category: "Playbook",
     tags: ["GEO", "LLM SEO", "Brand", "MVP"],
     body: [
       {
@@ -417,6 +420,7 @@ export const posts: Post[] = [
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 9,
+    category: "Field Notes",
     tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"],
     body: [
       {
@@ -581,6 +585,7 @@ export const posts: Post[] = [
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 8,
+    category: "Research",
     tags: ["AI at work", "State of marketing 2026", "Founders", "Research"],
     body: [
       {
@@ -739,6 +744,7 @@ export const posts: Post[] = [
       "Schema and answer-first writing get you eligible to be cited. Backlinks are what tip a brand-new MVP from eligible to actually recommended.",
     publishedAt: "2026-04-22",
     readMinutes: 6,
+    category: "Playbook",
     tags: ["SEO", "Backlinks", "Off-page", "MVP"],
     body: [
       {
@@ -865,6 +871,7 @@ export const posts: Post[] = [
       "Replacing your dashboard with a chat bar is a downgrade. The real shift is to interfaces that get generated on the fly for the task at hand, and to backends that an agent can drive without ever touching your UI.",
     publishedAt: "2026-04-24",
     readMinutes: 7,
+    category: "Essay",
     tags: ["AI-native", "Generative UI", "Design", "API"],
     body: [
       {
@@ -1021,6 +1028,7 @@ export const posts: Post[] = [
       "If AI is going to generate your screens, the ceiling on what it can produce is your design system. A weak system means weak output, every time. Here is what changes.",
     publishedAt: "2026-04-23",
     readMinutes: 6,
+    category: "Essay",
     tags: ["Design Systems", "AI-native", "API", "Design"],
     body: [
       {

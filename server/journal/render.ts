@@ -879,13 +879,13 @@ export function renderArticleHtml(post: Post, origin: string): string {
         .join("")}</ul></section>`
     : "";
 
-  const category = post.tags[0] || "Journal";
+  const category = post.category || "Journal";
   const deckSource = post.excerpt || post.description;
 
   const others = allPostsNewestFirst().filter((p) => p.slug !== post.slug).slice(0, 2);
   const nextCards = others
     .map((p) => {
-      const cat = p.tags[0] || "Journal";
+      const cat = p.category || "Journal";
       return `
       <a href="/journal/${esc(p.slug)}" class="next-card">
         <div class="next-card-meta">${esc(cat)} · ${esc(formatDate(p.publishedAt))}</div>
