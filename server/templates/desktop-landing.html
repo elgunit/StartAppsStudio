@@ -3107,7 +3107,7 @@
       }
 
       /* ---- Pricing ------------------------------------------------- */
-      .pricing-grid { gap: 0 !important; border: 1px solid var(--ed-ink); }
+      .pricing-grid { gap: 0 !important; border: 1px solid var(--ed-ink); overflow: hidden !important; }
       .price-card {
         border-radius: 0 !important;
         border: none !important;
@@ -3242,13 +3242,13 @@
         /* ensure the offset shadow is never clipped */
         margin-left: auto !important;
         margin-right: auto !important;
-        max-width: calc(100% - 32px) !important;
+        max-width: calc(100% - 96px) !important;
       }
       @media (max-width: 600px) {
         .waitlist-card {
           padding: 28px 20px !important;
           box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
-          max-width: calc(100% - 24px) !important;
+          max-width: calc(100% - 48px) !important;
           margin-bottom: 40px !important;
         }
         .waitlist-title {
