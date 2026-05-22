@@ -44,6 +44,24 @@ export const Colors = {
   },
 };
 
+// Editorial (Bloomberg Businessweek-style) tokens shared with desktop landing.
+// Yellow surfaces always use a LOCKED dark on-yellow text color so dark mode
+// stays legible.
+export const Editorial = {
+  yellow: "#FCD34D",
+  yellowDeep: "#F59E0B",
+  pop: "#FF5A1F",
+  onYellow: "#0A0A0A",
+  inkLight: "#0A0A0A",
+  inkDark: "#FAFAFA",
+  hairLight: "rgba(10,10,10,0.14)",
+  hairDark: "rgba(250,250,250,0.16)",
+  display: "Fraunces_900Black",
+  displayBold: "Fraunces_700Bold",
+  displayItalic: "Fraunces_500Medium_Italic",
+  kicker: "ArchivoNarrow_700Bold",
+};
+
 export const Spacing = {
   xs: 4,
   sm: 8,

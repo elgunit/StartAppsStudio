@@ -16,7 +16,7 @@ import { Feather } from "@expo/vector-icons";
 
 import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius } from "@/constants/theme";
+import { Spacing, BorderRadius, Editorial } from "@/constants/theme";
 import { getApiUrl } from "@/lib/query-client";
 
 const STATUS_MONTHS = [
@@ -253,13 +253,15 @@ function SectionHeading({ kicker, title, subtitle }: { kicker?: string; title: s
   return (
     <View style={styles.sectionHeading}>
       {kicker ? (
-        <ThemedText type="caption" style={[styles.kicker, { color: theme.textTertiary }]}>
-          {kicker.toUpperCase()}
-        </ThemedText>
+        <View style={[styles.kickerBlock, { backgroundColor: theme.text }]}>
+          <ThemedText style={[styles.kickerText, { color: Editorial.yellow }]}>
+            {kicker.toUpperCase()}
+          </ThemedText>
+        </View>
       ) : null}
-      <ThemedText type="h2" style={styles.sectionTitle}>{title}</ThemedText>
+      <ThemedText style={[styles.sectionTitle, { color: theme.text }]}>{title}</ThemedText>
       {subtitle ? (
-        <ThemedText type="body" style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>{subtitle}</ThemedText>
+        <ThemedText style={[styles.sectionSubtitle, { color: theme.textSecondary }]}>{subtitle}</ThemedText>
       ) : null}
     </View>
   );
@@ -388,43 +390,71 @@ export default function WelcomeScreen() {
       <View style={styles.heroSection}>
         <Image
           source={isDark ? require("../../assets/images/icon-dark.png") : require("../../assets/images/icon.png")}
-          style={[styles.logo, { borderRadius: 16 }]}
+          style={styles.logo}
           resizeMode="contain"
         />
-        <View style={[styles.heroEyebrow, { backgroundColor: theme.backgroundDefault, borderColor: theme.border }]}>
-          <View style={styles.heroEyebrowDot} />
-          <ThemedText type="caption" style={[styles.heroEyebrowText, { color: theme.text }]}>
-            {buildHeroPinLine()}
+        <View
+          style={[
+            styles.heroEyebrow,
+            {
+              backgroundColor: isDark ? theme.text : Editorial.yellow,
+              borderColor: isDark ? Editorial.yellow : Editorial.onYellow,
+            },
+            isDark ? styles.heroEyebrowShadowDark : styles.heroEyebrowShadowLight,
+          ]}
+        >
+          <View
+            style={[
+              styles.heroEyebrowDot,
+              { backgroundColor: isDark ? Editorial.yellow : Editorial.onYellow },
+            ]}
+          />
+          <ThemedText
+            style={[
+              styles.heroEyebrowText,
+              { color: isDark ? Editorial.yellow : Editorial.onYellow },
+            ]}
+          >
+            {buildHeroPinLine().toUpperCase()}
           </ThemedText>
         </View>
-        <ThemedText type="display" style={styles.heroTitle}>
-          Your technical{"\n"}co-founder, without{"\n"}the equity split.
+        <ThemedText style={[styles.heroTitle, { color: theme.text }]}>
+          Your technical{"\n"}co-founder, without{"\n"}the{" "}
+          <ThemedText style={[styles.heroTitleAccent, { color: Editorial.onYellow, backgroundColor: Editorial.yellow }]}>
+            {" equity split. "}
+          </ThemedText>
         </ThemedText>
-        <ThemedText type="body" style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
+        <ThemedText style={[styles.heroSubtitle, { color: theme.textSecondary }]}>
           A small AI-native studio building mockups, prototypes, and shippable MVPs in 3 to 8 weeks.
         </ThemedText>
-        <View style={styles.statsRow}>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
-            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>~200</ThemedText> founders shipped
-          </ThemedText>
-          <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
-            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>$50M+</ThemedText> raised
-          </ThemedText>
-          <ThemedText type="caption" style={{ color: theme.textTertiary }}>·</ThemedText>
-          <ThemedText type="caption" style={[styles.statItem, { color: theme.textTertiary }]}>
-            <ThemedText type="caption" style={{ color: theme.text, fontWeight: "700" }}>3-8 weeks</ThemedText> to launch
-          </ThemedText>
+        <View style={[styles.statsRow, { borderColor: isDark ? Editorial.hairDark : Editorial.hairLight }]}>
+          <View style={styles.statBlock}>
+            <ThemedText style={[styles.statValue, { color: theme.text }]}>~200</ThemedText>
+            <ThemedText style={[styles.statLabel, { color: theme.textSecondary }]}>FOUNDERS SHIPPED</ThemedText>
+          </View>
+          <View style={[styles.statDivider, { backgroundColor: isDark ? Editorial.hairDark : Editorial.hairLight }]} />
+          <View style={styles.statBlock}>
+            <ThemedText style={[styles.statValue, { color: theme.text }]}>$50M+</ThemedText>
+            <ThemedText style={[styles.statLabel, { color: theme.textSecondary }]}>RAISED</ThemedText>
+          </View>
+          <View style={[styles.statDivider, { backgroundColor: isDark ? Editorial.hairDark : Editorial.hairLight }]} />
+          <View style={styles.statBlock}>
+            <ThemedText style={[styles.statValue, { color: theme.text }]}>3-8 WK</ThemedText>
+            <ThemedText style={[styles.statLabel, { color: theme.textSecondary }]}>TO LAUNCH</ThemedText>
+          </View>
         </View>
 
-        <Pressable
-          onPress={openContact}
-          style={[styles.heroCta, { backgroundColor: theme.text }]}
-          testID="button-hero-contact"
-        >
-          <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>Get a free plan</ThemedText>
-          <Feather name="arrow-right" size={16} color={theme.buttonText} />
-        </Pressable>
+        <View style={styles.heroCtaWrap}>
+          <View style={[styles.heroCtaShadow, { backgroundColor: Editorial.yellow }]} />
+          <Pressable
+            onPress={openContact}
+            style={[styles.heroCta, { backgroundColor: theme.text, borderColor: theme.text }]}
+            testID="button-hero-contact"
+          >
+            <ThemedText style={[styles.heroCtaText, { color: theme.buttonText }]}>GET A FREE PLAN</ThemedText>
+            <Feather name="arrow-right" size={14} color={theme.buttonText} />
+          </Pressable>
+        </View>
       </View>
 
       {/* Services */}
@@ -870,49 +900,118 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   heroSection: {
     paddingHorizontal: Spacing.xl,
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: Spacing["2xl"],
   },
-  logo: { width: 80, height: 80, marginBottom: Spacing.lg },
+  logo: { width: 64, height: 64, marginBottom: Spacing.lg, borderRadius: 0 },
   heroEyebrow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    borderRadius: BorderRadius.full,
-    borderWidth: 1,
-    marginBottom: Spacing.md,
+    borderRadius: 0,
+    borderWidth: 1.5,
+    marginBottom: Spacing.lg,
+  },
+  heroEyebrowShadowLight: {
+    shadowColor: Editorial.onYellow,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+  heroEyebrowShadowDark: {
+    shadowColor: Editorial.yellow,
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   heroEyebrowDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#0d9488",
+    width: 7,
+    height: 7,
+    borderRadius: 0,
   },
-  heroEyebrowText: { fontWeight: "600" as const, fontSize: 12 },
-  heroTitle: { textAlign: "center", marginBottom: Spacing.md },
-  heroSubtitle: { textAlign: "center", maxWidth: 320 },
+  heroEyebrowText: {
+    fontFamily: Editorial.kicker,
+    fontSize: 11.5,
+    letterSpacing: 1.8,
+  },
+  heroTitle: {
+    textAlign: "left",
+    fontFamily: Editorial.display,
+    fontSize: 48,
+    lineHeight: 48,
+    letterSpacing: -1.2,
+    marginBottom: Spacing.md,
+    alignSelf: "stretch",
+  },
+  heroTitleAccent: {
+    fontFamily: Editorial.display,
+    fontSize: 48,
+    lineHeight: 48,
+    letterSpacing: -1.2,
+  },
+  heroSubtitle: {
+    textAlign: "left",
+    fontFamily: Editorial.displayItalic,
+    fontStyle: "italic",
+    fontSize: 18,
+    lineHeight: 26,
+    alignSelf: "stretch",
+  },
   statsRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.sm,
-    marginTop: Spacing.md,
-    flexWrap: "wrap",
-    justifyContent: "center",
-    paddingHorizontal: Spacing.lg,
+    gap: Spacing.md,
+    marginTop: Spacing.lg,
+    justifyContent: "flex-start",
+    paddingVertical: Spacing.md,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    alignSelf: "stretch",
   },
-  statItem: { fontWeight: "500" as const },
+  statBlock: { flexShrink: 1 },
+  statValue: {
+    fontFamily: Editorial.display,
+    fontSize: 22,
+    lineHeight: 24,
+    letterSpacing: -0.5,
+  },
+  statLabel: {
+    fontFamily: Editorial.kicker,
+    fontSize: 10.5,
+    letterSpacing: 1.4,
+    marginTop: 2,
+  },
+  statDivider: { width: 1, height: 28 },
+  heroCtaWrap: {
+    marginTop: Spacing.xl,
+    alignSelf: "flex-start",
+    position: "relative",
+  },
+  heroCtaShadow: {
+    position: "absolute",
+    top: 5,
+    left: 5,
+    right: -5,
+    bottom: -5,
+  },
   heroCta: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.full,
-    marginTop: Spacing.xl,
+    borderRadius: 0,
+    borderWidth: 1.5,
   },
-  heroCtaText: { fontSize: 15, fontWeight: "600" as const },
+  heroCtaText: {
+    fontFamily: Editorial.kicker,
+    fontSize: 13,
+    letterSpacing: 2,
+  },
   section: {
     paddingHorizontal: Spacing.xl,
     marginBottom: Spacing["2xl"],
@@ -937,22 +1036,43 @@ const styles = StyleSheet.create({
   studioStatusText: {
     fontWeight: "500" as const,
   },
-  sectionHeading: { marginBottom: Spacing.lg },
-  kicker: { letterSpacing: 1.5, fontWeight: "700" as const, marginBottom: 6 },
-  sectionTitle: { marginBottom: 6 },
-  sectionSubtitle: { lineHeight: 22 },
+  sectionHeading: { marginBottom: Spacing.lg, alignItems: "flex-start" },
+  kickerBlock: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: Spacing.sm,
+    borderRadius: 0,
+  },
+  kickerText: {
+    fontFamily: Editorial.kicker,
+    fontSize: 11,
+    letterSpacing: 1.8,
+  },
+  sectionTitle: {
+    fontFamily: Editorial.display,
+    fontSize: 32,
+    lineHeight: 34,
+    letterSpacing: -0.8,
+    marginBottom: 8,
+  },
+  sectionSubtitle: {
+    fontFamily: Editorial.displayItalic,
+    fontStyle: "italic",
+    fontSize: 16,
+    lineHeight: 24,
+  },
   gridTwo: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   tile: {
     flexBasis: "48%",
     flexGrow: 1,
     padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
+    borderRadius: 0,
     borderWidth: 1,
   },
   tileIcon: {
     width: 36,
     height: 36,
-    borderRadius: BorderRadius.md,
+    borderRadius: 0,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: Spacing.sm,
@@ -963,13 +1083,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.md,
     padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
+    borderRadius: 0,
     borderWidth: 1,
   },
   hatIcon: {
     width: 40,
     height: 40,
-    borderRadius: BorderRadius.md,
+    borderRadius: 0,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -984,13 +1104,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.md,
     padding: Spacing.md,
-    borderRadius: BorderRadius.md,
+    borderRadius: 0,
     borderWidth: 1,
   },
   toolkitAvatar: {
     width: 32,
     height: 32,
-    borderRadius: BorderRadius.sm,
+    borderRadius: 0,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -1001,7 +1121,7 @@ const styles = StyleSheet.create({
   footnote: { lineHeight: 20, marginTop: Spacing.sm },
   packageCard: {
     padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
+    borderRadius: 0,
   },
   packageHeader: {
     flexDirection: "row",
@@ -1010,20 +1130,33 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   popularBadge: {
-    backgroundColor: "#0d9488",
+    backgroundColor: Editorial.yellow,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 4,
-    borderRadius: BorderRadius.full,
+    borderRadius: 0,
+    borderWidth: 1,
+    borderColor: Editorial.onYellow,
   },
-  popularBadgeText: { color: "#fff", fontSize: 11, fontWeight: "700" as const },
-  packagePrice: { fontSize: 28, lineHeight: 34, marginBottom: 4 },
+  popularBadgeText: {
+    color: Editorial.onYellow,
+    fontSize: 11,
+    fontFamily: Editorial.kicker,
+    letterSpacing: 1.4,
+  },
+  packagePrice: {
+    fontFamily: Editorial.display,
+    fontSize: 28,
+    lineHeight: 34,
+    marginBottom: 4,
+    letterSpacing: -0.5,
+  },
   packageNote: { marginTop: Spacing.xs },
   caseCard: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.md,
     padding: Spacing.md,
-    borderRadius: BorderRadius.md,
+    borderRadius: 0,
     borderWidth: 1,
   },
   caseResult: {
@@ -1032,7 +1165,7 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 4,
-    borderRadius: BorderRadius.full,
+    borderRadius: 0,
     borderWidth: 1,
   },
   loadMoreBtn: {
@@ -1042,12 +1175,12 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     paddingVertical: Spacing.md,
     marginTop: Spacing.md,
-    borderRadius: BorderRadius.full,
+    borderRadius: 0,
     borderWidth: 1,
   },
   ctaCard: {
     padding: Spacing.xl,
-    borderRadius: BorderRadius.lg,
+    borderRadius: 0,
     borderWidth: 1,
     alignItems: "center",
   },
