@@ -3050,11 +3050,37 @@
       /* Invert the icon box on hover so it stays legible on the yellow card */
       .services-grid .service-card:hover .service-icon,
       .growth-grid .growth-card:hover .growth-icon,
-      .why-grid .why-card:hover .why-card-icon {
+      .why-grid .why-card:hover .why-card-icon,
+      .services-grid .service-card.expanded .service-icon,
+      .growth-grid .growth-card.expanded .growth-icon,
+      .why-grid .why-card.expanded .why-card-icon {
         background: var(--ed-ink) !important;
         border-color: var(--ed-ink) !important;
         color: var(--ed-yellow) !important;
       }
+      /* Force SVG stroke yellow so it stays visible on the dark icon background */
+      .services-grid .service-card:hover .service-icon svg,
+      .growth-grid .growth-card:hover .growth-icon svg,
+      .why-grid .why-card:hover .why-card-icon svg,
+      .services-grid .service-card.expanded .service-icon svg,
+      .growth-grid .growth-card.expanded .growth-icon svg,
+      .why-grid .why-card.expanded .why-card-icon svg {
+        color: var(--ed-yellow) !important;
+        stroke: var(--ed-yellow) !important;
+      }
+      /* Expanded state mirrors hover: yellow card, ink text */
+      .services-grid .service-card.expanded,
+      .growth-grid .growth-card.expanded,
+      .why-grid .why-card.expanded {
+        background: var(--ed-yellow) !important;
+        border-color: var(--ed-ink) !important;
+      }
+      .services-grid .service-card.expanded,
+      .services-grid .service-card.expanded *,
+      .growth-grid .growth-card.expanded,
+      .growth-grid .growth-card.expanded *,
+      .why-grid .why-card.expanded,
+      .why-grid .why-card.expanded * { color: var(--ed-on-yellow) !important; }
       .growth-credit-badge {
         border-radius: 0 !important;
         font-family: var(--ed-kicker) !important;
