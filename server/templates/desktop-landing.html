@@ -210,8 +210,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Editorial type system: Fraunces (display serif), Archivo Narrow (condensed grotesk), JetBrains Mono (kicker numerals) -->
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700&family=Archivo+Narrow:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Editorial type system: Fraunces (display serif) + Archivo Narrow (condensed grotesk for kickers/labels). Mono uses system stack. -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,500&family=Archivo+Narrow:wght@700&display=swap" rel="stylesheet">
     
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2679,7 +2679,7 @@
         --ed-mute: #57534e;
         --ed-display: 'Fraunces', 'Times New Roman', Georgia, serif;
         --ed-kicker: 'Archivo Narrow', 'Inter', sans-serif;
-        --ed-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+        --ed-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
       }
       @media (prefers-color-scheme: dark) {
         :root {
