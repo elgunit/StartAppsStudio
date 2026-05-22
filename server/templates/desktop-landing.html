@@ -3028,7 +3028,25 @@
         width: 36px !important;
         height: 36px !important;
         border: 1.5px solid var(--ed-ink) !important;
-        background: var(--ed-paper) !important;
+        background: transparent !important;
+        transition: background 0.22s cubic-bezier(0.16,1,0.3,1),
+                    border-color 0.22s ease,
+                    color 0.22s ease !important;
+      }
+      /* Improve card transition timing */
+      .services-grid .service-card,
+      .growth-grid .growth-card,
+      .why-grid .why-card {
+        transition: background 0.22s cubic-bezier(0.16,1,0.3,1),
+                    border-color 0.22s ease !important;
+      }
+      /* Invert the icon box on hover so it stays legible on the yellow card */
+      .services-grid .service-card:hover .service-icon,
+      .growth-grid .growth-card:hover .growth-icon,
+      .why-grid .why-card:hover .why-card-icon {
+        background: var(--ed-ink) !important;
+        border-color: var(--ed-ink) !important;
+        color: var(--ed-yellow) !important;
       }
       .growth-credit-badge {
         border-radius: 0 !important;
