@@ -3232,6 +3232,21 @@
         background: var(--ed-yellow) !important;
         padding: 36px 32px !important;
         box-shadow: 8px 8px 0 0 var(--ed-ink) !important;
+        /* ensure the offset shadow is never clipped */
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: calc(100% - 32px) !important;
+      }
+      @media (max-width: 600px) {
+        .waitlist-card {
+          padding: 28px 20px !important;
+          box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
+          max-width: calc(100% - 24px) !important;
+          margin-bottom: 40px !important;
+        }
+        .waitlist-title {
+          font-size: clamp(22px, 7vw, 36px) !important;
+        }
       }
       .waitlist-card::before { display: none !important; }
       .waitlist-card, .waitlist-card * { color: var(--ed-on-yellow) !important; }
@@ -3484,7 +3499,7 @@
         padding: 32px !important;
       }
       #ai-efficiency .ae-teaser:hover {
-        transform: translate(-2px, -2px) !important;
+        transform: translateY(-2px) !important;
         box-shadow: 8px 8px 0 0 var(--ed-pop) !important;
       }
       #ai-efficiency .ae-teaser-badge {
