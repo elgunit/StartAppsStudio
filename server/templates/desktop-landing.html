@@ -240,6 +240,7 @@
         }
       }
       
+      html { scroll-behavior: smooth; }
       body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         background: var(--bg);
@@ -457,6 +458,16 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        text-decoration: none;
+        color: var(--text);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .hat-showcase-item:active {
+        transform: scale(0.94) translateY(0px);
+        box-shadow: none;
+        opacity: 0.82;
+        transition: transform 0.08s ease, opacity 0.08s ease;
       }
       @media (prefers-color-scheme: dark) {
         .hat-showcase-item { background: rgba(24,24,27,0.55); }
@@ -2762,7 +2773,7 @@
         background-clip: unset !important;
         -webkit-text-fill-color: var(--ed-on-yellow) !important;
         color: var(--ed-on-yellow) !important;
-        padding: 0.04em 0.06em 0.06em 0.06em !important;
+        padding: 0 0.07em !important;
         border-radius: 0 !important;
         animation: none !important;
         filter: none !important;
@@ -3562,36 +3573,36 @@
 
         <!-- 5 Hats Showcase -->
         <div class="hats-showcase">
-          <div class="hat-showcase-item hat-designer">
+          <a href="#expertise" class="hat-showcase-item hat-designer">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
             </div>
             Designer
-          </div>
-          <div class="hat-showcase-item hat-developer">
+          </a>
+          <a href="#expertise" class="hat-showcase-item hat-developer">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             Developer
-          </div>
-          <div class="hat-showcase-item hat-strategist">
+          </a>
+          <a href="#expertise" class="hat-showcase-item hat-strategist">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             </div>
             Strategist
-          </div>
-          <div class="hat-showcase-item hat-manager">
+          </a>
+          <a href="#expertise" class="hat-showcase-item hat-manager">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
             </div>
             Manager
-          </div>
-          <div class="hat-showcase-item hat-analyst">
+          </a>
+          <a href="#expertise" class="hat-showcase-item hat-analyst">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             </div>
             Analyst
-          </div>
+          </a>
         </div>
 
         <div class="hero-stats">
@@ -3621,22 +3632,6 @@
         </div>
       </section>
 
-      <!-- App Waitlist -->
-      <div class="waitlist-card">
-        <span class="waitlist-badge"><span class="waitlist-badge-dot"></span>Coming Soon</span>
-        <h2 class="waitlist-title">The Start Apps Studio App</h2>
-        <p class="waitlist-desc">Track your build, message your team, and review designs live, all from your phone. iOS and Android, free for every Start Apps client.</p>
-        <form class="waitlist-form" id="waitlistForm" onsubmit="submitWaitlist(event)">
-          <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="your@email.com" required autocomplete="email" />
-          <button type="submit" class="waitlist-btn" id="waitlistBtn">Notify me</button>
-        </form>
-        <div class="waitlist-success" id="waitlistSuccess">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-          You're on the list. We'll notify you at launch.
-        </div>
-        <p class="waitlist-note">No spam. One email when we ship.</p>
-      </div>
-      
       <!-- What We Do -->
       <section class="section" data-section-name="what-we-ship">
         <h2 class="section-title">What we ship</h2>
@@ -3921,7 +3916,7 @@
       </div>
       
       <!-- Expertise -->
-      <section class="section" data-section-name="expertise">
+      <section class="section" id="expertise" data-section-name="expertise">
         <h2 class="section-title">Five hats, one partner</h2>
         <p class="section-subtitle">One team that swaps roles as your project moves from idea to launch.</p>
         
@@ -5525,6 +5520,22 @@
         </details>
       </div>
     </section>
+
+    <!-- App Waitlist -->
+    <div class="waitlist-card">
+      <span class="waitlist-badge"><span class="waitlist-badge-dot"></span>Coming Soon</span>
+      <h2 class="waitlist-title">The Start Apps Studio App</h2>
+      <p class="waitlist-desc">Track your build, message your team, and review designs live, all from your phone. iOS and Android, free for every Start Apps client.</p>
+      <form class="waitlist-form" id="waitlistForm" onsubmit="submitWaitlist(event)">
+        <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="your@email.com" required autocomplete="email" />
+        <button type="submit" class="waitlist-btn" id="waitlistBtn">Notify me</button>
+      </form>
+      <div class="waitlist-success" id="waitlistSuccess">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+        You're on the list. We'll notify you at launch.
+      </div>
+      <p class="waitlist-note">No spam. One email when we ship.</p>
+    </div>
 
     <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
