@@ -3573,31 +3573,31 @@
 
         <!-- 5 Hats Showcase -->
         <div class="hats-showcase">
-          <a href="#expertise" class="hat-showcase-item hat-designer">
+          <a href="#hat-designer" class="hat-showcase-item hat-designer" onclick="openHatCard('hat-designer',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
             </div>
             Designer
           </a>
-          <a href="#expertise" class="hat-showcase-item hat-developer">
+          <a href="#hat-developer" class="hat-showcase-item hat-developer" onclick="openHatCard('hat-developer',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             Developer
           </a>
-          <a href="#expertise" class="hat-showcase-item hat-strategist">
+          <a href="#hat-strategist" class="hat-showcase-item hat-strategist" onclick="openHatCard('hat-strategist',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             </div>
             Strategist
           </a>
-          <a href="#expertise" class="hat-showcase-item hat-manager">
+          <a href="#hat-manager" class="hat-showcase-item hat-manager" onclick="openHatCard('hat-manager',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
             </div>
             Manager
           </a>
-          <a href="#expertise" class="hat-showcase-item hat-analyst">
+          <a href="#hat-analyst" class="hat-showcase-item hat-analyst" onclick="openHatCard('hat-analyst',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             </div>
@@ -3921,7 +3921,7 @@
         <p class="section-subtitle">One team that swaps roles as your project moves from idea to launch.</p>
         
         <div class="expertise-grid">
-        <div class="expandable-card" onclick="toggleCard(this)">
+        <div class="expandable-card" id="hat-designer" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&#9998;</div>
             <div class="card-info">
@@ -3941,7 +3941,7 @@
           </div>
         </div>
         
-        <div class="expandable-card" onclick="toggleCard(this)">
+        <div class="expandable-card" id="hat-developer" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&lt;/&gt;</div>
             <div class="card-info">
@@ -3961,7 +3961,7 @@
           </div>
         </div>
         
-        <div class="expandable-card" onclick="toggleCard(this)">
+        <div class="expandable-card" id="hat-strategist" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&#9733;</div>
             <div class="card-info">
@@ -3981,7 +3981,7 @@
           </div>
         </div>
         
-        <div class="expandable-card" onclick="toggleCard(this)">
+        <div class="expandable-card" id="hat-manager" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&#9776;</div>
             <div class="card-info">
@@ -4001,7 +4001,7 @@
           </div>
         </div>
         
-        <div class="expandable-card" onclick="toggleCard(this)">
+        <div class="expandable-card" id="hat-analyst" onclick="toggleCard(this)">
           <div class="card-header">
             <div class="card-icon">&#128200;</div>
             <div class="card-info">
@@ -5581,6 +5581,22 @@
     <script>
       function toggleCard(el) {
         el.classList.toggle('expanded');
+      }
+
+      function openHatCard(hatId, event) {
+        event.preventDefault();
+        var card = document.getElementById(hatId);
+        if (!card) return;
+        // Close all other expertise cards first
+        document.querySelectorAll('#expertise .expandable-card').forEach(function(c) {
+          if (c !== card) c.classList.remove('expanded');
+        });
+        // Open the target card
+        card.classList.add('expanded');
+        // Smooth scroll so the card lands near the top of the viewport
+        setTimeout(function() {
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
       }
       
       function toggleInterest(e, el) {
