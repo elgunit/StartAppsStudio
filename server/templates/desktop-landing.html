@@ -3124,10 +3124,12 @@
         box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
         transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.22s ease !important;
       }
-      .expertise-grid .expandable-card:hover {
-        transform: translate(-2px, -2px) !important;
-        box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
-        border-color: var(--ed-ink) !important;
+      @media (hover: hover) {
+        .expertise-grid .expandable-card:hover {
+          transform: translate(-2px, -2px) !important;
+          box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
+          border-color: var(--ed-ink) !important;
+        }
       }
       .expertise-grid .expandable-card.expanded {
         background: var(--ed-yellow) !important;
@@ -3176,10 +3178,12 @@
         box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
         transition: transform 0.18s ease, box-shadow 0.18s ease !important;
       }
-      .how-bento .how-card:hover {
-        transform: translate(-2px, -2px) !important;
-        box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
-        border-color: var(--ed-ink) !important;
+      @media (hover: hover) {
+        .how-bento .how-card:hover {
+          transform: translate(-2px, -2px) !important;
+          box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
+          border-color: var(--ed-ink) !important;
+        }
       }
       .how-bento .how-card-icon {
         border-radius: 0 !important;
