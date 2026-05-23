@@ -3116,6 +3116,111 @@
         padding: 4px 8px;
       }
 
+      /* ---- Five hats, one partner (expandable cards) ---------------- */
+      .expertise-grid .expandable-card {
+        border-radius: 0 !important;
+        border: 1.5px solid var(--ed-ink) !important;
+        background: var(--ed-paper) !important;
+        box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.22s ease !important;
+      }
+      .expertise-grid .expandable-card:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
+        border-color: var(--ed-ink) !important;
+      }
+      .expertise-grid .expandable-card.expanded {
+        background: var(--ed-yellow) !important;
+        border-color: var(--ed-ink) !important;
+        box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
+      }
+      .expertise-grid .expandable-card.expanded,
+      .expertise-grid .expandable-card.expanded * { color: var(--ed-on-yellow) !important; }
+      .expertise-grid .card-icon {
+        border-radius: 0 !important;
+        width: 44px !important;
+        height: 44px !important;
+        border: 1.5px solid var(--ed-ink) !important;
+        background: transparent !important;
+        font-family: var(--ed-display) !important;
+        font-weight: 900 !important;
+      }
+      .expertise-grid .expandable-card:hover .card-icon,
+      .expertise-grid .expandable-card.expanded .card-icon {
+        background: var(--ed-ink) !important;
+        color: var(--ed-yellow) !important;
+      }
+      .expertise-grid .card-info h4 {
+        font-family: var(--ed-display) !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.01em !important;
+      }
+      .expertise-grid .card-info p {
+        font-family: var(--ed-kicker) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.12em !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: var(--ed-mute) !important;
+      }
+      .expertise-grid .expandable-card.expanded .card-info p { color: var(--ed-on-yellow) !important; }
+      .expertise-grid .skill-item { font-size: 14px !important; }
+      .expertise-grid .skill-item svg { color: var(--ed-ink) !important; }
+      .expertise-grid .expandable-card.expanded .skill-item svg { color: var(--ed-on-yellow) !important; }
+
+      /* ---- How it works (how-card bento) ----------------------------- */
+      .how-bento .how-card {
+        border-radius: 0 !important;
+        border: 1.5px solid var(--ed-ink) !important;
+        background: var(--ed-paper) !important;
+        box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
+        transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+      }
+      .how-bento .how-card:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0 0 var(--ed-yellow) !important;
+        border-color: var(--ed-ink) !important;
+      }
+      .how-bento .how-card-icon {
+        border-radius: 0 !important;
+        width: 44px !important;
+        height: 44px !important;
+        border: 1.5px solid var(--ed-ink) !important;
+        background: transparent !important;
+        color: var(--ed-ink) !important;
+      }
+      .how-bento .how-card:hover .how-card-icon {
+        background: var(--ed-ink) !important;
+        color: var(--ed-yellow) !important;
+      }
+      .how-bento .how-card:hover .how-card-icon svg {
+        color: var(--ed-yellow) !important;
+        stroke: var(--ed-yellow) !important;
+      }
+      .how-bento .how-card-step {
+        font-family: var(--ed-kicker) !important;
+        text-transform: uppercase;
+        letter-spacing: 0.14em !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: var(--ed-mute) !important;
+      }
+      .how-bento .how-card-step::before {
+        border-radius: 0 !important;
+        background: var(--ed-ink) !important;
+      }
+      .how-bento .how-card h4 {
+        font-family: var(--ed-display) !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.01em !important;
+      }
+      .how-bento .how-card p { color: var(--ed-mute) !important; }
+      .how-bento .how-card-ghost {
+        font-family: var(--ed-display) !important;
+        font-weight: 900 !important;
+        color: rgba(0, 0, 0, 0.06) !important;
+      }
+
       /* Service tabs as masthead-style toggle */
       .service-tabs {
         border-radius: 0 !important;
