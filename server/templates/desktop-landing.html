@@ -1411,6 +1411,8 @@
         transition: all 0.2s;
         white-space: nowrap;
       }
+      .cmp-tab .cmp-tab-full { display: inline; }
+      .cmp-tab .cmp-tab-short { display: none; }
       .cmp-tab.active {
         background: var(--bg);
         color: var(--text);
@@ -1503,17 +1505,19 @@
         .modal-content { padding: 28px 16px; }
         .modal-content h3 { padding: 8px 32px 0 32px; }
         .cmp-grid { grid-template-columns: 1fr; }
-        .cmp-tabs { gap: 4px; padding: 3px; }
+        .cmp-tabs { gap: 6px; padding: 4px; }
         .cmp-tab  {
-          font-size: 11px;
-          padding: 9px 6px;
-          gap: 4px;
+          font-size: 13px;
+          padding: 12px 10px;
+          gap: 8px;
           white-space: nowrap;
           line-height: 1.2;
           min-width: 0;
-          letter-spacing: -0.01em;
+          letter-spacing: 0.02em;
         }
-        .cmp-tab svg { display: none; }
+        .cmp-tab svg { display: inline-block; width: 14px; height: 14px; }
+        .cmp-tab .cmp-tab-full { display: none; }
+        .cmp-tab .cmp-tab-short { display: inline; }
         .cmp-header { padding: 4px 24px 0; }
         .cmp-title-br { display: none; }
         .cmp-title { font-size: clamp(28px, 8vw, 36px); line-height: 1.12; letter-spacing: -0.02em; }
@@ -2440,9 +2444,11 @@
       }
 
       .modal-close {
-        position: absolute;
-        top: 16px;
-        right: 16px;
+        position: sticky;
+        top: 12px;
+        float: right;
+        margin: 0 0 8px 12px;
+        z-index: 5;
         width: 36px;
         height: 36px;
         border-radius: 50%;
@@ -3677,10 +3683,16 @@
         background: var(--ed-paper) !important;
       }
       .modal-close {
+        position: sticky !important;
+        top: 12px !important;
+        float: right !important;
+        margin: 0 0 8px 12px !important;
+        z-index: 5 !important;
         border-radius: 0 !important;
         border: 1.5px solid var(--ed-ink) !important;
         background: var(--ed-paper) !important;
         color: var(--ed-ink) !important;
+        box-shadow: 2px 2px 0 0 var(--ed-ink) !important;
       }
       .modal-close:hover {
         background: var(--ed-ink) !important;
@@ -3718,6 +3730,22 @@
         box-shadow: none !important;
       }
       .cmp-tab.them.active { border-bottom-color: var(--ed-pop) !important; }
+      .cmp-tab .cmp-tab-full { display: inline !important; }
+      .cmp-tab .cmp-tab-short { display: none !important; }
+      @media (max-width: 560px) {
+        .cmp-tabs { gap: 8px !important; }
+        .cmp-tab {
+          flex: 1 !important;
+          padding: 14px 8px !important;
+          font-size: 13px !important;
+          gap: 8px !important;
+          letter-spacing: 0.06em !important;
+          justify-content: center !important;
+        }
+        .cmp-tab svg { display: inline-block !important; width: 14px !important; height: 14px !important; }
+        .cmp-tab .cmp-tab-full { display: none !important; }
+        .cmp-tab .cmp-tab-short { display: inline !important; }
+      }
       .cmp-benefit, .cmp-pain {
         border-radius: 0 !important;
         background: transparent !important;
@@ -4022,11 +4050,13 @@
           <div class="cmp-tabs" role="tablist">
             <button class="cmp-tab us active" id="cmpTabUs" onclick="switchCmpTab('us',this)" role="tab" aria-selected="true">
               <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-              The Start Apps Studio Way
+              <span class="cmp-tab-full">The Start Apps Studio Way</span>
+              <span class="cmp-tab-short">Our Way</span>
             </button>
             <button class="cmp-tab them" id="cmpTabThem" onclick="switchCmpTab('them',this)" role="tab" aria-selected="false">
               <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-              Traditional Agencies
+              <span class="cmp-tab-full">Traditional Agencies</span>
+              <span class="cmp-tab-short">Agencies</span>
             </button>
           </div>
 
