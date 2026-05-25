@@ -8,6 +8,13 @@ A premium mobile-first platform connecting a solo product designer ("Elgar Siraj
 
 Preferred communication style: Simple, everyday language.
 
+## Known Environment Issues
+
+### Start Frontend workflow port-detection timeout (May 2026)
+The `Start Frontend` workflow intermittently fails with `DIDNT_OPEN_A_PORT: didn't open port 8081` even when given a 360-second timeout. The Metro log shows the standard `Web is waiting on http://localhost:8081` banner but the workflow's port detector never sees the bind. A manual background launch (`nohup npm run expo:dev`) reliably binds port 8081 within ~22–45 seconds, so the project code and `expo:dev` script are healthy — the issue is the workflow port-detector deadline / environment. Workarounds:
+- Click the Run/Restart button on the `Start Frontend` workflow from the workspace UI (UI-initiated restarts seem more lenient than agent-initiated ones).
+- If the issue persists, contact Replit support and reference this note plus the workflow logs in `/tmp/logs/Start_Frontend_*.log`.
+
 ## System Architecture
 
 ### Frontend Architecture
