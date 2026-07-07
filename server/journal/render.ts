@@ -970,9 +970,22 @@ export function renderArticleHtml(post: Post, origin: string): string {
     </article>
   </main>`;
 
+  const resolvedTitle = post.seoTitle || `${post.title} | Start Apps Studio`;
+  const resolvedDescription = post.seoDescription || post.description;
+  if (resolvedTitle.length > 65) {
+    console.warn(
+      `[SEO] "${post.slug}" seoTitle is ${resolvedTitle.length} chars (target ≤65): "${resolvedTitle}"`
+    );
+  }
+  if (resolvedDescription.length > 160) {
+    console.warn(
+      `[SEO] "${post.slug}" seoDescription is ${resolvedDescription.length} chars (target ≤160): "${resolvedDescription}"`
+    );
+  }
+
   return shell({
-    title: post.seoTitle || `${post.title} | Start Apps Studio`,
-    description: post.seoDescription || post.description,
+    title: resolvedTitle,
+    description: resolvedDescription,
     canonical,
     origin,
     ogImage: "/assets/images/og-cover.png",
@@ -1030,7 +1043,7 @@ export function renderIndexHtml(origin: string): string {
   </main>`;
 
   return shell({
-    title: `Journal · ${AUTHOR_NAME}`,
+    title: `MVP SEO & GEO Journal | ${AUTHOR_NAME}`,
     description:
       "Field notes on shipping MVPs that rank on Google and get quoted by AI — GEO, vibe-coding, and the state of AI at work.",
     canonical,
