@@ -20,6 +20,7 @@ import {
   renderLlmsTxt,
   renderRobotsTxt,
   renderSitemapXml,
+  CANONICAL_ORIGIN,
 } from "./journal/render";
 import { getPost, allPostsNewestFirst } from "./journal/posts";
 
@@ -63,11 +64,28 @@ function publicUser<T extends Record<string, unknown> | null | undefined>(
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // ─── Canonical-domain redirect ────────────────────────────────────────
+  // If the request arrives on any host other than the canonical one, issue a
+  // permanent redirect so every crawler always consolidates signals to the
+  // same origin. API routes and localhost are exempt so development and
+  // internal calls continue to work.
+  const canonicalHost = new URL(CANONICAL_ORIGIN).host;
+  app.use((req, res, next) => {
+    const reqHost =
+      req.header("x-forwarded-host") || req.get("host") || "";
+    const isLocalhost =
+      reqHost.startsWith("localhost") || reqHost.startsWith("127.0.0.1");
+    const isApi = req.path.startsWith("/api/");
+    if (!isLocalhost && !isApi && reqHost && reqHost !== canonicalHost) {
+      return res.redirect(301, `${CANONICAL_ORIGIN}${req.originalUrl}`);
+    }
+    next();
+  });
+
   // ─── Journal (SEO content) ───────────────────────────────────────────
-  app.get("/journal", (req, res) => {
-    const origin = resolveOrigin(req);
+  app.get("/journal", (_req, res) => {
     res.setHeader("content-type", "text/html; charset=utf-8");
-    res.send(renderIndexHtml(origin));
+    res.send(renderIndexHtml(CANONICAL_ORIGIN));
   });
 
   app.get("/journal/:slug", (req, res) => {
@@ -78,9 +96,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `<!doctype html><meta charset="utf-8"><title>Not found</title><p>No article at that URL. <a href="/journal">Back to the Journal</a>.</p>`,
       );
     }
-    const origin = resolveOrigin(req);
     res.setHeader("content-type", "text/html; charset=utf-8");
-    res.send(renderArticleHtml(post, origin));
+    res.send(renderArticleHtml(post, CANONICAL_ORIGIN));
   });
 
   // JSON API for the in-app Journal (Expo client)
@@ -249,30 +266,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/sitemap.xml", (req, res) => {
-    const origin = resolveOrigin(req);
+  app.get("/sitemap.xml", (_req, res) => {
     res.setHeader("content-type", "application/xml; charset=utf-8");
-    res.send(renderSitemapXml(origin));
+    res.send(renderSitemapXml(CANONICAL_ORIGIN));
   });
 
-  app.get("/robots.txt", (req, res) => {
-    const origin = resolveOrigin(req);
+  app.get("/robots.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.send(renderRobotsTxt(origin));
+    res.send(renderRobotsTxt(CANONICAL_ORIGIN));
   });
 
-  app.get("/llms.txt", (req, res) => {
-    const origin = resolveOrigin(req);
+  app.get("/llms.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.setHeader("cache-control", "public, max-age=3600");
-    res.send(renderLlmsTxt(origin));
+    res.send(renderLlmsTxt(CANONICAL_ORIGIN));
   });
 
-  app.get("/llms-full.txt", (req, res) => {
-    const origin = resolveOrigin(req);
+  app.get("/llms-full.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.setHeader("cache-control", "public, max-age=3600");
-    res.send(renderLlmsFullTxt(origin));
+    res.send(renderLlmsFullTxt(CANONICAL_ORIGIN));
   });
 
   // Auth routes

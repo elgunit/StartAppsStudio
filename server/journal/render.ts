@@ -1,6 +1,16 @@
 import type { Block, Post } from "./posts";
 import { AUTHOR_NAME, allPostsNewestFirst } from "./posts";
 
+/**
+ * The single authoritative public origin for all SEO-facing URLs.
+ * Set PUBLIC_SITE_URL in the environment to override (no trailing slash).
+ * This value is used for canonicals, sitemap <loc> entries, robots.txt
+ * Sitemap directive, og:url, and llms.txt links — never the request host.
+ */
+export const CANONICAL_ORIGIN: string = (
+  process.env.PUBLIC_SITE_URL || "https://startappsstudio.com"
+).replace(/\/$/, "");
+
 function esc(s: string): string {
   return s
     .replace(/&/g, "&amp;")
