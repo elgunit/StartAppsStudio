@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "-f34Lxc6IJ5YcwnflDGNu"
@@ -12,3 +11,9 @@ id = "QumS00PyxPZ6kJj10CwNQ"
 uri = "file://assets/images/og-cover.png"
 type = "image"
 title = "og cover mvp studio founders"
+
+[[outputs]]
+id = "QEnifRy_wlp8M7OBh2stE"
+uri = "file://attached_assets/generated_videos/start-apps-studio-promo.mp4"
+type = "video"
+title = "Start Apps Studio - Animated Promo (29s)"
