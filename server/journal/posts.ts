@@ -12,7 +12,9 @@ export type Block =
 export interface Post {
   slug: string;
   title: string;
+  seoTitle?: string;
   description: string;
+  seoDescription?: string;
   excerpt: string;
   publishedAt: string; // ISO date
   updatedAt?: string;
@@ -30,8 +32,11 @@ export const posts: Post[] = [
     slug: "ai-overviews-citation-playbook-for-mvps",
     title:
       "The AI Overviews citation playbook for MVPs",
+    seoTitle: "AI Overviews Citation Playbook for MVPs | Start Apps Studio",
     description:
       "Five concrete patterns we see in pages pulled into Google AI Overviews — one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats — applied to three Start Apps Studio MVPs.",
+    seoDescription:
+      "Five patterns that get MVPs cited in Google AI Overviews: direct answers, FAQPage schema, comparison tables, named entities, and dated stats. Real examples included.",
     excerpt:
       "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things — and none of them are luck.",
     publishedAt: "2026-04-17",
@@ -203,8 +208,11 @@ export const posts: Post[] = [
     slug: "make-your-brand-visible-in-chatgpt",
     title:
       "How to make your brand visible in ChatGPT and AI answers",
+    seoTitle: "Make Your Brand Visible in ChatGPT & AI Answers | Start Apps Studio",
     description:
       "A 12-point GEO checklist — answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T — so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
+    seoDescription:
+      "A 12-point GEO checklist so ChatGPT, Perplexity, and Google AI Overviews surface your brand — answer-first writing, schema, entity signals, social proof, and E-E-A-T.",
     excerpt:
       "If ChatGPT never names your product when someone asks for a recommendation, your site is failing 12 specific tests. Here's the checklist we run on every MVP we ship.",
     publishedAt: "2026-04-16",
@@ -413,8 +421,11 @@ export const posts: Post[] = [
     slug: "vibe-coded-apps-have-an-seo-problem",
     title:
       "Vibe-coded apps have an SEO problem — here's how to fix it",
+    seoTitle: "Why Vibe-Coded Apps Fail SEO — and How to Fix It | Start Apps Studio",
     description:
       "Lovable, Bolt and v0 ship empty divs to crawlers. This is how to fix it: a Cloudflare Worker SSR proxy pattern, or a full migration to Claude Code + Supabase + Vercel when you need to rank.",
+    seoDescription:
+      "Lovable, Bolt, and v0 ship empty divs to crawlers. Fix it with a Cloudflare Worker SSR proxy for a quick win, or migrate to a real stack when ranking matters.",
     excerpt:
       "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it — a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
     publishedAt: "2026-04-16",
@@ -578,8 +589,11 @@ export const posts: Post[] = [
     slug: "ai-at-work-2026-what-it-means-for-founders",
     title:
       "AI at work in 2026: what the exposure data means for founders",
+    seoTitle: "AI at Work in 2026: What the Data Means for Founders | Start Apps Studio",
     description:
       "74.5% of programmers are AI-exposed, observed usage trails theoretical capability, and HubSpot's 2026 marketing report is about lead generation, not content. What that means if you're building an MVP in 2026.",
+    seoDescription:
+      "74.5% of programmers are AI-exposed yet real usage lags capability. Learn what the 2026 AI exposure data means for founders building and marketing MVPs right now.",
     excerpt:
       "The gap between what AI can do and what workers actually use it for is now the biggest arbitrage of the decade. Here's how to read the 2026 data as a founder.",
     publishedAt: "2026-04-16",
@@ -738,8 +752,11 @@ export const posts: Post[] = [
     slug: "backlinks-still-decide-who-gets-recommended",
     title:
       "Backlinks still decide who gets recommended in 2026",
+    seoTitle: "Backlinks Still Decide Who Gets Recommended in 2026 | Start Apps Studio",
     description:
       "Why backlinks remain the single biggest off-page signal for both Google and AI answer engines, what a healthy MVP backlink profile actually looks like, and the four-step outreach loop we run for every Start Apps Studio launch.",
+    seoDescription:
+      "Backlinks remain the top off-page signal for Google and AI answer engines. Learn what a healthy MVP backlink profile looks like and our four-step outreach loop.",
     excerpt:
       "Schema and answer-first writing get you eligible to be cited. Backlinks are what tip a brand-new MVP from eligible to actually recommended.",
     publishedAt: "2026-04-22",
@@ -865,8 +882,11 @@ export const posts: Post[] = [
     slug: "designing-for-the-ai-native-era",
     title:
       "Designing for the AI-native era: generative UI and building for agents",
+    seoTitle: "Designing for the AI-Native Era: Generative UI & Agents | Start Apps Studio",
     description:
       "A field guide for founders on the shift from static dashboards to generative interfaces, the four stages every AI-native product moves through, and the three things you must do today so AI agents can actually use your product.",
+    seoDescription:
+      "A field guide on generative UI and AI-native products: the four stages every product moves through and three steps to make your product agent-ready today.",
     excerpt:
       "Replacing your dashboard with a chat bar is a downgrade. The real shift is to interfaces that get generated on the fly for the task at hand, and to backends that an agent can drive without ever touching your UI.",
     publishedAt: "2026-04-24",
@@ -1022,8 +1042,11 @@ export const posts: Post[] = [
     slug: "design-systems-matter-more-in-the-ai-era",
     title:
       "Your design system matters more in the AI era, not less",
+    seoTitle: "Your Design System Matters More in the AI Era | Start Apps Studio",
     description:
       "When AI generates your interface, the quality of the output is bounded by the quality of your design system. A tour of why APIs become the new product surface, why a strong system is now a force multiplier, why every product has two users, and why design as judgment is more valuable than ever.",
+    seoDescription:
+      "When AI generates your UI, your design system sets the ceiling on output quality. Learn why APIs become the product surface and why design judgment matters more than ever.",
     excerpt:
       "If AI is going to generate your screens, the ceiling on what it can produce is your design system. A weak system means weak output, every time. Here is what changes.",
     publishedAt: "2026-04-23",

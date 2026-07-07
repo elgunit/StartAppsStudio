@@ -114,13 +114,27 @@ function renderFaqJsonLd(post: Post): string {
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
 
+function renderBreadcrumbJsonLd(post: Post, canonical: string, origin: string): string {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+      { "@type": "ListItem", position: 2, name: "Journal", item: `${origin}/journal` },
+      { "@type": "ListItem", position: 3, name: post.title, item: canonical },
+    ],
+  };
+  return `<script type="application/ld+json">${safeJson(data)}</script>`;
+}
+
 function renderArticleJsonLd(post: Post, canonical: string, origin: string): string {
+  const articleImage = `${origin}/assets/images/og-cover.png`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    description: post.description,
-    image: [`${origin}/assets/images/favicon.png`],
+    description: post.seoDescription || post.description,
+    image: [articleImage],
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
     author: {
@@ -884,7 +898,8 @@ export function renderArticleHtml(post: Post, origin: string): string {
   const canonical = `${origin}/journal/${post.slug}`;
   const articleJsonLd = renderArticleJsonLd(post, canonical, origin);
   const faqJsonLd = renderFaqJsonLd(post);
-  const jsonLd = `${articleJsonLd}${faqJsonLd}`;
+  const breadcrumbJsonLd = renderBreadcrumbJsonLd(post, canonical, origin);
+  const jsonLd = `${articleJsonLd}${faqJsonLd}${breadcrumbJsonLd}`;
 
   const body = post.body.map(renderBlock).join("\n");
   const tags = post.tags
@@ -956,11 +971,11 @@ export function renderArticleHtml(post: Post, origin: string): string {
   </main>`;
 
   return shell({
-    title: `${post.title} · ${AUTHOR_NAME} Journal`,
-    description: post.description,
+    title: post.seoTitle || `${post.title} | Start Apps Studio`,
+    description: post.seoDescription || post.description,
     canonical,
     origin,
-    ogImage: "/assets/images/favicon.png",
+    ogImage: "/assets/images/og-cover.png",
     ogType: "article",
     jsonLd,
     bodyInner,
@@ -1020,7 +1035,7 @@ export function renderIndexHtml(origin: string): string {
       "Field notes on shipping MVPs that rank on Google and get quoted by AI — GEO, vibe-coding, and the state of AI at work.",
     canonical,
     origin,
-    ogImage: "/assets/images/favicon.png",
+    ogImage: "/assets/images/og-cover.png",
     ogType: "website",
     jsonLd,
     bodyInner,
