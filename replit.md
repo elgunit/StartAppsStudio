@@ -15,6 +15,9 @@ The `Start Frontend` workflow intermittently fails with `DIDNT_OPEN_A_PORT: didn
 - Click the Run/Restart button on the `Start Frontend` workflow from the workspace UI (UI-initiated restarts seem more lenient than agent-initiated ones).
 - If the issue persists, contact Replit support and reference this note plus the workflow logs in `/tmp/logs/Start_Frontend_*.log`.
 
+### Start Backend workflow port-detection timeout (July 2026)
+The `Start Backend` workflow shows the same behavior on agent-initiated restarts: it fails with `DIDNT_OPEN_A_PORT: didn't open port 5000` even though the log clearly reaches `express server serving on port 5000` and a manual launch responds to requests within ~4 seconds. The server binds and serves fine; the workflow's port detector deadline (independent of the tool's own timeout) gives up and SIGKILLs the healthy process. Same workarounds as the Frontend note above: use the UI Run/Restart button (more lenient than agent restarts), and check `/tmp/logs/Start_Backend_*.log`. Note: the AI-bot-verifier fetches remote IP ranges during startup, which can add latency after the port bind.
+
 ## System Architecture
 
 ### Frontend Architecture
