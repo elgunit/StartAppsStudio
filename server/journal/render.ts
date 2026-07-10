@@ -1164,6 +1164,10 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 }
 
 export function renderLlmsFullTxt(origin: string): string {
+  const toolkitAsOf = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
   return `# Start Apps Studio — Full Overview
 
 ## Who we are
@@ -1198,7 +1202,7 @@ A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch
 ### Custom-Scale — $15,000+
 Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
 
-## Toolkit (current as of April 2026)
+## Toolkit (current as of ${toolkitAsOf})
 
 We swap in new model versions the week they ship.
 

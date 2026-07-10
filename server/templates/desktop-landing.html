@@ -4705,7 +4705,7 @@
         <p class="section-subtitle">A small team that ships like a big one.</p>
         <div class="toolkit-meta">
           <span class="toolkit-meta-pulse" aria-hidden="true"></span>
-          <span>Stack current as of April 2026 · we swap in new model versions the week they ship.</span>
+          <span><span id="toolkitAsOf">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>
         </div>
 
         <div class="toolkit-stack">
@@ -5934,6 +5934,14 @@
     </footer>
     
     <script>
+      (function () {
+        var el = document.getElementById('toolkitAsOf');
+        if (el) {
+          var asOf = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+          el.textContent = 'Stack current as of ' + asOf;
+        }
+      })();
+
       function toggleCard(el) {
         el.classList.toggle('expanded');
       }
