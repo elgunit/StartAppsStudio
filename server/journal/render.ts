@@ -1123,7 +1123,7 @@ export function renderLlmsTxt(origin: string): string {
 
 > An AI-native studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $699 mockups to full apps in 3 to 8 weeks.
 
-We are a small team augmented by the best AI models available — Claude Opus 4.7, Gemini 2.5 Pro, GPT-5, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
+We are a small team augmented by the best AI models available — Claude Opus 4.8 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
 
 ## Services
 
@@ -1143,7 +1143,7 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 
 ## Toolkit
 
-- Reasoning & Code: Claude Opus 4.7, Gemini 2.5 Pro, GPT-5, Llama 4
+- Reasoning & Code: Claude Opus 4.8 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, Llama 4
 - Mockups & Prototyping: Figma, Replit, Lovable, Rork
 - Production & Delivery: Webflow, WordPress, GitHub, Swift (iOS), Kotlin (Android), n8n, Make, custom webhooks
 - Content & Media: ElevenLabs, Seedance 2.0
@@ -1203,9 +1203,9 @@ Handcrafted multi-platform builds for funded teams ready to scale. Quoted per en
 We swap in new model versions the week they ship.
 
 **Reasoning & Code**
-- Claude Opus 4.7 — primary builder
+- Claude Opus 4.8 & Fable 5 — primary builder
 - Gemini 2.5 Pro — long-context review
-- GPT-5 — creative & copy
+- GPT-5.6 Sol — creative & copy
 - Llama 4 — self-hosted fallback
 
 **Mockups & Prototyping**
