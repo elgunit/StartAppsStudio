@@ -36,9 +36,42 @@ function resolveOrigin(req: Request): string {
   return `${proto}://${host}`;
 }
 
-// Simple password hashing
-function hashPassword(password: string): string {
-  return crypto.createHash("sha256").update(password).digest("hex");
+// Password hashing with scrypt (memory-hard, salted).
+// Stored format: "scrypt:<hex-salt>:<hex-derived-key>"
+// Legacy SHA-256 hashes (plain 64-char hex) are detected on login and
+// automatically migrated to scrypt on first successful authentication.
+async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const derived = await new Promise<Buffer>((resolve, reject) =>
+    crypto.scrypt(password, salt, 64, (err, key) =>
+      err ? reject(err) : resolve(key),
+    ),
+  );
+  return `scrypt:${salt}:${derived.toString("hex")}`;
+}
+
+async function verifyPassword(
+  password: string,
+  stored: string,
+): Promise<boolean> {
+  if (stored.startsWith("scrypt:")) {
+    const [, salt, keyHex] = stored.split(":");
+    const derived = await new Promise<Buffer>((resolve, reject) =>
+      crypto.scrypt(password, salt, 64, (err, key) =>
+        err ? reject(err) : resolve(key),
+      ),
+    );
+    return crypto.timingSafeEqual(Buffer.from(keyHex, "hex"), derived);
+  }
+  // Legacy: plain SHA-256 — accept but caller should migrate
+  const legacy = crypto
+    .createHash("sha256")
+    .update(password)
+    .digest("hex");
+  return crypto.timingSafeEqual(
+    Buffer.from(stored, "hex"),
+    Buffer.from(legacy, "hex"),
+  );
 }
 
 // Strip auth-sensitive fields (password hash, session token) from user
@@ -304,7 +337,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const user = await storage.createUser({
         email,
-        password: hashPassword(password),
+        password: await hashPassword(password),
         name,
         role: "client",
         credits: 0,
@@ -339,14 +372,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const user = await storage.getUserByEmail(email);
-      if (!user || user.password !== hashPassword(password)) {
+      const passwordValid = user ? await verifyPassword(password, user.password ?? "") : false;
+      if (!user || !passwordValid) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
+
+      // Migrate legacy SHA-256 hash to scrypt on first successful login.
+      const needsMigration = user.password && !user.password.startsWith("scrypt:");
+      const newHash = needsMigration ? await hashPassword(password) : undefined;
 
       // Rotate a fresh server-issued session token on every successful login
       // so admin endpoints can verify identity without trusting client-supplied IDs.
       const sessionToken = crypto.randomBytes(32).toString("hex");
-      const updated = await storage.updateUser(user.id, { isOnline: true, sessionToken });
+      const updated = await storage.updateUser(user.id, {
+        isOnline: true,
+        sessionToken,
+        ...(newHash ? { password: newHash } : {}),
+      });
 
       res.json({
         user: { ...publicUser(updated || user), isOnline: true, sessionToken },
@@ -1026,26 +1068,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Initialize designer account if not exists
-  app.post("/api/init-designer", async (req, res) => {
-    try {
-      let designer = await storage.getDesigner();
-      if (!designer) {
-        designer = await storage.createUser({
-          email: "create@startappsstudio.com",
-          password: hashPassword("designer123"),
-          name: "Start Apps Studio",
-          role: "designer",
-          credits: 0,
-          isOnline: false,
-        });
-      }
-      res.json(publicUser(designer));
-    } catch (error) {
-      console.error("Init designer error:", error);
-      res.status(500).json({ error: "Failed to initialize designer" });
-    }
-  });
 
   // ────────────────────────────────────────────────────────────────────
   // Visitor analytics — anonymous-friendly tracking
@@ -1705,6 +1727,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to create service order" });
     }
   });
+
+  // ── Designer account bootstrap ──────────────────────────────────────
+  // Runs once at server start (not via a public API endpoint).
+  // Credentials are read from environment variables DESIGNER_EMAIL and
+  // DESIGNER_PASSWORD so they never appear in source code.  If the vars
+  // are absent the bootstrap is skipped and a warning is logged.
+  const designerEmail = process.env.DESIGNER_EMAIL;
+  const designerPassword = process.env.DESIGNER_PASSWORD;
+  const existingDesigner = await storage.getDesigner();
+  if (!existingDesigner) {
+    if (designerEmail && designerPassword) {
+      await storage.createUser({
+        email: designerEmail,
+        password: await hashPassword(designerPassword),
+        name: "Start Apps Studio",
+        role: "designer",
+        credits: 0,
+        isOnline: false,
+      });
+      console.log("Designer account bootstrapped from environment variables.");
+    } else {
+      console.warn(
+        "No designer account found. Set DESIGNER_EMAIL and DESIGNER_PASSWORD environment variables to create one on startup.",
+      );
+    }
+  }
 
   const httpServer = createServer(app);
   return httpServer;

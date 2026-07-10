@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useQueryClient } from "@tanstack/react-query";
 
 import AuthStackNavigator from "@/navigation/AuthStackNavigator";
 import ClientTabNavigator from "@/navigation/ClientTabNavigator";
@@ -20,7 +19,6 @@ import JournalStatsScreen from "@/screens/JournalStatsScreen";
 import AiTrafficScreen from "@/screens/AiTrafficScreen";
 import { useScreenOptions } from "@/hooks/useScreenOptions";
 import { useAuth } from "@/lib/auth";
-import { apiRequest } from "@/lib/query-client";
 
 export type RootStackParamList = {
   Auth: undefined;
@@ -46,19 +44,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function RootStackNavigator() {
   const screenOptions = useScreenOptions();
   const { user, isLoading, isAuthenticated } = useAuth();
-  const queryClient = useQueryClient();
-
-  // Initialize designer account on app start
-  useEffect(() => {
-    const initDesigner = async () => {
-      try {
-        await apiRequest("POST", "/api/init-designer", {});
-      } catch (error) {
-        console.log("Designer init:", error);
-      }
-    };
-    initDesigner();
-  }, []);
 
   if (isLoading) {
     return null; // Or a splash screen
