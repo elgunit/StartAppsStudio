@@ -48,11 +48,6 @@ function buildStudioStatusMessages() {
   return [seatsLine + monthName, shippingLine, callLine, "Next handoff in 2 weeks"];
 }
 
-function buildHeroPinLine() {
-  const now = new Date();
-  return `Booking ${STATUS_MONTHS[now.getMonth()]} ${now.getFullYear()}`;
-}
-
 function StudioStatusStrip() {
   const { theme } = useTheme();
   const messages = React.useMemo(buildStudioStatusMessages, []);
@@ -393,31 +388,6 @@ export default function WelcomeScreen() {
           style={styles.logo}
           resizeMode="contain"
         />
-        <View
-          style={[
-            styles.heroEyebrow,
-            {
-              backgroundColor: isDark ? theme.text : Editorial.yellow,
-              borderColor: isDark ? Editorial.yellow : Editorial.onYellow,
-            },
-            isDark ? styles.heroEyebrowShadowDark : styles.heroEyebrowShadowLight,
-          ]}
-        >
-          <View
-            style={[
-              styles.heroEyebrowDot,
-              { backgroundColor: isDark ? Editorial.yellow : Editorial.onYellow },
-            ]}
-          />
-          <ThemedText
-            style={[
-              styles.heroEyebrowText,
-              { color: isDark ? Editorial.yellow : Editorial.onYellow },
-            ]}
-          >
-            {buildHeroPinLine().toUpperCase()}
-          </ThemedText>
-        </View>
         <ThemedText style={[styles.heroTitle, { color: theme.text }]}>
           Your technical{"\n"}co-founder, without{"\n"}the{" "}
           <ThemedText style={[styles.heroTitleAccent, { color: Editorial.onYellow, backgroundColor: Editorial.yellow }]}>
@@ -904,40 +874,6 @@ const styles = StyleSheet.create({
     marginBottom: Spacing["2xl"],
   },
   logo: { width: 64, height: 64, marginBottom: Spacing.lg, borderRadius: 0 },
-  heroEyebrow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 0,
-    borderWidth: 1.5,
-    marginBottom: Spacing.lg,
-  },
-  heroEyebrowShadowLight: {
-    shadowColor: Editorial.onYellow,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 0,
-  },
-  heroEyebrowShadowDark: {
-    shadowColor: Editorial.yellow,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 0,
-    elevation: 0,
-  },
-  heroEyebrowDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 0,
-  },
-  heroEyebrowText: {
-    fontFamily: Editorial.kicker,
-    fontSize: 11.5,
-    letterSpacing: 1.8,
-  },
   heroTitle: {
     textAlign: "left",
     fontFamily: Editorial.display,

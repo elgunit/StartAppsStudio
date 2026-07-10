@@ -3926,7 +3926,6 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
-        <span class="hero-eyebrow" id="bookingPin"><span class="hero-eyebrow-dot"></span><span id="bookingPinStatic">Booking April 2026</span></span>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio</span> <span class="hero-line hero-line-nowrap">for <span class="accent-word">founders</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">Startup MVP development for founders with a clear idea and no dev team. We design, build, and ship your first real product in weeks, not months, for a fraction of what an agency would quote.</p>
 
@@ -6499,12 +6498,9 @@
       })();
 
       // Studio Status: gentle crossfade rotator (placed above Pricing).
-      // The hero booking pin is static; the static line is also computed here
-      // from the same calendar logic so both surfaces stay in sync.
       (function () {
         var el = document.getElementById('studioStatusText');
-        var heroStatic = document.getElementById('bookingPinStatic');
-        if (!el && !heroStatic) return;
+        if (!el) return;
 
         var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         var DWELL_MS = 6500;
@@ -6549,15 +6545,6 @@
         var messages = buildMessages();
         if (!messages.length) return;
 
-        // Hero pin: a calmer, distinct line so it never duplicates anything in
-        // the rotating studio-status strip below. Computed live so the month
-        // and year stay current.
-        if (heroStatic) {
-          var nowH = new Date();
-          heroStatic.textContent = 'Booking ' + MONTHS[nowH.getMonth()] + ' ' + nowH.getFullYear();
-        }
-
-        if (!el) return;
         var idx = 0;
         el.textContent = messages[0];
 
