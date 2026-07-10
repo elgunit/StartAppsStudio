@@ -458,12 +458,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Project routes
   app.get("/api/projects", async (req, res) => {
     try {
-      const { clientId } = req.query;
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
       let projectList;
-      if (clientId) {
-        projectList = await storage.getProjectsByClient(clientId as string);
+      if (caller.role === "designer") {
+        const { clientId } = req.query;
+        if (clientId) {
+          projectList = await storage.getProjectsByClient(clientId as string);
+        } else {
+          projectList = await storage.getAllProjects();
+        }
       } else {
-        projectList = await storage.getAllProjects();
+        projectList = await storage.getProjectsByClient(caller.id);
       }
       res.json(projectList);
     } catch (error) {
@@ -473,10 +480,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/projects/:id", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
       const project = await storage.getProjectWithDetails(req.params.id);
       if (!project) {
         return res.status(404).json({ error: "Project not found" });
       }
+
+      if (caller.role !== "designer" && project.clientId !== caller.id) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
+      if (project.client) {
+        project.client = publicUser(project.client);
+      }
+
       res.json(project);
     } catch (error) {
       res.status(500).json({ error: "Failed to get project" });
@@ -485,8 +504,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/projects", async (req, res) => {
     try {
-      const { clientId, name, description, hats, estimatedCredits, planTier } = req.body;
-      
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      const { name, description, hats, estimatedCredits, planTier } = req.body;
+
+      const clientId = caller.role === "designer"
+        ? (req.body.clientId ?? caller.id)
+        : caller.id;
+
       if (!clientId || !name || !description) {
         return res.status(400).json({ error: "Missing required fields" });
       }
@@ -496,9 +522,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         name,
         description,
         status: "brief_submitted",
-        estimatedCredits: estimatedCredits || 0,
+        estimatedCredits: caller.role === "designer" ? (estimatedCredits || 0) : 0,
         usedCredits: 0,
-        planTier: planTier || null,
+        planTier: caller.role === "designer" ? (planTier || null) : null,
       });
 
       // Add hats
@@ -517,7 +543,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/projects/:id", async (req, res) => {
     try {
-      const project = await storage.updateProject(req.params.id, req.body);
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      const existing = await storage.getProject(req.params.id);
+      if (!existing) return res.status(404).json({ error: "Project not found" });
+
+      if (caller.role !== "designer" && existing.clientId !== caller.id) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
+      const body = (req.body ?? {}) as Record<string, unknown>;
+      let updateData: Record<string, unknown>;
+
+      if (caller.role === "designer") {
+        updateData = body;
+      } else {
+        const { name, description, ..._ } = body;
+        void _;
+        updateData = {} as Record<string, unknown>;
+        if (name !== undefined) updateData.name = name;
+        if (description !== undefined) updateData.description = description;
+      }
+
+      const project = await storage.updateProject(req.params.id, updateData as Partial<typeof existing>);
       if (!project) {
         return res.status(404).json({ error: "Project not found" });
       }
@@ -558,6 +607,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Messages routes
   app.get("/api/messages/:projectId", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      if (caller.role !== "designer") {
+        const project = await storage.getProject(req.params.projectId);
+        if (!project || project.clientId !== caller.id) {
+          return res.status(403).json({ error: "Forbidden" });
+        }
+      }
+
       const messages = await storage.getMessagesByProject(req.params.projectId);
       res.json(messages);
     } catch (error) {
@@ -567,6 +626,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/conversations/:userId", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      if (caller.role !== "designer" && caller.id !== req.params.userId) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
       const conversations = await storage.getConversations(req.params.userId);
       res.json(conversations);
     } catch (error) {
@@ -576,10 +642,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/messages", async (req, res) => {
     try {
-      const { projectId, senderId, content, fileUrl, fileName } = req.body;
-      
-      if (!projectId || !senderId || !content) {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      const { projectId, content, fileUrl, fileName } = req.body;
+      const senderId = caller.id;
+
+      if (!projectId || !content) {
         return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      if (caller.role !== "designer") {
+        const project = await storage.getProject(projectId);
+        if (!project || project.clientId !== caller.id) {
+          return res.status(403).json({ error: "Forbidden" });
+        }
       }
 
       const message = await storage.createMessage({
@@ -599,8 +676,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/messages/:projectId/read", async (req, res) => {
     try {
-      const { userId } = req.body;
-      await storage.markMessagesAsRead(req.params.projectId, userId);
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      if (caller.role !== "designer") {
+        const project = await storage.getProject(req.params.projectId);
+        if (!project || project.clientId !== caller.id) {
+          return res.status(403).json({ error: "Forbidden" });
+        }
+      }
+
+      await storage.markMessagesAsRead(req.params.projectId, caller.id);
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to mark messages as read" });
@@ -610,6 +696,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Work sessions routes
   app.get("/api/work-sessions/active", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const session = await storage.getActiveWorkSession();
       res.json(session || null);
     } catch (error) {
@@ -619,6 +708,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/work-sessions/project/:projectId", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      if (caller.role !== "designer") {
+        const project = await storage.getProject(req.params.projectId);
+        if (!project || project.clientId !== caller.id) {
+          return res.status(403).json({ error: "Forbidden" });
+        }
+      }
+
       const sessions = await storage.getWorkSessionsByProject(req.params.projectId);
       res.json(sessions);
     } catch (error) {
@@ -628,8 +727,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/work-sessions", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const { projectId } = req.body;
-      
+
       // End any existing active session
       const activeSession = await storage.getActiveWorkSession();
       if (activeSession) {
@@ -659,6 +761,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.patch("/api/work-sessions/:id", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const session = await storage.updateWorkSession(req.params.id, req.body);
       if (!session) {
         return res.status(404).json({ error: "Session not found" });
@@ -671,6 +776,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/work-sessions/:id/stop", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const session = await storage.updateWorkSession(req.params.id, {
         isActive: false,
         endTime: new Date(),
@@ -693,6 +801,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/work-sessions/:id/increment-prompt", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const session = await storage.getWorkSession(req.params.id);
       if (!session) {
         return res.status(404).json({ error: "Session not found" });
@@ -711,6 +822,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Project versions routes
   app.get("/api/project-versions/:projectId", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
+      if (caller.role !== "designer") {
+        const project = await storage.getProject(req.params.projectId);
+        if (!project || project.clientId !== caller.id) {
+          return res.status(403).json({ error: "Forbidden" });
+        }
+      }
+
       const versions = await storage.getProjectVersions(req.params.projectId);
       res.json(versions);
     } catch (error) {
@@ -720,8 +841,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/project-versions", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const { projectId, previewUrl, notes } = req.body;
-      
+
       const versions = await storage.getProjectVersions(projectId);
       const versionNumber = versions.length + 1;
 
@@ -892,6 +1016,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/clients", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const clients = await storage.getClientUsers();
       res.json(clients.map((c: any) => publicUser(c)));
     } catch (error) {
@@ -923,13 +1050,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ────────────────────────────────────────────────────────────────────
   // Visitor analytics — anonymous-friendly tracking
   // POST endpoints are open (anonymous insert).
-  // GET endpoints require designer/admin role (passed via ?adminId=...).
+  // GET endpoints require designer session token via x-session-token header.
   // ────────────────────────────────────────────────────────────────────
-  const requireAdmin = async (adminId: unknown): Promise<boolean> => {
-    if (typeof adminId !== "string" || !adminId) return false;
-    const u = await storage.getUser(adminId);
-    return Boolean(u && u.role === "designer");
-  };
 
   // Session-token based admin auth. Reads `x-session-token` from the request,
   // looks up the matching user, and only allows designers through. Used for
@@ -1101,7 +1223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin reads — designer-only.
   app.get("/api/admin/section-views", async (req, res) => {
     try {
-      if (!(await requireAdmin(req.query.adminId))) {
+      if (!(await requireDesignerFromToken(req))) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
@@ -1113,7 +1235,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/visitor-events", async (req, res) => {
     try {
-      if (!(await requireAdmin(req.query.adminId))) {
+      if (!(await requireDesignerFromToken(req))) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
@@ -1127,7 +1249,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // "what % of hero viewers actually reach pricing/AI efficiency?".
   app.get("/api/admin/section-views/funnel", async (req, res) => {
     try {
-      if (!(await requireAdmin(req.query.adminId))) {
+      if (!(await requireDesignerFromToken(req))) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1151,7 +1273,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/journal/conversion-stats", async (req, res) => {
     try {
-      if (!(await requireAdmin(req.query.adminId))) {
+      if (!(await requireDesignerFromToken(req))) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1171,7 +1293,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/journal/conversion-trends", async (req, res) => {
     try {
-      if (!(await requireAdmin(req.query.adminId))) {
+      if (!(await requireDesignerFromToken(req))) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1368,6 +1490,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Contact submissions (for designer dashboard)
   app.get("/api/contact-submissions", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const submissions = await storage.getContactSubmissions();
       res.json(submissions);
     } catch (error) {

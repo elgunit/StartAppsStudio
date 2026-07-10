@@ -254,24 +254,26 @@ export default function JournalStatsScreen() {
     return d;
   }, [range]);
 
-  const adminId = user?.id;
+  const sessionToken = user?.sessionToken;
   const queryKey = useMemo(
-    () => ["/api/admin/journal/conversion-stats", range, adminId] as const,
-    [range, adminId],
+    () => ["/api/admin/journal/conversion-stats", range] as const,
+    [range],
   );
   const trendsQueryKey = useMemo(
-    () => ["/api/admin/journal/conversion-trends", range, adminId] as const,
-    [range, adminId],
+    () => ["/api/admin/journal/conversion-trends", range] as const,
+    [range],
   );
 
   const { data, isLoading, refetch, isError } = useQuery<JournalStatsResponse>({
     queryKey,
-    enabled: Boolean(adminId),
+    enabled: Boolean(sessionToken),
     queryFn: async () => {
       const url = new URL("/api/admin/journal/conversion-stats", getApiUrl());
-      if (adminId) url.searchParams.set("adminId", adminId);
       if (fromDate) url.searchParams.set("from", fromDate.toISOString());
-      const res = await fetch(url.toString(), { credentials: "include" });
+      const res = await fetch(url.toString(), {
+        credentials: "include",
+        headers: sessionToken ? { "x-session-token": sessionToken } : {},
+      });
       if (!res.ok) {
         throw new Error(`${res.status}: ${await res.text()}`);
       }
@@ -281,12 +283,14 @@ export default function JournalStatsScreen() {
 
   const { data: trendsData, isLoading: trendsLoading, refetch: refetchTrends } = useQuery<JournalTrendsResponse>({
     queryKey: trendsQueryKey,
-    enabled: Boolean(adminId),
+    enabled: Boolean(sessionToken),
     queryFn: async () => {
       const url = new URL("/api/admin/journal/conversion-trends", getApiUrl());
-      if (adminId) url.searchParams.set("adminId", adminId);
       if (fromDate) url.searchParams.set("from", fromDate.toISOString());
-      const res = await fetch(url.toString(), { credentials: "include" });
+      const res = await fetch(url.toString(), {
+        credentials: "include",
+        headers: sessionToken ? { "x-session-token": sessionToken } : {},
+      });
       if (!res.ok) {
         throw new Error(`${res.status}: ${await res.text()}`);
       }
