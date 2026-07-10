@@ -954,6 +954,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Credit transactions
   app.get("/api/credit-transactions/:userId", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+      if (caller.role !== "designer" && caller.id !== req.params.userId) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
       const transactions = await storage.getCreditTransactionsByUser(req.params.userId);
       res.json(transactions);
     } catch (error) {
@@ -963,6 +968,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/credits/add", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
       const { userId, amount, description, projectId } = req.body;
       await storage.addCreditsToUser(userId, amount, description, projectId);
       const user = await storage.getUser(userId);
@@ -972,21 +979,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Project-agnostic credit top-up: $99 for 100 base credits, doubled to 200
-  // by the active 2x promo. Any logged-in client can buy.
+  // Project-agnostic credit top-up: must be performed by the designer after
+  // confirming payment off-band. No payment gateway is integrated, so
+  // self-serve minting is disabled to prevent balance abuse.
   app.post("/api/credits/topup", async (req, res) => {
     try {
-      // Identify the user from their session token; never trust a body-supplied
-      // userId for a credit-minting flow. (Real payment confirmation should be
-      // wired via the payments provider before granting credits — this stops
-      // unauthenticated callers from awarding credits to anyone.)
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-      if (caller.role !== "client") {
-        return res.status(403).json({ error: "Only clients can top up credits." });
-      }
-      await storage.addCreditsToUser(caller.id, 200, "Credit top-up ($99 / 100 credits + 2x promo bonus = 200)");
-      const updated = await storage.getUser(caller.id);
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+      const { userId } = req.body;
+      if (!userId) return res.status(400).json({ error: "userId is required" });
+      await storage.addCreditsToUser(userId, 200, "Credit top-up ($99 / 100 credits + 2x promo bonus = 200)");
+      const updated = await storage.getUser(userId);
       res.json({ credits: updated?.credits || 0 });
     } catch (error) {
       console.error("Topup error:", error);
@@ -996,6 +999,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/credits/purchase", async (req, res) => {
     try {
+      // Restricted to designer-only: no payment gateway is integrated, so
+      // clients cannot self-serve purchase plan tiers. The designer manually
+      // confirms payment and triggers this route on behalf of the client.
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
+
       const { userId, projectId, packageId, tier } = req.body;
       if (!userId || !projectId || (!packageId && !tier)) {
         return res.status(400).json({ error: "userId, projectId, and packageId or tier are required" });
@@ -1041,6 +1050,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/credits/deduct", async (req, res) => {
     try {
+      const caller = await requireDesignerFromToken(req);
+      if (!caller) return res.status(403).json({ error: "Forbidden" });
       const { userId, amount, description } = req.body;
       if (!userId || !amount || amount <= 0) {
         return res.status(400).json({ error: "Valid userId and positive amount required" });
@@ -1676,10 +1687,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/marketing/orders", async (req, res) => {
     try {
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
+
       const { clientId } = req.query;
       if (!clientId) {
         return res.status(400).json({ error: "clientId is required" });
       }
+
+      if (caller.role !== "designer" && caller.id !== (clientId as string)) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
       const orders = await storage.getServiceOrdersByClient(clientId as string);
       res.json(orders);
     } catch (error) {
@@ -1690,10 +1709,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/marketing/orders", async (req, res) => {
     try {
-      const { clientId, serviceId, goals, websiteUrl } = req.body;
+      const caller = await requireUserFromToken(req);
+      if (!caller) return res.status(401).json({ error: "Unauthorized" });
 
-      if (!clientId || !serviceId || !goals) {
-        return res.status(400).json({ error: "clientId, serviceId, and goals are required" });
+      const { serviceId, goals, websiteUrl } = req.body;
+      if (!serviceId || !goals) {
+        return res.status(400).json({ error: "serviceId and goals are required" });
+      }
+
+      // Clients place orders against their own account only; ignore body-supplied clientId.
+      const clientId = caller.role === "designer"
+        ? (req.body.clientId ?? null)
+        : caller.id;
+
+      if (!clientId) {
+        return res.status(400).json({ error: "clientId is required" });
       }
 
       const service = await storage.getMarketingService(serviceId);
