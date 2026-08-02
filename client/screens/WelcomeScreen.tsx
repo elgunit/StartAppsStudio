@@ -153,7 +153,7 @@ const toolkitGroups: ToolkitGroup[] = [
   {
     label: "Reasoning & Code",
     tools: [
-      { name: "Claude Opus 4.8 & Fable 5", role: "primary builder", letter: "C", color: "#D97757" },
+      { name: "Claude Opus 5 & Fable 5", role: "primary builder", letter: "C", color: "#D97757" },
       { name: "Gemini 2.5 Pro", role: "long-context review", letter: "G", color: "#4285F4" },
       { name: "GPT-5.6 Sol", role: "creative & copy", letter: "G", color: "#10A37F" },
       { name: "Llama 4", role: "self-hosted fallback", letter: "L", color: "#0866FF" },
@@ -175,7 +175,7 @@ const toolkitGroups: ToolkitGroup[] = [
       { name: "WordPress", role: "content sites & blogs", letter: "W", color: "#21759B" },
       { name: "GitHub", role: "daily updates + version control", letter: "G", color: "#24292E" },
       { name: "Swift", role: "native iOS apps", letter: "S", color: "#F05138" },
-      { name: "Kotlin", role: "native Android apps", letter: "K", color: "#7F52FF" },
+      { name: "Kotlin and Compose UI", role: "native Android apps", letter: "K", color: "#7F52FF" },
       { name: "Automation", role: "n8n + Make + webhooks", letter: "A", color: "#0d9488" },
     ],
   },
