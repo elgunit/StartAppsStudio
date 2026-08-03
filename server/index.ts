@@ -37,18 +37,13 @@ function setupCors(app: express.Application) {
 
     const origin = req.header("origin");
 
-    // Allow localhost origins for Expo web development (any port)
-    const isLocalhost =
-      origin?.startsWith("http://localhost:") ||
-      origin?.startsWith("http://127.0.0.1:");
-
-    if (origin && (origins.has(origin) || isLocalhost)) {
+    if (origin && origins.has(origin)) {
       res.header("Access-Control-Allow-Origin", origin);
       res.header(
         "Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, OPTIONS",
       );
-      res.header("Access-Control-Allow-Headers", "Content-Type");
+      res.header("Access-Control-Allow-Headers", "Content-Type, x-session-token, x-admin-token");
       res.header("Access-Control-Allow-Credentials", "true");
     }
 
@@ -63,9 +58,6 @@ function setupCors(app: express.Application) {
 function setupBodyParsing(app: express.Application) {
   app.use(
     express.json({
-      // Avatar uploads are sent inline as base64 data URIs (capped at ~1.5MB
-      // by the avatar validator). The default 100KB JSON limit rejects them
-      // before they reach the route handler, so allow up to 2MB here.
       limit: "2mb",
       verify: (req, _res, buf) => {
         req.rawBody = buf;
@@ -94,17 +86,6 @@ export function hashIp(ip: string | undefined | null): string | null {
 }
 
 // Returns the client IP we can actually trust for IP-based bot verification.
-//
-// `X-Forwarded-For` is a CSV the client can almost entirely control: if a
-// client sends `XFF: 20.171.207.5`, our reverse proxy appends the real TCP
-// peer to the right, producing `XFF: 20.171.207.5, real_client_ip`. The
-// proxy-supplied rightmost entry is the only value the client cannot spoof,
-// so we take that. This deliberately ignores Express's `req.ip` because the
-// `trust proxy=N` algorithm walks back N hops and returns the leftmost
-// remaining entry — which is still attacker-controlled when N=1.
-//
-// If no `X-Forwarded-For` is present (e.g. direct localhost requests in
-// dev), we fall back to the socket peer address.
 function getClientIp(req: Request): string {
   const xff = req.header("x-forwarded-for");
   if (xff) {
@@ -121,9 +102,7 @@ function getClientIp(req: Request): string {
 
 function setupAiCrawlerLogging(app: express.Application) {
   app.use((req, _res, next) => {
-    // Only log GET requests so we don't log internal API mutations.
     if (req.method !== "GET") return next();
-    // Skip noisy static asset paths — we care about pages, not images/JS.
     if (
       req.path.startsWith("/assets") ||
       req.path.startsWith("/static") ||
@@ -141,14 +120,8 @@ function setupAiCrawlerLogging(app: express.Application) {
 
     const ipTrusted = getClientIp(req);
 
-    // Fire-and-forget — verification (especially reverse DNS) can take a
-    // few hundred ms, so we never block the actual response on it.
     (async () => {
       try {
-        // Referrer-attributed hits are real human visits clicking through
-        // from an AI assistant, not bots claiming to be one — IP
-        // verification doesn't apply, so they're recorded as
-        // "unverifiable" rather than "spoofed".
         const verification =
           match.source === "user-agent"
             ? await verifyAiBot(match.botName, ipTrusted)
@@ -207,114 +180,33 @@ function setupRequestLogging(app: express.Application) {
   });
 }
 
-function getAppName(): string {
-  try {
-    const appJsonPath = path.resolve(process.cwd(), "app.json");
-    const appJsonContent = fs.readFileSync(appJsonPath, "utf-8");
-    const appJson = JSON.parse(appJsonContent);
-    return appJson.expo?.name || "App Landing Page";
-  } catch {
-    return "App Landing Page";
-  }
-}
-
-function serveExpoManifest(platform: string, res: Response) {
-  const manifestPath = path.resolve(
-    process.cwd(),
-    "static-build",
-    platform,
-    "manifest.json",
-  );
-
-  if (!fs.existsSync(manifestPath)) {
-    return res
-      .status(404)
-      .json({ error: `Manifest not found for platform: ${platform}` });
-  }
-
-  res.setHeader("expo-protocol-version", "1");
-  res.setHeader("expo-sfv-version", "0");
-  res.setHeader("content-type", "application/json");
-
-  const manifest = fs.readFileSync(manifestPath, "utf-8");
-  res.send(manifest);
-}
-
-function isMobileUserAgent(userAgent: string): boolean {
-  return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-}
-
-function isDevelopmentEnvironment(host: string): boolean {
-  return host.includes(":5000") || host.includes("-5000.");
-}
-
-function serveLandingPage({
-  req,
-  res,
-}: {
-  req: Request;
-  res: Response;
-}) {
-  const userAgent = req.header("user-agent") || "";
-  const forwardedHost = req.header("x-forwarded-host");
-  const host = forwardedHost || req.get("host") || "";
-  
-  // In development, desktop browsers should be redirected to the Expo web app on port 8081
-  if (!isMobileUserAgent(userAgent) && isDevelopmentEnvironment(host)) {
-    const forwardedProto = req.header("x-forwarded-proto");
-    const protocol = forwardedProto || req.protocol || "https";
-    
-    const webAppUrl = host.includes(":5000") 
-      ? `${protocol}://${host.replace(":5000", ":8081")}`
-      : `${protocol}://${host.replace("-5000.", "-8081.")}`;
-    
-    log(`Development desktop detected, redirecting to Expo web: ${webAppUrl}`);
-    return res.redirect(302, webAppUrl);
-  }
-  
-  // All visitors (desktop and mobile) get the landing page in production
+function serveLandingPage(req: Request, res: Response) {
   const landingPagePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
   if (fs.existsSync(landingPagePath)) {
-    log(`Serving landing page to ${isMobileUserAgent(userAgent) ? 'mobile' : 'desktop'} visitor`);
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
     return res.sendFile(landingPagePath);
   }
-
-  // Fallback if landing page doesn't exist
-  log(`Landing page not found, serving 404`);
   res.status(404).send("Landing page not found");
 }
 
-function configureExpoAndLanding(app: express.Application) {
-  log("Serving static Expo files with dynamic manifest routing");
-
+function setupLandingPage(app: express.Application) {
   app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.path.startsWith("/api")) {
+    if (req.path.startsWith("/api") || req.path.startsWith("/journal") ||
+        req.path === "/sitemap.xml" || req.path === "/robots.txt" ||
+        req.path === "/llms.txt" || req.path === "/llms-full.txt") {
       return next();
-    }
-
-    if (req.path !== "/" && req.path !== "/manifest") {
-      return next();
-    }
-
-    const platform = req.header("expo-platform");
-    if (platform && (platform === "ios" || platform === "android")) {
-      return serveExpoManifest(platform, res);
     }
 
     if (req.path === "/") {
-      return serveLandingPage({ req, res });
+      return serveLandingPage(req, res);
     }
 
     next();
   });
 
   app.use("/assets", express.static(path.resolve(process.cwd(), "assets")));
-  app.use(express.static(path.resolve(process.cwd(), "static-build")));
-
-  log("Expo routing: Checking expo-platform header on / and /manifest");
 }
 
 function setupErrorHandler(app: express.Application) {
@@ -366,7 +258,7 @@ async function checkAndSendScheduledReport() {
   setupAiCrawlerLogging(app);
   setupRequestLogging(app);
 
-  configureExpoAndLanding(app);
+  setupLandingPage(app);
 
   const server = await registerRoutes(app);
 
@@ -381,7 +273,6 @@ async function checkAndSendScheduledReport() {
     },
     () => {
       log(`express server serving on port ${port}`);
-      // Check for due scheduled reports every hour
       setInterval(checkAndSendScheduledReport, 60 * 60 * 1000);
     },
   );

@@ -1,9 +1,6 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
-import { db } from "./db";
-import { users as usersTable, appWaitlist, type User } from "@shared/schema";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
@@ -24,84 +21,21 @@ import {
 } from "./journal/render";
 import { getPost, allPostsNewestFirst } from "./journal/posts";
 
-function resolveOrigin(req: Request): string {
-  const forwardedHost = req.header("x-forwarded-host");
-  const forwardedProto = req.header("x-forwarded-proto");
-  const host = forwardedHost || req.get("host") || "localhost:5000";
-  const proto =
-    forwardedProto ||
-    (host.includes("localhost") || host.includes("127.0.0.1")
-      ? "http"
-      : "https");
-  return `${proto}://${host}`;
-}
-
-// Password hashing with scrypt (memory-hard, salted).
-// Stored format: "scrypt:<hex-salt>:<hex-derived-key>"
-// Legacy SHA-256 hashes (plain 64-char hex) are detected on login and
-// automatically migrated to scrypt on first successful authentication.
-async function hashPassword(password: string): Promise<string> {
-  const salt = crypto.randomBytes(16).toString("hex");
-  const derived = await new Promise<Buffer>((resolve, reject) =>
-    crypto.scrypt(password, salt, 64, (err, key) =>
-      err ? reject(err) : resolve(key),
-    ),
-  );
-  return `scrypt:${salt}:${derived.toString("hex")}`;
-}
-
-async function verifyPassword(
-  password: string,
-  stored: string,
-): Promise<boolean> {
-  if (stored.startsWith("scrypt:")) {
-    const [, salt, keyHex] = stored.split(":");
-    const derived = await new Promise<Buffer>((resolve, reject) =>
-      crypto.scrypt(password, salt, 64, (err, key) =>
-        err ? reject(err) : resolve(key),
-      ),
-    );
-    return crypto.timingSafeEqual(Buffer.from(keyHex, "hex"), derived);
+// Admin auth — compares the x-session-token header against SESSION_SECRET
+// using a constant-time comparison to prevent timing attacks.
+function requireAdminToken(req: Request): boolean {
+  const token = (req.header("x-session-token") || "").trim();
+  const secret = (process.env.SESSION_SECRET || "").trim();
+  if (!secret || token.length < 16 || token.length !== secret.length) return false;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(secret));
+  } catch {
+    return false;
   }
-  // Legacy: plain SHA-256 — accept but caller should migrate
-  const legacy = crypto
-    .createHash("sha256")
-    .update(password)
-    .digest("hex");
-  return crypto.timingSafeEqual(
-    Buffer.from(stored, "hex"),
-    Buffer.from(legacy, "hex"),
-  );
-}
-
-// Strip auth-sensitive fields (password hash, session token) from user
-// objects before they leave the server. Use this for every response that
-// includes a user — the only exception is the login response, which must
-// include the freshly-issued session token for the client.
-type SensitiveUserKeys = "password" | "sessionToken";
-type PublicUser<T> = T extends null | undefined
-  ? T
-  : Omit<T, SensitiveUserKeys>;
-
-function publicUser<T extends Record<string, unknown> | null | undefined>(
-  u: T,
-): PublicUser<T> {
-  if (!u) return u as PublicUser<T>;
-  const { password, sessionToken, ...rest } = u as Record<string, unknown> & {
-    password?: unknown;
-    sessionToken?: unknown;
-  };
-  void password;
-  void sessionToken;
-  return rest as PublicUser<T>;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // ─── Canonical-domain redirect ────────────────────────────────────────
-  // If the request arrives on any host other than the canonical one, issue a
-  // permanent redirect so every crawler always consolidates signals to the
-  // same origin. API routes and localhost are exempt so development and
-  // internal calls continue to work.
+  // ─── Canonical-domain redirect ─────────────────────────────────────────
   const canonicalHost = new URL(CANONICAL_ORIGIN).host;
   app.use((req, res, next) => {
     const reqHost =
@@ -115,7 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   });
 
-  // ─── Journal (SEO content) ───────────────────────────────────────────
+  // ─── Journal (SEO content) ──────────────────────────────────────────────
   app.get("/journal", (_req, res) => {
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderIndexHtml(CANONICAL_ORIGIN));
@@ -133,53 +67,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.send(renderArticleHtml(post, CANONICAL_ORIGIN));
   });
 
-  // JSON API for the in-app Journal (Expo client)
+  app.get("/sitemap.xml", (_req, res) => {
+    res.setHeader("content-type", "application/xml; charset=utf-8");
+    res.send(renderSitemapXml(CANONICAL_ORIGIN));
+  });
+
+  app.get("/robots.txt", (_req, res) => {
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.send(renderRobotsTxt(CANONICAL_ORIGIN));
+  });
+
+  app.get("/llms.txt", (_req, res) => {
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.setHeader("cache-control", "public, max-age=3600");
+    res.send(renderLlmsTxt(CANONICAL_ORIGIN));
+  });
+
+  app.get("/llms-full.txt", (_req, res) => {
+    res.setHeader("content-type", "text/plain; charset=utf-8");
+    res.setHeader("cache-control", "public, max-age=3600");
+    res.send(renderLlmsFullTxt(CANONICAL_ORIGIN));
+  });
+
+  // ─── Journal JSON API (read-only, used by landing page preview) ────────
   app.get("/api/journal/posts", (_req, res) => {
-    const list = allPostsNewestFirst().map((p) => ({
+    const posts = allPostsNewestFirst().map((p) => ({
       slug: p.slug,
       title: p.title,
       description: p.description,
       excerpt: p.excerpt,
       publishedAt: p.publishedAt,
-      updatedAt: p.updatedAt,
+      updatedAt: p.updatedAt ?? null,
       readMinutes: p.readMinutes,
+      category: p.category,
       tags: p.tags,
     }));
-    res.json({ posts: list });
+    res.setHeader("cache-control", "public, max-age=300");
+    res.json(posts);
   });
 
   app.get("/api/journal/posts/:slug", (req, res) => {
     const post = getPost(req.params.slug);
-    if (!post) {
-      return res.status(404).json({ error: "Post not found" });
-    }
-    res.json({ post });
+    if (!post) return res.status(404).json({ error: "not found" });
+    res.setHeader("cache-control", "public, max-age=300");
+    res.json(post);
   });
 
-  // App launch waitlist — pre-register email capture from the landing page.
-  app.post("/api/waitlist", async (req, res) => {
-    try {
-      const { email } = req.body || {};
-      const cleanEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
-      if (!cleanEmail || !/\S+@\S+\.\S+/.test(cleanEmail)) {
-        return res.status(400).json({ error: "valid email is required" });
-      }
-      const existing = await db.select({ id: appWaitlist.id })
-        .from(appWaitlist)
-        .where(eq(appWaitlist.email, cleanEmail))
-        .limit(1);
-      if (existing.length > 0) {
-        return res.status(409).json({ ok: true, message: "already registered" });
-      }
-      await db.insert(appWaitlist).values({ email: cleanEmail, source: "landing" });
-      return res.json({ ok: true });
-    } catch (err) {
-      console.error("[waitlist]", err);
-      return res.status(500).json({ error: "server error" });
-    }
-  });
-
-  // Capture a guest email from an in-app Journal article CTA.
+  // ─── Journal leads ──────────────────────────────────────────────────────
   app.post("/api/journal/leads", async (req, res) => {
     try {
       const { slug, title, email, source } = req.body || {};
@@ -192,8 +126,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "valid email is required" });
       }
 
-      // Resolve the canonical title from the slug when possible so the
-      // studio sees the real article title even if the client omits it.
       const post = getPost(cleanSlug);
       const finalTitle =
         (typeof title === "string" && title.trim()) ||
@@ -206,8 +138,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         source: typeof source === "string" && source ? source.slice(0, 80) : "journal_signup",
       });
 
-      // Only notify the studio on the first capture for this slug+email,
-      // so a visitor who taps the CTA twice doesn't trigger a second email.
       if (created) {
         try {
           const { client, fromEmail } = await getUncachableResendClient();
@@ -237,13 +167,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin read of captured Journal leads (designer-only).
-  // Uses the server-issued session token from the `x-session-token` header
-  // — never trusts a client-supplied user ID — because lead emails are PII.
+  // Admin read of captured Journal leads (admin-only).
   app.get("/api/admin/journal-leads", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const wantsCsv = String(req.query.format ?? "").toLowerCase() === "csv";
@@ -258,14 +185,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const escape = (val: unknown) => {
         let s = val === null || val === undefined ? "" : String(val);
-        // Defuse spreadsheet formula injection: a leading =, +, -, @, tab,
-        // or carriage return makes Excel/Sheets evaluate the cell. Prefix
-        // with a single quote to neutralize without losing the original.
         if (s.length > 0 && /^[=+\-@\t\r]/.test(s)) {
           s = `'${s}`;
         }
-        // Always quote so commas/newlines/quotes inside fields stay safe.
-        // Doubling quote chars is the CSV escape per RFC 4180.
         return `"${s.replace(/"/g, '""')}"`;
       };
       const header = ["slug", "title", "email", "source", "createdAt"];
@@ -299,834 +221,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/sitemap.xml", (_req, res) => {
-    res.setHeader("content-type", "application/xml; charset=utf-8");
-    res.send(renderSitemapXml(CANONICAL_ORIGIN));
-  });
-
-  app.get("/robots.txt", (_req, res) => {
-    res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.send(renderRobotsTxt(CANONICAL_ORIGIN));
-  });
-
-  app.get("/llms.txt", (_req, res) => {
-    res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.setHeader("cache-control", "public, max-age=3600");
-    res.send(renderLlmsTxt(CANONICAL_ORIGIN));
-  });
-
-  app.get("/llms-full.txt", (_req, res) => {
-    res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.setHeader("cache-control", "public, max-age=3600");
-    res.send(renderLlmsFullTxt(CANONICAL_ORIGIN));
-  });
-
-  // Auth routes
-  app.post("/api/auth/register", async (req, res) => {
+  // ─── Contact form ───────────────────────────────────────────────────────
+  app.get("/api/contact-submissions", async (req, res) => {
     try {
-      const { email, password, name } = req.body;
-      
-      if (!email || !password || !name) {
-        return res.status(400).json({ error: "Email, password, and name are required" });
+      if (!requireAdminToken(req)) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      const submissions = await storage.getContactSubmissions();
+      res.json(submissions);
+    } catch (error) {
+      console.error("Failed to get contact submissions:", error);
+      res.status(500).json({ error: "Failed to get contact submissions" });
+    }
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { fullName, email, company, budget, interests, message } = req.body;
+
+      if (!fullName || !email || !message) {
+        return res.status(400).json({ error: "Name, email, and message are required" });
       }
 
-      const existingUser = await storage.getUserByEmail(email);
-      if (existingUser) {
-        return res.status(400).json({ error: "Email already registered" });
-      }
-
-      const user = await storage.createUser({
+      await storage.createContactSubmission({
+        fullName,
         email,
-        password: await hashPassword(password),
-        name,
-        role: "client",
-        credits: 0,
-        isOnline: false,
+        company: company || null,
+        budget: budget || null,
+        interests: interests || [],
+        message,
       });
 
-      // Issue a session token immediately so the client lands fully
-      // authenticated (mirrors /api/auth/login). Without this, the new
-      // user has no token and any token-protected request (avatar upload,
-      // top-up, project cancel) would return 401.
-      const sessionToken = crypto.randomBytes(32).toString("hex");
-      const updated = await storage.updateUser(user.id, {
-        isOnline: true,
-        sessionToken,
-      });
+      console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
 
-      res.json({
-        user: { ...publicUser(updated || user), isOnline: true, sessionToken },
-      });
-    } catch (error) {
-      console.error("Registration error:", error);
-      res.status(500).json({ error: "Failed to register" });
-    }
-  });
-
-  app.post("/api/auth/login", async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      
-      if (!email || !password) {
-        return res.status(400).json({ error: "Email and password are required" });
+      try {
+        const { client, fromEmail } = await getUncachableResendClient();
+        const interestsList = interests && interests.length > 0
+          ? interests.join(', ')
+          : 'Not specified';
+        const emailResult = await client.emails.send({
+          from: fromEmail,
+          to: 'create@startappsstudio.com',
+          subject: `New Project Inquiry from ${fullName}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> ${fullName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Company:</strong> ${company || 'Not specified'}</p>
+            <p><strong>Budget:</strong> ${budget || 'Not specified'}</p>
+            <p><strong>Interested in:</strong> ${interestsList}</p>
+            <h3>Message:</h3>
+            <p>${message}</p>
+          `,
+        });
+        console.log("Email notification sent successfully:", JSON.stringify(emailResult));
+      } catch (emailError: any) {
+        console.error("Failed to send email notification:", emailError?.message || emailError);
       }
 
-      const user = await storage.getUserByEmail(email);
-      const passwordValid = user ? await verifyPassword(password, user.password ?? "") : false;
-      if (!user || !passwordValid) {
-        return res.status(401).json({ error: "Invalid credentials" });
-      }
-
-      // Migrate legacy SHA-256 hash to scrypt on first successful login.
-      const needsMigration = user.password && !user.password.startsWith("scrypt:");
-      const newHash = needsMigration ? await hashPassword(password) : undefined;
-
-      // Rotate a fresh server-issued session token on every successful login
-      // so admin endpoints can verify identity without trusting client-supplied IDs.
-      const sessionToken = crypto.randomBytes(32).toString("hex");
-      const updated = await storage.updateUser(user.id, {
-        isOnline: true,
-        sessionToken,
-        ...(newHash ? { password: newHash } : {}),
-      });
-
-      res.json({
-        user: { ...publicUser(updated || user), isOnline: true, sessionToken },
-      });
-    } catch (error) {
-      console.error("Login error:", error);
-      res.status(500).json({ error: "Failed to login" });
-    }
-  });
-
-  app.post("/api/auth/logout", async (req, res) => {
-    try {
-      // Authenticate the caller by their server-issued session token instead
-      // of trusting a `userId` from the request body. Otherwise any unauth
-      // caller could repeatedly null another user's sessionToken and lock
-      // them out of token-gated admin endpoints.
-      const raw = req.header("x-session-token");
-      const token = typeof raw === "string" ? raw.trim() : "";
-      if (token && token.length >= 16) {
-        const [u] = await db
-          .select()
-          .from(usersTable)
-          .where(eq(usersTable.sessionToken, token));
-        if (u) {
-          await storage.updateUser(u.id, { isOnline: false, sessionToken: null });
-        }
-      }
-      // Always respond success — the client should clear local state even
-      // if the server-side token was already invalidated.
       res.json({ success: true });
     } catch (error) {
-      res.status(500).json({ error: "Failed to logout" });
+      console.error("Contact form error:", error);
+      res.status(500).json({ error: "Failed to submit contact form" });
     }
   });
 
-  // User routes
-  app.get("/api/users/:id", async (req, res) => {
-    try {
-      const user = await storage.getUser(req.params.id);
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      res.json(publicUser(user));
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get user" });
-    }
-  });
-
-  app.get("/api/designer", async (req, res) => {
-    try {
-      const designer = await storage.getDesigner();
-      if (!designer) {
-        return res.status(404).json({ error: "Designer not found" });
-      }
-      res.json(publicUser(designer));
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get designer" });
-    }
-  });
-
-  app.patch("/api/users/:id", async (req, res) => {
-    try {
-      // Require a valid session token and only allow users to mutate their own
-      // profile. Designers may edit any profile.
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-      if (caller.id !== req.params.id && caller.role !== "designer") {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-
-      // Disallow client-driven mutation of auth-sensitive fields. Anything
-      // sensitive (password rotation, session token rotation, role changes,
-      // credit balance) must go through dedicated server-controlled flows.
-      const body = (req.body ?? {}) as Record<string, unknown>;
-      const {
-        password,
-        sessionToken,
-        role,
-        credits,
-        ...safe
-      } = body;
-      void password;
-      void sessionToken;
-      void role;
-      void credits;
-
-      // Validate avatar payload server-side to prevent oversized data URIs
-      // bloating the database.
-      if ("avatarUrl" in safe) {
-        const validated = validateAvatarUrl(safe.avatarUrl);
-        if (validated === null) {
-          return res.status(400).json({
-            error: "avatarUrl must be an HTTPS URL or a JPEG/PNG/WebP data URI under 1.5MB.",
-          });
-        }
-        safe.avatarUrl = validated;
-      }
-
-      const user = await storage.updateUser(req.params.id, safe as Partial<User>);
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      res.json(publicUser(user));
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update user" });
-    }
-  });
-
-  // Project routes
-  app.get("/api/projects", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      let projectList;
-      if (caller.role === "designer") {
-        const { clientId } = req.query;
-        if (clientId) {
-          projectList = await storage.getProjectsByClient(clientId as string);
-        } else {
-          projectList = await storage.getAllProjects();
-        }
-      } else {
-        projectList = await storage.getProjectsByClient(caller.id);
-      }
-      res.json(projectList);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get projects" });
-    }
-  });
-
-  app.get("/api/projects/:id", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const project = await storage.getProjectWithDetails(req.params.id);
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-
-      if (caller.role !== "designer" && project.clientId !== caller.id) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-
-      if (project.client) {
-        project.client = publicUser(project.client);
-      }
-
-      res.json(project);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get project" });
-    }
-  });
-
-  app.post("/api/projects", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const { name, description, hats, estimatedCredits, planTier } = req.body;
-
-      const clientId = caller.role === "designer"
-        ? (req.body.clientId ?? caller.id)
-        : caller.id;
-
-      if (!clientId || !name || !description) {
-        return res.status(400).json({ error: "Missing required fields" });
-      }
-
-      const project = await storage.createProject({
-        clientId,
-        name,
-        description,
-        status: "brief_submitted",
-        estimatedCredits: caller.role === "designer" ? (estimatedCredits || 0) : 0,
-        usedCredits: 0,
-        planTier: caller.role === "designer" ? (planTier || null) : null,
-      });
-
-      // Add hats
-      if (hats && Array.isArray(hats)) {
-        for (const hat of hats) {
-          await storage.addProjectHat(project.id, hat);
-        }
-      }
-
-      res.json(project);
-    } catch (error) {
-      console.error("Create project error:", error);
-      res.status(500).json({ error: "Failed to create project" });
-    }
-  });
-
-  app.patch("/api/projects/:id", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const existing = await storage.getProject(req.params.id);
-      if (!existing) return res.status(404).json({ error: "Project not found" });
-
-      if (caller.role !== "designer" && existing.clientId !== caller.id) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-
-      const body = (req.body ?? {}) as Record<string, unknown>;
-      let updateData: Record<string, unknown>;
-
-      if (caller.role === "designer") {
-        updateData = body;
-      } else {
-        const { name, description, ..._ } = body;
-        void _;
-        updateData = {} as Record<string, unknown>;
-        if (name !== undefined) updateData.name = name;
-        if (description !== undefined) updateData.description = description;
-      }
-
-      const project = await storage.updateProject(req.params.id, updateData as Partial<typeof existing>);
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-      res.json(project);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update project" });
-    }
-  });
-
-  app.delete("/api/projects/:id", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const project = await storage.getProject(req.params.id);
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-      // Only the owning client (or a designer) may cancel.
-      if (caller.role !== "designer" && project.clientId !== caller.id) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-      // Clients can cancel any time before the project is completed. Once
-      // it's marked completed, it stays for accounting/portfolio reasons.
-      if (project.status === "completed" && caller.role !== "designer") {
-        return res.status(409).json({
-          error: "Completed projects can't be cancelled. Reach out to the studio if you need it removed.",
-        });
-      }
-      await storage.deleteProject(req.params.id);
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Delete project error:", error);
-      res.status(500).json({ error: "Failed to delete project" });
-    }
-  });
-
-  // Messages routes
-  app.get("/api/messages/:projectId", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      if (caller.role !== "designer") {
-        const project = await storage.getProject(req.params.projectId);
-        if (!project || project.clientId !== caller.id) {
-          return res.status(403).json({ error: "Forbidden" });
-        }
-      }
-
-      const messages = await storage.getMessagesByProject(req.params.projectId);
-      res.json(messages);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get messages" });
-    }
-  });
-
-  app.get("/api/conversations/:userId", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      if (caller.role !== "designer" && caller.id !== req.params.userId) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-
-      const conversations = await storage.getConversations(req.params.userId);
-      res.json(conversations);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get conversations" });
-    }
-  });
-
-  app.post("/api/messages", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const { projectId, content, fileUrl, fileName } = req.body;
-      const senderId = caller.id;
-
-      if (!projectId || !content) {
-        return res.status(400).json({ error: "Missing required fields" });
-      }
-
-      if (caller.role !== "designer") {
-        const project = await storage.getProject(projectId);
-        if (!project || project.clientId !== caller.id) {
-          return res.status(403).json({ error: "Forbidden" });
-        }
-      }
-
-      const message = await storage.createMessage({
-        projectId,
-        senderId,
-        content,
-        fileUrl,
-        fileName,
-        isRead: false,
-      });
-
-      res.json(message);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to send message" });
-    }
-  });
-
-  app.post("/api/messages/:projectId/read", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      if (caller.role !== "designer") {
-        const project = await storage.getProject(req.params.projectId);
-        if (!project || project.clientId !== caller.id) {
-          return res.status(403).json({ error: "Forbidden" });
-        }
-      }
-
-      await storage.markMessagesAsRead(req.params.projectId, caller.id);
-      res.json({ success: true });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to mark messages as read" });
-    }
-  });
-
-  // Work sessions routes
-  app.get("/api/work-sessions/active", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const session = await storage.getActiveWorkSession();
-      res.json(session || null);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get active session" });
-    }
-  });
-
-  app.get("/api/work-sessions/project/:projectId", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      if (caller.role !== "designer") {
-        const project = await storage.getProject(req.params.projectId);
-        if (!project || project.clientId !== caller.id) {
-          return res.status(403).json({ error: "Forbidden" });
-        }
-      }
-
-      const sessions = await storage.getWorkSessionsByProject(req.params.projectId);
-      res.json(sessions);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get work sessions" });
-    }
-  });
-
-  app.post("/api/work-sessions", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const { projectId } = req.body;
-
-      // End any existing active session
-      const activeSession = await storage.getActiveWorkSession();
-      if (activeSession) {
-        await storage.updateWorkSession(activeSession.id, {
-          isActive: false,
-          endTime: new Date(),
-        });
-      }
-
-      const session = await storage.createWorkSession({
-        projectId,
-        isActive: true,
-        promptCount: 0,
-      });
-
-      // Update designer online status
-      const designer = await storage.getDesigner();
-      if (designer) {
-        await storage.updateUser(designer.id, { isOnline: true });
-      }
-
-      res.json(session);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to start work session" });
-    }
-  });
-
-  app.patch("/api/work-sessions/:id", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const session = await storage.updateWorkSession(req.params.id, req.body);
-      if (!session) {
-        return res.status(404).json({ error: "Session not found" });
-      }
-      res.json(session);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to update work session" });
-    }
-  });
-
-  app.post("/api/work-sessions/:id/stop", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const session = await storage.updateWorkSession(req.params.id, {
-        isActive: false,
-        endTime: new Date(),
-      });
-
-      // Update designer offline status if no active sessions
-      const activeSession = await storage.getActiveWorkSession();
-      if (!activeSession) {
-        const designer = await storage.getDesigner();
-        if (designer) {
-          await storage.updateUser(designer.id, { isOnline: false });
-        }
-      }
-
-      res.json(session);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to stop work session" });
-    }
-  });
-
-  app.post("/api/work-sessions/:id/increment-prompt", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const session = await storage.getWorkSession(req.params.id);
-      if (!session) {
-        return res.status(404).json({ error: "Session not found" });
-      }
-
-      const updated = await storage.updateWorkSession(req.params.id, {
-        promptCount: session.promptCount + 1,
-      });
-
-      res.json(updated);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to increment prompt count" });
-    }
-  });
-
-  // Project versions routes
-  app.get("/api/project-versions/:projectId", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      if (caller.role !== "designer") {
-        const project = await storage.getProject(req.params.projectId);
-        if (!project || project.clientId !== caller.id) {
-          return res.status(403).json({ error: "Forbidden" });
-        }
-      }
-
-      const versions = await storage.getProjectVersions(req.params.projectId);
-      res.json(versions);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get versions" });
-    }
-  });
-
-  app.post("/api/project-versions", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const { projectId, previewUrl, notes } = req.body;
-
-      const versions = await storage.getProjectVersions(projectId);
-      const versionNumber = versions.length + 1;
-
-      const version = await storage.createProjectVersion({
-        projectId,
-        versionNumber,
-        previewUrl,
-        notes,
-      });
-
-      // Update project with new preview URL
-      await storage.updateProject(projectId, { previewUrl });
-
-      res.json(version);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to create version" });
-    }
-  });
-
-  // Credit packages routes
-  app.get("/api/credit-packages", async (req, res) => {
-    try {
-      let packages = await storage.getCreditPackages();
-      
-      // Create default packages if none exist
-      if (packages.length === 0) {
-        await storage.createCreditPackage({
-          name: "Starter",
-          credits: 450,
-          priceInCents: 69900,
-          description: "Mockup application with starter functions: founder-ready visuals plus the core working pieces stitched together. Delivered in 3-5 days.",
-          isPopular: false,
-        });
-        await storage.createCreditPackage({
-          name: "Prototype",
-          credits: 1000,
-          priceInCents: 239900,
-          description: "Investor-ready with full UI/UX design, functional prototype and user testing. Delivered in 5-10 days.",
-          isPopular: true,
-        });
-        await storage.createCreditPackage({
-          name: "Production",
-          credits: 4000,
-          priceInCents: 150000,
-          description: "Launch-ready MVP with complete development, ongoing support. Scales up to 10k users. Delivered in 3-10 weeks.",
-          isPopular: false,
-        });
-        await storage.createCreditPackage({
-          name: "Custom",
-          credits: 0,
-          priceInCents: 750000,
-          description: "100% handcrafted development for 10k+ users. Credits billed internally. 1-6 months delivery.",
-          isPopular: false,
-        });
-        packages = await storage.getCreditPackages();
-      }
-
-      res.json(packages);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get credit packages" });
-    }
-  });
-
-  // Credit transactions
-  app.get("/api/credit-transactions/:userId", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-      if (caller.role !== "designer" && caller.id !== req.params.userId) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-      const transactions = await storage.getCreditTransactionsByUser(req.params.userId);
-      res.json(transactions);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get transactions" });
-    }
-  });
-
-  app.post("/api/credits/add", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-      const { userId, amount, description, projectId } = req.body;
-      await storage.addCreditsToUser(userId, amount, description, projectId);
-      const user = await storage.getUser(userId);
-      res.json({ credits: user?.credits || 0 });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to add credits" });
-    }
-  });
-
-  // Project-agnostic credit top-up: must be performed by the designer after
-  // confirming payment off-band. No payment gateway is integrated, so
-  // self-serve minting is disabled to prevent balance abuse.
-  app.post("/api/credits/topup", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-      const { userId } = req.body;
-      if (!userId) return res.status(400).json({ error: "userId is required" });
-      await storage.addCreditsToUser(userId, 200, "Credit top-up ($99 / 100 credits + 2x promo bonus = 200)");
-      const updated = await storage.getUser(userId);
-      res.json({ credits: updated?.credits || 0 });
-    } catch (error) {
-      console.error("Topup error:", error);
-      res.status(500).json({ error: "Failed to top up credits" });
-    }
-  });
-
-  app.post("/api/credits/purchase", async (req, res) => {
-    try {
-      // Restricted to designer-only: no payment gateway is integrated, so
-      // clients cannot self-serve purchase plan tiers. The designer manually
-      // confirms payment and triggers this route on behalf of the client.
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const { userId, projectId, packageId, tier } = req.body;
-      if (!userId || !projectId || (!packageId && !tier)) {
-        return res.status(400).json({ error: "userId, projectId, and packageId or tier are required" });
-      }
-
-      const project = await storage.getProject(projectId);
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-
-      const tierOrder = ["Starter", "Prototype", "Production", "Custom"];
-      const currentTierIndex = project.planTier ? tierOrder.indexOf(project.planTier) : -1;
-
-      let pkg: any;
-      if (packageId) {
-        pkg = await storage.getCreditPackage(packageId);
-      } else {
-        const packages = await storage.getCreditPackages();
-        pkg = packages.find((p: any) => p.name === tier);
-      }
-      if (!pkg) {
-        return res.status(404).json({ error: "Package not found" });
-      }
-
-      const newTierIndex = tierOrder.indexOf(pkg.name);
-      if (newTierIndex <= currentTierIndex) {
-        return res.status(400).json({ error: "Can only upgrade to a higher tier" });
-      }
-
-      if (pkg.name !== "Custom") {
-        await storage.addCreditsToUser(userId, pkg.credits, `Purchased ${pkg.name} for ${project.name}`, projectId);
-      }
-
-      await storage.updateProject(projectId, { planTier: pkg.name });
-
-      const user = await storage.getUser(userId);
-      res.json({ credits: user?.credits || 0, planTier: pkg.name });
-    } catch (error) {
-      console.error("Purchase error:", error);
-      res.status(500).json({ error: "Failed to purchase plan" });
-    }
-  });
-
-  app.post("/api/credits/deduct", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-      const { userId, amount, description } = req.body;
-      if (!userId || !amount || amount <= 0) {
-        return res.status(400).json({ error: "Valid userId and positive amount required" });
-      }
-      const success = await storage.useCredits(userId, amount, description || "Work session deduction");
-      if (!success) {
-        return res.status(400).json({ error: "Insufficient credits" });
-      }
-      const user = await storage.getUser(userId);
-      res.json({ credits: user?.credits || 0 });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to deduct credits" });
-    }
-  });
-
-  app.get("/api/clients", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const clients = await storage.getClientUsers();
-      res.json(clients.map((c: any) => publicUser(c)));
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get clients" });
-    }
-  });
-
-
-  // ────────────────────────────────────────────────────────────────────
-  // Visitor analytics — anonymous-friendly tracking
-  // POST endpoints are open (anonymous insert).
-  // GET endpoints require designer session token via x-session-token header.
-  // ────────────────────────────────────────────────────────────────────
-
-  // Session-token based admin auth. Reads `x-session-token` from the request,
-  // looks up the matching user, and only allows designers through. Used for
-  // admin endpoints that return PII (e.g. captured leads) — does NOT trust
-  // any client-supplied user ID.
-  const requireDesignerFromToken = async (req: Request) => {
-    const raw = req.header("x-session-token");
-    const token = typeof raw === "string" ? raw.trim() : "";
-    if (!token || token.length < 16) return null;
-    const [u] = await db
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.sessionToken, token));
-    if (!u || u.role !== "designer") return null;
-    return u;
-  };
-
-  const requireUserFromToken = async (req: Request) => {
-    const raw = req.header("x-session-token");
-    const token = typeof raw === "string" ? raw.trim() : "";
-    if (!token || token.length < 16) return null;
-    const [u] = await db
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.sessionToken, token));
-    return u || null;
-  };
-
-  // Allow only inline data URIs of common image MIME types and cap their
-  // base64 payload to ~1.5 MB (~2 MB raw) to prevent unbounded DB growth.
-  const MAX_AVATAR_BASE64_BYTES = 1_500_000;
-  const validateAvatarUrl = (value: unknown): string | null => {
-    if (typeof value !== "string") return null;
-    const v = value.trim();
-    if (v === "") return "";
-    if (/^https:\/\//i.test(v) && v.length <= 1000) return v;
-    const m = v.match(/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/);
-    if (!m) return null;
-    if (m[2].length > MAX_AVATAR_BASE64_BYTES) return null;
-    return v;
-  };
-
+  // ─── Visitor analytics ──────────────────────────────────────────────────
   app.post("/api/track/section-view", async (req, res) => {
     try {
       const { sectionName, visitorId, userAgent, referrer, durationMs, userId } = req.body || {};
@@ -1174,7 +334,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
       if (!visitorId) return res.status(400).json({ error: "visitorId required" });
 
-      // Persist the event for analytics history.
       await storage.createVisitorEvent({
         eventType: "active_visitor",
         visitorId: String(visitorId).slice(0, 120),
@@ -1183,7 +342,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: userId || null,
       } as any);
 
-      // Send notification email (best-effort).
       try {
         const { client, fromEmail } = await getUncachableResendClient();
         const { subject, html } = activeVisitorNotification({
@@ -1253,10 +411,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin reads — designer-only.
+  // Admin reads — require SESSION_SECRET via x-session-token header.
   app.get("/api/admin/section-views", async (req, res) => {
     try {
-      if (!(await requireDesignerFromToken(req))) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
@@ -1268,7 +426,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/visitor-events", async (req, res) => {
     try {
-      if (!(await requireDesignerFromToken(req))) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const limit = Math.min(1000, parseInt(String(req.query.limit ?? "200"), 10) || 200);
@@ -1278,11 +436,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Section-view funnel — designer-only aggregated view answering
-  // "what % of hero viewers actually reach pricing/AI efficiency?".
   app.get("/api/admin/section-views/funnel", async (req, res) => {
     try {
-      if (!(await requireDesignerFromToken(req))) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1306,7 +462,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/journal/conversion-stats", async (req, res) => {
     try {
-      if (!(await requireDesignerFromToken(req))) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1326,7 +482,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/journal/conversion-trends", async (req, res) => {
     try {
-      if (!(await requireDesignerFromToken(req))) {
+      if (!requireAdminToken(req)) {
         return res.status(403).json({ error: "Forbidden" });
       }
       const parseDate = (v: unknown): Date | undefined => {
@@ -1344,7 +500,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ── Toolkit reveals (visitors unblurring tool names on the landing page) ──
+  // ─── Toolkit reveals ───────────────────────────────────────────────────
   app.post("/api/toolkit-reveal", async (req, res) => {
     try {
       const body = req.body || {};
@@ -1358,7 +514,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         req.socket.remoteAddress ||
         "";
       const { hashIp } = await import("./index");
-      // Fire-and-forget so we never block the visitor's page on logging
       storage
         .recordToolkitReveal({
           toolName,
@@ -1377,8 +532,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/admin/toolkit-reveals", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
       const parseDate = (v: unknown): Date | undefined => {
         if (typeof v !== "string" || !v) return undefined;
         const d = new Date(v);
@@ -1395,14 +549,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ── AI assistant traffic ─────────────────────────────────────────────────
-  // Returns aggregated counts per detected AI bot (GPTBot, ClaudeBot, etc.)
-  // alongside the recent raw hit log, so the studio can see which assistants
-  // actually drive traffic. GA4 hides these in "Direct" / "Other".
+  // ─── AI assistant traffic ──────────────────────────────────────────────
   app.get("/api/admin/ai-traffic", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
 
       const parseDate = (v: unknown): Date | undefined => {
         if (typeof v !== "string" || !v) return undefined;
@@ -1420,10 +570,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         storage.getAiCrawlerStats(from, to),
         storage.getRecentAiCrawlerHits(limit, from, to),
       ]);
-      // `totalHits` is the trustworthy headline (verified + unverifiable).
-      // Spoofed hits are still counted but reported separately so the
-      // designer can see attempted impersonation without it inflating the
-      // main number.
       const totalHits = stats.reduce((acc, r) => acc + r.hits, 0);
       const verifiedHits = stats.reduce((acc, r) => acc + r.verifiedHits, 0);
       const unverifiableHits = stats.reduce(
@@ -1449,29 +595,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Manual refresh of vendor IP ranges. Auto-refreshes every 24h, but this
-  // lets the designer force a pull when a vendor publishes a new range.
   app.post("/api/admin/ai-traffic/refresh-verification", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
       const result = await refreshAiBotIpRanges();
       res.json({ ...result, status: getAiBotVerifierStatus() });
     } catch (error) {
       console.error("ai traffic refresh error:", error);
-      res
-        .status(500)
-        .json({ error: "Failed to refresh AI bot verification list" });
+      res.status(500).json({ error: "Failed to refresh AI bot verification list" });
     }
   });
 
-  // ── Journal report schedule ──────────────────────────────────────────────
-
-
+  // ─── Journal report schedule ───────────────────────────────────────────
   app.get("/api/admin/journal/report-schedule", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
       const schedule = await storage.getJournalReportSchedule();
       res.json(schedule ?? null);
     } catch (error) {
@@ -1482,8 +620,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/journal/report-schedule", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
       const { frequency, recipientEmail, enabled } = req.body;
       if (!frequency || !["weekly", "monthly"].includes(frequency)) {
         return res.status(400).json({ error: "frequency must be 'weekly' or 'monthly'" });
@@ -1505,8 +642,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/admin/journal/report-schedule/send-now", async (req, res) => {
     try {
-      const designer = await requireDesignerFromToken(req);
-      if (!designer) return res.status(403).json({ error: "Forbidden" });
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
       const { frequency, recipientEmail } = req.body;
       if (!recipientEmail || typeof recipientEmail !== "string" || !recipientEmail.trim()) {
         return res.status(400).json({ error: "recipientEmail is required" });
@@ -1519,270 +655,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: error?.message || "Failed to send report" });
     }
   });
-
-  // Contact submissions (for designer dashboard)
-  app.get("/api/contact-submissions", async (req, res) => {
-    try {
-      const caller = await requireDesignerFromToken(req);
-      if (!caller) return res.status(403).json({ error: "Forbidden" });
-
-      const submissions = await storage.getContactSubmissions();
-      res.json(submissions);
-    } catch (error) {
-      console.error("Failed to get contact submissions:", error);
-      res.status(500).json({ error: "Failed to get contact submissions" });
-    }
-  });
-
-  // Contact form submission
-  app.post("/api/contact", async (req, res) => {
-    try {
-      const { fullName, email, company, budget, interests, message } = req.body;
-      
-      if (!fullName || !email || !message) {
-        return res.status(400).json({ error: "Name, email, and message are required" });
-      }
-      
-      // Store contact submission
-      await storage.createContactSubmission({
-        fullName,
-        email,
-        company: company || null,
-        budget: budget || null,
-        interests: interests || [],
-        message,
-      });
-      
-      console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
-      
-      // Send email notification using Resend
-      try {
-        const { client, fromEmail } = await getUncachableResendClient();
-        console.log("Resend client obtained, fromEmail:", fromEmail);
-        
-        const interestsList = interests && interests.length > 0 
-          ? interests.join(', ') 
-          : 'Not specified';
-        
-        const emailResult = await client.emails.send({
-          from: fromEmail,
-          to: 'create@startappsstudio.com',
-          subject: `New Project Inquiry from ${fullName}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${fullName}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Company:</strong> ${company || 'Not specified'}</p>
-            <p><strong>Budget:</strong> ${budget || 'Not specified'}</p>
-            <p><strong>Interested in:</strong> ${interestsList}</p>
-            <h3>Message:</h3>
-            <p>${message}</p>
-          `,
-        });
-        
-        console.log("Email notification sent successfully:", JSON.stringify(emailResult));
-      } catch (emailError: any) {
-        console.error("Failed to send email notification:", emailError?.message || emailError);
-        console.error("Full error details:", JSON.stringify(emailError, null, 2));
-        // Don't fail the request if email fails - submission was still saved
-      }
-      
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Contact form error:", error);
-      res.status(500).json({ error: "Failed to submit contact form" });
-    }
-  });
-
-  // Marketing services routes
-  app.get("/api/marketing/services", async (req, res) => {
-    try {
-      let services = await storage.getMarketingServices();
-
-      if (services.length === 0) {
-        const defaults = [
-          {
-            category: "SEO",
-            name: "SEO Audit & Optimization",
-            description: "Comprehensive technical SEO audit with actionable fixes to improve search rankings.",
-            creditsRequired: 200,
-            deliverables: ["Full site crawl & technical audit report", "Keyword gap analysis", "On-page optimization recommendations"],
-            isActive: true,
-          },
-          {
-            category: "SEO",
-            name: "Keyword Strategy",
-            description: "Data-driven keyword research and content mapping for organic growth.",
-            creditsRequired: 150,
-            deliverables: ["100+ keyword opportunities ranked by impact", "Content calendar with topics", "Competitor keyword gap report"],
-            isActive: true,
-          },
-          {
-            category: "SEO",
-            name: "Backlink Strategy & Outreach",
-            description: "Earn 15-30 high-quality backlinks per quarter through competitor link mapping, a link-worthy asset, and personal outreach.",
-            creditsRequired: 320,
-            deliverables: [
-              "Competitor backlink gap analysis with target shortlist",
-              "One link-worthy asset per quarter (benchmark, survey or tool)",
-              "Personal outreach to 100+ editors and managed reply handling",
-              "Monthly link-acquisition report with anchor text and DR",
-            ],
-            isActive: true,
-          },
-          {
-            category: "Content",
-            name: "Content Plan & Copywriting",
-            description: "Strategic content plan with professionally written copy for your MVP.",
-            creditsRequired: 250,
-            deliverables: ["30-day content strategy document", "5 SEO-optimized blog posts", "Landing page copy & CTAs"],
-            isActive: true,
-          },
-          {
-            category: "Ads",
-            name: "Paid Ads Setup",
-            description: "Launch-ready ad campaigns on Google and Meta with targeting and creatives.",
-            creditsRequired: 300,
-            deliverables: ["Campaign structure & audience targeting", "Ad creative designs (5 variations)", "Tracking & conversion setup"],
-            isActive: true,
-          },
-          {
-            category: "Social",
-            name: "Social Media Kit",
-            description: "Complete social media brand kit with templates and launch strategy.",
-            creditsRequired: 200,
-            deliverables: ["Profile & cover designs for 3 platforms", "15 branded post templates", "Launch week posting schedule"],
-            isActive: true,
-          },
-          {
-            category: "Email",
-            name: "Email Sequence",
-            description: "Automated email sequences to convert and retain your early users.",
-            creditsRequired: 180,
-            deliverables: ["5-email welcome sequence", "3-email re-engagement flow", "Email template designs"],
-            isActive: true,
-          },
-          {
-            category: "Brand",
-            name: "Brand Identity Report",
-            description: "Define your brand voice, visual identity, and positioning in the market.",
-            creditsRequired: 350,
-            deliverables: ["Brand voice & messaging guide", "Visual identity system (colors, typography)", "Competitive positioning map"],
-            isActive: true,
-          },
-        ];
-
-        for (const svc of defaults) {
-          await storage.createMarketingService(svc);
-        }
-        services = await storage.getMarketingServices();
-      }
-
-      res.json(services);
-    } catch (error) {
-      console.error("Failed to get marketing services:", error);
-      res.status(500).json({ error: "Failed to get marketing services" });
-    }
-  });
-
-  app.get("/api/marketing/orders", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const { clientId } = req.query;
-      if (!clientId) {
-        return res.status(400).json({ error: "clientId is required" });
-      }
-
-      if (caller.role !== "designer" && caller.id !== (clientId as string)) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-
-      const orders = await storage.getServiceOrdersByClient(clientId as string);
-      res.json(orders);
-    } catch (error) {
-      console.error("Failed to get service orders:", error);
-      res.status(500).json({ error: "Failed to get service orders" });
-    }
-  });
-
-  app.post("/api/marketing/orders", async (req, res) => {
-    try {
-      const caller = await requireUserFromToken(req);
-      if (!caller) return res.status(401).json({ error: "Unauthorized" });
-
-      const { serviceId, goals, websiteUrl } = req.body;
-      if (!serviceId || !goals) {
-        return res.status(400).json({ error: "serviceId and goals are required" });
-      }
-
-      // Clients place orders against their own account only; ignore body-supplied clientId.
-      const clientId = caller.role === "designer"
-        ? (req.body.clientId ?? null)
-        : caller.id;
-
-      if (!clientId) {
-        return res.status(400).json({ error: "clientId is required" });
-      }
-
-      const service = await storage.getMarketingService(serviceId);
-      if (!service) {
-        return res.status(404).json({ error: "Service not found" });
-      }
-
-      const success = await storage.useCredits(
-        clientId,
-        service.creditsRequired,
-        `Marketing service: ${service.name}`
-      );
-
-      if (!success) {
-        return res.status(400).json({ error: "Insufficient credits" });
-      }
-
-      const order = await storage.createServiceOrder({
-        clientId,
-        serviceId,
-        goals,
-        websiteUrl: websiteUrl || null,
-        creditsCharged: service.creditsRequired,
-        status: "submitted",
-      });
-
-      const orderWithService = { ...order, service };
-      res.json(orderWithService);
-    } catch (error) {
-      console.error("Failed to create service order:", error);
-      res.status(500).json({ error: "Failed to create service order" });
-    }
-  });
-
-  // ── Designer account bootstrap ──────────────────────────────────────
-  // Runs once at server start (not via a public API endpoint).
-  // Credentials are read from environment variables DESIGNER_EMAIL and
-  // DESIGNER_PASSWORD so they never appear in source code.  If the vars
-  // are absent the bootstrap is skipped and a warning is logged.
-  const designerEmail = process.env.DESIGNER_EMAIL;
-  const designerPassword = process.env.DESIGNER_PASSWORD;
-  const existingDesigner = await storage.getDesigner();
-  if (!existingDesigner) {
-    if (designerEmail && designerPassword) {
-      await storage.createUser({
-        email: designerEmail,
-        password: await hashPassword(designerPassword),
-        name: "Start Apps Studio",
-        role: "designer",
-        credits: 0,
-        isOnline: false,
-      });
-      console.log("Designer account bootstrapped from environment variables.");
-    } else {
-      console.warn(
-        "No designer account found. Set DESIGNER_EMAIL and DESIGNER_PASSWORD environment variables to create one on startup.",
-      );
-    }
-  }
 
   const httpServer = createServer(app);
   return httpServer;

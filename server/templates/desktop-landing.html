@@ -2169,129 +2169,7 @@
         margin-top: 8px;
       }
       
-      /* App Download Section */
-      /* ── Waitlist / Coming Soon card ─────────────────────────── */
-      .waitlist-card {
-        position: relative;
-        max-width: 580px;
-        margin: 0 auto 72px;
-        padding: 44px 36px;
-        border-radius: 20px;
-        border: 1px solid rgba(13, 148, 136, 0.28);
-        background:
-          radial-gradient(ellipse 140% 70% at 50% -10%, rgba(13,148,136,0.13), transparent 60%),
-          radial-gradient(ellipse 100% 60% at 50% 110%, rgba(13,148,136,0.08), transparent 60%),
-          var(--bg-elevated);
-        box-shadow:
-          0 0 0 1px rgba(13,148,136,0.10),
-          0 8px 40px rgba(13,148,136,0.12),
-          0 2px 8px rgba(0,0,0,0.06);
-        text-align: center;
-        overflow: hidden;
-      }
-      .waitlist-card::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: -1px;
-        transform: translateX(-50%);
-        width: 60%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(13,148,136,0.55), transparent);
-        border-radius: 0 0 4px 4px;
-        pointer-events: none;
-      }
-      .waitlist-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 12px;
-        border-radius: 99px;
-        background: rgba(13,148,136,0.10);
-        border: 1px solid rgba(13,148,136,0.22);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.10em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 18px;
-      }
-      .waitlist-badge-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--accent);
-        animation: hero-dot-pulse 2.4s ease-in-out infinite;
-      }
-      .waitlist-title {
-        font-size: clamp(20px, 3.5vw, 28px);
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        margin: 0 0 10px;
-      }
-      .waitlist-desc {
-        font-size: 15px;
-        color: var(--text-secondary);
-        line-height: 1.65;
-        margin: 0 0 28px;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .waitlist-form {
-        display: flex;
-        gap: 8px;
-        max-width: 380px;
-        margin: 0 auto;
-      }
-      .waitlist-input {
-        flex: 1;
-        padding: 12px 16px;
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--bg);
-        color: var(--text);
-        font-size: 15px;
-        outline: none;
-        transition: border-color 0.2s;
-        min-width: 0;
-      }
-      .waitlist-input:focus { border-color: var(--accent); }
-      .waitlist-input::placeholder { color: var(--text-secondary); }
-      .waitlist-btn {
-        padding: 12px 20px;
-        background: var(--accent);
-        color: var(--bg);
-        border: none;
-        border-radius: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: opacity 0.2s, transform 0.15s;
-      }
-      .waitlist-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-      .waitlist-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-      .waitlist-success {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        color: #10b981;
-        font-size: 14px;
-        font-weight: 500;
-        margin-top: 4px;
-      }
-      .waitlist-note {
-        margin-top: 14px;
-        font-size: 12px;
-        color: var(--text-secondary);
-      }
-      @media (max-width: 480px) {
-        .waitlist-card { padding: 32px 20px; }
-        .waitlist-form { flex-direction: column; }
-        .waitlist-btn { width: 100%; }
-      }
+
 
       .app-preregister {
         font-size: 13px;
@@ -2740,7 +2618,6 @@
       .journal-notes-title,
       .contact-left h2,
       #aiEfficiencyModal .ae-modal-hero h2,
-      .waitlist-title,
       .hero-headline {
         font-family: var(--ed-display);
         font-optical-sizing: auto;
@@ -3410,68 +3287,6 @@
         color: #fff;
         padding: 3px 6px;
         margin-right: 4px;
-      }
-
-      /* Waitlist card — promo box */
-      .waitlist-card {
-        border-radius: 0 !important;
-        border: 2px solid var(--ed-ink) !important;
-        background: var(--ed-yellow) !important;
-        padding: 36px 32px !important;
-        box-shadow: 8px 8px 0 0 var(--ed-ink) !important;
-        /* ensure the offset shadow is never clipped */
-        margin-left: auto !important;
-        margin-right: auto !important;
-        max-width: calc(100% - 96px) !important;
-      }
-      @media (max-width: 600px) {
-        .waitlist-card {
-          padding: 28px 20px !important;
-          box-shadow: 4px 4px 0 0 var(--ed-ink) !important;
-          max-width: calc(100% - 48px) !important;
-          margin-bottom: 40px !important;
-        }
-        .waitlist-title {
-          font-size: clamp(22px, 7vw, 36px) !important;
-        }
-      }
-      .waitlist-card::before { display: none !important; }
-      .waitlist-card, .waitlist-card * { color: var(--ed-on-yellow) !important; }
-      .waitlist-badge {
-        background: var(--ed-ink) !important;
-        color: var(--ed-yellow) !important;
-        border: none !important;
-        border-radius: 0 !important;
-        font-family: var(--ed-kicker) !important;
-        text-transform: uppercase;
-        letter-spacing: 0.16em !important;
-        font-size: 10.5px !important;
-        font-weight: 700 !important;
-        padding: 5px 10px !important;
-      }
-      .waitlist-badge-dot { background: var(--ed-yellow) !important; }
-      .waitlist-title {
-        font-size: clamp(28px, 4.4vw, 48px) !important;
-        font-weight: 900 !important;
-        letter-spacing: -0.025em !important;
-        color: var(--ed-on-yellow) !important;
-        line-height: 1.05 !important;
-      }
-      .waitlist-desc { color: var(--ed-on-yellow) !important; opacity: 0.85; }
-      .waitlist-input {
-        border-radius: 0 !important;
-        border: 1.5px solid #0a0a0a !important;
-        background: #ffffff !important;
-        color: #0a0a0a !important;
-      }
-      .waitlist-btn {
-        border-radius: 0 !important;
-        background: var(--ed-ink) !important;
-        color: var(--ed-paper) !important;
-        font-family: var(--ed-kicker) !important;
-        text-transform: uppercase;
-        letter-spacing: 0.14em !important;
-        font-weight: 700 !important;
       }
 
       /* ---- Contact -------------------------------------------------- */
@@ -5875,22 +5690,6 @@
       </div>
     </section>
 
-    <!-- App Waitlist -->
-    <div class="waitlist-card">
-      <span class="waitlist-badge"><span class="waitlist-badge-dot"></span>Coming Soon</span>
-      <h2 class="waitlist-title">The Start Apps Studio App</h2>
-      <p class="waitlist-desc">Track your build, message your team, and review designs live, all from your phone. iOS and Android, free for every Start Apps client.</p>
-      <form class="waitlist-form" id="waitlistForm" onsubmit="submitWaitlist(event)">
-        <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="your@email.com" required autocomplete="email" />
-        <button type="submit" class="waitlist-btn" id="waitlistBtn">Notify me</button>
-      </form>
-      <div class="waitlist-success" id="waitlistSuccess">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-        You're on the list. We'll notify you at launch.
-      </div>
-      <p class="waitlist-note">No spam. One email when we ship.</p>
-    </div>
-
     <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
          still see the latest articles. -->
@@ -6315,32 +6114,6 @@
           p.addEventListener('touchcancel', function() { tracking = false; }, { passive: true });
         });
       })();
-
-      function submitWaitlist(e) {
-        e.preventDefault();
-        var email = document.getElementById('waitlistEmail').value.trim();
-        var btn = document.getElementById('waitlistBtn');
-        if (!email) return;
-        btn.disabled = true;
-        btn.textContent = 'Saving\u2026';
-        fetch('/api/waitlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email })
-        }).then(function(res) {
-          if (res.ok || res.status === 409) {
-            document.getElementById('waitlistForm').style.display = 'none';
-            var s = document.getElementById('waitlistSuccess');
-            s.style.display = 'flex';
-          } else {
-            btn.disabled = false;
-            btn.textContent = 'Notify me';
-          }
-        }).catch(function() {
-          btn.disabled = false;
-          btn.textContent = 'Notify me';
-        });
-      }
 
       // FAQ open tracking — fires an event to Clarity and GA each time a
       // visitor expands a question, tagged with the question text. Every
