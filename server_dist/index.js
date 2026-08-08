@@ -3363,40 +3363,90 @@ var init_render = __esm({
     .article-cta { padding: 24px 20px; }
   }
 
-  /* Liquid Glass journal layer \u2014 shared material with the landing page. */
+  /* THEME CONSOLIDATION \u2014 journal uses the same mineral glass, ink, saffron signal,
+     and rose action language as the landing page. */
   :root {
-    --glass-bg: #edf5f4; --glass-ink: #102d35; --glass-muted: #536d73;
-    --glass-line: rgba(25,78,86,.17); --glass-panel: rgba(255,255,255,.55);
-    --glass-teal: #087f83; --glass-coral: #c96c55;
+    --glass-bg:#eef2f0; --glass-ink:#182a2d; --glass-muted:#5d7071;
+    --glass-line:rgba(24,42,45,.14); --glass-panel:rgba(255,255,255,.62);
+    --glass-teal:#1d5960; --glass-coral:#e07a5f; --glass-signal:#d4a72c;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --glass-bg:#081b23; --glass-ink:#e8f4f1; --glass-muted:#a1b9bc;
-      --glass-line:rgba(189,232,226,.2); --glass-panel:rgba(19,47,55,.76);
-      --glass-teal:#74d5cc; --glass-coral:#f0a18b; }
+    :root { --glass-bg:#102124; --glass-ink:#edf4ef; --glass-muted:#afc1bc;
+      --glass-line:rgba(237,244,239,.16); --glass-panel:rgba(28,52,55,.72);
+      --glass-teal:#8bc8bd; --glass-coral:#ef987e; --glass-signal:#e6c45a; }
   }
-  html { background:var(--glass-bg); }
-  body { background:radial-gradient(ellipse at 10% 0%,rgba(104,210,197,.2),transparent 34rem),radial-gradient(ellipse at 90% 16%,rgba(202,133,109,.12),transparent 30rem),var(--glass-bg); color:var(--glass-ink); }
-  body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.2; background-image:radial-gradient(rgba(255,255,255,.35) .6px,transparent .6px); background-size:5px 5px; }
-  .site-nav { max-width:1080px; margin:18px auto; padding:14px 20px; border:1px solid var(--glass-line); border-radius:999px; background:var(--glass-panel); box-shadow:0 14px 40px rgba(13,58,67,.1),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
+  /* Consolidated text token: legacy --pop consumers are links, labels and
+     markers, so they must be ink-safe. Rose remains available as glass-coral
+     for borders and non-text emphasis. */
+  :root { --pop: #1d5960; }
+  @media (prefers-color-scheme: dark) { :root { --pop: #8bc8bd; } }
+  html { background:var(--glass-bg); overflow-x:clip; }
+  body { background:radial-gradient(ellipse at 10% 0%,rgba(29,89,96,.13),transparent 34rem),radial-gradient(ellipse at 90% 16%,rgba(224,122,95,.10),transparent 30rem),var(--glass-bg); color:var(--glass-ink); overflow-x:clip; }
+  body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.12; background-image:radial-gradient(rgba(24,42,45,.5) .55px,transparent .55px); background-size:7px 7px; }
+  .site-nav { width:calc(100% - 32px); max-width:1080px; margin:18px auto; padding:14px 20px; border:1px solid var(--glass-line); border-radius:999px; background:var(--glass-panel); box-shadow:0 14px 40px rgba(13,58,67,.1),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); overflow:hidden; }
   .site-nav .brand, .site-nav .nav-links a { color:var(--glass-ink); }
   .site-nav .brand { font-family:var(--display); }
   .container, .container-wide { position:relative; }
   .index-header, .article-kicker, .article-body, .article-footer, .post-grid, .article-cta { position:relative; }
-  .index-header::before, .article-body::before { content:""; position:absolute; inset:-28px -34px; z-index:-1; border:1px solid var(--glass-line); border-radius:28px; background:var(--glass-panel); box-shadow:0 20px 60px rgba(13,58,67,.08),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  .index-header, .article-body { overflow:hidden; }
+  .index-header::before, .article-body::before { content:""; position:absolute; inset:-28px -34px; z-index:-1;
+    /* keep within page padding so the glass panel never widens scrollWidth */
+  }
+  @media (max-width: 700px) {
+    .index-header::before, .article-body::before { left:-14px; right:-14px; }
+  }
+  .index-header::before, .article-body::before { border:1px solid var(--glass-line); border-radius:28px; background:var(--glass-panel); box-shadow:0 20px 60px rgba(13,58,67,.08),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
   .index-title, .article-title, .article-footer-title { color:var(--glass-ink); }
-  .index-eyebrow, .article-kicker .kicker-cat { background:rgba(8,127,131,.12); border:1px solid rgba(8,127,131,.28); color:var(--glass-teal); box-shadow:none; border-radius:999px; }
+  .index-eyebrow, .article-kicker .kicker-cat { background:rgba(212,167,44,.18); border:1px solid rgba(212,167,44,.42); color:var(--glass-ink); box-shadow:none; border-radius:999px; }
   .post-grid, .next-grid { gap:14px; border:0; }
   .post-card, .next-card { border:1px solid var(--glass-line); border-radius:20px; background:var(--glass-panel); box-shadow:0 18px 48px rgba(13,58,67,.09),0 1px 0 rgba(255,255,255,.62) inset; overflow:hidden; transition:transform .3s ease, border-color .3s ease; }
   .post-card:hover, .next-card:hover { background:var(--glass-panel); transform:translateY(-5px); border-color:rgba(8,127,131,.45); }
   .post-card:hover *, .next-card:hover * { color:inherit; }
   .post-card-meta, .next-card-meta, .article-kicker .kicker-meta { color:var(--glass-teal); }
   .article-body h2 { border-top:1px solid var(--glass-line); }
-  .article-body blockquote, .answer-box, .callout, .article-cta { border-color:var(--glass-line); background:rgba(255,255,255,.2); border-radius:18px; }
+  .article-body h2::before,.sources h3,.callout strong,.post-card-meta,.next-card-meta { color:var(--glass-coral); }
+  .article-body blockquote, .answer-box, .callout, .article-cta { border-color:var(--glass-line); background:var(--glass-panel); border-radius:18px; box-shadow:0 18px 55px rgba(29,72,73,.10); }
+  .article-body blockquote { border-left:4px solid var(--glass-coral); }
+  .answer-box .answer-label { background:rgba(212,167,44,.18); color:var(--glass-ink); border:1px solid rgba(212,167,44,.42); box-shadow:none; border-radius:999px; }
   .article-cta { box-shadow:0 20px 56px rgba(13,58,67,.12),0 1px 0 rgba(255,255,255,.7) inset; }
-  .cta-btn { background:var(--glass-ink); color:var(--glass-bg); border:0; border-radius:999px; box-shadow:0 10px 24px rgba(13,58,67,.18); }
+  .cta-btn { background:var(--glass-teal); color:var(--glass-bg); border:0; border-radius:999px; box-shadow:0 10px 24px rgba(13,58,67,.18); min-height:48px; }
+  /* Final audit: journal never falls back to editorial markers or offset shadows. */
+  .article-kicker .kicker-cat, .index-eyebrow, .answer-box .answer-label {
+    background:rgba(212,167,44,.18)!important; color:var(--glass-ink)!important;
+    border:1px solid rgba(212,167,44,.42)!important; box-shadow:none!important;
+    border-radius:999px!important;
+  }
+  .article-body blockquote { border-left:4px solid var(--glass-coral)!important; }
+  .next-card:hover, .post-card:hover { background:var(--glass-panel)!important; color:inherit!important; }
+  .next-card:hover *, .post-card:hover * { color:inherit!important; }
+  .article-cta, .cta-btn { box-shadow:0 18px 55px rgba(29,72,73,.10)!important; }
+  .cta-btn:hover { transform:translateY(-2px); box-shadow:0 18px 55px rgba(29,72,73,.16)!important; }
+  /* Final article-internals sweep: all reading aids stay in the mineral system. */
+  .article-body code { background:var(--glass-panel)!important; border-color:var(--glass-line)!important; }
+  .article-body h2, .faq, .sources, .article-footer { border-color:var(--glass-line)!important; }
+  .article-body h2::before, .sources h3, .callout strong,
+  .post-card-meta, .next-card-meta { color:var(--glass-coral)!important; }
+  .article-body blockquote { background:var(--glass-panel)!important; border-left-color:var(--glass-coral)!important; }
+  .article-kicker .kicker-cat, .index-eyebrow, .answer-box .answer-label {
+    background:color-mix(in srgb,var(--glass-signal) 18%,transparent)!important;
+    border-color:color-mix(in srgb,var(--glass-signal) 42%,transparent)!important;
+    color:var(--glass-ink)!important; box-shadow:none!important;
+  }
+  .article-cta, .post-card, .next-card { box-shadow:0 18px 55px rgba(29,72,73,.10)!important; }
   .tag { border-color:var(--glass-line); border-radius:999px; color:var(--glass-muted); }
   .site-footer { border-top:1px solid var(--glass-line); }
-  @media (prefers-reduced-motion: reduce) { .post-card, .next-card { transition:none; } }
+  @media (max-width:640px) {
+    .container,.container-wide { padding:32px 16px 64px; }
+    .site-nav { width:calc(100% - 32px); margin:12px 16px; padding-left:14px; padding-right:14px; }
+    .site-nav .nav-links { gap:10px; }
+    .post-grid,.next-grid { grid-template-columns:1fr; gap:12px; }
+    .article-title { font-size:clamp(38px,12vw,58px); }
+    .article-body { font-size:18px; }
+    .article-cta { padding:24px 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+  }
 `;
   }
 });

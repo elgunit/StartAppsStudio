@@ -3817,6 +3817,143 @@
           scroll-behavior:auto!important;
         }
       }
+
+      /* THEME CONSOLIDATION — one material system: quiet mineral canvas, ink glass,
+         saffron signal and rose action. These tokens intentionally supersede the
+         retired editorial layer above; no section is allowed its own visual language. */
+      :root {
+        --canvas: #eef2f0;
+        --surface: rgba(255,255,255,.62);
+        --surface-strong: rgba(255,255,255,.86);
+        --ink: #182a2d;
+        --muted: #5d7071;
+        --line: rgba(24,42,45,.14);
+        --line-strong: rgba(24,42,45,.25);
+        --dominant: #1d5960;
+        --support: #d9e6df;
+        /* --accent is a text-safe interaction token. Rose is reserved for
+           non-text decoration in --rose so legacy consumers remain readable. */
+        --accent: #1d5960;
+        --rose: #e07a5f;
+        --signal: #d4a72c;
+        --on-accent: #fff8f2;
+        --shadow: 0 18px 55px rgba(29,72,73,.12);
+        --r-sm: 12px; --r-md: 20px; --r-lg: 30px;
+        --s-1: 6px; --s-2: 10px; --s-3: 14px; --s-4: 20px;
+        --s-5: 28px; --s-6: 40px; --s-7: 64px; --s-8: 88px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas: #102124; --surface: rgba(28,52,55,.72); --surface-strong: #1d393b;
+          --ink: #edf4ef; --muted: #afc1bc; --line: rgba(237,244,239,.16);
+          --line-strong: rgba(237,244,239,.3); --dominant: #8bc8bd;
+          --support: #234348; --accent: #8bc8bd; --rose: #ef987e; --signal: #e6c45a;
+          --on-accent: #1b2d2d; --shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+      }
+      /* Shared material: every section reads as one studio instrument. */
+      html, body { background: var(--canvas)!important; color: var(--ink)!important; overflow-x:clip!important; }
+      body { background-image: radial-gradient(circle at 12% 0%, color-mix(in srgb,var(--dominant) 13%,transparent), transparent 34rem), radial-gradient(circle at 88% 20%, color-mix(in srgb,var(--rose) 10%,transparent), transparent 30rem)!important; }
+      body::before { opacity:.12!important; background-image: radial-gradient(var(--ink) .55px,transparent .55px)!important; background-size: 7px 7px!important; }
+      .container { max-width:1320px!important; padding: var(--s-3) clamp(16px,4vw,56px) var(--s-8)!important; }
+      .section, .why-section, .faq-section, .journal-notes, .contact { position:relative; }
+      .section::before, .why-section::before, .faq-section::before, .journal-notes::before, .contact::before {
+        background: var(--surface)!important; border:1px solid var(--line)!important; box-shadow:var(--shadow)!important;
+        backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-radius:var(--r-lg)!important;
+      }
+      /* Hero strategy: establish confidence with a spacious, high-contrast first read. */
+      /* Hero content must remain in an unfiltered stacking context. The glass
+         surface is opaque enough to read in dark mode; ornaments stay behind it. */
+      .hero { background:var(--surface)!important; border:1px solid var(--line)!important; box-shadow:var(--shadow)!important; border-radius:var(--r-lg)!important; padding:clamp(34px,7vw,92px) clamp(18px,6vw,80px)!important; overflow:hidden!important; backdrop-filter:none!important; -webkit-backdrop-filter:none!important; }
+      .hero > * { position:relative; z-index:2; filter:none!important; -webkit-filter:none!important; opacity:1; }
+      .hero-headline, .hero h1 { color:var(--ink)!important; -webkit-text-fill-color:var(--ink)!important; }
+      /* Cascade audit: this exact selector beats the retired editorial marker rule. */
+      .hero-headline .hero-line .accent-word {
+        background:linear-gradient(100deg,var(--dominant),var(--rose))!important;
+        background-color:transparent!important;
+        -webkit-background-clip:text!important; background-clip:text!important;
+        -webkit-text-fill-color:transparent!important; color:transparent!important;
+        box-shadow:none!important; text-shadow:none!important;
+      }
+      /* Section strategy: make proof scannable through calm glass panels and one signal color. */
+      .service-card,.growth-card,.why-card,.case-study-card,.price-card,.journal-note,.faq-item,.contact-form,.special-package {
+        background:var(--surface)!important; border:1px solid var(--line)!important; box-shadow:var(--shadow)!important; border-radius:var(--r-md)!important;
+      }
+      /* Section titles use type hierarchy only; the old generated 09/10 chips are gone. */
+      .section-title::before, .why-section .section-header h2::before { content:none!important; display:none!important; }
+      .section-number,.number-chip,.orange-chip { display:none!important; }
+      .popular-badge { background:var(--signal)!important; color:var(--ink)!important; border:1px solid color-mix(in srgb,var(--signal) 70%,var(--ink))!important; box-shadow:none!important; border-radius:999px!important; }
+      /* Pricing strategy: package badges are quiet status pills, never editorial labels. */
+      .special-badge {
+        display:inline-flex!important; align-items:center; min-height:28px;
+        padding:6px 11px!important; border-radius:999px!important;
+        background:color-mix(in srgb,var(--support) 72%,transparent)!important;
+        color:var(--dominant)!important; border:1px solid color-mix(in srgb,var(--dominant) 28%,transparent)!important;
+        box-shadow:none!important; font-family:var(--sans)!important;
+        letter-spacing:.08em!important; text-transform:uppercase!important;
+      }
+      .special-package.enterprise .special-badge {
+        background:color-mix(in srgb,var(--rose) 14%,var(--surface))!important;
+        color:var(--accent)!important; border-color:color-mix(in srgb,var(--rose) 38%,transparent)!important;
+      }
+      .cta-button,.cta-btn,.why-compare-btn,.store-btn { background:var(--dominant)!important; color:var(--canvas)!important; border:1px solid var(--dominant)!important; box-shadow:0 10px 24px color-mix(in srgb,var(--dominant) 28%,transparent)!important; border-radius:999px!important; min-height:48px; }
+      .cta-button.secondary { background:transparent!important; color:var(--ink)!important; border-color:var(--line-strong)!important; box-shadow:none!important; }
+      .hero-eyebrow,.hero-badge,.hat-showcase-item,.tag,.method-badge { background:color-mix(in srgb,var(--support) 70%,transparent)!important; color:var(--dominant)!important; border:1px solid color-mix(in srgb,var(--dominant) 24%,transparent)!important; box-shadow:none!important; border-radius:999px!important; }
+      .hat-showcase-item:hover,.cta-button:hover,.cta-btn:hover { transform:translateY(-2px); }
+      input,textarea,select { background:var(--surface-strong)!important; color:var(--ink)!important; border:1px solid var(--line)!important; border-radius:var(--r-sm)!important; min-height:48px; }
+      /* Legacy identity kill-switch: no marker fills, boxed kickers, or offset shadows
+         can survive in late modal/utility rules. */
+      .hero-eyebrow, .hero-badge, .studio-status, .hat-showcase-item,
+      .toolkit-chip, .toolkit-meta, .budget-chip, .interest-option,
+      #ai-efficiency .ae-teaser, #aiEfficiencyModal .ae-modal-cta,
+      .submit-btn, .cmp-action, .view-more-btn {
+        box-shadow:none!important;
+      }
+      #ai-efficiency .ae-teaser, #aiEfficiencyModal .ae-modal-cta {
+        background:var(--surface)!important; border:1px solid var(--line)!important;
+        border-radius:var(--r-md)!important; color:var(--ink)!important;
+      }
+      .budget-chip:has(input:checked), .interest-option:has(input:checked) {
+        background:color-mix(in srgb,var(--dominant) 16%,var(--surface))!important;
+        color:var(--ink)!important; border-color:var(--dominant)!important;
+      }
+      .cta-button:hover, .cta-button.secondary:hover, .submit-btn:hover,
+      .why-compare-btn:hover, .cmp-action:hover, .view-more-btn:hover,
+      #ai-efficiency .ae-teaser:hover, #aiEfficiencyModal .ae-modal-cta:hover,
+      .journal-note:hover, .service-card:hover, .growth-card:hover, .why-card:hover {
+        box-shadow:var(--shadow)!important;
+        background:var(--surface)!important;
+        color:var(--ink)!important;
+      }
+      .cta-button:hover, .why-compare-btn:hover, .cmp-action:hover, .view-more-btn:hover,
+      #ai-efficiency .ae-teaser:hover, #aiEfficiencyModal .ae-modal-cta:hover,
+      .submit-btn:hover { transform:translateY(-2px)!important; }
+      /* Final rendered-surface sweep: case studies, toolkit, AI, contact and FAQ
+         inherit the same glass material and never expose the retired marker layer. */
+      .industry-chip,.toolkit-card,.ai-card,.case-study-card,.cmp-footnote,
+      .contact,.contact-form,.form-success,.contact-trust-icon,.faq-item,
+      .budget-chip,.interest-option,.toolkit-chip,.toolkit-meta,
+      .special-icon,.enterprise-service-icon {
+        background:var(--surface)!important; border-color:var(--line)!important;
+        box-shadow:none!important; border-radius:var(--r-sm)!important;
+      }
+      .contact-form,.form-success { box-shadow:var(--shadow)!important; }
+      .contact-trust-icon { color:var(--dominant)!important; }
+      .journal-note:hover,.post-card:hover,.next-card:hover { background:var(--surface)!important; }
+      /* Mobile strategy: preserve hierarchy, never squeeze a card or touch target. */
+      @media (max-width:720px) {
+        .container { padding-left:16px!important; padding-right:16px!important; }
+        .section, .why-section, .faq-section, .journal-notes, .contact { padding-top:var(--s-7)!important; padding-bottom:var(--s-7)!important; }
+        .hero { margin-top:var(--s-3)!important; padding:var(--s-7) var(--s-4)!important; }
+        .hero-cta-group { gap:var(--s-2)!important; }
+        .hero-cta-group > * { width:100%; text-align:center; }
+        .services-grid,.growth-grid,.why-grid,.case-studies-grid,.pricing-grid { grid-template-columns:1fr!important; }
+        .section-title { font-size:clamp(30px,9vw,48px)!important; }
+        .section::before, .why-section::before, .faq-section::before, .journal-notes::before, .contact::before { max-width:100%; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+      }
     </style>
   </head>
   <body>
