@@ -1,0 +1,1 @@
+- [Workflow port detection fix](workflow-port-detection.md) — `[[ports]]` needs explicit `externalPort` or restarts time out despite a healthy server; .replit edits need an in-workspace temp file.

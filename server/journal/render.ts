@@ -827,6 +827,41 @@ const STYLE = `
     .article-byline { gap: 10px; font-size: 11px; }
     .article-cta { padding: 24px 20px; }
   }
+
+  /* Liquid Glass journal layer — shared material with the landing page. */
+  :root {
+    --glass-bg: #edf5f4; --glass-ink: #102d35; --glass-muted: #536d73;
+    --glass-line: rgba(25,78,86,.17); --glass-panel: rgba(255,255,255,.55);
+    --glass-teal: #087f83; --glass-coral: #c96c55;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --glass-bg:#081b23; --glass-ink:#e8f4f1; --glass-muted:#a1b9bc;
+      --glass-line:rgba(189,232,226,.2); --glass-panel:rgba(19,47,55,.76);
+      --glass-teal:#74d5cc; --glass-coral:#f0a18b; }
+  }
+  html { background:var(--glass-bg); }
+  body { background:radial-gradient(ellipse at 10% 0%,rgba(104,210,197,.2),transparent 34rem),radial-gradient(ellipse at 90% 16%,rgba(202,133,109,.12),transparent 30rem),var(--glass-bg); color:var(--glass-ink); }
+  body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.2; background-image:radial-gradient(rgba(255,255,255,.35) .6px,transparent .6px); background-size:5px 5px; }
+  .site-nav { max-width:1080px; margin:18px auto; padding:14px 20px; border:1px solid var(--glass-line); border-radius:999px; background:var(--glass-panel); box-shadow:0 14px 40px rgba(13,58,67,.1),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
+  .site-nav .brand, .site-nav .nav-links a { color:var(--glass-ink); }
+  .site-nav .brand { font-family:var(--display); }
+  .container, .container-wide { position:relative; }
+  .index-header, .article-kicker, .article-body, .article-footer, .post-grid, .article-cta { position:relative; }
+  .index-header::before, .article-body::before { content:""; position:absolute; inset:-28px -34px; z-index:-1; border:1px solid var(--glass-line); border-radius:28px; background:var(--glass-panel); box-shadow:0 20px 60px rgba(13,58,67,.08),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  .index-title, .article-title, .article-footer-title { color:var(--glass-ink); }
+  .index-eyebrow, .article-kicker .kicker-cat { background:rgba(8,127,131,.12); border:1px solid rgba(8,127,131,.28); color:var(--glass-teal); box-shadow:none; border-radius:999px; }
+  .post-grid, .next-grid { gap:14px; border:0; }
+  .post-card, .next-card { border:1px solid var(--glass-line); border-radius:20px; background:var(--glass-panel); box-shadow:0 18px 48px rgba(13,58,67,.09),0 1px 0 rgba(255,255,255,.62) inset; overflow:hidden; transition:transform .3s ease, border-color .3s ease; }
+  .post-card:hover, .next-card:hover { background:var(--glass-panel); transform:translateY(-5px); border-color:rgba(8,127,131,.45); }
+  .post-card:hover *, .next-card:hover * { color:inherit; }
+  .post-card-meta, .next-card-meta, .article-kicker .kicker-meta { color:var(--glass-teal); }
+  .article-body h2 { border-top:1px solid var(--glass-line); }
+  .article-body blockquote, .answer-box, .callout, .article-cta { border-color:var(--glass-line); background:rgba(255,255,255,.2); border-radius:18px; }
+  .article-cta { box-shadow:0 20px 56px rgba(13,58,67,.12),0 1px 0 rgba(255,255,255,.7) inset; }
+  .cta-btn { background:var(--glass-ink); color:var(--glass-bg); border:0; border-radius:999px; box-shadow:0 10px 24px rgba(13,58,67,.18); }
+  .tag { border-color:var(--glass-line); border-radius:999px; color:var(--glass-muted); }
+  .site-footer { border-top:1px solid var(--glass-line); }
+  @media (prefers-reduced-motion: reduce) { .post-card, .next-card { transition:none; } }
 `;
 
 function shell({
@@ -1121,7 +1156,7 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
-> An AI-native studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $699 mockups to full apps in 3 to 8 weeks.
+> A strategy-first product studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $1,399 mockups to full apps in 3 to 8 weeks.
 
 We are a small team augmented by the best AI models available — Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
 
@@ -1134,10 +1169,10 @@ We are a small team augmented by the best AI models available — Claude Opus 5 
 
 ## Pricing
 
-- Mockup: $699, fixed price
-- Prototype: $2,399, fixed price
-- MVP: $4,500 to $9,500, fixed price
-- Custom-Scale: $15,000+, custom quote
+- Mockup: $1,399, fixed price
+- Prototype: $4,799, fixed price
+- MVP: $9,000 to $19,000, fixed price
+- Custom-Scale: $30,000+, custom quote
 
 All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 
@@ -1190,16 +1225,16 @@ Start Apps Studio is an AI-native product studio for early-stage founders. We de
 
 ## Packages
 
-### Mockup — $699, fixed
+### Mockup — $1,399, fixed
 Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
 
-### Prototype — $2,399, fixed
+### Prototype — $4,799, fixed
 A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 5 to 10 days.
 
-### MVP — $4,500 to $9,500, fixed
+### MVP — $9,000 to $19,000, fixed
 A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.
 
-### Custom-Scale — $15,000+
+### Custom-Scale — $30,000+
 Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
 
 ## Toolkit (current as of ${toolkitAsOf})
