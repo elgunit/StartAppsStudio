@@ -3164,7 +3164,7 @@
       }
 
       /* ---- Pricing ------------------------------------------------- */
-      .pricing-grid { gap: 0 !important; border: 1px solid var(--ed-ink); margin-top: 20px !important; }
+      .pricing-grid { margin-top: 20px !important; }
       .price-card {
         border-radius: 0 !important;
         border: none !important;
@@ -3734,7 +3734,7 @@
         background: transparent !important;
       }
 
-      /* End editorial layer ============================================ */
+      /* End retired editorial declarations. */
       /* Liquid Glass system: optical clarity over deep water. */
       :root {
         --glass-bg:#edf5f4; --glass-ink:#102d35; --glass-muted:#536d73;
@@ -3953,6 +3953,81 @@
       }
       @media (prefers-reduced-motion: reduce) {
         *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+      }
+      /* Fluid mineral system: one scale from a 360px phone to a wide canvas. */
+      :root {
+        --space-1:clamp(6px,1vw,10px); --space-2:clamp(10px,1.5vw,16px);
+        --space-3:clamp(16px,2.5vw,28px); --space-4:clamp(24px,4vw,48px);
+        --space-5:clamp(36px,6vw,80px); --space-6:clamp(56px,9vw,128px);
+        --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+        --type-kicker:clamp(10px,1vw,12px); --type-body:clamp(15px,1.2vw,18px);
+        --type-h3:clamp(24px,3.5vw,42px); --type-h2:clamp(32px,6vw,76px);
+      }
+      html { overflow-x:clip!important; }
+      body { overflow-x:clip!important; }
+      .container { width:min(100%,1360px)!important; padding:var(--space-2) var(--space-3) var(--space-6)!important; }
+      .hero { margin:var(--space-2) 0 var(--space-5)!important; padding:var(--space-6) var(--space-3)!important; min-height:min(78svh,760px); display:flex; flex-direction:column; justify-content:center; }
+      .hero-headline { font-size:clamp(38px,8.5vw,92px)!important; max-width:12ch; margin-inline:auto; }
+      .hero-subheadline { font-size:var(--type-body)!important; max-width:56ch; }
+      .hero-cta-group { gap:var(--space-2)!important; }
+      .section,.why-section,.faq-section,.journal-notes,.contact { margin-bottom:var(--space-6)!important; padding:var(--space-5) 0!important; }
+      .section-title,.faq-title,.contact-left h2 { font-size:var(--type-h2)!important; max-width:14ch; }
+      .section-subtitle,.section p { font-size:var(--type-body); }
+      .services-grid,.growth-grid,.why-grid,.case-studies-grid,.pricing-grid,.journal-notes-grid {
+        display:grid!important; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))!important; gap:var(--space-3)!important;
+      }
+      .service-card,.growth-card,.why-card,.case-study-card,.price-card,.journal-note,.faq-item,.contact-form,.special-package,.toolkit-card,.ai-card {
+        min-width:0; padding:var(--space-3)!important;
+      }
+      .pricing-grid { align-items:stretch; }
+      .contact { padding-inline:var(--space-3)!important; }
+      .contact-form { width:100%; }
+      .faq-item { padding:var(--space-3)!important; }
+      .faq-item summary { font-size:clamp(16px,1.5vw,20px)!important; }
+      @media (max-width:600px) {
+        .hero { min-height:0; text-align:center!important; }
+        .hero-headline { max-width:100%; font-size:clamp(38px,12vw,58px)!important; }
+        .hero-benefits,.hero-stats { flex-direction:column; gap:var(--space-2); }
+        .hero-cta-group > * { width:100%; }
+        .section-title,.faq-title,.contact-left h2 { font-size:clamp(32px,10vw,50px)!important; }
+        .special-header { gap:var(--space-2)!important; flex-wrap:wrap; }
+        .special-badge { margin-left:auto; }
+      }
+      /* Unified landing finish: these are the only active component surfaces.
+         The former editorial declarations above are intentionally superseded
+         here by native tokens, not by their old colors or geometry. */
+      .hero,.section,.why-section,.faq-section,.journal-notes,.contact {
+        border-color:var(--line)!important;
+        background:transparent!important;
+      }
+      .hero { background:var(--surface)!important; text-align:center!important; }
+      .hero-eyebrow,.hero-badge,.studio-status,.hat-showcase-item,
+      .method-badge,.popular-badge,.special-badge,.toolkit-meta,.toolkit-chip,
+      .budget-chip,.interest-option,.industry-chip {
+        border:1px solid var(--line)!important; border-radius:999px!important;
+        box-shadow:none!important;
+      }
+      .service-card,.growth-card,.why-card,.case-study-card,.price-card,
+      .journal-note,.faq-item,.contact-form,.special-package,.toolkit-card,.ai-card,
+      .cmp-benefit,.cmp-pain,.cmp-footnote {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+      }
+      .cta-button,.cta-button.secondary,.cmp-action,.why-compare-btn,.view-more-btn,
+      .submit-btn,.store-btn {
+        border:1px solid var(--dominant)!important; border-radius:999px!important;
+        box-shadow:none!important; font-family:var(--sans)!important;
+        background:var(--dominant)!important; color:var(--canvas)!important;
+      }
+      .cta-button.secondary { background:transparent!important; color:var(--ink)!important; border-color:var(--line-strong)!important; }
+      .section-title::before,.why-section .section-header h2::before { display:none!important; content:none!important; }
+      .contact-trust-icon,.special-icon,.enterprise-service-icon,.cmp-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important; box-shadow:none!important;
+      }
+      .hero::before,.hero::after,.section::before,.why-section::before,
+      .faq-section::before,.journal-notes::before,.contact::before {
+        pointer-events:none!important;
       }
     </style>
   </head>
