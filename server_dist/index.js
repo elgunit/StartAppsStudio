@@ -3662,7 +3662,7 @@ async function registerRoutes(app2) {
   });
   app2.post("/api/contact", async (req, res) => {
     try {
-      const { fullName, email, company, budget, interests, message } = req.body;
+      const { fullName, email, company, budget, interests, timeline, message } = req.body;
       if (!fullName || !email || !message) {
         return res.status(400).json({ error: "Name, email, and message are required" });
       }
@@ -3674,23 +3674,33 @@ async function registerRoutes(app2) {
         interests: interests || [],
         message
       });
-      console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
+      console.log("Contact form submission:", { fullName, email, company, budget, interests, timeline, message });
       try {
         const { client, fromEmail } = await getUncachableResendClient();
-        const interestsList = interests && interests.length > 0 ? interests.join(", ") : "Not specified";
+        const esc2 = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        const timelineLabels = {
+          asap: "ASAP",
+          "4weeks": "Within 4 weeks",
+          "1-3months": "1\u20133 months",
+          "3-6months": "3\u20136 months",
+          exploring: "Just exploring"
+        };
+        const timelineLabel = timeline && Object.prototype.hasOwnProperty.call(timelineLabels, timeline) ? timelineLabels[timeline] : "Not specified";
+        const interestsList = Array.isArray(interests) && interests.length > 0 ? interests.map(esc2).join(", ") : "Not specified";
         const emailResult = await client.emails.send({
           from: fromEmail,
           to: "elgunit@gmail.com",
-          subject: `New Project Inquiry from ${fullName}`,
+          subject: `New Project Inquiry from ${esc2(fullName)}`,
           html: `
             <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${fullName}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Company:</strong> ${company || "Not specified"}</p>
-            <p><strong>Budget:</strong> ${budget || "Not specified"}</p>
+            <p><strong>Name:</strong> ${esc2(fullName)}</p>
+            <p><strong>Email:</strong> ${esc2(email)}</p>
+            <p><strong>Company:</strong> ${esc2(company) || "Not specified"}</p>
+            <p><strong>Budget:</strong> ${esc2(budget) || "Not specified"}</p>
             <p><strong>Interested in:</strong> ${interestsList}</p>
+            <p><strong>Launch timeline:</strong> ${timelineLabel}</p>
             <h3>Message:</h3>
-            <p>${message}</p>
+            <p>${esc2(message)}</p>
           `
         });
         console.log("Email notification sent successfully:", JSON.stringify(emailResult));

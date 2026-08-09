@@ -237,7 +237,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/contact", async (req, res) => {
     try {
-      const { fullName, email, company, budget, interests, message } = req.body;
+      const { fullName, email, company, budget, interests, timeline, message } = req.body;
 
       if (!fullName || !email || !message) {
         return res.status(400).json({ error: "Name, email, and message are required" });
@@ -252,26 +252,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message,
       });
 
-      console.log("Contact form submission:", { fullName, email, company, budget, interests, message });
+      console.log("Contact form submission:", { fullName, email, company, budget, interests, timeline, message });
 
       try {
         const { client, fromEmail } = await getUncachableResendClient();
-        const interestsList = interests && interests.length > 0
-          ? interests.join(', ')
+
+        // Escape user-controlled values before HTML interpolation.
+        const esc = (s: unknown) =>
+          String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+        // Allowlist timeline — reject unknown values so arbitrary markup cannot be injected.
+        const timelineLabels: Record<string, string> = {
+          asap: 'ASAP',
+          '4weeks': 'Within 4 weeks',
+          '1-3months': '1–3 months',
+          '3-6months': '3–6 months',
+          exploring: 'Just exploring',
+        };
+        const timelineLabel = timeline && Object.prototype.hasOwnProperty.call(timelineLabels, timeline)
+          ? timelineLabels[timeline as string]
           : 'Not specified';
+
+        const interestsList = Array.isArray(interests) && interests.length > 0
+          ? interests.map(esc).join(', ')
+          : 'Not specified';
+
         const emailResult = await client.emails.send({
           from: fromEmail,
           to: 'elgunit@gmail.com',
-          subject: `New Project Inquiry from ${fullName}`,
+          subject: `New Project Inquiry from ${esc(fullName)}`,
           html: `
             <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${fullName}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Company:</strong> ${company || 'Not specified'}</p>
-            <p><strong>Budget:</strong> ${budget || 'Not specified'}</p>
+            <p><strong>Name:</strong> ${esc(fullName)}</p>
+            <p><strong>Email:</strong> ${esc(email)}</p>
+            <p><strong>Company:</strong> ${esc(company) || 'Not specified'}</p>
+            <p><strong>Budget:</strong> ${esc(budget) || 'Not specified'}</p>
             <p><strong>Interested in:</strong> ${interestsList}</p>
+            <p><strong>Launch timeline:</strong> ${timelineLabel}</p>
             <h3>Message:</h3>
-            <p>${message}</p>
+            <p>${esc(message)}</p>
           `,
         });
         console.log("Email notification sent successfully:", JSON.stringify(emailResult));
