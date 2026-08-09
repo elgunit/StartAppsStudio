@@ -2828,6 +2828,7 @@
       .journal-note:hover,.journal-note:hover * { color:var(--ink)!important; }
       .journal-note-meta { color:var(--dominant)!important; }
       .journal-note-title { color:var(--ink)!important; }
+      .journal-note-excerpt { color:var(--muted)!important; }
       .journal-note-cta { color:var(--dominant)!important; }
 
       /* --- Contact form: progressive reveal */
@@ -3367,6 +3368,9 @@
         width: auto!important;
         box-sizing: border-box!important;
       }
+      /* clear vertical gap between the FAQ and Journal panels */
+      .faq-section { margin-bottom: var(--space-6, 48px)!important; }
+      .journal-notes { margin-bottom: var(--space-6, 48px)!important; }
       /* mobile ≤600px: container uses exactly 16px side padding */
       @media (max-width: 600px) {
         .faq-section, .journal-notes {
