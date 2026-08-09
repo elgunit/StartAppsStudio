@@ -4062,6 +4062,49 @@
       }
       .service-card { border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
         background:var(--surface)!important; box-shadow:var(--shadow)!important; }
+      /* Breathing room: sections must not clip their cards' soft shadows.
+         Only the industries marquee needs its own clipping. */
+      .section,.why-section,.faq-section,.journal-notes,.contact { overflow:visible!important; }
+      .industries-scroll { overflow:hidden!important; max-width:100%!important; }
+      /* Modal reads as translucent white paper, not clear glass. */
+      .modal-content {
+        background:color-mix(in srgb,#ffffff 88%,transparent)!important;
+        backdrop-filter:blur(22px) saturate(1.1); -webkit-backdrop-filter:blur(22px) saturate(1.1);
+      }
+      @media (prefers-color-scheme:dark) {
+        .modal-content { background:color-mix(in srgb,#122e33 90%,transparent)!important; }
+      }
+      /* Budget + interest pins: one tactile pill system with clear selected state. */
+      .budget-chip,.interest-option {
+        border-radius:999px!important; border:1px solid var(--line-strong)!important;
+        background:var(--surface)!important; box-shadow:none!important;
+        min-height:48px; display:inline-flex!important; align-items:center; justify-content:center;
+        gap:8px; padding:10px 18px!important; cursor:pointer;
+        transition:border-color .15s ease, background .15s ease, transform .15s ease;
+      }
+      .budget-chip:hover,.interest-option:hover { border-color:var(--dominant)!important; transform:translateY(-1px); }
+      /* NOTE: keep .selected rules separate from :has() rules — a browser that
+         drops :has() invalidates the entire comma-separated selector list. */
+      #contact .budget-chip.selected,#contact .interest-option.selected {
+        background:var(--dominant)!important; border-color:var(--dominant)!important;
+        color:var(--canvas)!important;
+      }
+      #contact .budget-chip:has(input:checked),#contact .interest-option:has(input:checked) {
+        background:var(--dominant)!important; border-color:var(--dominant)!important;
+        color:var(--canvas)!important;
+      }
+      #contact .budget-chip.selected *,#contact .interest-option.selected * {
+        color:var(--canvas)!important; background:transparent!important;
+      }
+      #contact .budget-chip:has(input:checked) *,#contact .interest-option:has(input:checked) * {
+        color:var(--canvas)!important; background:transparent!important;
+      }
+      #contact .interest-option.selected::before,#contact .interest-option::before { content:none!important; }
+      #contact .interest-option { min-height:48px!important; }
+      /* Toolkit chips share the same pill language with roomier spacing. */
+      .toolkit-chip { border-radius:999px!important; padding:10px 16px!important; gap:10px!important; }
+      .toolkit-grid { gap:var(--space-2)!important; }
+      .toolkit-avatar { border-radius:50%!important; }
     </style>
   </head>
   <body>
