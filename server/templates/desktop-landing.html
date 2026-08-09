@@ -3485,6 +3485,153 @@
       .timeline-chip input { position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
       .timeline-chip.selected { border-color:var(--dominant); background:var(--support); color:var(--dominant); font-weight:600; }
 
+      /* === Project Showcase Cards ================================== */
+      .showcase-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(18px, 3vw, 32px);
+        margin-bottom: 24px;
+      }
+
+      .showcase-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+      .showcase-card:hover {
+        border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
+        transform: translateY(-3px);
+      }
+
+      /* Visual area — swap contents for <img> when screenshots are ready */
+      .showcase-visual {
+        position: relative;
+        height: clamp(170px, 18vw, 230px);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .showcase-visual img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+      }
+
+      /* Gradient placeholder background */
+      .showcase-visual-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .showcase-visual-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.09) 1px, transparent 0);
+        background-size: 20px 20px;
+      }
+
+      /* Browser chrome strip */
+      .showcase-chrome {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 28px;
+        background: rgba(0,0,0,0.20);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 12px;
+        z-index: 2;
+      }
+      .showcase-chrome-dot {
+        width: 7px; height: 7px; border-radius: 50%;
+      }
+      .showcase-chrome-dot:nth-child(1) { background: rgba(255,255,255,0.50); }
+      .showcase-chrome-dot:nth-child(2) { background: rgba(255,255,255,0.30); }
+      .showcase-chrome-dot:nth-child(3) { background: rgba(255,255,255,0.20); }
+
+      /* Faint wireframe skeleton */
+      .showcase-wire {
+        position: absolute;
+        z-index: 1;
+        inset: 36px 18px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        opacity: 0.16;
+        pointer-events: none;
+      }
+      .showcase-wire-bar {
+        height: 9px;
+        border-radius: 4px;
+        background: rgba(255,255,255,0.9);
+      }
+      .showcase-wire-row {
+        display: flex;
+        gap: 8px;
+        flex: 1;
+      }
+      .showcase-wire-col {
+        border-radius: 6px;
+        background: rgba(255,255,255,0.7);
+      }
+
+      /* Card body */
+      .showcase-body {
+        padding: clamp(18px, 2.5vw, 26px);
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .showcase-category {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--dominant);
+        margin-bottom: 7px;
+      }
+      .showcase-name {
+        font-size: clamp(17px, 1.6vw, 21px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 7px;
+        line-height: 1.25;
+      }
+      .showcase-problem {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin-bottom: 10px;
+        line-height: 1.5;
+        font-style: italic;
+      }
+      .showcase-solution {
+        font-size: 14px;
+        color: var(--ink);
+        line-height: 1.65;
+        margin-bottom: 16px;
+        flex: 1;
+      }
+      .showcase-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 16px;
+      }
+      .showcase-footer {
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+        margin-top: auto;
+      }
+
+      @media (max-width: 680px) {
+        .showcase-grid { grid-template-columns: 1fr; }
+        .showcase-visual { height: 160px; }
+      }
+
       /* === Who you're working with: Founder bio + Testimonials ======= */
 
       /* Founder panel — no card chrome, purely typographic */
@@ -4142,227 +4289,294 @@
       <section class="section" id="case-studies" data-section-name="case-studies">
         <h2 class="section-title">Selected projects</h2>
         <p class="section-subtitle">Real products in users' hands, across healthcare, fintech, retail, and more.</p>
-        
+
+        <!-- Primary showcase cards (always visible) -->
         <div id="caseStudiesContainer">
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>AI Health Platform</h4>
-                <span>Healthcare</span>
+          <div class="showcase-grid">
+
+            <!-- Card 1: Mobile health app
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/wellness-app.jpg" alt="Wellness coaching app screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 55%, var(--rose)) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:45%;"></div>
+                  <div class="showcase-wire-bar" style="width:72%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:2;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                </div>
               </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-                <span class="hat-badge">Manager</span>
-                <span class="hat-badge">Analyst</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              40% user retention increase
-            </div>
-            <div class="case-study-details">
-              An AI-powered health monitoring platform that provides personalized wellness recommendations. Built with React Native for seamless cross-platform experience.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>E-Commerce Solution</h4>
-                <span>Retail</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Analyst</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              60% organic traffic growth
-            </div>
-            <div class="case-study-details">
-              A modern e-commerce platform with advanced product search, personalized recommendations, and streamlined checkout flow.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Web3 Interface</h4>
-                <span>Fintech</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-                <span class="hat-badge">Analyst</span>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">Wellness · iOS &amp; Android</div>
+                <div class="showcase-name">Coaching &amp; Tracking App</div>
+                <p class="showcase-problem">Non-technical founder needed iOS and Android live before a pre-seed pitch, with six weeks to ship and no technical co-founder.</p>
+                <p class="showcase-solution">Built a React Native app with push notifications, a coach-facing admin dashboard, and subscription billing via RevenueCat. Shipped to both stores on week six, one week before the pitch.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React Native</span>
+                  <span class="hat-badge">Expo</span>
+                  <span class="hat-badge">RevenueCat</span>
+                  <span class="hat-badge">PostgreSQL</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    Shipped in 6 weeks · Pre-seed raised
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              18% fewer transaction errors
+
+            <!-- Card 2: SaaS rescue build
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/saas-dashboard.jpg" alt="Operations dashboard screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, #234348 0%, var(--dominant) 60%, color-mix(in srgb, var(--dominant) 70%, var(--canvas)) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:60%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:2;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-bar" style="width:40%;"></div>
+                </div>
+              </div>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">SaaS · Rescue Build</div>
+                <div class="showcase-name">Operations Dashboard</div>
+                <p class="showcase-problem">Six months of freelance work left a B2B founder with a broken prototype and a client demo in two weeks.</p>
+                <p class="showcase-solution">Audited the codebase, rebuilt the data model and API layer, redesigned the core UI, and delivered a stable, demo-ready product in 11 days. The client signed the day after the demo.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React</span>
+                  <span class="hat-badge">TypeScript</span>
+                  <span class="hat-badge">Node.js</span>
+                  <span class="hat-badge">PostgreSQL</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    Demo-ready in 11 days · Contract signed
+                  </span>
+                </div>
+              </div>
             </div>
-            <div class="case-study-details">
-              A user-friendly interface for blockchain transactions, making Web3 accessible to mainstream users with intuitive design patterns.
+
+            <!-- Card 3: Fintech web MVP
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/fintech-platform.jpg" alt="Payments platform screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 60%, var(--dominant)) 0%, var(--dominant) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:50%;"></div>
+                  <div class="showcase-wire-bar" style="width:80%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:3;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">Fintech · Web Platform</div>
+                <div class="showcase-name">Payments &amp; Ledger MVP</div>
+                <p class="showcase-problem">A fintech founder needed a working product for a Series A meeting in seven weeks, not a clickable prototype.</p>
+                <p class="showcase-solution">Built a full-stack platform with Stripe Connect for multi-party payouts, real-time transaction feeds, and an admin console. Shipped in seven weeks with a clean codebase and full source handoff.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React</span>
+                  <span class="hat-badge">Stripe Connect</span>
+                  <span class="hat-badge">Node.js</span>
+                  <span class="hat-badge">PostgreSQL</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    Shipped in 7 weeks · Series A closed
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        
+
+            <!-- Card 4: EdTech platform
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/edtech-platform.jpg" alt="Learning platform screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, color-mix(in srgb, var(--dominant) 70%, black) 0%, color-mix(in srgb, var(--dominant) 50%, var(--rose)) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:65%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:2;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-bar" style="width:35%;"></div>
+                </div>
+              </div>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">Education · Web App</div>
+                <div class="showcase-name">Course &amp; Learning Platform</div>
+                <p class="showcase-problem">An edtech founder had a solid audience but only a waitlist landing page, and investors wanted to see a working product.</p>
+                <p class="showcase-solution">Built a video course platform with progress tracking, a quiz engine, and Stripe-gated enrollment in five weeks. The first cohort sold out within a week of launch.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React</span>
+                  <span class="hat-badge">Node.js</span>
+                  <span class="hat-badge">Stripe</span>
+                  <span class="hat-badge">PostgreSQL</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    First cohort sold out at launch
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.showcase-grid -->
+        </div><!-- /#caseStudiesContainer -->
+
+        <!-- Additional showcase cards (hidden behind Load More) -->
         <div id="additionalCaseStudies" style="display: none;">
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Fitness Tracking App</h4>
-                <span>Fitness & Wellness</span>
+          <div class="showcase-grid">
+
+            <!-- Card 5: Real estate app rescue
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/property-app.jpg" alt="Property discovery app screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:55%;"></div>
+                  <div class="showcase-wire-row" style="flex:2;">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-bar" style="width:70%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:2;"></div>
+                  </div>
+                </div>
               </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Analyst</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              85% daily active users
-            </div>
-            <div class="case-study-details">
-              A comprehensive fitness app with workout tracking, nutrition logging, and progress visualization.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Property Listing Portal</h4>
-                <span>Real Estate</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              3x lead generation
-            </div>
-            <div class="case-study-details">
-              A modern property listing platform with virtual tours, intelligent search, and agent matching.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>EdTech Learning Platform</h4>
-                <span>Education</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-                <span class="hat-badge">Manager</span>
-                <span class="hat-badge">Analyst</span>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">Real Estate · iOS &amp; Android</div>
+                <div class="showcase-name">Property Discovery App</div>
+                <p class="showcase-problem">An outsourced build came back incomplete, over budget, and with no documentation to hand over to the client.</p>
+                <p class="showcase-solution">Took over the project, wrote the missing search and listing API, rebuilt the map integration from scratch, and delivered a clean codebase with full source handoff in four weeks.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React Native</span>
+                  <span class="hat-badge">Mapbox</span>
+                  <span class="hat-badge">Node.js</span>
+                  <span class="hat-badge">PostgreSQL</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    Rescued &amp; shipped in 4 weeks
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              92% course completion rate
-            </div>
-            <div class="case-study-details">
-              An interactive learning platform with video courses, quizzes, and progress tracking.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Hotel Booking System</h4>
-                <span>Hospitality</span>
+
+            <!-- Card 6: Investor pitch prototype
+                 REPLACE visual: swap .showcase-visual contents with
+                 <img src="/assets/images/projects/pitch-prototype.jpg" alt="Pitch demo screenshots"> -->
+            <div class="showcase-card">
+              <div class="showcase-visual">
+                <div class="showcase-visual-bg" style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"></div>
+                <div class="showcase-chrome">
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                  <span class="showcase-chrome-dot"></span>
+                </div>
+                <div class="showcase-wire">
+                  <div class="showcase-wire-bar" style="width:40%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                  </div>
+                  <div class="showcase-wire-bar" style="width:80%;"></div>
+                  <div class="showcase-wire-row">
+                    <div class="showcase-wire-col" style="flex:1;"></div>
+                    <div class="showcase-wire-col" style="flex:3;"></div>
+                  </div>
+                </div>
               </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              45% booking increase
-            </div>
-            <div class="case-study-details">
-              A streamlined hotel booking experience with real-time availability and instant confirmation.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Streaming Media App</h4>
-                <span>Media & Telecom</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-                <span class="hat-badge">Analyst</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              2.5M+ downloads
-            </div>
-            <div class="case-study-details">
-              A feature-rich streaming platform with personalized content recommendations, offline viewing, and multi-device sync.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Digital Banking Platform</h4>
-                <span>Fintech</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-                <span class="hat-badge">Manager</span>
-                <span class="hat-badge">Analyst</span>
+              <div class="showcase-body">
+                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
+                <div class="showcase-category">Pitch Prototype · Web</div>
+                <div class="showcase-name">Investor-Ready Demo</div>
+                <p class="showcase-problem">A founder had a compelling deck but no live product, with a Series A meeting locked in for ten days out.</p>
+                <p class="showcase-solution">Built an interactive web prototype on real infrastructure, with working data flows, auth, and a demo mode investors could tap through on their phone. Live in nine days.</p>
+                <div class="showcase-tags">
+                  <span class="hat-badge">React</span>
+                  <span class="hat-badge">Vite</span>
+                  <span class="hat-badge">Node.js</span>
+                  <span class="hat-badge">Vercel</span>
+                </div>
+                <div class="showcase-footer">
+                  <span class="result-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    Demo live in 9 days · Meeting secured
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              35% cost reduction
-            </div>
-            <div class="case-study-details">
-              A comprehensive digital banking solution with secure transactions, budgeting tools, and real-time notifications.
-            </div>
-          </div>
-          
-          <div class="case-study-card" onclick="toggleCard(this)">
-            <div class="case-study-header">
-              <div>
-                <h4>Telemedicine Solution</h4>
-                <span>Healthcare</span>
-              </div>
-              <div class="case-study-badges">
-                <span class="hat-badge">Designer</span>
-                <span class="hat-badge">Developer</span>
-                <span class="hat-badge">Strategist</span>
-              </div>
-            </div>
-            <div class="result-badge">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
-              50k+ consultations/month
-            </div>
-            <div class="case-study-details">
-              A HIPAA-compliant telemedicine platform connecting patients with healthcare providers through secure video consultations.
-            </div>
-          </div>
-        </div>
+
+          </div><!-- /.showcase-grid -->
+        </div><!-- /#additionalCaseStudies -->
         
         <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
           <span>Load More</span>
