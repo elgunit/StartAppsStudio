@@ -4105,6 +4105,12 @@
       .toolkit-chip { border-radius:999px!important; padding:10px 16px!important; gap:10px!important; }
       .toolkit-grid { gap:var(--space-2)!important; }
       .toolkit-avatar { border-radius:50%!important; }
+      /* The section panels provide the visual separation now. Retire the
+         old editorial rules that drew horizontal divider lines above panels. */
+      .section,.why-section,.faq-section,.journal-notes,.contact,#pricing,
+      .section + .section,.section + .why-section,.why-section + .section {
+        border-top:0!important;
+      }
     </style>
   </head>
   <body>
