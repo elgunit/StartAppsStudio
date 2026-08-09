@@ -3320,6 +3320,98 @@
          fluid-mineral) have been removed. The base styles above are the
          single source of truth for every rendered surface.
          ═══════════════════════════════════════════════════════════════════ */
+
+      /* ============================================================
+         Mobile polish pass: FAQ/Journal gutters, contact panel layers,
+         Enterprise card radius, AI efficiency modal glass restyle.
+         ============================================================ */
+
+      /* FAQ + Journal: same side gutters as the other section panels */
+      @media (max-width: 920px) {
+        .faq-section,.journal-notes {
+          margin-inline:var(--space-2,12px)!important;
+          width:auto!important; max-width:none!important;
+        }
+      }
+
+      /* Contact: kill any legacy second layer behind the section panel */
+      .contact { box-shadow:none!important; background:transparent!important; border:0!important; }
+      .contact::after { content:none!important; display:none!important; }
+      .contact::before {
+        border-radius:var(--r-lg)!important; background:var(--surface)!important;
+        border:1px solid var(--line)!important; box-shadow:var(--shadow)!important;
+      }
+
+      /* Pricing: Enterprise card matches the rounded glass system */
+      .special-package,.special-package.enterprise {
+        border-radius:var(--r-md)!important;
+        border:1px solid var(--line)!important;
+        background:var(--surface)!important;
+        box-shadow:var(--shadow)!important;
+        overflow:hidden!important;
+      }
+      .special-package.enterprise { border-color:color-mix(in srgb,var(--dominant) 45%,var(--line))!important; }
+      .special-package:hover,.special-package.expanded { border-color:var(--dominant)!important; }
+      .special-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      .special-tag { border-radius:999px!important; }
+
+      /* AI efficiency modal: glass panels, no hard red boxes/bars */
+      #aiEfficiencyModal .ae-modal-content {
+        border-radius:var(--r-lg)!important; border:1px solid var(--line)!important;
+        background:var(--canvas)!important; box-shadow:var(--shadow)!important;
+      }
+      #aiEfficiencyModal .ae-panel,
+      #aiEfficiencyModal .ae-panel.alone,
+      #aiEfficiencyModal .ae-panel.managed {
+        border:1px solid var(--line)!important; border-left-width:1px!important;
+        border-radius:var(--r-md)!important; background:var(--surface)!important;
+        box-shadow:var(--shadow)!important;
+      }
+      #aiEfficiencyModal .ae-panel.managed {
+        border-color:color-mix(in srgb,var(--dominant) 45%,var(--line))!important;
+        background:color-mix(in srgb,var(--dominant) 6%,var(--surface))!important;
+      }
+      #aiEfficiencyModal .ae-panel-tag {
+        border-radius:999px!important; border:1px solid var(--line)!important;
+        padding:5px 12px!important;
+      }
+      #aiEfficiencyModal .ae-panel.alone .ae-panel-tag {
+        color:#c46a7a!important; border-color:color-mix(in srgb,#c46a7a 40%,var(--line))!important;
+        background:color-mix(in srgb,#c46a7a 8%,transparent)!important;
+      }
+      #aiEfficiencyModal .ae-panel.managed .ae-panel-tag {
+        color:var(--dominant)!important; border-color:color-mix(in srgb,var(--dominant) 40%,var(--line))!important;
+        background:var(--support)!important;
+      }
+      #aiEfficiencyModal .ae-panel.alone .ae-bullet {
+        border-radius:50%!important; border:1px solid color-mix(in srgb,#c46a7a 35%,var(--line))!important;
+        background:color-mix(in srgb,#c46a7a 10%,transparent)!important; color:#c46a7a!important;
+      }
+      #aiEfficiencyModal .ae-panel.managed .ae-bullet {
+        border-radius:50%!important; border:1px solid color-mix(in srgb,var(--dominant) 35%,var(--line))!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      #aiEfficiencyModal .ae-eyebrow {
+        border-radius:999px!important; border:1px solid var(--line)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      #aiEfficiencyModal .ae-ratio,
+      #aiEfficiencyModal .ae-proof-card {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important;
+      }
+      #aiEfficiencyModal .ae-proof-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      #aiEfficiencyModal .ae-modal-cta {
+        border-radius:999px!important; background:var(--dominant)!important;
+        color:var(--canvas)!important;
+      }
+      #aiEfficiencyModal .ae-ratio-swatch { border-radius:50%!important; }
     </style>
   </head>
   <body>
