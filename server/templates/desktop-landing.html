@@ -824,7 +824,7 @@
       .services-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        align-items: stretch;
+        align-items: start;
         gap: 16px;
       }
       
@@ -838,11 +838,69 @@
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         display: flex;
         flex-direction: column;
-        height: 100%;
       }
       
       .service-card:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
-      .service-card.expanded { border-color: var(--dominant); }
+      .service-card.expanded { border-color: var(--dominant); transform: none; }
+
+      /* Recent builds compact list */
+      .recent-builds {
+        display: none;
+        margin-top: 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        overflow: hidden;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .recent-builds-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-bottom: 1px solid var(--line);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .recent-builds-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .recent-build-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 20px;
+        border-bottom: 1px solid var(--line);
+        flex-wrap: wrap;
+        row-gap: 4px;
+      }
+      .recent-build-item:last-child { border-bottom: none; }
+      .recent-build-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+        flex: 1;
+        min-width: 160px;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .recent-build-result {
+        font-size: 12px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      @media (max-width: 520px) {
+        .recent-builds-header,
+        .recent-build-item { padding-left: 14px; padding-right: 14px; }
+        .recent-build-name { flex: 1 1 auto; }
+      }
       
       .service-header {
         display: flex;
@@ -3898,9 +3956,15 @@
       .service-card, .growth-card, .why-card,
       .price-card, .showcase-card, .journal-note,
       .faq-item, .how-card, .ae-proof-card,
-      .testimonial-card, .founder-panel {
+      .testimonial-card {
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
+      }
+      /* Founder panel stays transparent — no card chrome */
+      .founder-panel {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
       }
 
       /* --- Card hover: teal-lit refractive lift ------------------------ */
@@ -4829,6 +4893,46 @@
           <span>Load More</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
+
+        <!-- Compact list of recent builds beyond the featured cards -->
+        <div class="recent-builds" id="recentBuilds">
+          <div class="recent-builds-header">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            More recent builds
+          </div>
+          <ul class="recent-builds-list">
+            <li class="recent-build-item">
+              <span class="recent-build-name">Retail Inventory Dashboard</span>
+              <span class="hat-badge">E-commerce · Web</span>
+              <span class="recent-build-result">Shipped in 3 weeks</span>
+            </li>
+            <li class="recent-build-item">
+              <span class="recent-build-name">Healthcare Appointment Booking</span>
+              <span class="hat-badge">Health · iOS &amp; Android</span>
+              <span class="recent-build-result">Live in 5 weeks · 800 bookings in week one</span>
+            </li>
+            <li class="recent-build-item">
+              <span class="recent-build-name">Agency Client Portal</span>
+              <span class="hat-badge">SaaS · Web</span>
+              <span class="recent-build-result">Replaced spreadsheets · 3 agencies onboarded</span>
+            </li>
+            <li class="recent-build-item">
+              <span class="recent-build-name">Restaurant Ordering &amp; Kitchen Display</span>
+              <span class="hat-badge">Hospitality · iOS &amp; Android</span>
+              <span class="recent-build-result">Deployed across 4 locations</span>
+            </li>
+            <li class="recent-build-item">
+              <span class="recent-build-name">Nonprofit Donor Management</span>
+              <span class="hat-badge">Non-profit · Web</span>
+              <span class="recent-build-result">Shipped in 4 weeks · $120k raised at launch</span>
+            </li>
+            <li class="recent-build-item">
+              <span class="recent-build-name">AI Content Workflow Tool</span>
+              <span class="hat-badge">SaaS · Web</span>
+              <span class="recent-build-result">Beta launched · 200 signups in 48 hours</span>
+            </li>
+          </ul>
+        </div>
       </section>
       
       <!-- How It Works -->
@@ -5215,10 +5319,7 @@
              then update .founder-name, .founder-role, and .founder-bio text below. -->
         <div class="founder-panel">
           <div class="founder-avatar">
-            <svg class="founder-avatar-placeholder" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
+            <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
           </div>
           <div class="founder-info">
             <div class="founder-name">Elgar Sirajov</div>
@@ -5918,6 +6019,7 @@
           } else {
             additional.style.display = 'block';
           }
+          document.getElementById('recentBuilds').style.display = 'block';
           btn.dataset.expanded = 'true';
           btn.innerHTML = '<span>Show Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
         } else {
@@ -5934,6 +6036,7 @@
           } else {
             additional.style.display = 'none';
           }
+          document.getElementById('recentBuilds').style.display = 'none';
           btn.dataset.expanded = 'false';
           btn.innerHTML = '<span>Load More</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
