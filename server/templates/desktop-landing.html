@@ -5870,11 +5870,48 @@
       function toggleMoreWork() {
         const additional = document.getElementById('additionalCaseStudies');
         const btn = document.getElementById('viewMoreBtn');
-        if (additional.style.display === 'none') {
-          additional.style.display = 'block';
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        // Use an explicit flag so state is independent of CSS display value
+        const isExpanded = btn.dataset.expanded === 'true';
+
+        if (!isExpanded) {
+          // --- LOAD MORE ---
+          if (isMobile) {
+            // On mobile: move cards into the primary grid for one continuous carousel
+            const primaryGrid = document.querySelector('#caseStudiesContainer .showcase-grid');
+            const extraCards = Array.from(additional.querySelectorAll('.showcase-card'));
+            extraCards.forEach(card => {
+              card.dataset.movedFromAdditional = 'true';
+              primaryGrid.appendChild(card);
+            });
+            // Scroll to the first newly appended card
+            if (extraCards.length > 0) {
+              requestAnimationFrame(() => {
+                extraCards[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+              });
+            }
+            // Keep additional hidden (cards have been moved out of it)
+            additional.style.display = 'none';
+          } else {
+            additional.style.display = 'block';
+          }
+          btn.dataset.expanded = 'true';
           btn.innerHTML = '<span>Show Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
         } else {
-          additional.style.display = 'none';
+          // --- SHOW LESS ---
+          if (isMobile) {
+            // Move the cards back into the additional container and hide it
+            const additionalGrid = additional.querySelector('.showcase-grid');
+            const movedCards = Array.from(document.querySelectorAll('#caseStudiesContainer .showcase-card[data-moved-from-additional]'));
+            movedCards.forEach(card => {
+              delete card.dataset.movedFromAdditional;
+              additionalGrid.appendChild(card);
+            });
+            additional.style.display = 'none';
+          } else {
+            additional.style.display = 'none';
+          }
+          btn.dataset.expanded = 'false';
           btn.innerHTML = '<span>Load More</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
       }
