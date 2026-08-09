@@ -3756,12 +3756,209 @@
           justify-self: center;
         }
       }
+
+      /* ================================================================
+         Liquid Glass Depth — refractive surfaces, specular edges,
+         pointer-light bloom, layered canvas depth.
+         No external deps. Respects prefers-reduced-motion + mobile.
+         ================================================================ */
+
+      /* --- New glass tokens ------------------------------------------- */
+      :root {
+        --specular:         rgba(255,255,255,0.26);
+        --specular-teal:    color-mix(in srgb, var(--dominant) 18%, rgba(255,255,255,0.22));
+        --refract-top:      linear-gradient(180deg, color-mix(in srgb, var(--dominant) 5%, rgba(255,255,255,0.11)) 0%, transparent 54%);
+        --glass-blur-front: 28px;
+        --glass-blur-mid:   20px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --specular:      rgba(255,255,255,0.08);
+          --specular-teal: color-mix(in srgb, var(--dominant) 30%, rgba(255,255,255,0.06));
+          --refract-top:   linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 54%);
+        }
+      }
+
+      /* --- Second ambient orb layer — slow drift behind everything ------ */
+      body::after {
+        content: '';
+        position: fixed; inset: 0;
+        pointer-events: none; z-index: -2;
+        background:
+          radial-gradient(ellipse 50% 40% at 64% 84%, color-mix(in srgb, var(--dominant) 10%, transparent), transparent),
+          radial-gradient(ellipse 44% 38% at 26% 56%, color-mix(in srgb, var(--rose) 8%, transparent), transparent);
+        filter: blur(52px);
+        animation: canvas-orb-drift 42s ease-in-out infinite alternate;
+        will-change: opacity, transform;
+        opacity: 0.6;
+      }
+      @keyframes canvas-orb-drift {
+        0%   { opacity: 0.45; transform: scale(1); }
+        50%  { opacity: 0.75; transform: scale(1.07) translate(2%, 1%); }
+        100% { opacity: 0.55; transform: scale(0.97) translate(-1%, 2%); }
+      }
+      @media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
+
+      /* --- Hero: full glass depth with specular top edge ---------------- */
+      .hero {
+        backdrop-filter: blur(var(--glass-blur-front)) saturate(152%) !important;
+        -webkit-backdrop-filter: blur(var(--glass-blur-front)) saturate(152%) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 32px 80px -20px rgba(13,89,96,0.22) !important;
+      }
+
+      /* Hero children sit above the pointer-light layer */
+      .hero > *:not(#hero-light) { position: relative; z-index: 1; }
+
+      /* --- Pointer-light bloom (JS drives --lx/--ly) ------------------- */
+      #hero-light {
+        position: absolute; inset: 0;
+        pointer-events: none; z-index: 0;
+        border-radius: inherit; overflow: hidden;
+      }
+      #hero-light::after {
+        content: '';
+        position: absolute;
+        width: 640px; height: 640px; border-radius: 50%;
+        top: var(--ly, 38%); left: var(--lx, 52%);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--dominant) 16%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 5%, transparent) 44%,
+          transparent 70%
+        );
+        transition: top 0.14s ease-out, left 0.14s ease-out;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: reduce) { #hero-light::after { transition: none; } }
+      @media (max-width: 768px) { #hero-light { display: none; } }
+
+      /* --- Section panels: specular + deeper refraction ---------------- */
+      .section::before, .why-section::before, .faq-section::before,
+      .journal-notes::before, .contact::before {
+        backdrop-filter: blur(var(--glass-blur-mid)) saturate(148%) !important;
+        -webkit-backdrop-filter: blur(var(--glass-blur-mid)) saturate(148%) !important;
+        box-shadow: inset 0 1px 0 var(--specular), 0 24px 64px -18px rgba(13,89,96,0.14) !important;
+        background: var(--refract-top), var(--surface) !important;
+      }
+
+      /* --- Cards: specular inset on every glass surface ---------------- */
+      .service-card, .growth-card, .why-card,
+      .price-card, .showcase-card, .journal-note,
+      .faq-item, .how-card, .ae-proof-card,
+      .testimonial-card, .founder-panel {
+        box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
+        background: var(--refract-top), var(--surface) !important;
+      }
+
+      /* --- Card hover: teal-lit refractive lift ------------------------ */
+      .service-card:hover, .growth-card:hover, .why-card:hover,
+      .price-card:hover:not(.featured) {
+        transform: translateY(-3px) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 22px 48px -12px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.16)) !important;
+      }
+
+      /* --- Featured pricing: deep teal refractive glow ----------------- */
+      .price-card.featured {
+        isolation: isolate;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 0 0 1.5px color-mix(in srgb, var(--dominant) 38%, transparent),
+          0 8px 52px -8px color-mix(in srgb, var(--dominant) 28%, transparent) !important;
+      }
+      .price-card.featured::after {
+        content: ''; position: absolute; inset: 0;
+        border-radius: inherit;
+        background: var(--refract-top);
+        pointer-events: none; z-index: 0;
+      }
+      .price-card.featured > * { position: relative; z-index: 1; }
+
+      /* --- Showcase cards: specular + shimmer on hover ----------------- */
+      .showcase-card {
+        box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
+        transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease !important;
+      }
+      .showcase-card:hover {
+        transform: translateY(-4px) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 24px 52px -12px color-mix(in srgb, var(--dominant) 20%, rgba(0,0,0,0.16)) !important;
+      }
+      .showcase-visual { overflow: hidden; position: relative; }
+      .showcase-visual::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 52%);
+        opacity: 0; pointer-events: none; z-index: 2;
+        transition: opacity 0.4s ease;
+      }
+      .showcase-card:hover .showcase-visual::after { opacity: 1; }
+
+      /* --- Contact form: glass depth ----------------------------------- */
+      .contact-form {
+        backdrop-filter: blur(24px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(150%) !important;
+        box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
+        background: var(--refract-top), var(--surface) !important;
+      }
+
+      /* --- Modal: deepest glass layer ---------------------------------- */
+      .modal-content {
+        backdrop-filter: blur(32px) saturate(162%) !important;
+        -webkit-backdrop-filter: blur(32px) saturate(162%) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular),
+          0 32px 80px rgba(0,0,0,0.24) !important;
+        background: var(--refract-top), var(--surface) !important;
+      }
+
+      /* --- Toolkit chips: glass pills with specular -------------------- */
+      .toolkit-chip {
+        box-shadow: inset 0 1px 0 var(--specular) !important;
+      }
+      .toolkit-chip:hover {
+        box-shadow: inset 0 1px 0 var(--specular-teal),
+          0 8px 20px -6px color-mix(in srgb, var(--dominant) 18%, transparent) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      /* --- Testimonials: specular + refractive lift -------------------- */
+      .testimonial-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 20px 44px -12px color-mix(in srgb, var(--dominant) 18%, rgba(0,0,0,0.14)) !important;
+      }
+
+      /* --- Reduce blur on mobile for performance ----------------------- */
+      @media (max-width: 768px) {
+        .hero {
+          backdrop-filter: blur(16px) saturate(140%) !important;
+          -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+        }
+        .section::before, .why-section::before, .faq-section::before,
+        .journal-notes::before, .contact::before {
+          backdrop-filter: blur(12px) saturate(132%) !important;
+          -webkit-backdrop-filter: blur(12px) saturate(132%) !important;
+        }
+        .contact-form, .modal-content {
+          backdrop-filter: blur(12px) saturate(132%) !important;
+          -webkit-backdrop-filter: blur(12px) saturate(132%) !important;
+        }
+      }
+
     </style>
   </head>
   <body>
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
+        <div id="hero-light" aria-hidden="true"></div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio</span> <span class="hero-line hero-line-nowrap">for <span class="accent-word">founders</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
         <p class="hero-subheadline">Strategy-first development for founders starting fresh, teams rescuing a half-built app, businesses outsourcing a project, and clients who need a landing page or pitch prototype fast. We map your flows, design, build, and launch in weeks, not months.</p>
 
@@ -6108,6 +6305,32 @@
         // Hold the first message for the full dwell, then start cycling.
         window.setTimeout(cycle, DWELL_MS);
       })();
+    </script>
+    <script>
+    /* Pointer-light bloom: hero refractive spotlight follows cursor.
+       Lightweight — only runs on desktop with motion allowed. */
+    (function () {
+      if (!window.matchMedia) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia('(max-width: 768px)').matches) return;
+      var hero  = document.querySelector('.hero');
+      var light = document.getElementById('hero-light');
+      if (!hero || !light) return;
+      var raf = null;
+      hero.addEventListener('mousemove', function (e) {
+        if (raf) return;           /* throttle to one rAF frame */
+        raf = requestAnimationFrame(function () {
+          raf = null;
+          var r = hero.getBoundingClientRect();
+          light.style.setProperty('--lx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+          light.style.setProperty('--ly', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+        });
+      });
+      hero.addEventListener('mouseleave', function () {
+        light.style.setProperty('--lx', '52%');
+        light.style.setProperty('--ly', '38%');
+      });
+    })();
     </script>
   </body>
 </html>
