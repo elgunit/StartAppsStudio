@@ -3970,7 +3970,17 @@
       .hero-headline { font-size:clamp(38px,8.5vw,92px)!important; max-width:12ch; margin-inline:auto; }
       .hero-subheadline { font-size:var(--type-body)!important; max-width:56ch; }
       .hero-cta-group { gap:var(--space-2)!important; }
-      .section,.why-section,.faq-section,.journal-notes,.contact { margin-bottom:var(--space-6)!important; padding:var(--space-5) 0!important; }
+      /* Panel geometry contract: the glass panel hugs the section exactly (inset:0),
+         and the section's own inline padding is the single gutter that keeps every
+         heading, card, and chip inside the rounded border at all widths. */
+      .section,.why-section,.faq-section,.journal-notes,.contact {
+        margin-bottom:var(--space-6)!important;
+        padding:var(--space-5) var(--space-3)!important;
+      }
+      .section::before,.why-section::before,.faq-section::before,
+      .journal-notes::before,.contact::before {
+        inset:0!important; border-radius:var(--r-lg)!important; max-width:none!important;
+      }
       .section-title,.faq-title,.contact-left h2 { font-size:var(--type-h2)!important; max-width:14ch; }
       .section-subtitle,.section p { font-size:var(--type-body); }
       .services-grid,.growth-grid,.why-grid,.case-studies-grid,.pricing-grid,.journal-notes-grid {
