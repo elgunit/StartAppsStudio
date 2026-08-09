@@ -2759,11 +2759,43 @@
       .cmp-benefit,.cmp-pain {
         border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
         background:var(--surface)!important; box-shadow:none!important;
-        padding:14px 16px!important; border-left-width:3px!important;
+        padding:14px 16px!important;
+        border-left-width:4px!important;
+        gap:14px!important;
+        align-items:center!important;
       }
       .cmp-benefit { border-left-color:var(--dominant)!important; }
       .cmp-pain { border-left-color:#c46a7a!important; }
-      .cmp-tab.them.active { border-bottom-color:#c46a7a!important; }
+
+      /* Circular icons — match reference */
+      .cmp-icon {
+        width:38px!important; height:38px!important;
+        border-radius:999px!important; flex-shrink:0!important;
+      }
+      .cmp-benefit .cmp-icon {
+        background:color-mix(in srgb,var(--dominant) 16%,transparent)!important;
+        color:var(--dominant)!important;
+      }
+      .cmp-pain .cmp-icon {
+        background:rgba(239,68,68,0.18)!important;
+        color:#f87171!important;
+      }
+
+      /* Tabs: active colour must cascade to the SVG icon */
+      .cmp-tab.us.active { color:var(--dominant)!important; }
+      .cmp-tab.them.active { color:#c46a7a!important; }
+
+      /* Footnote: subtle glass card */
+      .cmp-footnote {
+        border:1px solid var(--line)!important;
+        border-radius:var(--r-md)!important;
+        background:var(--surface)!important;
+        padding:18px 20px!important;
+        font-size:14px!important;
+        line-height:1.6!important;
+      }
+
+      /* CTA pill */
       .cmp-action { border-radius:999px!important; background:var(--dominant)!important; color:var(--canvas)!important; }
 
       /* --- FAQ: rounded glass items with page-consistent padding */
