@@ -4029,6 +4029,29 @@
       .faq-section::before,.journal-notes::before,.contact::before {
         pointer-events:none!important;
       }
+      /* Tabs + modals join the mineral system (previously left on legacy tokens). */
+      .service-tabs,.cmp-tabs {
+        background:var(--surface)!important; border:1px solid var(--line)!important;
+        border-radius:999px!important; box-shadow:none!important; padding:4px!important;
+      }
+      .service-tab,.cmp-tab {
+        border-radius:999px!important; border:0!important; background:transparent!important;
+        box-shadow:none!important; color:var(--ink)!important;
+      }
+      .service-tab.active,.cmp-tab.active {
+        background:var(--dominant)!important; color:var(--canvas)!important;
+      }
+      .modal-content {
+        background:var(--surface)!important; border:1px solid var(--line)!important;
+        border-radius:var(--r-md)!important; box-shadow:var(--shadow)!important;
+        backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      }
+      .modal-close {
+        border:1px solid var(--line)!important; border-radius:999px!important;
+        background:var(--surface)!important; color:var(--ink)!important; box-shadow:none!important;
+      }
+      .service-card { border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important; }
     </style>
   </head>
   <body>
