@@ -261,7 +261,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           : 'Not specified';
         const emailResult = await client.emails.send({
           from: fromEmail,
-          to: 'create@startappsstudio.com',
+          to: 'elgunit@gmail.com',
           subject: `New Project Inquiry from ${fullName}`,
           html: `
             <h2>New Contact Form Submission</h2>

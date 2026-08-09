@@ -3680,7 +3680,7 @@ async function registerRoutes(app2) {
         const interestsList = interests && interests.length > 0 ? interests.join(", ") : "Not specified";
         const emailResult = await client.emails.send({
           from: fromEmail,
-          to: "create@startappsstudio.com",
+          to: "elgunit@gmail.com",
           subject: `New Project Inquiry from ${fullName}`,
           html: `
             <h2>New Contact Form Submission</h2>
