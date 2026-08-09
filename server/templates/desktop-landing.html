@@ -4111,6 +4111,195 @@
       .section + .section,.section + .why-section,.why-section + .section {
         border-top:0!important;
       }
+
+      /* ================================================================
+         Mineral-glass uplift for the remaining editorial sections.
+         Presentation only — copy, prices, JS behaviour untouched.
+         ================================================================ */
+      :root { --ed-pop: var(--dominant); } /* retire the orange accent */
+
+      /* --- What we ship: glass cards, no numbered chips / yellow fills */
+      .services-grid,.growth-grid,.why-grid {
+        gap:var(--space-3,16px)!important; border:0!important;
+      }
+      .services-grid .service-card,.growth-grid .growth-card,.why-grid .why-card {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        padding:clamp(20px,3vw,28px)!important;
+      }
+      .services-grid .service-card::before,
+      .growth-grid .growth-card::before,
+      .why-grid .why-card::before { content:none!important; display:none!important; }
+      .services-grid .service-card:hover,.services-grid .service-card.expanded,
+      .growth-grid .growth-card:hover,.growth-grid .growth-card.expanded,
+      .why-grid .why-card:hover,.why-grid .why-card.expanded {
+        background:color-mix(in srgb,var(--dominant) 8%,var(--surface))!important;
+        border-color:var(--dominant)!important; box-shadow:var(--shadow)!important;
+      }
+      .services-grid .service-card:hover *,.services-grid .service-card.expanded *,
+      .growth-grid .growth-card:hover *,.growth-grid .growth-card.expanded *,
+      .why-grid .why-card:hover *,.why-grid .why-card.expanded * { color:var(--ink)!important; }
+      .service-icon,.growth-icon,.why-card-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      .services-grid .service-card:hover .service-icon,
+      .services-grid .service-card.expanded .service-icon,
+      .growth-grid .growth-card:hover .growth-icon,
+      .growth-grid .growth-card.expanded .growth-icon,
+      .why-grid .why-card:hover .why-card-icon,
+      .why-grid .why-card.expanded .why-card-icon {
+        background:var(--dominant)!important; border-color:var(--dominant)!important;
+        color:var(--canvas)!important;
+      }
+      .services-grid .service-card:hover .service-icon svg,
+      .services-grid .service-card.expanded .service-icon svg,
+      .growth-grid .growth-card:hover .growth-icon svg,
+      .growth-grid .growth-card.expanded .growth-icon svg,
+      .why-grid .why-card:hover .why-card-icon svg,
+      .why-grid .why-card.expanded .why-card-icon svg {
+        color:var(--canvas)!important; stroke:var(--canvas)!important;
+      }
+      .service-details { border-top:1px solid var(--line)!important; }
+
+      /* --- Five hats: glass accordion rows, teal expanded state */
+      .expandable-card,.expertise-grid .expandable-card {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        margin-bottom:var(--space-2,12px)!important; overflow:hidden!important;
+        transform:none!important;
+      }
+      .expandable-card:hover,.expertise-grid .expandable-card:hover {
+        border-color:var(--dominant)!important; background:var(--surface)!important;
+        transform:none!important; box-shadow:var(--shadow)!important;
+      }
+      .expandable-card.expanded,.expertise-grid .expandable-card.expanded {
+        background:color-mix(in srgb,var(--dominant) 8%,var(--surface))!important;
+        border-color:var(--dominant)!important; box-shadow:var(--shadow)!important;
+      }
+      .expandable-card.expanded,.expandable-card.expanded *,
+      .expertise-grid .expandable-card.expanded,
+      .expertise-grid .expandable-card.expanded * { color:var(--ink)!important; }
+      .expertise-grid .expandable-card:hover,
+      .expertise-grid .expandable-card:hover * { color:var(--ink)!important; }
+      .card-icon,.expertise-grid .card-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      .expandable-card.expanded .card-icon,
+      .expertise-grid .expandable-card.expanded .card-icon,
+      .expertise-grid .expandable-card:hover .card-icon {
+        background:var(--dominant)!important; border-color:var(--dominant)!important;
+        color:var(--canvas)!important;
+      }
+      .expandable-card.expanded .card-icon svg,
+      .expertise-grid .expandable-card.expanded .card-icon svg,
+      .expertise-grid .expandable-card:hover .card-icon svg { color:var(--canvas)!important; stroke:var(--canvas)!important; }
+
+      /* --- Selected projects: guaranteed gap, no overlap */
+      .case-study-card {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        margin-bottom:var(--space-3,18px)!important; transform:none!important;
+        padding:clamp(20px,3vw,28px)!important; position:relative;
+      }
+      .case-study-card:hover,.case-study-card.expanded { border-color:var(--dominant)!important; }
+      .case-study-card.expanded {
+        background:color-mix(in srgb,var(--dominant) 6%,var(--surface))!important;
+        z-index:1;
+      }
+      .case-study-details { border-top:1px solid var(--line)!important; }
+
+      /* --- How it works: glass steps with teal number pill */
+      .how-bento { gap:var(--space-3,18px)!important; }
+      .how-bento .how-card {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+      }
+      @media (hover:hover) {
+        .how-bento .how-card:hover {
+          transform:translateY(-3px)!important; border-color:var(--dominant)!important;
+          box-shadow:var(--shadow)!important;
+        }
+      }
+      .how-bento .how-card-step {
+        color:var(--dominant)!important;
+        background:var(--support)!important; border-radius:999px!important;
+        width:fit-content; padding:6px 14px!important;
+      }
+      .how-bento .how-card-step::before { content:none!important; display:none!important; }
+      .how-bento .how-card-icon {
+        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
+        background:var(--support)!important; color:var(--dominant)!important;
+      }
+      .how-bento .how-card:hover .how-card-icon {
+        background:var(--dominant)!important; color:var(--canvas)!important;
+      }
+      .how-bento .how-card:hover .how-card-icon svg { color:var(--canvas)!important; stroke:var(--canvas)!important; }
+      .how-bento .how-card-ghost { color:color-mix(in srgb,var(--dominant) 7%,transparent)!important; }
+
+      /* --- Toolkit: teal group labels, glass chips */
+      .toolkit-group-label { color:var(--dominant)!important; }
+      .toolkit-group-label::after { background:var(--line)!important; }
+      .toolkit-meta {
+        border:1px solid var(--line)!important; border-radius:999px!important;
+        background:var(--surface)!important; color:var(--ink)!important;
+      }
+      .toolkit-meta-pulse { border-radius:50%!important; }
+      .toolkit-chip { border:1px solid var(--line)!important; background:var(--surface)!important; }
+      .toolkit-chip:hover { border-color:var(--dominant)!important; }
+
+      /* --- Modal comparison rows: glass rows with comfortable padding */
+      .cmp-benefit,.cmp-pain {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; box-shadow:none!important;
+        padding:14px 16px!important; border-left-width:3px!important;
+      }
+      .cmp-benefit { border-left-color:var(--dominant)!important; }
+      .cmp-pain { border-left-color:#c46a7a!important; }
+      .cmp-tab.them.active { border-bottom-color:#c46a7a!important; }
+      .cmp-action { border-radius:999px!important; background:var(--dominant)!important; color:var(--canvas)!important; }
+
+      /* --- FAQ: rounded glass items with page-consistent padding */
+      .faq-section { padding-inline:clamp(20px,4vw,40px)!important; }
+      .faq-list { gap:var(--space-2,12px)!important; }
+      .faq-item {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; overflow:hidden!important;
+      }
+      .faq-item[open] { border-color:var(--dominant)!important; box-shadow:var(--shadow)!important; }
+      .faq-item > summary { padding:18px 20px!important; }
+      .faq-item > summary::before { content:none!important; display:none!important; }
+      .faq-title::before { content:none!important; display:none!important; }
+      .faq-answer { padding:0 20px 18px!important; }
+
+      /* --- From the Journal: glass cards, page-consistent padding */
+      .journal-notes { padding-inline:clamp(20px,4vw,40px)!important; }
+      .journal-notes-grid { gap:var(--space-3,18px)!important; border:0!important; }
+      .journal-note {
+        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
+        background:var(--surface)!important; background-image:none!important;
+        box-shadow:var(--shadow)!important; padding:clamp(20px,3vw,26px)!important;
+        color:var(--ink)!important;
+      }
+      .journal-note::before,.journal-note::after { content:none!important; display:none!important; }
+      .journal-note:hover {
+        background:color-mix(in srgb,var(--dominant) 6%,var(--surface))!important;
+        transform:translateY(-3px)!important; border-color:var(--dominant)!important;
+      }
+      .journal-note:hover,.journal-note:hover * { color:var(--ink)!important; }
+      .journal-note-meta { color:var(--dominant)!important; }
+      .journal-note-title { color:var(--ink)!important; }
+      .journal-note-cta { color:var(--dominant)!important; }
+
+      /* --- Contact form: progressive reveal */
+      .form-section.fs-hidden { display:none; }
+      .form-section.fs-reveal { animation:fsReveal .35s ease both; }
+      @keyframes fsReveal {
+        from { opacity:0; transform:translateY(10px); }
+        to { opacity:1; transform:none; }
+      }
+      .submit-btn.fs-hidden { display:none; }
     </style>
   </head>
   <body>
@@ -4182,7 +4371,7 @@
       </section>
 
       <!-- What We Do -->
-      <section class="section" data-section-name="what-we-ship">
+      <section class="section" id="what-we-ship" data-section-name="what-we-ship">
         <h2 class="section-title">What we ship</h2>
         <p class="section-subtitle">One landing page or a full multi-platform product — we cover both.</p>
         <div class="service-tabs">
@@ -4610,7 +4799,7 @@
       </section>
       
       <!-- Recent Work -->
-      <section class="section" data-section-name="case-studies">
+      <section class="section" id="case-studies" data-section-name="case-studies">
         <h2 class="section-title">Selected projects</h2>
         <p class="section-subtitle">Shipped products across healthcare, fintech, retail and more.</p>
         
@@ -4842,7 +5031,7 @@
       </section>
       
       <!-- How It Works -->
-      <section class="section" data-section-name="how-it-works">
+      <section class="section" id="how-it-works" data-section-name="how-it-works">
         <h2 class="section-title">How It Works</h2>
         <p class="section-subtitle">Four steps. No technical background required.</p>
         <div class="how-bento" id="howItWorksGrid">
@@ -4982,7 +5171,7 @@
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-higgs">S</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Seedance 2.0</span><span class="toolkit-chip-version">video &amp; image gen</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Seedance 2.5</span><span class="toolkit-chip-version">video &amp; image gen</span></span>
               </span>
             </div>
           </div>
@@ -6145,6 +6334,40 @@
           checkbox.checked = el.classList.contains('selected');
         }
       }
+
+      // Progressive form reveal: About you → Budget → Building → Message → CTA.
+      (function() {
+        var form = document.getElementById('contactForm');
+        if (!form) return;
+        var sections = form.querySelectorAll('.form-section');
+        if (sections.length < 4) return;
+        var about = sections[0], budget = sections[1], interest = sections[2], message = sections[3];
+        var submit = document.getElementById('submitBtn');
+        [budget, interest, message].forEach(function(s) { s.classList.add('fs-hidden'); });
+        if (submit) submit.classList.add('fs-hidden');
+
+        function show(el) {
+          if (el.classList.contains('fs-hidden')) {
+            el.classList.remove('fs-hidden');
+            el.classList.add('fs-reveal');
+          }
+        }
+        function aboutDone() {
+          var n = document.getElementById('fullName'), e = document.getElementById('email');
+          return n && e && n.value.trim().length > 1 && /.+@.+\..+/.test(e.value);
+        }
+        function budgetDone() { return !!form.querySelector('input[name="budget"]:checked'); }
+        function interestDone() { return !!form.querySelector('input[name="interest"]:checked'); }
+        function sync() {
+          if (aboutDone()) show(budget);
+          if (budgetDone()) show(interest);
+          if (interestDone()) { show(message); if (submit) show(submit); }
+        }
+        form.addEventListener('input', sync);
+        form.addEventListener('change', sync);
+        form.addEventListener('click', function() { setTimeout(sync, 0); });
+        sync(); // restore state on load (e.g. autofill)
+      })();
 
       // Budget chip selection (segmented radio group).
       (function() {
