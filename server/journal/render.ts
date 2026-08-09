@@ -128,7 +128,7 @@ function renderBreadcrumbJsonLd(post: Post, canonical: string, origin: string): 
 }
 
 function renderArticleJsonLd(post: Post, canonical: string, origin: string): string {
-  const articleImage = `${origin}/assets/images/og-cover.png`;
+  const articleImage = `${origin}/assets/images/og-journal-default.png`;
   const data = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -1098,7 +1098,7 @@ export function renderArticleHtml(post: Post, origin: string): string {
     description: resolvedDescription,
     canonical,
     origin,
-    ogImage: "/assets/images/og-cover.png",
+    ogImage: "/assets/images/og-journal-default.png",
     ogType: "article",
     jsonLd,
     bodyInner,
@@ -1158,7 +1158,7 @@ export function renderIndexHtml(origin: string): string {
       "Field notes on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
     canonical,
     origin,
-    ogImage: "/assets/images/og-cover.png",
+    ogImage: "/assets/images/og-journal-default.png",
     ogType: "website",
     jsonLd,
     bodyInner,
