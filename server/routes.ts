@@ -149,7 +149,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           await client.emails.send({
             from: fromEmail,
-            to: "create@startappsstudio.com",
+            to: "elgunit@gmail.com",
             subject,
             html,
           });

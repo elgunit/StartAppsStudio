@@ -2357,7 +2357,7 @@ ${jsonLd}
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:elgunit@gmail.com">elgunit@gmail.com</a></div>
   </footer>
 </body>
 </html>`;
@@ -2586,7 +2586,7 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 ## Contact
 
 - Website: ${origin}/
-- Email: hello@startappsstudio.com
+- Email: elgunit@gmail.com
 - Inquiry form: ${origin}/#contact
 
 ## Key URLs
@@ -2673,7 +2673,7 @@ We swap in new model versions the week they ship.
 
 ## Contact
 
-- Email: hello@startappsstudio.com
+- Email: elgunit@gmail.com
 - Inquiry form: ${origin}/#contact
 - Website: ${origin}/
 - Journal: ${origin}/journal
@@ -3584,7 +3584,7 @@ async function registerRoutes(app2) {
           });
           await client.emails.send({
             from: fromEmail,
-            to: "create@startappsstudio.com",
+            to: "elgunit@gmail.com",
             subject,
             html
           });
