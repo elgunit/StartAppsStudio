@@ -3326,11 +3326,20 @@
          Enterprise card radius, AI efficiency modal glass restyle.
          ============================================================ */
 
-      /* FAQ + Journal: same side gutters as the other section panels */
-      @media (max-width: 920px) {
-        .faq-section,.journal-notes {
-          margin-inline:var(--space-2,12px)!important;
-          width:auto!important; max-width:none!important;
+      /* FAQ + Journal: sit outside .container so manually match its side gutters */
+      /* desktop: same clamp as the container's horizontal padding */
+      .faq-section, .journal-notes {
+        margin-left: clamp(16px,4vw,56px)!important;
+        margin-right: clamp(16px,4vw,56px)!important;
+        max-width: none!important;
+        width: auto!important;
+        box-sizing: border-box!important;
+      }
+      /* mobile ≤600px: container uses exactly 16px side padding */
+      @media (max-width: 600px) {
+        .faq-section, .journal-notes {
+          margin-left: 16px!important;
+          margin-right: 16px!important;
         }
       }
 
