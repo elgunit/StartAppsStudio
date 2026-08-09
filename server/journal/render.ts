@@ -845,8 +845,8 @@ const STYLE = `
      for borders and non-text emphasis. */
   :root { --pop: #1d5960; }
   @media (prefers-color-scheme: dark) { :root { --pop: #8bc8bd; } }
-  html { background:var(--glass-bg); overflow-x:clip; }
-  body { background:radial-gradient(ellipse at 10% 0%,rgba(29,89,96,.13),transparent 34rem),radial-gradient(ellipse at 90% 16%,rgba(224,122,95,.10),transparent 30rem),var(--glass-bg); color:var(--glass-ink); overflow-x:clip; }
+  html { background:radial-gradient(ellipse at 10% 0%,rgba(29,89,96,.13),transparent 34rem),radial-gradient(ellipse at 90% 16%,rgba(224,122,95,.10),transparent 30rem),var(--glass-bg); overflow-x:clip; }
+  body { background:transparent; color:var(--glass-ink); overflow-x:clip; }
   body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.12; background-image:radial-gradient(rgba(24,42,45,.5) .55px,transparent .55px); background-size:7px 7px; }
   .site-nav { width:calc(100% - 32px); max-width:1080px; margin:18px auto; padding:14px 20px; border:1px solid var(--glass-line); border-radius:999px; background:var(--glass-panel); box-shadow:0 14px 40px rgba(13,58,67,.1),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); overflow:hidden; }
   .site-nav .brand, .site-nav .nav-links a { color:var(--glass-ink); }
