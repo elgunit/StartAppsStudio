@@ -3484,6 +3484,131 @@
       .timeline-chip { display:inline-flex; align-items:center; padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:color-mix(in srgb,var(--surface) 70%,transparent); cursor:pointer; font-size:0.85rem; color:var(--ink); transition:border-color .2s,background .2s,color .2s; user-select:none; }
       .timeline-chip input { position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
       .timeline-chip.selected { border-color:var(--dominant); background:var(--support); color:var(--dominant); font-weight:600; }
+
+      /* === Who you're working with: Founder bio + Testimonials ======= */
+
+      /* Founder panel — no card chrome, purely typographic */
+      .founder-panel {
+        display: flex;
+        align-items: flex-start;
+        gap: clamp(24px, 3.5vw, 48px);
+        max-width: 760px;
+        margin: 0 auto clamp(40px, 5vw, 60px);
+      }
+
+      .founder-avatar {
+        flex: 0 0 auto;
+        width: clamp(76px, 10vw, 100px);
+        height: clamp(76px, 10vw, 100px);
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--support) 80%, transparent);
+        border: 2px solid color-mix(in srgb, var(--dominant) 35%, transparent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .founder-avatar img {
+        width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+      }
+      .founder-avatar-placeholder {
+        color: var(--dominant); opacity: 0.45;
+      }
+
+      .founder-info { flex: 1; min-width: 0; }
+      .founder-name {
+        font-size: clamp(17px, 1.8vw, 20px);
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: var(--ink);
+        margin-bottom: 3px;
+      }
+      .founder-role {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--dominant);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .founder-bio {
+        font-size: clamp(14px, 1.3vw, 15.5px);
+        color: var(--muted);
+        line-height: 1.68;
+        margin: 0;
+      }
+
+      /* Testimonial grid */
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+      }
+      .testimonial-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        box-shadow: var(--shadow);
+        padding: clamp(20px, 2.5vw, 28px);
+        display: flex;
+        flex-direction: column;
+      }
+      .testimonial-quote-mark {
+        font-size: 52px;
+        line-height: 0.85;
+        color: var(--dominant);
+        font-weight: 900;
+        font-family: Georgia, 'Times New Roman', serif;
+        letter-spacing: -0.02em;
+        opacity: 0.55;
+        margin-bottom: 14px;
+        user-select: none;
+      }
+      .testimonial-text {
+        font-size: clamp(14px, 1.2vw, 15px);
+        line-height: 1.7;
+        color: var(--ink);
+        flex: 1;
+        margin: 0 0 18px;
+      }
+      .testimonial-sep {
+        height: 1px;
+        background: var(--line);
+        margin-bottom: 14px;
+      }
+      .testimonial-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .testimonial-client {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.01em;
+      }
+
+      @media (max-width: 680px) {
+        .founder-panel {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .testimonials-grid { grid-template-columns: 1fr; }
+      }
+      @media (min-width: 681px) and (max-width: 920px) {
+        .testimonials-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .testimonial-card:last-child {
+          grid-column: 1 / -1;
+          max-width: calc(50% - var(--space-3) / 2);
+          justify-self: center;
+        }
+      }
     </style>
   </head>
   <body>
@@ -4618,6 +4743,65 @@
       </div>
 
 
+      <!-- Who you're working with -->
+      <section class="section" id="studio-human" data-section-name="studio-human">
+        <h2 class="section-title">Who you're working with</h2>
+        <p class="section-subtitle">A founder-led studio. You work directly with the person shipping your product, not an account manager.</p>
+
+        <!-- Founder panel
+             REPLACE: swap the SVG placeholder with a real photo:
+             <img src="/assets/images/founder.jpg" alt="[Your name]"> inside .founder-avatar,
+             then update .founder-name, .founder-role, and .founder-bio text below. -->
+        <div class="founder-panel">
+          <div class="founder-avatar">
+            <svg class="founder-avatar-placeholder" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+          </div>
+          <div class="founder-info">
+            <div class="founder-name">Your Name Here</div>
+            <div class="founder-role">Founder, Start Apps Studio</div>
+            <p class="founder-bio">I started this studio after watching too many founders burn through agency budgets and get nothing they could actually ship. Every project I take on is built by me, reviewed by the best AI models available, and handed off with full source code and zero lock-in. If you book a call, you're talking to me, not an account manager.</p>
+          </div>
+        </div>
+
+        <!-- Testimonial strip
+             REPLACE: update each .testimonial-text, .testimonial-client, and the
+             .method-badge label with real client quotes and package names. -->
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">We had been stuck with a freelancer for six months and had nothing to show. Start Apps Studio shipped a working prototype in nine days. I showed it to investors the following week.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Marcus H., SaaS founder</div>
+              <span class="method-badge">Prototype</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">The fixed price was the thing that made me take the leap. I knew exactly what I was paying before any work started. We launched on time and the app has been running without issues ever since.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Priya R., healthcare founder</div>
+              <span class="method-badge">MVP</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">I came in with a vibe-coded prototype that was falling apart. They audited it in two days, told me honestly what was salvageable, and shipped a clean codebase I can actually build on.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Daniel K., fintech founder</div>
+              <span class="method-badge">Rescue &amp; MVP</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Pricing -->
       <section class="section" id="pricing" data-section-name="pricing">
         <h2 class="section-title">Pricing & timelines</h2>
@@ -5046,6 +5230,12 @@
       })();
 
       function toggleCard(el) {
+        var whatWeShip = el.closest('#what-we-ship');
+        if (whatWeShip) {
+          whatWeShip.querySelectorAll('.service-card, .growth-card').forEach(function(card) {
+            if (card !== el) card.classList.remove('expanded');
+          });
+        }
         el.classList.toggle('expanded');
       }
 
