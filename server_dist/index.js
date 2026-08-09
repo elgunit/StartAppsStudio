@@ -1150,9 +1150,9 @@ var init_posts = __esm({
         slug: "ai-overviews-citation-playbook-for-mvps",
         title: "The AI Overviews citation playbook for MVPs",
         seoTitle: "AI Overviews Citation Playbook for MVPs | Start Apps Studio",
-        description: "Five concrete patterns we see in pages pulled into Google AI Overviews \u2014 one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats \u2014 applied to three Start Apps Studio MVPs.",
+        description: "Five concrete patterns we see in pages pulled into Google AI Overviews: one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats. Applied to three Start Apps Studio MVPs.",
         seoDescription: "Five patterns that get MVPs cited in AI Overviews: direct answers, FAQPage schema, comparison tables, named entities, and dated stats. Real examples included.",
-        excerpt: "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things \u2014 and none of them are luck.",
+        excerpt: "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things, and none of them are luck.",
         publishedAt: "2026-04-17",
         readMinutes: 6,
         category: "Playbook",
@@ -1187,7 +1187,7 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: "FAQPage schema is the single highest-leverage block of structured data for AIO citations. Use the actual questions your users ask in support, sales, and Reddit threads \u2014 not invented marketing questions. Three to six Q&As per page is the sweet spot."
+            text: "FAQPage schema is the single highest-leverage block of structured data for AIO citations. Use the actual questions your users ask in support, sales, and Reddit threads, not invented marketing questions. Three to six Q&As per page is the sweet spot."
           },
           {
             type: "h3",
@@ -1223,7 +1223,7 @@ var init_posts = __esm({
           },
           {
             type: "h3",
-            text: "Example 1 \u2014 A B2B scheduling MVP",
+            text: "Example 1: A B2B scheduling MVP",
             id: "example-scheduling"
           },
           {
@@ -1232,7 +1232,7 @@ var init_posts = __esm({
           },
           {
             type: "h3",
-            text: "Example 2 \u2014 A consumer fitness MVP",
+            text: "Example 2: A consumer fitness MVP",
             id: "example-fitness"
           },
           {
@@ -1241,7 +1241,7 @@ var init_posts = __esm({
           },
           {
             type: "h3",
-            text: "Example 3 \u2014 A developer tooling MVP",
+            text: "Example 3: A developer tooling MVP",
             id: "example-devtools"
           },
           {
@@ -1258,7 +1258,7 @@ var init_posts = __esm({
             items: [
               "Rewrite the first 100 words of your highest-traffic page to lead with one direct-answer sentence that names your brand, product, and category.",
               "Ship a FAQPage JSON-LD block with three to six real questions taken from your support inbox or Reddit threads.",
-              "Add at least one HTML comparison table \u2014 even a 3x3 grid will do.",
+              "Add at least one HTML comparison table. Even a 3x3 grid will do.",
               "Audit every key page for at least one stat with a year attached. Refresh the year on January 1.",
               "Resubmit the page in Google Search Console and watch coverage in the Discover and AIO panels over the next two weeks."
             ]
@@ -1266,7 +1266,7 @@ var init_posts = __esm({
           {
             type: "callout",
             title: "Where we plug in",
-            text: "Every MVP we ship at Start Apps Studio launches with all five patterns wired in from day one \u2014 direct answer, FAQPage schema, comparison table, named entities, dated stats. That's why our portfolio MVPs start collecting AI Overview citations before they've spent a dollar on paid acquisition."
+            text: "Every MVP we ship at Start Apps Studio launches with all five patterns wired in from day one: direct answer, FAQPage schema, comparison table, named entities, dated stats. That's why our portfolio MVPs start collecting AI Overview citations before they've spent a dollar on paid acquisition."
           },
           {
             type: "h2",
@@ -1278,7 +1278,7 @@ var init_posts = __esm({
             items: [
               {
                 q: "How fast can a brand-new MVP earn its first AI Overview citation?",
-                a: "In our portfolio, between 9 and 21 days after the page is indexed and the five patterns are in place. The biggest variable is how quickly Google re-crawls the page \u2014 submitting the URL in Search Console after the rewrite usually accelerates this to under two weeks."
+                a: "In our portfolio, between 9 and 21 days after the page is indexed and the five patterns are in place. The biggest variable is how quickly Google re-crawls the page. Submitting the URL in Search Console after the rewrite usually accelerates this to under two weeks."
               },
               {
                 q: "Do I need a high domain rating to be cited in AI Overviews?",
@@ -1297,10 +1297,10 @@ var init_posts = __esm({
         ],
         sources: [
           {
-            label: "Internal Start Apps Studio portfolio analysis \u2014 AI Overview citation timing across 14 MVP launches."
+            label: "Internal Start Apps Studio portfolio analysis: AI Overview citation timing across 14 MVP launches."
           },
           {
-            label: "Google Search Central \u2014 structured data guidelines for FAQPage and Article schema."
+            label: "Google Search Central: structured data guidelines for FAQPage and Article schema."
           }
         ]
       },
@@ -1308,7 +1308,7 @@ var init_posts = __esm({
         slug: "make-your-brand-visible-in-chatgpt",
         title: "How to make your brand visible in ChatGPT and AI answers",
         seoTitle: "Brand Visible in ChatGPT & AI Overviews | Start Apps Studio",
-        description: "A 12-point GEO checklist \u2014 answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T \u2014 so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
+        description: "A 12-point GEO checklist covering answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T, so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
         seoDescription: "A 12-point GEO checklist so ChatGPT and AI Overviews surface your brand: answer-first writing, schema, entity signals, social proof, and E-E-A-T.",
         excerpt: "If ChatGPT never names your product when someone asks for a recommendation, your site is failing 12 specific tests. Here's the checklist we run on every MVP we ship.",
         publishedAt: "2026-04-16",
@@ -1323,12 +1323,12 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: "Generative Engine Optimization (GEO) is the new SEO. Your MVP can rank on Google and still be invisible inside ChatGPT, Claude, Perplexity and Google's AI Overviews, because LLMs don't index pages the way crawlers do \u2014 they extract answers. Below is the 12-point audit we run on every MVP we ship at Start Apps Studio, based on the patterns we see across brands that actually get quoted by AI."
+            text: "Generative Engine Optimization (GEO) is the new SEO. Your MVP can rank on Google and still be invisible inside ChatGPT, Claude, Perplexity and Google's AI Overviews, because LLMs don't index pages the way crawlers do; they extract answers. Below is the 12-point audit we run on every MVP we ship at Start Apps Studio, based on the patterns we see across brands that actually get quoted by AI."
           },
           { type: "h2", text: "Why this matters for MVPs", id: "why" },
           {
             type: "p",
-            text: "Roughly a third of product discovery is already happening inside chat interfaces. For an MVP the stakes are higher than for an incumbent: you don't have the 10,000 third-party mentions Stripe or Notion have, so every signal you send has to be intentional. The good news is that GEO wins compound quickly \u2014 a single well-structured page can start getting quoted within days of indexing."
+            text: "Roughly a third of product discovery is already happening inside chat interfaces. For an MVP the stakes are higher than for an incumbent: you don't have the 10,000 third-party mentions Stripe or Notion have, so every signal you send has to be intentional. The good news is that GEO wins compound quickly. A single well-structured page can start getting quoted within days of indexing."
           },
           {
             type: "h2",
@@ -1373,7 +1373,7 @@ var init_posts = __esm({
           },
           {
             type: "h3",
-            text: "5. Define your own terms \u2014 inline",
+            text: "5. Define your own terms, inline",
             id: "definitions"
           },
           {
@@ -1441,7 +1441,7 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: "Every page needs unique, structured product schema \u2014 not copy-pasted text. Duplicate content collapses topical authority and confuses AI indexing. If you have 20 near-identical SKU pages, LLMs will pick none of them."
+            text: "Every page needs unique, structured product schema, not copy-pasted text. Duplicate content collapses topical authority and confuses AI indexing. If you have 20 near-identical SKU pages, LLMs will pick none of them."
           },
           {
             type: "h2",
@@ -1479,27 +1479,27 @@ var init_posts = __esm({
               },
               {
                 q: "Do small MVPs really need schema markup?",
-                a: "Yes \u2014 more than big brands do. Schema is the cheapest way for a small site to punch above its weight in AI answers, because LLMs use structured data to disambiguate unknown brands."
+                a: "Yes, more than big brands do. Schema is the cheapest way for a small site to punch above its weight in AI answers, because LLMs use structured data to disambiguate unknown brands."
               }
             ]
           }
         ],
         sources: [
           {
-            label: "'12 Reasons Your Brand Is Invisible in ChatGPT Responses' \u2014 Francesco Gatti (LinkedIn)."
+            label: "'12 Reasons Your Brand Is Invisible in ChatGPT Responses' by Francesco Gatti (LinkedIn)."
           },
           {
-            label: "'The key to nailing every brand identity project' \u2014 Maik Noblovits (Instagram)."
+            label: "'The key to nailing every brand identity project' by Maik Noblovits (Instagram)."
           }
         ]
       },
       {
         slug: "vibe-coded-apps-have-an-seo-problem",
-        title: "Vibe-coded apps have an SEO problem \u2014 here's how to fix it",
+        title: "Vibe-coded apps have an SEO problem. Here's how to fix it",
         seoTitle: "Vibe-Coded Apps & SEO: How to Fix It | Start Apps Studio",
         description: "Lovable, Bolt and v0 ship empty divs to crawlers. This is how to fix it: a Cloudflare Worker SSR proxy pattern, or a full migration to Claude Code + Supabase + Vercel when you need to rank.",
         seoDescription: "Lovable, Bolt, and v0 ship empty divs to crawlers. Fix it with a Cloudflare Worker SSR proxy for a quick win, or migrate to a real stack when ranking matters.",
-        excerpt: "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it \u2014 a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
+        excerpt: "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it: a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
         publishedAt: "2026-04-16",
         updatedAt: "2026-04-17",
         readMinutes: 9,
@@ -1520,7 +1520,7 @@ var init_posts = __esm({
           },
           {
             type: "h2",
-            text: "Fix 1 \u2014 Cloudflare Worker SSR proxy",
+            text: "Fix 1: Cloudflare Worker SSR proxy",
             id: "cloudflare-worker"
           },
           {
@@ -1529,7 +1529,7 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: "This is not cloaking when it's done correctly \u2014 the content the bot receives has to match what the user eventually sees once the JS executes. The setup is two steps:"
+            text: "This is not cloaking when it's done correctly. The content the bot receives has to match what the user eventually sees once the JS executes. The setup is two steps:"
           },
           {
             type: "ol",
@@ -1545,7 +1545,7 @@ var init_posts = __esm({
           },
           {
             type: "h2",
-            text: "Fix 2 \u2014 Migrate off Lovable with Claude Code",
+            text: "Fix 2: Migrate off Lovable with Claude Code",
             id: "migrate-claude"
           },
           {
@@ -1560,17 +1560,17 @@ var init_posts = __esm({
               "Install Claude Code locally so it can read and edit your repo directly.",
               "Point Claude at your repo (GitHub remote or local path).",
               "Create a Supabase project for database and auth (roughly five minutes).",
-              'Ask Claude to migrate the project away from Lovable \u2014 prompt: "Migrate this Lovable project into a normal web stack and organize the repo cleanly."',
+              'Ask Claude to migrate the project away from Lovable with this prompt: "Migrate this Lovable project into a normal web stack and organize the repo cleanly."',
               "Set up hosting on Vercel. The free tier covers most MVPs.",
-              "Ask Claude which environment variables and API keys are required \u2014 it's surprisingly good at identifying them.",
+              "Ask Claude which environment variables and API keys are required; it's surprisingly good at identifying them.",
               "Generate the keys and create a .env file (Supabase keys, API tokens, etc).",
-              "Ask Claude to configure deployment \u2014 it can wire the GitHub \u2192 Vercel flow and connect Supabase.",
+              "Ask Claude to configure deployment. It can wire the GitHub \u2192 Vercel flow and connect Supabase.",
               "Fix anything that breaks by asking Claude to debug, one error at a time."
             ]
           },
           {
             type: "p",
-            text: "This setup ends up more flexible than Lovable itself. You stop paying per-prompt credits for app changes, and you can fall back to free models for small edits \u2014 because Lovable is already using Claude under the hood for most of its generation."
+            text: "This setup ends up more flexible than Lovable itself. You stop paying per-prompt credits for app changes, and you can fall back to free models for small edits, since Lovable is already using Claude under the hood for most of its generation."
           },
           {
             type: "h2",
@@ -1579,7 +1579,7 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: "If you're mid-project and not ready to migrate, there's a middle path that multiple r/lovable users have validated: connect Lovable to GitHub, then give Claude Code access to the same repo. Claude sits on a layer above Lovable, guiding it through complex features, debugging, and enhancements, while you run SQL directly in Supabase for database changes (free \u2014 Lovable doesn't charge to run a query)."
+            text: "If you're mid-project and not ready to migrate, there's a middle path that multiple r/lovable users have validated: connect Lovable to GitHub, then give Claude Code access to the same repo. Claude sits on a layer above Lovable, guiding it through complex features, debugging, and enhancements, while you run SQL directly in Supabase for database changes (Lovable doesn't charge to run a query, so it's free)."
           },
           {
             type: "p",
@@ -1601,7 +1601,7 @@ var init_posts = __esm({
           {
             type: "callout",
             title: "Where we plug in",
-            text: "Start Apps Studio has migrated a handful of Lovable MVPs off the platform using exactly this recipe. If you'd rather not burn a week on the plumbing, we can take it from prompt to indexed production \u2014 usually in under two weeks."
+            text: "Start Apps Studio has migrated a handful of Lovable MVPs off the platform using exactly this recipe. If you'd rather not burn a week on the plumbing, we can take it from prompt to indexed production, usually in under two weeks."
           },
           {
             type: "h2",
@@ -1632,13 +1632,13 @@ var init_posts = __esm({
         ],
         sources: [
           {
-            label: "r/lovable showcase \u2014 'I solved Lovable's biggest SEO problem' (Cloudflare Worker pattern)."
+            label: "r/lovable showcase: 'I solved Lovable's biggest SEO problem' (Cloudflare Worker pattern)."
           },
           {
-            label: "r/lovable tutorial \u2014 'Lovable <> Claude = 10X performance' by u/EIAMM."
+            label: "r/lovable tutorial: 'Lovable <> Claude = 10X performance' by u/EIAMM."
           },
           {
-            label: "r/lovable \u2014 10-step migration to Claude Code + Supabase + Vercel."
+            label: "r/lovable: 10-step migration to Claude Code + Supabase + Vercel."
           }
         ]
       },
@@ -1682,7 +1682,7 @@ var init_posts = __esm({
             type: "ul",
             items: [
               "Workers with a bachelor's degree are 23.8 percentage points more likely to be in the top AI-exposure quartile (37.1% vs 13.3%).",
-              "The average hourly wage in high-exposure roles is $32.69, versus $22.23 in no-exposure roles \u2014 a $10.45 wage premium.",
+              "The average hourly wage in high-exposure roles is $32.69, versus $22.23 in no-exposure roles, a $10.45 wage premium.",
               "Female workers are 15.5 percentage points more represented in high-exposure roles than in no-exposure roles."
             ]
           },
@@ -1697,11 +1697,11 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: 'Across every occupational category we looked at \u2014 management, business and finance, computer and math, architecture and engineering, legal, arts and media \u2014 observed AI usage is a fraction of theoretical capability. Even in office and admin work, where exposure is highest, the red-shaded "observed" footprint sits at roughly a third of the blue "theoretical" one.'
+            text: 'Across every occupational category we looked at (management, business and finance, computer and math, architecture and engineering, legal, arts and media), observed AI usage is a fraction of theoretical capability. Even in office and admin work, where exposure is highest, the red-shaded "observed" footprint sits at roughly a third of the blue "theoretical" one.'
           },
           {
             type: "p",
-            text: 'That gap is the arbitrage. Enterprise users are not short on access to LLMs; they are short on workflows that turn access into outcomes. Every startup that closes one such workflow \u2014 "draft the contract", "reconcile the invoice", "write the follow-up" \u2014 is pricing on the gap.'
+            text: 'That gap is the arbitrage. Enterprise users are not short on access to LLMs; they are short on workflows that turn access into outcomes. Every startup that closes one such workflow ("draft the contract", "reconcile the invoice", "write the follow-up") is pricing on the gap.'
           },
           {
             type: "h2",
@@ -1732,7 +1732,7 @@ var init_posts = __esm({
           },
           {
             type: "p",
-            text: 'The shift from 2025 is subtle but real. "Producing content" has dropped out of the top goals entirely; marketers are being measured on revenue and lead velocity. In a world where AI content is effectively free, the scarce resource is distribution \u2014 traffic, leads and trust.'
+            text: 'The shift from 2025 is subtle but real. "Producing content" has dropped out of the top goals entirely; marketers are being measured on revenue and lead velocity. In a world where AI content is effectively free, the scarce resource is distribution: traffic, leads and trust.'
           },
           {
             type: "h2",
@@ -1743,15 +1743,15 @@ var init_posts = __esm({
             type: "ol",
             items: [
               "Price on the capability gap. If you can ship a workflow that converts a 'theoretical' AI capability into a reliable 'observed' outcome for a specific role, you have a business.",
-              "Target the high-exposure, high-wage seats first. Programmers, customer service leads, finance and legal analysts \u2014 they have both the budget and the pain.",
-              "Assume AI content is free. Don't compete on output. Compete on distribution \u2014 SEO, GEO, partnerships and owned audience.",
+              "Target the high-exposure, high-wage seats first. Programmers, customer service leads, finance and legal analysts. They have both the budget and the pain.",
+              "Assume AI content is free. Don't compete on output. Compete on distribution: SEO, GEO, partnerships and owned audience.",
               "Measure on revenue, not reach. HubSpot's 2026 data says every B2B buyer is doing the same. Tie every marketing dollar to a pipeline number or cut it."
             ]
           },
           {
             type: "callout",
             title: "Where we plug in",
-            text: "Every MVP we ship at Start Apps Studio is built around a single measurable outcome \u2014 revenue, leads, or time saved. We don't ship pretty demos. If you've got a capability-gap idea, we can get you from signal to shipped in weeks, not quarters."
+            text: "Every MVP we ship at Start Apps Studio is built around a single measurable outcome: revenue, leads, or time saved. We don't ship pretty demos. If you've got a capability-gap idea, we can get you from signal to shipped in weeks, not quarters."
           },
           {
             type: "h2",
@@ -1785,10 +1785,10 @@ var init_posts = __esm({
             label: "'AI at Work: Mapping the Landscape of Occupational Exposure' (research summary infographic)."
           },
           {
-            label: "'Theoretical capability and observed usage by occupational category' \u2014 occupational radar chart."
+            label: "'Theoretical capability and observed usage by occupational category' (occupational radar chart)."
           },
           {
-            label: "HubSpot State of Marketing 2026 \u2014 in-app dashboard."
+            label: "HubSpot State of Marketing 2026, in-app dashboard."
           }
         ]
       },
@@ -2482,13 +2482,13 @@ function renderIndexHtml(origin) {
     <header class="index-header">
       <span class="index-eyebrow">The Journal \xB7 Vol. I</span>
       <h1 class="index-title">Field notes from the studio.</h1>
-      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI \u2014 GEO, vibe-coding, and the state of AI at work.</p>
+      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.</p>
     </header>
     <div class="post-grid">${cards}</div>
   </main>`;
   return shell({
     title: `MVP SEO & GEO Journal | ${AUTHOR_NAME}`,
-    description: "Field notes on shipping MVPs that rank on Google and get quoted by AI \u2014 GEO, vibe-coding, and the state of AI at work.",
+    description: "Field notes on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
     canonical,
     origin,
     ogImage: "/assets/images/og-cover.png",
@@ -2558,14 +2558,14 @@ function renderLlmsTxt(origin) {
 
 > A strategy-first product studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $1,399 mockups to full apps in 3 to 8 weeks.
 
-We are a small team augmented by the best AI models available \u2014 Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4 \u2014 so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
+We are a small team augmented by the best AI models available (Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4), so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
 
 ## Services
 
-- Mockups \u2014 polished, founder-ready visual mockups of your product idea
-- Prototypes \u2014 clickable, end-to-end prototype of the core flow, ready to demo
-- MVPs \u2014 real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
-- Custom-Scale \u2014 handcrafted multi-platform builds for funded teams ready to scale
+- Mockups: polished, founder-ready visual mockups of your product idea
+- Prototypes: clickable, end-to-end prototype of the core flow, ready to demo
+- MVPs: real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
+- Custom-Scale: handcrafted multi-platform builds for funded teams ready to scale
 
 ## Pricing
 
@@ -2602,11 +2602,11 @@ function renderLlmsFullTxt(origin) {
     month: "long",
     year: "numeric"
   });
-  return `# Start Apps Studio \u2014 Full Overview
+  return `# Start Apps Studio: Full Overview
 
 ## Who we are
 
-Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes \u2014 brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
+Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes, brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
 
 ## Who we serve
 
@@ -2624,16 +2624,16 @@ Start Apps Studio is an AI-native product studio for early-stage founders. We de
 
 ## Packages
 
-### Mockup \u2014 $1,399, fixed
+### Mockup: $1,399, fixed
 Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
 
-### Prototype \u2014 $4,799, fixed
+### Prototype: $4,799, fixed
 A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 5 to 10 days.
 
-### MVP \u2014 $9,000 to $19,000, fixed
+### MVP: $9,000 to $19,000, fixed
 A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.
 
-### Custom-Scale \u2014 $30,000+
+### Custom-Scale: $30,000+
 Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
 
 ## Toolkit (current as of ${toolkitAsOf})
@@ -2641,28 +2641,28 @@ Handcrafted multi-platform builds for funded teams ready to scale. Quoted per en
 We swap in new model versions the week they ship.
 
 **Reasoning & Code**
-- Claude Opus 5 & Fable 5 \u2014 primary builder
-- Gemini 2.5 Pro \u2014 long-context review
-- GPT-5.6 Sol \u2014 creative & copy
-- Llama 4 \u2014 self-hosted fallback
+- Claude Opus 5 & Fable 5: primary builder
+- Gemini 2.5 Pro: long-context review
+- GPT-5.6 Sol: creative & copy
+- Llama 4: self-hosted fallback
 
 **Mockups & Prototyping**
-- Figma \u2014 design system + Dev Mode
-- Replit \u2014 React hybrid builds
-- Lovable \u2014 rapid mockups
-- Rork \u2014 iOS & Android prototypes
+- Figma: design system + Dev Mode
+- Replit: React hybrid builds
+- Lovable: rapid mockups
+- Rork: iOS & Android prototypes
 
 **Production & Delivery**
-- Webflow \u2014 marketing site builds
-- WordPress \u2014 content sites & blogs
-- GitHub \u2014 daily updates + version control
-- Swift \u2014 native iOS apps
-- Kotlin and Compose UI \u2014 native Android apps
-- Automation \u2014 n8n + Make + custom webhooks
+- Webflow: marketing site builds
+- WordPress: content sites & blogs
+- GitHub: daily updates + version control
+- Swift: native iOS apps
+- Kotlin and Compose UI: native Android apps
+- Automation: n8n + Make + custom webhooks
 
 **Content & Media**
-- ElevenLabs \u2014 voiceover & speech
-- Seedance 2.0 \u2014 video & image gen
+- ElevenLabs: voiceover & speech
+- Seedance 2.0: video & image gen
 
 ## What makes us different
 

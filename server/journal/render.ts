@@ -1147,7 +1147,7 @@ export function renderIndexHtml(origin: string): string {
     <header class="index-header">
       <span class="index-eyebrow">The Journal · Vol. I</span>
       <h1 class="index-title">Field notes from the studio.</h1>
-      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI — GEO, vibe-coding, and the state of AI at work.</p>
+      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.</p>
     </header>
     <div class="post-grid">${cards}</div>
   </main>`;
@@ -1155,7 +1155,7 @@ export function renderIndexHtml(origin: string): string {
   return shell({
     title: `MVP SEO & GEO Journal | ${AUTHOR_NAME}`,
     description:
-      "Field notes on shipping MVPs that rank on Google and get quoted by AI — GEO, vibe-coding, and the state of AI at work.",
+      "Field notes on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
     canonical,
     origin,
     ogImage: "/assets/images/og-cover.png",
@@ -1233,14 +1233,14 @@ export function renderLlmsTxt(origin: string): string {
 
 > A strategy-first product studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $1,399 mockups to full apps in 3 to 8 weeks.
 
-We are a small team augmented by the best AI models available — Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4 — so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
+We are a small team augmented by the best AI models available (Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4), so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
 
 ## Services
 
-- Mockups — polished, founder-ready visual mockups of your product idea
-- Prototypes — clickable, end-to-end prototype of the core flow, ready to demo
-- MVPs — real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
-- Custom-Scale — handcrafted multi-platform builds for funded teams ready to scale
+- Mockups: polished, founder-ready visual mockups of your product idea
+- Prototypes: clickable, end-to-end prototype of the core flow, ready to demo
+- MVPs: real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
+- Custom-Scale: handcrafted multi-platform builds for funded teams ready to scale
 
 ## Pricing
 
@@ -1278,11 +1278,11 @@ export function renderLlmsFullTxt(origin: string): string {
     month: "long",
     year: "numeric",
   });
-  return `# Start Apps Studio — Full Overview
+  return `# Start Apps Studio: Full Overview
 
 ## Who we are
 
-Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes — brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
+Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes, brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
 
 ## Who we serve
 
@@ -1300,16 +1300,16 @@ Start Apps Studio is an AI-native product studio for early-stage founders. We de
 
 ## Packages
 
-### Mockup — $1,399, fixed
+### Mockup: $1,399, fixed
 Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
 
-### Prototype — $4,799, fixed
+### Prototype: $4,799, fixed
 A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 5 to 10 days.
 
-### MVP — $9,000 to $19,000, fixed
+### MVP: $9,000 to $19,000, fixed
 A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.
 
-### Custom-Scale — $30,000+
+### Custom-Scale: $30,000+
 Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
 
 ## Toolkit (current as of ${toolkitAsOf})
@@ -1317,28 +1317,28 @@ Handcrafted multi-platform builds for funded teams ready to scale. Quoted per en
 We swap in new model versions the week they ship.
 
 **Reasoning & Code**
-- Claude Opus 5 & Fable 5 — primary builder
-- Gemini 2.5 Pro — long-context review
-- GPT-5.6 Sol — creative & copy
-- Llama 4 — self-hosted fallback
+- Claude Opus 5 & Fable 5: primary builder
+- Gemini 2.5 Pro: long-context review
+- GPT-5.6 Sol: creative & copy
+- Llama 4: self-hosted fallback
 
 **Mockups & Prototyping**
-- Figma — design system + Dev Mode
-- Replit — React hybrid builds
-- Lovable — rapid mockups
-- Rork — iOS & Android prototypes
+- Figma: design system + Dev Mode
+- Replit: React hybrid builds
+- Lovable: rapid mockups
+- Rork: iOS & Android prototypes
 
 **Production & Delivery**
-- Webflow — marketing site builds
-- WordPress — content sites & blogs
-- GitHub — daily updates + version control
-- Swift — native iOS apps
-- Kotlin and Compose UI — native Android apps
-- Automation — n8n + Make + custom webhooks
+- Webflow: marketing site builds
+- WordPress: content sites & blogs
+- GitHub: daily updates + version control
+- Swift: native iOS apps
+- Kotlin and Compose UI: native Android apps
+- Automation: n8n + Make + custom webhooks
 
 **Content & Media**
-- ElevenLabs — voiceover & speech
-- Seedance 2.0 — video & image gen
+- ElevenLabs: voiceover & speech
+- Seedance 2.0: video & image gen
 
 ## What makes us different
 

@@ -34,11 +34,11 @@ export const posts: Post[] = [
       "The AI Overviews citation playbook for MVPs",
     seoTitle: "AI Overviews Citation Playbook for MVPs | Start Apps Studio",
     description:
-      "Five concrete patterns we see in pages pulled into Google AI Overviews — one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats — applied to three Start Apps Studio MVPs.",
+      "Five concrete patterns we see in pages pulled into Google AI Overviews: one-sentence answers, FAQPage schema, comparison tables, named entities up top, and dated stats. Applied to three Start Apps Studio MVPs.",
     seoDescription:
       "Five patterns that get MVPs cited in AI Overviews: direct answers, FAQPage schema, comparison tables, named entities, and dated stats. Real examples included.",
     excerpt:
-      "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things — and none of them are luck.",
+      "Most MVPs wait months to be cited in Google's AI Overviews. The pages that get pulled in early all do the same five things, and none of them are luck.",
     publishedAt: "2026-04-17",
     readMinutes: 6,
     category: "Playbook",
@@ -77,7 +77,7 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "FAQPage schema is the single highest-leverage block of structured data for AIO citations. Use the actual questions your users ask in support, sales, and Reddit threads — not invented marketing questions. Three to six Q&As per page is the sweet spot.",
+          "FAQPage schema is the single highest-leverage block of structured data for AIO citations. Use the actual questions your users ask in support, sales, and Reddit threads, not invented marketing questions. Three to six Q&As per page is the sweet spot.",
       },
       {
         type: "h3",
@@ -116,7 +116,7 @@ export const posts: Post[] = [
       },
       {
         type: "h3",
-        text: "Example 1 — A B2B scheduling MVP",
+        text: "Example 1: A B2B scheduling MVP",
         id: "example-scheduling",
       },
       {
@@ -126,7 +126,7 @@ export const posts: Post[] = [
       },
       {
         type: "h3",
-        text: "Example 2 — A consumer fitness MVP",
+        text: "Example 2: A consumer fitness MVP",
         id: "example-fitness",
       },
       {
@@ -136,7 +136,7 @@ export const posts: Post[] = [
       },
       {
         type: "h3",
-        text: "Example 3 — A developer tooling MVP",
+        text: "Example 3: A developer tooling MVP",
         id: "example-devtools",
       },
       {
@@ -154,7 +154,7 @@ export const posts: Post[] = [
         items: [
           "Rewrite the first 100 words of your highest-traffic page to lead with one direct-answer sentence that names your brand, product, and category.",
           "Ship a FAQPage JSON-LD block with three to six real questions taken from your support inbox or Reddit threads.",
-          "Add at least one HTML comparison table — even a 3x3 grid will do.",
+          "Add at least one HTML comparison table. Even a 3x3 grid will do.",
           "Audit every key page for at least one stat with a year attached. Refresh the year on January 1.",
           "Resubmit the page in Google Search Console and watch coverage in the Discover and AIO panels over the next two weeks.",
         ],
@@ -163,7 +163,7 @@ export const posts: Post[] = [
         type: "callout",
         title: "Where we plug in",
         text:
-          "Every MVP we ship at Start Apps Studio launches with all five patterns wired in from day one — direct answer, FAQPage schema, comparison table, named entities, dated stats. That's why our portfolio MVPs start collecting AI Overview citations before they've spent a dollar on paid acquisition.",
+          "Every MVP we ship at Start Apps Studio launches with all five patterns wired in from day one: direct answer, FAQPage schema, comparison table, named entities, dated stats. That's why our portfolio MVPs start collecting AI Overview citations before they've spent a dollar on paid acquisition.",
       },
       {
         type: "h2",
@@ -175,7 +175,7 @@ export const posts: Post[] = [
         items: [
           {
             q: "How fast can a brand-new MVP earn its first AI Overview citation?",
-            a: "In our portfolio, between 9 and 21 days after the page is indexed and the five patterns are in place. The biggest variable is how quickly Google re-crawls the page — submitting the URL in Search Console after the rewrite usually accelerates this to under two weeks.",
+            a: "In our portfolio, between 9 and 21 days after the page is indexed and the five patterns are in place. The biggest variable is how quickly Google re-crawls the page. Submitting the URL in Search Console after the rewrite usually accelerates this to under two weeks.",
           },
           {
             q: "Do I need a high domain rating to be cited in AI Overviews?",
@@ -195,11 +195,11 @@ export const posts: Post[] = [
     sources: [
       {
         label:
-          "Internal Start Apps Studio portfolio analysis — AI Overview citation timing across 14 MVP launches.",
+          "Internal Start Apps Studio portfolio analysis: AI Overview citation timing across 14 MVP launches.",
       },
       {
         label:
-          "Google Search Central — structured data guidelines for FAQPage and Article schema.",
+          "Google Search Central: structured data guidelines for FAQPage and Article schema.",
       },
     ],
   },
@@ -210,7 +210,7 @@ export const posts: Post[] = [
       "How to make your brand visible in ChatGPT and AI answers",
     seoTitle: "Brand Visible in ChatGPT & AI Overviews | Start Apps Studio",
     description:
-      "A 12-point GEO checklist — answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T — so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
+      "A 12-point GEO checklist covering answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T, so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
     seoDescription:
       "A 12-point GEO checklist so ChatGPT and AI Overviews surface your brand: answer-first writing, schema, entity signals, social proof, and E-E-A-T.",
     excerpt:
@@ -229,13 +229,13 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "Generative Engine Optimization (GEO) is the new SEO. Your MVP can rank on Google and still be invisible inside ChatGPT, Claude, Perplexity and Google's AI Overviews, because LLMs don't index pages the way crawlers do — they extract answers. Below is the 12-point audit we run on every MVP we ship at Start Apps Studio, based on the patterns we see across brands that actually get quoted by AI.",
+          "Generative Engine Optimization (GEO) is the new SEO. Your MVP can rank on Google and still be invisible inside ChatGPT, Claude, Perplexity and Google's AI Overviews, because LLMs don't index pages the way crawlers do; they extract answers. Below is the 12-point audit we run on every MVP we ship at Start Apps Studio, based on the patterns we see across brands that actually get quoted by AI.",
       },
       { type: "h2", text: "Why this matters for MVPs", id: "why" },
       {
         type: "p",
         text:
-          "Roughly a third of product discovery is already happening inside chat interfaces. For an MVP the stakes are higher than for an incumbent: you don't have the 10,000 third-party mentions Stripe or Notion have, so every signal you send has to be intentional. The good news is that GEO wins compound quickly — a single well-structured page can start getting quoted within days of indexing.",
+          "Roughly a third of product discovery is already happening inside chat interfaces. For an MVP the stakes are higher than for an incumbent: you don't have the 10,000 third-party mentions Stripe or Notion have, so every signal you send has to be intentional. The good news is that GEO wins compound quickly. A single well-structured page can start getting quoted within days of indexing.",
       },
       {
         type: "h2",
@@ -284,7 +284,7 @@ export const posts: Post[] = [
       },
       {
         type: "h3",
-        text: "5. Define your own terms — inline",
+        text: "5. Define your own terms, inline",
         id: "definitions",
       },
       {
@@ -360,7 +360,7 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "Every page needs unique, structured product schema — not copy-pasted text. Duplicate content collapses topical authority and confuses AI indexing. If you have 20 near-identical SKU pages, LLMs will pick none of them.",
+          "Every page needs unique, structured product schema, not copy-pasted text. Duplicate content collapses topical authority and confuses AI indexing. If you have 20 near-identical SKU pages, LLMs will pick none of them.",
       },
       {
         type: "h2",
@@ -400,7 +400,7 @@ export const posts: Post[] = [
           },
           {
             q: "Do small MVPs really need schema markup?",
-            a: "Yes — more than big brands do. Schema is the cheapest way for a small site to punch above its weight in AI answers, because LLMs use structured data to disambiguate unknown brands.",
+            a: "Yes, more than big brands do. Schema is the cheapest way for a small site to punch above its weight in AI answers, because LLMs use structured data to disambiguate unknown brands.",
           },
         ],
       },
@@ -408,11 +408,11 @@ export const posts: Post[] = [
     sources: [
       {
         label:
-          "'12 Reasons Your Brand Is Invisible in ChatGPT Responses' — Francesco Gatti (LinkedIn).",
+          "'12 Reasons Your Brand Is Invisible in ChatGPT Responses' by Francesco Gatti (LinkedIn).",
       },
       {
         label:
-          "'The key to nailing every brand identity project' — Maik Noblovits (Instagram).",
+          "'The key to nailing every brand identity project' by Maik Noblovits (Instagram).",
       },
     ],
   },
@@ -420,14 +420,14 @@ export const posts: Post[] = [
   {
     slug: "vibe-coded-apps-have-an-seo-problem",
     title:
-      "Vibe-coded apps have an SEO problem — here's how to fix it",
+      "Vibe-coded apps have an SEO problem. Here's how to fix it",
     seoTitle: "Vibe-Coded Apps & SEO: How to Fix It | Start Apps Studio",
     description:
       "Lovable, Bolt and v0 ship empty divs to crawlers. This is how to fix it: a Cloudflare Worker SSR proxy pattern, or a full migration to Claude Code + Supabase + Vercel when you need to rank.",
     seoDescription:
       "Lovable, Bolt, and v0 ship empty divs to crawlers. Fix it with a Cloudflare Worker SSR proxy for a quick win, or migrate to a real stack when ranking matters.",
     excerpt:
-      "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it — a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
+      "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it: a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
     publishedAt: "2026-04-16",
     updatedAt: "2026-04-17",
     readMinutes: 9,
@@ -451,7 +451,7 @@ export const posts: Post[] = [
       },
       {
         type: "h2",
-        text: "Fix 1 — Cloudflare Worker SSR proxy",
+        text: "Fix 1: Cloudflare Worker SSR proxy",
         id: "cloudflare-worker",
       },
       {
@@ -462,7 +462,7 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "This is not cloaking when it's done correctly — the content the bot receives has to match what the user eventually sees once the JS executes. The setup is two steps:",
+          "This is not cloaking when it's done correctly. The content the bot receives has to match what the user eventually sees once the JS executes. The setup is two steps:",
       },
       {
         type: "ol",
@@ -479,7 +479,7 @@ export const posts: Post[] = [
       },
       {
         type: "h2",
-        text: "Fix 2 — Migrate off Lovable with Claude Code",
+        text: "Fix 2: Migrate off Lovable with Claude Code",
         id: "migrate-claude",
       },
       {
@@ -495,18 +495,18 @@ export const posts: Post[] = [
           "Install Claude Code locally so it can read and edit your repo directly.",
           "Point Claude at your repo (GitHub remote or local path).",
           "Create a Supabase project for database and auth (roughly five minutes).",
-          "Ask Claude to migrate the project away from Lovable — prompt: \"Migrate this Lovable project into a normal web stack and organize the repo cleanly.\"",
+          "Ask Claude to migrate the project away from Lovable with this prompt: \"Migrate this Lovable project into a normal web stack and organize the repo cleanly.\"",
           "Set up hosting on Vercel. The free tier covers most MVPs.",
-          "Ask Claude which environment variables and API keys are required — it's surprisingly good at identifying them.",
+          "Ask Claude which environment variables and API keys are required; it's surprisingly good at identifying them.",
           "Generate the keys and create a .env file (Supabase keys, API tokens, etc).",
-          "Ask Claude to configure deployment — it can wire the GitHub → Vercel flow and connect Supabase.",
+          "Ask Claude to configure deployment. It can wire the GitHub → Vercel flow and connect Supabase.",
           "Fix anything that breaks by asking Claude to debug, one error at a time.",
         ],
       },
       {
         type: "p",
         text:
-          "This setup ends up more flexible than Lovable itself. You stop paying per-prompt credits for app changes, and you can fall back to free models for small edits — because Lovable is already using Claude under the hood for most of its generation.",
+          "This setup ends up more flexible than Lovable itself. You stop paying per-prompt credits for app changes, and you can fall back to free models for small edits, since Lovable is already using Claude under the hood for most of its generation.",
       },
       {
         type: "h2",
@@ -516,7 +516,7 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "If you're mid-project and not ready to migrate, there's a middle path that multiple r/lovable users have validated: connect Lovable to GitHub, then give Claude Code access to the same repo. Claude sits on a layer above Lovable, guiding it through complex features, debugging, and enhancements, while you run SQL directly in Supabase for database changes (free — Lovable doesn't charge to run a query).",
+          "If you're mid-project and not ready to migrate, there's a middle path that multiple r/lovable users have validated: connect Lovable to GitHub, then give Claude Code access to the same repo. Claude sits on a layer above Lovable, guiding it through complex features, debugging, and enhancements, while you run SQL directly in Supabase for database changes (Lovable doesn't charge to run a query, so it's free).",
       },
       {
         type: "p",
@@ -540,7 +540,7 @@ export const posts: Post[] = [
         type: "callout",
         title: "Where we plug in",
         text:
-          "Start Apps Studio has migrated a handful of Lovable MVPs off the platform using exactly this recipe. If you'd rather not burn a week on the plumbing, we can take it from prompt to indexed production — usually in under two weeks.",
+          "Start Apps Studio has migrated a handful of Lovable MVPs off the platform using exactly this recipe. If you'd rather not burn a week on the plumbing, we can take it from prompt to indexed production, usually in under two weeks.",
       },
       {
         type: "h2",
@@ -572,15 +572,15 @@ export const posts: Post[] = [
     sources: [
       {
         label:
-          "r/lovable showcase — 'I solved Lovable's biggest SEO problem' (Cloudflare Worker pattern).",
+          "r/lovable showcase: 'I solved Lovable's biggest SEO problem' (Cloudflare Worker pattern).",
       },
       {
         label:
-          "r/lovable tutorial — 'Lovable <> Claude = 10X performance' by u/EIAMM.",
+          "r/lovable tutorial: 'Lovable <> Claude = 10X performance' by u/EIAMM.",
       },
       {
         label:
-          "r/lovable — 10-step migration to Claude Code + Supabase + Vercel.",
+          "r/lovable: 10-step migration to Claude Code + Supabase + Vercel.",
       },
     ],
   },
@@ -631,7 +631,7 @@ export const posts: Post[] = [
         type: "ul",
         items: [
           "Workers with a bachelor's degree are 23.8 percentage points more likely to be in the top AI-exposure quartile (37.1% vs 13.3%).",
-          "The average hourly wage in high-exposure roles is $32.69, versus $22.23 in no-exposure roles — a $10.45 wage premium.",
+          "The average hourly wage in high-exposure roles is $32.69, versus $22.23 in no-exposure roles, a $10.45 wage premium.",
           "Female workers are 15.5 percentage points more represented in high-exposure roles than in no-exposure roles.",
         ],
       },
@@ -648,12 +648,12 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "Across every occupational category we looked at — management, business and finance, computer and math, architecture and engineering, legal, arts and media — observed AI usage is a fraction of theoretical capability. Even in office and admin work, where exposure is highest, the red-shaded \"observed\" footprint sits at roughly a third of the blue \"theoretical\" one.",
+          "Across every occupational category we looked at (management, business and finance, computer and math, architecture and engineering, legal, arts and media), observed AI usage is a fraction of theoretical capability. Even in office and admin work, where exposure is highest, the red-shaded \"observed\" footprint sits at roughly a third of the blue \"theoretical\" one.",
       },
       {
         type: "p",
         text:
-          "That gap is the arbitrage. Enterprise users are not short on access to LLMs; they are short on workflows that turn access into outcomes. Every startup that closes one such workflow — \"draft the contract\", \"reconcile the invoice\", \"write the follow-up\" — is pricing on the gap.",
+          "That gap is the arbitrage. Enterprise users are not short on access to LLMs; they are short on workflows that turn access into outcomes. Every startup that closes one such workflow (\"draft the contract\", \"reconcile the invoice\", \"write the follow-up\") is pricing on the gap.",
       },
       {
         type: "h2",
@@ -685,7 +685,7 @@ export const posts: Post[] = [
       {
         type: "p",
         text:
-          "The shift from 2025 is subtle but real. \"Producing content\" has dropped out of the top goals entirely; marketers are being measured on revenue and lead velocity. In a world where AI content is effectively free, the scarce resource is distribution — traffic, leads and trust.",
+          "The shift from 2025 is subtle but real. \"Producing content\" has dropped out of the top goals entirely; marketers are being measured on revenue and lead velocity. In a world where AI content is effectively free, the scarce resource is distribution: traffic, leads and trust.",
       },
       {
         type: "h2",
@@ -696,8 +696,8 @@ export const posts: Post[] = [
         type: "ol",
         items: [
           "Price on the capability gap. If you can ship a workflow that converts a 'theoretical' AI capability into a reliable 'observed' outcome for a specific role, you have a business.",
-          "Target the high-exposure, high-wage seats first. Programmers, customer service leads, finance and legal analysts — they have both the budget and the pain.",
-          "Assume AI content is free. Don't compete on output. Compete on distribution — SEO, GEO, partnerships and owned audience.",
+          "Target the high-exposure, high-wage seats first. Programmers, customer service leads, finance and legal analysts. They have both the budget and the pain.",
+          "Assume AI content is free. Don't compete on output. Compete on distribution: SEO, GEO, partnerships and owned audience.",
           "Measure on revenue, not reach. HubSpot's 2026 data says every B2B buyer is doing the same. Tie every marketing dollar to a pipeline number or cut it.",
         ],
       },
@@ -705,7 +705,7 @@ export const posts: Post[] = [
         type: "callout",
         title: "Where we plug in",
         text:
-          "Every MVP we ship at Start Apps Studio is built around a single measurable outcome — revenue, leads, or time saved. We don't ship pretty demos. If you've got a capability-gap idea, we can get you from signal to shipped in weeks, not quarters.",
+          "Every MVP we ship at Start Apps Studio is built around a single measurable outcome: revenue, leads, or time saved. We don't ship pretty demos. If you've got a capability-gap idea, we can get you from signal to shipped in weeks, not quarters.",
       },
       {
         type: "h2",
@@ -741,10 +741,10 @@ export const posts: Post[] = [
       },
       {
         label:
-          "'Theoretical capability and observed usage by occupational category' — occupational radar chart.",
+          "'Theoretical capability and observed usage by occupational category' (occupational radar chart).",
       },
       {
-        label: "HubSpot State of Marketing 2026 — in-app dashboard.",
+        label: "HubSpot State of Marketing 2026, in-app dashboard.",
       },
     ],
   },
