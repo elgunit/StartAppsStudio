@@ -4958,10 +4958,11 @@
         });
         // Open the target card
         card.classList.add('expanded');
-        // Smooth scroll to the section start so the heading is visible
+        // Smooth scroll to the opened card so its full header starts in view.
+        // The expanded skill list can continue below the viewport on smaller
+        // screens instead of being pushed below the section heading.
         setTimeout(function() {
-          var section = document.getElementById('expertise');
-          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 50);
       }
       
