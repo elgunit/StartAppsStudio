@@ -871,35 +871,53 @@
         padding: 0;
       }
       .recent-build-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "main badge";
+        align-items: start;
+        column-gap: 16px;
         padding: 11px 20px;
         border-bottom: 1px solid var(--line);
-        flex-wrap: wrap;
-        row-gap: 4px;
       }
       .recent-build-item:last-child { border-bottom: none; }
+      .recent-build-main {
+        grid-area: main;
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
       .recent-build-name {
         font-size: 14px;
         font-weight: 600;
         color: var(--ink);
-        flex: 1;
-        min-width: 160px;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      .recent-build-item .hat-badge {
+        grid-area: badge;
+        align-self: start;
+        justify-self: end;
+        white-space: nowrap;
+      }
       .recent-build-result {
         font-size: 12px;
         color: var(--muted);
-        white-space: nowrap;
+        line-height: 1.4;
       }
       @media (max-width: 520px) {
         .recent-builds-header,
         .recent-build-item { padding-left: 14px; padding-right: 14px; }
-        .recent-build-name { flex: 1 1 auto; }
+        .recent-build-item {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-areas:
+            "main"
+            "badge";
+          row-gap: 8px;
+        }
+        .recent-build-item .hat-badge { justify-self: start; }
       }
       
       .service-header {
@@ -4906,34 +4924,46 @@
           </div>
           <ul class="recent-builds-list">
             <li class="recent-build-item">
-              <span class="recent-build-name">Retail Inventory Dashboard</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">Retail Inventory Dashboard</span>
+                <span class="recent-build-result">Shipped in 3 weeks</span>
+              </div>
               <span class="hat-badge">E-commerce · Web</span>
-              <span class="recent-build-result">Shipped in 3 weeks</span>
             </li>
             <li class="recent-build-item">
-              <span class="recent-build-name">Healthcare Appointment Booking</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">Healthcare Appointment Booking</span>
+                <span class="recent-build-result">Live in 5 weeks · 800 bookings in week one</span>
+              </div>
               <span class="hat-badge">Health · iOS &amp; Android</span>
-              <span class="recent-build-result">Live in 5 weeks · 800 bookings in week one</span>
             </li>
             <li class="recent-build-item">
-              <span class="recent-build-name">Agency Client Portal</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">Agency Client Portal</span>
+                <span class="recent-build-result">Replaced spreadsheets · 3 agencies onboarded</span>
+              </div>
               <span class="hat-badge">SaaS · Web</span>
-              <span class="recent-build-result">Replaced spreadsheets · 3 agencies onboarded</span>
             </li>
             <li class="recent-build-item">
-              <span class="recent-build-name">Restaurant Ordering &amp; Kitchen Display</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">Restaurant Ordering &amp; Kitchen Display</span>
+                <span class="recent-build-result">Deployed across 4 locations</span>
+              </div>
               <span class="hat-badge">Hospitality · iOS &amp; Android</span>
-              <span class="recent-build-result">Deployed across 4 locations</span>
             </li>
             <li class="recent-build-item">
-              <span class="recent-build-name">Nonprofit Donor Management</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">Nonprofit Donor Management</span>
+                <span class="recent-build-result">Shipped in 4 weeks · $120k raised at launch</span>
+              </div>
               <span class="hat-badge">Non-profit · Web</span>
-              <span class="recent-build-result">Shipped in 4 weeks · $120k raised at launch</span>
             </li>
             <li class="recent-build-item">
-              <span class="recent-build-name">AI Content Workflow Tool</span>
+              <div class="recent-build-main">
+                <span class="recent-build-name">AI Content Workflow Tool</span>
+                <span class="recent-build-result">Beta launched · 200 signups in 48 hours</span>
+              </div>
               <span class="hat-badge">SaaS · Web</span>
-              <span class="recent-build-result">Beta launched · 200 signups in 48 hours</span>
             </li>
           </ul>
         </div>
