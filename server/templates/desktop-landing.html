@@ -4475,71 +4475,90 @@
       /* Hero children sit above the pointer-light layer */
       .hero > *:not(#hero-light) { position: relative; z-index: 1; }
 
-      /* --- Pointer-light bloom (JS drives --lx/--ly) ------------------- */
+      /* --- Fidget-spinner hero glow ----------------------------------------
+         Three DOM children inside #hero-light, each positioned and rotated
+         by JS via CSS custom properties. The outer blob orbits around the
+         hero centre driven by angular velocity (imparted by mouse movement
+         and coasting with friction). The inner core follows the cursor like
+         a lagging comet. A trailing smear stretches behind the orbit arc.
+      ---------------------------------------------------------------------- */
       #hero-light {
         position: absolute; inset: 0;
         pointer-events: none; z-index: 0;
         border-radius: inherit; overflow: hidden;
         opacity: 0;
-        transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
+        transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
       }
-      #hero-light.is-active { opacity: 0.86; }
-      #hero-light.is-away { opacity: 0; }
-      #hero-light::before,
-      #hero-light::after {
-        content: '';
+      #hero-light.is-active { opacity: 1; }
+      #hero-light.is-away   { opacity: 0; }
+
+      /* Shared blob base */
+      #hero-light .hl-blob {
         position: absolute;
         top: 0; left: 0;
-        transform:
-          translate3d(var(--lx, 52%), var(--ly, 38%), 0)
-          translate(-50%, -50%)
-          rotate(var(--liquid-angle, 0deg))
-          scaleX(var(--liquid-stretch, 1))
-          scaleY(var(--liquid-squash, 1));
         pointer-events: none;
-        will-change: transform, filter;
-        background-blend-mode: screen;
+        will-change: transform;
+        border-radius: 50%;
       }
-      /* A smaller, sharper pool gives the light a liquid edge instead of a
-         circular spotlight. The asymmetric radii keep it from reading as a
-         stock gradient even when the pointer is still. */
-      #hero-light::before {
-        width: 340px; height: 250px;
-        border-radius: 58% 42% 64% 36% / 46% 61% 39% 54%;
-        background:
-          linear-gradient(118deg,
-            color-mix(in srgb, var(--dominant) 22%, transparent),
-            color-mix(in srgb, var(--rose) 13%, transparent) 48%,
-            color-mix(in srgb, #fff 8%, transparent) 78%,
-            transparent),
-          conic-gradient(from var(--liquid-angle, 0deg),
-            color-mix(in srgb, var(--dominant) 28%, transparent),
-            color-mix(in srgb, var(--rose) 18%, transparent) 31%,
-            transparent 58%,
-            color-mix(in srgb, var(--dominant) 18%, transparent) 82%,
-            color-mix(in srgb, var(--rose) 12%, transparent));
-        filter: blur(16px) saturate(135%);
-        opacity: 0.8;
-      }
-      /* The wide layer is deliberately translucent and off-axis: it gives
-         the hero a refracted wash rather than another visible circle. */
-      #hero-light::after {
-        width: 690px; height: 430px;
+
+      /* Outer orbit blob — wide cloudy wash */
+      #hero-light .hl-outer {
+        width: 560px; height: 360px;
         border-radius: 63% 37% 48% 52% / 42% 54% 46% 58%;
         background:
-          linear-gradient(102deg,
-            transparent 8%,
-            color-mix(in srgb, var(--dominant) 17%, transparent) 38%,
-            color-mix(in srgb, var(--rose) 10%, transparent) 66%,
-            transparent 94%),
-          conic-gradient(from calc(var(--liquid-angle, 0deg) + 35deg),
-            transparent,
-            color-mix(in srgb, var(--dominant) 18%, transparent) 24%,
-            color-mix(in srgb, var(--rose) 11%, transparent) 55%,
-            transparent 79%);
-        filter: blur(44px) saturate(125%);
-        opacity: 0.58;
+          conic-gradient(from var(--spin, 0deg) at 50% 50%,
+            color-mix(in srgb, var(--dominant) 30%, transparent),
+            color-mix(in srgb, var(--rose) 22%, transparent) 28%,
+            color-mix(in srgb, #7fc8cc 18%, transparent) 52%,
+            transparent 68%,
+            color-mix(in srgb, var(--dominant) 20%, transparent) 88%,
+            color-mix(in srgb, var(--rose) 14%, transparent));
+        filter: blur(48px) saturate(140%);
+        opacity: 0.72;
+        transform:
+          translate3d(var(--ox, 0px), var(--oy, 0px), 0)
+          translate(-50%, -50%)
+          rotate(var(--tilt, 0deg))
+          scaleX(var(--sx, 1)) scaleY(var(--sy, 1));
       }
+
+      /* Inner comet core — tighter, brighter */
+      #hero-light .hl-inner {
+        width: 260px; height: 200px;
+        border-radius: 58% 42% 64% 36% / 46% 61% 39% 54%;
+        background:
+          radial-gradient(ellipse at 40% 45%,
+            color-mix(in srgb, #fff 28%, transparent) 0%,
+            color-mix(in srgb, var(--dominant) 32%, transparent) 35%,
+            color-mix(in srgb, var(--rose) 20%, transparent) 65%,
+            transparent 90%);
+        filter: blur(14px) saturate(160%) brightness(1.15);
+        opacity: 0.85;
+        transform:
+          translate3d(var(--ix, 0px), var(--iy, 0px), 0)
+          translate(-50%, -50%)
+          rotate(var(--itilt, 0deg))
+          scaleX(var(--isx, 1)) scaleY(var(--isy, 1));
+      }
+
+      /* Shooting-star trail — elongated smear behind the orbit point */
+      #hero-light .hl-trail {
+        width: 420px; height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          color-mix(in srgb, var(--dominant) 18%, transparent) 30%,
+          color-mix(in srgb, var(--rose) 14%, transparent) 62%,
+          color-mix(in srgb, #fff 8%, transparent) 82%,
+          transparent 100%);
+        filter: blur(22px) saturate(130%);
+        opacity: 0.55;
+        transform:
+          translate3d(var(--tx, 0px), var(--ty, 0px), 0)
+          translate(-50%, -50%)
+          rotate(var(--tang, 0deg));
+      }
+
       @media (prefers-reduced-motion: reduce) {
         #hero-light { transition: none; }
       }
@@ -4674,7 +4693,11 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
-        <div id="hero-light" aria-hidden="true"></div>
+        <div id="hero-light" aria-hidden="true">
+          <div class="hl-blob hl-outer"></div>
+          <div class="hl-blob hl-inner"></div>
+          <div class="hl-blob hl-trail"></div>
+        </div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio for <span class="accent-word">founders</span>,</span><span class="hero-line hero-line-nowrap">without the equity split.</span></h1>
         <p class="hero-subheadline">Strategy-first development for founders starting fresh, teams rescuing a half-built app, businesses outsourcing a project, and clients who need a landing page or pitch prototype fast. We map your flows, design, build, and launch in weeks, not months.</p>
 
@@ -7499,119 +7522,216 @@
     })();
     </script>
     <script>
-    /* Pointer-light bloom: hero refractive spotlight follows cursor.
-       Lightweight — only runs on desktop with motion allowed. */
+    /* -----------------------------------------------------------------------
+       Fidget-spinner hero glow
+       -----------------------------------------------------------------------
+       Physics model (all time-based so framerate-independent):
+
+       SPIN  — the outer blob orbits around the hero centre at radius R.
+               Mouse movement imparts angular velocity proportional to the
+               tangential component of pointer velocity. Releasing the mouse
+               lets it coast with exponential friction (half-life ~1.4s).
+               A slow idle drift keeps it alive when the pointer is absent.
+
+       CORE  — the inner comet core chases the cursor with a lazy spring
+               (half-life ~0.22s). It stretches along its direction of travel.
+
+       TRAIL — a thin smear sits behind the orbit point, oriented along the
+               tangent of the orbit, fading as spin slows.
+
+       All three children are plain DOM divs so they can be styled and
+       transformed independently (CSS ::before/::after can't be addressed
+       individually by JS). Only runs on desktop with motion allowed.
+    ----------------------------------------------------------------------- */
     (function () {
       if (!window.matchMedia) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       if (window.matchMedia('(max-width: 768px)').matches) return;
+
       var hero  = document.querySelector('.hero');
       var light = document.getElementById('hero-light');
       if (!hero || !light) return;
-      var raf = null;
-      var currentX = 0, currentY = 0;
-      var targetX = 0, targetY = 0;
-      var hasPosition = false;
+
+      var outer = light.querySelector('.hl-outer');
+      var inner = light.querySelector('.hl-inner');
+      var trail = light.querySelector('.hl-trail');
+      if (!outer || !inner || !trail) return;
+
+      /* ---- Orbit state ---- */
+      var angle    = Math.PI * 0.25;   // current orbit angle (radians)
+      var omega    = 0.55;             // angular velocity (rad/s) — initial gentle drift
+      var FRICTION = 0.52;             // exponential decay rate (1/s); higher = faster stop
+      var IDLE_ω   = 0.38;             // passive drift speed when pointer is away
+      var RADIUS   = 0;                // set on first layout
+
+      /* ---- Core (comet) state ---- */
+      var cx = 0, cy = 0;             // current core position (hero-relative px)
+      var tcx = 0, tcy = 0;           // target core position
+
+      /* ---- Mouse tracking for angular impulse ---- */
+      var prevMx = null, prevMy = null, prevMt = null;
+      var insideHero = false;
+
+      /* ---- Loop ---- */
+      var ticking   = false;
+      var lastTick  = null;
       var awayTimer = null;
+      var spinVal   = 0;              // accumulated spin angle in degrees for conic
 
-      var ticking = false;
-      var lastTick = null;
-
-      function setGlowPosition(x, y) {
-        targetX = x;
-        targetY = y;
-        if (!ticking) {
-          ticking = true;
-          lastTick = null;
-          window.setTimeout(tick, 16);
-        }
+      function heroRect() { return hero.getBoundingClientRect(); }
+      function heroCenter() {
+        var r = heroRect();
+        return { x: r.width * 0.5, y: r.height * 0.5 };
       }
 
-      // Drive the loop with setTimeout + performance.now() — same approach
-      // as the anchor scroll above — so it keeps ticking even when rAF is
-      // throttled (background tabs, embedded iframes, headless environments).
-      function tick() {
+      function startLoop() {
+        if (ticking) return;
+        ticking  = true;
+        lastTick = null;
+        window.setTimeout(loop, 16);
+      }
+
+      function loop() {
         var now = performance.now();
         if (lastTick === null) lastTick = now;
-        // Time-based damping: the glow closes a fixed fraction of the
-        // remaining distance per unit of TIME, not per frame, so the
-        // motion feels identical regardless of tick cadence. Rate 2.8/s
-        // gives a weighty ~1s settle. dt is clamped so a long gap eases
-        // forward instead of jumping.
-        var dt = Math.min((now - lastTick) / 1000, 0.1);
+        var dt = Math.min((now - lastTick) / 1000, 0.08);
         lastTick = now;
-        var ease = 1 - Math.exp(-dt * 2.8);
 
-        var dx = targetX - currentX;
-        var dy = targetY - currentY;
-        currentX += dx * ease;
-        currentY += dy * ease;
-        light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
-        light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
-        var drift = Math.sqrt(dx * dx + dy * dy);
-        var angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        var stretch = 1 + Math.min(0.16, drift / 900);
-        var squash = 1 - Math.min(0.07, drift / 1800);
-        light.style.setProperty('--liquid-angle', angle.toFixed(2) + 'deg');
-        light.style.setProperty('--liquid-stretch', stretch.toFixed(3));
-        light.style.setProperty('--liquid-squash', squash.toFixed(3));
+        var r  = heroRect();
+        RADIUS = Math.min(r.width, r.height) * 0.28;
 
-        if (Math.abs(dx) + Math.abs(dy) > 0.25) {
-          window.setTimeout(tick, 16);
+        var cx0 = r.width  * 0.5;
+        var cy0 = r.height * 0.5;
+
+        /* -- Spin physics -- */
+        if (insideHero) {
+          // Friction only while mouse is present (finger-drag feel)
+          omega -= omega * FRICTION * dt;
         } else {
-          currentX = targetX;
-          currentY = targetY;
-          light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
-          light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
-          ticking = false;
+          // Coast toward idle drift when away
+          omega += (IDLE_ω - omega) * (1 - Math.exp(-dt * 1.2));
+        }
+
+        angle += omega * dt;
+        spinVal += omega * dt * (180 / Math.PI);
+
+        /* -- Orbit position -- */
+        var ox = cx0 + Math.cos(angle) * RADIUS;
+        var oy = cy0 + Math.sin(angle) * RADIUS * 0.55; // flatten to ellipse
+
+        /* -- Stretch outer along orbit tangent -- */
+        var speed = Math.abs(omega);
+        var sx = 1 + Math.min(0.55, speed * 0.28);   // stretch along travel
+        var sy = 1 - Math.min(0.22, speed * 0.11);   // squash perpendicular
+        var tiltDeg = (angle + Math.PI * 0.5) * 180 / Math.PI; // tangent angle
+
+        outer.style.transform =
+          'translate3d(' + ox.toFixed(2) + 'px,' + oy.toFixed(2) + 'px,0)' +
+          ' translate(-50%,-50%)' +
+          ' rotate(' + tiltDeg.toFixed(2) + 'deg)' +
+          ' scaleX(' + sx.toFixed(3) + ') scaleY(' + sy.toFixed(3) + ')';
+        outer.style.setProperty('--spin', spinVal.toFixed(1) + 'deg');
+
+        /* -- Core chases cursor (lazy spring) -- */
+        var coreEase = 1 - Math.exp(-dt * 4.5);
+        var prevCx = cx, prevCy = cy;
+        cx += (tcx - cx) * coreEase;
+        cy += (tcy - cy) * coreEase;
+
+        var cdx = cx - prevCx, cdy = cy - prevCy;
+        var cspeed = Math.sqrt(cdx * cdx + cdy * cdy) / dt;
+        var cTilt  = Math.atan2(cdy, cdx) * 180 / Math.PI;
+        var isx = 1 + Math.min(0.45, cspeed / 700);
+        var isy = 1 - Math.min(0.18, cspeed / 1400);
+
+        inner.style.transform =
+          'translate3d(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px,0)' +
+          ' translate(-50%,-50%)' +
+          ' rotate(' + cTilt.toFixed(2) + 'deg)' +
+          ' scaleX(' + isx.toFixed(3) + ') scaleY(' + isy.toFixed(3) + ')';
+
+        /* -- Trail: elongated smear trailing behind orbit point -- */
+        var trailOpacity = Math.min(0.7, speed * 0.55);
+        var trailSx = 1 + Math.min(1.8, speed * 0.9);
+        trail.style.opacity = trailOpacity.toFixed(3);
+        trail.style.transform =
+          'translate3d(' + ox.toFixed(2) + 'px,' + oy.toFixed(2) + 'px,0)' +
+          ' translate(-50%,-50%)' +
+          ' rotate(' + (tiltDeg + 180).toFixed(2) + 'deg)' +
+          ' scaleX(' + trailSx.toFixed(3) + ')';
+
+        /* -- Keep ticking while there is meaningful motion -- */
+        var stillMoving = Math.abs(omega) > 0.01 ||
+                          Math.abs(tcx - cx) + Math.abs(tcy - cy) > 0.5;
+        if (stillMoving || insideHero) {
+          window.setTimeout(loop, 16);
+        } else {
+          ticking  = false;
           lastTick = null;
         }
       }
 
+      /* ---- Pointer events ---- */
       function heroPoint(e) {
-        var r = hero.getBoundingClientRect();
-        return {
-          x: e.clientX - r.left,
-          y: e.clientY - r.top
-        };
+        var r = heroRect();
+        return { x: e.clientX - r.left, y: e.clientY - r.top };
       }
 
       hero.addEventListener('mouseenter', function (e) {
-        if (awayTimer) window.clearTimeout(awayTimer);
+        if (awayTimer) { window.clearTimeout(awayTimer); awayTimer = null; }
+        insideHero = true;
         light.classList.remove('is-away');
         light.classList.add('is-active');
         var p = heroPoint(e);
-        if (!hasPosition) {
-          currentX = p.x;
-          currentY = p.y;
-          hasPosition = true;
-        }
-        setGlowPosition(p.x, p.y);
+        // Snap core to entry point on first visit so it doesn't fly in from 0,0
+        if (cx === 0 && cy === 0) { cx = p.x; cy = p.y; }
+        tcx = p.x; tcy = p.y;
+        prevMx = p.x; prevMy = p.y; prevMt = performance.now();
+        startLoop();
       });
 
       hero.addEventListener('mousemove', function (e) {
-        var p = heroPoint(e);
-        setGlowPosition(p.x, p.y);
+        var p  = heroPoint(e);
+        var now = performance.now();
+        tcx = p.x; tcy = p.y;
+
+        // Compute angular impulse from pointer velocity relative to centre
+        if (prevMt !== null) {
+          var dt2 = Math.max((now - prevMt) / 1000, 0.001);
+          var r   = heroRect();
+          var c0x = r.width * 0.5, c0y = r.height * 0.5;
+          // Vector from centre to cursor
+          var rx = p.x - c0x, ry = p.y - c0y;
+          var rLen = Math.sqrt(rx * rx + ry * ry) || 1;
+          // Pointer velocity
+          var vx = (p.x - prevMx) / dt2, vy = (p.y - prevMy) / dt2;
+          // Tangential component = cross product (r × v) / |r|
+          var tangential = (rx * vy - ry * vx) / rLen;
+          // Scale impulse gently so fast swipes give a good spin
+          omega += tangential * 0.004;
+          // Clamp to a sane max so it doesn't fly off
+          omega = Math.max(-6, Math.min(6, omega));
+        }
+        prevMx = p.x; prevMy = p.y; prevMt = now;
+        startLoop();
       });
 
       hero.addEventListener('mouseleave', function () {
-        var r = hero.getBoundingClientRect();
-        setGlowPosition(r.width * 0.52, r.height * 0.38);
+        insideHero = false;
+        prevMx = null; prevMy = null; prevMt = null;
+        // Let it coast; fade after a short coast
         awayTimer = window.setTimeout(function () {
           light.classList.add('is-away');
           light.classList.remove('is-active');
-        }, 220);
+        }, 900);
+        startLoop(); // keep coasting
       });
 
-      // Start from the same resting point used by the original bloom.
-      var initialRect = hero.getBoundingClientRect();
-      currentX = targetX = initialRect.width * 0.52;
-      currentY = targetY = initialRect.height * 0.38;
-      light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
-      light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
-      light.style.setProperty('--liquid-angle', '0deg');
-      light.style.setProperty('--liquid-stretch', '1');
-      light.style.setProperty('--liquid-squash', '1');
+      /* ---- Init ---- */
+      var ir = heroRect();
+      cx  = tcx = ir.width  * 0.52;
+      cy  = tcy = ir.height * 0.38;
+      startLoop();
     })();
     </script>
   </body>
