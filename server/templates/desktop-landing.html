@@ -2588,9 +2588,7 @@
         font-size: 15px;
         line-height: 1.65;
       }
-      @media (prefers-color-scheme: dark) {
-        .faq-item { background: rgba(255, 255, 255, 0.02); }
-      }
+      /* Dark-mode faq-item background is now handled by the liquid-glass block above */
       @media (max-width: 600px) {
         .faq-item > summary { padding: 16px 18px; font-size: 15px; }
         .faq-answer { padding: 0 18px 18px; font-size: 14.5px; }
@@ -3333,8 +3331,21 @@
         gap:var(--space-3,16px)!important; border:0!important;
       }
       .services-grid .service-card,.growth-grid .growth-card {
-        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
-        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        border:1px solid color-mix(in srgb, var(--dominant) 14%, var(--line))!important;
+        border-radius:var(--r-md)!important;
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface)!important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow)!important;
+        backdrop-filter:blur(12px) saturate(140%)!important;
+        -webkit-backdrop-filter:blur(12px) saturate(140%)!important;
+        position:relative!important; isolation:isolate!important;
         padding:clamp(20px,3vw,28px)!important;
       }
       /* why-cards keep the shared radius/padding but get their own
@@ -3348,11 +3359,26 @@
       .why-grid .why-card::before { content:none!important; display:none!important; }
       .services-grid .service-card:hover,.services-grid .service-card.expanded,
       .growth-grid .growth-card:hover,.growth-grid .growth-card.expanded {
-        background:color-mix(in srgb,var(--dominant) 8%,var(--surface))!important;
-        border-color:var(--dominant)!important; box-shadow:var(--shadow)!important;
+        border-color:color-mix(in srgb, var(--dominant) 36%, transparent)!important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14))!important;
       }
       .services-grid .service-card:hover *,.services-grid .service-card.expanded *,
       .growth-grid .growth-card:hover *,.growth-grid .growth-card.expanded * { color:var(--ink)!important; }
+      /* Ambient inner glow on hover — same ::after pattern as why-cards */
+      .services-grid .service-card::after,.growth-grid .growth-card::after {
+        content:''; position:absolute; inset:0; border-radius:inherit; z-index:0;
+        opacity:0; pointer-events:none;
+        background:radial-gradient(ellipse at 30% 20%,
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 8%, transparent) 55%,
+          transparent 80%);
+        transition:opacity 0.4s ease;
+      }
+      .services-grid .service-card > *,.growth-grid .growth-card > * { position:relative; z-index:1; }
+      .services-grid .service-card:hover::after,.growth-grid .growth-card:hover::after { opacity:1!important; }
       .service-icon,.growth-icon {
         border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
         background:var(--support)!important; color:var(--dominant)!important;
@@ -3420,18 +3446,47 @@
       }
       .case-study-details { border-top:1px solid var(--line)!important; }
 
-      /* --- How it works: glass steps with a compact corner index */
+      /* --- How it works: liquid-glass steps with teal number pill */
       .how-bento { gap:var(--space-3,18px)!important; }
       .how-bento .how-card {
-        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
-        background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        border:1px solid color-mix(in srgb, var(--dominant) 14%, var(--line))!important;
+        border-radius:var(--r-md)!important;
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface)!important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow)!important;
+        backdrop-filter:blur(12px) saturate(140%)!important;
+        -webkit-backdrop-filter:blur(12px) saturate(140%)!important;
+        isolation:isolate!important;
       }
       @media (hover:hover) {
         .how-bento .how-card:hover {
-          transform:translateY(-3px)!important; border-color:var(--dominant)!important;
-          box-shadow:var(--shadow)!important;
+          transform:translateY(-4px)!important;
+          border-color:color-mix(in srgb, var(--dominant) 36%, transparent)!important;
+          box-shadow:
+            inset 0 1px 0 var(--specular-teal),
+            inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+            0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14))!important;
         }
       }
+      /* Ambient glow ::after for how-cards */
+      .how-bento .how-card::after {
+        content:''; position:absolute; inset:0; border-radius:inherit; z-index:0;
+        opacity:0; pointer-events:none;
+        background:radial-gradient(ellipse at 30% 20%,
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 8%, transparent) 55%,
+          transparent 80%);
+        transition:opacity 0.4s ease;
+      }
+      .how-bento .how-card > * { position:relative; z-index:1; }
+      .how-bento .how-card:hover::after { opacity:1!important; }
       .how-bento .how-card-step {
         position:absolute!important;
         top:24px; right:24px;
@@ -3472,14 +3527,46 @@
 
       /* Modal comparison rows — consolidated above; overrides removed. */
 
-      /* --- FAQ: rounded glass items with page-consistent padding */
+      /* --- FAQ: liquid-glass items with page-consistent padding */
       .faq-section { padding-inline:clamp(20px,4vw,40px)!important; }
       .faq-list { gap:var(--space-2,12px)!important; }
       .faq-item {
-        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
-        background:var(--surface)!important; overflow:hidden!important;
+        border:1px solid color-mix(in srgb, var(--dominant) 14%, var(--line))!important;
+        border-radius:var(--r-md)!important;
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface)!important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow)!important;
+        backdrop-filter:blur(12px) saturate(140%)!important;
+        -webkit-backdrop-filter:blur(12px) saturate(140%)!important;
+        overflow:hidden!important;
+        position:relative!important; isolation:isolate!important;
       }
-      .faq-item[open] { border-color:var(--dominant)!important; box-shadow:var(--shadow)!important; }
+      .faq-item[open] {
+        border-color:color-mix(in srgb, var(--dominant) 36%, transparent)!important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14))!important;
+      }
+      /* Ambient glow ::after for FAQ items (shows when open) */
+      .faq-item::after {
+        content:''; position:absolute; inset:0; border-radius:inherit; z-index:0;
+        opacity:0; pointer-events:none;
+        background:radial-gradient(ellipse at 30% 20%,
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 8%, transparent) 55%,
+          transparent 80%);
+        transition:opacity 0.4s ease;
+      }
+      .faq-item > * { position:relative; z-index:1; }
+      .faq-item:hover::after,.faq-item[open]::after { opacity:1!important; }
       .faq-item > summary { padding:18px 20px!important; }
       .faq-item > summary::before { content:none!important; display:none!important; }
       .faq-title::before { content:none!important; display:none!important; }
@@ -4707,13 +4794,40 @@
       }
 
       /* --- Cards: specular inset on every glass surface ---------------- */
-      .service-card, .growth-card,
-      .price-card, .showcase-card, .journal-note,
-      .faq-item, .how-card, .ae-proof-card,
-      .testimonial-card {
+      /* Shallow glass (plain specular top edge) — price/showcase/journal/proof cards */
+      .price-card, .showcase-card, .journal-note, .ae-proof-card {
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
       }
+      /* Full liquid-glass surface — matches the why-card recipe */
+      .service-card, .growth-card, .faq-item, .how-card, .testimonial-card {
+        border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow) !important;
+        backdrop-filter: blur(12px) saturate(140%) !important;
+        -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+        position: relative !important;
+        isolation: isolate !important;
+      }
+      /* Testimonial ::after ambient glow (hover) */
+      .testimonial-card::after {
+        content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 0;
+        opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse at 30% 20%,
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 8%, transparent) 55%,
+          transparent 80%);
+        transition: opacity 0.4s ease;
+      }
+      .testimonial-card > * { position: relative; z-index: 1; }
       /* why-cards have their own richer liquid-glass treatment — do not flatten */
       .why-grid .why-card {
         box-shadow:
@@ -4785,13 +4899,24 @@
       }
 
       /* --- Card hover: teal-lit refractive lift ------------------------ */
-      .service-card:hover, .growth-card:hover,
       .price-card:hover:not(.featured) {
         transform: translateY(-3px) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
           0 22px 48px -12px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.16)) !important;
       }
+      /* Full liquid-glass hover — matches why-card lift recipe */
+      .service-card:hover, .growth-card:hover,
+      .how-card:hover, .testimonial-card:hover {
+        transform: translateY(-4px) !important;
+        border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14)) !important;
+      }
+      .service-card:hover::after, .growth-card:hover::after,
+      .how-card:hover::after, .testimonial-card:hover::after { opacity: 1 !important; }
       /* why-cards handle their own hover — don't interfere */
       .why-grid .why-card:hover {
         transform: translateY(-4px) !important;
@@ -4868,13 +4993,7 @@
         transform: translateY(-2px) !important;
       }
 
-      /* --- Testimonials: specular + refractive lift -------------------- */
-      .testimonial-card:hover {
-        transform: translateY(-3px) !important;
-        box-shadow:
-          inset 0 1px 0 var(--specular-teal),
-          0 20px 44px -12px color-mix(in srgb, var(--dominant) 18%, rgba(0,0,0,0.14)) !important;
-      }
+      /* --- Testimonials: liquid-glass lift handled in card hover block above */
 
       /* Sudden edge bloom on hover — the glass catches light at the rim,
          while the one-pass glare above sweeps across the card surface. */
@@ -4904,6 +5023,11 @@
         .contact-form, .modal-content {
           backdrop-filter: blur(12px) saturate(132%) !important;
           -webkit-backdrop-filter: blur(12px) saturate(132%) !important;
+        }
+        /* Reduce liquid-glass blur on cards for mobile performance */
+        .service-card, .growth-card, .faq-item, .how-card, .testimonial-card {
+          backdrop-filter: blur(8px) saturate(128%) !important;
+          -webkit-backdrop-filter: blur(8px) saturate(128%) !important;
         }
       }
 
