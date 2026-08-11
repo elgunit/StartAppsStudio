@@ -3878,6 +3878,35 @@
         color:var(--canvas)!important;
       }
       #aiEfficiencyModal .ae-ratio-swatch { border-radius:50%!important; }
+      /* --- Inline industry credibility strip (inside Selected Projects) */
+      .industry-strip-inline { margin: 0 0 28px; overflow: hidden; }
+      .industry-strip-inline .industries-scroll { cursor: default; margin: 0; padding: 0; }
+
+      /* --- Mid-page CTA bridge */
+      .mid-cta-bridge {
+        margin: 0 0 16px;
+        padding: 32px 40px;
+        border-radius: var(--r-lg);
+        background: linear-gradient(135deg, var(--support) 0%, color-mix(in srgb, var(--support) 60%, transparent) 100%);
+        border: 1px solid color-mix(in srgb, var(--dominant) 22%, transparent);
+      }
+      .mid-cta-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .mid-cta-text { display: flex; flex-direction: column; gap: 4px; }
+      .mid-cta-heading { font-size: 1.15rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+      .mid-cta-sub { font-size: 0.9rem; color: var(--ink-2); line-height: 1.5; }
+      .mid-cta-btn { flex-shrink: 0; }
+      @media (max-width: 600px) {
+        .mid-cta-bridge { padding: 24px 20px; }
+        .mid-cta-inner { flex-direction: column; align-items: flex-start; }
+        .mid-cta-btn { align-self: stretch; text-align: center; }
+      }
+
       /* --- Pain strip */
       .pain-strip { display:flex; flex-wrap:wrap; gap:12px; padding:4px 0 40px; justify-content:center; }
       .pain-strip-item { display:flex; align-items:flex-start; gap:12px; flex:1; min-width:210px; max-width:310px; background:color-mix(in srgb,var(--surface) 80%,transparent); border:1px solid var(--line); border-radius:var(--r-md); padding:14px 16px; }
@@ -4751,252 +4780,13 @@
         </div>
       </section>
 
-      <!-- Why Start Apps Studio -->
-      <div class="why-section" data-section-name="why">
-        <div class="section-header">
-          <h2>Why Start Apps Studio?</h2>
-          <p>Everything you need to launch, nothing you don't</p>
-        </div>
-        <div class="why-grid">
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-            </div>
-            <h4>Live on iPhone and Android</h4>
-            <p>Most web-only tools never get traction because users don't open browsers. We ship to both app stores so your product lives where people actually spend time.</p>
-          </div>
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <h4>Instant Updates</h4>
-            <p>App store reviews mean even a one-line bug fix can take weeks to reach users. We push updates the moment you approve them. No waiting, no re-submission.</p>
-          </div>
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-            </div>
-            <h4>Reach Users on Their Lock Screen</h4>
-            <p>Email gets ignored. Push notifications show up like a text message. We wire them in from day one so your app can pull users back the moment it matters.</p>
-          </div>
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-            </div>
-            <h4>Start Earning From Day One</h4>
-            <p>Payment integrations are notorious for blowing timelines. We ship subscriptions, upgrades, and one-time purchases as part of the build, ready to charge on launch day.</p>
-          </div>
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-            </div>
-            <h4>Grow Without Surprise Bills</h4>
-            <p>Most hosting bills spike the moment you go viral, right when you can least afford a distraction. Our infrastructure scales with your growth. The invoice doesn't.</p>
-          </div>
-          <div class="why-card">
-            <div class="why-card-icon">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-            </div>
-            <h4>You Own It, Forever</h4>
-            <p>Too many clients discover they can't leave because the agency holds the accounts. Every line of code, every design file, and every API key is yours from day one.</p>
-          </div>
-        </div>
-        <button class="why-compare-btn" onclick="openWhyModal()">
-          See the full comparison
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-      </div>
-
-      <div class="modal-overlay" id="whyModal">
-        <div class="modal-content">
-          <button class="modal-close" onclick="closeWhyModal()">&times;</button>
-
-          <div class="cmp-header">
-            <div class="cmp-eyebrow">Why founders choose us</div>
-          </div>
-
-          <div class="cmp-tabs" role="tablist">
-            <button class="cmp-tab us active" id="cmpTabUs" onclick="switchCmpTab('us',this)" role="tab" aria-selected="true">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-              <span class="cmp-tab-full">The Start Apps Studio Way</span>
-              <span class="cmp-tab-short">Our Way</span>
-            </button>
-            <button class="cmp-tab them" id="cmpTabThem" onclick="switchCmpTab('them',this)" role="tab" aria-selected="false">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-              <span class="cmp-tab-full">Traditional Agencies</span>
-              <span class="cmp-tab-short">Agencies</span>
-            </button>
-          </div>
-
-          <!-- Start Apps Studio panel -->
-          <div class="cmp-panel active" id="cmp-us" role="tabpanel">
-            <div class="cmp-grid">
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-                <div><div class="cmp-item-title">Fixed pricing</div><div class="cmp-item-desc">What we quote is what you pay</div></div>
-              </div>
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-                <div><div class="cmp-item-title">Everything included</div><div class="cmp-item-desc">Design, dev, launch. No add-ons.</div></div>
-              </div>
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
-                <div><div class="cmp-item-title">Lifetime updates</div><div class="cmp-item-desc">Never gated behind a subscription</div></div>
-              </div>
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-                <div><div class="cmp-item-title">Weeks, not months</div><div class="cmp-item-desc">Ship before competitors finish their RFP</div></div>
-              </div>
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-                <div><div class="cmp-item-title">Live progress</div><div class="cmp-item-desc">Watch your product come together in real time</div></div>
-              </div>
-              <div class="cmp-benefit">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                <div><div class="cmp-item-title">You own everything</div><div class="cmp-item-desc">Code, accounts, assets. Zero lock-in.</div></div>
-              </div>
-            </div>
-            <a class="cmp-action" href="#contact" onclick="closeWhyModal()">Start your build &rarr;</a>
-          </div>
-
-          <!-- Traditional Agencies panel -->
-          <div class="cmp-panel" id="cmp-them" role="tabpanel">
-            <div class="cmp-grid">
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-                <div><div class="cmp-item-title">$50k-$80k upfront</div><div class="cmp-item-desc">Before you've seen a single screen</div></div>
-              </div>
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-                <div><div class="cmp-item-title">Add-on creep</div><div class="cmp-item-desc">Every feature is a change order</div></div>
-              </div>
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
-                <div><div class="cmp-item-title">Six-month timelines</div><div class="cmp-item-desc">By the time it ships, the market moved</div></div>
-              </div>
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-                <div><div class="cmp-item-title">Annual retainers for updates</div><div class="cmp-item-desc">Pay forever to fix bugs</div></div>
-              </div>
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
-                <div><div class="cmp-item-title">Vendor lock-in</div><div class="cmp-item-desc">Try migrating off their stack later</div></div>
-              </div>
-              <div class="cmp-pain">
-                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
-                <div><div class="cmp-item-title">Black-box delivery</div><div class="cmp-item-desc">You find out at the demo, not before</div></div>
-              </div>
-            </div>
-            <div class="cmp-footnote">
-              Most agencies quote $80k+ and take six months for what we ship in weeks, without the equity ask of a technical co-founder. <a href="#contact" onclick="closeWhyModal()" style="color:var(--accent);text-decoration:none;font-weight:600;">Talk to us &rarr;</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Expertise -->
-      <section class="section" id="expertise" data-section-name="expertise">
-        <h2 class="section-title">One partner across the product lifecycle</h2>
-        <p class="section-subtitle">The five disciplines that keep an early-stage product coherent, from deciding what matters to proving it works.</p>
-        
-        <div class="expertise-grid">
-        <div class="expandable-card" id="hat-designer" onclick="toggleCard(this)">
-          <div class="card-header">
-            <div class="card-icon">&#9998;</div>
-            <div class="card-info">
-              <h4>Product design</h4>
-              <p>Make the product clear before making it polished</p>
-            </div>
-            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="card-details">
-            <div class="skill-list">
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who know what they want to build but not how it should feel</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products where users drop off because flows are unclear, not broken</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Early pitches that need to look credible before a line of code is written</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="expandable-card" id="hat-developer" onclick="toggleCard(this)">
-          <div class="card-header">
-            <div class="card-icon">&lt;/&gt;</div>
-            <div class="card-info">
-              <h4>Product engineering</h4>
-              <p>Turn the validated idea into dependable software</p>
-            </div>
-            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="card-details">
-            <div class="skill-list">
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Prototypes that look good but break when real data or real users arrive</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> AI-generated codebases with no structure a team can safely extend</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products that need auth, payments, or app store deployment done properly the first time</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="expandable-card" id="hat-strategist" onclick="toggleCard(this)">
-          <div class="card-header">
-            <div class="card-icon">&#9733;</div>
-            <div class="card-info">
-              <h4>Product strategy</h4>
-              <p>Reduce ambiguity before it becomes expensive</p>
-            </div>
-            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="card-details">
-            <div class="skill-list">
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who need to decide what to build first, not just how to build it</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products where scope keeps growing because no one has set a clear boundary</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Investor decks that need a credible build plan behind the pitch narrative</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="expandable-card" id="hat-manager" onclick="toggleCard(this)">
-          <div class="card-header">
-            <div class="card-icon">&#9776;</div>
-            <div class="card-info">
-              <h4>Delivery leadership</h4>
-              <p>Keep decisions, scope, and momentum aligned</p>
-            </div>
-            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="card-details">
-            <div class="skill-list">
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Builds that drift because feedback loops are slow or unclear</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Projects where scope creep has already cost one team their timeline</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who want visibility into progress without micromanaging the build</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="expandable-card" id="hat-analyst" onclick="toggleCard(this)">
-          <div class="card-header">
-            <div class="card-icon">&#931;</div>
-            <div class="card-info">
-              <h4>Product insight</h4>
-              <p>Replace confident guesses with useful signals</p>
-            </div>
-            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="card-details">
-            <div class="skill-list">
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products that launched but nobody knows if anyone is actually using them</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders making the next build decision on gut feel rather than early user behaviour</div>
-              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Teams that need to know whether to double down or change direction before spending more</div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </section>
-      
-      <!-- Industries -->
-      <section class="section" data-section-name="industries">
-        <h2 class="section-title">Industry Expertise</h2>
-        <p class="section-subtitle">Deep experience across key sectors</p>
-        <div class="industries-scroll" id="industriesBelt">
+      <!-- Recent Work -->
+      <section class="section" id="case-studies" data-section-name="case-studies">
+        <h2 class="section-title">Selected projects</h2>
+        <p class="section-subtitle">Real products in users' hands, across healthcare, fintech, retail, and more.</p>
+        <!-- Industry credibility strip -->
+        <div class="industry-strip-inline" aria-label="Industries served">
+          <div class="industries-scroll" id="industriesBelt">
           <div class="industries-track" aria-hidden="false">
             <span class="industry-chip"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Fintech</span>
             <span class="industry-chip"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> Education</span>
@@ -5025,12 +4815,9 @@
             <span class="industry-chip" aria-hidden="true"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Cybersecurity</span>
           </div>
         </div>
-      </section>
-      
-      <!-- Recent Work -->
-      <section class="section" id="case-studies" data-section-name="case-studies">
-        <h2 class="section-title">Selected projects</h2>
-        <p class="section-subtitle">Real products in users' hands, across healthcare, fintech, retail, and more.</p>
+        </div>
+
+
 
         <!-- Primary showcase cards (always visible) -->
         <div id="caseStudiesContainer">
@@ -5426,10 +5213,500 @@
         </div>
       </section>
       
+      <!-- Pricing -->
+      <section class="section" id="pricing" data-section-name="pricing">
+        <h2 class="section-title">Pricing & timelines</h2>
+        <p class="section-subtitle">Strategy-first work for founders who want more than a typical site build. Every package starts with user flows and case scenarios, and includes unlimited revisions while we build.</p>
+        
+        <div class="pricing-grid">
+          <div class="price-card" onclick="toggleCard(this)">
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Lovable &middot; Replit
+            </div>
+            <div class="price-title">Launch Site</div>
+            <div class="price-subtitle">Your site, built and live</div>
+            <div class="price-amount">$1,399</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Your direction turned into a polished responsive site</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Built in Lovable or Replit, ready for instant edits</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Deployed with the code and account access in your name</div>
+            </div>
+            <div class="price-details">
+              Bring the idea, rough copy, references, or an existing page. Elgar applies the design direction, builds the site directly in Lovable or Replit, and gets it live without a separate Figma phase. You can keep editing the site immediately after handoff, rather than waiting for a designer to export another round of screens. A Figma design file is available as an optional add-on. Delivered in 3–5 business days.
+            </div>
+          </div>
+
+          <div class="price-card featured" onclick="toggleCard(this)">
+            <div class="popular-badge"><span class="popular-badge-dot"></span>Most chosen</div>
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Figma &middot; React &middot; Live infra
+            </div>
+            <div class="price-title">Prototype</div>
+            <div class="price-subtitle">Clickable &middot; investor-ready</div>
+            <div class="price-amount">$4,799</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Live on real infrastructure. Tap it on any phone</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Web-first: update content without an App Store review</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full Figma design system + source code handed to you</div>
+            </div>
+            <div class="price-details">
+              This is the Figma-led design phase: full UI/UX, mapped flows, and an interactive React prototype on live infrastructure. Investors and design partners can tap through a real product on their phone, not just a PDF. Because it runs on the web, you can update copy, fix a flow, or swap a screen the same day without waiting on App Store review cycles. Source code and design files are yours at handoff. Delivered in 5–10 days.
+            </div>
+          </div>
+
+          <div class="price-card" onclick="toggleCard(this)">
+            <div class="method-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              React Native &middot; Node &middot; Postgres
+            </div>
+            <div class="price-title">MVP</div>
+            <div class="price-subtitle">Launch-ready &middot; 100K–500K users</div>
+            <div class="price-amount">$9k-$19k</div>
+            <div class="price-features">
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Production stack: auth, database, payments, uptime monitoring</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS &amp; Android + instant web updates between app releases</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> All accounts and code in your name. Zero lock-in</div>
+            </div>
+            <div class="price-details">
+              The full production stack: React Native (Expo) for iOS and Android, a web layer for content and SaaS features you can update instantly without waiting on App Store review, Node + Postgres backend, authentication, payments where needed, and uptime monitoring from day one. Every third-party account, including App Store, Google Play, hosting, database, and payments, is created in your name and transferred at launch. The codebase is clean, documented, and ready for a future team to pick up. Launched in 3–8 weeks, built for products serving 100K–500K users.
+            </div>
+          </div>
+        </div>
+        
+        <!-- Custom / Scale -->
+        <div class="special-package" onclick="toggleCard(this)">
+          <div class="special-header">
+            <div class="special-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+            </div>
+            <div class="special-info">
+              <h4>Custom / Scale</h4>
+              <span>$30k+ or monthly retainer &middot; 1M+ users</span>
+            </div>
+            <div class="special-badge">Handcrafted</div>
+          </div>
+          <p class="special-desc">100% handcrafted from the ground up for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration. Most projects take 1-6 months.</p>
+          <div class="special-features">
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Native iOS & Android</div>
+            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
+          </div>
+          <div class="special-details">
+            For clients who need completely bespoke solutions built from scratch by experienced developers. Every line of code is manually written and reviewed.
+          </div>
+        </div>
+        
+        <!-- Enterprise Package -->
+        <div class="special-package enterprise" onclick="toggleCard(this)">
+          <div class="special-header">
+            <div class="special-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div class="special-info">
+              <h4>Enterprise</h4>
+              <span>Via Our Partner Network</span>
+            </div>
+            <div class="special-badge">Handoff</div>
+          </div>
+          <p class="special-desc">Upon prototype MVP, we handoff to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
+          <div class="special-details">
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+              <div>
+                <h5>LLM Training Data</h5>
+                <p>Human-generated code data, SFT & RLHF</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+              <div>
+                <h5>LLM Finetuning</h5>
+                <p>End-to-end pipeline, PoC to production</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+              <div>
+                <h5>Staff Augmentation</h5>
+                <p>Senior & lead-level engineering talent</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+              <div>
+                <h5>Custom Software</h5>
+                <p>Native iOS, Android & web applications</p>
+              </div>
+            </div>
+            <div class="enterprise-service">
+              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+              <div>
+                <h5>UX/UI Design</h5>
+                <p>Intuitive designs that drive engagement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+            <!-- Mid-page CTA bridge -->
+      <div class="mid-cta-bridge" aria-label="Start a conversation">
+        <div class="mid-cta-inner">
+          <div class="mid-cta-text">
+            <span class="mid-cta-heading">Ready to scope your project?</span>
+            <span class="mid-cta-sub">You'll get a plan, a price, and a timeline back within 24 hours.</span>
+          </div>
+          <a href="#contact" class="cta-button mid-cta-btn">Get a free plan</a>
+        </div>
+      </div>
+
+<!-- Who you're working with -->
+      <section class="section" id="studio-human" data-section-name="studio-human">
+        <h2 class="section-title">One person. Full accountability.</h2>
+        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping it.</p>
+
+        <!-- Identity block -->
+        <div class="studio-identity">
+          <div class="founder-avatar">
+            <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
+          </div>
+          <div class="founder-info">
+            <div class="founder-name">Elgar Sirajov</div>
+            <div class="founder-role">Founder · Designer · Developer · Strategist</div>
+            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You always know who to call, and that person always has the full context, so every decision moves your product forward.</p>
+          </div>
+        </div>
+
+        <!-- Partnership principles -->
+        <div class="studio-principles">
+          <div class="studio-principle">
+            <div class="stp-icon-wrap">
+              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stp-kicker">Direct access</div>
+            <div class="stp-title">One person, full context</div>
+            <p class="stp-body">You talk to the person making the decisions, not an account manager relaying them.</p>
+          </div>
+          <div class="studio-principle">
+            <div class="stp-icon-wrap">
+              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>
+            </div>
+            <div class="stp-kicker">Live decisions</div>
+            <div class="stp-title">Feedback while it is easy</div>
+            <p class="stp-body">See working previews, respond quickly, and make changes before they become expensive.</p>
+          </div>
+          <div class="studio-principle">
+            <div class="stp-icon-wrap">
+              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-4z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div class="stp-kicker">Your foundation</div>
+            <div class="stp-title">Nothing held hostage</div>
+            <p class="stp-body">The code, accounts, and assets are yours, whether you keep working with me or bring in a team.</p>
+          </div>
+          <div class="studio-principle">
+            <div class="stp-icon-wrap">
+              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M15 16a5 5 0 0 1 6 4v1"/></svg>
+            </div>
+            <div class="stp-kicker">Specialist depth</div>
+            <div class="stp-title">A bigger bench when needed</div>
+            <p class="stp-body">When the brief calls for it, I can bring in trusted specialist partners for the extra expertise or delivery capacity your product needs.</p>
+          </div>
+        </div>
+
+        <!-- Client voices — specific outcomes from real engagements -->
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: inconsistent visual output
+            </div>
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, boutique event studio<br><span class="testimonial-location">Istanbul / Toronto</span></div>
+              <span class="method-badge">Content system</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: slow catalogue updates
+            </div>
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Owner, specialty food importer<br><span class="testimonial-location">Etobicoke, ON</span></div>
+              <span class="method-badge">Catalogue system</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: indistinguishable product shots
+            </div>
+            <div class="testimonial-quote-mark">"</div>
+            <p class="testimonial-text">I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Homeowner<br><span class="testimonial-location">Toronto · Onex install</span></div>
+              <span class="method-badge">Product creative</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Start Apps Studio -->
+      <div class="why-section" data-section-name="why">
+        <div class="section-header">
+          <h2>Why Start Apps Studio?</h2>
+          <p>Everything you need to launch, nothing you don't</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </div>
+            <h4>Live on iPhone and Android</h4>
+            <p>Most web-only tools never get traction because users don't open browsers. We ship to both app stores so your product lives where people actually spend time.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h4>Instant Updates</h4>
+            <p>App store reviews mean even a one-line bug fix can take weeks to reach users. We push updates the moment you approve them. No waiting, no re-submission.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+            <h4>Reach Users on Their Lock Screen</h4>
+            <p>Email gets ignored. Push notifications show up like a text message. We wire them in from day one so your app can pull users back the moment it matters.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            </div>
+            <h4>Start Earning From Day One</h4>
+            <p>Payment integrations are notorious for blowing timelines. We ship subscriptions, upgrades, and one-time purchases as part of the build, ready to charge on launch day.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h4>Grow Without Surprise Bills</h4>
+            <p>Most hosting bills spike the moment you go viral, right when you can least afford a distraction. Our infrastructure scales with your growth. The invoice doesn't.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+            </div>
+            <h4>You Own It, Forever</h4>
+            <p>Too many clients discover they can't leave because the agency holds the accounts. Every line of code, every design file, and every API key is yours from day one.</p>
+          </div>
+        </div>
+        <button class="why-compare-btn" onclick="openWhyModal()">
+          See the full comparison
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-overlay" id="whyModal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeWhyModal()">&times;</button>
+
+          <div class="cmp-header">
+            <div class="cmp-eyebrow">Why founders choose us</div>
+          </div>
+
+          <div class="cmp-tabs" role="tablist">
+            <button class="cmp-tab us active" id="cmpTabUs" onclick="switchCmpTab('us',this)" role="tab" aria-selected="true">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              <span class="cmp-tab-full">The Start Apps Studio Way</span>
+              <span class="cmp-tab-short">Our Way</span>
+            </button>
+            <button class="cmp-tab them" id="cmpTabThem" onclick="switchCmpTab('them',this)" role="tab" aria-selected="false">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <span class="cmp-tab-full">Traditional Agencies</span>
+              <span class="cmp-tab-short">Agencies</span>
+            </button>
+          </div>
+
+          <!-- Start Apps Studio panel -->
+          <div class="cmp-panel active" id="cmp-us" role="tabpanel">
+            <div class="cmp-grid">
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <div><div class="cmp-item-title">Fixed pricing</div><div class="cmp-item-desc">What we quote is what you pay</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <div><div class="cmp-item-title">Everything included</div><div class="cmp-item-desc">Design, dev, launch. No add-ons.</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                <div><div class="cmp-item-title">Lifetime updates</div><div class="cmp-item-desc">Never gated behind a subscription</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+                <div><div class="cmp-item-title">Weeks, not months</div><div class="cmp-item-desc">Ship before competitors finish their RFP</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                <div><div class="cmp-item-title">Live progress</div><div class="cmp-item-desc">Watch your product come together in real time</div></div>
+              </div>
+              <div class="cmp-benefit">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div><div class="cmp-item-title">You own everything</div><div class="cmp-item-desc">Code, accounts, assets. Zero lock-in.</div></div>
+              </div>
+            </div>
+            <a class="cmp-action" href="#contact" onclick="closeWhyModal()">Start your build &rarr;</a>
+          </div>
+
+          <!-- Traditional Agencies panel -->
+          <div class="cmp-panel" id="cmp-them" role="tabpanel">
+            <div class="cmp-grid">
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <div><div class="cmp-item-title">$50k-$80k upfront</div><div class="cmp-item-desc">Before you've seen a single screen</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                <div><div class="cmp-item-title">Add-on creep</div><div class="cmp-item-desc">Every feature is a change order</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+                <div><div class="cmp-item-title">Six-month timelines</div><div class="cmp-item-desc">By the time it ships, the market moved</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <div><div class="cmp-item-title">Annual retainers for updates</div><div class="cmp-item-desc">Pay forever to fix bugs</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+                <div><div class="cmp-item-title">Vendor lock-in</div><div class="cmp-item-desc">Try migrating off their stack later</div></div>
+              </div>
+              <div class="cmp-pain">
+                <div class="cmp-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+                <div><div class="cmp-item-title">Black-box delivery</div><div class="cmp-item-desc">You find out at the demo, not before</div></div>
+              </div>
+            </div>
+            <div class="cmp-footnote">
+              Most agencies quote $80k+ and take six months for what we ship in weeks, without the equity ask of a technical co-founder. <a href="#contact" onclick="closeWhyModal()" style="color:var(--accent);text-decoration:none;font-weight:600;">Talk to us &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Expertise -->
+      <section class="section" id="expertise" data-section-name="expertise">
+        <h2 class="section-title">One partner across the product lifecycle</h2>
+        <p class="section-subtitle">The five disciplines that keep an early-stage product coherent, from deciding what matters to proving it works.</p>
+        
+        <div class="expertise-grid">
+        <div class="expandable-card" id="hat-designer" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9998;</div>
+            <div class="card-info">
+              <h4>Product design</h4>
+              <p>Make the product clear before making it polished</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who know what they want to build but not how it should feel</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products where users drop off because flows are unclear, not broken</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Early pitches that need to look credible before a line of code is written</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" id="hat-developer" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&lt;/&gt;</div>
+            <div class="card-info">
+              <h4>Product engineering</h4>
+              <p>Turn the validated idea into dependable software</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Prototypes that look good but break when real data or real users arrive</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> AI-generated codebases with no structure a team can safely extend</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products that need auth, payments, or app store deployment done properly the first time</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" id="hat-strategist" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9733;</div>
+            <div class="card-info">
+              <h4>Product strategy</h4>
+              <p>Reduce ambiguity before it becomes expensive</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who need to decide what to build first, not just how to build it</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products where scope keeps growing because no one has set a clear boundary</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Investor decks that need a credible build plan behind the pitch narrative</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" id="hat-manager" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#9776;</div>
+            <div class="card-info">
+              <h4>Delivery leadership</h4>
+              <p>Keep decisions, scope, and momentum aligned</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Builds that drift because feedback loops are slow or unclear</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Projects where scope creep has already cost one team their timeline</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders who want visibility into progress without micromanaging the build</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="expandable-card" id="hat-analyst" onclick="toggleCard(this)">
+          <div class="card-header">
+            <div class="card-icon">&#931;</div>
+            <div class="card-info">
+              <h4>Product insight</h4>
+              <p>Replace confident guesses with useful signals</p>
+            </div>
+            <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="card-details">
+            <div class="skill-list">
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Products that launched but nobody knows if anyone is actually using them</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Founders making the next build decision on gut feel rather than early user behaviour</div>
+              <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Teams that need to know whether to double down or change direction before spending more</div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+      
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
-        <h2 class="section-title">Custom Website &amp; MVP Builds</h2>
-        <p class="section-subtitle">Clean-slate builds in Webflow, WordPress, and modern product stacks, with a curated AI layer that acts as a second set of eyes on every decision.</p>
+        <h2 class="section-title">The stack behind every build</h2>
+        <p class="section-subtitle">A curated AI layer reviewed and updated weekly, acting as a second set of eyes on every design decision, flow, and line of code.</p>
 
         <!-- AI stack stat bar -->
         <div class="ai-stat-bar">
@@ -5775,244 +6052,6 @@
       </div>
 
 
-      <!-- Who you're working with -->
-      <section class="section" id="studio-human" data-section-name="studio-human">
-        <h2 class="section-title">One person. Full accountability.</h2>
-        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping it.</p>
-
-        <!-- Identity block -->
-        <div class="studio-identity">
-          <div class="founder-avatar">
-            <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
-          </div>
-          <div class="founder-info">
-            <div class="founder-name">Elgar Sirajov</div>
-            <div class="founder-role">Founder · Designer · Developer · Strategist</div>
-            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You always know who to call, and that person always has the full context, so every decision moves your product forward.</p>
-          </div>
-        </div>
-
-        <!-- Partnership principles -->
-        <div class="studio-principles">
-          <div class="studio-principle">
-            <div class="stp-icon-wrap">
-              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="stp-kicker">Direct access</div>
-            <div class="stp-title">One person, full context</div>
-            <p class="stp-body">You talk to the person making the decisions, not an account manager relaying them.</p>
-          </div>
-          <div class="studio-principle">
-            <div class="stp-icon-wrap">
-              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>
-            </div>
-            <div class="stp-kicker">Live decisions</div>
-            <div class="stp-title">Feedback while it is easy</div>
-            <p class="stp-body">See working previews, respond quickly, and make changes before they become expensive.</p>
-          </div>
-          <div class="studio-principle">
-            <div class="stp-icon-wrap">
-              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-4z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </div>
-            <div class="stp-kicker">Your foundation</div>
-            <div class="stp-title">Nothing held hostage</div>
-            <p class="stp-body">The code, accounts, and assets are yours, whether you keep working with me or bring in a team.</p>
-          </div>
-          <div class="studio-principle">
-            <div class="stp-icon-wrap">
-              <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M15 16a5 5 0 0 1 6 4v1"/></svg>
-            </div>
-            <div class="stp-kicker">Specialist depth</div>
-            <div class="stp-title">A bigger bench when needed</div>
-            <p class="stp-body">When the brief calls for it, I can bring in trusted specialist partners for the extra expertise or delivery capacity your product needs.</p>
-          </div>
-        </div>
-
-        <!-- Client voices — specific outcomes from real engagements -->
-        <div class="testimonials-grid">
-          <div class="testimonial-card">
-            <div class="testimonial-problem-tag">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem: inconsistent visual output
-            </div>
-            <div class="testimonial-quote-mark">"</div>
-            <p class="testimonial-text">Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.</p>
-            <div class="testimonial-sep"></div>
-            <div class="testimonial-footer">
-              <div class="testimonial-client">Founder, boutique event studio<br><span class="testimonial-location">Istanbul / Toronto</span></div>
-              <span class="method-badge">Content system</span>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-problem-tag">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem: slow catalogue updates
-            </div>
-            <div class="testimonial-quote-mark">"</div>
-            <p class="testimonial-text">We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.</p>
-            <div class="testimonial-sep"></div>
-            <div class="testimonial-footer">
-              <div class="testimonial-client">Owner, specialty food importer<br><span class="testimonial-location">Etobicoke, ON</span></div>
-              <span class="method-badge">Catalogue system</span>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-problem-tag">
-              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Problem: indistinguishable product shots
-            </div>
-            <div class="testimonial-quote-mark">"</div>
-            <p class="testimonial-text">I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.</p>
-            <div class="testimonial-sep"></div>
-            <div class="testimonial-footer">
-              <div class="testimonial-client">Homeowner<br><span class="testimonial-location">Toronto · Onex install</span></div>
-              <span class="method-badge">Product creative</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Pricing -->
-      <section class="section" id="pricing" data-section-name="pricing">
-        <h2 class="section-title">Pricing & timelines</h2>
-        <p class="section-subtitle">Strategy-first work for founders who want more than a typical site build. Every package starts with user flows and case scenarios, and includes unlimited revisions while we build.</p>
-        
-        <div class="pricing-grid">
-          <div class="price-card" onclick="toggleCard(this)">
-            <div class="method-badge">
-              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Lovable &middot; Replit
-            </div>
-            <div class="price-title">Launch Site</div>
-            <div class="price-subtitle">Your site, built and live</div>
-            <div class="price-amount">$1,399</div>
-            <div class="price-features">
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Your direction turned into a polished responsive site</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Built in Lovable or Replit, ready for instant edits</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Deployed with the code and account access in your name</div>
-            </div>
-            <div class="price-details">
-              Bring the idea, rough copy, references, or an existing page. Elgar applies the design direction, builds the site directly in Lovable or Replit, and gets it live without a separate Figma phase. You can keep editing the site immediately after handoff, rather than waiting for a designer to export another round of screens. A Figma design file is available as an optional add-on. Delivered in 3–5 business days.
-            </div>
-          </div>
-
-          <div class="price-card featured" onclick="toggleCard(this)">
-            <div class="popular-badge"><span class="popular-badge-dot"></span>Most chosen</div>
-            <div class="method-badge">
-              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Figma &middot; React &middot; Live infra
-            </div>
-            <div class="price-title">Prototype</div>
-            <div class="price-subtitle">Clickable &middot; investor-ready</div>
-            <div class="price-amount">$4,799</div>
-            <div class="price-features">
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Live on real infrastructure. Tap it on any phone</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Web-first: update content without an App Store review</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full Figma design system + source code handed to you</div>
-            </div>
-            <div class="price-details">
-              This is the Figma-led design phase: full UI/UX, mapped flows, and an interactive React prototype on live infrastructure. Investors and design partners can tap through a real product on their phone, not just a PDF. Because it runs on the web, you can update copy, fix a flow, or swap a screen the same day without waiting on App Store review cycles. Source code and design files are yours at handoff. Delivered in 5–10 days.
-            </div>
-          </div>
-
-          <div class="price-card" onclick="toggleCard(this)">
-            <div class="method-badge">
-              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              React Native &middot; Node &middot; Postgres
-            </div>
-            <div class="price-title">MVP</div>
-            <div class="price-subtitle">Launch-ready &middot; 100K–500K users</div>
-            <div class="price-amount">$9k-$19k</div>
-            <div class="price-features">
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Production stack: auth, database, payments, uptime monitoring</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS &amp; Android + instant web updates between app releases</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> All accounts and code in your name. Zero lock-in</div>
-            </div>
-            <div class="price-details">
-              The full production stack: React Native (Expo) for iOS and Android, a web layer for content and SaaS features you can update instantly without waiting on App Store review, Node + Postgres backend, authentication, payments where needed, and uptime monitoring from day one. Every third-party account, including App Store, Google Play, hosting, database, and payments, is created in your name and transferred at launch. The codebase is clean, documented, and ready for a future team to pick up. Launched in 3–8 weeks, built for products serving 100K–500K users.
-            </div>
-          </div>
-        </div>
-        
-        <!-- Custom / Scale -->
-        <div class="special-package" onclick="toggleCard(this)">
-          <div class="special-header">
-            <div class="special-icon">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
-            </div>
-            <div class="special-info">
-              <h4>Custom / Scale</h4>
-              <span>$30k+ or monthly retainer &middot; 1M+ users</span>
-            </div>
-            <div class="special-badge">Handcrafted</div>
-          </div>
-          <p class="special-desc">100% handcrafted from the ground up for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration. Most projects take 1-6 months.</p>
-          <div class="special-features">
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Native iOS & Android</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
-          </div>
-          <div class="special-details">
-            For clients who need completely bespoke solutions built from scratch by experienced developers. Every line of code is manually written and reviewed.
-          </div>
-        </div>
-        
-        <!-- Enterprise Package -->
-        <div class="special-package enterprise" onclick="toggleCard(this)">
-          <div class="special-header">
-            <div class="special-icon">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-            </div>
-            <div class="special-info">
-              <h4>Enterprise</h4>
-              <span>Via Our Partner Network</span>
-            </div>
-            <div class="special-badge">Handoff</div>
-          </div>
-          <p class="special-desc">Upon prototype MVP, we handoff to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
-          <div class="special-details">
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-              <div>
-                <h5>LLM Training Data</h5>
-                <p>Human-generated code data, SFT & RLHF</p>
-              </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
-              <div>
-                <h5>LLM Finetuning</h5>
-                <p>End-to-end pipeline, PoC to production</p>
-              </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-              <div>
-                <h5>Staff Augmentation</h5>
-                <p>Senior & lead-level engineering talent</p>
-              </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
-              <div>
-                <h5>Custom Software</h5>
-                <p>Native iOS, Android & web applications</p>
-              </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
-              <div>
-                <h5>UX/UI Design</h5>
-                <p>Intuitive designs that drive engagement</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       <!-- Contact -->
       <section class="contact" id="contact" data-section-name="contact">
         <div class="contact-inner">
