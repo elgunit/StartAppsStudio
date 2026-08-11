@@ -1404,7 +1404,7 @@
       }
       
       .price-card:hover { border-color: rgba(29,89,96,.35); }
-      .price-card.featured { border-color: var(--dominant); border-width: 2px; }
+      .price-card.featured { border-color: var(--dominant); border-width: 2px; padding-top: calc(var(--space-3) + 18px); }
       .price-card.expanded { border-color: var(--dominant); }
       
       .popular-badge {
@@ -1803,7 +1803,8 @@
         max-width: 540px !important;
         padding: 32px 28px 28px !important;
         border-radius: var(--r-lg) !important;
-        background: var(--refract-top), var(--surface) !important;
+        /* Solid canvas fallback ensures the modal is never transparent on iOS Safari */
+        background: var(--canvas) !important;
         backdrop-filter: blur(32px) saturate(160%) !important;
         -webkit-backdrop-filter: blur(32px) saturate(160%) !important;
         box-shadow:
@@ -3656,6 +3657,7 @@
         .aem-title {
           font-size: clamp(22px, 4vw, 27px); font-weight: 800;
           line-height: 1.2; letter-spacing: -0.02em; margin: 0;
+          text-align: center;
         }
         .aem-lede {
           color: var(--muted); font-size: 14px; line-height: 1.6;
@@ -3858,7 +3860,14 @@
           #ai-efficiency .ae-teaser-title { font-size: 19px; }
         }
         @media (max-width: 560px) {
-          #aiEfficiencyModal .aem-shell { padding: 24px 16px 20px; }
+          #aiEfficiencyModal .aem-shell {
+            padding: 24px 16px 20px;
+            /* iOS Safari: backdrop-filter can render transparent on < iOS 17;
+               fall back to a solid canvas colour so the modal is never see-through */
+            background: var(--canvas) !important;
+            -webkit-backdrop-filter: none !important;
+            backdrop-filter: none !important;
+          }
           .aem-tabs { gap: 4px; padding: 4px; }
           .aem-tab { font-size: 12.5px; padding: 10px 8px; min-width: 0; }
           .aem-ratio-head { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -5600,7 +5609,7 @@
 
 <!-- Who you're working with -->
       <section class="section" id="studio-human" data-section-name="studio-human">
-        <h2 class="section-title">One person. Full accountability.</h2>
+        <h2 class="section-title">One person.<br>Full accountability.</h2>
         <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping it.</p>
 
         <!-- Identity block -->
