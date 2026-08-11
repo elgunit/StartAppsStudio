@@ -1001,6 +1001,64 @@
         color: var(--text-secondary);
       }
 
+      /* AI stat bar */
+      .ai-stat-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        max-width: 860px;
+        margin: 0 auto 32px;
+        background: color-mix(in srgb, var(--dominant) 5%, var(--surface));
+        border: 1px solid color-mix(in srgb, var(--dominant) 18%, transparent);
+        border-radius: var(--r-md);
+        overflow: hidden;
+      }
+      .ai-stat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: clamp(16px, 2.5vw, 22px) clamp(14px, 2vw, 20px);
+        gap: 4px;
+      }
+      .ai-stat-num {
+        font-size: clamp(20px, 2.5vw, 26px);
+        font-weight: 800;
+        color: var(--dominant);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .ai-stat-label {
+        font-size: clamp(11px, 1vw, 12.5px);
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .ai-stat-divider {
+        width: 1px;
+        height: 40px;
+        background: color-mix(in srgb, var(--dominant) 18%, transparent);
+        flex-shrink: 0;
+      }
+      @media (max-width: 600px) {
+        .ai-stat-bar {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        .ai-stat-divider {
+          display: none;
+        }
+        .ai-stat:nth-child(1),
+        .ai-stat:nth-child(3) {
+          border-right: 1px solid color-mix(in srgb, var(--dominant) 18%, transparent);
+        }
+        .ai-stat:nth-child(3),
+        .ai-stat:nth-child(4) {
+          border-top: 1px solid color-mix(in srgb, var(--dominant) 18%, transparent);
+        }
+      }
+
       /* Toolkit */
       .toolkit-meta {
         display: flex;
@@ -2208,7 +2266,7 @@
       
       /* FAQ section */
       .faq-section {
-        max-width: 880px;
+        max-width: 1120px;
         margin: 0 auto;
         padding: clamp(56px, 8vw, 88px) clamp(20px, 3vw, 40px) clamp(24px, 4vw, 40px);
       }
@@ -2231,9 +2289,13 @@
         line-height: 1.55;
       }
       .faq-list {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
+        align-items: start;
+      }
+      @media (max-width: 720px) {
+        .faq-list { grid-template-columns: 1fr; }
       }
       .faq-item {
         border: 1px solid var(--line);
@@ -5351,7 +5413,31 @@
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
         <h2 class="section-title">Custom Website &amp; MVP Builds</h2>
-        <p class="section-subtitle">Clean-slate builds in Webflow, WordPress, and modern product stacks.</p>
+        <p class="section-subtitle">Clean-slate builds in Webflow, WordPress, and modern product stacks — with a curated AI layer that acts as a second set of eyes on every decision.</p>
+
+        <!-- AI stack stat bar -->
+        <div class="ai-stat-bar">
+          <div class="ai-stat">
+            <span class="ai-stat-num">4</span>
+            <span class="ai-stat-label">frontier models<br>in active rotation</span>
+          </div>
+          <div class="ai-stat-divider"></div>
+          <div class="ai-stat">
+            <span class="ai-stat-num">Every</span>
+            <span class="ai-stat-label">build reviewed by<br>at least 2 models</span>
+          </div>
+          <div class="ai-stat-divider"></div>
+          <div class="ai-stat">
+            <span class="ai-stat-num">Zero</span>
+            <span class="ai-stat-label">vendor lock-in —<br>models swapped weekly</span>
+          </div>
+          <div class="ai-stat-divider"></div>
+          <div class="ai-stat">
+            <span class="ai-stat-num">You</span>
+            <span class="ai-stat-label">never pay the<br>model bills</span>
+          </div>
+        </div>
+
         <div class="toolkit-meta">
           <span class="toolkit-meta-pulse" aria-hidden="true"></span>
           <span><span id="toolkitAsOf">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>
