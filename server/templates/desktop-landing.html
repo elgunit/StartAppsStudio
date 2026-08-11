@@ -3994,21 +3994,22 @@
         }
       }
 
-      /* === Who you're working with: Founder bio + Testimonials ======= */
+      /* === Who you're working with ======================================= */
 
-      /* Founder panel — no card chrome, purely typographic */
-      .founder-panel {
-        display: flex;
-        align-items: flex-start;
-        gap: clamp(24px, 3.5vw, 48px);
-        max-width: 760px;
-        margin: 0 auto clamp(40px, 5vw, 60px);
+      /* ── Identity block ─────────────────────────────────────────────── */
+      .studio-identity {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: start;
+        gap: clamp(20px, 3vw, 44px);
+        max-width: 820px;
+        margin: 0 auto clamp(40px, 5.5vw, 64px);
       }
 
       .founder-avatar {
         flex: 0 0 auto;
-        width: clamp(88px, 13vw, 132px);
-        height: clamp(88px, 13vw, 132px);
+        width: clamp(88px, 11vw, 120px);
+        height: clamp(88px, 11vw, 120px);
         border-radius: 50%;
         background: color-mix(in srgb, var(--support) 80%, transparent);
         border: 2px solid color-mix(in srgb, var(--dominant) 35%, transparent);
@@ -4017,38 +4018,100 @@
         justify-content: center;
         overflow: hidden;
         position: relative;
+        flex-shrink: 0;
       }
       .founder-avatar img {
         width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
       }
-      .founder-avatar-placeholder {
-        color: var(--dominant); opacity: 0.45;
-      }
+      .founder-avatar-placeholder { color: var(--dominant); opacity: 0.45; }
 
-      .founder-info { flex: 1; min-width: 0; }
+      .founder-info { min-width: 0; }
       .founder-name {
         font-size: clamp(17px, 1.8vw, 20px);
         font-weight: 700;
         letter-spacing: -0.015em;
         color: var(--ink);
-        margin-bottom: 3px;
+        margin-bottom: 2px;
       }
       .founder-role {
-        font-size: 12.5px;
-        font-weight: 600;
+        font-size: 11.5px;
+        font-weight: 700;
         color: var(--dominant);
-        letter-spacing: 0.02em;
+        letter-spacing: 0.07em;
         text-transform: uppercase;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
       }
       .founder-bio {
         font-size: clamp(14px, 1.3vw, 15.5px);
         color: var(--muted);
-        line-height: 1.68;
-        margin: 0;
+        line-height: 1.7;
+        margin: 0 0 18px;
       }
 
-      /* Testimonial grid */
+      /* ── Contrast rail ──────────────────────────────────────────────── */
+      /* "What you normally get" vs "What you get here" */
+      .studio-contrast {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        border-radius: var(--r-md);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        margin: 0 auto clamp(36px, 5vw, 56px);
+        max-width: 900px;
+      }
+      .contrast-col {
+        padding: clamp(20px, 2.8vw, 32px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .contrast-col-theirs {
+        background: color-mix(in srgb, var(--canvas) 60%, transparent);
+      }
+      .contrast-col-ours {
+        background: color-mix(in srgb, var(--dominant) 6%, var(--surface));
+        border-left: 2px solid color-mix(in srgb, var(--dominant) 22%, transparent);
+      }
+      .contrast-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .contrast-label-theirs { color: var(--muted); }
+      .contrast-label-ours   { color: var(--dominant); }
+      .contrast-label-dot {
+        width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+      }
+      .contrast-label-theirs .contrast-label-dot { background: var(--muted); opacity: 0.5; }
+      .contrast-label-ours   .contrast-label-dot { background: var(--dominant); }
+
+      .contrast-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 11px 0;
+        border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+        font-size: clamp(13px, 1.15vw, 14px);
+        line-height: 1.5;
+      }
+      .contrast-row:first-of-type { border-top: none; padding-top: 0; }
+      .contrast-row-icon {
+        flex-shrink: 0;
+        margin-top: 1px;
+        opacity: 0.55;
+      }
+      .contrast-col-theirs .contrast-row-icon { color: var(--muted); }
+      .contrast-col-ours   .contrast-row-icon { color: var(--dominant); opacity: 1; }
+      .contrast-col-theirs .contrast-row { color: var(--muted); }
+      .contrast-col-ours   .contrast-row { color: var(--ink); font-weight: 500; }
+
+      /* ── Testimonials ───────────────────────────────────────────────── */
       .testimonials-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -4062,20 +4125,32 @@
         padding: clamp(20px, 2.5vw, 28px);
         display: flex;
         flex-direction: column;
+        position: relative;
       }
+      .testimonial-problem-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .testimonial-problem-tag svg { opacity: 0.6; }
       .testimonial-quote-mark {
-        font-size: 52px;
+        font-size: 44px;
         line-height: 0.85;
         color: var(--dominant);
         font-weight: 900;
         font-family: Georgia, 'Times New Roman', serif;
-        letter-spacing: -0.02em;
-        opacity: 0.55;
-        margin-bottom: 14px;
+        opacity: 0.45;
+        margin-bottom: 12px;
         user-select: none;
       }
       .testimonial-text {
-        font-size: clamp(14px, 1.2vw, 15px);
+        font-size: clamp(13.5px, 1.2vw, 15px);
         line-height: 1.7;
         color: var(--ink);
         flex: 1;
@@ -4100,22 +4175,20 @@
         letter-spacing: 0.01em;
       }
 
+      /* ── Responsive ─────────────────────────────────────────────────── */
       @media (max-width: 680px) {
-        .founder-panel {
-          flex-direction: column;
-          align-items: center;
+        .studio-identity {
+          grid-template-columns: 1fr;
+          justify-items: center;
           text-align: center;
         }
-        .founder-avatar {
-          width: 112px;
-          height: 112px;
-        }
+        .founder-avatar { width: 96px; height: 96px; }
+        .studio-contrast { grid-template-columns: 1fr; }
+        .contrast-col-ours { border-left: none; border-top: 2px solid color-mix(in srgb, var(--dominant) 22%, transparent); }
         .testimonials-grid { grid-template-columns: 1fr; }
       }
       @media (min-width: 681px) and (max-width: 920px) {
-        .testimonials-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+        .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
         .testimonial-card:last-child {
           grid-column: 1 / -1;
           max-width: calc(50% - var(--space-3) / 2);
@@ -4219,8 +4292,8 @@
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
       }
-      /* Founder panel stays transparent — no card chrome */
-      .founder-panel {
+      /* Identity block stays transparent — no card chrome */
+      .studio-identity {
         background: transparent !important;
         box-shadow: none !important;
         border: none !important;
@@ -5581,29 +5654,84 @@
 
       <!-- Who you're working with -->
       <section class="section" id="studio-human" data-section-name="studio-human">
-        <h2 class="section-title">Who you're working with</h2>
-        <p class="section-subtitle">A founder-led studio. You work directly with the person shipping your product, not an account manager.</p>
+        <h2 class="section-title">One person. Full accountability.</h2>
+        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping it.</p>
 
-        <!-- Founder panel
-             REPLACE: swap the SVG placeholder with a real photo:
-             <img src="/assets/images/founder.jpg" alt="[Your name]"> inside .founder-avatar,
-             then update .founder-name, .founder-role, and .founder-bio text below. -->
-        <div class="founder-panel">
+        <!-- Identity block -->
+        <div class="studio-identity">
           <div class="founder-avatar">
             <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
           </div>
           <div class="founder-info">
             <div class="founder-name">Elgar Sirajov</div>
-            <div class="founder-role">Founder, Start Apps Studio</div>
-            <p class="founder-bio">I built this studio out of necessity. Founders should be able to get a full MVP done through one point of contact who understands the pain points, owns the outcome, and keeps the work moving. I wear the designer, developer, strategist, and QA hats, testing and refining along the way instead of leaving logged tasks behind to deal with later. The goal is not just to check off a tier of to-dos, but to deliver an experience that meets the brief and surpasses what users expect. When something needed to be done yesterday, I am the person you call.</p>
+            <div class="founder-role">Founder · Designer · Developer · Strategist</div>
+            <p class="founder-bio">Most founders waste months bouncing between agencies that over-promise, freelancers who disappear, and offshore teams that need constant managing. I built this studio to remove every one of those failure points. One person owns the design, the code, the QA, and the deadline. You always know who to call, and that person always knows the full context of your project. When something needs to ship, it ships.</p>
           </div>
         </div>
 
-        <!-- Testimonial strip
-             REPLACE: update each .testimonial-text, .testimonial-client, and the
-             .method-badge label with real client quotes and package names. -->
+        <!-- Contrast rail -->
+        <div class="studio-contrast">
+          <div class="contrast-col contrast-col-theirs">
+            <div class="contrast-label contrast-label-theirs">
+              <span class="contrast-label-dot"></span>
+              Typical agency or marketplace
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              Account manager sells the deal, a junior team delivers it
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              Scope creep billed as change orders mid-build
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              3-6 month ramp-up before a single screen is designed
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              You manage the people. You absorb the coordination cost
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              Handoff docs and a Slack channel when the contract ends
+            </div>
+          </div>
+          <div class="contrast-col contrast-col-ours">
+            <div class="contrast-label contrast-label-ours">
+              <span class="contrast-label-dot"></span>
+              Start Apps Studio
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              The founder scopes, designs, builds, and ships — same person throughout
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Fixed price agreed before work starts — no surprises
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              First real screens in days, not months
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              You describe the outcome. I own everything between here and there
+            </div>
+            <div class="contrast-row">
+              <svg class="contrast-row-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              You own the code, accounts, and assets from day one
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonials — each anchored to a competitor failure mode -->
         <div class="testimonials-grid">
           <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: freelancer went dark
+            </div>
             <div class="testimonial-quote-mark">"</div>
             <p class="testimonial-text">We had been stuck with a freelancer for six months and had nothing to show. Start Apps Studio shipped a working prototype in nine days. I showed it to investors the following week.</p>
             <div class="testimonial-sep"></div>
@@ -5614,6 +5742,10 @@
           </div>
 
           <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: agency scope creep
+            </div>
             <div class="testimonial-quote-mark">"</div>
             <p class="testimonial-text">The fixed price was the thing that made me take the leap. I knew exactly what I was paying before any work started. We launched on time and the app has been running without issues ever since.</p>
             <div class="testimonial-sep"></div>
@@ -5624,6 +5756,10 @@
           </div>
 
           <div class="testimonial-card">
+            <div class="testimonial-problem-tag">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Problem: unmaintainable vibe-coded build
+            </div>
             <div class="testimonial-quote-mark">"</div>
             <p class="testimonial-text">I came in with a vibe-coded prototype that was falling apart. They audited it in two days, told me honestly what was salvageable, and shipped a clean codebase I can actually build on.</p>
             <div class="testimonial-sep"></div>
