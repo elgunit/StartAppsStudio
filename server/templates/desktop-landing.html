@@ -344,9 +344,11 @@
         inset: 0;
         pointer-events: none;
         z-index: -1;
-        opacity: .12;
-        background-image: radial-gradient(var(--ink) .55px, transparent .55px);
-        background-size: 7px 7px;
+        /* Keep the texture calm: sparse, soft marks instead of a
+           high-frequency field of tiny dots that creates visual noise. */
+        opacity: .07;
+        background-image: radial-gradient(var(--ink) 1px, transparent 1.4px);
+        background-size: 30px 30px;
       }
       input, textarea, select, [contenteditable="true"] {
         -webkit-user-select: text !important;
@@ -1480,6 +1482,7 @@
         box-shadow: var(--shadow);
         margin-bottom: 16px;
         cursor: pointer;
+         position: relative;
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       
@@ -1487,83 +1490,135 @@
       .special-package.expanded { border-color: var(--dominant); }
       .special-package.enterprise { border-width: 2px; border-color: var(--dominant); }
       
+      /* Special-package header: icon+meta left, summary prose right */
       .special-header {
         display: flex;
-        align-items: center;
-        gap: 16px;
+        align-items: flex-start;
+        gap: 20px;
       }
-      
+      .special-header-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        flex-shrink: 0;
+      }
+      .special-header-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .special-header-meta h4 { font-weight: 600; margin: 0; font-size: 16px; }
+      .special-header-meta > span { font-size: 13px; color: var(--text-secondary); }
+
       .special-icon {
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         background: var(--bg-elevated);
         border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
       }
-      
-      .special-info { flex: 1; }
-      .special-info h4 { font-weight: 600; margin: 0 0 2px 0; }
-      .special-info span { font-size: 14px; color: var(--text-secondary); }
-      
+
       .special-badge {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        align-self: flex-start;
+        margin: 0;
         padding: 4px 10px;
-        background: var(--accent);
-        color: var(--bg);
-        border-radius: 100px;
+        background: color-mix(in srgb, var(--support) 70%, transparent);
+        color: var(--dominant);
+        border: 1px solid color-mix(in srgb, var(--dominant) 24%, transparent);
+        border-radius: 999px;
         font-size: 12px;
+        white-space: nowrap;
       }
-      
-      .special-desc {
-        margin-top: 16px;
-        font-size: 14px;
+
+      /* Summary sits to the right of the icon+meta block */
+      .special-summary {
+        flex: 1;
+        font-size: 13.5px;
+        line-height: 1.65;
         color: var(--text-secondary);
+        padding-top: 3px;
       }
-      
+
+      /* Old .special-desc hidden — content moved into .special-summary */
+      .special-desc { display: none; }
+
       .special-features {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 12px;
-        margin-top: 16px;
+        gap: 10px;
+        margin-top: 18px;
       }
-      
+
       .special-feature {
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 14px;
+        font-size: 13.5px;
       }
-      
+
       .special-details {
         display: none;
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid var(--border);
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
       }
-      
+
       .special-package.expanded .special-details { display: block; }
-      
+
+      /* Enterprise services: 2×2 compact grid */
+      .enterprise-services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      @media (max-width: 560px) {
+        .enterprise-services-grid { grid-template-columns: 1fr; }
+      }
+
       .enterprise-service {
         display: flex;
         align-items: flex-start;
-        gap: 12px;
-        padding: 12px 0;
-      }
-      
-      .enterprise-service-icon {
-        width: 32px;
-        height: 32px;
+        gap: 10px;
+        padding: 12px;
+        border-radius: var(--r-sm);
         background: var(--bg-elevated);
+      }
+
+      .enterprise-service-icon {
+        width: 30px;
+        height: 30px;
+        background: var(--surface);
+        border: 1px solid var(--line);
         border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
       }
-      
-      .enterprise-service h5 { font-weight: 600; margin: 0 0 2px 0; font-size: 14px; }
-      .enterprise-service p { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+      .enterprise-service h5 { font-weight: 600; margin: 0 0 2px 0; font-size: 13px; }
+      .enterprise-service p  { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
+
+      /* Narrow screens: stack header left/summary vertically */
+      @media (max-width: 600px) {
+        .special-header {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 12px;
+        }
+        .special-header-left { grid-column: 1; }
+        .special-badge { grid-column: 2; grid-row: 1; }
+        .special-summary {
+          grid-column: 1 / -1;
+          padding-top: 0;
+        }
+      }
       
       /* How It Works — Bento Cards */
       .how-bento {
@@ -3822,7 +3877,7 @@
         border:1px solid var(--line)!important;
         background:var(--surface)!important;
         box-shadow:var(--shadow)!important;
-        overflow:hidden!important;
+         overflow:visible!important;
       }
       .special-package.enterprise { border-color:color-mix(in srgb,var(--dominant) 45%,var(--line))!important; }
       .special-package:hover,.special-package.expanded { border-color:var(--dominant)!important; }
@@ -4323,7 +4378,7 @@
       .testimonial-sep {
         height: 1px;
         background: var(--line);
-        margin-bottom: 14px;
+        margin-bottom: 24px;
       }
       .testimonial-footer {
         display: flex;
@@ -4395,15 +4450,15 @@
         background:
           radial-gradient(ellipse 50% 40% at 64% 84%, color-mix(in srgb, var(--dominant) 10%, transparent), transparent),
           radial-gradient(ellipse 44% 38% at 26% 56%, color-mix(in srgb, var(--rose) 8%, transparent), transparent);
-        filter: blur(52px);
+        filter: blur(68px);
         animation: canvas-orb-drift 42s ease-in-out infinite alternate;
         will-change: opacity, transform;
-        opacity: 0.6;
+        opacity: 0.72;
       }
       @keyframes canvas-orb-drift {
-        0%   { opacity: 0.45; transform: scale(1); }
-        50%  { opacity: 0.75; transform: scale(1.07) translate(2%, 1%); }
-        100% { opacity: 0.55; transform: scale(0.97) translate(-1%, 2%); }
+        0%   { opacity: 0.55; transform: scale(1); }
+        50%  { opacity: 0.9; transform: scale(1.1) translate(3%, 1.5%); }
+        100% { opacity: 0.65; transform: scale(0.96) translate(-1.5%, 2.5%); }
       }
       @media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
 
@@ -4425,23 +4480,69 @@
         position: absolute; inset: 0;
         pointer-events: none; z-index: 0;
         border-radius: inherit; overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
       }
+      #hero-light.is-active { opacity: 0.86; }
+      #hero-light.is-away { opacity: 0; }
+      #hero-light::before,
       #hero-light::after {
         content: '';
         position: absolute;
-        width: 640px; height: 640px; border-radius: 50%;
-        top: var(--ly, 38%); left: var(--lx, 52%);
-        transform: translate(-50%, -50%);
-        background: radial-gradient(
-          circle,
-          color-mix(in srgb, var(--dominant) 16%, transparent) 0%,
-          color-mix(in srgb, var(--rose) 5%, transparent) 44%,
-          transparent 70%
-        );
-        transition: top 0.14s ease-out, left 0.14s ease-out;
+        top: 0; left: 0;
+        transform:
+          translate3d(var(--lx, 52%), var(--ly, 38%), 0)
+          translate(-50%, -50%)
+          rotate(var(--liquid-angle, 0deg))
+          scaleX(var(--liquid-stretch, 1))
+          scaleY(var(--liquid-squash, 1));
         pointer-events: none;
+        will-change: transform, filter;
+        background-blend-mode: screen;
       }
-      @media (prefers-reduced-motion: reduce) { #hero-light::after { transition: none; } }
+      /* A smaller, sharper pool gives the light a liquid edge instead of a
+         circular spotlight. The asymmetric radii keep it from reading as a
+         stock gradient even when the pointer is still. */
+      #hero-light::before {
+        width: 340px; height: 250px;
+        border-radius: 58% 42% 64% 36% / 46% 61% 39% 54%;
+        background:
+          linear-gradient(118deg,
+            color-mix(in srgb, var(--dominant) 22%, transparent),
+            color-mix(in srgb, var(--rose) 13%, transparent) 48%,
+            color-mix(in srgb, #fff 8%, transparent) 78%,
+            transparent),
+          conic-gradient(from var(--liquid-angle, 0deg),
+            color-mix(in srgb, var(--dominant) 28%, transparent),
+            color-mix(in srgb, var(--rose) 18%, transparent) 31%,
+            transparent 58%,
+            color-mix(in srgb, var(--dominant) 18%, transparent) 82%,
+            color-mix(in srgb, var(--rose) 12%, transparent));
+        filter: blur(16px) saturate(135%);
+        opacity: 0.8;
+      }
+      /* The wide layer is deliberately translucent and off-axis: it gives
+         the hero a refracted wash rather than another visible circle. */
+      #hero-light::after {
+        width: 690px; height: 430px;
+        border-radius: 63% 37% 48% 52% / 42% 54% 46% 58%;
+        background:
+          linear-gradient(102deg,
+            transparent 8%,
+            color-mix(in srgb, var(--dominant) 17%, transparent) 38%,
+            color-mix(in srgb, var(--rose) 10%, transparent) 66%,
+            transparent 94%),
+          conic-gradient(from calc(var(--liquid-angle, 0deg) + 35deg),
+            transparent,
+            color-mix(in srgb, var(--dominant) 18%, transparent) 24%,
+            color-mix(in srgb, var(--rose) 11%, transparent) 55%,
+            transparent 79%);
+        filter: blur(44px) saturate(125%);
+        opacity: 0.58;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #hero-light { transition: none; }
+      }
       @media (max-width: 768px) { #hero-light { display: none; } }
 
       /* --- Section panels: specular + deeper refraction ---------------- */
@@ -4612,7 +4713,7 @@
         </div>
 
         <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-number">~40</span> founders shipped</div>
+          <div class="hero-stat"><span class="hero-stat-number">~40</span> founders shipped over the past 3 years</div>
           <div class="hero-stats-dot"></div>
           <div class="hero-stat"><span class="hero-stat-number">3-8 weeks</span> to launch</div>
         </div>
@@ -5196,8 +5297,8 @@
       
       <!-- How It Works -->
       <section class="section" id="how-it-works" data-section-name="how-it-works">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Plain English in, shipped product out. No spec docs, no project managers to manage.</p>
+        <h2 class="section-title">Start with the right product decision</h2>
+        <p class="section-subtitle">We help you choose what to build, what to prove first, and which path gets you to a useful product without paying for the wrong version.</p>
         <div class="how-bento" id="howItWorksGrid">
           <!-- Card 1 -->
           <div class="how-card">
@@ -5206,8 +5307,8 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.17-2.1 5.87-5 6.72V18a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2.28C7.1 14.87 5 12.17 5 9a7 7 0 017-7z"/><path d="M9 21h6"/></svg>
             </div>
-            <h4>Share Your Vision</h4>
-            <p>Tell us your idea in plain English. No spec docs, no wireframes needed. Just tell us what you want to build and who it's for.</p>
+            <h4>Define the first useful version</h4>
+            <p>We turn the idea, half-built app, or business brief into a sharp first release: the core user journey, the must-have features, and the work that can wait.</p>
           </div>
           <!-- Card 2 -->
           <div class="how-card">
@@ -5216,8 +5317,8 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             </div>
-            <h4>Strategy First</h4>
-            <p>We map the screens, flows, and tech stack before anything is designed. You approve the plan; we don't guess.</p>
+            <h4>Choose the right route</h4>
+            <p>Launch site, clickable prototype, web app, or native iOS and Android? We compare the options, platform trade-offs, and existing tools before recommending the route.</p>
           </div>
           <!-- Card 3 -->
           <div class="how-card">
@@ -5226,8 +5327,8 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             </div>
-            <h4>Design &amp; Build</h4>
-            <p>Watch your product come together day by day. Preview on your phone, leave comments, and request changes with unlimited rounds.</p>
+            <h4>Make the solution tangible</h4>
+            <p>We map the flows, design the key screens, and build against real scenarios. You see the product working on your phone or browser while decisions are still easy to change.</p>
           </div>
           <!-- Card 4 -->
           <div class="how-card">
@@ -5236,8 +5337,8 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
-            <h4>Launch &amp; Hand Off</h4>
-            <p>App Store, Play Store, web, all live and working. You get the source code, the accounts, and the keys. Zero lock-in, ever.</p>
+            <h4>Launch with room to grow</h4>
+            <p>We ship the working version, connect the accounts, and hand over the code and keys. You leave with a live product—and a clear next move based on what users do.</p>
           </div>
         </div>
       </section>
@@ -5307,74 +5408,65 @@
         <!-- Custom / Scale -->
         <div class="special-package" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-icon">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+            <div class="special-header-left">
+              <div class="special-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+              </div>
+              <div class="special-header-meta">
+                <h4>Custom / Scale</h4>
+                <span>$30k+ or monthly retainer &middot; 1M+ users</span>
+              </div>
             </div>
-            <div class="special-info">
-              <h4>Custom / Scale</h4>
-              <span>$30k+ or monthly retainer &middot; 1M+ users</span>
-            </div>
+            <p class="special-summary">100% handcrafted for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration. Most projects take 1–6 months.</p>
             <div class="special-badge">Handcrafted</div>
           </div>
-          <p class="special-desc">100% handcrafted from the ground up for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration. Most projects take 1-6 months.</p>
           <div class="special-features">
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Native iOS & Android</div>
-            <div class="special-feature"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
+            <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
+            <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
+            <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> Native iOS &amp; Android</div>
+            <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
           </div>
           <div class="special-details">
             For clients who need completely bespoke solutions built from scratch by experienced developers. Every line of code is manually written and reviewed.
           </div>
         </div>
-        
+
         <!-- Enterprise Package -->
         <div class="special-package enterprise" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-icon">
-              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            <div class="special-header-left">
+              <div class="special-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+              </div>
+              <div class="special-header-meta">
+                <h4>Enterprise</h4>
+                <span>Via Our Partner Network</span>
+              </div>
             </div>
-            <div class="special-info">
-              <h4>Enterprise</h4>
-              <span>Via Our Partner Network</span>
-            </div>
+            <p class="special-summary">Upon prototype or MVP, we hand off to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
             <div class="special-badge">Handoff</div>
           </div>
-          <p class="special-desc">Upon prototype MVP, we handoff to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
           <div class="special-details">
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-              <div>
-                <h5>LLM Training Data</h5>
-                <p>Human-generated code data, SFT & RLHF</p>
+            <div class="enterprise-services-grid">
+              <div class="enterprise-service">
+                <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+                <div><h5>LLM Training Data</h5><p>Human-generated code data, SFT &amp; RLHF</p></div>
               </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
-              <div>
-                <h5>LLM Finetuning</h5>
-                <p>End-to-end pipeline, PoC to production</p>
+              <div class="enterprise-service">
+                <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+                <div><h5>LLM Finetuning</h5><p>End-to-end pipeline, PoC to production</p></div>
               </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-              <div>
-                <h5>Staff Augmentation</h5>
-                <p>Senior & lead-level engineering talent</p>
+              <div class="enterprise-service">
+                <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                <div><h5>Staff Augmentation</h5><p>Senior &amp; lead-level engineering talent</p></div>
               </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
-              <div>
-                <h5>Custom Software</h5>
-                <p>Native iOS, Android & web applications</p>
+              <div class="enterprise-service">
+                <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+                <div><h5>Custom Software</h5><p>Native iOS, Android &amp; web applications</p></div>
               </div>
-            </div>
-            <div class="enterprise-service">
-              <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
-              <div>
-                <h5>UX/UI Design</h5>
-                <p>Intuitive designs that drive engagement</p>
+              <div class="enterprise-service">
+                <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+                <div><h5>UX/UI Design</h5><p>Intuitive designs that drive engagement</p></div>
               </div>
             </div>
           </div>
@@ -7230,6 +7322,24 @@
              scrollToAnchor(target, hash);
            });
          });
+
+         // Cross-page navigation: when arriving from another page (e.g.
+         // /journal → /#contact) the browser fires its native jump before
+         // fonts and scroll-reveal animations have settled, leaving the
+         // scroll position wrong. Re-run our own scroll after a short
+         // layout-settle delay so the landing is accurate.
+         (function handleInitialHash() {
+           var hash = location.hash;
+           if (!hash || hash === '#') return;
+           var target = document.getElementById(hash.slice(1));
+           if (!target) return;
+           // Suppress the browser's own jump first, then re-scroll.
+           history.replaceState(null, '', location.pathname + location.search + hash);
+           window.scrollTo(0, 0);
+           window.setTimeout(function () {
+             scrollToAnchor(target, null);
+           }, 120);
+         })();
        })();
 
       /* ── 1. SCROLL REVEAL ──────────────────────────────────────────
@@ -7399,19 +7509,109 @@
       var light = document.getElementById('hero-light');
       if (!hero || !light) return;
       var raf = null;
+      var currentX = 0, currentY = 0;
+      var targetX = 0, targetY = 0;
+      var hasPosition = false;
+      var awayTimer = null;
+
+      var ticking = false;
+      var lastTick = null;
+
+      function setGlowPosition(x, y) {
+        targetX = x;
+        targetY = y;
+        if (!ticking) {
+          ticking = true;
+          lastTick = null;
+          window.setTimeout(tick, 16);
+        }
+      }
+
+      // Drive the loop with setTimeout + performance.now() — same approach
+      // as the anchor scroll above — so it keeps ticking even when rAF is
+      // throttled (background tabs, embedded iframes, headless environments).
+      function tick() {
+        var now = performance.now();
+        if (lastTick === null) lastTick = now;
+        // Time-based damping: the glow closes a fixed fraction of the
+        // remaining distance per unit of TIME, not per frame, so the
+        // motion feels identical regardless of tick cadence. Rate 2.8/s
+        // gives a weighty ~1s settle. dt is clamped so a long gap eases
+        // forward instead of jumping.
+        var dt = Math.min((now - lastTick) / 1000, 0.1);
+        lastTick = now;
+        var ease = 1 - Math.exp(-dt * 2.8);
+
+        var dx = targetX - currentX;
+        var dy = targetY - currentY;
+        currentX += dx * ease;
+        currentY += dy * ease;
+        light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
+        light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
+        var drift = Math.sqrt(dx * dx + dy * dy);
+        var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        var stretch = 1 + Math.min(0.16, drift / 900);
+        var squash = 1 - Math.min(0.07, drift / 1800);
+        light.style.setProperty('--liquid-angle', angle.toFixed(2) + 'deg');
+        light.style.setProperty('--liquid-stretch', stretch.toFixed(3));
+        light.style.setProperty('--liquid-squash', squash.toFixed(3));
+
+        if (Math.abs(dx) + Math.abs(dy) > 0.25) {
+          window.setTimeout(tick, 16);
+        } else {
+          currentX = targetX;
+          currentY = targetY;
+          light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
+          light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
+          ticking = false;
+          lastTick = null;
+        }
+      }
+
+      function heroPoint(e) {
+        var r = hero.getBoundingClientRect();
+        return {
+          x: e.clientX - r.left,
+          y: e.clientY - r.top
+        };
+      }
+
+      hero.addEventListener('mouseenter', function (e) {
+        if (awayTimer) window.clearTimeout(awayTimer);
+        light.classList.remove('is-away');
+        light.classList.add('is-active');
+        var p = heroPoint(e);
+        if (!hasPosition) {
+          currentX = p.x;
+          currentY = p.y;
+          hasPosition = true;
+        }
+        setGlowPosition(p.x, p.y);
+      });
+
       hero.addEventListener('mousemove', function (e) {
-        if (raf) return;           /* throttle to one rAF frame */
-        raf = requestAnimationFrame(function () {
-          raf = null;
-          var r = hero.getBoundingClientRect();
-          light.style.setProperty('--lx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
-          light.style.setProperty('--ly', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
-        });
+        var p = heroPoint(e);
+        setGlowPosition(p.x, p.y);
       });
+
       hero.addEventListener('mouseleave', function () {
-        light.style.setProperty('--lx', '52%');
-        light.style.setProperty('--ly', '38%');
+        var r = hero.getBoundingClientRect();
+        setGlowPosition(r.width * 0.52, r.height * 0.38);
+        awayTimer = window.setTimeout(function () {
+          light.classList.add('is-away');
+          light.classList.remove('is-active');
+        }, 220);
       });
+
+      // Start from the same resting point used by the original bloom.
+      var initialRect = hero.getBoundingClientRect();
+      currentX = targetX = initialRect.width * 0.52;
+      currentY = targetY = initialRect.height * 0.38;
+      light.style.setProperty('--lx', currentX.toFixed(2) + 'px');
+      light.style.setProperty('--ly', currentY.toFixed(2) + 'px');
+      light.style.setProperty('--liquid-angle', '0deg');
+      light.style.setProperty('--liquid-stretch', '1');
+      light.style.setProperty('--liquid-squash', '1');
     })();
     </script>
   </body>

@@ -12,3 +12,10 @@ The rule: when asking the testing agent to verify custom JS scroll animations (e
 **How to apply:** For any scroll/animation verification, write the test plan with explicit "take NO screenshots and perform NO page interactions between the click and the final read" language, and diagnose disputed failures with a monkey-patch trace (scrollTo/scrollIntoView/focus/hashchange logging) before changing code.
 
 Related durable detail: custom eased anchor scrolls on pages with scroll-reveal animations must re-measure the target position on every tick — a distance snapshotted at click time lands short when below-the-fold reveals shift layout mid-scroll.
+
+## Headless rendering freezes CSS transitions and throttles rAF
+
+Two more environment artifacts that produce false failures:
+
+- **CSS transitions never progress in the headless tester.** A computed-style poll after adding a class will show the OLD value indefinitely, even though the rule is correct. To verify a transition-based state change, emulate `prefers-reduced-motion: reduce` (which the site maps to `transition: none`) and assert the property changes instantly — that separates "rule overridden" from "transition frozen".
+- **requestAnimationFrame is heavily throttled** (a handful of ticks over seconds) and Playwright `mouse.move` events are not reliably delivered to the page. Drive JS animation loops with `setTimeout(16)` + `performance.now()` deltas in app code, and test them with synthetic `dispatchEvent(new MouseEvent(...))` + `setInterval` samplers, never rAF recorders or harness-side polling.
