@@ -7,6 +7,7 @@ A premium mobile-first platform connecting a solo product designer ("Elgar Siraj
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Brand voice: Keep founder bio and positioning copy positive and constructive. Describe competitor limitations through the clarity, ownership, and outcomes this studio provides; avoid deficit-focused wording such as "waste" in the bio.
 
 ## Known Environment Issues
 
