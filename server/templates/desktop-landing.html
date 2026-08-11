@@ -311,7 +311,15 @@
         }
       }
       
-      html { scroll-behavior: smooth; overflow-x: clip; }
+      html { scroll-behavior: auto; overflow-x: clip; }
+      .section,
+      .why-section,
+      .faq-section,
+      .journal-notes,
+      .contact,
+      #pricing {
+        scroll-margin-top: 20px;
+      }
       body {
         font-family: var(--sans);
         background: var(--canvas);
@@ -923,7 +931,7 @@
       }
       .recent-build-item .hat-badge {
         grid-area: badge;
-        align-self: start;
+         align-self: center;
         justify-self: end;
         white-space: nowrap;
       }
@@ -4319,10 +4327,9 @@
       }
       .testimonial-footer {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        flex-wrap: wrap;
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 8px;
       }
       .testimonial-client {
         font-size: 12.5px;
@@ -5284,15 +5291,15 @@
               React Native &middot; Node &middot; Postgres
             </div>
             <div class="price-title">MVP</div>
-            <div class="price-subtitle">Launch-ready &middot; 100K–500K users</div>
-            <div class="price-amount">$9k-$19k</div>
+            <div class="price-subtitle">Real users. Real data. Yours to own</div>
+            <div class="price-amount">$9k–$19k</div>
             <div class="price-features">
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Production stack: auth, database, payments, uptime monitoring</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS &amp; Android + instant web updates between app releases</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> All accounts and code in your name. Zero lock-in</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS, Android, and web — one build, all platforms</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User accounts, payments, and data from day one</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Every account and line of code transferred to you at launch</div>
             </div>
             <div class="price-details">
-              The full production stack: React Native (Expo) for iOS and Android, a web layer for content and SaaS features you can update instantly without waiting on App Store review, Node + Postgres backend, authentication, payments where needed, and uptime monitoring from day one. Every third-party account, including App Store, Google Play, hosting, database, and payments, is created in your name and transferred at launch. The codebase is clean, documented, and ready for a future team to pick up. Launched in 3–8 weeks, built for products serving 100K–500K users.
+              This is for founders who are ready to acquire real users, not just impress them. The Prototype proves the concept; the MVP is what you actually charge for and grow. It ships with everything a live product needs: user authentication, a database that scales, payments wired in where needed, and uptime monitoring from the first deploy. iOS, Android, and a web layer are all in one build — so you can push content updates the same day without waiting on App Store review. Every account (App Store, Google Play, hosting, payments) is set up in your name and handed to you at launch. The codebase is documented and structured so a future developer or team can pick it up without archaeology. Delivered in 3–8 weeks, built to handle 100K–500K users.
             </div>
           </div>
         </div>
@@ -7159,6 +7166,71 @@
        ═══════════════════════════════════════════════════════════════ */
     (function () {
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+       /* ── 0. WARM ANCHOR TRANSITIONS ────────────────────────────────
+          Replace the browser's abrupt native anchor easing with a slower,
+          gentle landing. The 20px offset keeps the destination breathing
+          room above the section container.                               */
+       (function smoothAnchors() {
+         var anchorDuration = 1050;
+         var anchorOffset = 20;
+
+         function easeInOutCubic(t) {
+           return t < 0.5
+             ? 4 * t * t * t
+             : 1 - Math.pow(-2 * t + 2, 3) / 2;
+         }
+
+         function measureTargetTop(target) {
+           var top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset;
+           var maxScroll = Math.max(0,
+             document.documentElement.scrollHeight - window.innerHeight);
+           return Math.min(Math.max(0, top), maxScroll);
+         }
+
+         function scrollToAnchor(target, updateHash) {
+           var startTop = window.pageYOffset;
+
+           // pushState never triggers a native jump, so update the hash
+           // immediately — the URL reflects the destination right away.
+           if (updateHash) history.pushState(null, '', updateHash);
+
+           if (reduced || Math.abs(measureTargetTop(target) - startTop) < 2) {
+             window.scrollTo(0, measureTargetTop(target));
+             return;
+           }
+
+           // Drive the animation with setTimeout + performance.now() so it
+           // keeps ticking even when rAF is throttled (background tabs,
+           // embedded iframes, headless environments). The target position
+           // is re-measured on every tick because lazy content loading in
+           // below-the-fold sections shifts layout mid-scroll — a distance
+           // snapshotted at click time would land short.
+           var startTime = performance.now();
+           function tick() {
+             var progress = Math.min(1, (performance.now() - startTime) / anchorDuration);
+             var targetTop = measureTargetTop(target);
+             if (progress >= 1) {
+               window.scrollTo(0, targetTop);
+               return;
+             }
+             window.scrollTo(0, startTop + (targetTop - startTop) * easeInOutCubic(progress));
+             window.setTimeout(tick, 16);
+           }
+           tick();
+         }
+
+         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+           link.addEventListener('click', function (event) {
+             var hash = link.getAttribute('href');
+             if (!hash || hash === '#') return;
+             var target = document.getElementById(hash.slice(1));
+             if (!target) return;
+             event.preventDefault();
+             scrollToAnchor(target, hash);
+           });
+         });
+       })();
 
       /* ── 1. SCROLL REVEAL ──────────────────────────────────────────
          Sections, cards and principles fade+rise as they enter the

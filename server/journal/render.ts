@@ -856,14 +856,8 @@ const STYLE = `
   .site-nav .brand { font-family:var(--display); }
   .container, .container-wide { position:relative; }
   .index-header, .article-kicker, .article-body, .article-footer, .post-grid, .article-cta { position:relative; }
-  .index-header { overflow:hidden; }
-  .index-header::before { content:""; position:absolute; inset:-28px -34px; z-index:-1;
-    /* keep within page padding so the glass panel never widens scrollWidth */
-  }
-  @media (max-width: 700px) {
-    .index-header::before { left:-14px; right:-14px; }
-  }
-  .index-header::before { border:1px solid var(--glass-line); border-radius:28px; background:var(--glass-panel); box-shadow:0 20px 60px rgba(13,58,67,.08),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  /* The journal hero shares the page surface instead of sitting inside a
+     second rectangular glass panel. */
   .article-body { background:transparent; }
   .index-title, .article-title, .article-footer-title { color:var(--glass-ink); }
   .index-eyebrow, .article-kicker .kicker-cat { background:rgba(212,167,44,.18); border:1px solid rgba(212,167,44,.42); color:var(--glass-ink); box-shadow:none; border-radius:999px; }
