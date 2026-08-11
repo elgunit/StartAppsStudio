@@ -3621,465 +3621,245 @@
           display: inline-flex; align-items: center; gap: 8px;
           color: var(--dominant); font-weight: 600; font-size: 14px;
         }
-        #aiEfficiencyModal .ae-modal-content { max-width: 880px; padding: 48px; }
-        #aiEfficiencyModal .ae-modal-hero {
+        /* ── AI Efficiency modal (aem-*) — same design language as the
+           comparison modal: compact frosted shell, segmented tabs,
+           circular icon wells, full-border rows, teal CTA pill. ── */
+        #aiEfficiencyModal .aem-shell {
+          max-width: 620px;
+          padding: 34px 30px 26px;
+          border-radius: var(--r-lg);
+          border: 1px solid var(--line);
+          background: var(--canvas);
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(24px) saturate(140%);
+          -webkit-backdrop-filter: blur(24px) saturate(140%);
+        }
+        .aem-header {
           text-align: center;
-          max-width: 640px;
-          margin: 0 auto 28px;
-          display: flex; flex-direction: column; align-items: center; gap: 14px;
+          display: flex; flex-direction: column; align-items: center; gap: 12px;
+          margin-bottom: 20px;
         }
-        #aiEfficiencyModal .ae-eyebrow-dot {
-          width: 6px; height: 6px; border-radius: 999px;
-          background: #14b8a6;
-          box-shadow: 0 0 10px rgba(20,184,166,0.85);
-        }
-        #aiEfficiencyModal .ae-modal-hero .ae-eyebrow {
+        .aem-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
           padding: 4px 12px; border-radius: 999px;
           background: var(--support);
-          border: 1px solid color-mix(in srgb, var(--dominant) 40%, transparent);
+          border: 1px solid var(--line);
           color: var(--dominant);
           font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
           text-transform: uppercase;
         }
-        #aiEfficiencyModal .ae-modal-hero h2 {
-          font-size: 32px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em;
-          margin: 0;
+        .aem-dot {
+          width: 6px; height: 6px; border-radius: 999px;
+          background: var(--dominant);
+          box-shadow: 0 0 10px color-mix(in srgb, var(--dominant) 85%, transparent);
         }
-        #aiEfficiencyModal .ae-modal-hero .ae-modal-lede {
-          color: var(--muted); font-size: 15px; line-height: 1.6;
-          max-width: 520px; margin: 0;
+        .aem-title {
+          font-size: clamp(22px, 4vw, 27px); font-weight: 800;
+          line-height: 1.2; letter-spacing: -0.02em; margin: 0;
         }
-        #aiEfficiencyModal .ae-section-label {
-          display: block;
+        .aem-lede {
+          color: var(--muted); font-size: 14px; line-height: 1.6;
+          max-width: 440px; margin: 0;
+        }
+
+        /* Segmented tab bar — glass pill container */
+        .aem-tabs {
+          display: flex;
+          gap: 5px;
+          background: color-mix(in srgb, var(--surface) 70%, transparent);
+          border: 1px solid var(--line);
+          border-radius: var(--r-sm);
+          padding: 4px;
+          margin-bottom: 14px;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: inset 0 1px 0 var(--specular);
+        }
+        .aem-tab {
+          flex: 1;
+          display: flex; align-items: center; justify-content: center; gap: 7px;
+          padding: 10px 14px;
+          border: none;
+          border-radius: calc(var(--r-sm) - 3px);
+          background: transparent;
+          color: var(--muted);
+          font-size: 13px; font-weight: 600; font-family: inherit;
+          cursor: pointer;
+          transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+          white-space: nowrap;
+        }
+        .aem-tab.active {
+          background: var(--surface);
+          color: var(--ink);
+          box-shadow: inset 0 1px 0 var(--specular), 0 1px 6px rgba(0,0,0,0.10);
+        }
+        #aemTabAlone.active   { color: var(--rose); }
+        #aemTabManaged.active { color: var(--dominant); }
+
+        /* Panels */
+        .aem-panel { display: none; }
+        .aem-panel.active {
+          display: flex; flex-direction: column; gap: 8px;
+          margin-bottom: 18px;
+          animation: cmp-in 0.22s cubic-bezier(0.22,0.61,0.36,1);
+        }
+
+        /* Rows — full-border glass rows with circular icon wells */
+        .aem-row {
+          display: flex; align-items: center; gap: 13px;
+          padding: 12px 14px;
+          border-radius: var(--r-md);
+          border: 1px solid var(--line);
+          background: var(--surface);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          box-shadow: inset 0 1px 0 var(--specular);
+          font-size: 13.5px; color: var(--ink); line-height: 1.5;
+          transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+        #aemPanelAlone .aem-row {
+          background: color-mix(in srgb, var(--rose) 4%, var(--surface));
+        }
+        #aemPanelAlone .aem-row:hover {
+          border-color: color-mix(in srgb, var(--rose) 30%, var(--line));
+        }
+        #aemPanelManaged .aem-row {
+          background: color-mix(in srgb, var(--dominant) 4%, var(--surface));
+        }
+        #aemPanelManaged .aem-row:hover {
+          border-color: color-mix(in srgb, var(--dominant) 36%, var(--line));
+        }
+        .aem-icon {
+          width: 32px; height: 32px; border-radius: 999px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          border: 1px solid var(--line);
+          box-shadow: inset 0 1px 0 var(--specular);
+        }
+        .aem-icon--rose {
+          background: color-mix(in srgb, var(--rose) 14%, transparent);
+          color: var(--rose);
+          border-color: color-mix(in srgb, var(--rose) 22%, transparent);
+        }
+        .aem-icon--teal {
+          background: color-mix(in srgb, var(--dominant) 14%, transparent);
+          color: var(--dominant);
+          border-color: color-mix(in srgb, var(--dominant) 22%, transparent);
+        }
+
+        /* Ratio bar card */
+        .aem-ratio {
+          padding: 16px 18px;
+          border-radius: var(--r-md);
+          border: 1px solid var(--line);
+          background: var(--surface);
+          box-shadow: inset 0 1px 0 var(--specular);
+          margin-bottom: 18px;
+        }
+        .aem-ratio-head {
+          display: flex; justify-content: space-between; align-items: baseline;
+          gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+        }
+        .aem-ratio-label {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--muted);
+        }
+        .aem-ratio-caption { font-size: 12.5px; color: var(--muted); }
+        .aem-ratio-caption b { color: var(--dominant); font-weight: 700; }
+        .aem-ratio-track {
+          position: relative;
+          height: 12px;
+          border-radius: 999px;
+          background: color-mix(in srgb, var(--rose) 16%, transparent);
+          border: 1px solid color-mix(in srgb, var(--rose) 22%, transparent);
+          overflow: hidden;
+        }
+        .aem-ratio-fill {
+          position: absolute; top: 0; left: 0; bottom: 0;
+          width: 32%;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--dominant), color-mix(in srgb, var(--dominant) 65%, var(--rose)));
+          box-shadow: 0 0 14px color-mix(in srgb, var(--dominant) 40%, transparent);
+        }
+        .aem-ratio-legend {
+          margin-top: 9px;
+          display: flex; justify-content: space-between;
+          font-size: 12px; color: var(--muted);
+          flex-wrap: wrap; gap: 8px;
+        }
+        .aem-ratio-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        .aem-swatch { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+        .aem-swatch--teal { background: var(--dominant); }
+        .aem-swatch--rose { background: var(--rose); }
+
+        /* Proof rows */
+        .aem-section-label {
           text-align: center;
           font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--muted);
-          margin: 8px auto 4px;
+          margin: 0 0 10px;
         }
-        #aiEfficiencyModal .ae-modal-cta {
-          display: inline-flex; align-items: center; gap: 10px;
-          margin: 24px auto 0;
-          padding: 13px 28px;
-          border-radius: 999px;
+        .aem-proof { display: flex; flex-direction: column; gap: 8px; }
+        .aem-proof-row {
+          display: flex; align-items: center; gap: 13px;
+          padding: 12px 14px;
+          border-radius: var(--r-md);
+          border: 1px solid var(--line);
+          background: var(--surface);
+          box-shadow: inset 0 1px 0 var(--specular);
+          transition: border-color 0.18s ease;
+        }
+        .aem-proof-row:hover {
+          border-color: color-mix(in srgb, var(--dominant) 36%, var(--line));
+        }
+        .aem-proof-icon {
+          width: 32px; height: 32px; border-radius: 999px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          background: color-mix(in srgb, var(--dominant) 14%, transparent);
+          color: var(--dominant);
+          border: 1px solid color-mix(in srgb, var(--dominant) 22%, transparent);
+          box-shadow: inset 0 1px 0 var(--specular);
+        }
+        .aem-proof-title { font-size: 14px; font-weight: 700; color: var(--ink); margin: 0 0 2px; line-height: 1.3; }
+        .aem-proof-sub { font-size: 12px; color: var(--muted); line-height: 1.45; margin: 0; }
+
+        /* CTA — full-width teal pill, same recipe as the comparison modal */
+        .aem-cta-wrap { margin-top: 18px; }
+        .aem-cta {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          padding: 14px 28px;
           background: var(--dominant);
           color: var(--canvas);
-          font-size: 14px; font-weight: 700;
-          font-family: var(--sans);
-          letter-spacing: 0.02em;
-          border: 1px solid var(--dominant); cursor: pointer;
+          border-radius: var(--r-md);
+          font-size: 15px; font-weight: 700; font-family: inherit;
           text-decoration: none;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          border: none;
           box-shadow: 0 8px 24px color-mix(in srgb, var(--dominant) 28%, transparent);
-          min-height: 48px;
+          transition: opacity 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+          width: 100%;
+          min-height: 50px;
         }
-        #aiEfficiencyModal .ae-modal-cta:hover { opacity: 0.82; }
+        .aem-cta:hover {
+          opacity: 0.88;
+          transform: translateY(-1px);
+          box-shadow: 0 14px 32px color-mix(in srgb, var(--dominant) 36%, transparent);
+        }
 
-        #aiEfficiencyModal .ae-modal-cta-wrap { text-align: center; }
-        @media (max-width: 600px) {
-          #aiEfficiencyModal .ae-modal-hero h2 { font-size: 26px; }
-        }
         @media (max-width: 720px) {
           #ai-efficiency .ae-teaser { padding: 22px; }
           #ai-efficiency .ae-teaser-title { font-size: 19px; }
-          #aiEfficiencyModal .ae-modal-content { padding: 28px 18px; }
         }
-        #ai-efficiency .ae-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 12px;
-          margin: 0 auto 14px;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--dominant);
-          background: rgba(13, 148, 136, 0.10);
-          border: 1px solid rgba(94, 234, 212, 0.28);
-          border-radius: 999px;
+        @media (max-width: 560px) {
+          #aiEfficiencyModal .aem-shell { padding: 24px 16px 20px; }
+          .aem-tabs { gap: 4px; padding: 4px; }
+          .aem-tab { font-size: 12.5px; padding: 10px 8px; min-width: 0; }
+          .aem-ratio-head { flex-direction: column; align-items: flex-start; gap: 4px; }
         }
         #ai-efficiency .ae-eyebrow-dot {
           width: 6px; height: 6px; border-radius: 999px;
           background: #14b8a6;
           box-shadow: 0 0 10px rgba(20,184,166,0.85);
-        }
-        #ai-efficiency .ae-header { text-align: center; max-width: 760px; margin: 0 auto 36px; }
-        #ai-efficiency .section-title { margin-bottom: 12px; }
-        #ai-efficiency .ae-sub { color: var(--muted); font-size: 16px; line-height: 1.65; }
-        #ai-efficiency .ae-sub strong { color: var(--ink); font-weight: 600; }
-
-        /* Comparison */
-        #ai-efficiency .ae-compare {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 20px;
-          max-width: 1040px;
-          margin: 0 auto 28px;
-        }
-        #ai-efficiency .ae-panel {
-          position: relative;
-          padding: 28px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background: var(--surface);
-          backdrop-filter: blur(24px) saturate(140%);
-          -webkit-backdrop-filter: blur(24px) saturate(140%);
-          overflow: hidden;
-          isolation: isolate;
-        }
-        #ai-efficiency .ae-panel::before {
-          content: "";
-          position: absolute; inset: 0;
-          background:
-            radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.05), transparent 60%);
-          pointer-events: none;
-          z-index: -1;
-        }
-        #ai-efficiency .ae-panel.alone {
-          border-color: rgba(248, 113, 113, 0.30);
-          border-left: 4px solid #f87171;
-          background:
-            radial-gradient(120% 90% at 0% 0%, rgba(248, 113, 113, 0.10), transparent 55%),
-            var(--surface);
-        }
-        #ai-efficiency .ae-panel.managed {
-          border-color: rgba(45, 212, 191, 0.40);
-          border-left: 4px solid var(--dominant);
-          background:
-            radial-gradient(120% 90% at 100% 0%, rgba(45, 212, 191, 0.14), transparent 55%),
-            var(--surface);
-          box-shadow:
-            0 0 0 1px rgba(45, 212, 191, 0.10),
-            0 18px 50px -28px rgba(20, 184, 166, 0.55);
-        }
-        #ai-efficiency .ae-panel-head {
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 12px; margin-bottom: 14px; flex-wrap: wrap;
-        }
-        #ai-efficiency .ae-panel-head .ae-stat-value {
-          font-size: 26px; font-weight: 800; letter-spacing: -0.02em;
-        }
-        #ai-efficiency .ae-panel.alone .ae-panel-head .ae-stat-value { color: #f87171; }
-        #ai-efficiency .ae-panel.managed .ae-panel-head .ae-stat-value { color: var(--dominant); }
-        #ai-efficiency .ae-panel-tag {
-          display: inline-flex; align-items: center; gap: 8px;
-          font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-          text-transform: uppercase;
-          padding: 5px 10px; border-radius: 999px;
-          margin: 0;
-        }
-        #ai-efficiency .ae-panel.alone .ae-panel-tag {
-          color: #fca5a5;
-          background: rgba(248, 113, 113, 0.10);
-          border: 1px solid rgba(248, 113, 113, 0.28);
-        }
-        #ai-efficiency .ae-panel.managed .ae-panel-tag {
-          color: var(--dominant);
-          background: rgba(20, 184, 166, 0.12);
-          border: 1px solid rgba(94, 234, 212, 0.32);
-        }
-        #ai-efficiency .ae-panel h3 {
-          font-size: 20px; font-weight: 700; line-height: 1.3;
-          margin-bottom: 6px;
-        }
-        #ai-efficiency .ae-panel-lede { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
-        #ai-efficiency .ae-list { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-direction: column; gap: 10px; }
-        #ai-efficiency .ae-list li {
-          display: flex; gap: 12px; align-items: flex-start;
-          font-size: 14.5px; color: var(--ink); line-height: 1.55;
-        }
-        #ai-efficiency .ae-list li .ae-bullet {
-          flex-shrink: 0; width: 20px; height: 20px; border-radius: 999px;
-          display: inline-flex; align-items: center; justify-content: center;
-          margin-top: 1px;
-        }
-        #ai-efficiency .ae-panel.alone .ae-bullet {
-          background: rgba(248, 113, 113, 0.12);
-          color: #f87171;
-          border: 1px solid rgba(248, 113, 113, 0.30);
-        }
-        #ai-efficiency .ae-panel.managed .ae-bullet {
-          background: rgba(20, 184, 166, 0.14);
-          color: var(--dominant);
-          border: 1px solid rgba(94, 234, 212, 0.36);
-        }
-        #ai-efficiency .ae-stat {
-          display: flex; align-items: baseline; gap: 8px;
-          padding-top: 14px;
-          border-top: 1px solid var(--line);
-        }
-        #ai-efficiency .ae-stat-value { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
-        #ai-efficiency .ae-panel.alone .ae-stat-value { color: #f87171; }
-        #ai-efficiency .ae-panel.managed .ae-stat-value { color: var(--dominant); }
-        #ai-efficiency .ae-stat-label { color: var(--muted); font-size: 13px; }
-
-        /* Efficiency ratio bar */
-        #ai-efficiency .ae-ratio {
-          max-width: 1040px;
-          margin: 0 auto 32px;
-          padding: 22px 24px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background:
-            linear-gradient(180deg, rgba(20, 184, 166, 0.05), transparent 80%),
-            var(--surface);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-        }
-        #ai-efficiency .ae-ratio-head {
-          display: flex; justify-content: space-between; align-items: baseline;
-          gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
-        }
-        #ai-efficiency .ae-ratio-title {
-          font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
-          text-transform: uppercase; color: var(--muted);
-        }
-        #ai-efficiency .ae-ratio-caption { font-size: 13px; color: var(--muted); }
-        #ai-efficiency .ae-ratio-caption b { color: var(--dominant); font-weight: 700; }
-        #ai-efficiency .ae-ratio-track {
-          position: relative;
-          height: 14px;
-          border-radius: 999px;
-          background: rgba(248, 113, 113, 0.18);
-          overflow: hidden;
-          border: 1px solid rgba(248, 113, 113, 0.25);
-        }
-        #ai-efficiency .ae-ratio-fill {
-          position: absolute; top: 0; left: 0; bottom: 0;
-          width: 32%;
-          border-radius: 999px;
-          background: linear-gradient(90deg, var(--dominant), color-mix(in srgb, var(--dominant) 65%, var(--rose)));
-          box-shadow: 0 0 18px rgba(34, 211, 238, 0.45);
-        }
-        #ai-efficiency .ae-ratio-legend {
-          margin-top: 10px;
-          display: flex; justify-content: space-between;
-          font-size: 12px; color: var(--muted);
-        }
-        #ai-efficiency .ae-ratio-legend span b { color: var(--ink); font-weight: 600; }
-
-        /* Value proof cards (vertical stack, horizontal row layout) */
-        #ai-efficiency .ae-proof {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          max-width: 1040px;
-          margin: 0 auto;
-        }
-        #ai-efficiency .ae-proof-card {
-          display: flex; align-items: flex-start; gap: 16px;
-          padding: 18px 20px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background: var(--surface);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          transition: transform 0.18s ease, border-color 0.18s ease;
-        }
-        #ai-efficiency .ae-proof-card:hover {
-          border-color: color-mix(in srgb, var(--dominant) 45%, transparent);
-        }
-        #ai-efficiency .ae-proof-icon {
-          flex-shrink: 0;
-          width: 40px; height: 40px;
-          border-radius: 10px;
-          display: inline-flex; align-items: center; justify-content: center;
-          margin-bottom: 0;
-          color: var(--dominant);
-          background: var(--support);
-          border: 1px solid var(--line);
-        }
-        #ai-efficiency .ae-proof-body { flex: 1; }
-        #ai-efficiency .ae-proof-card h4 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
-        #ai-efficiency .ae-proof-card p { font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0; }
-        /* Ratio legend with swatches */
-        #ai-efficiency .ae-ratio-legend span { display: inline-flex; align-items: center; gap: 6px; }
-        #ai-efficiency .ae-ratio-legend .ae-ratio-swatch {
-          display: inline-block; width: 10px; height: 10px; border-radius: 3px;
-        }
-
-        @media (max-width: 720px) {
-          #ai-efficiency .ae-compare { grid-template-columns: 1fr; }
-          #ai-efficiency .ae-proof { grid-template-columns: 1fr; }
-          #ai-efficiency .ae-ratio-head { flex-direction: column; align-items: flex-start; gap: 6px; }
-          #ai-efficiency .ae-ratio-legend { flex-direction: column; gap: 4px; }
-        }
-        @media (max-width: 480px) {
-          #ai-efficiency .ae-panel { padding: 22px; }
-          #ai-efficiency .ae-ratio { padding: 18px; }
-          #ai-efficiency .ae-proof-card { padding: 18px; }
-          #ai-efficiency .ae-panel h3 { font-size: 18px; }
-          #ai-efficiency .ae-stat-value { font-size: 20px; }
-        }
-
-        /* Modal-scoped mirrors of the AE styles (panels, bullets, ratio, proof) */
-        #aiEfficiencyModal .ae-compare {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 20px;
-          max-width: 100%;
-          margin: 0 0 24px;
-        }
-        #aiEfficiencyModal .ae-panel {
-          position: relative;
-          padding: 26px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background: var(--surface);
-          overflow: hidden;
-          isolation: isolate;
-        }
-        #aiEfficiencyModal .ae-panel::before {
-          content: "";
-          position: absolute; inset: 0;
-          background: radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.05), transparent 60%);
-          pointer-events: none;
-          z-index: -1;
-        }
-        #aiEfficiencyModal .ae-panel.alone {
-          border-color: var(--line);
-          border-left: 3px solid #f87171;
-          background: transparent;
-        }
-        #aiEfficiencyModal .ae-panel.managed {
-          border-color: var(--line);
-          border-left: 3px solid var(--dominant);
-          background: transparent;
-          box-shadow: none;
-        }
-        #aiEfficiencyModal .ae-panel-tag {
-          display: inline-flex; align-items: center; gap: 8px;
-          font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
-          text-transform: uppercase;
-          padding: 3px 8px; border-radius: 999px;
-          margin: 0 0 12px;
-        }
-        #aiEfficiencyModal .ae-panel.alone .ae-panel-tag {
-          color: #f87171;
-          background: transparent;
-          border: 1.5px solid #f87171;
-        }
-        #aiEfficiencyModal .ae-panel.managed .ae-panel-tag {
-          color: var(--dominant);
-          background: transparent;
-          border: 1.5px solid var(--dominant);
-        }
-        #aiEfficiencyModal .ae-panel h3 {
-          font-size: 20px; font-weight: 700; line-height: 1.3;
-          margin: 0 0 6px;
-        }
-        #aiEfficiencyModal .ae-panel-lede {
-          color: var(--muted); font-size: 14px; margin: 0 0 18px; line-height: 1.55;
-        }
-        #aiEfficiencyModal .ae-list {
-          list-style: none; padding: 0; margin: 0;
-          display: flex; flex-direction: column; gap: 10px;
-        }
-        #aiEfficiencyModal .ae-list li {
-          display: flex; gap: 12px; align-items: flex-start;
-          font-size: 14.5px; color: var(--muted); line-height: 1.55;
-        }
-        #aiEfficiencyModal .ae-list li .ae-bullet {
-          flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px;
-          display: inline-flex; align-items: center; justify-content: center;
-          margin-top: 1px;
-        }
-        #aiEfficiencyModal .ae-panel.alone .ae-bullet {
-          background: rgba(248, 113, 113, 0.12);
-          color: #f87171;
-          border: 1px solid rgba(248, 113, 113, 0.30);
-        }
-        #aiEfficiencyModal .ae-panel.managed .ae-bullet {
-          background: rgba(20, 184, 166, 0.14);
-          color: var(--dominant);
-          border: 1px solid rgba(94, 234, 212, 0.36);
-        }
-
-        #aiEfficiencyModal .ae-ratio {
-          margin: 0 0 24px;
-          padding: 22px 24px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background: var(--surface);
-        }
-        #aiEfficiencyModal .ae-ratio-head {
-          display: flex; justify-content: space-between; align-items: baseline;
-          gap: 16px; margin-bottom: 12px; flex-wrap: wrap;
-        }
-        #aiEfficiencyModal .ae-ratio-title {
-          font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
-          text-transform: uppercase; color: var(--muted);
-        }
-        #aiEfficiencyModal .ae-ratio-caption { font-size: 13px; color: var(--muted); }
-        #aiEfficiencyModal .ae-ratio-caption b { color: var(--dominant); font-weight: 700; }
-        #aiEfficiencyModal .ae-ratio-track {
-          position: relative;
-          height: 14px;
-          border-radius: 999px;
-          background: rgba(248, 113, 113, 0.18);
-          overflow: hidden;
-          border: 1px solid rgba(248, 113, 113, 0.25);
-        }
-        #aiEfficiencyModal .ae-ratio-fill {
-          position: absolute; top: 0; left: 0; bottom: 0;
-          width: 32%;
-          border-radius: 999px;
-          background: linear-gradient(90deg, var(--dominant), color-mix(in srgb, var(--dominant) 65%, var(--rose)));
-          box-shadow: 0 0 18px rgba(34, 211, 238, 0.45);
-        }
-        #aiEfficiencyModal .ae-ratio-legend {
-          margin-top: 10px;
-          display: flex; justify-content: space-between;
-          font-size: 12px; color: var(--muted);
-          flex-wrap: wrap; gap: 8px;
-        }
-        #aiEfficiencyModal .ae-ratio-legend span { display: inline-flex; align-items: center; gap: 6px; }
-        #aiEfficiencyModal .ae-ratio-legend span b { color: var(--ink); font-weight: 600; }
-        #aiEfficiencyModal .ae-ratio-legend .ae-ratio-swatch {
-          display: inline-block; width: 10px; height: 10px; border-radius: 3px;
-        }
-
-        #aiEfficiencyModal .ae-proof {
-          display: flex; flex-direction: column; gap: 12px;
-          margin: 0 0 8px;
-        }
-        #aiEfficiencyModal .ae-proof-card {
-          display: flex; align-items: flex-start; gap: 16px;
-          padding: 16px 18px;
-          border-radius: var(--r-md);
-          border: 1px solid var(--line);
-          background: var(--surface);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          transition: transform 0.18s ease, border-color 0.18s ease;
-        }
-        #aiEfficiencyModal .ae-proof-card:hover {
-          border-color: color-mix(in srgb, var(--dominant) 45%, transparent);
-        }
-        #aiEfficiencyModal .ae-proof-icon {
-          flex-shrink: 0;
-          width: 40px; height: 40px;
-          border-radius: 10px;
-          display: inline-flex; align-items: center; justify-content: center;
-          color: var(--dominant);
-          background: var(--support);
-          border: 1px solid var(--line);
-        }
-        #aiEfficiencyModal .ae-proof-body { flex: 1; }
-        #aiEfficiencyModal .ae-proof-card h4 { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
-        #aiEfficiencyModal .ae-proof-card p { font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0; }
-
-        @media (max-width: 720px) {
-          #aiEfficiencyModal .ae-compare { grid-template-columns: 1fr; }
-          #aiEfficiencyModal .ae-ratio-head { flex-direction: column; align-items: flex-start; gap: 6px; }
-          #aiEfficiencyModal .ae-ratio-legend { flex-direction: column; gap: 4px; }
-        }
-        @media (max-width: 480px) {
-          #aiEfficiencyModal .ae-panel { padding: 22px; }
-          #aiEfficiencyModal .ae-ratio { padding: 18px; }
-          #aiEfficiencyModal .ae-proof-card { padding: 16px; }
-          #aiEfficiencyModal .ae-panel h3 { font-size: 18px; }
         }
       /* ═══════════════════════════════════════════════════════════════════
          END OF ACTIVE STYLES — no more layers below.
@@ -4137,60 +3917,6 @@
       }
       .special-tag { border-radius:999px!important; }
 
-      /* AI efficiency modal: glass panels, no hard red boxes/bars */
-      #aiEfficiencyModal .ae-modal-content {
-        border-radius:var(--r-lg)!important; border:1px solid var(--line)!important;
-        background:var(--canvas)!important; box-shadow:var(--shadow)!important;
-      }
-      #aiEfficiencyModal .ae-panel,
-      #aiEfficiencyModal .ae-panel.alone,
-      #aiEfficiencyModal .ae-panel.managed {
-        border:1px solid var(--line)!important; border-left-width:1px!important;
-        border-radius:var(--r-md)!important; background:var(--surface)!important;
-        box-shadow:var(--shadow)!important;
-      }
-      #aiEfficiencyModal .ae-panel.managed {
-        border-color:color-mix(in srgb,var(--dominant) 45%,var(--line))!important;
-        background:color-mix(in srgb,var(--dominant) 6%,var(--surface))!important;
-      }
-      #aiEfficiencyModal .ae-panel-tag {
-        border-radius:999px!important; border:1px solid var(--line)!important;
-        padding:5px 12px!important;
-      }
-      #aiEfficiencyModal .ae-panel.alone .ae-panel-tag {
-        color:#c46a7a!important; border-color:color-mix(in srgb,#c46a7a 40%,var(--line))!important;
-        background:color-mix(in srgb,#c46a7a 8%,transparent)!important;
-      }
-      #aiEfficiencyModal .ae-panel.managed .ae-panel-tag {
-        color:var(--dominant)!important; border-color:color-mix(in srgb,var(--dominant) 40%,var(--line))!important;
-        background:var(--support)!important;
-      }
-      #aiEfficiencyModal .ae-panel.alone .ae-bullet {
-        border-radius:50%!important; border:1px solid color-mix(in srgb,#c46a7a 35%,var(--line))!important;
-        background:color-mix(in srgb,#c46a7a 10%,transparent)!important; color:#c46a7a!important;
-      }
-      #aiEfficiencyModal .ae-panel.managed .ae-bullet {
-        border-radius:50%!important; border:1px solid color-mix(in srgb,var(--dominant) 35%,var(--line))!important;
-        background:var(--support)!important; color:var(--dominant)!important;
-      }
-      #aiEfficiencyModal .ae-eyebrow {
-        border-radius:999px!important; border:1px solid var(--line)!important;
-        background:var(--support)!important; color:var(--dominant)!important;
-      }
-      #aiEfficiencyModal .ae-ratio,
-      #aiEfficiencyModal .ae-proof-card {
-        border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
-        background:var(--surface)!important;
-      }
-      #aiEfficiencyModal .ae-proof-icon {
-        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
-        background:var(--support)!important; color:var(--dominant)!important;
-      }
-      #aiEfficiencyModal .ae-modal-cta {
-        border-radius:999px!important; background:var(--dominant)!important;
-        color:var(--canvas)!important;
-      }
-      #aiEfficiencyModal .ae-ratio-swatch { border-radius:50%!important; }
       /* --- Inline industry credibility strip (inside Selected Projects) */
       .industry-strip-inline { margin: 0 0 28px; overflow: hidden; }
       .industry-strip-inline .industries-scroll { cursor: default; margin: 0; padding: 0; }
@@ -6444,131 +6170,136 @@
       </section>
 
       <div class="modal-overlay" id="aiEfficiencyModal" role="dialog" aria-modal="true" aria-labelledby="aiEfficiencyModalTitle">
-        <div class="modal-content ae-modal-content">
+        <div class="modal-content aem-shell">
           <button class="modal-close" onclick="closeAiEfficiencyModal()" aria-label="Close">&times;</button>
 
-          <div class="ae-modal-hero">
-            <span class="ae-eyebrow"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
-            <h2 id="aiEfficiencyModalTitle">Stop burning credits.<br>Start shipping product.</h2>
-            <p class="ae-modal-lede">Most founders quietly burn $10,000+ on AI credits and tools that never quite fit their niche before they ship anything real. We turn that spend into working product.</p>
+          <!-- Header -->
+          <div class="aem-header">
+            <span class="aem-eyebrow"><span class="aem-dot"></span>AI Efficiency &amp; Value</span>
+            <h2 class="aem-title" id="aiEfficiencyModalTitle">Stop burning credits.<br>Start shipping product.</h2>
+            <p class="aem-lede">Most founders quietly burn $10,000+ on AI tools before they ship anything real. We turn that spend into working product.</p>
           </div>
 
-          <div class="ae-compare">
-            <div class="ae-panel alone">
-              <span class="ae-panel-tag">Raw AI stack</span>
-              <h3>Trial, error, and a credit card on file</h3>
-              <p class="ae-panel-lede">The cost of figuring it out yourself, in public, on the clock.</p>
-              <ul class="ae-list">
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </span>
-                  Thousands of credits spent on prompts that almost work
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </span>
-                  Generic outputs that ignore your niche, your users, and your voice
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </span>
-                  Half-built assets with no one to stitch them together
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </span>
-                  Open-ended bills that grow every month you delay shipping
-                </li>
-              </ul>
-            </div>
+          <!-- Segmented tab bar -->
+          <div class="aem-tabs" role="tablist">
+            <button class="aem-tab active" id="aemTabAlone" role="tab" aria-selected="true"
+              aria-controls="aemPanelAlone" onclick="switchAemTab('alone',this)">
+              Raw AI stack
+            </button>
+            <button class="aem-tab" id="aemTabManaged" role="tab" aria-selected="false"
+              aria-controls="aemPanelManaged" onclick="switchAemTab('managed',this)">
+              Start Apps Studio
+            </button>
+          </div>
 
-            <div class="ae-panel managed">
-              <span class="ae-panel-tag">With Start Apps Studio</span>
-              <h3>Know-how, plus the delivery to back it up</h3>
-              <p class="ae-panel-lede">A managed AI stack and a team that has done this hundreds of times.</p>
-              <ul class="ae-list">
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  Proprietary in-house model stack tuned for product, code, and copy
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  Expert prompting and review, so outputs land your niche on the first pass
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  Full lifecycle of assets and code, from first mock to live product
-                </li>
-                <li>
-                  <span class="ae-bullet">
-                    <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  Fixed scope, fixed budget, no surprise bills mid-build
-                </li>
-              </ul>
+          <!-- Panel: Raw AI stack -->
+          <div class="aem-panel active" id="aemPanelAlone" role="tabpanel" aria-labelledby="aemTabAlone">
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--rose">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </span>
+              <span>Thousands of credits spent on prompts that almost work</span>
+            </div>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--rose">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </span>
+              <span>Generic outputs that ignore your niche, your users, and your voice</span>
+            </div>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--rose">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </span>
+              <span>Half-built assets with no one to stitch them together</span>
+            </div>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--rose">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </span>
+              <span>Open-ended bills that grow every month you delay shipping</span>
             </div>
           </div>
 
-          <div class="ae-ratio" role="img" aria-label="Credit waste reduction: 68 percent of typical AI spend turns into wasted credits when going alone, versus the managed Start Apps Studio stack which directs spend to shipped product.">
-            <div class="ae-ratio-head">
-              <span class="ae-ratio-title">Credit waste, at a glance</span>
-              <span class="ae-ratio-caption">Managed delivery converts about <b>3x</b> more spend into shipped product.</span>
+          <!-- Panel: Start Apps Studio -->
+          <div class="aem-panel" id="aemPanelManaged" role="tabpanel" aria-labelledby="aemTabManaged">
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--teal">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Proprietary in-house model stack tuned for product, code, and copy</span>
             </div>
-            <div class="ae-ratio-track">
-              <div class="ae-ratio-fill"></div>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--teal">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Expert prompting and review, so outputs land your niche on the first pass</span>
             </div>
-            <div class="ae-ratio-legend">
-              <span><span class="ae-ratio-swatch" style="background:#14b8a6"></span><b>Managed</b> · ~32% iteration</span>
-              <span><span class="ae-ratio-swatch" style="background:#f87171"></span><b>Solo</b> · ~68% lost</span>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--teal">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Full lifecycle — brand, design, code, and launch under one roof</span>
             </div>
-          </div>
-
-          <span class="ae-section-label">What managed delivery gives you</span>
-
-          <div class="ae-proof">
-            <div class="ae-proof-card">
-              <div class="ae-proof-icon">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-              </div>
-              <div class="ae-proof-body">
-                <h4>Proprietary AI stack</h4>
-                <p>A curated mix of frontier and in-house models, picked per task so you pay for output, not experimentation.</p>
-              </div>
-            </div>
-            <div class="ae-proof-card">
-              <div class="ae-proof-icon">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-              </div>
-              <div class="ae-proof-body">
-                <h4>Full asset and code lifecycle</h4>
-                <p>One team owns the brand, the design system, the copy, the code, and the launch, so nothing gets dropped between tools.</p>
-              </div>
-            </div>
-            <div class="ae-proof-card">
-              <div class="ae-proof-icon">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
-              </div>
-              <div class="ae-proof-body">
-                <h4>Fixed scope, fixed budget</h4>
-                <p>You agree the deliverables and the price up front. We absorb the model bills, the retries, and the late-night iterations.</p>
-              </div>
+            <div class="aem-row">
+              <span class="aem-icon aem-icon--teal">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Fixed scope, fixed budget — no surprise bills mid-build</span>
             </div>
           </div>
 
-          <div class="ae-modal-cta-wrap">
-            <a class="ae-modal-cta" href="#contact" onclick="closeAiEfficiencyModal()">
+          <!-- Ratio bar -->
+          <div class="aem-ratio" role="img" aria-label="Credit waste: ~68% of solo AI spend is lost; managed delivery directs ~3x more to shipped product.">
+            <div class="aem-ratio-head">
+              <span class="aem-ratio-label">Credit waste at a glance</span>
+              <span class="aem-ratio-caption">Managed delivery converts about <b>3×</b> more spend into shipped product.</span>
+            </div>
+            <div class="aem-ratio-track">
+              <div class="aem-ratio-fill"></div>
+            </div>
+            <div class="aem-ratio-legend">
+              <span><span class="aem-swatch aem-swatch--teal"></span>Managed · ~32% iteration</span>
+              <span><span class="aem-swatch aem-swatch--rose"></span>Solo · ~68% lost</span>
+            </div>
+          </div>
+
+          <!-- Proof rows -->
+          <p class="aem-section-label">What managed delivery gives you</p>
+          <div class="aem-proof">
+            <div class="aem-proof-row">
+              <span class="aem-proof-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+              </span>
+              <div>
+                <p class="aem-proof-title">Proprietary AI stack</p>
+                <p class="aem-proof-sub">Frontier and in-house models picked per task — you pay for output, not experimentation.</p>
+              </div>
+            </div>
+            <div class="aem-proof-row">
+              <span class="aem-proof-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              </span>
+              <div>
+                <p class="aem-proof-title">Full asset and code lifecycle</p>
+                <p class="aem-proof-sub">One team owns brand, design, code, and launch — nothing dropped between tools.</p>
+              </div>
+            </div>
+            <div class="aem-proof-row">
+              <span class="aem-proof-icon">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+              </span>
+              <div>
+                <p class="aem-proof-title">Fixed scope, fixed budget</p>
+                <p class="aem-proof-sub">You agree the deliverables and price up front. We absorb the retries and late-night iterations.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="aem-cta-wrap">
+            <a class="aem-cta" href="#contact" onclick="closeAiEfficiencyModal()">
               Start your build
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
           </div>
         </div>
@@ -7052,6 +6783,20 @@
       function closeAiEfficiencyModal() {
         document.getElementById('aiEfficiencyModal').classList.remove('open');
         document.body.style.overflow = '';
+      }
+
+      function switchAemTab(which, btn) {
+        var alonePanel = document.getElementById('aemPanelAlone');
+        var managedPanel = document.getElementById('aemPanelManaged');
+        var aloneTab = document.getElementById('aemTabAlone');
+        var managedTab = document.getElementById('aemTabManaged');
+        var showAlone = which === 'alone';
+        alonePanel.classList.toggle('active', showAlone);
+        managedPanel.classList.toggle('active', !showAlone);
+        aloneTab.classList.toggle('active', showAlone);
+        managedTab.classList.toggle('active', !showAlone);
+        aloneTab.setAttribute('aria-selected', showAlone ? 'true' : 'false');
+        managedTab.setAttribute('aria-selected', showAlone ? 'false' : 'true');
       }
 
       document.getElementById('aiEfficiencyModal').addEventListener('click', function(e) {
