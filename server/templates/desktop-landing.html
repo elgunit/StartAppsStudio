@@ -4154,6 +4154,18 @@
         text-transform: uppercase;
         margin-bottom: 14px;
       }
+       .founder-link {
+         display: inline-flex;
+         align-items: center;
+         gap: 6px;
+         margin: 0 0 14px;
+         color: var(--dominant);
+         font-size: 12px;
+         font-weight: 700;
+         text-decoration: none;
+         letter-spacing: 0.02em;
+       }
+       .founder-link:hover { text-decoration: underline; }
       .founder-bio {
         font-size: clamp(14px, 1.3vw, 15.5px);
         color: var(--muted);
@@ -4274,15 +4286,25 @@
       }
       .testimonial-problem-tag svg { opacity: 0.6; }
       .testimonial-quote-mark {
-        font-size: 44px;
-        line-height: 0.85;
+         width: 40px;
+         height: 40px;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         border: 1px solid color-mix(in srgb, var(--dominant) 20%, var(--line));
+         border-radius: 12px;
+         background: color-mix(in srgb, var(--support) 78%, transparent);
         color: var(--dominant);
-        font-weight: 900;
-        font-family: Georgia, 'Times New Roman', serif;
         opacity: 0.45;
-        margin-bottom: 12px;
+         margin-bottom: 16px;
         user-select: none;
       }
+       .testimonial-quote-mark svg {
+         width: 22px;
+         height: 22px;
+         display: block;
+         fill: currentColor;
+       }
       .testimonial-text {
         font-size: clamp(13.5px, 1.2vw, 15px);
         line-height: 1.7;
@@ -5376,6 +5398,16 @@
           <div class="founder-info">
             <div class="founder-name">Elgar Sirajov</div>
             <div class="founder-role">Founder · Designer · Developer · Strategist</div>
+             <a
+               class="founder-link"
+               href="https://www.linkedin.com/in/elgarsirajov/"
+               target="_blank"
+               rel="noopener noreferrer"
+               data-social-platform="LinkedIn"
+             >
+               View LinkedIn profile
+               <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+             </a>
             <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You always know who to call, and that person always has the full context, so every decision moves your product forward.</p>
           </div>
         </div>
@@ -5423,7 +5455,9 @@
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               Problem: inconsistent visual output
             </div>
-            <div class="testimonial-quote-mark">"</div>
+             <div class="testimonial-quote-mark" aria-hidden="true">
+               <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+             </div>
             <p class="testimonial-text">Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
@@ -5437,7 +5471,9 @@
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               Problem: slow catalogue updates
             </div>
-            <div class="testimonial-quote-mark">"</div>
+             <div class="testimonial-quote-mark" aria-hidden="true">
+               <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+             </div>
             <p class="testimonial-text">We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
@@ -5451,7 +5487,9 @@
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               Problem: indistinguishable product shots
             </div>
-            <div class="testimonial-quote-mark">"</div>
+             <div class="testimonial-quote-mark" aria-hidden="true">
+               <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+             </div>
             <p class="testimonial-text">I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
@@ -6865,6 +6903,52 @@
                 }
               } catch (_) {}
             });
+          });
+        } catch (_) {}
+      })();
+
+      // LinkedIn click notification — reports the outbound click before the
+      // visitor leaves the site. LinkedIn profile opens themselves cannot be
+      // observed by this site, so this tracks clicks from the founder panel.
+      (function trackLinkedInClick() {
+        try {
+          var link = document.querySelector('[data-social-platform="LinkedIn"]');
+          if (!link) return;
+
+          function getVisitorId() {
+            var key = 'sas_visitor_id_v1';
+            var visitorId = null;
+            try { visitorId = localStorage.getItem(key); } catch (_) {}
+            if (!visitorId) {
+              visitorId = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+              try { localStorage.setItem(key, visitorId); } catch (_) {}
+            }
+            return visitorId;
+          }
+
+          link.addEventListener('click', function () {
+            var payload = {
+              visitorId: getVisitorId(),
+              pagePath: location.pathname + location.search,
+              platform: 'LinkedIn',
+              userAgent: navigator.userAgent,
+              referrer: document.referrer || ''
+            };
+            var body = JSON.stringify(payload);
+
+            try {
+              var blob = new Blob([body], { type: 'application/json' });
+              if (navigator.sendBeacon && navigator.sendBeacon('/api/track/social-click', blob)) return;
+            } catch (_) {}
+
+            try {
+              fetch('/api/track/social-click', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: body,
+                keepalive: true
+              }).catch(function () {});
+            } catch (_) {}
           });
         } catch (_) {}
       })();
