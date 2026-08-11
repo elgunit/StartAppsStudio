@@ -1495,32 +1495,40 @@
       .special-package.enterprise { border-width: 2px; border-color: var(--dominant); }
       .special-package.enterprise { margin-bottom: 0; }
       
-      /* Special-package header: identity row — icon, title+pins, badge, chevron */
+      /* Special-package header: status above identity, supporting pins beside title */
       .special-header {
         display: flex;
         align-items: flex-start;
         gap: 14px;
       }
 
-      .special-header-meta {
+      .special-header-main {
         display: flex;
         flex-direction: column;
-        gap: 8px;
         min-width: 0;
         flex: 1;
       }
-      .special-title-row {
+
+      .special-identity-row {
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
         gap: 10px;
+        min-width: 0;
       }
-      .special-title-row h4 { font-weight: 600; margin: 0; font-size: 17px; letter-spacing: -0.01em; }
+      .special-identity-row h4 {
+        min-width: 0;
+        font-weight: 600;
+        margin: 0;
+        font-size: 17px;
+        letter-spacing: -0.01em;
+      }
 
       .special-pins {
         display: flex;
         flex-wrap: wrap;
+        justify-content: flex-end;
         gap: 6px;
+        margin-left: auto;
       }
       .special-pin {
         display: inline-flex;
@@ -1555,8 +1563,9 @@
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        flex-shrink: 0;
-        margin: 0;
+        align-self: flex-start;
+        width: fit-content;
+        margin: 0 0 10px;
         padding: 4px 10px;
         background: color-mix(in srgb, var(--support) 70%, transparent);
         color: var(--dominant);
@@ -1678,6 +1687,17 @@
       @media (max-width: 600px) {
         .special-header { gap: 12px; }
         .special-icon { width: 40px; height: 40px; }
+        .special-identity-row {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+        .special-pins {
+          width: 100%;
+          justify-content: flex-start;
+          margin-left: 50px;
+          margin-top: -2px;
+        }
+        .special-badge { margin-bottom: 8px; }
         .special-summary { margin-top: 12px; }
         .special-feature { font-size: 12.5px; padding: 6px 12px; }
       }
@@ -3322,7 +3342,7 @@
       }
       .case-study-details { border-top:1px solid var(--line)!important; }
 
-      /* --- How it works: glass steps with teal number pill */
+      /* --- How it works: glass steps with a compact corner index */
       .how-bento { gap:var(--space-3,18px)!important; }
       .how-bento .how-card {
         border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
@@ -3335,11 +3355,22 @@
         }
       }
       .how-bento .how-card-step {
+        position:absolute!important;
+        top:24px; right:24px;
+        z-index:2;
         color:var(--dominant)!important;
-        background:var(--support)!important; border-radius:999px!important;
-        width:fit-content; padding:6px 14px!important;
+        background:transparent!important;
+        border:0!important;
+        border-radius:0!important;
+        width:auto;
+        padding:0!important;
+        margin:0!important;
+        font-size:12px!important;
+        font-weight:800!important;
+        letter-spacing:.12em!important;
       }
       .how-bento .how-card-step::before { content:none!important; display:none!important; }
+      .how-bento .how-card-ghost { display:none!important; }
       .how-bento .how-card-icon {
         border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
         background:var(--support)!important; color:var(--dominant)!important;
@@ -5529,13 +5560,13 @@
       
       <!-- How It Works -->
       <section class="section" id="how-it-works" data-section-name="how-it-works">
-        <h2 class="section-title">Start with the right product decision</h2>
+        <h2 class="section-title">From idea to launch</h2>
         <p class="section-subtitle">We help you choose what to build, what to prove first, and which path gets you to a useful product without paying for the wrong version.</p>
         <div class="how-bento" id="howItWorksGrid">
           <!-- Card 1 -->
           <div class="how-card">
             <div class="how-card-ghost">1</div>
-            <div class="how-card-step">Step 01</div>
+            <div class="how-card-step">01</div>
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.17-2.1 5.87-5 6.72V18a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2.28C7.1 14.87 5 12.17 5 9a7 7 0 017-7z"/><path d="M9 21h6"/></svg>
             </div>
@@ -5545,7 +5576,7 @@
           <!-- Card 2 -->
           <div class="how-card">
             <div class="how-card-ghost">2</div>
-            <div class="how-card-step">Step 02</div>
+            <div class="how-card-step">02</div>
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             </div>
@@ -5555,7 +5586,7 @@
           <!-- Card 3 -->
           <div class="how-card">
             <div class="how-card-ghost">3</div>
-            <div class="how-card-step">Step 03</div>
+            <div class="how-card-step">03</div>
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             </div>
@@ -5565,7 +5596,7 @@
           <!-- Card 4 -->
           <div class="how-card">
             <div class="how-card-ghost">4</div>
-            <div class="how-card-step">Step 04</div>
+            <div class="how-card-step">04</div>
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
@@ -5640,18 +5671,18 @@
         <!-- Custom / Scale -->
         <div class="special-package" id="custom-scale" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-icon">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
-            </div>
-            <div class="special-header-meta">
-              <div class="special-title-row">
+            <div class="special-header-main">
+              <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Handcrafted</div>
+              <div class="special-identity-row">
+                <div class="special-icon">
+                  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+                </div>
                 <h4>Custom / Scale</h4>
-                <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Handcrafted</div>
-              </div>
-              <div class="special-pins">
-                <span class="special-pin strong">$30k+ or monthly retainer</span>
-                <span class="special-pin">1M+ users</span>
-                <span class="special-pin">1–6 months</span>
+                <div class="special-pins">
+                  <span class="special-pin strong">$30k+ or monthly retainer</span>
+                  <span class="special-pin">1M+ users</span>
+                  <span class="special-pin">1–6 months</span>
+                </div>
               </div>
             </div>
             <svg class="special-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -5672,17 +5703,17 @@
         <!-- Enterprise Package -->
         <div class="special-package enterprise" id="enterprise-package" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-icon">
-              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-            </div>
-            <div class="special-header-meta">
-              <div class="special-title-row">
+            <div class="special-header-main">
+              <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Handoff</div>
+              <div class="special-identity-row">
+                <div class="special-icon">
+                  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                </div>
                 <h4>Enterprise</h4>
-                <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Handoff</div>
-              </div>
-              <div class="special-pins">
-                <span class="special-pin strong">Via our partner network</span>
-                <span class="special-pin">Dedicated teams</span>
+                <div class="special-pins">
+                  <span class="special-pin strong">Via our partner network</span>
+                  <span class="special-pin">Dedicated teams</span>
+                </div>
               </div>
             </div>
             <svg class="special-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
