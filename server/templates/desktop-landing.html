@@ -3873,25 +3873,20 @@
          Enterprise card radius, AI efficiency modal glass restyle.
          ============================================================ */
 
-      /* FAQ + Journal: sit outside .container so manually match its side gutters */
-      /* desktop: same clamp as the container's horizontal padding */
+       /* FAQ + Journal: sit outside .container, but use the same centered
+          width and horizontal gutter system as the main page sections. */
       .faq-section, .journal-notes {
-        margin-left: clamp(16px,4vw,56px)!important;
-        margin-right: clamp(16px,4vw,56px)!important;
-        max-width: none!important;
-        width: auto!important;
+         width: calc(100% - 2 * clamp(16px,4vw,56px))!important;
+         max-width: calc(1320px - 2 * clamp(16px,4vw,56px))!important;
+         margin-left: auto!important;
+         margin-right: auto!important;
+         padding-left: clamp(16px,4vw,56px)!important;
+         padding-right: clamp(16px,4vw,56px)!important;
         box-sizing: border-box!important;
       }
-      /* clear vertical gap between the FAQ and Journal panels */
+       /* Clear vertical gap between the FAQ and Journal panels. */
       .faq-section { margin-bottom: var(--space-6, 48px)!important; }
       .journal-notes { margin-bottom: var(--space-6, 48px)!important; }
-      /* mobile ≤600px: container uses exactly 16px side padding */
-      @media (max-width: 600px) {
-        .faq-section, .journal-notes {
-          margin-left: 16px!important;
-          margin-right: 16px!important;
-        }
-      }
 
       /* Contact: kill any legacy second layer behind the section panel */
       .contact { box-shadow:none!important; background:transparent!important; border:0!important; }
