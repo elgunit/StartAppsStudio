@@ -566,7 +566,6 @@
       }
 
       .hat-showcase-item:hover {
-        transform: translateY(-2px);
         border-color: color-mix(in srgb, var(--dominant) 40%, transparent);
       }
 
@@ -875,7 +874,7 @@
         flex-direction: column;
       }
       
-      .service-card:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
+      .service-card:hover { border-color: rgba(29,89,96,.35); }
       .service-card.expanded { border-color: var(--dominant); transform: none; }
 
       /* Recent builds compact list */
@@ -1007,7 +1006,6 @@
 
       .growth-card:hover {
         border-color: rgba(29,89,96,.35);
-        transform: translateY(-2px);
       }
 
       .growth-icon {
@@ -1164,7 +1162,6 @@
         transition: transform 0.18s ease, border-color 0.18s ease;
       }
       .toolkit-chip:hover {
-        transform: translateY(-1px);
         border-color: rgba(13,148,136,0.4);
       }
       .toolkit-avatar {
@@ -1294,7 +1291,7 @@
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       
-      .case-study-card:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
+      .case-study-card:hover { border-color: rgba(29,89,96,.35); }
       .case-study-card.expanded { border-color: var(--dominant); }
       
       .case-study-header {
@@ -1406,7 +1403,7 @@
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       
-      .price-card:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
+      .price-card:hover { border-color: rgba(29,89,96,.35); }
       .price-card.featured { border-color: var(--dominant); border-width: 2px; }
       .price-card.expanded { border-color: var(--dominant); }
       
@@ -1490,7 +1487,7 @@
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       
-      .special-package:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
+      .special-package:hover { border-color: rgba(29,89,96,.35); }
       .special-package.expanded { border-color: var(--dominant); }
       .special-package.enterprise { border-width: 2px; border-color: var(--dominant); }
       .special-package.enterprise { margin-bottom: 0; }
@@ -1743,7 +1740,6 @@
       }
 
       .how-card:hover {
-        transform: translateY(-5px);
         box-shadow: 0 28px 56px rgba(0,0,0,0.32);
         border-color: rgba(13,148,136,0.28);
       }
@@ -1816,10 +1812,25 @@
       }
 
       /* ── Why modal: comparison tabbed design ──────────────────────────── */
+
+      /* Scope the panel to a compact, centred glass card */
+      #whyModal .modal-content {
+        max-width: 540px !important;
+        padding: 32px 28px 28px !important;
+        border-radius: var(--r-lg) !important;
+        background: var(--refract-top), var(--surface) !important;
+        backdrop-filter: blur(32px) saturate(160%) !important;
+        -webkit-backdrop-filter: blur(32px) saturate(160%) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 0 0 1px color-mix(in srgb, var(--dominant) 16%, transparent),
+          0 32px 80px -16px rgba(0,0,0,0.28) !important;
+      }
+
       .cmp-header {
         text-align: center;
-        padding: 4px 48px 0;
-        margin-bottom: 22px;
+        padding: 0;
+        margin-bottom: 18px;
       }
       .cmp-eyebrow {
         display: inline-flex;
@@ -1914,44 +1925,39 @@
         margin-bottom: 22px;
       }
 
-      /* Individual rows — glass surface with directional accent stripe */
+      /* Individual rows — clean glass surface, no left accent stripe */
       .cmp-benefit, .cmp-pain {
         display: flex;
         align-items: center;
         gap: 14px;
-        padding: 14px 16px;
+        padding: 13px 14px;
         border-radius: var(--r-md);
         border: 1px solid var(--line);
         background: var(--surface);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         box-shadow: inset 0 1px 0 var(--specular);
-        border-left-width: 3px;
-        transition: border-color 0.18s ease, transform 0.18s ease;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
       }
       .cmp-benefit {
-        border-left-color: var(--dominant);
         background: color-mix(in srgb, var(--dominant) 4%, var(--surface));
       }
       .cmp-benefit:hover {
-        border-color: color-mix(in srgb, var(--dominant) 45%, var(--line));
-        border-left-color: var(--dominant);
-        transform: translateX(2px);
+        border-color: color-mix(in srgb, var(--dominant) 36%, var(--line));
+        box-shadow: inset 0 1px 0 var(--specular-teal), 0 4px 16px -4px color-mix(in srgb, var(--dominant) 14%, transparent);
       }
       .cmp-pain {
-        border-left-color: var(--rose);
         background: color-mix(in srgb, var(--rose) 4%, var(--surface));
       }
       .cmp-pain:hover {
-        border-color: color-mix(in srgb, var(--rose) 35%, var(--line));
-        border-left-color: var(--rose);
-        transform: translateX(2px);
+        border-color: color-mix(in srgb, var(--rose) 30%, var(--line));
+        box-shadow: inset 0 1px 0 var(--specular), 0 4px 16px -4px color-mix(in srgb, var(--rose) 12%, transparent);
       }
 
       /* Icon wells — liquid-glass circles */
       .cmp-icon {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         border-radius: 999px;
         display: flex;
         align-items: center;
@@ -1984,67 +1990,56 @@
         line-height: 1.45;
       }
 
-      /* CTA pill — matches dominant teal pill language */
+      /* CTA pill — full-width rounded teal button */
       .cmp-action {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
-        padding: 13px 28px;
+        padding: 14px 28px;
         background: var(--dominant);
         color: var(--canvas);
-        border-radius: 999px;
+        border-radius: var(--r-md);
         font-size: 15px;
         font-weight: 700;
         font-family: inherit;
         text-decoration: none;
-        border: 1px solid var(--dominant);
+        border: none;
         box-shadow: 0 8px 24px color-mix(in srgb, var(--dominant) 28%, transparent);
         transition: opacity 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
-        width: fit-content;
-        margin: 0 auto;
-        min-height: 48px;
+        width: 100%;
+        margin-top: 8px;
+        min-height: 50px;
       }
       .cmp-action:hover {
         opacity: 0.88;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         box-shadow: 0 14px 32px color-mix(in srgb, var(--dominant) 36%, transparent);
       }
 
-      /* Footnote — glass surface card */
+      /* Footnote — muted text only, no heavy card */
       .cmp-footnote {
         text-align: center;
-        font-size: 13.5px;
+        font-size: 13px;
         color: var(--muted);
-        margin-top: 18px;
-        padding: 18px 22px;
-        border-radius: var(--r-md);
-        background: var(--surface);
-        border: 1px solid var(--line);
-        box-shadow: inset 0 1px 0 var(--specular);
-        line-height: 1.65;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        margin-top: 16px;
+        line-height: 1.6;
       }
 
       @media (max-width: 560px) {
-        .modal-content { padding: 28px 16px; }
-        .modal-content h3 { padding: 8px 32px 0 32px; }
-        .cmp-tabs { gap: 5px; padding: 4px; }
+        #whyModal .modal-content { padding: 24px 16px 20px !important; }
+        .cmp-tabs { gap: 4px; padding: 4px; }
         .cmp-tab  {
           font-size: 12.5px;
-          padding: 11px 10px;
-          gap: 7px;
+          padding: 10px 8px;
+          gap: 6px;
           white-space: nowrap;
           line-height: 1.2;
           min-width: 0;
-          letter-spacing: 0.01em;
         }
-        .cmp-tab svg { display: inline-block; width: 14px; height: 14px; }
+        .cmp-tab svg { width: 13px; height: 13px; }
         .cmp-tab .cmp-tab-full { display: none; }
         .cmp-tab .cmp-tab-short { display: inline; }
-        .cmp-header { padding: 4px 24px 0; }
-        .cmp-title-br { display: none; }
-        .cmp-title { font-size: clamp(28px, 8vw, 36px); line-height: 1.12; letter-spacing: -0.02em; }
+        .cmp-header { padding: 0; }
       }
       
       /* Contact */
@@ -2279,7 +2274,7 @@
         text-align: left;
       }
       .budget-chip input { position: absolute; opacity: 0; pointer-events: none; }
-      .budget-chip:hover { border-color: #0d9488; transform: translateY(-2px); }
+      .budget-chip:hover { border-color: #0d9488; }
       .budget-chip.selected {
         border-color: #0d9488;
         background: linear-gradient(135deg, rgba(13,148,136,0.10), rgba(6,182,212,0.06));
@@ -2320,7 +2315,6 @@
       .interest-option:hover {
         border-color: var(--accent);
         background: rgba(13,148,136,0.04);
-        transform: translateY(-2px);
       }
 
       .interest-option.selected {
@@ -2448,7 +2442,6 @@
       .journal-note::before { display: none; }
       .journal-note::after  { display: none; }
       .journal-note:hover {
-        transform: translateY(-4px) rotate(-0.15deg);
         box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 36px -16px rgba(0, 0, 0, 0.28);
       }
       .journal-note-meta {
@@ -2908,8 +2901,8 @@
         /* Liquid-glass layering: specular top edge + teal refraction wash */
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface);
         box-shadow:
@@ -2943,7 +2936,6 @@
 
       .why-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 36%, transparent);
-        transform: translateY(-4px);
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
           inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
@@ -3019,7 +3011,6 @@
       }
 
       .why-compare-btn:hover {
-        transform: translateY(-2px);
         box-shadow: 0 10px 24px color-mix(in srgb, var(--dominant) 28%, transparent);
       }
 
@@ -3335,8 +3326,8 @@
         border-radius:var(--r-md)!important;
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface)!important;
         box-shadow:
@@ -3453,8 +3444,8 @@
         border-radius:var(--r-md)!important;
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface)!important;
         box-shadow:
@@ -3467,7 +3458,6 @@
       }
       @media (hover:hover) {
         .how-bento .how-card:hover {
-          transform:translateY(-4px)!important;
           border-color:color-mix(in srgb, var(--dominant) 36%, transparent)!important;
           box-shadow:
             inset 0 1px 0 var(--specular-teal),
@@ -3535,8 +3525,8 @@
         border-radius:var(--r-md)!important;
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface)!important;
         box-shadow:
@@ -3584,7 +3574,7 @@
       .journal-note::before,.journal-note::after { content:none!important; display:none!important; }
       .journal-note:hover {
         background:color-mix(in srgb,var(--dominant) 6%,var(--surface))!important;
-        transform:translateY(-3px)!important; border-color:var(--dominant)!important;
+        border-color:var(--dominant)!important;
       }
       .journal-note:hover,.journal-note:hover * { color:var(--ink)!important; }
       .journal-note-meta { color:var(--dominant)!important; }
@@ -3903,7 +3893,6 @@
           transition: transform 0.18s ease, border-color 0.18s ease;
         }
         #ai-efficiency .ae-proof-card:hover {
-          transform: translateY(-1px);
           border-color: color-mix(in srgb, var(--dominant) 45%, transparent);
         }
         #ai-efficiency .ae-proof-icon {
@@ -4081,7 +4070,6 @@
           transition: transform 0.18s ease, border-color 0.18s ease;
         }
         #aiEfficiencyModal .ae-proof-card:hover {
-          transform: translateY(-1px);
           border-color: color-mix(in srgb, var(--dominant) 45%, transparent);
         }
         #aiEfficiencyModal .ae-proof-icon {
@@ -4279,7 +4267,6 @@
       }
       .showcase-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
-        transform: translateY(-3px);
       }
 
       /* Visual area — swap contents for <img> when screenshots are ready */
@@ -4718,7 +4705,7 @@
       :root {
         --specular:         rgba(255,255,255,0.26);
         --specular-teal:    color-mix(in srgb, var(--dominant) 18%, rgba(255,255,255,0.22));
-        --refract-top:      linear-gradient(180deg, color-mix(in srgb, var(--dominant) 5%, rgba(255,255,255,0.11)) 0%, transparent 54%);
+        --refract-top:      linear-gradient(180deg, color-mix(in srgb, var(--dominant) 2%, rgba(255,255,255,0.06)) 0%, transparent 54%);
         --glass-blur-front: 28px;
         --glass-blur-mid:   20px;
       }
@@ -4804,8 +4791,8 @@
         border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface) !important;
         box-shadow:
@@ -4836,8 +4823,8 @@
           var(--shadow) !important;
         background:
           linear-gradient(160deg,
-            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
-            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            color-mix(in srgb, var(--dominant)  2%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       1%, transparent) 45%,
             transparent 78%),
           var(--surface) !important;
         border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
@@ -4900,7 +4887,6 @@
 
       /* --- Card hover: teal-lit refractive lift ------------------------ */
       .price-card:hover:not(.featured) {
-        transform: translateY(-3px) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
           0 22px 48px -12px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.16)) !important;
@@ -4908,7 +4894,6 @@
       /* Full liquid-glass hover — matches why-card lift recipe */
       .service-card:hover, .growth-card:hover,
       .how-card:hover, .testimonial-card:hover {
-        transform: translateY(-4px) !important;
         border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
@@ -4919,7 +4904,6 @@
       .how-card:hover::after, .testimonial-card:hover::after { opacity: 1 !important; }
       /* why-cards handle their own hover — don't interfere */
       .why-grid .why-card:hover {
-        transform: translateY(-4px) !important;
         border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
@@ -4951,7 +4935,6 @@
         transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease !important;
       }
       .showcase-card:hover {
-        transform: translateY(-4px) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
           0 24px 52px -12px color-mix(in srgb, var(--dominant) 20%, rgba(0,0,0,0.16)) !important;
@@ -4990,7 +4973,6 @@
       .toolkit-chip:hover {
         box-shadow: inset 0 1px 0 var(--specular-teal),
           0 8px 20px -6px color-mix(in srgb, var(--dominant) 18%, transparent) !important;
-        transform: translateY(-2px) !important;
       }
 
       /* --- Testimonials: liquid-glass lift handled in card hover block above */
@@ -7849,7 +7831,7 @@
               var r = card.getBoundingClientRect();
               var rx = ((e.clientY - r.top)  / r.height - 0.5) * -5;
               var ry = ((e.clientX - r.left) / r.width  - 0.5) *  5;
-              card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-3px)';
+              card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
             });
           });
           card.addEventListener('mouseleave', function () {
