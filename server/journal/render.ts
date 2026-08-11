@@ -11,6 +11,9 @@ export const CANONICAL_ORIGIN: string = (
   process.env.PUBLIC_SITE_URL || "https://startappsstudio.com"
 ).replace(/\/$/, "");
 
+// Keep the homepage freshness signal in sync with meaningful public copy changes.
+export const HOMEPAGE_LAST_MODIFIED = "2026-08-11";
+
 function esc(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -1194,7 +1197,7 @@ export function renderIndexHtml(origin: string): string {
 
 export function renderSitemapXml(origin: string): string {
   const urls: { loc: string; lastmod?: string; priority?: string }[] = [
-    { loc: `${origin}/`, priority: "1.0" },
+    { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
     { loc: `${origin}/journal`, priority: "0.8" },
   ];
   for (const p of allPostsNewestFirst()) {

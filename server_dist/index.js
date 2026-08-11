@@ -2499,7 +2499,7 @@ function renderIndexHtml(origin) {
 }
 function renderSitemapXml(origin) {
   const urls = [
-    { loc: `${origin}/`, priority: "1.0" },
+    { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
     { loc: `${origin}/journal`, priority: "0.8" }
   ];
   for (const p of allPostsNewestFirst()) {
@@ -2688,12 +2688,13 @@ We swap in new model versions the week they ship.
 - LLM short overview: ${origin}/llms.txt
 `;
 }
-var CANONICAL_ORIGIN, ACCENT_PALETTE, STYLE;
+var CANONICAL_ORIGIN, HOMEPAGE_LAST_MODIFIED, ACCENT_PALETTE, STYLE;
 var init_render = __esm({
   "server/journal/render.ts"() {
     "use strict";
     init_posts();
     CANONICAL_ORIGIN = (process.env.PUBLIC_SITE_URL || "https://startappsstudio.com").replace(/\/$/, "");
+    HOMEPAGE_LAST_MODIFIED = "2026-08-11";
     ACCENT_PALETTE = [
       "#0d9488",
       // teal
