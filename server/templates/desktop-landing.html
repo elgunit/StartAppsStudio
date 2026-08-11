@@ -2741,43 +2741,103 @@
       }
 
       .why-card {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
+        position: relative;
+        isolation: isolate;
+        border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line));
         border-radius: var(--r-md);
         padding: var(--space-3);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        overflow: hidden;
+        /* Liquid-glass layering: specular top edge + teal refraction wash */
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface);
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow);
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        transition:
+          transform   0.3s cubic-bezier(0.22,0.61,0.36,1),
+          box-shadow  0.3s cubic-bezier(0.22,0.61,0.36,1),
+          border-color 0.3s ease;
       }
+
+      /* Inner ambient glow — fades in on hover */
+      .why-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        opacity: 0;
+        background: radial-gradient(ellipse at 30% 20%,
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose)      8%, transparent) 55%,
+          transparent 80%);
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .why-card > * { position: relative; z-index: 1; }
 
       .why-card:hover {
-        border-color: rgba(29,89,96,.35);
-        transform: translateY(-2px);
+        border-color: color-mix(in srgb, var(--dominant) 36%, transparent);
+        transform: translateY(-4px);
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14));
       }
+      .why-card:hover::after { opacity: 1; }
 
       .why-card-icon {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: var(--r-sm);
-        background: var(--support);
+        /* Glass icon well — teal-tinted surface with specular rim */
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 18%, transparent),
+            color-mix(in srgb, var(--rose)      8%, transparent));
         color: var(--dominant);
-        margin-bottom: 14px;
-        border: 1px solid var(--line);
+        margin-bottom: 16px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 22%, transparent);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.55),
+          0 2px 6px color-mix(in srgb, var(--dominant) 14%, transparent);
+        transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
       }
+
+      .why-card:hover .why-card-icon {
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 88%, #fff),
+            color-mix(in srgb, var(--dominant) 68%, var(--rose)));
+        color: #fff;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.28),
+          0 4px 12px color-mix(in srgb, var(--dominant) 32%, transparent);
+      }
+      .why-card:hover .why-card-icon svg { stroke: #fff; }
 
       .why-card h4 {
         font-size: 15px;
         font-weight: 700;
         margin-bottom: 6px;
         color: var(--ink);
+        letter-spacing: -0.01em;
       }
 
       .why-card p {
         font-size: 13px;
         color: var(--muted);
-        line-height: 1.5;
+        line-height: 1.55;
         margin: 0;
       }
 
@@ -3112,42 +3172,42 @@
       .services-grid,.growth-grid,.why-grid {
         gap:var(--space-3,16px)!important; border:0!important;
       }
-      .services-grid .service-card,.growth-grid .growth-card,.why-grid .why-card {
+      .services-grid .service-card,.growth-grid .growth-card {
         border:1px solid var(--line)!important; border-radius:var(--r-md)!important;
         background:var(--surface)!important; box-shadow:var(--shadow)!important;
+        padding:clamp(20px,3vw,28px)!important;
+      }
+      /* why-cards keep the shared radius/padding but get their own
+         liquid-glass surface later in the sheet — do not flatten them here */
+      .why-grid .why-card {
+        border-radius:var(--r-md)!important;
         padding:clamp(20px,3vw,28px)!important;
       }
       .services-grid .service-card::before,
       .growth-grid .growth-card::before,
       .why-grid .why-card::before { content:none!important; display:none!important; }
       .services-grid .service-card:hover,.services-grid .service-card.expanded,
-      .growth-grid .growth-card:hover,.growth-grid .growth-card.expanded,
-      .why-grid .why-card:hover,.why-grid .why-card.expanded {
+      .growth-grid .growth-card:hover,.growth-grid .growth-card.expanded {
         background:color-mix(in srgb,var(--dominant) 8%,var(--surface))!important;
         border-color:var(--dominant)!important; box-shadow:var(--shadow)!important;
       }
       .services-grid .service-card:hover *,.services-grid .service-card.expanded *,
-      .growth-grid .growth-card:hover *,.growth-grid .growth-card.expanded *,
-      .why-grid .why-card:hover *,.why-grid .why-card.expanded * { color:var(--ink)!important; }
-      .service-icon,.growth-icon,.why-card-icon {
+      .growth-grid .growth-card:hover *,.growth-grid .growth-card.expanded * { color:var(--ink)!important; }
+      .service-icon,.growth-icon {
         border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
         background:var(--support)!important; color:var(--dominant)!important;
       }
       .services-grid .service-card:hover .service-icon,
       .services-grid .service-card.expanded .service-icon,
       .growth-grid .growth-card:hover .growth-icon,
-      .growth-grid .growth-card.expanded .growth-icon,
-      .why-grid .why-card:hover .why-card-icon,
-      .why-grid .why-card.expanded .why-card-icon {
+      .growth-grid .growth-card.expanded .growth-icon {
         background:var(--dominant)!important; border-color:var(--dominant)!important;
         color:var(--canvas)!important;
       }
       .services-grid .service-card:hover .service-icon svg,
       .services-grid .service-card.expanded .service-icon svg,
       .growth-grid .growth-card:hover .growth-icon svg,
-      .growth-grid .growth-card.expanded .growth-icon svg,
-      .why-grid .why-card:hover .why-card-icon svg,
-      .why-grid .why-card.expanded .why-card-icon svg {
+      .growth-grid .growth-card.expanded .growth-icon svg {
         color:var(--canvas)!important; stroke:var(--canvas)!important;
       }
       .service-details { border-top:1px solid var(--line)!important; }
@@ -4584,12 +4644,28 @@
       }
 
       /* --- Cards: specular inset on every glass surface ---------------- */
-      .service-card, .growth-card, .why-card,
+      .service-card, .growth-card,
       .price-card, .showcase-card, .journal-note,
       .faq-item, .how-card, .ae-proof-card,
       .testimonial-card {
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
+      }
+      /* why-cards have their own richer liquid-glass treatment — do not flatten */
+      .why-grid .why-card {
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow) !important;
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  8%, transparent)  0%,
+            color-mix(in srgb, var(--rose)       5%, transparent) 45%,
+            transparent 78%),
+          var(--surface) !important;
+        border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
+        backdrop-filter: blur(12px) saturate(140%) !important;
+        -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
       }
       /* Identity block stays transparent — no card chrome */
       .studio-identity {
@@ -4599,12 +4675,21 @@
       }
 
       /* --- Card hover: teal-lit refractive lift ------------------------ */
-      .service-card:hover, .growth-card:hover, .why-card:hover,
+      .service-card:hover, .growth-card:hover,
       .price-card:hover:not(.featured) {
         transform: translateY(-3px) !important;
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
           0 22px 48px -12px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.16)) !important;
+      }
+      /* why-cards handle their own hover — don't interfere */
+      .why-grid .why-card:hover {
+        transform: translateY(-4px) !important;
+        border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 20px 52px -10px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.14)) !important;
       }
 
       /* --- Featured pricing: deep teal refractive glow ----------------- */
