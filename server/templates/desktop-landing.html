@@ -480,7 +480,7 @@
         -webkit-background-clip: border-box;
         contain: layout style;
       }
-      .hero-headline .hero-line { display: inline; color: inherit; -webkit-text-fill-color: inherit; background: none; }
+      .hero-headline .hero-line { display: block; color: inherit; -webkit-text-fill-color: inherit; background: none; }
       .hero-headline .hero-line .accent-word { color: transparent; -webkit-text-fill-color: transparent; }
 
       /* Accent word — gradient text, no decorative halo */
@@ -2618,8 +2618,7 @@
         }
         .hero-eyebrow { margin-bottom: 18px; font-size: 12px; padding: 6px 12px 6px 9px; }
         .hero-headline { font-size: clamp(36px, 10.5vw, 48px) !important; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 16px; }
-        .hero-headline .hero-line { display: block; }
-        .hero-headline .hero-line-nowrap { white-space: nowrap; }
+        .hero-headline .hero-line-nowrap { white-space: normal; }
         .hero-subheadline { font-size: 14.5px; margin-bottom: 22px; line-height: 1.55; }
         .hero-stats { margin-bottom: 20px; font-size: 13px; }
         .hero-cta-group { gap: 10px; margin-bottom: 16px; }
@@ -4099,7 +4098,7 @@
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
         <div id="hero-light" aria-hidden="true"></div>
-        <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio</span> <span class="hero-line hero-line-nowrap">for <span class="accent-word">founders</span>,</span> <span class="hero-line hero-line-nowrap">without the</span> <span class="hero-line hero-line-nowrap">equity split.</span></h1>
+        <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio for <span class="accent-word">founders</span>,</span><span class="hero-line hero-line-nowrap">without the equity split.</span></h1>
         <p class="hero-subheadline">Strategy-first development for founders starting fresh, teams rescuing a half-built app, businesses outsourcing a project, and clients who need a landing page or pitch prototype fast. We map your flows, design, build, and launch in weeks, not months.</p>
 
         <!-- 5 Hats Showcase -->
@@ -5023,7 +5022,7 @@
       
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
-        <h2 class="section-title">Backed by the best models</h2>
+        <h2 class="section-title">AI Development for Agencies</h2>
         <p class="section-subtitle">A small team that ships like a big one.</p>
         <div class="toolkit-meta">
           <span class="toolkit-meta-pulse" aria-hidden="true"></span>
