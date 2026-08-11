@@ -1,2 +1,3 @@
 - [Workflow port detection fix](workflow-port-detection.md) — `[[ports]]` needs explicit `externalPort` or restarts time out despite a healthy server; .replit edits need an in-workspace temp file.
 - [Testing agent must be given the local dev URL](testing-agent-url.md) — the tester may silently verify against the production domain; pin http://127.0.0.1:5000 in every plan.
+- [Package positioning](package-positioning.md) — the entry offer is a Lovable/Replit Launch Site; the Prototype owns the full Figma design phase.
