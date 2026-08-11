@@ -2861,6 +2861,45 @@
         .app-section { padding: 24px 16px; margin-bottom: 48px; }
         .store-btn { padding: 10px 16px; gap: 8px; }
       }
+      /* ── Narrow phone pass (320–390px) ─────────────────────────── */
+      @media (max-width: 390px) {
+        /* Reclaim horizontal space so form content doesn't clip */
+        .contact { padding: 24px 6px; }
+        .contact-form { padding: 16px 10px; }
+
+        /* Budget grid: force 2 columns — auto-fit collapses to 1 at ~244px */
+        .budget-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 8px;
+        }
+        .budget-chip { padding: 12px 8px; }
+        .budget-chip .budget-price { font-size: 13px; }
+        .budget-chip .budget-tier  { font-size: 10px; }
+
+        /* Interest chips: tighten so long labels don't push outside */
+        .interest-scroll { gap: 8px; }
+        .interest-option { font-size: 12px; padding: 9px 12px; }
+
+        /* Timeline pills: smaller text + padding so they wrap predictably */
+        .timeline-chip { font-size: 0.8rem; padding: 7px 12px; }
+
+        /* Success panel: reduce outer padding, let steps use full width */
+        .form-success { padding: 24px 14px; }
+        .form-success-sub { font-size: 13.5px; max-width: 100%; }
+        .form-success-steps { max-width: 100%; }
+        .form-success-step { font-size: 12.5px; gap: 10px; }
+
+        /* Email confirmation badge: wrap so a long address doesn't overflow */
+        .form-success-email {
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+          padding: 8px 12px;
+          font-size: 12px;
+          gap: 4px;
+        }
+      }
+
       /* ── Hero entrance animations ─────────────────────────────── */
       @keyframes hero-card-in {
         from { opacity: 0; transform: scale(0.97) translateY(12px); }
