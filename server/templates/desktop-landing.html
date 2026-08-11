@@ -1472,6 +1472,10 @@
       }
       
       .price-card.expanded .price-details { display: block; }
+      .price-card.mvp-card .price-details {
+        font-size: 13px;
+        line-height: 1.55;
+      }
       
       /* Special Packages */
       .special-package {
@@ -1480,7 +1484,7 @@
         padding: var(--space-3);
         background: var(--surface);
         box-shadow: var(--shadow);
-        margin-bottom: 16px;
+        margin-bottom: 24px;
         cursor: pointer;
          position: relative;
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -1489,26 +1493,52 @@
       .special-package:hover { border-color: rgba(29,89,96,.35); transform: translateY(-2px); }
       .special-package.expanded { border-color: var(--dominant); }
       .special-package.enterprise { border-width: 2px; border-color: var(--dominant); }
+      .special-package.enterprise { margin-bottom: 0; }
       
-      /* Special-package header: icon+meta left, summary prose right */
+      /* Special-package header: identity row — icon, title+pins, badge, chevron */
       .special-header {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
-      }
-      .special-header-left {
-        display: flex;
-        align-items: flex-start;
         gap: 14px;
-        flex-shrink: 0;
       }
+
       .special-header-meta {
         display: flex;
         flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
+      }
+      .special-title-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .special-title-row h4 { font-weight: 600; margin: 0; font-size: 17px; letter-spacing: -0.01em; }
+
+      .special-pins {
+        display: flex;
+        flex-wrap: wrap;
         gap: 6px;
       }
-      .special-header-meta h4 { font-weight: 600; margin: 0; font-size: 16px; }
-      .special-header-meta > span { font-size: 13px; color: var(--text-secondary); }
+      .special-pin {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--support) 32%, transparent);
+        font-size: 12px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+      }
+      .special-pin.strong {
+        color: var(--dominant);
+        border-color: color-mix(in srgb, var(--dominant) 26%, transparent);
+        background: color-mix(in srgb, var(--support) 60%, transparent);
+        font-weight: 600;
+      }
 
       .special-icon {
         width: 44px;
@@ -1524,58 +1554,95 @@
       .special-badge {
         display: inline-flex;
         align-items: center;
+        gap: 5px;
         flex-shrink: 0;
-        align-self: flex-start;
         margin: 0;
         padding: 4px 10px;
         background: color-mix(in srgb, var(--support) 70%, transparent);
         color: var(--dominant);
         border: 1px solid color-mix(in srgb, var(--dominant) 24%, transparent);
         border-radius: 999px;
-        font-size: 12px;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
         white-space: nowrap;
       }
+      .special-badge svg { flex-shrink: 0; }
 
-      /* Summary sits to the right of the icon+meta block */
+      .special-chevron {
+        flex-shrink: 0;
+        align-self: center;
+        color: var(--text-secondary);
+        opacity: 0.7;
+        transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+      }
+      .special-package:hover .special-chevron { color: var(--dominant); opacity: 1; }
+      .special-package.expanded .special-chevron { transform: rotate(180deg); color: var(--dominant); opacity: 1; }
+
+      /* Summary: full-width prose under the identity row */
       .special-summary {
-        flex: 1;
-        font-size: 13.5px;
+        margin-top: 14px;
+        max-width: 720px;
+        font-size: 14px;
         line-height: 1.65;
         color: var(--text-secondary);
-        padding-top: 3px;
       }
 
       /* Old .special-desc hidden — content moved into .special-summary */
       .special-desc { display: none; }
 
+      /* Feature chips: scannable pill row instead of a dense grid */
       .special-features {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
       }
 
       .special-feature {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 8px;
-        font-size: 13.5px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--support) 26%, transparent);
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
       }
+      .special-feature svg { color: var(--dominant); flex-shrink: 0; }
 
       .special-details {
         display: none;
         margin-top: 18px;
         padding-top: 18px;
         border-top: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.65;
+        color: var(--text-secondary);
+      }
+      .special-details-label {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dominant);
+        margin-bottom: 10px;
       }
 
       .special-package.expanded .special-details { display: block; }
 
-      /* Enterprise services: 2×2 compact grid */
+      /* Enterprise services: compact glass wells */
       .enterprise-services-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         gap: 10px;
+      }
+      @media (max-width: 720px) {
+         .enterprise-services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
       @media (max-width: 560px) {
         .enterprise-services-grid { grid-template-columns: 1fr; }
@@ -1585,9 +1652,10 @@
         display: flex;
         align-items: flex-start;
         gap: 10px;
-        padding: 12px;
+        padding: 13px 14px;
         border-radius: var(--r-sm);
-        background: var(--bg-elevated);
+        border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+        background: color-mix(in srgb, var(--support) 22%, transparent);
       }
 
       .enterprise-service-icon {
@@ -1600,24 +1668,18 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        color: var(--dominant);
       }
 
       .enterprise-service h5 { font-weight: 600; margin: 0 0 2px 0; font-size: 13px; }
       .enterprise-service p  { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
 
-      /* Narrow screens: stack header left/summary vertically */
+      /* Narrow screens: badge drops under the title, chevron stays right */
       @media (max-width: 600px) {
-        .special-header {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) auto;
-          gap: 12px;
-        }
-        .special-header-left { grid-column: 1; }
-        .special-badge { grid-column: 2; grid-row: 1; }
-        .special-summary {
-          grid-column: 1 / -1;
-          padding-top: 0;
-        }
+        .special-header { gap: 12px; }
+        .special-icon { width: 40px; height: 40px; }
+        .special-summary { margin-top: 12px; }
+        .special-feature { font-size: 12.5px; padding: 6px 12px; }
       }
       
       /* How It Works — Bento Cards */
@@ -4442,9 +4504,13 @@
       }
       .testimonial-footer {
         display: flex;
-         flex-direction: column;
-         align-items: flex-start;
-         gap: 8px;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 12px;
+       }
+       .testimonial-footer .method-badge {
+         margin-bottom: 0;
+         flex-shrink: 0;
       }
       .testimonial-client {
         font-size: 12.5px;
@@ -4674,6 +4740,53 @@
         border: none !important;
       }
 
+      /* --- Card pointer-light blob: follows mouse within each card ---- */
+      /* Opacity is driven entirely by JS (--glow-op) — no CSS :hover    */
+      /* transition, so the blob vanishes the instant the pointer leaves  */
+      /* and there is no lingering glow between adjacent cards.           */
+      .service-card, .growth-card,
+      .price-card, .testimonial-card,
+      .showcase-card, .how-card, .faq-item, .journal-note,
+      .why-grid .why-card, .special-package {
+        --mx: 50%; --my: 50%;
+        --glow-op: 0;
+        isolation: isolate;
+      }
+      .service-card::before, .growth-card::before,
+      .price-card::before, .testimonial-card::before,
+      .showcase-card::before, .how-card::before, .faq-item::before,
+      .journal-note::before, .why-grid .why-card::before,
+      .special-package::before {
+        content: '';
+        position: absolute; inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 0;
+        opacity: var(--glow-op);
+        background: radial-gradient(
+          circle 160px at var(--mx) var(--my),
+          color-mix(in srgb, var(--dominant) 14%, transparent) 0%,
+          color-mix(in srgb, var(--rose)     6%, transparent) 55%,
+          transparent 100%
+        );
+        /* No opacity transition — JS controls it to avoid cross-card bleed */
+      }
+      /* All card children sit above the pointer blob */
+      .service-card > *, .growth-card > *,
+      .price-card > *, .testimonial-card > *,
+      .showcase-card > *, .how-card > *, .faq-item > *,
+      .journal-note > *, .why-grid .why-card > *,
+      .special-package > * {
+        position: relative; z-index: 1;
+      }
+      @media (prefers-reduced-motion: reduce), (max-width: 768px) {
+        .service-card::before, .growth-card::before,
+        .price-card::before, .testimonial-card::before,
+        .showcase-card::before, .how-card::before, .faq-item::before,
+        .journal-note::before, .why-grid .why-card::before,
+        .special-package::before { display: none; }
+      }
+
       /* --- Card hover: teal-lit refractive lift ------------------------ */
       .service-card:hover, .growth-card:hover,
       .price-card:hover:not(.featured) {
@@ -4704,7 +4817,8 @@
         content: ''; position: absolute; inset: 0;
         border-radius: inherit;
         background: var(--refract-top);
-        pointer-events: none; z-index: 0;
+        /* Below the pointer-light ::before so the glow reads on this card too */
+        pointer-events: none; z-index: -1;
       }
       .price-card.featured > *:not(.popular-badge) { position: relative; z-index: 1; }
       .popular-badge { display: inline-flex !important; align-items: center !important; width: fit-content !important; position: absolute !important; z-index: 2 !important; }
@@ -5356,7 +5470,7 @@
         </div><!-- /#additionalCaseStudies -->
         
         <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
-          <span>Load More</span>
+          <span>See more builds</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
 
@@ -5504,7 +5618,7 @@
             </div>
           </div>
 
-          <div class="price-card" onclick="toggleCard(this)">
+          <div class="price-card mvp-card" onclick="toggleCard(this)">
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               React Native &middot; Node &middot; Postgres
@@ -5524,20 +5638,25 @@
         </div>
         
         <!-- Custom / Scale -->
-        <div class="special-package" onclick="toggleCard(this)">
+        <div class="special-package" id="custom-scale" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-header-left">
-              <div class="special-icon">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
-              </div>
-              <div class="special-header-meta">
+            <div class="special-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l2-2v-3M8 18l-2-2v-3M12 2l4 4-4 4-4-4 4-4zM3 7l4 4-4 4M21 7l-4 4 4 4M12 12v10"/></svg>
+            </div>
+            <div class="special-header-meta">
+              <div class="special-title-row">
                 <h4>Custom / Scale</h4>
-                <span>$30k+ or monthly retainer &middot; 1M+ users</span>
+                <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Handcrafted</div>
+              </div>
+              <div class="special-pins">
+                <span class="special-pin strong">$30k+ or monthly retainer</span>
+                <span class="special-pin">1M+ users</span>
+                <span class="special-pin">1–6 months</span>
               </div>
             </div>
-            <p class="special-summary">100% handcrafted for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration. Most projects take 1–6 months.</p>
-            <div class="special-badge">Handcrafted</div>
+            <svg class="special-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
           </div>
+          <p class="special-summary">100% handcrafted for products built to handle 1M+ users. Every line of code is human-written and reviewed. AI is used only for image generation and routine API integration.</p>
           <div class="special-features">
             <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Handcrafted Code</div>
             <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Landing Pages</div>
@@ -5545,26 +5664,32 @@
             <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> API Integration</div>
           </div>
           <div class="special-details">
+            <span class="special-details-label">Who this is for</span>
             For clients who need completely bespoke solutions built from scratch by experienced developers. Every line of code is manually written and reviewed.
           </div>
         </div>
 
         <!-- Enterprise Package -->
-        <div class="special-package enterprise" onclick="toggleCard(this)">
+        <div class="special-package enterprise" id="enterprise-package" onclick="toggleCard(this)">
           <div class="special-header">
-            <div class="special-header-left">
-              <div class="special-icon">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-              </div>
-              <div class="special-header-meta">
+            <div class="special-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div class="special-header-meta">
+              <div class="special-title-row">
                 <h4>Enterprise</h4>
-                <span>Via Our Partner Network</span>
+                <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Handoff</div>
+              </div>
+              <div class="special-pins">
+                <span class="special-pin strong">Via our partner network</span>
+                <span class="special-pin">Dedicated teams</span>
               </div>
             </div>
-            <p class="special-summary">Upon prototype or MVP, we hand off to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
-            <div class="special-badge">Handoff</div>
+            <svg class="special-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
           </div>
+          <p class="special-summary">Upon prototype or MVP, we hand off to our partner network for dedicated engineering teams and enterprise-scale solutions.</p>
           <div class="special-details">
+            <span class="special-details-label">Partner network services</span>
             <div class="enterprise-services-grid">
               <div class="enterprise-service">
                 <div class="enterprise-service-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
@@ -6865,7 +6990,7 @@
           }
           document.getElementById('recentBuilds').style.display = 'none';
           btn.dataset.expanded = 'false';
-          btn.innerHTML = '<span>Load More</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+          btn.innerHTML = '<span>See more builds</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
       }
       
@@ -7527,7 +7652,50 @@
         });
       }
 
-      /* ── 3. TOOLKIT CHIP SHIMMER ──────────────────────────────────
+      /* ── 3. CARD POINTER-LIGHT ────────────────────────────────────
+         A radial teal/rose blob follows the cursor inside each glass
+         card via --mx / --my and --glow-op CSS vars.
+         Opacity is driven entirely by JS — no CSS transition — so the
+         blob vanishes instantly on mouseleave and never bleeds into
+         adjacent cards. Desktop + motion allowed only.              */
+      if (!reduced && window.innerWidth > 768) {
+        var cardGlowSel = [
+          '.service-card', '.growth-card',
+          '.price-card', '.testimonial-card',
+          '.showcase-card', '.how-card', '.faq-item',
+          '.journal-note', '.why-grid .why-card', '.special-package'
+        ].join(',');
+        document.querySelectorAll(cardGlowSel).forEach(function (card) {
+          var raf = null;
+          card.addEventListener('mouseenter', function (e) {
+            /* Position first, then show — avoids a one-frame flash at centre */
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+            card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+            card.style.setProperty('--glow-op', '1');
+          });
+          card.addEventListener('mousemove', function (e) {
+            if (raf) return;
+            raf = requestAnimationFrame(function () {
+              raf = null;
+              var r = card.getBoundingClientRect();
+              var x = ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%';
+              var y = ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%';
+              card.style.setProperty('--mx', x);
+              card.style.setProperty('--my', y);
+            });
+          });
+          card.addEventListener('mouseleave', function () {
+            /* Kill opacity instantly — no fade, no cross-card bleed */
+            card.style.setProperty('--glow-op', '0');
+            /* Reset position so re-entry starts from current cursor, not edge */
+            card.style.setProperty('--mx', '50%');
+            card.style.setProperty('--my', '50%');
+          });
+        });
+      }
+
+      /* ── 5. TOOLKIT CHIP SHIMMER ──────────────────────────────────
          A thin traveling-light sweep across the chip on hover.
          Pure CSS injected dynamically.                                */
       var shimStyle = document.createElement('style');
@@ -7542,7 +7710,7 @@
       ].join('');
       document.head.appendChild(shimStyle);
 
-      /* ── 4. PRICING CARD GENTLE 3-D TILT ─────────────────────────
+      /* ── 6. PRICING CARD GENTLE 3-D TILT ─────────────────────────
          Cards tilt max ±5° toward the cursor. Resets on leave.
          Desktop only; skips featured card to keep it prominent.       */
       if (!reduced && window.innerWidth > 768) {
@@ -7566,7 +7734,7 @@
         });
       }
 
-      /* ── 5. TESTIMONIAL QUOTE-MARK BREATHING PULSE ────────────────
+      /* ── 7. TESTIMONIAL QUOTE-MARK BREATHING PULSE ────────────────
          The large " mark slowly inhales and exhales. Barely visible,
          gives each card a sense of life.                              */
       var quoteStyle = document.createElement('style');
@@ -7578,7 +7746,7 @@
       ].join('');
       document.head.appendChild(quoteStyle);
 
-      /* ── 6. HERO STAT COUNTER TICK-UP ─────────────────────────────
+      /* ── 8. HERO STAT COUNTER TICK-UP ─────────────────────────────
          Numbers in .hero-stat-number count up from 0 once when the
          hero enters the viewport. Parses "~40", "3-8 weeks" etc.    */
       if (!reduced) {
@@ -7696,10 +7864,13 @@
         gx += (hx - gx) * cloudEase;
         gy += (hy - gy) * cloudEase;
 
-        /* Speed + direction, both smoothed so the tail doesn't jitter */
+        /* Speed + direction, both smoothed so the tail doesn't jitter.
+           Guard dt=0 (first tick): 0/0 = NaN would poison smoothSpeed
+           and make every transform string invalid — the frozen-glow bug. */
         var vdx = hx - phx, vdy = hy - phy;
-        var instSpeed = Math.sqrt(vdx * vdx + vdy * vdy) / dt;
+        var instSpeed = dt > 0 ? Math.sqrt(vdx * vdx + vdy * vdy) / dt : 0;
         smoothSpeed += (instSpeed - smoothSpeed) * (1 - Math.exp(-dt * 6));
+        if (!isFinite(smoothSpeed)) smoothSpeed = 0;
 
         if (instSpeed > 30) {
           var instDir = Math.atan2(vdy, vdx) * 180 / Math.PI;
@@ -7717,13 +7888,18 @@
           ' rotate(' + dirDeg.toFixed(2) + 'deg)' +
           ' scaleX(' + hsx.toFixed(3) + ') scaleY(' + hsy.toFixed(3) + ')';
 
-        /* Cloud behind the head, stretched along the travel line */
+        /* Cloud behind the head, stretched along the travel line.
+           When nearly still, a gentle sine drift keeps it alive.      */
         var csx = 1 + speedN * 0.75;
         var csy = 1 - speedN * 0.2;
         var cloudOp = 0.5 + speedN * 0.3;
+        var idleAmt = Math.max(0, 1 - speedN * 4);   // 1 at rest, 0 when moving fast
+        var idleT   = now / 1000;
+        var idleDx  = Math.sin(idleT * 0.38) * 18 * idleAmt;
+        var idleDy  = Math.cos(idleT * 0.27) * 12 * idleAmt;
         cloud.style.opacity = cloudOp.toFixed(3);
         cloud.style.transform =
-          'translate3d(' + gx.toFixed(2) + 'px,' + gy.toFixed(2) + 'px,0)' +
+          'translate3d(' + (gx + idleDx).toFixed(2) + 'px,' + (gy + idleDy).toFixed(2) + 'px,0)' +
           ' translate(-50%,-50%)' +
           ' rotate(' + dirDeg.toFixed(2) + 'deg)' +
           ' scaleX(' + csx.toFixed(3) + ') scaleY(' + csy.toFixed(3) + ')';
