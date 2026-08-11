@@ -1459,21 +1459,6 @@
       .price-feature { display: flex; align-items: center; gap: 8px; font-size: 14px; }
       .price-feature svg { color: var(--success); flex-shrink: 0; }
       
-      .price-details {
-        display: none;
-        margin-top: 16px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-        font-size: 14px;
-        color: var(--text-secondary);
-      }
-      
-      .price-card.expanded .price-details { display: block; }
-      .price-card.mvp-card .price-details {
-        font-size: 13px;
-        line-height: 1.55;
-      }
-      
       /* Special Packages */
       .special-package {
         border: 1px solid var(--line);
@@ -4750,25 +4735,83 @@
       /* Hero children sit above the static edge glow. */
       .hero > * { position: relative; z-index: 1; }
 
-      /* Larger static mineral glow returning to the hero edge treatment.
-         It stays attached to the right edge instead of following the cursor,
-         so the hero has depth without a distracting animated blob. */
-      .hero::after {
-        content: '';
+      /* ── LIQUID BLOB ELEMENTS ─────────────────────────────────────────
+         The static ::after glow is replaced by two DOM blob elements
+         that JS can position, squish, and animate with physics.
+         CSS handles: idle drift, split burst, reduced-motion fallback.  */
+
+      /* Idle drift animations — GPU-composited transforms only */
+      @keyframes blob-drift-a {
+        0%   { transform: translate(  0px,   0px) scale(1.00, 1.00); }
+        20%  { transform: translate(  9px, -11px) scale(1.05, 0.96); }
+        45%  { transform: translate( -6px,   8px) scale(0.97, 1.04); }
+        70%  { transform: translate( 11px,   6px) scale(1.04, 0.97); }
+        100% { transform: translate(  0px,   0px) scale(1.00, 1.00); }
+      }
+      @keyframes blob-drift-b {
+        0%   { transform: translate(  0px,   0px) scale(1.00, 1.00); }
+        30%  { transform: translate(-10px,   7px) scale(1.06, 0.95); }
+        65%  { transform: translate(  7px, -8px)  scale(0.95, 1.06); }
+        100% { transform: translate(  0px,   0px) scale(1.00, 1.00); }
+      }
+
+      /* One-shot burst that fires on the easter egg split */
+      @keyframes blob-burst {
+        0%   { filter: blur(52px) saturate(140%) brightness(1.0); opacity: 0.80; }
+        15%  { filter: blur(32px) saturate(240%) brightness(1.9); opacity: 1.00; }
+        50%  { filter: blur(42px) saturate(190%) brightness(1.4); opacity: 0.95; }
+        100% { filter: blur(52px) saturate(140%) brightness(1.0); opacity: 0.80; }
+      }
+
+      .hero-blob {
         position: absolute;
-        z-index: 0;
+        border-radius: 50%;
         pointer-events: none;
-        inset: -18% -12% -18% 36%;
-        background:
-          radial-gradient(ellipse 62% 54% at 92% 38%,
-            color-mix(in srgb, var(--dominant) 26%, transparent) 0%,
-            color-mix(in srgb, var(--dominant) 10%, transparent) 42%,
-            transparent 76%),
-          radial-gradient(ellipse 48% 42% at 82% 78%,
-            color-mix(in srgb, var(--rose) 17%, transparent) 0%,
-            transparent 74%);
-        filter: blur(42px) saturate(140%);
-        opacity: 0.8;
+        z-index: 0;
+        will-change: left, top, transform;
+        /* JS sets left/top; CSS drift runs on transform so both compose cleanly */
+      }
+
+      /* Teal blob — anchored right-edge at rest */
+      .hero-blob-teal {
+        width:  clamp(280px, 38vw, 500px);
+        height: clamp(240px, 32vw, 420px);
+        /* Rest position: right edge, upper third */
+        right: -8%;  top: 12%;
+        background: radial-gradient(ellipse at 42% 42%,
+          color-mix(in srgb, var(--dominant) 52%, transparent) 0%,
+          color-mix(in srgb, var(--dominant) 20%, transparent) 46%,
+          transparent 74%);
+        filter: blur(52px) saturate(140%);
+        opacity: 0.82;
+        animation: blob-drift-a 18s ease-in-out infinite;
+      }
+
+      /* Rose blob — hidden inside teal until split */
+      .hero-blob-rose {
+        width:  clamp(210px, 28vw, 380px);
+        height: clamp(190px, 24vw, 340px);
+        right: -4%;  top: 36%;
+        background: radial-gradient(ellipse at 52% 46%,
+          color-mix(in srgb, var(--rose) 46%, transparent) 0%,
+          color-mix(in srgb, var(--rose) 16%, transparent) 50%,
+          transparent 76%);
+        filter: blur(52px) saturate(140%);
+        /* Visible + drifting by default (mobile/touch/reduced-motion).
+           The desktop physics JS hides it at init until the split. */
+        opacity: 0.72;
+        animation: blob-drift-b 22s ease-in-out infinite;
+      }
+
+      /* JS adds this once for the split burst */
+      .hero-blob.blob-burst {
+        animation: blob-burst 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards !important;
+      }
+
+      /* Reduced-motion: static blobs, no physics */
+      @media (prefers-reduced-motion: reduce) {
+        .hero-blob-teal  { animation: none !important; opacity: 0.82 !important; }
+        .hero-blob-rose  { animation: none !important; opacity: 0.70 !important; }
       }
 
       /* --- Section panels: specular + deeper refraction ---------------- */
@@ -5019,6 +5062,9 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
+        <!-- Liquid physics blobs — pointer-events:none, JS drives position -->
+        <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">MVP studio for <span class="accent-word">founders</span>,</span><span class="hero-line hero-line-nowrap">without the equity split.</span></h1>
         <p class="hero-subheadline">Strategy-first development for founders starting fresh, teams rescuing a half-built app, businesses outsourcing a project, and clients who need a landing page or pitch prototype fast. We map your flows, design, build, and launch in weeks, not months.</p>
 
@@ -5693,7 +5739,7 @@
         <p class="section-subtitle">Strategy-first work for founders who want more than a typical site build. Every package starts with user flows and case scenarios, and includes unlimited revisions while we build.</p>
         
         <div class="pricing-grid">
-          <div class="price-card" onclick="toggleCard(this)">
+          <div class="price-card">
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               Lovable &middot; Replit
@@ -5706,12 +5752,9 @@
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Built in Lovable or Replit, ready for instant edits</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Deployed with the code and account access in your name</div>
             </div>
-            <div class="price-details">
-              Bring the idea, rough copy, references, or an existing page. Elgar applies the design direction, builds the site directly in Lovable or Replit, and gets it live without a separate Figma phase. You can keep editing the site immediately after handoff, rather than waiting for a designer to export another round of screens. A Figma design file is available as an optional add-on. Delivered in 3–5 business days.
-            </div>
           </div>
 
-          <div class="price-card featured" onclick="toggleCard(this)">
+          <div class="price-card featured">
             <div class="popular-badge"><span class="popular-badge-dot"></span>Most chosen</div>
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -5725,12 +5768,9 @@
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Web-first: update content without an App Store review</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Full Figma design system + source code handed to you</div>
             </div>
-            <div class="price-details">
-              This is the Figma-led design phase: full UI/UX, mapped flows, and an interactive React prototype on live infrastructure. Investors and design partners can tap through a real product on their phone, not just a PDF. Because it runs on the web, you can update copy, fix a flow, or swap a screen the same day without waiting on App Store review cycles. Source code and design files are yours at handoff. Delivered in 5–10 days.
-            </div>
           </div>
 
-          <div class="price-card mvp-card" onclick="toggleCard(this)">
+          <div class="price-card mvp-card">
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               React Native &middot; Node &middot; Postgres
@@ -5742,9 +5782,6 @@
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS, Android, and web — one build, all platforms</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User accounts, payments, and data from day one</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Every account and line of code transferred to you at launch</div>
-            </div>
-            <div class="price-details">
-              This is for founders who are ready to acquire real users, not just impress them. The Prototype proves the concept; the MVP is what you actually charge for and grow. It ships with everything a live product needs: user authentication, a database that scales, payments wired in where needed, and uptime monitoring from the first deploy. iOS, Android, and a web layer are all in one build — so you can push content updates the same day without waiting on App Store review. Every account (App Store, Google Play, hosting, payments) is set up in your name and handed to you at launch. The codebase is documented and structured so a future developer or team can pick it up without archaeology. Delivered in 3–8 weeks, built to handle 100K–500K users.
             </div>
           </div>
         </div>
@@ -7778,7 +7815,8 @@
             var r = card.getBoundingClientRect();
             card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
             card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
-            card.style.setProperty('--glow-op', '1');
+            /* Keep the pointer glow atmospheric rather than dominant. */
+            card.style.setProperty('--glow-op', '0.5');
           });
           card.addEventListener('mousemove', function (e) {
             if (raf) return;
@@ -7887,6 +7925,339 @@
           observer.observe(el);
         });
       }
+
+      /* ── 9. HERO LIQUID BLOB PHYSICS ─────────────────────────────────
+         Two glow blobs float inside the hero with spring physics.
+         On first mouse contact: gravity-split easter egg fires, the
+         single teal mass splits into teal + rose with a brightness burst.
+         Guards: desktop only (>768px), no reduced-motion, no touch.      */
+      (function () {
+        var hero   = document.querySelector('.hero');
+        var blobT  = document.getElementById('hero-blob-teal');
+        var blobR  = document.getElementById('hero-blob-rose');
+        if (!hero || !blobT || !blobR) return;
+
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var isTouch = (('ontouchstart' in window) || navigator.maxTouchPoints > 1);
+        if (reduced || isTouch || window.innerWidth <= 768) return;
+
+        /* ── Layout helpers ── */
+        function heroRect() { return hero.getBoundingClientRect(); }
+        function blobSize(el) {
+          return { w: el.offsetWidth, h: el.offsetHeight };
+        }
+
+        /* ── Physics state for each blob ── */
+        /* Coordinates are in hero-local px from the blob's centre */
+        var r = heroRect();
+
+        /* Rest positions (normalised 0-1 of hero, from top-left) */
+        var REST_T = { nx: 0.82, ny: 0.30 };   /* teal: right upper  */
+        var REST_R = { nx: 0.80, ny: 0.58 };   /* rose: right lower  */
+
+        function normToHeroPx(nx, ny, hr, bs) {
+          /* Returns top-left px so that the blob centre sits at nx,ny */
+          return {
+            x: nx * hr.width  - bs.w / 2,
+            y: ny * hr.height - bs.h / 2
+          };
+        }
+
+        var sT = blobSize(blobT), sR = blobSize(blobR);
+        var rT = normToHeroPx(REST_T.nx, REST_T.ny, r, sT);
+        var rR = normToHeroPx(REST_R.nx, REST_R.ny, r, sR);
+
+        /* State: pos = current px offset (top-left), vel = velocity */
+        var stateT = { x: rT.x, y: rT.y, vx: 0, vy: 0, sx: 1, sy: 1 };
+        /* Rose starts hidden inside teal — same position */
+        var stateR = { x: rT.x + (sT.w - sR.w)/2,
+                       y: rT.y + (sT.h - sR.h)/2,
+                       vx: 0, vy: 0, sx: 1, sy: 1 };
+
+        /* Apply initial position. Physics is active: hide the rose blob
+           inside the teal mass until the gravity-split reveals it. */
+        blobT.style.left = stateT.x + 'px';
+        blobT.style.top  = stateT.y + 'px';
+        blobT.style.right = 'auto';
+        blobR.style.left = stateR.x + 'px';
+        blobR.style.top  = stateR.y + 'px';
+        blobR.style.right = 'auto';
+        blobR.style.opacity = '0';
+        blobR.style.animationPlayState = 'paused';
+
+        /* ── Mouse tracking ── */
+        var mouse = null;
+        var paused = false;
+        var splitDone = false;
+        var splitPhase = null; /* 'gravity' | 'burst' | null */
+        var splitTimer = 0;
+        var gravityTarget = null; /* cursor pos captured at trigger time */
+
+        /* Track the mouse at document level — no dependence on the hero's
+           own hit-testing (overlays/children can interfere with it). The
+           hero-local bounds check below replaces mouseenter/leave. */
+        document.addEventListener('mousemove', function (e) {
+          var hr = heroRect();
+          var mx = e.clientX - hr.left, my = e.clientY - hr.top;
+          if (mx < 0 || my < 0 || mx > hr.width || my > hr.height) {
+            mouse = null;
+            return;
+          }
+          mouse = { x: mx, y: my };
+          /* Trigger detection happens in the event itself — a fast
+             in-and-out pass can come and go between two rAF frames. */
+          checkFirstContact();
+          /* Watchdog: if the loop ever stopped (missed visibility event,
+             browser throttling) any mouse activity restarts it. */
+          if (!rafId && !paused && heroVisible) {
+            rafId = requestAnimationFrame(loop);
+          }
+        }, { passive: true });
+
+        /* Tab/visibility pause — resume the loop when the tab returns */
+        document.addEventListener('visibilitychange', function () {
+          paused = document.visibilityState === 'hidden';
+          if (!paused && heroVisible && !rafId) {
+            rafId = requestAnimationFrame(loop);
+          }
+        });
+
+        /* ── Physics constants ── */
+        var SPRING   = 0.045;   /* spring pull toward rest */
+        var DAMP     = 0.82;    /* velocity damping per frame */
+        var REPULSE  = 18000;   /* mouse repulsion strength */
+        var REPULSE_R = 180;    /* mouse radius that triggers repulsion (px) */
+        var PEER_R   = 0.55;    /* peer-blob squish: fraction of combined radii */
+        var EDGE_PAD = 18;      /* px inside hero edge before squish */
+        var SQUISH_K = 0.28;    /* squish amount per edge/peer overlap */
+
+        /* ── Easter-egg gravity constants ── */
+        var GRAV_FRAMES  = 38;  /* frames for gravity phase */
+        var GRAV_STR     = 0.7; /* gravity acceleration toward cursor per frame */
+
+        /* ── Apply spring + damping ── */
+        function springStep(state, restX, restY, bsW, bsH) {
+          state.vx += (restX - (state.x + bsW/2)) * SPRING;
+          state.vy += (restY - (state.y + bsH/2)) * SPRING;
+          state.vx *= DAMP;
+          state.vy *= DAMP;
+          state.x  += state.vx;
+          state.y  += state.vy;
+        }
+
+        /* ── Mouse repulsion ── */
+        function applyRepulsion(state, bsW, bsH) {
+          if (!mouse) return;
+          var cx = state.x + bsW / 2;
+          var cy = state.y + bsH / 2;
+          var dx = cx - mouse.x;
+          var dy = cy - mouse.y;
+          var dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          if (dist < REPULSE_R) {
+            var strength = REPULSE / (dist * dist);
+            state.vx += (dx / dist) * strength * 0.016;
+            state.vy += (dy / dist) * strength * 0.016;
+          }
+        }
+
+        /* ── Squish helpers ── */
+        function clampBlob(state, bsW, bsH, hr) {
+          /* Edge clamp + squish */
+          var maxX = hr.width  - bsW - EDGE_PAD;
+          var maxY = hr.height - bsH - EDGE_PAD;
+          var sqX = 1, sqY = 1;
+
+          if (state.x < EDGE_PAD) {
+            var over = (EDGE_PAD - state.x) / bsW;
+            sqX = Math.max(0.78, 1 - over * SQUISH_K * 3);
+            sqY = Math.min(1.14, 1 + over * SQUISH_K * 1.5);
+            state.x = EDGE_PAD;
+            state.vx *= -0.35;
+          } else if (state.x > maxX) {
+            var over2 = (state.x - maxX) / bsW;
+            sqX = Math.max(0.78, 1 - over2 * SQUISH_K * 3);
+            sqY = Math.min(1.14, 1 + over2 * SQUISH_K * 1.5);
+            state.x = maxX;
+            state.vx *= -0.35;
+          }
+
+          if (state.y < EDGE_PAD) {
+            var overY = (EDGE_PAD - state.y) / bsH;
+            sqY = Math.max(0.78, sqY * (1 - overY * SQUISH_K * 3));
+            sqX = Math.min(1.14, sqX * (1 + overY * SQUISH_K * 1.5));
+            state.y = EDGE_PAD;
+            state.vy *= -0.35;
+          } else if (state.y > maxY) {
+            var overY2 = (state.y - maxY) / bsH;
+            sqY = Math.max(0.78, sqY * (1 - overY2 * SQUISH_K * 3));
+            sqX = Math.min(1.14, sqX * (1 + overY2 * SQUISH_K * 1.5));
+            state.y = maxY;
+            state.vy *= -0.35;
+          }
+
+          state.sx += (sqX - state.sx) * 0.22;
+          state.sy += (sqY - state.sy) * 0.22;
+        }
+
+        function peerSquish(a, aw, ah, b, bw, bh) {
+          /* Soft collision squish between two blobs */
+          var ax = a.x + aw/2, ay = a.y + ah/2;
+          var bx = b.x + bw/2, by = b.y + bh/2;
+          var dx = ax - bx, dy = ay - by;
+          var dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          var minDist = (aw + bw) * PEER_R * 0.5;
+          if (dist < minDist) {
+            var overlap = (minDist - dist) / minDist;
+            var sq = overlap * SQUISH_K * 1.6;
+            a.sx += (1 - sq - a.sx) * 0.18;
+            a.sy += (1 + sq - a.sy) * 0.18;
+            b.sx += (1 - sq - b.sx) * 0.18;
+            b.sy += (1 + sq - b.sy) * 0.18;
+            /* gentle push apart */
+            var nx = dx / dist, ny = dy / dist;
+            a.vx += nx * overlap * 1.2;
+            a.vy += ny * overlap * 1.2;
+            b.vx -= nx * overlap * 1.2;
+            b.vy -= ny * overlap * 1.2;
+          }
+        }
+
+        /* ── Apply transform to DOM ── */
+        function applyBlob(el, state) {
+          var sx = state.sx.toFixed(3), sy = state.sy.toFixed(3);
+          el.style.left = state.x.toFixed(1) + 'px';
+          el.style.top  = state.y.toFixed(1) + 'px';
+          el.style.transform = 'scale(' + sx + ',' + sy + ')';
+        }
+
+        /* ── Easter-egg split trigger ── */
+        function checkFirstContact() {
+          if (splitDone || !mouse) return;
+          /* Check if cursor is within teal blob bounds */
+          var cx = stateT.x, cy = stateT.y;
+          if (mouse.x > cx && mouse.x < cx + sT.w &&
+              mouse.y > cy && mouse.y < cy + sT.h) {
+            splitDone = true;
+            splitPhase = 'gravity';
+            splitTimer = 0;
+            /* Capture the target now — the split must complete even if
+               the cursor leaves the hero mid-fall */
+            gravityTarget = { x: mouse.x, y: mouse.y };
+            hero.setAttribute('data-blob-state', 'gravity');
+            /* Hard guarantee: even if the rAF loop is paused (tab hidden,
+               hero scrolled away) the split always completes. */
+            setTimeout(function () {
+              if (splitPhase === 'gravity') completeSplit();
+            }, 1400);
+          }
+        }
+
+        /* Phase 2: burst + split — extracted so both the frame counter
+           and the fallback timer can invoke it exactly once. */
+        function completeSplit() {
+          splitPhase = 'burst';
+          hero.setAttribute('data-blob-state', 'burst');
+
+          /* Reveal rose blob at same position */
+          stateR.x  = stateT.x + (sT.w - sR.w)/2;
+          stateR.y  = stateT.y + (sT.h - sR.h)/2;
+          stateR.vx = 0; stateR.vy = 0;
+          blobR.style.opacity = '0.78';
+          blobR.style.animationPlayState = 'running';
+          applyBlob(blobR, stateR);
+
+          /* Kick them apart */
+          stateT.vx = -4.5; stateT.vy = -3;
+          stateR.vx =  4.5; stateR.vy =  2.5;
+
+          /* Fire burst animation on both */
+          blobT.classList.add('blob-burst');
+          blobR.classList.add('blob-burst');
+          setTimeout(function () {
+            blobT.classList.remove('blob-burst');
+            blobR.classList.remove('blob-burst');
+            splitPhase = null;
+            hero.setAttribute('data-blob-state', 'split');
+          }, 1100);
+        }
+
+        function doGravitySplit() {
+          /* Follow the live cursor while available; otherwise fall toward
+             the captured trigger point so the phase always completes */
+          var target = mouse || gravityTarget;
+          if (target) { gravityTarget = { x: target.x, y: target.y }; }
+          else { splitTimer = GRAV_FRAMES; }
+          /* Phase 1: the teal blob falls toward the target */
+          var cx = stateT.x + sT.w/2;
+          var cy = stateT.y + sT.h/2;
+          var tx = (target || gravityTarget || { x: cx, y: cy });
+          var dx = tx.x - cx, dy = tx.y - cy;
+          var dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          stateT.vx += (dx/dist) * GRAV_STR;
+          stateT.vy += (dy/dist) * GRAV_STR;
+          stateT.x  += stateT.vx;
+          stateT.y  += stateT.vy;
+          splitTimer++;
+
+          if (splitTimer >= GRAV_FRAMES && splitPhase === 'gravity') {
+            completeSplit();
+          }
+        }
+
+        /* ── Main rAF loop ── */
+        var rafId = null;
+
+        /* Intersection observer: pause loop when hero scrolls off screen */
+        var heroVisible = true;
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            heroVisible = entries[0].isIntersecting;
+            if (heroVisible && !rafId) rafId = requestAnimationFrame(loop);
+          }, { threshold: 0.01 }).observe(hero);
+        }
+
+        function loop() {
+          rafId = null;
+          if (paused || !heroVisible) return;
+          /* Debug/testing hook: frame counter proves the loop is alive */
+          window.__blobFrames = (window.__blobFrames || 0) + 1;
+
+          var hr = heroRect();
+
+          /* Rest positions in px (recomputed: hero may resize) */
+          var rrT = normToHeroPx(REST_T.nx, REST_T.ny, hr, sT);
+          var rrR = normToHeroPx(REST_R.nx, REST_R.ny, hr, sR);
+
+          if (splitPhase === 'gravity') {
+            doGravitySplit();
+            /* Rose stays hidden during gravity phase */
+          } else {
+            /* Normal physics for teal */
+            checkFirstContact();
+            applyRepulsion(stateT, sT.w, sT.h);
+            springStep(stateT, rrT.x + sT.w/2, rrT.y + sT.h/2, sT.w, sT.h);
+            clampBlob(stateT, sT.w, sT.h, hr);
+
+            if (splitDone && splitPhase !== 'gravity') {
+              /* Normal physics for rose after split */
+              applyRepulsion(stateR, sR.w, sR.h);
+              springStep(stateR, rrR.x + sR.w/2, rrR.y + sR.h/2, sR.w, sR.h);
+              clampBlob(stateR, sR.w, sR.h, hr);
+              peerSquish(stateT, sT.w, sT.h, stateR, sR.w, sR.h);
+              applyBlob(blobR, stateR);
+            } else if (!splitDone) {
+              /* Recover squish on teal toward 1 */
+              stateT.sx += (1 - stateT.sx) * 0.14;
+              stateT.sy += (1 - stateT.sy) * 0.14;
+            }
+          }
+
+          applyBlob(blobT, stateT);
+          rafId = requestAnimationFrame(loop);
+        }
+
+        rafId = requestAnimationFrame(loop);
+      }());
 
     })();
     </script>
