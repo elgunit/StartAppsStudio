@@ -3776,8 +3776,15 @@
         }
         .aem-ratio-fill {
           position: absolute; top: 0; left: 0; bottom: 0;
-          width: 32%;
+          width: 68%;
           border-radius: 999px;
+          background: linear-gradient(90deg, var(--rose), color-mix(in srgb, var(--rose) 68%, #fff));
+          box-shadow: 0 0 14px color-mix(in srgb, var(--rose) 40%, transparent);
+          transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+            background 0.45s ease, box-shadow 0.45s ease;
+        }
+        .aem-ratio.is-managed .aem-ratio-fill {
+          width: 32%;
           background: linear-gradient(90deg, var(--dominant), color-mix(in srgb, var(--dominant) 65%, var(--rose)));
           box-shadow: 0 0 14px color-mix(in srgb, var(--dominant) 40%, transparent);
         }
@@ -6244,10 +6251,10 @@
           </div>
 
           <!-- Ratio bar -->
-          <div class="aem-ratio" role="img" aria-label="Credit waste: ~68% of solo AI spend is lost; managed delivery directs ~3x more to shipped product.">
+          <div class="aem-ratio" id="aemRatio" role="img" aria-label="Raw AI stack: about 68% of spend is lost to iteration.">
             <div class="aem-ratio-head">
               <span class="aem-ratio-label">Credit waste at a glance</span>
-              <span class="aem-ratio-caption">Managed delivery converts about <b>3×</b> more spend into shipped product.</span>
+              <span class="aem-ratio-caption" id="aemRatioCaption">Raw AI stack loses about <b>68%</b> to iteration.</span>
             </div>
             <div class="aem-ratio-track">
               <div class="aem-ratio-fill"></div>
@@ -6785,6 +6792,8 @@
         var managedPanel = document.getElementById('aemPanelManaged');
         var aloneTab = document.getElementById('aemTabAlone');
         var managedTab = document.getElementById('aemTabManaged');
+        var ratio = document.getElementById('aemRatio');
+        var ratioCaption = document.getElementById('aemRatioCaption');
         var showAlone = which === 'alone';
         alonePanel.classList.toggle('active', showAlone);
         managedPanel.classList.toggle('active', !showAlone);
@@ -6792,6 +6801,20 @@
         managedTab.classList.toggle('active', !showAlone);
         aloneTab.setAttribute('aria-selected', showAlone ? 'true' : 'false');
         managedTab.setAttribute('aria-selected', showAlone ? 'false' : 'true');
+        if (ratio) {
+          ratio.classList.toggle('is-managed', !showAlone);
+          ratio.setAttribute(
+            'aria-label',
+            showAlone
+              ? 'Raw AI stack: about 68% of spend is lost to iteration.'
+              : 'Start Apps Studio: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.'
+          );
+        }
+        if (ratioCaption) {
+          ratioCaption.innerHTML = showAlone
+            ? 'Raw AI stack loses about <b>68%</b> to iteration.'
+            : 'Start Apps Studio keeps iteration to about <b>32%</b>.';
+        }
       }
 
       document.getElementById('aiEfficiencyModal').addEventListener('click', function(e) {
