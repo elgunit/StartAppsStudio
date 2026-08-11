@@ -1025,7 +1025,7 @@ ${jsonLd}
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · <a href="/">Home</a> · <a href="/journal">Journal</a> · <a href="mailto:elgunit@gmail.com">elgunit@gmail.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · <a href="/">Home</a> · <a href="/journal">Journal</a> · <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
   </footer>
 </body>
 </html>`;
@@ -1288,7 +1288,7 @@ All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
 ## Contact
 
 - Website: ${origin}/
-- Email: elgunit@gmail.com
+- Email: create@startappsstudio.com
 - Inquiry form: ${origin}/#contact
 
 ## Key URLs
@@ -1376,7 +1376,7 @@ We swap in new model versions the week they ship.
 
 ## Contact
 
-- Email: elgunit@gmail.com
+- Email: create@startappsstudio.com
 - Inquiry form: ${origin}/#contact
 - Website: ${origin}/
 - Journal: ${origin}/journal
