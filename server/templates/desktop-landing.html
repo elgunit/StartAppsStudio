@@ -4605,7 +4605,7 @@
         </div>
 
         <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-number">~200</span> founders shipped</div>
+          <div class="hero-stat"><span class="hero-stat-number">~40</span> founders shipped</div>
           <div class="hero-stats-dot"></div>
           <div class="hero-stat"><span class="hero-stat-number">3-8 weeks</span> to launch</div>
         </div>
@@ -7280,12 +7280,12 @@
 
       /* ── 6. HERO STAT COUNTER TICK-UP ─────────────────────────────
          Numbers in .hero-stat-number count up from 0 once when the
-         hero enters the viewport. Parses "~200", "3-8 weeks" etc.    */
+         hero enters the viewport. Parses "~40", "3-8 weeks" etc.    */
       if (!reduced) {
         var heroStats = document.querySelectorAll('.hero-stat-number');
         heroStats.forEach(function (el) {
           var raw = el.textContent.trim();
-          /* Only animate simple numeric values like "~200".
+          /* Only animate simple numeric values like "~40".
              Skip ranges ("3-8 weeks") and plain text. */
           var match = raw.match(/^([^0-9]*)([0-9]+)([^0-9]*)$/);
           if (!match) return;
