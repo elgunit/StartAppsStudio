@@ -3206,6 +3206,9 @@
         .submit-btn { padding: 16px 20px; font-size: 15px; }
         .why-grid { grid-template-columns: 1fr; }
         .growth-grid { grid-template-columns: 1fr; }
+        /* Stacked pricing: give the featured card's pin badge clearance
+           from the card above */
+        .price-card.featured { margin-top: 26px; }
         .expertise-grid { grid-template-columns: 1fr; }
         .modal-content { padding: 24px 16px; }
         .app-section { padding: 24px 16px; margin-bottom: 48px; }
@@ -4116,19 +4119,50 @@
           display: flex;
           flex-direction: row;
           overflow-x: auto;
+          overflow-y: hidden;
           scroll-snap-type: x mandatory;
           -webkit-overflow-scrolling: touch;
-          gap: 14px;
-          padding: 4px 4px 20px;
+          overscroll-behavior-x: contain;
+          gap: 12px;
+          /* Bleed to the section panel edges so cards can centre-snap;
+             generous padding so card borders/shadows never get clipped
+             into a detached band that scrolls with the track */
+          /* Stay inside the section panel — no bleed. Left/right padding gives
+             card shadows room to breathe without exposing the scroll track. */
+          margin: 0 0 8px;
+          padding: 6px 20px 20px;
           scrollbar-width: none;
-          -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
-          mask-image: linear-gradient(to right, black 88%, transparent 100%);
+          /* Fade cards into the section background at both edges — attached to
+             the container, so it never scrolls with the cards */
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 10%,
+            black 90%,
+            transparent 100%
+          );
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
+        /* Endpoint spacers so first/last cards can center-snap */
+        .showcase-grid::before,
+        .showcase-grid::after {
+          content: '';
+          flex: 0 0 max(0px, calc(50% - min(42vw, 170px) - 12px));
+        }
         .showcase-card {
-          min-width: min(82vw, 340px);
+          min-width: min(84vw, 340px);
           flex-shrink: 0;
-          scroll-snap-align: start;
+          scroll-snap-align: center;
+          scroll-snap-stop: always; /* one card per swipe — no Freeform-style free glide */
+          /* Compact shadow that stays visually attached to the card */
+          box-shadow: 0 6px 20px rgba(29,72,73,.12);
         }
         .showcase-visual { height: 160px; }
 
@@ -5610,7 +5644,7 @@
 <!-- Who you're working with -->
       <section class="section" id="studio-human" data-section-name="studio-human">
         <h2 class="section-title">One person.<br>Full accountability.</h2>
-        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping it.</p>
+        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping.</p>
 
         <!-- Identity block -->
         <div class="studio-identity">
@@ -5630,7 +5664,7 @@
                View LinkedIn profile
                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
              </a>
-            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You always know who to call, and that person always has the full context, so every decision moves your product forward.</p>
+            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You know who to call, and that person has the full context, so every decision moves your product forward.</p>
           </div>
         </div>
 
@@ -5726,7 +5760,7 @@
       <div class="why-section" data-section-name="why">
         <div class="section-header">
           <h2>Why Start Apps Studio?</h2>
-          <p>Everything you need to launch, nothing you don't</p>
+          <p>Everything needed to launch, nothing you don't.</p>
         </div>
         <div class="why-grid">
           <div class="why-card">
