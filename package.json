@@ -11,6 +11,7 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,css,json}\""
   },
   "dependencies": {
+    "@replit/connectors-sdk": "^0.4.2",
     "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.7.0",
     "express": "^5.0.1",
