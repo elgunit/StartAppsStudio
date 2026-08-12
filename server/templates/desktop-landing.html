@@ -4115,30 +4115,15 @@
 
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
-        /* Wrapper clips overflow and hosts the stationary edge fades */
+        /* Wrapper is a plain positioning shell. It must NOT clip — clipping
+           chops card shadows into a hard rectangle. It also carries NO edge
+           fade overlays: gradients built from the translucent --surface token
+           can never fully cover a card, so they read as a grey veil with a
+           sharp inner edge. Cards are simply sized to fit (below). */
         .showcase-carousel-wrap {
           position: relative;
-          margin: 0 0 8px;
-          overflow: hidden; /* hides the scrollbar track beyond section edge */
-        }
-        /* Stationary left fade — gradient lives on the wrapper, not the track */
-        .showcase-carousel-wrap::before,
-        .showcase-carousel-wrap::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 28px;
-          z-index: 2;
-          pointer-events: none;
-        }
-        .showcase-carousel-wrap::before {
-          left: 0;
-          background: linear-gradient(to right, var(--surface) 0%, transparent 100%);
-        }
-        .showcase-carousel-wrap::after {
-          right: 0;
-          background: linear-gradient(to left, var(--surface) 0%, transparent 100%);
+          margin: 0 0 4px;
+          overflow: visible;
         }
         .showcase-grid {
           display: flex;
@@ -4150,24 +4135,33 @@
           overscroll-behavior-x: contain;
           gap: 12px;
           margin: 0;
-          padding: 6px 16px 20px;
+          /* Generous bottom padding: the scroll container clips ink at its
+             padding edge, so the card shadow needs room to fade out fully
+             inside the scroller instead of being cut into a band. */
+          padding: 10px 16px 32px;
           scrollbar-width: none;
-          /* No mask — fades are on the wrapper above so they don't move */
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
-        /* Endpoint spacers so first/last cards can center-snap */
+        /* Endpoint spacers so first/last cards can center-snap.
+           Matches card sizing below: card = min(100% - 48px, 340px). */
         .showcase-grid::before,
         .showcase-grid::after {
           content: '';
-          flex: 0 0 max(0px, calc(50% - min(42vw, 170px) - 12px));
+          flex: 0 0 max(12px, calc(50% - 182px));
         }
         .showcase-card {
-          min-width: min(84vw, 340px);
-          flex-shrink: 0;
+          /* Size against the carousel container, NOT the viewport (vw).
+             A vw-based width can exceed the panel's inner width, which
+             physically clips the centred card at both edges. 100% here is
+             the scroller's content width, so the card always fits with a
+             visible gutter / neighbour peek on each side. */
+          flex: 0 0 auto;
+          width: min(calc(100% - 48px), 340px);
+          min-width: 0;
           scroll-snap-align: center;
           scroll-snap-stop: always; /* one card per swipe — no Freeform-style free glide */
           /* Compact shadow that stays visually attached to the card */
-          box-shadow: 0 6px 20px rgba(29,72,73,.12);
+          box-shadow: 0 6px 18px rgba(29,72,73,.10);
         }
         .showcase-visual { height: 160px; }
 
