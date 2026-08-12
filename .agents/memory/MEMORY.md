@@ -3,3 +3,4 @@
 - [Tester interferes with scroll animations](tester-scroll-interference.md) — Playwright auto-scroll/click-retries corrupt scroll-animation tests; use one click + in-page instrumentation only.
 - [Package positioning](package-positioning.md) — the entry offer is a Lovable/Replit Launch Site; the Prototype owns the full Figma design phase.
 - [Mobile carousel edge treatment](carousel-edge-treatment.md) — no fade overlays from translucent tokens, no overflow:hidden wrappers, size cards to container not vw.
+- [GitHub push authentication](github-push-auth.md) — shell git push fails (askpass has no GitHub creds); replay commits via the GitHub connection API, SHAs stay identical.
