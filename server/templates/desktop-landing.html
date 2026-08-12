@@ -4115,6 +4115,31 @@
 
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
+        /* Wrapper clips overflow and hosts the stationary edge fades */
+        .showcase-carousel-wrap {
+          position: relative;
+          margin: 0 0 8px;
+          overflow: hidden; /* hides the scrollbar track beyond section edge */
+        }
+        /* Stationary left fade — gradient lives on the wrapper, not the track */
+        .showcase-carousel-wrap::before,
+        .showcase-carousel-wrap::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 28px;
+          z-index: 2;
+          pointer-events: none;
+        }
+        .showcase-carousel-wrap::before {
+          left: 0;
+          background: linear-gradient(to right, var(--surface) 0%, transparent 100%);
+        }
+        .showcase-carousel-wrap::after {
+          right: 0;
+          background: linear-gradient(to left, var(--surface) 0%, transparent 100%);
+        }
         .showcase-grid {
           display: flex;
           flex-direction: row;
@@ -4124,30 +4149,10 @@
           -webkit-overflow-scrolling: touch;
           overscroll-behavior-x: contain;
           gap: 12px;
-          /* Bleed to the section panel edges so cards can centre-snap;
-             generous padding so card borders/shadows never get clipped
-             into a detached band that scrolls with the track */
-          /* Stay inside the section panel — no bleed. Left/right padding gives
-             card shadows room to breathe without exposing the scroll track. */
-          margin: 0 0 8px;
-          padding: 6px 20px 20px;
+          margin: 0;
+          padding: 6px 16px 20px;
           scrollbar-width: none;
-          /* Fade cards into the section background at both edges — attached to
-             the container, so it never scrolls with the cards */
-          -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
+          /* No mask — fades are on the wrapper above so they don't move */
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
         /* Endpoint spacers so first/last cards can center-snap */
@@ -5112,6 +5117,7 @@
 
         <!-- Primary showcase cards (always visible) -->
         <div id="caseStudiesContainer">
+          <div class="showcase-carousel-wrap">
           <div class="showcase-grid">
 
             <!-- Card 1: Mobile health app
@@ -5298,10 +5304,12 @@
             </div>
 
           </div><!-- /.showcase-grid -->
+          </div><!-- /.showcase-carousel-wrap -->
         </div><!-- /#caseStudiesContainer -->
 
         <!-- Additional showcase cards (hidden behind Load More) -->
         <div id="additionalCaseStudies" style="display: none;">
+          <div class="showcase-carousel-wrap">
           <div class="showcase-grid">
 
             <!-- Card 5: Real estate app rescue
@@ -5396,6 +5404,7 @@
             </div>
 
           </div><!-- /.showcase-grid -->
+          </div><!-- /.showcase-carousel-wrap -->
         </div><!-- /#additionalCaseStudies -->
         
         <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
