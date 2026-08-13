@@ -365,7 +365,7 @@
         padding: var(--space-2) clamp(16px,4vw,56px) var(--s-8);
       }
       
-      /* === Hero ===================================================== */
+      /* --- Hero ----------------------------------------------------- */
       .hero {
         text-align: center;
         margin: var(--space-2) 0 var(--space-5);
@@ -2365,7 +2365,7 @@
       .submit-btn:active { transform: translateY(-1px); }
       .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-      /* === Journal "book notes" footer ============================== */
+      /* --- Journal "book notes" footer ------------------------------ */
       .journal-notes {
         max-width: 1200px;
         margin: 0 auto 48px;
@@ -3300,10 +3300,10 @@
         border-top:0!important;
       }
 
-      /* ================================================================
+      /* ----------------------------------------------------------------
          Mineral-glass uplift for the remaining editorial sections.
          Presentation only — copy, prices, JS behaviour untouched.
-         ================================================================ */
+         ---------------------------------------------------------------- */
       :root { --ed-pop: var(--dominant); } /* retire the orange accent */
 
       /* --- What we ship: glass cards, no numbered chips / yellow fills */
@@ -3887,10 +3887,10 @@
          single source of truth for every rendered surface.
          ═══════════════════════════════════════════════════════════════════ */
 
-      /* ============================================================
+      /* ------------------------------------------------------------
          Mobile polish pass: FAQ/Journal gutters, contact panel layers,
          Enterprise card radius, AI efficiency modal glass restyle.
-         ============================================================ */
+         ------------------------------------------------------------ */
 
        /* FAQ + Journal: sit outside .container, but use the same centered
           width and horizontal gutter system as the main page sections. */
@@ -3972,7 +3972,7 @@
       .timeline-chip input { position:absolute; opacity:0; width:0; height:0; pointer-events:none; }
       .timeline-chip.selected { border-color:var(--dominant); background:var(--support); color:var(--dominant); font-weight:600; }
 
-      /* === Project Showcase Cards ================================== */
+      /* --- Project Showcase Cards ---------------------------------- */
       .showcase-grid {
         display: grid;
         /* 3 columns on wide screens, 2 on medium, 1 on narrow desktop */
@@ -4250,11 +4250,10 @@
         /* ── Pagination dots ─────────────────────────────────────────── */
         .carousel-ui {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          gap: 6px;
-          margin-top: 14px;
+          gap: 10px;
+          margin-top: 2px;
           margin-bottom: 4px;
         }
         .carousel-dots {
@@ -4294,6 +4293,16 @@
         @media (prefers-reduced-motion: reduce) {
           .carousel-dot { animation: none; }
         }
+        .carousel-swipe-hint {
+          font-size: 11px;
+          color: var(--text-secondary, var(--muted));
+          letter-spacing: 0.04em;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          opacity: 0.7;
+        }
+        .carousel-swipe-hint svg { opacity: 0.8; }
 
         /* Cards are tappable on mobile */
         .showcase-card { cursor: pointer; }
@@ -4325,8 +4334,11 @@
         #showcaseDetailModal .modal-content {
           max-width: 100%;
           width: 100%;
-          max-height: 90svh;          /* safe viewport height on modern iOS */
-          max-height: 90vh;           /* fallback for older Safari */
+          height: 90vh;               /* fallback for older Safari */
+          height: 90svh;              /* stable viewport height on modern iOS */
+          /* Override the shared max-height:85vh so the full height is used */
+          max-height: 90vh;
+          max-height: 90svh;
           border-radius: 20px 20px 0 0;
           padding: 0 0 env(safe-area-inset-bottom, 20px);
           border-bottom: none;
@@ -4339,14 +4351,20 @@
           /* Subtle top shadow so the sheet lifts off the page */
           box-shadow: 0 -8px 40px rgba(0,0,0,0.22);
         }
-        #showcaseDetailModal.open .modal-content {
+        /* .sheet-ready is added via double-rAF after .open, so the browser
+           has already painted the off-screen starting position before this
+           transition fires — guaranteeing a smooth slide-up entrance. */
+        #showcaseDetailModal.open.sheet-ready .modal-content {
           transform: translateY(0);
           opacity: 1;
         }
-        /* Slide-down exit */
-        #showcaseDetailModal.closing .modal-content {
-          transform: translateY(100%);
-          opacity: 0;
+        /* Keep overlay displayed during the slide-down exit so the
+           transform transition has a painted frame to animate from.
+           Without this, removing .open causes display:none immediately,
+           collapsing the sheet before the transition can run. */
+        #showcaseDetailModal.closing {
+          display: flex;
+          background: rgba(0,0,0,0);
         }
 
         /* Drag-handle pill at the top of the sheet */
@@ -4374,12 +4392,12 @@
         #showcaseDetailModal .sdm-scroll {
           padding: 0 20px 28px;
         }
+      }
 
-        @media (prefers-reduced-motion: reduce) {
-          #showcaseDetailModal,
-          #showcaseDetailModal .modal-content {
-            transition: none;
-          }
+      @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+        #showcaseDetailModal,
+        #showcaseDetailModal .modal-content {
+          transition: none;
         }
       }
 
@@ -4446,7 +4464,7 @@
         padding-top: 14px;
       }
 
-      /* === Who you're working with ======================================= */
+      /* --- Who you're working with --------------------------------------- */
 
       /* ── Identity block ─────────────────────────────────────────────── */
       .studio-identity {
@@ -4707,11 +4725,11 @@
         }
       }
 
-      /* ================================================================
+      /* ----------------------------------------------------------------
          Liquid Glass Depth — refractive surfaces, specular edges,
          pointer-light bloom, layered canvas depth.
          No external deps. Respects prefers-reduced-motion + mobile.
-         ================================================================ */
+         ---------------------------------------------------------------- */
 
       /* --- New glass tokens ------------------------------------------- */
       :root {
@@ -5621,9 +5639,13 @@
           <div class="showcase-edge-fade showcase-edge-fade-left" aria-hidden="true"></div>
           <div class="showcase-edge-fade showcase-edge-fade-right" aria-hidden="true"></div>
           </div><!-- /.showcase-carousel-wrap -->
-          <!-- Pagination dots: mobile only -->
+          <!-- Pagination dots + swipe hint: mobile only -->
           <div class="carousel-ui" id="carouselUiPrimary" aria-hidden="true">
             <div class="carousel-dots" id="carouselDotsPrimary"><!-- dots generated by JS, one per card --></div>
+            <div class="carousel-swipe-hint">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Swipe to explore
+            </div>
           </div>
         </div><!-- /#caseStudiesContainer -->
 
@@ -6159,7 +6181,7 @@
         </button>
       </div>
 
-      <!-- Showcase card detail modal (mobile tap-to-expand) -->
+      <!-- Showcase card detail modal (mobile: bottom-sheet; desktop: centred dialog) -->
       <div class="modal-overlay" id="showcaseDetailModal" role="dialog" aria-modal="true" aria-labelledby="sdmName">
         <div class="modal-content">
           <button class="modal-close" onclick="closeShowcaseModal()" aria-label="Close">&times;</button>
@@ -7245,9 +7267,6 @@
 
       /* ── Showcase card detail modal ──────────────────────────────── */
       function openShowcaseModal(card) {
-        // Only activate on touch/mobile — skip on desktop pointer devices
-        if (window.matchMedia('(min-width: 769px)').matches) return;
-
         var overlay = document.getElementById('showcaseDetailModal');
         if (!overlay) return;
 
@@ -7279,19 +7298,30 @@
           tagsEl.appendChild(span);
         });
 
-        overlay.classList.remove('closing');
+        overlay.classList.remove('closing', 'sheet-ready');
         overlay.classList.add('open');
         document.body.style.overflow = 'hidden';
+        // Two rAFs guarantee the browser has painted the off-screen starting
+        // state (translateY(100%), opacity:0) before .sheet-ready triggers the
+        // transition — avoids painting directly at the final position.
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            overlay.classList.add('sheet-ready');
+          });
+        });
       }
 
       function closeShowcaseModal() {
         var overlay = document.getElementById('showcaseDetailModal');
         if (!overlay || !overlay.classList.contains('open')) return;
         var isMobile = window.matchMedia('(max-width: 768px)').matches;
-        if (isMobile) {
-          // Play slide-down exit, then hide
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (isMobile && !reducedMotion) {
+          // Remove .sheet-ready so content transitions back to translateY(100%).
+          // Remove .open and add .closing in the same tick so the overlay stays
+          // display:flex (via the .closing rule) while the transition plays.
+          overlay.classList.remove('open', 'sheet-ready');
           overlay.classList.add('closing');
-          overlay.classList.remove('open');
           var sheet = overlay.querySelector('.modal-content');
           var dur = 360;
           var done = false;
@@ -7309,7 +7339,8 @@
           // Fallback: clear state even if transitionend never fires
           setTimeout(finish, dur + 80);
         } else {
-          overlay.classList.remove('open');
+          // Desktop or reduced-motion: remove immediately, no animation wait
+          overlay.classList.remove('open', 'closing', 'sheet-ready');
           document.body.style.overflow = '';
         }
       }
@@ -7317,6 +7348,52 @@
       document.getElementById('showcaseDetailModal').addEventListener('click', function(e) {
         if (e.target === this) closeShowcaseModal();
       });
+
+      // Swipe-down gesture to dismiss the bottom sheet on mobile.
+      // Only activates when the touch begins in the top handle area OR when
+      // the sheet is already scrolled to the very top — prevents conflicting
+      // with normal content scrolling.
+      (function() {
+        var overlay = document.getElementById('showcaseDetailModal');
+        var content = overlay.querySelector('.modal-content');
+        var startY = 0, isDragging = false;
+
+        content.addEventListener('touchstart', function(e) {
+          // Allow drag when at the very top of the scroll (which includes
+          // the ::before handle area), preventing conflicts with body scroll.
+          var atTop = content.scrollTop <= 0;
+          if (atTop) {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+          } else {
+            isDragging = false;
+          }
+        }, { passive: true });
+
+        content.addEventListener('touchmove', function(e) {
+          if (!isDragging) return;
+          var delta = e.touches[0].clientY - startY;
+          if (delta > 0) {
+            // Follow the finger; suppress the CSS transition while dragging
+            content.style.transition = 'none';
+            content.style.transform = 'translateY(' + delta + 'px)';
+          }
+        }, { passive: true });
+
+        content.addEventListener('touchend', function(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          var delta = e.changedTouches[0].clientY - startY;
+          // Restore transition so snap-back or close animates correctly
+          content.style.transition = '';
+          content.style.transform = '';
+          if (delta > 80) {
+            closeShowcaseModal();
+          }
+          // else: .open still active → sheet snaps back to open position
+        }, { passive: true });
+      })();
+
 
       /* ── Carousel pagination dots ────────────────────────────────── */
       var refreshCarouselDots; // re-syncs dot count after cards are added/removed
