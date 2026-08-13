@@ -4397,7 +4397,21 @@
            collapsing the sheet before the transition can run. */
         #showcaseDetailModal.closing {
           display: flex;
-          background: rgba(0,0,0,0);
+          /* Clear background + blur the moment dismissal starts — page
+             becomes crisp immediately, not after the sheet finishes. */
+          background: rgba(0,0,0,0) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          transition: none !important;
+        }
+        #showcaseDetailModal.closing .modal-content {
+          /* Fast exit: 200ms slide-down, opacity fades in first 100ms.
+             JS setTimeout uses 240ms (200 + 40 headroom) as the cleanup
+             deadline — these must stay in sync. */
+          transition: transform 200ms cubic-bezier(0.4, 0, 1, 1),
+                      opacity  100ms linear !important;
+          transform: translateY(100%) !important;
+          opacity: 0 !important;
         }
 
         /* Drag-handle pill at the top of the sheet */
@@ -7421,21 +7435,20 @@
           overlay.classList.remove('open', 'sheet-ready');
           overlay.classList.add('closing');
           var sheet = overlay.querySelector('.modal-content');
-          var dur = 360;
-          var done = false;
-          function finish() {
-            if (done) return; done = true;
+          /* If a swipe left an inline translateY, force a painted frame with
+             the sheet at that position before clearing it. This lets the
+             short closing transition continue from the user's finger,
+             rather than jumping back to the fully-open sheet first. */
+          void sheet.offsetHeight;
+          sheet.style.transform = '';
+          /* CSS exit: 200ms slide-down + 100ms opacity (see .closing rule).
+             Use a single deterministic timer aligned to the CSS duration.
+             transitionend is unreliable on iOS when backdrop-filter and
+             display change in the same frame, so we do not rely on it. */
+          setTimeout(function () {
             overlay.classList.remove('closing');
             sdmUnlockScroll();
-          }
-          sheet.addEventListener('transitionend', function onEnd(e) {
-            if (e.propertyName === 'transform') {
-              sheet.removeEventListener('transitionend', onEnd);
-              finish();
-            }
-          });
-          // Fallback: clear state even if transitionend never fires
-          setTimeout(finish, dur + 80);
+          }, 240);
         } else {
           // Desktop or reduced-motion: remove immediately, no animation wait
           overlay.classList.remove('open', 'closing', 'sheet-ready');
@@ -7507,13 +7520,16 @@
           if (!isDragging) return;
           isDragging = false;
           var delta = e.changedTouches[0].clientY - startY;
-          // Restore transition so snap-back or close animates correctly
-          content.style.transition = '';
-          content.style.transform = '';
           if (delta > 80) {
+            // Keep the finger's current position; closeShowcaseModal()
+            // continues the exit from there instead of resetting to open.
+            content.style.transition = '';
             closeShowcaseModal();
+          } else {
+            // .open is still active → sheet snaps back to open position.
+            content.style.transition = '';
+            content.style.transform = '';
           }
-          // else: .open still active → sheet snaps back to open position
         }, { passive: true });
       })();
 
