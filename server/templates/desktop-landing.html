@@ -7265,6 +7265,33 @@
         }
       });
 
+      /* ── iOS-safe scroll lock for the showcase bottom sheet ─────── */
+      // body { overflow:hidden } alone does not freeze scroll on iOS Safari
+      // (and window.scrollBy still works everywhere). The reliable pattern:
+      // record scrollY → pin body position:fixed at -scrollY → on unlock,
+      // restore the styles and re-scroll to the recorded position.
+      var _sdmScrollY = 0;
+      function sdmLockScroll() {
+        _sdmScrollY = window.scrollY || window.pageYOffset || 0;
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top      = '-' + _sdmScrollY + 'px';
+        document.body.style.left     = '0';
+        document.body.style.right    = '0';
+        document.body.style.width    = '100%';
+        document.body.style.overflow = 'hidden';
+      }
+      function sdmUnlockScroll() {
+        document.documentElement.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top      = '';
+        document.body.style.left     = '';
+        document.body.style.right    = '';
+        document.body.style.width    = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, _sdmScrollY);
+      }
+
       /* ── Showcase card detail modal ──────────────────────────────── */
       function openShowcaseModal(card) {
         var overlay = document.getElementById('showcaseDetailModal');
@@ -7300,7 +7327,7 @@
 
         overlay.classList.remove('closing', 'sheet-ready');
         overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        sdmLockScroll();
         // Two rAFs guarantee the browser has painted the off-screen starting
         // state (translateY(100%), opacity:0) before .sheet-ready triggers the
         // transition — avoids painting directly at the final position.
@@ -7328,7 +7355,7 @@
           function finish() {
             if (done) return; done = true;
             overlay.classList.remove('closing');
-            document.body.style.overflow = '';
+            sdmUnlockScroll();
           }
           sheet.addEventListener('transitionend', function onEnd(e) {
             if (e.propertyName === 'transform') {
@@ -7341,7 +7368,7 @@
         } else {
           // Desktop or reduced-motion: remove immediately, no animation wait
           overlay.classList.remove('open', 'closing', 'sheet-ready');
-          document.body.style.overflow = '';
+          sdmUnlockScroll();
         }
       }
 
@@ -7350,19 +7377,44 @@
       });
 
       // Swipe-down gesture to dismiss the bottom sheet on mobile.
-      // Only activates when the touch begins in the top handle area OR when
-      // the sheet is already scrolled to the very top — prevents conflicting
-      // with normal content scrolling.
+      // Also locks page scroll behind the sheet so the site doesn't scroll
+      // while the user interacts with the project detail.
       (function() {
         var overlay = document.getElementById('showcaseDetailModal');
         var content = overlay.querySelector('.modal-content');
         var startY = 0, isDragging = false;
 
+        // ── Page-scroll lock ─────────────────────────────────────────────
+        // block all touch scroll on the overlay EXCEPT when the touch is
+        // inside the sheet's scrollable content and the sheet can still scroll.
+        function blockPageScroll(e) {
+          // If the touch target is inside the sheet content, allow vertical
+          // scroll only when the sheet itself has more to scroll — otherwise
+          // block so the page behind doesn't move.
+          var insideSheet = content.contains(e.target);
+          if (insideSheet) {
+            var atTop    = content.scrollTop <= 0;
+            var atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 1;
+            var movingDown = e.touches.length && (e.touches[0].clientY > startY);
+            var movingUp   = e.touches.length && (e.touches[0].clientY < startY);
+            // If the sheet can scroll in the direction of the swipe, let it.
+            if ((movingUp && !atBottom) || (movingDown && !atTop)) return;
+          }
+          e.preventDefault();
+        }
+
+        // Non-passive so preventDefault() is honoured by the browser.
+        overlay.addEventListener('touchstart', function(e) {
+          if (e.touches.length) startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        overlay.addEventListener('touchmove', blockPageScroll, { passive: false });
+
+        // ── Swipe-to-dismiss gesture ──────────────────────────────────────
         content.addEventListener('touchstart', function(e) {
           // Allow drag when at the very top of the scroll (which includes
-          // the ::before handle area), preventing conflicts with body scroll.
-          var atTop = content.scrollTop <= 0;
-          if (atTop) {
+          // the ::before handle area), preventing conflicts with content scroll.
+          if (content.scrollTop <= 0) {
             startY = e.touches[0].clientY;
             isDragging = true;
           } else {
@@ -7374,7 +7426,7 @@
           if (!isDragging) return;
           var delta = e.touches[0].clientY - startY;
           if (delta > 0) {
-            // Follow the finger; suppress the CSS transition while dragging
+            // Follow the finger; suppress CSS transition while dragging
             content.style.transition = 'none';
             content.style.transform = 'translateY(' + delta + 'px)';
           }
