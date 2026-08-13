@@ -4132,17 +4132,47 @@
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
         /* Wrapper is a plain positioning shell. It must NOT clip — clipping
-           chops card shadows into a hard rectangle. It also carries NO
-           bottom or edge cover overlays: the carousel sits inside a
-           translucent panel, so no gradient color can match the visible
-           background — any overlay paints its own sharp edge. The shadow
-           must instead dissolve naturally inside the scroller's padding.
-           NOTE: a box-shadow's visible tail reaches ~2x its blur radius,
-           so padding-bottom must be >= offset-y + 2*blur. */
+           chops card shadows into a hard rectangle.
+           The ::after pseudo-element is a bottom scrim that fades from
+           transparent to the page canvas color, covering the card shadow
+           bleed zone. The wrap ends exactly where the dots begin (dots are
+           a sibling, not a child), so the solid bottom of the gradient is
+           hidden behind nothing — it simply transitions into the bare page
+           background, making the shadow vanish before the dots appear. */
         .showcase-carousel-wrap {
           position: relative;
           margin: 0 0 4px;
           overflow: visible;
+        }
+        /* Bottom scrim: transparent → soft support green, fades shadow away
+           and gives the dots a coloured landing zone.
+           The dots are now inside the wrap (absolutely positioned above this
+           scrim at z-index 5), so the scrim is taller to give them room. */
+        .showcase-carousel-wrap::after {
+          content: '';
+          position: absolute;
+          left: 0; right: 0;
+          bottom: 0;
+          height: 72px;
+          pointer-events: none;
+          z-index: 4;
+          /* Transparent → support-green wash → solid canvas at the very
+             bottom. The solid end MUST be the canvas color: the wrap edge
+             sits on bare canvas, so ending on green would paint a new hard
+             line (see memory: cover scrims are only safe when their solid
+             edge matches the background they end on). */
+          background: linear-gradient(to bottom,
+            rgba(217,230,223,0)    0%,
+            rgba(217,230,223,.72) 52%,
+            rgba(238,242,240,1)  100%);
+        }
+        @media (prefers-color-scheme: dark) {
+          .showcase-carousel-wrap::after {
+            background: linear-gradient(to bottom,
+              rgba(35,67,72,0)    0%,
+              rgba(35,67,72,.72) 52%,
+              rgba(16,33,36,1)  100%);
+          }
         }
         .showcase-grid {
           display: flex;
@@ -4254,14 +4284,20 @@
           }
         }
 
-        /* ── Pagination dots ─────────────────────────────────────────── */
+        /* ── Pagination dots ─────────────────────────────────────────────
+           The dots now live INSIDE the carousel wrap, floating over the
+           green scrim (z-index 5 > scrim's 4). They take no layout space,
+           so "See more builds" moves up right below the wrap. */
         .carousel-ui {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 14px;
           display: flex;
-          flex-direction: column;
+          justify-content: center;
           align-items: center;
-          gap: 10px;
-          margin-top: 2px;
-           margin-bottom: 10px;
+          z-index: 5;
+          pointer-events: none;
         }
         .carousel-dots {
           display: flex;
@@ -4856,6 +4892,39 @@
         .hero-blob-rose  { animation: none !important; opacity: 0.70 !important; }
       }
 
+      /* Mobile entrance: let the hero settle before the liquid color reveals.
+         The JS adds .mobile-blob-reveal after the 3-second loading pause, then
+         hands both blobs back to their regular idle drift. Reduced-motion
+         visitors bypass this entirely and see the static blobs immediately. */
+      @keyframes blob-mobile-reveal-teal {
+        0%   { opacity: 0; filter: blur(76px) saturate(100%); }
+        100% { opacity: 0.82; filter: blur(52px) saturate(140%); }
+      }
+      @keyframes blob-mobile-reveal-rose {
+        0%   { opacity: 0; filter: blur(76px) saturate(100%); }
+        100% { opacity: 0.72; filter: blur(52px) saturate(140%); }
+      }
+      @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+        /* Initial hidden state is set via inline style in JS so it wins
+           against all CSS specificity battles without needing !important. */
+        .hero.mobile-blob-reveal .hero-blob-teal {
+          animation: blob-mobile-reveal-teal 1100ms
+            cubic-bezier(0.16, 1, 0.3, 1) both !important;
+        }
+        .hero.mobile-blob-reveal .hero-blob-rose {
+          animation: blob-mobile-reveal-rose 1100ms
+            cubic-bezier(0.16, 1, 0.3, 1) both !important;
+        }
+        .hero.mobile-blob-revealed .hero-blob-teal {
+          opacity: 0.82 !important;
+          animation: blob-drift-a 18s ease-in-out infinite !important;
+        }
+        .hero.mobile-blob-revealed .hero-blob-rose {
+          opacity: 0.72 !important;
+          animation: blob-drift-b 22s ease-in-out infinite !important;
+        }
+      }
+
       /* --- Section panels: specular + deeper refraction ---------------- */
       .section::before, .why-section::before, .faq-section::before,
       .journal-notes::before, .contact::before {
@@ -5104,6 +5173,15 @@
       }
       /* --- Reduce blur on mobile for performance ----------------------- */
       @media (max-width: 768px) {
+        /* Carousel cards: the glass block above forces var(--shadow)
+           (0 18px 55px) with !important, which defeats the soft mobile
+           shadow set in the carousel media query and bleeds a heavy
+           gradient toward the pagination dots. Re-assert the soft one
+           here (later in source, same specificity, so it wins). */
+        .showcase-card {
+          box-shadow: inset 0 1px 0 var(--specular),
+            0 4px 14px rgba(29,72,73,.08) !important;
+        }
         .hero {
           backdrop-filter: blur(16px) saturate(140%) !important;
           -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
@@ -5635,11 +5713,11 @@
           <!-- Edge fades: visible only on mobile, pointer-events:none -->
           <div class="showcase-edge-fade showcase-edge-fade-left" aria-hidden="true"></div>
           <div class="showcase-edge-fade showcase-edge-fade-right" aria-hidden="true"></div>
-          </div><!-- /.showcase-carousel-wrap -->
-          <!-- Pagination dots: mobile only -->
+          <!-- Pagination dots: mobile only, float above the bottom scrim -->
           <div class="carousel-ui" id="carouselUiPrimary" aria-hidden="true">
             <div class="carousel-dots" id="carouselDotsPrimary"><!-- dots generated by JS, one per card --></div>
           </div>
+          </div><!-- /.showcase-carousel-wrap -->
         </div><!-- /#caseStudiesContainer -->
 
         <!-- Additional showcase cards (hidden behind Load More) -->
@@ -8360,7 +8438,29 @@
 
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var isTouch = (('ontouchstart' in window) || navigator.maxTouchPoints > 1);
-        if (reduced || isTouch || window.innerWidth <= 768) return;
+        var isMobile = window.innerWidth <= 768;
+
+        /* Mobile gets a single delayed reveal instead of pointer physics.
+           Inline style hides both blobs immediately — beats any CSS rule.
+           After 3s the reveal animation runs, then idle drift takes over. */
+        if (isMobile && !reduced) {
+          blobT.style.opacity = '0';
+          blobR.style.opacity = '0';
+          blobR.style.animationPlayState = 'paused';
+          window.setTimeout(function () {
+            /* Clear the inline opacity so the CSS animation keyframes own it */
+            blobT.style.opacity = '';
+            blobR.style.opacity = '';
+            blobR.style.animationPlayState = '';
+            hero.classList.add('mobile-blob-reveal');
+            window.setTimeout(function () {
+              hero.classList.remove('mobile-blob-reveal');
+              hero.classList.add('mobile-blob-revealed');
+            }, 1150);
+          }, 3000);
+        }
+
+        if (reduced || isTouch || isMobile) return;
 
         /* ── Layout helpers ── */
         function heroRect() { return hero.getBoundingClientRect(); }

@@ -17,10 +17,14 @@ Three interacting failure modes produced a recurring "ugly cutoff" bug that surv
 
 ## Bottom-edge band (fourth failure mode, fixed Aug 2026)
 
-A faint horizontal band appeared between the card shadow and the pagination dots. Two wrong fixes preceded the real one:
+A shadow band kept appearing between the card bottom and the pagination dots, surviving several fixes:
 
-1. **A bottom fade overlay (transparent → canvas hex) cannot fix it** — the carousel sits inside a translucent panel, so even an opaque canvas-colored gradient doesn't match the visible background and paints its own sharp rectangle. Same lesson as failure mode 1, but it applies even with opaque colors when the true backdrop is a blend.
-2. **Softening the card box-shadow alone is not enough** — the band persisted.
-3. **Real culprit: the left/right edge vignettes terminate at `bottom: 44px` with a hard horizontal cut.** Fix: `mask-image: linear-gradient(to bottom, black 60%, transparent 100%)` on the vignettes so they dissolve before their bottom edge.
+1. **Root cause: a late global liquid-glass rule re-applied the heavy desktop shadow (`var(--shadow)` = 0 18px 55px) to `.showcase-card` with `!important`**, silently defeating the soft mobile shadow set in the carousel media query. Tuning the carousel rules could never work while that override stood. Fix: re-assert the soft mobile shadow with `!important` *later in source* inside a max-width media query.
+2. The left/right edge vignettes also terminated at `bottom: 44px` with a hard horizontal cut — fixed with `mask-image: linear-gradient(to bottom, black 60%, transparent 100%)` so they dissolve before their bottom edge.
+3. A bottom scrim (transparent → canvas `#eef2f0` / dark `#102124`) on `.showcase-carousel-wrap::after` works here **because the wrap ends exactly where the dots begin (dots are a sibling)** and the section sits directly on the opaque canvas — so the scrim's solid end blends into bare page background rather than painting a rectangle.
 
-**Rule:** every fade/vignette overlay must itself fade out on ALL edges that sit over visible background — an overlay that solves one edge can create a new hard edge where it ends. Also keep `padding-bottom >= shadow offset-y + 2×blur` so shadows dissolve inside the scroller.
+**Rules:**
+- When a shadow "won't soften," grep for later `!important` rules on the same selector before touching layout — the glass-styling blocks near the end of the stylesheet override component rules.
+- Every fade/vignette overlay must itself fade out on ALL edges that sit over visible background.
+- Cover scrims are only safe when their solid edge coincides with an element boundary over the same opaque background color.
+- Keep `padding-bottom >= shadow offset-y + 2×blur` so shadows dissolve inside the scroller.
