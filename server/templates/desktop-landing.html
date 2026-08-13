@@ -3975,9 +3975,16 @@
       /* === Project Showcase Cards ================================== */
       .showcase-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: clamp(18px, 3vw, 32px);
+        /* 3 columns on wide screens, 2 on medium, 1 on narrow desktop */
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(16px, 2.4vw, 28px);
         margin-bottom: 24px;
+      }
+      @media (max-width: 1100px) and (min-width: 769px) {
+        .showcase-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: clamp(16px, 2.8vw, 28px);
+        }
       }
 
       .showcase-card {
@@ -3989,6 +3996,7 @@
         display: flex;
         flex-direction: column;
         transition: transform 0.25s ease, border-color 0.25s ease;
+        min-height: 420px;
       }
       .showcase-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
@@ -3997,7 +4005,7 @@
       /* Visual area — swap contents for <img> when screenshots are ready */
       .showcase-visual {
         position: relative;
-        height: clamp(170px, 18vw, 230px);
+        height: clamp(180px, 16vw, 220px);
         overflow: hidden;
         flex-shrink: 0;
       }
@@ -4591,6 +4599,32 @@
         -webkit-backdrop-filter: blur(var(--glass-blur-mid)) saturate(148%) !important;
         box-shadow: inset 0 1px 0 var(--specular), 0 24px 64px -18px rgba(13,89,96,0.14) !important;
         background: var(--refract-top), var(--surface) !important;
+      }
+
+      /* --- Case-studies section: dissolve into page instead of hard shadow cut --- */
+      #case-studies {
+        /* Remove border so the fade is clean with no outline at the edge */
+        /* The ::before pseudo carries the glass; we mask it top+bottom */
+      }
+      #case-studies::before {
+        /* Soft vertical dissolve: section fades into the dark page at top and bottom */
+        mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 7%,
+          black 93%,
+          transparent 100%
+        ) !important;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          black 7%,
+          black 93%,
+          transparent 100%
+        ) !important;
+        /* Suppress the hard-edged outer box-shadow */
+        box-shadow: inset 0 1px 0 var(--specular) !important;
+        border-color: transparent !important;
       }
 
       /* --- Cards: specular inset on every glass surface ---------------- */
