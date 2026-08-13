@@ -4132,14 +4132,38 @@
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
         /* Wrapper is a plain positioning shell. It must NOT clip — clipping
-           chops card shadows into a hard rectangle. It also carries NO edge
-           fade overlays: gradients built from the translucent --surface token
-           can never fully cover a card, so they read as a grey veil with a
-           sharp inner edge. Cards are simply sized to fit (below). */
+           chops card shadows into a hard rectangle.
+           The ::after pseudo-element is a bottom-fade overlay that covers the
+           shadow bleed zone with an opaque-to-transparent gradient, using the
+           real canvas color so there is no grey veil artifact. It sits above
+           the scroll content (z-index 3) but below the left/right edge fades
+           (z-index 2 — the bottom fade wraps the whole wrapper, not just the
+           scroll track, so z-index 3 reaches above the left/right overlays). */
         .showcase-carousel-wrap {
           position: relative;
           margin: 0 0 4px;
           overflow: visible;
+        }
+        /* Bottom shadow-bleed fade — light mode */
+        .showcase-carousel-wrap::after {
+          content: '';
+          position: absolute;
+          left: 0; right: 0;
+          bottom: 0;
+          height: 44px;
+          pointer-events: none;
+          z-index: 3;
+          background: linear-gradient(to bottom,
+            transparent 0%,
+            #eef2f0 100%);
+        }
+        /* Dark mode override */
+        @media (prefers-color-scheme: dark) {
+          .showcase-carousel-wrap::after {
+            background: linear-gradient(to bottom,
+              transparent 0%,
+              #102124 100%);
+          }
         }
         .showcase-grid {
           display: flex;
@@ -4151,10 +4175,9 @@
           overscroll-behavior-x: contain;
           gap: 12px;
           margin: 0;
-          /* Generous bottom padding: the scroll container clips ink at its
-             padding edge, so the card shadow needs room to fade out fully
-             inside the scroller instead of being cut into a band. */
-          padding: 10px 16px 32px;
+          /* Extended bottom padding gives the card shadow room to fully
+             dissolve before the gradient overlay takes over. */
+          padding: 10px 16px 44px;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
@@ -4176,8 +4199,9 @@
           min-width: 0;
           scroll-snap-align: center;
           scroll-snap-stop: always; /* one card per swipe — no Freeform-style free glide */
-          /* Compact shadow that stays visually attached to the card */
-          box-shadow: 0 6px 18px rgba(29,72,73,.10);
+          /* Soft shadow — short vertical reach so it dissolves well before
+             the bottom of the scroll container's padding zone. */
+          box-shadow: 0 4px 14px rgba(29,72,73,.08);
         }
         .showcase-visual { height: 160px; }
 
@@ -4212,7 +4236,7 @@
           display: block;
           position: absolute;
           top: 0;
-          bottom: 32px; /* match the 32px bottom padding of .showcase-grid */
+          bottom: 44px; /* match the 44px bottom padding of .showcase-grid */
           width: 40px;
           pointer-events: none;
           z-index: 2;
