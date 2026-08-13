@@ -4132,38 +4132,17 @@
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
         /* Wrapper is a plain positioning shell. It must NOT clip — clipping
-           chops card shadows into a hard rectangle.
-           The ::after pseudo-element is a bottom-fade overlay that covers the
-           shadow bleed zone with an opaque-to-transparent gradient, using the
-           real canvas color so there is no grey veil artifact. It sits above
-           the scroll content (z-index 3) but below the left/right edge fades
-           (z-index 2 — the bottom fade wraps the whole wrapper, not just the
-           scroll track, so z-index 3 reaches above the left/right overlays). */
+           chops card shadows into a hard rectangle. It also carries NO
+           bottom or edge cover overlays: the carousel sits inside a
+           translucent panel, so no gradient color can match the visible
+           background — any overlay paints its own sharp edge. The shadow
+           must instead dissolve naturally inside the scroller's padding.
+           NOTE: a box-shadow's visible tail reaches ~2x its blur radius,
+           so padding-bottom must be >= offset-y + 2*blur. */
         .showcase-carousel-wrap {
           position: relative;
           margin: 0 0 4px;
           overflow: visible;
-        }
-        /* Bottom shadow-bleed fade — light mode */
-        .showcase-carousel-wrap::after {
-          content: '';
-          position: absolute;
-          left: 0; right: 0;
-          bottom: 0;
-          height: 44px;
-          pointer-events: none;
-          z-index: 3;
-          background: linear-gradient(to bottom,
-            transparent 0%,
-            #eef2f0 100%);
-        }
-        /* Dark mode override */
-        @media (prefers-color-scheme: dark) {
-          .showcase-carousel-wrap::after {
-            background: linear-gradient(to bottom,
-              transparent 0%,
-              #102124 100%);
-          }
         }
         .showcase-grid {
           display: flex;
@@ -4175,8 +4154,8 @@
           overscroll-behavior-x: contain;
           gap: 12px;
           margin: 0;
-          /* Extended bottom padding gives the card shadow room to fully
-             dissolve before the gradient overlay takes over. */
+          /* 44px bottom padding: shadow below is 0 4px 14px, so its tail
+             reaches ~4 + 28 = 32px — fully dissolved before the clip edge. */
           padding: 10px 16px 44px;
           scrollbar-width: none;
         }
@@ -4240,6 +4219,10 @@
           width: 40px;
           pointer-events: none;
           z-index: 2;
+          /* Dissolve the vignette toward its bottom so it never terminates
+             on a hard horizontal edge above the pagination dots. */
+          -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
         }
         .showcase-edge-fade-left {
           left: 0;
