@@ -47,8 +47,21 @@ export interface JournalTrendRow {
   buckets: TrendBucket[];
 }
 
-import { db } from "./db";
+import crypto from "crypto";
+import { db, pool } from "./db";
 import { eq, desc, and, sql, inArray } from "drizzle-orm";
+
+/**
+ * Derives a signed 32-bit integer lock key from an ipHash + toolName pair,
+ * suitable for pg_advisory_xact_lock (which takes bigint or two ints).
+ */
+function revealLockKey(ipHash: string, toolName: string): number {
+  const buf = crypto
+    .createHash("sha256")
+    .update(`${ipHash}::${toolName}`)
+    .digest();
+  return buf.readInt32BE(0);
+}
 
 export interface IStorage {
   // Contact Submissions
@@ -85,7 +98,8 @@ export interface IStorage {
 
   // Toolkit reveals
   recordToolkitReveal(reveal: InsertToolkitReveal): Promise<ToolkitReveal>;
-  getToolkitRevealStats(from?: Date, to?: Date): Promise<{ toolName: string; toolGroup: string | null; reveals: number; lastSeen: Date }[]>;
+  getToolkitRevealStats(from?: Date, to?: Date): Promise<{ toolName: string; toolGroup: string | null; reveals: number; rawReveals: number; lastSeen: Date }[]>;
+  getToolkitGroupStats(from?: Date, to?: Date): Promise<{ toolGroup: string | null; reveals: number; rawReveals: number; uniqueTools: number; lastSeen: Date }[]>;
 
   // Journal report schedule
   getJournalReportSchedule(): Promise<JournalReportSchedule | undefined>;
@@ -511,32 +525,86 @@ export class DatabaseStorage implements IStorage {
 
   // Toolkit reveals
   async recordToolkitReveal(reveal: InsertToolkitReveal): Promise<ToolkitReveal> {
-    const [row] = await db.insert(toolkitReveals).values(reveal).returning();
-    return row;
+    // No IP → cannot deduplicate; insert as unique.
+    if (!reveal.ipHash) {
+      const [row] = await db
+        .insert(toolkitReveals)
+        .values({ ...reveal, isDuplicate: false })
+        .returning();
+      return row;
+    }
+
+    // Use a per-{ipHash,toolName} advisory lock so concurrent requests from the
+    // same visitor cannot both race through the check and both be marked unique.
+    const lockKey = revealLockKey(reveal.ipHash, reveal.toolName);
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+      // Transaction-scoped advisory lock; released automatically on COMMIT/ROLLBACK.
+      await client.query("SELECT pg_advisory_xact_lock($1)", [lockKey]);
+
+      // Rolling 24 h window: check ALL prior rows (regardless of isDuplicate) so
+      // chained clicks (e.g. T=0 unique → T=10h dup → T=25h) are still caught.
+      const windowStart = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const { rows: existing } = await client.query<{ id: string }>(
+        `SELECT id FROM toolkit_reveals
+         WHERE ip_hash = $1 AND tool_name = $2 AND created_at >= $3
+         LIMIT 1`,
+        [reveal.ipHash, reveal.toolName, windowStart],
+      );
+      const isDuplicate = existing.length > 0;
+
+      const { rows } = await client.query<ToolkitReveal>(
+        `INSERT INTO toolkit_reveals
+           (tool_name, tool_group, source, user_agent, ip_hash, is_duplicate)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING *`,
+        [
+          reveal.toolName,
+          reveal.toolGroup ?? null,
+          reveal.source ?? null,
+          reveal.userAgent ?? null,
+          reveal.ipHash,
+          isDuplicate,
+        ],
+      );
+      await client.query("COMMIT");
+      return rows[0];
+    } catch (err) {
+      await client.query("ROLLBACK");
+      throw err;
+    } finally {
+      client.release();
+    }
   }
 
   async getToolkitRevealStats(
     from?: Date,
     to?: Date,
-  ): Promise<{ toolName: string; toolGroup: string | null; reveals: number; lastSeen: Date }[]> {
+  ): Promise<{ toolName: string; toolGroup: string | null; reveals: number; rawReveals: number; lastSeen: Date }[]> {
     const conditions = [] as ReturnType<typeof sql>[];
     if (from) conditions.push(sql`${toolkitReveals.createdAt} >= ${from}`);
     if (to) conditions.push(sql`${toolkitReveals.createdAt} <= ${to}`);
+    const whereClause = conditions.length > 0 ? and(...conditions) : sql`true`;
     const rows = await db
       .select({
         toolName: toolkitReveals.toolName,
         toolGroup: toolkitReveals.toolGroup,
-        reveals: sql<number>`count(*)::int`,
+        // unique: first-seen reveals only (is_duplicate = false)
+        reveals: sql<number>`count(*) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
+        // raw: every click recorded
+        rawReveals: sql<number>`count(*)::int`,
         lastSeen: sql<Date>`max(${toolkitReveals.createdAt})`,
       })
       .from(toolkitReveals)
-      .where(conditions.length > 0 ? and(...conditions) : sql`true`)
+      .where(whereClause)
       .groupBy(toolkitReveals.toolName, toolkitReveals.toolGroup)
-      .orderBy(desc(sql`count(*)`));
+      .orderBy(desc(sql`count(*) filter (where ${toolkitReveals.isDuplicate} = false)`));
     return rows.map((r) => ({
       toolName: r.toolName,
       toolGroup: r.toolGroup,
       reveals: Number(r.reveals),
+      rawReveals: Number(r.rawReveals),
       lastSeen: r.lastSeen,
     }));
   }
@@ -544,24 +612,27 @@ export class DatabaseStorage implements IStorage {
   async getToolkitGroupStats(
     from?: Date,
     to?: Date,
-  ): Promise<{ toolGroup: string | null; reveals: number; uniqueTools: number; lastSeen: Date }[]> {
+  ): Promise<{ toolGroup: string | null; reveals: number; rawReveals: number; uniqueTools: number; lastSeen: Date }[]> {
     const conditions = [] as ReturnType<typeof sql>[];
     if (from) conditions.push(sql`${toolkitReveals.createdAt} >= ${from}`);
     if (to) conditions.push(sql`${toolkitReveals.createdAt} <= ${to}`);
+    const whereClause = conditions.length > 0 ? and(...conditions) : sql`true`;
     const rows = await db
       .select({
         toolGroup: toolkitReveals.toolGroup,
-        reveals: sql<number>`count(*)::int`,
-        uniqueTools: sql<number>`count(distinct ${toolkitReveals.toolName})::int`,
+        reveals: sql<number>`count(*) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
+        rawReveals: sql<number>`count(*)::int`,
+        uniqueTools: sql<number>`count(distinct ${toolkitReveals.toolName}) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
         lastSeen: sql<Date>`max(${toolkitReveals.createdAt})`,
       })
       .from(toolkitReveals)
-      .where(conditions.length > 0 ? and(...conditions) : sql`true`)
+      .where(whereClause)
       .groupBy(toolkitReveals.toolGroup)
-      .orderBy(desc(sql`count(*)`));
+      .orderBy(desc(sql`count(*) filter (where ${toolkitReveals.isDuplicate} = false)`));
     return rows.map((r) => ({
       toolGroup: r.toolGroup,
       reveals: Number(r.reveals),
+      rawReveals: Number(r.rawReveals),
       uniqueTools: Number(r.uniqueTools),
       lastSeen: r.lastSeen,
     }));

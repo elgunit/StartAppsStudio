@@ -82,6 +82,9 @@ export const toolkitReveals = pgTable("toolkit_reveals", {
   source: text("source"),
   userAgent: text("user_agent"),
   ipHash: text("ip_hash"),
+  // true when the same ipHash+toolName was already recorded within the prior 24 h
+  // (raw row is preserved; stats queries filter this out for unique-visitor counts)
+  isDuplicate: boolean("is_duplicate").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

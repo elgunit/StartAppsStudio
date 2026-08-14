@@ -563,8 +563,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         storage.getToolkitRevealStats(from, to),
         storage.getToolkitGroupStats(from, to),
       ]);
-      const total = stats.reduce((acc, r) => acc + r.reveals, 0);
-      res.json({ totalReveals: total, groupStats, stats });
+      // `reveals` = unique visitor-tool pairs (is_duplicate=false); `rawReveals` = every click
+      const totalReveals = stats.reduce((acc, r) => acc + r.reveals, 0);
+      const totalRawReveals = stats.reduce((acc, r) => acc + r.rawReveals, 0);
+      res.json({ totalReveals, totalRawReveals, groupStats, stats });
     } catch (err) {
       console.error("toolkit-reveals admin error:", err);
       res.status(500).json({ error: "Failed to fetch toolkit reveals" });
