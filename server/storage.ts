@@ -541,6 +541,32 @@ export class DatabaseStorage implements IStorage {
     }));
   }
 
+  async getToolkitGroupStats(
+    from?: Date,
+    to?: Date,
+  ): Promise<{ toolGroup: string | null; reveals: number; uniqueTools: number; lastSeen: Date }[]> {
+    const conditions = [] as ReturnType<typeof sql>[];
+    if (from) conditions.push(sql`${toolkitReveals.createdAt} >= ${from}`);
+    if (to) conditions.push(sql`${toolkitReveals.createdAt} <= ${to}`);
+    const rows = await db
+      .select({
+        toolGroup: toolkitReveals.toolGroup,
+        reveals: sql<number>`count(*)::int`,
+        uniqueTools: sql<number>`count(distinct ${toolkitReveals.toolName})::int`,
+        lastSeen: sql<Date>`max(${toolkitReveals.createdAt})`,
+      })
+      .from(toolkitReveals)
+      .where(conditions.length > 0 ? and(...conditions) : sql`true`)
+      .groupBy(toolkitReveals.toolGroup)
+      .orderBy(desc(sql`count(*)`));
+    return rows.map((r) => ({
+      toolGroup: r.toolGroup,
+      reveals: Number(r.reveals),
+      uniqueTools: Number(r.uniqueTools),
+      lastSeen: r.lastSeen,
+    }));
+  }
+
   // Journal report schedule
   async getJournalReportSchedule(): Promise<JournalReportSchedule | undefined> {
     const [row] = await db.select().from(journalReportSchedules).limit(1);
