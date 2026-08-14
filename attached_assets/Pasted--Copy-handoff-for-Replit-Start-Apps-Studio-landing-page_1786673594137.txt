@@ -1,0 +1,118 @@
+# Copy handoff for Replit — Start Apps Studio landing page
+
+Paste the block below to Replit as-is. It lists every copy change as exact find/replace pairs against `server/templates/desktop-landing.html`, plus the page title and meta description.
+
+---
+
+## Instruction for Replit
+
+Update only text content in `server/templates/desktop-landing.html`. Do not change layout, classes, styles, or scripts. Apply these exact find/replace pairs.
+
+### 1. Page metadata
+
+FIND (title): `MVP Studio for Founders | Start Apps Studio`
+REPLACE: `Idea to Launched Product in Weeks | Start Apps Studio`
+
+FIND (meta description): `Strategy-first product studio for founders. Rescue half-built apps, launch polished sites, validate prototypes, and ship working MVPs in 3 to 8 weeks, without an equity split.`
+REPLACE: `Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team.`
+
+Apply the same new title/description to og:title, og:description, twitter:title, twitter:description.
+
+### 2. Hero headline (h1.hero-headline)
+
+FIND:
+```html
+<span class="hero-line hero-line-nowrap">MVP studio for <span class="accent-word">founders</span>,</span><span class="hero-line hero-line-nowrap">without the equity split.</span>
+```
+REPLACE:
+```html
+<span class="hero-line hero-line-nowrap">Go from idea to <span class="accent-word">launched product</span></span><span class="hero-line hero-line-nowrap">in weeks, not months.</span>
+```
+
+### 3. Hero subheadline (p.hero-subheadline)
+
+FIND: `Strategy-first builds for founders and teams with half-built apps or outsourced projects. We design, build, and launch in weeks, not months.`
+REPLACE: `You have the idea. We bring the strategy, design, and engineering partner you need to ship it. For non-technical founders who want a real product, not another slide deck.`
+
+### 4. Hero stat label
+
+FIND: `founders shipped over the past 3 years`
+REPLACE: `founder-led products shipped`
+
+Keep `~40` and the `3-8 weeks to launch` stat unchanged.
+
+### 5. Hero benefit chips
+
+FIND: `iOS, Android & Web` -> REPLACE: `One partner, end to end`
+
+FIND: `Fixed-Price Packages` -> REPLACE: `Ship in weeks, not months`
+
+### 6. Pain strip (three items — replace each label and its description)
+
+Item 1
+- `Budget overruns` -> `Idea stuck in slides`
+- `Fixed price, quoted upfront. No change orders, no surprises at the end.` -> `We turn your concept into a working product in weeks, so you can stop planning and start validating.`
+
+Item 2
+- `Timeline drift` -> `Hiring feels like a second job`
+- `Launch sites in days. MVP live in a month or two. You see real progress every few days, not at the end.` -> `One founder-led partner handles strategy, design, and build. No recruiters, no standups, no surprises.`
+
+Item 3
+- `No code ownership` -> `Agencies hand over code I can't control`
+- `Source code, accounts, and every API key transfer to you at handoff. Zero lock-in.` -> `You own every account, design file, and line of code. We build it with you, then hand it off cleanly.`
+
+### 7. "What we ship" section subtitle
+
+FIND: `From a landing page to a full multi-platform product. You walk away with something real and ready to use.`
+REPLACE: `From your first landing page to a full multi-platform product. Every package is built to get you closer to real users and real revenue.`
+
+### 8. Service card descriptions
+
+Landing Pages
+- FIND: `A clean, conversion-focused page for your idea, perfect for waitlists, investor demos, or early signups.`
+- REPLACE: `Validate demand before you build. A conversion-focused page with email capture, analytics, and SEO.`
+
+Native iOS & Android
+- FIND: `One real app that runs beautifully on both stores. We handle submission, you keep the keys.`
+- REPLACE: `Ship to the App Store and Play Store. Your product lives on users' home screens, not just in a browser tab.`
+
+Web Applications
+- FIND: `Production-grade web apps with login, payments, and a real database, built to scale when you do.`
+- REPLACE: `A production-grade web app with accounts, payments, and a real database — ready for your first paying customers.`
+
+MVP package
+- FIND: `A real, launch-ready product for your first 100K–500K users — not a throwaway demo. We scope, design, build, and launch the core experience in 1–2 months.`
+- REPLACE: `A real, launch-ready product for your first 100K–500K users. We scope, design, build, and launch the core experience in 1–2 months.`
+
+### 9. "Why Start Apps Studio?" section
+
+Subtitle
+- FIND: `Everything needed to launch, nothing you don't.`
+- REPLACE: `Built by a founder who has worn every hat — not just a dev team.`
+
+Cards
+- FIND: `Most web-only tools never get traction because users don't open browsers. We ship to both app stores so your product lives where people actually spend time.`
+- REPLACE: `Most web-only tools struggle to build habit. We ship to both app stores so your product lives where users actually spend time.`
+
+- FIND: `App store reviews mean even a one-line bug fix can take weeks to reach users. We push updates the moment you approve them. No waiting, no re-submission.`
+- REPLACE: `App store reviews can delay even urgent fixes. We push updates the moment you approve them, so you stay responsive to users.`
+
+- FIND: `Email gets ignored. Push notifications show up like a text message. We wire them in from day one so your app can pull users back the moment it matters.`
+- REPLACE: `Email gets ignored. Push notifications show up like a text message. We wire them in from day one so you can re-engage users at the right moment.`
+
+- FIND: `ready to charge on launch day.` -> REPLACE: `ready to earn on launch day.`
+
+- FIND: `Most hosting bills spike the moment you go viral, right when you can least afford a distraction.`
+- REPLACE: `Most hosting bills spike right when you can least afford a distraction.`
+
+- FIND: `Too many clients discover they can't leave because the agency holds the accounts.`
+- REPLACE: `Too many founders discover they can't leave because the agency holds the accounts.`
+
+### 10. Five-hats / lifecycle section subtitle
+
+FIND: `The five disciplines that keep an early-stage product coherent, from deciding what matters to proving it works.`
+REPLACE: `The five disciplines that keep an early-stage product coherent — learned by building, pivoting, and shipping my own products.`
+
+### Notes
+- Em dashes above are real `—` characters (U+2014); keep the file UTF-8 so they don't turn into mojibake.
+- Nothing else changes: no pricing, package names, layout, or visuals.
