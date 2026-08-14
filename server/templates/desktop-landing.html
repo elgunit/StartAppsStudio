@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>From Idea to Shipped Product in Weeks | Start Apps Studio</title>
+    <title>Ship Your Product in Weeks | Start Apps Studio</title>
     <meta name="description" content="Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team." />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#0d9488" />
@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Start Apps Studio" />
     <meta property="og:url" content="https://startappsstudio.com/" />
-    <meta property="og:title" content="From Idea to Shipped Product in Weeks | Start Apps Studio" />
+    <meta property="og:title" content="Ship Your Product in Weeks | Start Apps Studio" />
     <meta property="og:description" content="Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team." />
     <meta property="og:image" content="https://startappsstudio.com/assets/images/og-landing.png" />
     <meta property="og:image:width" content="1200" />
@@ -26,7 +26,7 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="From Idea to Shipped Product in Weeks | Start Apps Studio" />
+    <meta name="twitter:title" content="Ship Your Product in Weeks | Start Apps Studio" />
     <meta name="twitter:description" content="Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team." />
     <meta name="twitter:image" content="https://startappsstudio.com/assets/images/og-landing.png" />
     <meta name="twitter:image:alt" content="Start Apps Studio: from idea to shipped product in weeks" />
@@ -68,7 +68,7 @@
       "@type": "WebPage",
       "@id": "https://startappsstudio.com/#webpage",
       "url": "https://startappsstudio.com/",
-      "name": "From Idea to Shipped Product in Weeks | Start Apps Studio",
+      "name": "Ship Your Product in Weeks | Start Apps Studio",
       "description": "Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team.",
       "dateModified": "2026-08-11",
       "isPartOf": { "@id": "https://startappsstudio.com/#website" },
@@ -1143,6 +1143,14 @@
         height: 1px;
         background: var(--border);
       }
+      .toolkit-group-label { margin-bottom: 6px; }
+      .toolkit-group-desc {
+        margin: 0 0 12px;
+        font-size: 13.5px;
+        line-height: 1.5;
+        color: var(--text-secondary);
+        max-width: 640px;
+      }
       .toolkit-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1194,6 +1202,10 @@
       .toolkit-avatar.av-swift     { background: linear-gradient(135deg, #fa7343, #f05138); }
       .toolkit-avatar.av-kotlin    { background: linear-gradient(135deg, #7f52ff, #e44857); }
       .toolkit-avatar.av-github    { background: linear-gradient(135deg, #4a5568, #1a202c); }
+      .toolkit-avatar.av-expo      { background: linear-gradient(135deg, #61dafb, #1b6f8f); font-size: 13px; }
+      .toolkit-avatar.av-node      { background: linear-gradient(135deg, #539e43, #2f6a28); }
+      .toolkit-avatar.av-stripe    { background: linear-gradient(135deg, #635bff, #4338ca); }
+      .toolkit-avatar.av-revenuecat{ background: linear-gradient(135deg, #f2545b, #c62f4a); }
       .toolkit-chip-text {
         display: flex;
         flex-direction: column;
@@ -1257,6 +1269,7 @@
         }
         .toolkit-stack { gap: 22px; }
         .toolkit-group-label { font-size: 10px; }
+        .toolkit-group-desc { font-size: 12.5px; margin-bottom: 10px; }
       }
 
       /* Industries */
@@ -1367,19 +1380,24 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 12px;
-        background: transparent;
-        border: 1px dashed var(--border);
-        border-radius: 12px;
+        gap: 7px;
+        width: fit-content;
+        margin: 8px auto 0;
+        padding: 10px 24px;
+        background: var(--bg-elevated, var(--surface));
+        border: 1px solid var(--border, var(--line));
+        border-radius: 999px;
         color: var(--text-secondary);
         cursor: pointer;
         font-size: 14px;
-        transition: all 0.2s;
+        font-weight: 500;
+        transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
       }
-      
-      .view-more-btn:hover { border-color: var(--text); color: var(--text); }
+      .view-more-btn:hover {
+        border-color: color-mix(in srgb, var(--dominant) 40%, transparent);
+        color: var(--dominant, var(--ink));
+        box-shadow: 0 2px 12px -4px color-mix(in srgb, var(--dominant) 18%, transparent);
+      }
       
       /* Pricing */
       .pricing-grid {
@@ -3973,20 +3991,7 @@
       .timeline-chip.selected { border-color:var(--dominant); background:var(--support); color:var(--dominant); font-weight:600; }
 
       /* --- Project Showcase Cards ---------------------------------- */
-      .showcase-grid {
-        display: grid;
-        /* 3 columns on wide screens, 2 on medium, 1 on narrow desktop */
-        grid-template-columns: repeat(3, 1fr);
-        gap: clamp(16px, 2.4vw, 28px);
-        margin-bottom: 24px;
-      }
-      @media (max-width: 1100px) and (min-width: 769px) {
-        .showcase-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: clamp(16px, 2.8vw, 28px);
-        }
-      }
-
+      /* Base card styles — layout handled per-breakpoint below */
       .showcase-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -3997,6 +4002,7 @@
         flex-direction: column;
         transition: transform 0.25s ease, border-color 0.25s ease;
         min-height: 420px;
+        cursor: pointer;
       }
       .showcase-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
@@ -4341,6 +4347,74 @@
         .showcase-card { cursor: pointer; }
       }
 
+      /* Desktop: three cards fill the row, fourth peeks right so users
+         know there's more to scroll. Dots sit below the track. */
+      @media (min-width: 769px) {
+        .showcase-carousel-wrap {
+          position: relative;
+          overflow: hidden; /* clips the scrollbar without clipping shadows above */
+          /* Extend padding so the right-peek card's shadow is not cut */
+          padding-bottom: 8px;
+          margin-bottom: 0;
+        }
+        .showcase-grid {
+          display: flex;
+          flex-direction: row;
+          /* 3 cards visible + 48px peek of card 4, 20px gaps */
+          gap: 20px;
+          overflow-x: auto;
+          overflow-y: visible;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior-x: contain;
+          margin: 0;
+          padding: 10px 48px 20px 0; /* right padding = peek amount */
+          scrollbar-width: none;
+        }
+        .showcase-grid::-webkit-scrollbar { display: none; }
+        /* Each card = (full width − 2 gaps − peek) / 3 */
+        .showcase-card {
+          flex: 0 0 calc((100% - 40px - 48px) / 3);
+          min-width: 260px;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
+        /* Desktop dots: normal flow row beneath the grid (not absolute) */
+        .carousel-ui {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 10px;
+          margin-bottom: 4px;
+          pointer-events: none;
+          position: static; /* override any inherited absolute */
+        }
+        .carousel-dots {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .carousel-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: color-mix(in srgb, var(--dominant) 28%, var(--line));
+          transition: width 0.28s cubic-bezier(.4,0,.2,1),
+                      background 0.28s ease,
+                      border-radius 0.28s ease;
+          flex-shrink: 0;
+          animation: dot-intro 0.5s ease both;
+        }
+        .carousel-dot.active {
+          width: 18px;
+          border-radius: 3px;
+          background: var(--dominant);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .carousel-dot { animation: none; }
+        }
+      }
+
       /* ── Showcase detail modal ────────────────────────────────────── */
 
       /* Desktop: centred dialog (unchanged base behaviour) */
@@ -4424,15 +4498,6 @@
           background: color-mix(in srgb, var(--line) 70%, var(--muted));
           margin: 12px auto 4px;
           flex-shrink: 0;
-        }
-
-        /* Close button: fixed to top-right corner of the sheet */
-        #showcaseDetailModal .modal-close {
-          position: absolute;
-          top: 10px;
-          right: 14px;
-          float: none;
-          margin: 0;
         }
 
         /* Scrollable content area with generous padding */
@@ -5225,7 +5290,7 @@
         <!-- Liquid physics blobs — pointer-events:none, JS drives position -->
         <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
-        <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Turn your idea into a <span class="accent-word">real product</span></span><span class="hero-line hero-line-nowrap">in weeks.</span></h1>
+        <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
         <p class="hero-subheadline">Start Apps Studio is the founder-led product partner for non-technical founders. We handle strategy, design, engineering, and launch in one accountable team — so you can ship without hiring or managing a dev team.</p>
 
         <!-- 5 Hats Showcase -->
@@ -5499,7 +5564,7 @@
 
 
 
-        <!-- Primary showcase cards (always visible) -->
+        <!-- Project showcase: all cards in one grid; data-extra ones hidden until "See more" -->
         <div id="caseStudiesContainer">
           <div class="showcase-carousel-wrap">
           <div class="showcase-grid">
@@ -5723,26 +5788,10 @@
               </div>
             </div>
 
-          </div><!-- /.showcase-grid -->
-          <!-- Edge fades: visible only on mobile, pointer-events:none -->
-          <div class="showcase-edge-fade showcase-edge-fade-left" aria-hidden="true"></div>
-          <div class="showcase-edge-fade showcase-edge-fade-right" aria-hidden="true"></div>
-          <!-- Pagination dots: mobile only, float above the bottom scrim -->
-          <div class="carousel-ui" id="carouselUiPrimary" aria-hidden="true">
-            <div class="carousel-dots" id="carouselDotsPrimary"><!-- dots generated by JS, one per card --></div>
-          </div>
-          </div><!-- /.showcase-carousel-wrap -->
-        </div><!-- /#caseStudiesContainer -->
-
-        <!-- Additional showcase cards (hidden behind Load More) -->
-        <div id="additionalCaseStudies" style="display: none;">
-          <div class="showcase-carousel-wrap">
-          <div class="showcase-grid">
-
             <!-- Card 5: Real estate app rescue
                  REPLACE visual: swap .showcase-visual contents with
                  <img src="/assets/images/projects/property-app.jpg" alt="Property discovery app screenshots"> -->
-            <div class="showcase-card"
+            <div class="showcase-card showcase-extra"
               data-category="Real Estate · iOS &amp; Android"
               data-name="Property Discovery App"
               data-problem="An outsourced build came back incomplete, over budget, and with no documentation to hand over to the client."
@@ -5751,6 +5800,7 @@
               data-result="Rescued &amp; shipped in 4 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"
               onclick="openShowcaseModal(this)"
+              style="display:none;"
             >
               <div class="showcase-visual">
                 <div class="showcase-visual-bg" style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"></div>
@@ -5773,7 +5823,6 @@
                 </div>
               </div>
               <div class="showcase-body">
-                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
                 <div class="showcase-category">Real Estate · iOS &amp; Android</div>
                 <div class="showcase-name">Property Discovery App</div>
                 <p class="showcase-problem">An outsourced build came back incomplete, over budget, and with no documentation to hand over to the client.</p>
@@ -5796,7 +5845,7 @@
             <!-- Card 6: Investor pitch prototype
                  REPLACE visual: swap .showcase-visual contents with
                  <img src="/assets/images/projects/pitch-prototype.jpg" alt="Pitch demo screenshots"> -->
-            <div class="showcase-card"
+            <div class="showcase-card showcase-extra"
               data-category="Pitch Prototype · Web"
               data-name="Investor-Ready Demo"
               data-problem="A founder had a compelling deck but no live product, with a Series A meeting locked in for ten days out."
@@ -5805,6 +5854,7 @@
               data-result="Demo live in 9 days · Meeting secured"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"
               onclick="openShowcaseModal(this)"
+              style="display:none;"
             >
               <div class="showcase-visual">
                 <div class="showcase-visual-bg" style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"></div>
@@ -5828,7 +5878,6 @@
                 </div>
               </div>
               <div class="showcase-body">
-                <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
                 <div class="showcase-category">Pitch Prototype · Web</div>
                 <div class="showcase-name">Investor-Ready Demo</div>
                 <p class="showcase-problem">A founder had a compelling deck but no live product, with a Series A meeting locked in for ten days out.</p>
@@ -5849,9 +5898,16 @@
             </div>
 
           </div><!-- /.showcase-grid -->
+          <!-- Edge fades: visible only on mobile, pointer-events:none -->
+          <div class="showcase-edge-fade showcase-edge-fade-left" aria-hidden="true"></div>
+          <div class="showcase-edge-fade showcase-edge-fade-right" aria-hidden="true"></div>
+          <!-- Pagination dots: shown on all viewports -->
+          <div class="carousel-ui" id="carouselUiPrimary">
+            <div class="carousel-dots" id="carouselDotsPrimary"><!-- dots generated by JS, one per visible card --></div>
+          </div>
           </div><!-- /.showcase-carousel-wrap -->
-        </div><!-- /#additionalCaseStudies -->
-        
+        </div><!-- /#caseStudiesContainer -->
+
         <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
           <span>See more builds</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -6269,7 +6325,6 @@
       <!-- Showcase card detail modal (mobile: bottom-sheet; desktop: centred dialog) -->
       <div class="modal-overlay" id="showcaseDetailModal" role="dialog" aria-modal="true" aria-labelledby="sdmName">
         <div class="modal-content">
-          <button class="modal-close" onclick="closeShowcaseModal()" aria-label="Close">&times;</button>
           <div class="sdm-scroll">
             <div class="sdm-visual">
               <div class="sdm-visual-bg" id="sdmVisualBg"></div>
@@ -6477,7 +6532,7 @@
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
         <h2 class="section-title">The stack behind every build</h2>
-        <p class="section-subtitle">A curated AI layer reviewed and updated weekly, acting as a second set of eyes on every design decision, flow, and line of code.</p>
+        <p class="section-subtitle">Every tool here is chosen for what it gives your product — not what's fashionable. Hover or tap any card to see how it's used.</p>
 
         <!-- AI stack stat bar -->
         <div class="ai-stat-bar">
@@ -6509,95 +6564,99 @@
 
         <div class="toolkit-stack">
           <div class="toolkit-group">
-            <div class="toolkit-group-label">Reasoning &amp; Code</div>
-            <div class="toolkit-grid">
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-claude">C</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Opus/Fable 5</span><span class="toolkit-chip-version">primary builder</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-gemini">G</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Gemini 3.1 Pro</span><span class="toolkit-chip-version">long-context review</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-gpt">G</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GPT-5.6 Sol</span><span class="toolkit-chip-version">creative &amp; copy</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-llama">L</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama 4</span><span class="toolkit-chip-version">self-hosted fallback</span></span>
-              </span>
-            </div>
-          </div>
-
-          <div class="toolkit-group">
-            <div class="toolkit-group-label">Sites &amp; Prototyping</div>
+            <div class="toolkit-group-label">Your idea, made visible</div>
+            <p class="toolkit-group-desc">How your concept becomes screens you can tap, share with investors, and test with real users.</p>
             <div class="toolkit-grid">
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-figma">F</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Figma</span><span class="toolkit-chip-version">design system + Dev Mode</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-replit">R</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Replit</span><span class="toolkit-chip-version">React hybrid builds</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-lovable">L</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Lovable</span><span class="toolkit-chip-version">rapid site builds</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Figma</span><span class="toolkit-chip-version">every screen designed before code</span></span>
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-rork">R</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Rork</span><span class="toolkit-chip-version">iOS &amp; Android prototypes</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Rork</span><span class="toolkit-chip-version">try it on a real phone in days</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-lovable">L</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Lovable</span><span class="toolkit-chip-version">launch site live in days</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-replit">R</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Replit</span><span class="toolkit-chip-version">working product you can run &amp; edit</span></span>
               </span>
             </div>
           </div>
 
           <div class="toolkit-group">
-            <div class="toolkit-group-label">Production &amp; Delivery</div>
+            <div class="toolkit-group-label">Your product, built to last</div>
+            <p class="toolkit-group-desc">The engineering that powers the app your users install, open, and pay for.</p>
             <div class="toolkit-grid">
               <span class="toolkit-chip">
-                <span class="toolkit-avatar av-webflow">W</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Webflow</span><span class="toolkit-chip-version">marketing site builds</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-wordpress">W</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">WordPress</span><span class="toolkit-chip-version">content sites &amp; blogs</span></span>
-              </span>
-              <span class="toolkit-chip">
-                <span class="toolkit-avatar av-github">G</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GitHub</span><span class="toolkit-chip-version">daily updates + version control</span></span>
+                <span class="toolkit-avatar av-expo">RN</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">React Native</span><span class="toolkit-chip-version">one codebase, iOS + Android</span></span>
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-swift">S</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Swift</span><span class="toolkit-chip-version">native iOS apps</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Swift</span><span class="toolkit-chip-version">native iOS, fastest on iPhone</span></span>
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-kotlin">K</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Kotlin &amp; Compose UI</span><span class="toolkit-chip-version">native Android apps</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Kotlin</span><span class="toolkit-chip-version">native Android, full Play Store reach</span></span>
               </span>
               <span class="toolkit-chip">
-                <span class="toolkit-avatar av-hooks">A</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Automation</span><span class="toolkit-chip-version">n8n + Make + webhooks</span></span>
+                <span class="toolkit-avatar av-node">N</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Node + PostgreSQL</span><span class="toolkit-chip-version">your data, secure and yours to export</span></span>
               </span>
             </div>
           </div>
 
           <div class="toolkit-group">
-            <div class="toolkit-group-label">Content &amp; Media</div>
+            <div class="toolkit-group-label">Revenue &amp; launch, day one</div>
+            <p class="toolkit-group-desc">Payments, updates, and code safety wired in from the start — not bolted on after.</p>
             <div class="toolkit-grid">
               <span class="toolkit-chip">
-                <span class="toolkit-avatar av-eleven">E</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">ElevenLabs</span><span class="toolkit-chip-version">voiceover &amp; speech</span></span>
+                <span class="toolkit-avatar av-stripe">S</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Stripe</span><span class="toolkit-chip-version">one-time, subscriptions, upgrades</span></span>
               </span>
               <span class="toolkit-chip">
-                <span class="toolkit-avatar av-higgs">S</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">ByteDance</span><span class="toolkit-chip-version">video &amp; image gen</span></span>
+                <span class="toolkit-avatar av-revenuecat">R</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">RevenueCat</span><span class="toolkit-chip-version">App Store &amp; Play Store billing</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-github">G</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GitHub</span><span class="toolkit-chip-version">daily backups — your code is always safe</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-hooks">A</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Automation</span><span class="toolkit-chip-version">n8n + Make handle the busywork</span></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="toolkit-group">
+            <div class="toolkit-group-label">AI in the background, not in your way</div>
+            <p class="toolkit-group-desc">Multiple frontier models review every decision and catch weak spots before your users do.</p>
+            <div class="toolkit-grid">
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-claude">C</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Claude</span><span class="toolkit-chip-version">primary builder &amp; code reviewer</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-gemini">G</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Gemini</span><span class="toolkit-chip-version">reviews the whole product at once</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-gpt">G</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GPT-5</span><span class="toolkit-chip-version">copy, flows &amp; creative direction</span></span>
+              </span>
+              <span class="toolkit-chip">
+                <span class="toolkit-avatar av-llama">L</span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama 4</span><span class="toolkit-chip-version">self-hosted — your data stays private</span></span>
               </span>
             </div>
           </div>
         </div>
 
-        <p class="toolkit-footnote">These models don't just build for us. They critique each other's output, flag weak flows, and spot edge cases before you do. The result is more creative options, fewer surprises, and a product that adapts to the people you're actually building for.</p>
+        <p class="toolkit-footnote">You never pay the model bills, and you never get locked in. When a better tool ships, we swap it in — your product always runs on what's best right now, and every line of code stays yours.</p>
       </section>
 
       <script>
@@ -7379,6 +7438,10 @@
 
       /* ── Showcase card detail modal ──────────────────────────────── */
       function openShowcaseModal(card) {
+        // Desktop cards already show the full project story inline. Keep the
+        // detail sheet for tablet/mobile, where the compact carousel hides it.
+        if (window.matchMedia('(min-width: 769px)').matches) return;
+
         var overlay = document.getElementById('showcaseDetailModal');
         if (!overlay) return;
 
@@ -7542,10 +7605,12 @@
         if (!primaryGrid || !dotsContainer) return;
 
         function updateDots() {
-          var cards = primaryGrid.querySelectorAll('.showcase-card');
+          var cards = Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
+            return c.style.display !== 'none';
+          });
           var dots = dotsContainer.querySelectorAll('.carousel-dot');
           if (!cards.length || !dots.length) return;
-          // Find the card whose centre is closest to the scroll track centre
+          // Find the visible card whose centre is closest to the scroll track centre
           var trackCx = primaryGrid.scrollLeft + primaryGrid.clientWidth / 2;
           var bestIdx = 0;
           var bestDist = Infinity;
@@ -7559,10 +7624,12 @@
           });
         }
 
-        // Rebuild one dot per card currently in the primary grid, so the
-        // count stays correct when "See more builds" moves cards in or out.
+        // Rebuild one dot per VISIBLE card in the primary grid.
+        // Hidden .showcase-extra cards have display:none so they are excluded.
         refreshCarouselDots = function() {
-          var cards = primaryGrid.querySelectorAll('.showcase-card');
+          var cards = Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
+            return c.style.display !== 'none';
+          });
           dotsContainer.innerHTML = '';
           cards.forEach(function() {
             var dot = document.createElement('div');
@@ -7598,58 +7665,26 @@
       })();
 
       function toggleMoreWork() {
-        const additional = document.getElementById('additionalCaseStudies');
         const btn = document.getElementById('viewMoreBtn');
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        // Use an explicit flag so state is independent of CSS display value
         const isExpanded = btn.dataset.expanded === 'true';
+        const extraCards = Array.from(document.querySelectorAll('#caseStudiesContainer .showcase-extra'));
 
         if (!isExpanded) {
-          // --- LOAD MORE ---
-          if (isMobile) {
-            // On mobile: move cards into the primary grid for one continuous carousel
-            const primaryGrid = document.querySelector('#caseStudiesContainer .showcase-grid');
-            const extraCards = Array.from(additional.querySelectorAll('.showcase-card'));
-            extraCards.forEach(card => {
-              card.dataset.movedFromAdditional = 'true';
-              primaryGrid.appendChild(card);
-            });
-            // Scroll to the first newly appended card
-            if (extraCards.length > 0) {
-              requestAnimationFrame(() => {
-                extraCards[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-              });
-            }
-            // Keep additional hidden (cards have been moved out of it)
-            additional.style.display = 'none';
-            // Re-sync pagination dots with the six cards now in the carousel
-            if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
-          } else {
-            additional.style.display = 'block';
-          }
+          // Show extra cards — they're already in the grid, just hidden
+          extraCards.forEach(card => { card.style.display = ''; });
           document.getElementById('recentBuilds').style.display = 'block';
           btn.dataset.expanded = 'true';
-          btn.innerHTML = '<span>Show Less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+          btn.innerHTML = '<span>Show less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
         } else {
-          // --- SHOW LESS ---
-          if (isMobile) {
-            // Move the cards back into the additional container and hide it
-            const additionalGrid = additional.querySelector('.showcase-grid');
-            const movedCards = Array.from(document.querySelectorAll('#caseStudiesContainer .showcase-card[data-moved-from-additional]'));
-            movedCards.forEach(card => {
-              delete card.dataset.movedFromAdditional;
-              additionalGrid.appendChild(card);
-            });
-            additional.style.display = 'none';
-            // Re-sync pagination dots back to the four primary cards
-            if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
-          } else {
-            additional.style.display = 'none';
-          }
+          // Hide extra cards again
+          extraCards.forEach(card => { card.style.display = 'none'; });
           document.getElementById('recentBuilds').style.display = 'none';
           btn.dataset.expanded = 'false';
           btn.innerHTML = '<span>See more builds</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
+
+        // Re-sync carousel dots (counts visible cards on mobile)
+        if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
       }
       
       document.getElementById('contactForm').addEventListener('submit', async function(e) {
