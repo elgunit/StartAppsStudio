@@ -251,7 +251,7 @@
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-narrow-latin.woff2" crossorigin>
     
     <style>
-      /* Self-hosted variable fonts (latin + latin-ext subsets) — replaces render-blocking Google Fonts */
+      /* Self-hosted variable fonts (latin + latin-ext subsets) - replaces render-blocking Google Fonts */
       @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
       @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
       @font-face{font-family:'Fraunces';font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/fraunces-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
@@ -263,7 +263,7 @@
       * { box-sizing: border-box; margin: 0; padding: 0; }
       
       :root {
-        /* Legacy token aliases — map to active design-system tokens so every
+        /* Legacy token aliases - map to active design-system tokens so every
            remaining var(--bg/--text/--border) reference resolves correctly.
            Remove these once all base component rules migrate to --canvas/--ink/etc. */
         --bg: var(--canvas);
@@ -385,7 +385,7 @@
         justify-content: center;
       }
 
-      /* Animated aurora — GPU-only (transform/opacity), behind everything. */
+      /* Animated aurora - GPU-only (transform/opacity), behind everything. */
       .hero-aurora {
         position: absolute;
         inset: -20%;
@@ -452,7 +452,7 @@
         50%     { box-shadow: 0 0 0 6px rgba(34,197,94,0.05); }
       }
 
-      /* Studio status strip — rotating availability board placed above Pricing.
+      /* Studio status strip - rotating availability board placed above Pricing.
          The hero eyebrow is intentionally static; the motion lives here, where
          buying intent is highest. */
       .studio-status {
@@ -515,7 +515,7 @@
       .hero-headline .hero-line { display: block; color: inherit; -webkit-text-fill-color: inherit; background: none; }
       .hero-headline .hero-line .accent-word { color: transparent; -webkit-text-fill-color: transparent; }
 
-      /* Accent word — gradient text, no decorative halo */
+      /* Accent word - gradient text, no decorative halo */
       .hero-headline .accent-word {
         background: linear-gradient(100deg, var(--dominant) 0%, var(--rose) 100%);
         -webkit-background-clip: text;
@@ -1613,7 +1613,7 @@
         color: var(--text-secondary);
       }
 
-      /* Old .special-desc hidden — content moved into .special-summary */
+      /* Old .special-desc hidden - content moved into .special-summary */
       .special-desc { display: none; }
 
       /* Feature chips: scannable pill row instead of a dense grid */
@@ -1716,7 +1716,7 @@
         .special-feature { font-size: 12.5px; padding: 6px 12px; }
       }
       
-      /* How It Works — Bento Cards */
+      /* How It Works - Bento Cards */
       .how-bento {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1868,7 +1868,7 @@
         line-height: 1.25;
       }
 
-      /* Tab switcher — glass pill container */
+      /* Tab switcher - glass pill container */
       .cmp-tabs {
         display: flex;
         gap: 5px;
@@ -1906,7 +1906,7 @@
         color: var(--ink);
         box-shadow: inset 0 1px 0 var(--specular), 0 1px 6px rgba(0,0,0,0.10);
       }
-      /* Teal accent for "our way", rose for "agencies" — matches brand */
+      /* Teal accent for "our way", rose for "agencies" - matches brand */
       .cmp-tab.us.active   { color: var(--dominant); }
       .cmp-tab.them.active { color: var(--rose); }
 
@@ -1929,7 +1929,7 @@
         margin-bottom: 22px;
       }
 
-      /* Individual rows — clean glass surface, no left accent stripe */
+      /* Individual rows - clean glass surface, no left accent stripe */
       .cmp-benefit, .cmp-pain {
         display: flex;
         align-items: center;
@@ -1958,7 +1958,7 @@
         box-shadow: inset 0 1px 0 var(--specular), 0 4px 16px -4px color-mix(in srgb, var(--rose) 12%, transparent);
       }
 
-      /* Icon wells — liquid-glass circles */
+      /* Icon wells - liquid-glass circles */
       .cmp-icon {
         width: 36px;
         height: 36px;
@@ -1994,7 +1994,7 @@
         line-height: 1.45;
       }
 
-      /* CTA pill — full-width rounded teal button */
+      /* CTA pill - full-width rounded teal button */
       .cmp-action {
         display: flex;
         align-items: center;
@@ -2020,7 +2020,7 @@
         box-shadow: 0 14px 32px color-mix(in srgb, var(--dominant) 36%, transparent);
       }
 
-      /* Footnote — muted text only, no heavy card */
+      /* Footnote - muted text only, no heavy card */
       .cmp-footnote {
         text-align: center;
         font-size: 13px;
@@ -2210,7 +2210,7 @@
         resize: vertical;
       }
 
-      /* Hide the placeholder visually — only used as the floating-label trigger. */
+      /* Hide the placeholder visually - only used as the floating-label trigger. */
       .form-group input::placeholder,
       .form-group textarea::placeholder { color: transparent; }
 
@@ -2258,7 +2258,7 @@
         box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
       }
 
-      /* Budget — segmented chip grid (replaces the select). */
+      /* Budget - segmented chip grid (replaces the select). */
       .budget-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -2427,7 +2427,7 @@
         gap: 18px;
       }
 
-      /* Journal note — glass panel to match the rest of the design system */
+      /* Journal note - glass panel to match the rest of the design system */
       .journal-note {
         position: relative;
         display: flex;
@@ -2921,7 +2921,7 @@
           border-color 0.3s ease;
       }
 
-      /* Inner ambient glow — fades in on hover */
+      /* Inner ambient glow - fades in on hover */
       .why-card::after {
         content: '';
         position: absolute;
@@ -2954,7 +2954,7 @@
         align-items: center;
         justify-content: center;
         border-radius: var(--r-sm);
-        /* Glass icon well — teal-tinted surface with specular rim */
+        /* Glass icon well - teal-tinted surface with specular rim */
         background:
           linear-gradient(135deg,
             color-mix(in srgb, var(--dominant) 18%, transparent),
@@ -3149,7 +3149,7 @@
         flex-shrink: 1;
       }
 
-      /* Contact — collapse at medium widths */
+      /* Contact - collapse at medium widths */
       @media (max-width: 1024px) {
         .contact-inner {
           grid-template-columns: 1fr;
@@ -3238,7 +3238,7 @@
         .contact { padding: 24px 6px; }
         .contact-form { padding: 16px 10px; }
 
-        /* Budget grid: force 2 columns — auto-fit collapses to 1 at ~244px */
+      /* Budget grid: force 2 columns - auto-fit collapses to 1 at ~244px */
         .budget-grid {
           grid-template-columns: repeat(2, 1fr);
           gap: 8px;
@@ -3320,7 +3320,7 @@
 
       /* ----------------------------------------------------------------
          Mineral-glass uplift for the remaining editorial sections.
-         Presentation only — copy, prices, JS behaviour untouched.
+         Presentation only - copy, prices, JS behaviour untouched.
          ---------------------------------------------------------------- */
       :root { --ed-pop: var(--dominant); } /* retire the orange accent */
 
@@ -3347,7 +3347,7 @@
         padding:clamp(20px,3vw,28px)!important;
       }
       /* why-cards keep the shared radius/padding but get their own
-         liquid-glass surface later in the sheet — do not flatten them here */
+         liquid-glass surface later in the sheet - do not flatten them here */
       .why-grid .why-card {
         border-radius:var(--r-md)!important;
         padding:clamp(20px,3vw,28px)!important;
@@ -3365,7 +3365,7 @@
       }
       .services-grid .service-card:hover *,.services-grid .service-card.expanded *,
       .growth-grid .growth-card:hover *,.growth-grid .growth-card.expanded * { color:var(--ink)!important; }
-      /* Ambient inner glow on hover — same ::after pattern as why-cards */
+      /* Ambient inner glow on hover - same ::after pattern as why-cards */
       .services-grid .service-card::after,.growth-grid .growth-card::after {
         content:''; position:absolute; inset:0; border-radius:inherit; z-index:0;
         opacity:0; pointer-events:none;
@@ -3522,7 +3522,7 @@
       .toolkit-chip { border:1px solid var(--line)!important; background:var(--surface)!important; }
       .toolkit-chip:hover { border-color:var(--dominant)!important; }
 
-      /* Modal comparison rows — consolidated above; overrides removed. */
+      /* Modal comparison rows - consolidated above; overrides removed. */
 
       /* --- FAQ: liquid-glass items with page-consistent padding */
       .faq-section { padding-inline:clamp(20px,4vw,40px)!important; }
@@ -3643,7 +3643,7 @@
           display: inline-flex; align-items: center; gap: 8px;
           color: var(--dominant); font-weight: 600; font-size: 14px;
         }
-        /* ── AI Efficiency modal (aem-*) — same design language as the
+        /* ── AI Efficiency modal (aem-*) - same design language as the
            comparison modal: compact frosted shell, segmented tabs,
            circular icon wells, full-border rows, teal CTA pill. ── */
         #aiEfficiencyModal .aem-shell {
@@ -3685,7 +3685,7 @@
           max-width: 440px; margin: 0;
         }
 
-        /* Segmented tab bar — glass pill container */
+        /* Segmented tab bar - glass pill container */
         .aem-tabs {
           display: flex;
           gap: 5px;
@@ -3727,7 +3727,7 @@
           animation: cmp-in 0.22s cubic-bezier(0.22,0.61,0.36,1);
         }
 
-        /* Rows — full-border glass rows with circular icon wells */
+        /* Rows - full-border glass rows with circular icon wells */
         .aem-row {
           display: flex; align-items: center; gap: 13px;
           padding: 12px 14px;
@@ -3854,7 +3854,7 @@
         .aem-proof-title { font-size: 14px; font-weight: 700; color: var(--ink); margin: 0 0 2px; line-height: 1.3; }
         .aem-proof-sub { font-size: 12px; color: var(--muted); line-height: 1.45; margin: 0; }
 
-        /* CTA — full-width teal pill, same recipe as the comparison modal */
+        /* CTA - full-width teal pill, same recipe as the comparison modal */
         .aem-cta-wrap { margin-top: 18px; }
         .aem-cta {
           display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -3899,7 +3899,7 @@
           box-shadow: 0 0 10px rgba(20,184,166,0.85);
         }
       /* ═══════════════════════════════════════════════════════════════════
-         END OF ACTIVE STYLES — no more layers below.
+         END OF ACTIVE STYLES - no more layers below.
          All retired layers (editorial, liquid-glass, theme-consolidation,
          fluid-mineral) have been removed. The base styles above are the
          single source of truth for every rendered surface.
@@ -3991,7 +3991,7 @@
       .timeline-chip.selected { border-color:var(--dominant); background:var(--support); color:var(--dominant); font-weight:600; }
 
       /* --- Project Showcase Cards ---------------------------------- */
-      /* Base card styles — layout handled per-breakpoint below */
+      /* Base card styles - layout handled per-breakpoint below */
       .showcase-card {
         background: var(--surface);
         border: 1px solid var(--line);
@@ -4008,7 +4008,7 @@
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
       }
 
-      /* Visual area — swap contents for <img> when screenshots are ready */
+      /* Visual area - swap contents for <img> when screenshots are ready */
       .showcase-visual {
         position: relative;
         height: clamp(180px, 16vw, 220px);
@@ -4137,13 +4137,13 @@
 
       /* Mobile: horizontal snap-scroll carousel */
       @media (max-width: 768px) {
-        /* Wrapper is a plain positioning shell. It must NOT clip — clipping
+        /* Wrapper is a plain positioning shell. It must NOT clip - clipping
            chops card shadows into a hard rectangle.
            The ::after pseudo-element is a bottom scrim that fades from
            transparent to the page canvas color, covering the card shadow
            bleed zone. The wrap ends exactly where the dots begin (dots are
            a sibling, not a child), so the solid bottom of the gradient is
-           hidden behind nothing — it simply transitions into the bare page
+           hidden behind nothing - it simply transitions into the bare page
            background, making the shadow vanish before the dots appear. */
         .showcase-carousel-wrap {
           position: relative;
@@ -4191,7 +4191,7 @@
           gap: 12px;
           margin: 0;
           /* 44px bottom padding: shadow below is 0 4px 14px, so its tail
-             reaches ~4 + 28 = 32px — fully dissolved before the clip edge. */
+             reaches ~4 + 28 = 32px - fully dissolved before the clip edge. */
           padding: 10px 16px 44px;
           scrollbar-width: none;
         }
@@ -4213,8 +4213,8 @@
           width: min(calc(100% - 48px), 340px);
           min-width: 0;
           scroll-snap-align: center;
-          scroll-snap-stop: always; /* one card per swipe — no Freeform-style free glide */
-          /* Soft shadow — short vertical reach so it dissolves well before
+          scroll-snap-stop: always; /* one card per swipe - no Freeform-style free glide */
+          /* Soft shadow - short vertical reach so it dissolves well before
              the bottom of the scroll container's padding zone. */
           box-shadow: 0 4px 14px rgba(29,72,73,.08);
         }
@@ -4460,7 +4460,7 @@
         }
         /* .sheet-ready is added via double-rAF after .open, so the browser
            has already painted the off-screen starting position before this
-           transition fires — guaranteeing a smooth slide-up entrance. */
+           transition fires - guaranteeing a smooth slide-up entrance. */
         #showcaseDetailModal.open.sheet-ready .modal-content {
           transform: translateY(0);
           opacity: 1;
@@ -4471,7 +4471,7 @@
            collapsing the sheet before the transition can run. */
         #showcaseDetailModal.closing {
           display: flex;
-          /* Clear background + blur the moment dismissal starts — page
+         /* Clear background + blur the moment dismissal starts - page
              becomes crisp immediately, not after the sheet finishes. */
           background: rgba(0,0,0,0) !important;
           backdrop-filter: none !important;
@@ -4481,7 +4481,7 @@
         #showcaseDetailModal.closing .modal-content {
           /* Fast exit: 200ms slide-down, opacity fades in first 100ms.
              JS setTimeout uses 240ms (200 + 40 headroom) as the cleanup
-             deadline — these must stay in sync. */
+             deadline - these must stay in sync. */
           transition: transform 200ms cubic-bezier(0.4, 0, 1, 1),
                       opacity  100ms linear !important;
           transform: translateY(100%) !important;
@@ -4838,7 +4838,7 @@
       }
 
       /* ----------------------------------------------------------------
-         Liquid Glass Depth — refractive surfaces, specular edges,
+         Liquid Glass Depth - refractive surfaces, specular edges,
          pointer-light bloom, layered canvas depth.
          No external deps. Respects prefers-reduced-motion + mobile.
          ---------------------------------------------------------------- */
@@ -4859,7 +4859,7 @@
         }
       }
 
-      /* --- Second ambient orb layer — slow drift behind everything ------ */
+      /* --- Second ambient orb layer - slow drift behind everything ------ */
       body::after {
         content: '';
         position: fixed; inset: 0;
@@ -4897,7 +4897,7 @@
          that JS can position, squish, and animate with physics.
          CSS handles: idle drift, split burst, reduced-motion fallback.  */
 
-      /* Idle drift animations — GPU-composited transforms only */
+      /* Idle drift animations - GPU-composited transforms only */
       @keyframes blob-drift-a {
         0%   { transform: translate(  0px,   0px) scale(1.00, 1.00); }
         20%  { transform: translate(  9px, -11px) scale(1.05, 0.96); }
@@ -4929,7 +4929,7 @@
         /* JS sets left/top; CSS drift runs on transform so both compose cleanly */
       }
 
-      /* Teal blob — anchored right-edge at rest */
+      /* Teal blob - anchored right-edge at rest */
       .hero-blob-teal {
         width:  clamp(280px, 38vw, 500px);
         height: clamp(240px, 32vw, 420px);
@@ -4944,7 +4944,7 @@
         animation: blob-drift-a 18s ease-in-out infinite;
       }
 
-      /* Rose blob — hidden inside teal until split */
+      /* Rose blob - hidden inside teal until split */
       .hero-blob-rose {
         width:  clamp(210px, 28vw, 380px);
         height: clamp(190px, 24vw, 340px);
@@ -5040,12 +5040,12 @@
       }
 
       /* --- Cards: specular inset on every glass surface ---------------- */
-      /* Shallow glass (plain specular top edge) — price/showcase/journal/proof cards */
+      /* Shallow glass (plain specular top edge) - price/showcase/journal/proof cards */
       .price-card, .showcase-card, .journal-note, .ae-proof-card {
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
       }
-      /* Full liquid-glass surface — matches the why-card recipe */
+      /* Full liquid-glass surface - matches the why-card recipe */
       .service-card, .growth-card, .faq-item, .how-card, .testimonial-card {
         border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
         background:
@@ -5074,7 +5074,7 @@
         transition: opacity 0.4s ease;
       }
       .testimonial-card > * { position: relative; z-index: 1; }
-      /* why-cards have their own richer liquid-glass treatment — do not flatten */
+      /* why-cards have their own richer liquid-glass treatment - do not flatten */
       .why-grid .why-card {
         box-shadow:
           inset 0 1px 0 var(--specular-teal),
@@ -5090,7 +5090,7 @@
         backdrop-filter: blur(12px) saturate(140%) !important;
         -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
       }
-      /* Identity block stays transparent — no card chrome */
+      /* Identity block stays transparent - no card chrome */
       .studio-identity {
         background: transparent !important;
         box-shadow: none !important;
@@ -5098,7 +5098,7 @@
       }
 
       /* --- Card pointer-light blob: follows mouse within each card ---- */
-      /* Opacity is driven entirely by JS (--glow-op) — no CSS :hover    */
+      /* Opacity is driven entirely by JS (--glow-op) - no CSS :hover    */
       /* transition, so the blob vanishes the instant the pointer leaves  */
       /* and there is no lingering glow between adjacent cards.           */
       .service-card, .growth-card,
@@ -5126,7 +5126,7 @@
            color-mix(in srgb, var(--rose) 6%, transparent) 55%,
            transparent 100%
          );
-        /* No opacity transition — JS controls it to avoid cross-card bleed */
+        /* No opacity transition - JS controls it to avoid cross-card bleed */
       }
       /* All card children sit above the pointer blob */
       .service-card > *, .growth-card > *,
@@ -5150,7 +5150,7 @@
           inset 0 1px 0 var(--specular-teal),
           0 22px 48px -12px color-mix(in srgb, var(--dominant) 22%, rgba(0,0,0,0.16)) !important;
       }
-      /* Full liquid-glass hover — matches why-card lift recipe */
+      /* Full liquid-glass hover - matches why-card lift recipe */
       .service-card:hover, .growth-card:hover,
       .how-card:hover, .testimonial-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
@@ -5161,7 +5161,7 @@
       }
       .service-card:hover::after, .growth-card:hover::after,
       .how-card:hover::after, .testimonial-card:hover::after { opacity: 1 !important; }
-      /* why-cards handle their own hover — don't interfere */
+      /* why-cards handle their own hover - don't interfere */
       .why-grid .why-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 36%, transparent) !important;
         box-shadow:
@@ -5236,7 +5236,7 @@
 
       /* --- Testimonials: liquid-glass lift handled in card hover block above */
 
-      /* Sudden edge bloom on hover — the glass catches light at the rim,
+      /* Sudden edge bloom on hover - the glass catches light at the rim,
          while the one-pass glare above sweeps across the card surface. */
       .service-card:hover, .growth-card:hover,
       .price-card:hover, .testimonial-card:hover,
@@ -5287,11 +5287,11 @@
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
-        <!-- Liquid physics blobs — pointer-events:none, JS drives position -->
+        <!-- Liquid physics blobs - pointer-events:none, JS drives position -->
         <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
-        <p class="hero-subheadline">Start Apps Studio is the founder-led product partner for non-technical founders. We handle strategy, design, engineering, and launch in one accountable team — so you can ship without hiring or managing a dev team.</p>
+        <p class="hero-subheadline">Start Apps Studio is the founder-led product partner for non-technical founders. We handle strategy, design, engineering, and launch in one accountable team, so you can ship without hiring or managing a dev team.</p>
 
         <!-- 5 Hats Showcase -->
         <div class="hats-showcase">
@@ -5352,7 +5352,7 @@
         </div>
       </section>
 
-      <!-- Pain strip — 3 core problems surfaced before any benefits claim -->
+      <!-- Pain strip - 3 core problems surfaced before any benefits claim -->
       <div class="pain-strip" aria-label="Common problems we solve">
         <div class="pain-strip-item">
           <div class="pain-strip-icon">
@@ -5428,7 +5428,7 @@
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </div>
             <h4>Web Applications</h4>
-            <p>A production-grade web app with accounts, payments, and a real database — ready for your first paying customers.</p>
+            <p>A production-grade web app with accounts, payments, and a real database, ready for your first paying customers.</p>
             <div class="service-details">
               <div class="skill-list">
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Modern, fast, and mobile-first</div>
@@ -6009,7 +6009,7 @@
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
             <h4>Launch with room to grow</h4>
-            <p>We ship the working version, connect the accounts, and hand over the code and keys. You leave with a live product—and a clear next move based on what users do.</p>
+            <p>We ship the working version, connect the accounts, and hand over the code and keys. You leave with a live product, plus a clear next move based on what users do.</p>
           </div>
         </div>
       </section>
@@ -6060,7 +6060,7 @@
             <div class="price-subtitle">Real users. Real data. Yours to own</div>
             <div class="price-amount">$9k–$19k</div>
             <div class="price-features">
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS, Android, and web — one build, all platforms</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS, Android, and web: one build, all platforms</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> User accounts, payments, and data from day one</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Every account and line of code transferred to you at launch</div>
             </div>
@@ -6214,7 +6214,7 @@
           </div>
         </div>
 
-        <!-- Client voices — specific outcomes from real engagements -->
+        <!-- Client voices - specific outcomes from real engagements -->
         <div class="testimonials-grid">
           <div class="testimonial-card">
             <div class="testimonial-problem-tag">
@@ -6270,7 +6270,7 @@
       <div class="why-section" data-section-name="why">
         <div class="section-header">
           <h2>Why Start Apps Studio?</h2>
-          <p>Built by a founder who has worn every hat — not just a dev team.</p>
+          <p>Built by a founder who has worn every hat, not just a dev team.</p>
         </div>
         <div class="why-grid">
           <div class="why-card">
@@ -6434,7 +6434,7 @@
       <!-- Expertise -->
       <section class="section" id="expertise" data-section-name="expertise">
         <h2 class="section-title">One partner across the product lifecycle</h2>
-        <p class="section-subtitle">The five disciplines that keep an early-stage product coherent — learned by building, pivoting, and shipping my own products.</p>
+        <p class="section-subtitle">The five disciplines that keep an early-stage product coherent, learned by building, pivoting, and shipping my own products.</p>
         
         <div class="expertise-grid">
         <div class="expandable-card" id="hat-designer" onclick="toggleCard(this)">
@@ -6532,7 +6532,7 @@
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
         <h2 class="section-title">The stack behind every build</h2>
-        <p class="section-subtitle">Every tool here is chosen for what it gives your product — not what's fashionable. Hover or tap any card to see how it's used.</p>
+        <p class="section-subtitle">Every tool here is chosen for what it gives your product, not what's fashionable. Hover or tap any card to see how it's used.</p>
 
         <!-- AI stack stat bar -->
         <div class="ai-stat-bar">
@@ -6611,7 +6611,7 @@
 
           <div class="toolkit-group">
             <div class="toolkit-group-label">Revenue &amp; launch, day one</div>
-            <p class="toolkit-group-desc">Payments, updates, and code safety wired in from the start — not bolted on after.</p>
+            <p class="toolkit-group-desc">Payments, updates, and code safety wired in from the start, not bolted on after.</p>
             <div class="toolkit-grid">
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-stripe">S</span>
@@ -6623,7 +6623,7 @@
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-github">G</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GitHub</span><span class="toolkit-chip-version">daily backups — your code is always safe</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">GitHub</span><span class="toolkit-chip-version">daily backups: your code is always safe</span></span>
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-hooks">A</span>
@@ -6650,13 +6650,13 @@
               </span>
               <span class="toolkit-chip">
                 <span class="toolkit-avatar av-llama">L</span>
-                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama 4</span><span class="toolkit-chip-version">self-hosted — your data stays private</span></span>
+                <span class="toolkit-chip-text"><span class="toolkit-chip-name">Llama 4</span><span class="toolkit-chip-version">self-hosted: your data stays private</span></span>
               </span>
             </div>
           </div>
         </div>
 
-        <p class="toolkit-footnote">You never pay the model bills, and you never get locked in. When a better tool ships, we swap it in — your product always runs on what's best right now, and every line of code stays yours.</p>
+        <p class="toolkit-footnote">You never pay the model bills, and you never get locked in. When a better tool ships, we swap it in. Your product always runs on what's best right now, and every line of code stays yours.</p>
       </section>
 
       <script>
@@ -6819,13 +6819,13 @@
               <span class="aem-icon aem-icon--teal">
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              <span>Full lifecycle — brand, design, code, and launch under one roof</span>
+              <span>Full lifecycle: brand, design, code, and launch under one roof</span>
             </div>
             <div class="aem-row">
               <span class="aem-icon aem-icon--teal">
                 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              <span>Fixed scope, fixed budget — no surprise bills mid-build</span>
+              <span>Fixed scope, fixed budget: no surprise bills mid-build</span>
             </div>
           </div>
 
@@ -6853,7 +6853,7 @@
               </span>
               <div>
                 <p class="aem-proof-title">Proprietary AI stack</p>
-                <p class="aem-proof-sub">Frontier and in-house models picked per task — you pay for output, not experimentation.</p>
+                <p class="aem-proof-sub">Frontier and in-house models picked per task. You pay for output, not experimentation.</p>
               </div>
             </div>
             <div class="aem-proof-row">
@@ -6862,7 +6862,7 @@
               </span>
               <div>
                 <p class="aem-proof-title">Full asset and code lifecycle</p>
-                <p class="aem-proof-sub">One team owns brand, design, code, and launch — nothing dropped between tools.</p>
+                <p class="aem-proof-sub">One team owns brand, design, code, and launch. Nothing dropped between tools.</p>
               </div>
             </div>
             <div class="aem-proof-row">
@@ -7096,7 +7096,7 @@
       </section>
     </div>
     
-    <!-- FAQ section — answers to questions founders ask repeatedly.
+    <!-- FAQ section - answers to questions founders ask repeatedly.
          Mirrors the FAQPage JSON-LD in <head> so Google can surface this
          as a rich result. -->
     <section class="faq-section" id="faq" aria-labelledby="faqTitle" data-section-name="faq">
@@ -7148,7 +7148,7 @@
       </div>
     </section>
 
-    <!-- Journal "book notes" — pulled from /api/journal/posts at runtime,
+    <!-- Journal "book notes" - pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
          still see the latest articles. -->
     <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle" data-section-name="journal-notes">
@@ -7478,7 +7478,7 @@
         sdmLockScroll();
         // Two rAFs guarantee the browser has painted the off-screen starting
         // state (translateY(100%), opacity:0) before .sheet-ready triggers the
-        // transition — avoids painting directly at the final position.
+        // transition - avoids painting directly at the final position.
         requestAnimationFrame(function() {
           requestAnimationFrame(function() {
             overlay.classList.add('sheet-ready');
@@ -7536,7 +7536,7 @@
         // inside the sheet's scrollable content and the sheet can still scroll.
         function blockPageScroll(e) {
           // If the touch target is inside the sheet content, allow vertical
-          // scroll only when the sheet itself has more to scroll — otherwise
+          // scroll only when the sheet itself has more to scroll - otherwise
           // block so the page behind doesn't move.
           var insideSheet = content.contains(e.target);
           if (insideSheet) {
@@ -7670,7 +7670,7 @@
         const extraCards = Array.from(document.querySelectorAll('#caseStudiesContainer .showcase-extra'));
 
         if (!isExpanded) {
-          // Show extra cards — they're already in the grid, just hidden
+          // Show extra cards - they're already in the grid, just hidden
           extraCards.forEach(card => { card.style.display = ''; });
           document.getElementById('recentBuilds').style.display = 'block';
           btn.dataset.expanded = 'true';
@@ -7755,7 +7755,7 @@
 
         // Use exact float half so the seam is pixel-perfect.
         // scrollWidth/2 is wrong because flex `gap` only sits BETWEEN items,
-        // not after the last one — so it under-counts by one gap.
+        // not after the last one - so it under-counts by one gap.
         // Instead, measure from the first original chip to the first duplicate
         // chip (same chip in the duplicated set). That distance equals one
         // complete "set + gap" and gives a perfect seam.
@@ -7907,7 +7907,7 @@
         });
       })();
 
-      // FAQ open tracking — fires an event to Clarity and GA each time a
+      // FAQ open tracking - fires an event to Clarity and GA each time a
       // visitor expands a question, tagged with the question text. Every
       // open transition reports an event so reopens are not undercounted.
       (function trackFaqOpens() {
@@ -7942,7 +7942,7 @@
         } catch (_) {}
       })();
 
-      // LinkedIn click notification — reports the outbound click before the
+      // LinkedIn click notification - reports the outbound click before the
       // visitor leaves the site. LinkedIn profile opens themselves cannot be
       // observed by this site, so this tracks clicks from the founder panel.
       (function trackLinkedInClick() {
@@ -7988,7 +7988,7 @@
         } catch (_) {}
       })();
 
-      // Active visitor notification — fires once per session when the user
+      // Active visitor notification - fires once per session when the user
       // genuinely scrolls (not just a tap or a momentum bounce).
       (function trackActiveVisitor() {
         try {
@@ -8051,7 +8051,7 @@
         } catch (_) {}
       })();
 
-      // Section-view analytics — fires once per section per session when the
+      // Section-view analytics - fires once per section per session when the
       // section becomes >=50% visible. Lets us see how far visitors actually
       // scroll and which sections are dead weight.
       (function trackSectionViews() {
@@ -8189,7 +8189,7 @@
     </script>
     <script>
     /* ═══════════════════════════════════════════════════════════════
-       MICRO-ANIMATIONS — quiet, purposeful, never try-hard.
+       MICRO-ANIMATIONS - quiet, purposeful, never try-hard.
        Fully respects prefers-reduced-motion. Desktop-only for tilt.
        ═══════════════════════════════════════════════════════════════ */
     (function () {
@@ -8220,7 +8220,7 @@
            var startTop = window.pageYOffset;
 
            // pushState never triggers a native jump, so update the hash
-           // immediately — the URL reflects the destination right away.
+           // immediately - the URL reflects the destination right away.
            if (updateHash) history.pushState(null, '', updateHash);
 
            if (reduced || Math.abs(measureTargetTop(target) - startTop) < 2) {
@@ -8232,7 +8232,7 @@
            // keeps ticking even when rAF is throttled (background tabs,
            // embedded iframes, headless environments). The target position
            // is re-measured on every tick because lazy content loading in
-           // below-the-fold sections shifts layout mid-scroll — a distance
+           // below-the-fold sections shifts layout mid-scroll - a distance
            // snapshotted at click time would land short.
            var startTime = performance.now();
            function tick() {
@@ -8348,7 +8348,7 @@
       /* ── 3. CARD POINTER-LIGHT ────────────────────────────────────
          A radial teal/rose blob follows the cursor inside each glass
          card via --mx / --my and --glow-op CSS vars.
-         Opacity is driven entirely by JS — no CSS transition — so the
+         Opacity is driven entirely by JS - no CSS transition - so the
          blob vanishes instantly on mouseleave and never bleeds into
          adjacent cards. Desktop + motion allowed only.              */
       if (!reduced && window.innerWidth > 768) {
@@ -8361,7 +8361,7 @@
         document.querySelectorAll(cardGlowSel).forEach(function (card) {
           var raf = null;
           card.addEventListener('mouseenter', function (e) {
-            /* Position first, then show — avoids a one-frame flash at centre */
+            /* Position first, then show - avoids a one-frame flash at centre */
             var r = card.getBoundingClientRect();
             card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
             card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
@@ -8380,7 +8380,7 @@
             });
           });
           card.addEventListener('mouseleave', function () {
-            /* Kill opacity instantly — no fade, no cross-card bleed */
+            /* Kill opacity instantly - no fade, no cross-card bleed */
             card.style.setProperty('--glow-op', '0');
             /* Reset position so re-entry starts from current cursor, not edge */
             card.style.setProperty('--mx', '50%');
@@ -8492,7 +8492,7 @@
         var isMobile = window.innerWidth <= 768;
 
         /* Mobile gets a single delayed reveal instead of pointer physics.
-           Inline style hides both blobs immediately — beats any CSS rule.
+           Inline style hides both blobs immediately - beats any CSS rule.
            After 3s the reveal animation runs, then idle drift takes over. */
         if (isMobile && !reduced) {
           blobT.style.opacity = '0';
@@ -8541,7 +8541,7 @@
 
         /* State: pos = current px offset (top-left), vel = velocity */
         var stateT = { x: rT.x, y: rT.y, vx: 0, vy: 0, sx: 1, sy: 1 };
-        /* Rose starts hidden inside teal — same position */
+        /* Rose starts hidden inside teal - same position */
         var stateR = { x: rT.x + (sT.w - sR.w)/2,
                        y: rT.y + (sT.h - sR.h)/2,
                        vx: 0, vy: 0, sx: 1, sy: 1 };
@@ -8565,7 +8565,7 @@
         var splitTimer = 0;
         var gravityTarget = null; /* cursor pos captured at trigger time */
 
-        /* Track the mouse at document level — no dependence on the hero's
+        /* Track the mouse at document level - no dependence on the hero's
            own hit-testing (overlays/children can interfere with it). The
            hero-local bounds check below replaces mouseenter/leave. */
         document.addEventListener('mousemove', function (e) {
@@ -8576,7 +8576,7 @@
             return;
           }
           mouse = { x: mx, y: my };
-          /* Trigger detection happens in the event itself — a fast
+          /* Trigger detection happens in the event itself - a fast
              in-and-out pass can come and go between two rAF frames. */
           checkFirstContact();
           /* Watchdog: if the loop ever stopped (missed visibility event,
@@ -8586,7 +8586,7 @@
           }
         }, { passive: true });
 
-        /* Tab/visibility pause — resume the loop when the tab returns */
+          /* Tab/visibility pause - resume the loop when the tab returns */
         document.addEventListener('visibilitychange', function () {
           paused = document.visibilityState === 'hidden';
           if (!paused && heroVisible && !rafId) {
@@ -8712,7 +8712,7 @@
             splitDone = true;
             splitPhase = 'gravity';
             splitTimer = 0;
-            /* Capture the target now — the split must complete even if
+            /* Capture the target now - the split must complete even if
                the cursor leaves the hero mid-fall */
             gravityTarget = { x: mouse.x, y: mouse.y };
             hero.setAttribute('data-blob-state', 'gravity');
@@ -8724,7 +8724,7 @@
           }
         }
 
-        /* Phase 2: burst + split — extracted so both the frame counter
+        /* Phase 2: burst + split - extracted so both the frame counter
            and the fallback timer can invoke it exactly once. */
         function completeSplit() {
           splitPhase = 'burst';
