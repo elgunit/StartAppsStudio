@@ -7433,6 +7433,8 @@
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
+          var whyModal = document.getElementById('whyModal');
+          if (whyModal && whyModal.classList.contains('open')) closeWhyModal();
           var aeModal = document.getElementById('aiEfficiencyModal');
           if (aeModal && aeModal.classList.contains('open')) closeAiEfficiencyModal();
           var sdModal = document.getElementById('showcaseDetailModal');
