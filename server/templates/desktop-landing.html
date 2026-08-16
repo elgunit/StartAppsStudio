@@ -8625,6 +8625,11 @@
         blobR.style.opacity = '0';
         blobR.style.animationPlayState = 'paused';
 
+        /* ── Active-physics viewport guard ── */
+        /* All rAF scheduling paths check this before (re)starting the loop
+           so physics cannot resume while the viewport is in mobile range. */
+        var physicsActive = true;
+
         /* ── Mouse tracking ── */
         var mouse = null;
         var paused = false;
@@ -8649,7 +8654,7 @@
           checkFirstContact();
           /* Watchdog: if the loop ever stopped (missed visibility event,
              browser throttling) any mouse activity restarts it. */
-          if (!rafId && !paused && heroVisible) {
+          if (!rafId && !paused && heroVisible && physicsActive) {
             rafId = requestAnimationFrame(loop);
           }
         }, { passive: true });
@@ -8657,7 +8662,7 @@
           /* Tab/visibility pause - resume the loop when the tab returns */
         document.addEventListener('visibilitychange', function () {
           paused = document.visibilityState === 'hidden';
-          if (!paused && heroVisible && !rafId) {
+          if (!paused && heroVisible && !rafId && physicsActive) {
             rafId = requestAnimationFrame(loop);
           }
         });
@@ -8795,6 +8800,10 @@
         /* Phase 2: burst + split - extracted so both the frame counter
            and the fallback timer can invoke it exactly once. */
         function completeSplit() {
+          /* Guard: a resize-to-mobile can fire between the gravity trigger and
+             this fallback's 1.4 s timeout. If physics is no longer active,
+             discard silently — CSS drift already owns the blobs. */
+          if (!physicsActive) return;
           splitPhase = 'burst';
           hero.setAttribute('data-blob-state', 'burst');
 
@@ -8852,13 +8861,13 @@
         if ('IntersectionObserver' in window) {
           new IntersectionObserver(function (entries) {
             heroVisible = entries[0].isIntersecting;
-            if (heroVisible && !rafId) rafId = requestAnimationFrame(loop);
+            if (heroVisible && !rafId && physicsActive) rafId = requestAnimationFrame(loop);
           }, { threshold: 0.01 }).observe(hero);
         }
 
         function loop() {
           rafId = null;
-          if (paused || !heroVisible) return;
+          if (paused || !heroVisible || !physicsActive) return;
           /* Debug/testing hook: frame counter proves the loop is alive */
           window.__blobFrames = (window.__blobFrames || 0) + 1;
 
@@ -8897,6 +8906,53 @@
         }
 
         rafId = requestAnimationFrame(loop);
+
+        /* ── Resize: re-measure blob sizes + stop physics below 768 px ── */
+        var resizeTimer = null;
+        window.addEventListener('resize', function () {
+          if (resizeTimer) clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            resizeTimer = null;
+
+            if (window.innerWidth <= 768) {
+              /* ── Desktop → mobile transition ──────────────────────────
+                 1. Mark physics inactive so every rAF scheduling path bails.
+                 2. Cancel the current frame if one is queued.
+                 3. Clear all physics-set inline styles so CSS drift owns the
+                    blobs again (left/top/right/transform/opacity/playState).
+                 4. Add mobile-blob-revealed so the !important CSS rules
+                    restore the correct opacity and drift animation on both
+                    blobs immediately. */
+              physicsActive = false;
+              if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+
+              /* Clear teal physics overrides */
+              blobT.style.left      = '';
+              blobT.style.top       = '';
+              blobT.style.right     = '';
+              blobT.style.transform = '';
+
+              /* Clear rose physics overrides (opacity:'0' + paused set at init) */
+              blobR.style.left             = '';
+              blobR.style.top              = '';
+              blobR.style.right            = '';
+              blobR.style.transform        = '';
+              blobR.style.opacity          = '';
+              blobR.style.animationPlayState = '';
+
+              /* Hand both blobs to CSS drift */
+              hero.classList.remove('mobile-blob-reveal');
+              hero.classList.add('mobile-blob-revealed');
+              return;
+            }
+
+            /* Desktop: re-measure blob dimensions so edge clamp / rest
+               positions stay accurate after vw-based clamp() values settle. */
+            sT = blobSize(blobT);
+            sR = blobSize(blobR);
+          }, 150);
+        }, { passive: true });
+
       }());
 
     })();
