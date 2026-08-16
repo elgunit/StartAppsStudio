@@ -8902,15 +8902,15 @@
       var ctx = canvas.getContext('2d');
 
       /* ── Config ── */
-      var SPACING   = 44;    /* px between arrow centres */
-      var CHEVRON_LEN = 6.0;  /* chevron tip-to-base length */
-      var CHEVRON_WING = 2.6; /* half-width of each caret wing (px) */
-      var EASE      = 0.09;  /* angle interpolation speed per frame */
-      var BASE_ALPHA= 0.20;  /* opacity when far from cursor — subtle resting state */
-      var NEAR_ALPHA= 0.52;  /* opacity when cursor is close */
-      var NEAR_DIST = 160;   /* px: full brightness radius */
-      var FAR_DIST  = 380;   /* px: fade-out ends here */
-      var NEAR_SCALE= 1.24;  /* chevron scale multiplier near cursor */
+      var SPACING   = 44;    /* px between dot centres */
+      var DOT_R     = 1.5;   /* dot radius on desktop (px) */
+      var DOT_R_MOB = 1.1;   /* dot radius on mobile (px) */
+      var EASE      = 0.09;  /* kept for angle state (unused for dots but harmless) */
+      var BASE_ALPHA= 0.18;  /* opacity when far from cursor */
+      var NEAR_ALPHA= 0.55;  /* opacity when cursor is close */
+      var NEAR_DIST = 140;   /* px: full brightness radius */
+      var FAR_DIST  = 340;   /* px: fade-out ends here */
+      var NEAR_SCALE= 1.5;   /* dot scale multiplier near cursor */
 
       var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       /* Some desktop/headless browsers report hover:none despite having no
@@ -9006,28 +9006,12 @@
           var alpha = NEAR_ALPHA + (BASE_ALPHA - NEAR_ALPHA) * t;
           var scale = NEAR_SCALE + (1 - NEAR_SCALE) * t;
 
-          /* Draw a tiny “˄”-style chevron with no shaft */
-          var ang = a.angle;
-          var half = CHEVRON_LEN * scale * 0.5;
-          var wing = CHEVRON_WING * scale;
-          var ux = Math.cos(ang), uy = Math.sin(ang);
-          var px = -uy, py = ux;
-          var tipX = a.x + ux * half;
-          var tipY = a.y + uy * half;
-          var baseX = a.x - ux * half;
-          var baseY = a.y - uy * half;
-
+          /* Draw a filled dot */
+          var r = (W < 600 ? DOT_R_MOB : DOT_R) * scale;
           ctx.beginPath();
-          ctx.moveTo(tipX, tipY);
-          ctx.lineTo(baseX + px * wing, baseY + py * wing);
-          ctx.moveTo(tipX, tipY);
-          ctx.lineTo(baseX - px * wing, baseY - py * wing);
-
-          ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha.toFixed(3) + ')';
-          ctx.lineWidth   = 1.3;
-          ctx.lineCap     = 'round';
-          ctx.lineJoin    = 'round';
-          ctx.stroke();
+          ctx.arc(a.x, a.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha.toFixed(3) + ')';
+          ctx.fill();
         }
       }
 
