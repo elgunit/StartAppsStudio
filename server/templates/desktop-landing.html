@@ -4171,6 +4171,18 @@
             rgba(217,230,223,0)    0%,
             rgba(217,230,223,.72) 52%,
             rgba(238,242,240,1)  100%);
+           /* Keep the wash full-width, but soften its side borders into the
+              white page instead of ending on a sharp vertical edge. */
+           -webkit-mask-image: linear-gradient(to right,
+             transparent 0%,
+             #000 8%,
+             #000 92%,
+             transparent 100%);
+           mask-image: linear-gradient(to right,
+             transparent 0%,
+             #000 8%,
+             #000 92%,
+             transparent 100%);
         }
         @media (prefers-color-scheme: dark) {
           .showcase-carousel-wrap::after {
