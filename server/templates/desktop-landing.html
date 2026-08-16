@@ -1417,7 +1417,7 @@
         background: var(--surface);
         box-shadow: var(--shadow);
         position: relative;
-        cursor: pointer;
+        cursor: default;
         transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       
@@ -3077,6 +3077,15 @@
         border-color: var(--line-strong);
       }
 
+      /* Keep the comparison modal close control clear of its tab switcher. */
+      #whyModal .modal-close {
+        position: absolute;
+        top: 8px;
+        right: 0;
+        float: none;
+        margin: 0;
+      }
+
       .modal-content h3 {
         font-size: 24px;
         font-weight: 700;
@@ -4002,7 +4011,7 @@
         flex-direction: column;
         transition: transform 0.25s ease, border-color 0.25s ease;
         min-height: 420px;
-        cursor: pointer;
+        cursor: default;
       }
       .showcase-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
@@ -4355,8 +4364,9 @@
           .carousel-dot { animation: none; }
         }
 
-        /* Cards are tappable on mobile */
-        .showcase-card { cursor: pointer; }
+        /* Cards can still open their detail sheet on touch, but do not
+           advertise that interaction with a desktop-style hand cursor. */
+        .showcase-card { cursor: default; }
       }
 
       /* Desktop: three cards fill the row, fourth peeks right so users
@@ -6221,7 +6231,7 @@
               <svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M15 16a5 5 0 0 1 6 4v1"/></svg>
             </div>
             <div class="stp-kicker">Specialist depth</div>
-            <div class="stp-title">A bigger bench when needed</div>
+              <div class="stp-title">Trusted specialists</div>
             <p class="stp-body">When the brief calls for it, I can bring in trusted specialist partners for the extra expertise or delivery capacity your product needs.</p>
           </div>
         </div>
