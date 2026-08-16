@@ -4296,6 +4296,13 @@
           overscroll-behavior-x: contain;
           gap: 12px;
           margin: 0;
+          /* iOS Safari promotes this touch-scroll container to its own
+             composited layer, trapping the cards' z-index inside it. The
+             scrim (::after on the wrap) then paints OVER the whole grid.
+             Positioning the grid itself above the scrim is the only fix:
+             the cards ride this layer, which now sits above everything. */
+          position: relative;
+          z-index: 2;
           /* 44px bottom padding: shadow below is 0 4px 14px, so its tail
              reaches ~4 + 28 = 32px - fully dissolved before the clip edge. */
           padding: 10px 16px 44px;
