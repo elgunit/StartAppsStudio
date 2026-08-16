@@ -1810,6 +1810,12 @@
       /* Scope the panel to a compact, centred glass card */
       #whyModal .modal-content {
         max-width: 540px !important;
+        /* svh = small viewport height (accounts for browser chrome on iOS Safari).
+           Fallback vh for older browsers. Clamp keeps a 24px gap top+bottom. */
+        max-height: calc(100vh - 48px) !important;
+        max-height: 88svh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
         padding: 32px 28px 28px !important;
         border-radius: var(--r-lg) !important;
         /* Solid canvas fallback ensures the modal is never transparent on iOS Safari */
@@ -1820,6 +1826,27 @@
           inset 0 1px 0 var(--specular-teal),
           0 0 0 1px color-mix(in srgb, var(--dominant) 16%, transparent),
           0 32px 80px -16px rgba(0,0,0,0.28) !important;
+        /* Scroll-fade: hint that content continues below */
+        background-attachment: local, local, scroll, scroll !important;
+        background-image:
+          linear-gradient(var(--canvas) 30%, transparent),
+          linear-gradient(transparent, var(--canvas) 70%),
+          radial-gradient(farthest-side at 50% 0%, rgba(0,0,0,.08), transparent),
+          radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.08), transparent) !important;
+        background-size: 100% 48px, 100% 48px, 100% 14px, 100% 14px !important;
+        background-repeat: no-repeat !important;
+        background-position: 0 0, 0 100%, 0 0, 0 100% !important;
+      }
+
+      /* Drag handle — thin pill at the top of the modal on mobile.
+         Signals the sheet is scrollable without adding visual weight. */
+      #whyModal .modal-drag-handle {
+        display: none;
+        width: 36px;
+        height: 4px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--ink) 18%, transparent);
+        margin: 0 auto 18px;
       }
 
       .cmp-header {
@@ -2021,7 +2048,8 @@
       }
 
       @media (max-width: 560px) {
-        #whyModal .modal-content { padding: 24px 16px 20px !important; }
+        #whyModal .modal-content { padding: 16px 14px 20px !important; }
+        #whyModal .modal-drag-handle { display: block; }
         .cmp-tabs { gap: 4px; padding: 4px; }
         .cmp-tab  {
           font-size: 12.5px;
@@ -2035,6 +2063,28 @@
         .cmp-tab .cmp-tab-full { display: none; }
         .cmp-tab .cmp-tab-short { display: inline; }
         .cmp-header { padding: 0; }
+      }
+
+      /* Short-viewport pass — phones ≤ 700px tall (iPhone SE, older Androids).
+         Compress vertical rhythm so the CTA button stays reachable. */
+      @media (max-height: 700px) and (max-width: 768px) {
+        #whyModal .modal-content {
+          max-height: 92svh !important;
+          max-height: calc(100dvh - 32px) !important;
+        }
+        /* Tighten overlay vertical padding so modal gets max room */
+        #whyModal.open {
+          align-items: flex-start !important;
+          padding-top: max(16px, env(safe-area-inset-top, 16px)) !important;
+          padding-bottom: 16px !important;
+        }
+        .cmp-header { margin-bottom: 10px !important; }
+        .cmp-tabs   { margin-bottom: 12px !important; }
+        .cmp-grid   { gap: 5px !important; margin-bottom: 14px !important; }
+        .cmp-benefit, .cmp-pain { padding: 9px 12px !important; }
+        .cmp-icon   { width: 30px !important; height: 30px !important; }
+        .cmp-action { padding: 12px 20px !important; min-height: 44px !important; }
+        .cmp-footnote { margin-top: 10px !important; }
       }
       
       /* Contact */
@@ -6377,6 +6427,7 @@
 
       <div class="modal-overlay" id="whyModal">
         <div class="modal-content">
+          <div class="modal-drag-handle" aria-hidden="true"></div>
           <button class="modal-close" onclick="closeWhyModal()">&times;</button>
 
           <div class="cmp-header">
