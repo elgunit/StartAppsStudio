@@ -8884,14 +8884,14 @@
     })();
 
     /* ── ARROW FIELD ─────────────────────────────────────────────────────
-       A grid of short arrows across the full viewport that all rotate
-       to point toward the mouse. Each arrow eases smoothly to the new
+       A grid of tiny chevrons across the full viewport that all rotate
+       to point toward the mouse. Each chevron eases smoothly to the new
        angle via angular interpolation every rAF.
 
        Design decisions:
        - Canvas2D only — no DOM overhead, 1 draw call per frame.
        - Grid spacing adapts to viewport so mobile is sparser.
-       - Arrows closer to the cursor are brighter and slightly larger.
+       - Chevrons closer to the cursor are brighter and slightly larger.
        - Reduced-motion / touch: arrows are static, pointing inward from
          the page center (a calm radial pattern), with no rAF loop.
        - Dark-mode aware: reads --ink CSS variable each resize.
@@ -8903,18 +8903,20 @@
 
       /* ── Config ── */
       var SPACING   = 44;    /* px between arrow centres */
-      var ARROW_LEN = 7;     /* half-length of the arrow shaft (px) */
-      var HEAD_LEN  = 5;     /* arrowhead leg length (px) */
-      var HEAD_ANG  = 0.48;  /* arrowhead opening angle (radians) */
+      var CHEVRON_LEN = 2.2; /* total chevron length, intentionally tiny */
+      var CHEVRON_WING = 0.72; /* half-width of each caret wing (px) */
       var EASE      = 0.09;  /* angle interpolation speed per frame */
       var BASE_ALPHA= 0.09;  /* opacity when far from cursor — subtle resting state */
       var NEAR_ALPHA= 0.52;  /* opacity when cursor is close */
       var NEAR_DIST = 160;   /* px: full brightness radius */
       var FAR_DIST  = 380;   /* px: fade-out ends here */
-      var NEAR_SCALE= 1.42;  /* arrow scale multiplier near cursor */
+      var NEAR_SCALE= 1.24;  /* chevron scale multiplier near cursor */
 
       var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var isTouchOnly   = !window.matchMedia('(hover: hover)').matches;
+      /* Some desktop/headless browsers report hover:none despite having no
+         touch input, so require actual touch points before disabling tracking. */
+      var isTouchOnly   = navigator.maxTouchPoints > 0 &&
+                          !window.matchMedia('(hover: hover)').matches;
       var isStatic      = reducedMotion || isTouchOnly;
 
       /* ── Arrow grid state ── */
@@ -9004,30 +9006,25 @@
           var alpha = NEAR_ALPHA + (BASE_ALPHA - NEAR_ALPHA) * t;
           var scale = NEAR_SCALE + (1 - NEAR_SCALE) * t;
 
-          /* Draw */
+          /* Draw a tiny “˄”-style chevron with no shaft */
           var ang = a.angle;
-          var len = ARROW_LEN * scale;
-          var hlen = HEAD_LEN * scale;
-
-          /* Tail → head vector */
-          var ex = a.x + Math.cos(ang) * len;
-          var ey = a.y + Math.sin(ang) * len;
-          var sx = a.x - Math.cos(ang) * len;
-          var sy = a.y - Math.sin(ang) * len;
+          var half = CHEVRON_LEN * scale * 0.5;
+          var wing = CHEVRON_WING * scale;
+          var ux = Math.cos(ang), uy = Math.sin(ang);
+          var px = -uy, py = ux;
+          var tipX = a.x + ux * half;
+          var tipY = a.y + uy * half;
+          var baseX = a.x - ux * half;
+          var baseY = a.y - uy * half;
 
           ctx.beginPath();
-          ctx.moveTo(sx, sy);
-          ctx.lineTo(ex, ey);
-
-          /* Arrowhead */
-          var a1 = ang + Math.PI - HEAD_ANG;
-          var a2 = ang + Math.PI + HEAD_ANG;
-          ctx.lineTo(ex + Math.cos(a1) * hlen, ey + Math.sin(a1) * hlen);
-          ctx.moveTo(ex, ey);
-          ctx.lineTo(ex + Math.cos(a2) * hlen, ey + Math.sin(a2) * hlen);
+          ctx.moveTo(tipX, tipY);
+          ctx.lineTo(baseX + px * wing, baseY + py * wing);
+          ctx.moveTo(tipX, tipY);
+          ctx.lineTo(baseX - px * wing, baseY - py * wing);
 
           ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha.toFixed(3) + ')';
-          ctx.lineWidth   = 1.2;
+          ctx.lineWidth   = 0.8;
           ctx.lineCap     = 'round';
           ctx.lineJoin    = 'round';
           ctx.stroke();
