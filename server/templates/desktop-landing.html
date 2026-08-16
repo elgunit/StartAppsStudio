@@ -4229,6 +4229,9 @@
           /* Soft shadow - short vertical reach so it dissolves well before
              the bottom of the scroll container's padding zone. */
           box-shadow: 0 4px 14px rgba(29,72,73,.08);
+          /* Keep the cards and their shadows above the bottom green scrim. */
+          position: relative;
+          z-index: 5;
         }
         .showcase-visual { height: 160px; }
 
