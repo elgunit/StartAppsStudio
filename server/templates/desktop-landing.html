@@ -3068,13 +3068,22 @@
         border-color: var(--line-strong);
       }
 
-      /* Keep the comparison modal close control clear of its tab switcher. */
+      /* Comparison modal close: floating pill in the upper-right corner,
+         matching the AI Efficiency modal's treatment. */
       #whyModal .modal-close {
         position: absolute;
-        top: 8px;
-        right: 0;
+        top: 16px;
+        right: 16px;
         float: none;
         margin: 0;
+        z-index: 10;
+      }
+
+      /* Center-align the comparison modal header text to match AI modal */
+      .cmp-header {
+        text-align: center;
+        padding: 0 44px 0; /* indent away from the floating close button */
+        margin-bottom: 18px;
       }
 
       .modal-content h3 {
@@ -4465,6 +4474,10 @@
           border-radius: 20px 20px 0 0;
           padding: 0 0 env(safe-area-inset-bottom, 20px);
           border-bottom: none;
+          /* Bright white-ish sheet so it reads clearly against the dark page */
+          background: var(--canvas) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
           transform: translateY(100%);
           opacity: 0;
           transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1),
@@ -7362,12 +7375,12 @@
 
       function openWhyModal() {
         document.getElementById('whyModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        sdmLockScroll();
       }
 
       function closeWhyModal() {
         document.getElementById('whyModal').classList.remove('open');
-        document.body.style.overflow = '';
+        sdmUnlockScroll();
       }
 
       document.getElementById('whyModal').addEventListener('click', function(e) {
@@ -7376,12 +7389,12 @@
 
       function openAiEfficiencyModal() {
         document.getElementById('aiEfficiencyModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
+        sdmLockScroll();
       }
 
       function closeAiEfficiencyModal() {
         document.getElementById('aiEfficiencyModal').classList.remove('open');
-        document.body.style.overflow = '';
+        sdmUnlockScroll();
       }
 
       function switchAemTab(which, btn) {
