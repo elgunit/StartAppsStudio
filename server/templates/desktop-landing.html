@@ -4162,15 +4162,14 @@
           height: 72px;
           pointer-events: none;
           z-index: 4;
-          /* Transparent → support-green wash → solid canvas at the very
-             bottom. The solid end MUST be the canvas color: the wrap edge
-             sits on bare canvas, so ending on green would paint a new hard
-             line (see memory: cover scrims are only safe when their solid
-             edge matches the background they end on). */
+           /* Transparent → support-green wash → transparent again. The
+              lower edge dissolves into the page instead of ending as a
+              horizontal band. */
           background: linear-gradient(to bottom,
-            rgba(217,230,223,0)    0%,
-            rgba(217,230,223,.72) 52%,
-            rgba(238,242,240,1)  100%);
+             rgba(217,230,223,0)    0%,
+             rgba(217,230,223,.72) 52%,
+             rgba(217,230,223,.26) 78%,
+             rgba(217,230,223,0)  100%);
            /* Keep the wash full-width, but soften its side borders into the
               white page instead of ending on a sharp vertical edge. */
            -webkit-mask-image: linear-gradient(to right,
@@ -4187,9 +4186,10 @@
         @media (prefers-color-scheme: dark) {
           .showcase-carousel-wrap::after {
             background: linear-gradient(to bottom,
-              rgba(35,67,72,0)    0%,
-              rgba(35,67,72,.72) 52%,
-              rgba(16,33,36,1)  100%);
+               rgba(35,67,72,0)    0%,
+               rgba(35,67,72,.72) 52%,
+               rgba(35,67,72,.26) 78%,
+               rgba(35,67,72,0)  100%);
           }
         }
         .showcase-grid {
