@@ -4247,7 +4247,7 @@
         /* Bottom scrim: transparent → soft support green, fades shadow away
            and gives the dots a coloured landing zone.
            The dots are now inside the wrap (absolutely positioned above this
-           scrim at z-index 5), so the scrim is taller to give them room. */
+           scrim at z-index 3), so the scrim is taller to give them room. */
         .showcase-carousel-wrap::after {
           content: '';
           position: absolute;
@@ -4255,7 +4255,7 @@
           bottom: 0;
           height: 72px;
           pointer-events: none;
-          z-index: 4;
+          z-index: 1;
            /* Transparent → support-green wash → transparent again. The
               lower edge dissolves into the page instead of ending as a
               horizontal band. */
@@ -4325,7 +4325,7 @@
           box-shadow: 0 4px 14px rgba(29,72,73,.08);
           /* Keep the cards and their shadows above the bottom green scrim. */
           position: relative;
-          z-index: 5;
+          z-index: 2;
         }
         .showcase-visual { height: 160px; }
 
@@ -4401,8 +4401,8 @@
 
         /* ── Pagination dots ─────────────────────────────────────────────
            The dots now live INSIDE the carousel wrap, floating over the
-           green scrim (z-index 5 > scrim's 4). They take no layout space,
-           so "See more builds" moves up right below the wrap. */
+           green scrim (z-index 3 > cards' 2 > scrim's 1). They take no
+           layout space, so "See more builds" moves up right below the wrap. */
         .carousel-ui {
           position: absolute;
           left: 0;
@@ -4411,7 +4411,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          z-index: 5;
+          z-index: 3;
           pointer-events: none;
         }
         .carousel-dots {
