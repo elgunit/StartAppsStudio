@@ -9059,8 +9059,17 @@
       }
 
       /* ── Resize ── */
+      /* On iOS, the browser chrome shows/hides while scrolling, firing resize
+         events that change only window.innerHeight. Rebuilding the grid on
+         every such event clears the canvas and repositions all dots, causing
+         the visible "jigger". Fix: only rebuild when the WIDTH changes (real
+         layout change or orientation flip). Height-only changes are ignored. */
+      var lastW = window.innerWidth;
       var resizeTimer;
       window.addEventListener('resize', function () {
+        var newW = window.innerWidth;
+        if (newW === lastW) return; /* height-only (iOS chrome) — skip */
+        lastW = newW;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
           buildGrid();
