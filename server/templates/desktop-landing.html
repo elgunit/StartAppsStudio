@@ -7622,18 +7622,39 @@
           });
           var dots = dotsContainer.querySelectorAll('.carousel-dot');
           if (!cards.length || !dots.length) return;
-          // Find the visible card whose centre is closest to the scroll track centre
-          var trackCx = primaryGrid.scrollLeft + primaryGrid.clientWidth / 2;
-          var bestIdx = 0;
-          var bestDist = Infinity;
-          cards.forEach(function(card, i) {
-            var cardCx = card.offsetLeft + card.offsetWidth / 2;
-            var dist = Math.abs(cardCx - trackCx);
-            if (dist < bestDist) { bestDist = dist; bestIdx = i; }
-          });
-          dots.forEach(function(dot, i) {
-            dot.classList.toggle('active', i === bestIdx);
-          });
+
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+
+          if (isDesktop) {
+            // Desktop: dots represent scroll position across the whole track.
+            // Dot 0 = fully scrolled left (scrollLeft === 0),
+            // last dot = fully scrolled right (scrollLeft === maxScroll).
+            // This means the first dot is always active on load, and the last
+            // dot is always active when the end card is reached.
+            var maxScroll = primaryGrid.scrollWidth - primaryGrid.clientWidth;
+            var n = dots.length;
+            var bestIdx = 0;
+            if (maxScroll > 0 && n > 1) {
+              var ratio = primaryGrid.scrollLeft / maxScroll;            // 0 → 1
+              bestIdx = Math.min(Math.round(ratio * (n - 1)), n - 1);   // 0 → n-1
+            }
+            dots.forEach(function(dot, i) {
+              dot.classList.toggle('active', i === bestIdx);
+            });
+          } else {
+            // Mobile: mark the card whose centre is closest to the track centre.
+            var trackCx = primaryGrid.scrollLeft + primaryGrid.clientWidth / 2;
+            var bestIdx = 0;
+            var bestDist = Infinity;
+            cards.forEach(function(card, i) {
+              var cardCx = card.offsetLeft + card.offsetWidth / 2;
+              var dist = Math.abs(cardCx - trackCx);
+              if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+            });
+            dots.forEach(function(dot, i) {
+              dot.classList.toggle('active', i === bestIdx);
+            });
+          }
         }
 
         // Rebuild one dot per VISIBLE card in the primary grid.
@@ -7652,7 +7673,11 @@
         };
 
         primaryGrid.addEventListener('scroll', updateDots, { passive: true });
+        // Re-calculate after resize (maxScroll changes when window width changes)
+        window.addEventListener('resize', updateDots, { passive: true });
         refreshCarouselDots();
+        // Re-run after fonts/layout settle so the initial active dot is correct
+        setTimeout(updateDots, 300);
       })();
 
 
