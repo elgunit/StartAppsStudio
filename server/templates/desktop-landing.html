@@ -7616,33 +7616,41 @@
         var dotsContainer = document.getElementById('carouselDotsPrimary');
         if (!primaryGrid || !dotsContainer) return;
 
-        function updateDots() {
-          var cards = Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
+        // How many cards fit across the desktop track at once.
+        // Must match the CSS: flex: 0 0 calc((100% - 40px - 48px) / 3)
+        var DESKTOP_VISIBLE = 3;
+
+        function visibleCards() {
+          return Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
             return c.style.display !== 'none';
           });
+        }
+
+        function updateDots() {
           var dots = dotsContainer.querySelectorAll('.carousel-dot');
-          if (!cards.length || !dots.length) return;
+          if (!dots.length) return;
 
           var isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
           if (isDesktop) {
-            // Desktop: dots represent scroll position across the whole track.
-            // Dot 0 = fully scrolled left (scrollLeft === 0),
-            // last dot = fully scrolled right (scrollLeft === maxScroll).
-            // This means the first dot is always active on load, and the last
-            // dot is always active when the end card is reached.
-            var maxScroll = primaryGrid.scrollWidth - primaryGrid.clientWidth;
-            var n = dots.length;
+            // Each dot represents one reachable snap position: the card whose
+            // left edge aligns with the track's left edge when snapped there.
+            // We find the snap position closest to the current scrollLeft.
+            var cards = visibleCards();
             var bestIdx = 0;
-            if (maxScroll > 0 && n > 1) {
-              var ratio = primaryGrid.scrollLeft / maxScroll;            // 0 → 1
-              bestIdx = Math.min(Math.round(ratio * (n - 1)), n - 1);   // 0 → n-1
+            var bestDist = Infinity;
+            var snapCount = Math.max(1, cards.length - DESKTOP_VISIBLE + 1);
+            for (var i = 0; i < snapCount; i++) {
+              var snapX = cards[i] ? cards[i].offsetLeft : 0;
+              var dist = Math.abs(primaryGrid.scrollLeft - snapX);
+              if (dist < bestDist) { bestDist = dist; bestIdx = i; }
             }
             dots.forEach(function(dot, i) {
               dot.classList.toggle('active', i === bestIdx);
             });
           } else {
             // Mobile: mark the card whose centre is closest to the track centre.
+            var cards = visibleCards();
             var trackCx = primaryGrid.scrollLeft + primaryGrid.clientWidth / 2;
             var bestIdx = 0;
             var bestDist = Infinity;
@@ -7657,18 +7665,20 @@
           }
         }
 
-        // Rebuild one dot per VISIBLE card in the primary grid.
-        // Hidden .showcase-extra cards have display:none so they are excluded.
+        // Rebuild dots: desktop gets one dot per reachable snap position,
+        // mobile gets one dot per visible card.
         refreshCarouselDots = function() {
-          var cards = Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
-            return c.style.display !== 'none';
-          });
+          var cards = visibleCards();
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+          var dotCount = isDesktop
+            ? Math.max(1, cards.length - DESKTOP_VISIBLE + 1)
+            : cards.length;
           dotsContainer.innerHTML = '';
-          cards.forEach(function() {
+          for (var i = 0; i < dotCount; i++) {
             var dot = document.createElement('div');
             dot.className = 'carousel-dot';
             dotsContainer.appendChild(dot);
-          });
+          }
           updateDots();
         };
 
