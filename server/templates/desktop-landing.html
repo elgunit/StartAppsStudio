@@ -338,17 +338,17 @@
         user-select: none;
         -webkit-tap-highlight-color: transparent;
       }
-      body::before {
-        content: '';
+      /* body::before dot-grid replaced by the #arrow-field canvas */
+
+      /* Arrow-field canvas — sits behind all content */
+      #arrow-field {
         position: fixed;
         inset: 0;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
         z-index: -1;
-        /* Keep the texture calm: sparse, soft marks instead of a
-           high-frequency field of tiny dots that creates visual noise. */
-        opacity: .07;
-        background-image: radial-gradient(var(--ink) 1px, transparent 1.4px);
-        background-size: 30px 30px;
+        opacity: 1;
       }
       input, textarea, select, [contenteditable="true"] {
         -webkit-user-select: text !important;
@@ -408,17 +408,8 @@
         100% { transform: translate3d(-1%, 2%, 0) scale(1.02);  }
       }
 
-      /* Faint dotted grid (cheap, single static gradient). */
-      .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        background-image: radial-gradient(circle at 1px 1px, rgba(13, 148, 136, 0.10) 1px, transparent 0);
-        background-size: 28px 28px;
-        mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 80%);
-        pointer-events: none;
-      }
+      /* hero::before dot-grid removed — arrow-field canvas handles the pattern */
+      .hero::before { content: none; }
 
       @media (prefers-reduced-motion: reduce) {
         .hero-aurora { animation: none; }
@@ -5306,6 +5297,8 @@
     </style>
   </head>
   <body>
+    <!-- Arrow-field canvas: directional arrows that track the mouse pointer -->
+    <canvas id="arrow-field" aria-hidden="true"></canvas>
     <div class="container">
       <!-- Hero -->
       <section class="hero" data-section-name="hero">
@@ -8889,6 +8882,215 @@
       }());
 
     })();
+
+    /* ── ARROW FIELD ─────────────────────────────────────────────────────
+       A grid of short arrows across the full viewport that all rotate
+       to point toward the mouse. Each arrow eases smoothly to the new
+       angle via angular interpolation every rAF.
+
+       Design decisions:
+       - Canvas2D only — no DOM overhead, 1 draw call per frame.
+       - Grid spacing adapts to viewport so mobile is sparser.
+       - Arrows closer to the cursor are brighter and slightly larger.
+       - Reduced-motion / touch: arrows are static, pointing inward from
+         the page center (a calm radial pattern), with no rAF loop.
+       - Dark-mode aware: reads --ink CSS variable each resize.
+    ─────────────────────────────────────────────────────────────────── */
+    (function () {
+      var canvas = document.getElementById('arrow-field');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+
+      /* ── Config ── */
+      var SPACING   = 44;    /* px between arrow centres */
+      var ARROW_LEN = 7;     /* half-length of the arrow shaft (px) */
+      var HEAD_LEN  = 5;     /* arrowhead leg length (px) */
+      var HEAD_ANG  = 0.48;  /* arrowhead opening angle (radians) */
+      var EASE      = 0.09;  /* angle interpolation speed per frame */
+      var BASE_ALPHA= 0.09;  /* opacity when far from cursor — subtle resting state */
+      var NEAR_ALPHA= 0.52;  /* opacity when cursor is close */
+      var NEAR_DIST = 160;   /* px: full brightness radius */
+      var FAR_DIST  = 380;   /* px: fade-out ends here */
+      var NEAR_SCALE= 1.42;  /* arrow scale multiplier near cursor */
+
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isTouchOnly   = !window.matchMedia('(hover: hover)').matches;
+      var isStatic      = reducedMotion || isTouchOnly;
+
+      /* ── Arrow grid state ── */
+      var cols, rows, arrows = [];
+      /* Mouse position in viewport coords (default = off-screen) */
+      var mx = -9999, my = -9999;
+
+      /* ── Resolve the base ink colour ── */
+      function inkRgb() {
+        var style = getComputedStyle(document.documentElement);
+        var raw   = (style.getPropertyValue('--ink') || '').trim();
+        /* Parse "r g b" or "#rrggbb" or fall back to a teal-dark */
+        if (raw.indexOf('#') === 0) {
+          var hex = raw.slice(1);
+          if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          return [
+            parseInt(hex.slice(0,2),16),
+            parseInt(hex.slice(2,4),16),
+            parseInt(hex.slice(4,6),16)
+          ];
+        }
+        /* e.g. "14 30 27" */
+        var parts = raw.split(/[\s,]+/).map(Number).filter(function(n){ return !isNaN(n); });
+        if (parts.length >= 3) return [parts[0], parts[1], parts[2]];
+        return [13, 89, 96]; /* fallback: near --dominant dark */
+      }
+
+      var rgb = [13, 89, 96]; /* updated on resize */
+
+      /* ── Build / rebuild the grid ── */
+      function buildGrid() {
+        rgb = inkRgb();
+        var W = window.innerWidth, H = window.innerHeight;
+        canvas.width  = W;
+        canvas.height = H;
+
+        /* Sparser grid on small screens for performance */
+        var sp = W < 600 ? SPACING * 1.5 : SPACING;
+
+        cols = Math.ceil(W / sp) + 1;
+        rows = Math.ceil(H / sp) + 1;
+        var offX = (W - (cols - 1) * sp) / 2;
+        var offY = (H - (rows - 1) * sp) / 2;
+
+        arrows = [];
+        var cx = W / 2, cy = H / 2;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            var x = offX + c * sp;
+            var y = offY + r * sp;
+            /* Static target: point radially inward toward center */
+            var staticAngle = Math.atan2(cy - y, cx - x);
+            arrows.push({ x: x, y: y, angle: staticAngle, target: staticAngle, sp: sp });
+          }
+        }
+      }
+
+      /* ── Update arrow targets toward mouse ── */
+      function updateTargets() {
+        for (var i = 0; i < arrows.length; i++) {
+          var a = arrows[i];
+          a.target = Math.atan2(my - a.y, mx - a.x);
+        }
+      }
+
+      /* Shortest-path angular lerp */
+      function lerpAngle(cur, tgt, t) {
+        var d = tgt - cur;
+        /* Wrap d into [-π, π] */
+        while (d >  Math.PI) d -= 2 * Math.PI;
+        while (d < -Math.PI) d += 2 * Math.PI;
+        return cur + d * t;
+      }
+
+      /* ── Draw one frame ── */
+      function draw() {
+        var W = canvas.width, H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+
+        for (var i = 0; i < arrows.length; i++) {
+          var a = arrows[i];
+
+          /* Distance-based alpha and scale */
+          var dx = a.x - mx, dy = a.y - my;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var t    = Math.max(0, Math.min(1, (dist - NEAR_DIST) / (FAR_DIST - NEAR_DIST)));
+          var alpha = NEAR_ALPHA + (BASE_ALPHA - NEAR_ALPHA) * t;
+          var scale = NEAR_SCALE + (1 - NEAR_SCALE) * t;
+
+          /* Draw */
+          var ang = a.angle;
+          var len = ARROW_LEN * scale;
+          var hlen = HEAD_LEN * scale;
+
+          /* Tail → head vector */
+          var ex = a.x + Math.cos(ang) * len;
+          var ey = a.y + Math.sin(ang) * len;
+          var sx = a.x - Math.cos(ang) * len;
+          var sy = a.y - Math.sin(ang) * len;
+
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(ex, ey);
+
+          /* Arrowhead */
+          var a1 = ang + Math.PI - HEAD_ANG;
+          var a2 = ang + Math.PI + HEAD_ANG;
+          ctx.lineTo(ex + Math.cos(a1) * hlen, ey + Math.sin(a1) * hlen);
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(ex + Math.cos(a2) * hlen, ey + Math.sin(a2) * hlen);
+
+          ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha.toFixed(3) + ')';
+          ctx.lineWidth   = 1.2;
+          ctx.lineCap     = 'round';
+          ctx.lineJoin    = 'round';
+          ctx.stroke();
+        }
+      }
+
+      /* ── Animation loop (live mode) ── */
+      var rafId = null;
+      function loop() {
+        for (var i = 0; i < arrows.length; i++) {
+          var a = arrows[i];
+          a.angle = lerpAngle(a.angle, a.target, EASE);
+        }
+        draw();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      /* ── Initialise ── */
+      buildGrid();
+
+      if (isStatic) {
+        /* No interaction, no loop — paint once */
+        for (var i = 0; i < arrows.length; i++) arrows[i].angle = arrows[i].target;
+        draw();
+      } else {
+        /* Track mouse across the whole document */
+        document.addEventListener('mousemove', function (e) {
+          mx = e.clientX;
+          my = e.clientY;
+          updateTargets();
+        }, { passive: true });
+
+        /* When cursor leaves the viewport, drift arrows back to center */
+        document.addEventListener('mouseleave', function () {
+          mx = -9999;
+          my = -9999;
+          var cx = canvas.width / 2, cy = canvas.height / 2;
+          for (var i = 0; i < arrows.length; i++) {
+            var a = arrows[i];
+            a.target = Math.atan2(cy - a.y, cx - a.x);
+          }
+        }, { passive: true });
+
+        loop();
+      }
+
+      /* ── Resize ── */
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          buildGrid();
+          if (isStatic) {
+            for (var i = 0; i < arrows.length; i++) arrows[i].angle = arrows[i].target;
+            draw();
+          } else {
+            updateTargets();
+          }
+        }, 120);
+      }, { passive: true });
+
+    }());
+
     </script>
   </body>
 </html>
