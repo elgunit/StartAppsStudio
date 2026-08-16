@@ -3437,21 +3437,37 @@
       .services-grid .service-card > *,.growth-grid .growth-card > * { position:relative; z-index:1; }
       .services-grid .service-card:hover::after,.growth-grid .growth-card:hover::after { opacity:1!important; }
       .service-icon,.growth-icon {
-        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
-        background:var(--support)!important; color:var(--dominant)!important;
+        border:1px solid color-mix(in srgb, var(--dominant) 22%, transparent)!important;
+        border-radius:var(--r-sm)!important;
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 18%, transparent),
+            color-mix(in srgb, var(--rose) 8%, transparent))!important;
+        color:var(--dominant)!important;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.55),
+          0 2px 6px color-mix(in srgb, var(--dominant) 14%, transparent)!important;
+        transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease!important;
       }
       .services-grid .service-card:hover .service-icon,
       .services-grid .service-card.expanded .service-icon,
       .growth-grid .growth-card:hover .growth-icon,
       .growth-grid .growth-card.expanded .growth-icon {
-        background:var(--dominant)!important; border-color:var(--dominant)!important;
-        color:var(--canvas)!important;
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 88%, #fff),
+            color-mix(in srgb, var(--dominant) 68%, var(--rose)))!important;
+        border-color:color-mix(in srgb, var(--dominant) 44%, transparent)!important;
+        color:#fff!important;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.28),
+          0 4px 12px color-mix(in srgb, var(--dominant) 32%, transparent)!important;
       }
       .services-grid .service-card:hover .service-icon svg,
       .services-grid .service-card.expanded .service-icon svg,
       .growth-grid .growth-card:hover .growth-icon svg,
       .growth-grid .growth-card.expanded .growth-icon svg {
-        color:var(--canvas)!important; stroke:var(--canvas)!important;
+        color:#fff!important; stroke:#fff!important;
       }
       .service-details { border-top:1px solid var(--line)!important; }
 
@@ -3561,13 +3577,30 @@
       .how-bento .how-card-step::before { content:none!important; display:none!important; }
       .how-bento .how-card-ghost { display:none!important; }
       .how-bento .how-card-icon {
-        border:1px solid var(--line)!important; border-radius:var(--r-sm)!important;
-        background:var(--support)!important; color:var(--dominant)!important;
+        border:1px solid color-mix(in srgb, var(--dominant) 22%, transparent)!important;
+        border-radius:var(--r-sm)!important;
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 18%, transparent),
+            color-mix(in srgb, var(--rose) 8%, transparent))!important;
+        color:var(--dominant)!important;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.55),
+          0 2px 6px color-mix(in srgb, var(--dominant) 14%, transparent)!important;
+        transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease!important;
       }
       .how-bento .how-card:hover .how-card-icon {
-        background:var(--dominant)!important; color:var(--canvas)!important;
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 88%, #fff),
+            color-mix(in srgb, var(--dominant) 68%, var(--rose)))!important;
+        border-color:color-mix(in srgb, var(--dominant) 44%, transparent)!important;
+        color:#fff!important;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.28),
+          0 4px 12px color-mix(in srgb, var(--dominant) 32%, transparent)!important;
       }
-      .how-bento .how-card:hover .how-card-icon svg { color:var(--canvas)!important; stroke:var(--canvas)!important; }
+      .how-bento .how-card:hover .how-card-icon svg { color:#fff!important; stroke:#fff!important; }
       .how-bento .how-card-ghost { color:color-mix(in srgb,var(--dominant) 7%,transparent)!important; }
 
       /* --- Toolkit: teal group labels, glass chips */
