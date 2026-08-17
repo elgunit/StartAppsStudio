@@ -1026,15 +1026,14 @@
 
       /* AI stat bar */
       /* ── AI Stat quad: 2×2 on mobile, 4-col row on wider screens ── */
+      /* Liquid-glass stat cards: separated tiles with specular top edge and
+         teal refraction wash, matching the why-card design language. */
       .ai-stat-bar {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 10px;
         max-width: 860px;
         margin: 0 auto 20px;
-        background: color-mix(in srgb, var(--dominant) 4%, var(--surface));
-        border: 1px solid color-mix(in srgb, var(--dominant) 16%, transparent);
-        border-radius: var(--r-md);
-        overflow: hidden;
       }
       .ai-stat {
         display: flex;
@@ -1044,18 +1043,42 @@
         text-align: center;
         padding: clamp(14px, 1.8vw, 20px) clamp(12px, 1.6vw, 18px);
         gap: 5px;
-        transition: background 0.18s ease;
+        border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line));
+        border-radius: var(--r-md);
+        background:
+          linear-gradient(160deg,
+            color-mix(in srgb, var(--dominant)  3%, transparent)  0%,
+            color-mix(in srgb, var(--rose)      1.5%, transparent) 45%,
+            transparent 78%),
+          var(--surface);
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+          var(--shadow);
+        backdrop-filter: blur(12px) saturate(140%);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
       }
       .ai-stat:hover {
-        background: color-mix(in srgb, var(--dominant) 8%, var(--surface));
+        border-color: color-mix(in srgb, var(--dominant) 34%, transparent);
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          inset 0 0 0 1px color-mix(in srgb, var(--dominant) 10%, transparent),
+          0 14px 36px -10px color-mix(in srgb, var(--dominant) 20%, rgba(0,0,0,0.12));
       }
-      /* Icon well */
+      /* Glass icon well - same treatment as the why-card icons */
       .ai-stat-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 9px;
-        background: color-mix(in srgb, var(--dominant) 12%, transparent);
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background:
+          linear-gradient(135deg,
+            color-mix(in srgb, var(--dominant) 18%, transparent),
+            color-mix(in srgb, var(--rose)      8%, transparent));
         border: 1px solid color-mix(in srgb, var(--dominant) 22%, transparent);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.55),
+          0 2px 6px color-mix(in srgb, var(--dominant) 14%, transparent);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1081,25 +1104,8 @@
       .ai-stat-label { display: none; }
       /* Hide the old flex dividers */
       .ai-stat-divider { display: none; }
-      /* Quadrant borders: right on left column, top on bottom row */
-      .ai-stat:nth-child(1),
-      .ai-stat:nth-child(3) {
-        border-right: 1px solid color-mix(in srgb, var(--dominant) 16%, transparent);
-      }
-      .ai-stat:nth-child(3),
-      .ai-stat:nth-child(4) {
-        border-top: 1px solid color-mix(in srgb, var(--dominant) 16%, transparent);
-      }
       @media (min-width: 700px) {
         .ai-stat-bar { grid-template-columns: repeat(4, 1fr); }
-        .ai-stat:nth-child(3) { border-top: none; }
-        .ai-stat:nth-child(4) { border-top: none; }
-        .ai-stat:nth-child(1),
-        .ai-stat:nth-child(2),
-        .ai-stat:nth-child(3) {
-          border-right: 1px solid color-mix(in srgb, var(--dominant) 16%, transparent);
-        }
-        .ai-stat:nth-child(4) { border-right: none; }
       }
 
       /* Toolkit */
@@ -1355,9 +1361,10 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
-      /* Selected-discipline card: label + title on top, tool icons in a
-         horizontal row below, drawer-style chevron pinned bottom-right
-         (same affordance as the Custom/Scale package cards). */
+      /* Selected-discipline card: compact label + tool icons in a horizontal
+         row, drawer-style chevron pinned bottom-right (same affordance as the
+         Custom/Scale package cards). The discipline name lives in the active
+         pill above, so it is not repeated here. */
       .tke-summary {
         position: relative;
         display: flex;
@@ -1369,12 +1376,6 @@
         border-radius: 13px;
         background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
       }
-      .tke-summary-copy {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        min-width: 0;
-      }
       .tke-summary-label {
         color: var(--text-secondary);
         font-size: 9px;
@@ -1382,13 +1383,7 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
       }
-      .tke-summary-title {
-        color: var(--text-primary);
-        font-size: 13px;
-        font-weight: 700;
-        white-space: nowrap;
-      }
-      /* Tool icons: single horizontal row under the title */
+      /* Tool icons: single horizontal row under the label */
       .tke-summary-tools {
         display: flex;
         align-items: center;
@@ -3481,9 +3476,11 @@
         border-color: var(--line-strong);
       }
 
-      /* Comparison modal close: floating pill in the upper-right corner,
-         matching the AI Efficiency modal's treatment. */
-      #whyModal .modal-close {
+      /* Floating close pill in the upper-right corner for the comparison and
+         AI Efficiency modals: absolute so it never displaces the centered
+         header content (sticky+float pushed the eyebrow/title off-center). */
+      #whyModal .modal-close,
+      #aiEfficiencyModal .modal-close {
         position: absolute;
         top: 16px;
         right: 16px;
@@ -7020,28 +7017,28 @@
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
             </span>
             <span class="ai-stat-num">4</span>
-            <span class="ai-stat-title">Frontier models in rotation</span>
+            <span class="ai-stat-title">Frontier AI models on every project</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
             <span class="ai-stat-num">2+</span>
-            <span class="ai-stat-title">Models review every build</span>
+            <span class="ai-stat-title">Independent AI reviews per build</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </span>
-            <span class="ai-stat-num">Zero</span>
-            <span class="ai-stat-title">Vendor lock-in, you own it all</span>
+            <span class="ai-stat-num">100%</span>
+            <span class="ai-stat-title">Code and accounts owned by you</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
             </span>
             <span class="ai-stat-num">$0</span>
-            <span class="ai-stat-title">Model bills, we absorb API costs</span>
+            <span class="ai-stat-title">AI costs passed on to you</span>
           </div>
         </div>
 
@@ -7065,10 +7062,7 @@
             <button class="tke-pill"        role="tab" aria-selected="false" data-cat="business"   aria-controls="tkeChips">Business AI Stack</button>
           </div>
           <div class="tke-summary" id="tkeSummary">
-            <div class="tke-summary-copy">
-              <span class="tke-summary-label">Selected discipline</span>
-              <span class="tke-summary-title" id="tkeSummaryTitle">Research</span>
-            </div>
+            <span class="tke-summary-label">Tools we run for this</span>
             <div class="tke-summary-tools" id="tkeSummaryTools" aria-label="Tools in this discipline"></div>
             <button class="tke-expand" id="tkeExpand" type="button" aria-expanded="false" aria-controls="tkeStage" aria-label="Explore stack">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
@@ -9463,7 +9457,6 @@
       if (!card || !chips) return;
       var stage = document.getElementById('tkeStage');
       var expand = document.getElementById('tkeExpand');
-      var summaryTitle = document.getElementById('tkeSummaryTitle');
       var summaryTools = document.getElementById('tkeSummaryTools');
 
       /* Brand-accurate SVG logos — full colour on the white glass circle */
@@ -9573,7 +9566,6 @@
         var tools = DATA[cat] || [];
         var title = document.getElementById('tkeFor');
         if (title) title.textContent = TITLES[cat] || cat;
-        if (summaryTitle) summaryTitle.textContent = TITLES[cat] ? TITLES[cat].replace(/^For /, '') : cat;
         if (summaryTools) {
           summaryTools.innerHTML = tools.map(function (t) {
             return '<span class="tke-summary-tool">' + (ICONS[t.i] || '') + '<span>' + t.n + '</span></span>';
