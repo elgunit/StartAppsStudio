@@ -6947,7 +6947,7 @@
       <!-- Our Toolkit -->
       <section class="section" id="toolkit" data-section-name="toolkit">
         <h2 class="section-title">The stack behind every build</h2>
-        <p class="section-subtitle">Every tool here is chosen for what it gives your product, not what's fashionable. Hover or tap any card to see how it's used.</p>
+        <p class="section-subtitle">Every tool here is chosen for what it gives your product, not what's fashionable.</p>
         <p class="section-subtitle">AI is used throughout the work, which is why projects ship in weeks instead of months. Every build is reviewed and structured by a person who owns the outcome, so what ships is sound and extensible.</p>
 
         <!-- AI stack stat bar -->
@@ -7809,6 +7809,49 @@
         document.getElementById('tab-' + tab).classList.add('active');
         el.classList.add('active');
       }
+
+      /* Swipe between the Build and Grow views without interfering with
+         vertical page scrolling or tap-to-expand service cards. */
+      (function () {
+        var section = document.getElementById('what-we-ship');
+        if (!section) return;
+        var startX = 0, startY = 0, tracking = false, swipeHandled = false;
+        var minSwipe = 48;
+
+        section.addEventListener('touchstart', function (e) {
+          if (e.touches.length !== 1) { tracking = false; return; }
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          tracking = true;
+          swipeHandled = false;
+        }, { passive: true });
+
+        section.addEventListener('touchend', function (e) {
+          if (!tracking) return;
+          tracking = false;
+          var t = e.changedTouches[0];
+          var dx = t.clientX - startX;
+          var dy = t.clientY - startY;
+          if (Math.abs(dx) < minSwipe || Math.abs(dx) < Math.abs(dy) * 2) return;
+
+          var activeButton = section.querySelector('.service-tab.active');
+          var nextTab = dx < 0 ? 'grow' : 'build';
+          if (!activeButton || activeButton.textContent.trim().toLowerCase() === nextTab) return;
+          var nextButton = section.querySelector('.service-tab[onclick*="' + nextTab + '"]');
+          if (!nextButton) return;
+          switchTab(nextTab, nextButton);
+          swipeHandled = true;
+        }, { passive: true });
+
+        /* A swipe that starts on a card should not trigger its click handler
+           when the browser synthesizes a click after touchend. */
+        section.addEventListener('click', function (e) {
+          if (!swipeHandled) return;
+          e.preventDefault();
+          e.stopPropagation();
+          swipeHandled = false;
+        }, true);
+      })();
 
       function openWhyModal() {
         document.getElementById('whyModal').classList.add('open');
