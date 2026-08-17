@@ -62,7 +62,7 @@ function saveShaMap(map) {
 // ---------------------------------------------------------------------------
 
 function git(args) {
-  return execSync(`git ${args}`, { encoding: "utf8" }).trim();
+  return execSync(`git ${args}`, { encoding: "utf8", maxBuffer: MAX_BUF }).trim();
 }
 
 async function apiCall(path, options = {}) {
@@ -97,8 +97,10 @@ async function patch(path, payload) {
 // Git object parsing
 // ---------------------------------------------------------------------------
 
+const MAX_BUF = 100 * 1024 * 1024; // 100 MB — prevents ENOBUFS on large histories
+
 function parseCommit(sha) {
-  const raw    = execSync(`git cat-file -p ${sha}`, { encoding: "utf8" });
+  const raw    = execSync(`git cat-file -p ${sha}`, { encoding: "utf8", maxBuffer: MAX_BUF });
   const result = { sha, parents: [], message: "" };
   let inBody   = false;
 
@@ -154,7 +156,7 @@ function getChangedFiles(parentSha, commitSha) {
 
   if (!parentSha) {
     // Initial commit — list every file
-    const out = execSync(`git ls-tree -r ${commitSha}`, { encoding: "utf8" });
+    const out = execSync(`git ls-tree -r ${commitSha}`, { encoding: "utf8", maxBuffer: MAX_BUF });
     for (const line of out.split("\n")) {
       if (!line.trim()) continue;
       const tab  = line.indexOf("\t");
@@ -164,7 +166,7 @@ function getChangedFiles(parentSha, commitSha) {
     }
   } else {
     // ":old_mode new_mode old_sha new_sha STATUS\tpath"
-    const out = execSync(`git diff-tree -r --raw ${parentSha} ${commitSha}`, { encoding: "utf8" });
+    const out = execSync(`git diff-tree -r --raw ${parentSha} ${commitSha}`, { encoding: "utf8", maxBuffer: MAX_BUF });
     for (const line of out.split("\n")) {
       if (!line.trim()) continue;
       const tab    = line.indexOf("\t");
@@ -210,9 +212,20 @@ async function getRemoteTree(remoteCommitSha) {
 }
 
 async function createBlob(localBlobSha) {
-  const content = execFileSync("git", ["cat-file", "blob", localBlobSha]).toString("base64");
-  const result  = await post(`/repos/${OWNER}/${REPO}/git/blobs`, { content, encoding: "base64" });
-  return result.sha;
+  const content = execFileSync("git", ["cat-file", "blob", localBlobSha], { maxBuffer: MAX_BUF }).toString("base64");
+  try {
+    const result = await post(`/repos/${OWNER}/${REPO}/git/blobs`, { content, encoding: "base64" });
+    return result.sha;
+  } catch (e) {
+    // GitHub rejects blobs that are too large for the API (422 "input was too large").
+    // Skip the file so the rest of the commit is still pushed correctly.
+    if (e.message.includes("422") && e.message.toLowerCase().includes("too large")) {
+      const sizeMB = (Buffer.byteLength(content, "base64") / 1024 / 1024).toFixed(1);
+      console.warn(`    ⚠ Skipping oversized blob ${localBlobSha.slice(0, 8)} (~${sizeMB} MB) — too large for GitHub API`);
+      return null; // caller will omit this file from the tree
+    }
+    throw e;
+  }
 }
 
 async function createRemoteTree(baseTreeSha, changedFiles) {
@@ -225,7 +238,9 @@ async function createRemoteTree(baseTreeSha, changedFiles) {
                    f.mode === "120000" ? "120000" :
                    f.mode.startsWith("16") ? "160000" : "100644";
       const type = f.mode.startsWith("16") ? "commit" : "blob";
-      tree.push({ path: f.path, mode, type, sha: await createBlob(f.blobSha) });
+      const blobSha = await createBlob(f.blobSha);
+      if (blobSha === null) continue; // oversized — omit from tree
+      tree.push({ path: f.path, mode, type, sha: blobSha });
     }
   }
   const payload = { tree };
@@ -303,7 +318,7 @@ async function setRemoteRef(branch, sha, existed) {
  * (first-time run before any SHA-map entries exist).
  */
 function findBaseLocalSha(shaMap, localHead, remoteHead) {
-  const ancestors = execSync(`git log --format=%H ${localHead}`, { encoding: "utf8" })
+  const ancestors = execSync(`git log --format=%H ${localHead}`, { encoding: "utf8", maxBuffer: 100 * 1024 * 1024 })
     .trim().split("\n").filter(Boolean);
 
   for (const sha of ancestors) {
@@ -364,7 +379,7 @@ async function main() {
   const logRange = baseLocalSha ? `${baseLocalSha}..${localHead}` : localHead;
   const logOut   = execSync(
     `git log --format=%H --topo-order ${logRange}`,
-    { encoding: "utf8" }
+    { encoding: "utf8", maxBuffer: 100 * 1024 * 1024 }
   ).trim();
 
   if (!logOut) {
@@ -428,6 +443,9 @@ async function main() {
     if (remoteCommitSha !== sha) {
       console.log(`    (remote SHA: ${remoteCommitSha.slice(0, 8)})`);
     }
+
+    // Save SHA map every 50 commits so a crash never loses all progress
+    if (shaMap.size % 50 === 0) saveShaMap(shaMap);
   }
 
   // ── Update remote ref ─────────────────────────────────────────────────────
