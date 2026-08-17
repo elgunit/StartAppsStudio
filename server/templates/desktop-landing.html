@@ -4628,32 +4628,15 @@
       @media (max-width: 768px) {
         /* Wrapper is a plain positioning shell. It must NOT clip - clipping
            chops card shadows into a hard rectangle.
-           The ::after pseudo-element is a bottom scrim that fades from
-           transparent to the page canvas color, covering the card shadow
-           bleed zone. The wrap ends exactly where the dots begin (dots are
-           a sibling, not a child), so the solid bottom of the gradient is
-           hidden behind nothing - it simply transitions into the bare page
-           background, making the shadow vanish before the dots appear. */
+           NO bottom scrim here: the wrap sits on the section's translucent
+           glass panel, not on bare canvas, so any canvas-coloured gradient
+           inevitably ends as a visible band (worst in dark mode). The soft
+           mobile card shadow (0 4px 14px) dissolves on its own inside the
+           grid's 44px bottom padding - nothing needs covering. */
         .showcase-carousel-wrap {
           position: relative;
           margin: 0 0 4px;
           overflow: visible;
-        }
-        /* Bottom scrim: fades card shadows smoothly into the page background.
-           Uses var(--canvas) directly so it matches the actual background in
-           both light and dark mode with no hardcoded colour values. */
-        .showcase-carousel-wrap::after {
-          content: '';
-          position: absolute;
-          left: 0; right: 0;
-          bottom: 0;
-          height: 80px;
-          pointer-events: none;
-          z-index: 1;
-          background: linear-gradient(to bottom,
-            transparent                    0%,
-            color-mix(in srgb, var(--canvas) 70%, transparent) 55%,
-            var(--canvas)                100%);
         }
         .showcase-grid {
           display: flex;

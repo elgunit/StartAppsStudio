@@ -21,10 +21,10 @@ A shadow band kept appearing between the card bottom and the pagination dots, su
 
 1. **Root cause: a late global liquid-glass rule re-applied the heavy desktop shadow (`var(--shadow)` = 0 18px 55px) to `.showcase-card` with `!important`**, silently defeating the soft mobile shadow set in the carousel media query. Tuning the carousel rules could never work while that override stood. Fix: re-assert the soft mobile shadow with `!important` *later in source* inside a max-width media query.
 2. The left/right edge vignettes also terminated at `bottom: 44px` with a hard horizontal cut — fixed with `mask-image: linear-gradient(to bottom, black 60%, transparent 100%)` so they dissolve before their bottom edge.
-3. A bottom scrim (transparent → canvas `#eef2f0` / dark `#102124`) on `.showcase-carousel-wrap::after` works here **because the wrap ends exactly where the dots begin (dots are a sibling)** and the section sits directly on the opaque canvas — so the scrim's solid end blends into bare page background rather than painting a rectangle.
+3. ~~A bottom scrim on `.showcase-carousel-wrap::after`~~ — **disproven Aug 2026**: the carousel sits on the section's translucent glass panel (`.section::before` with backdrop-filter), NOT bare opaque canvas, so any canvas-coloured scrim (hardcoded or `var(--canvas)`) paints a visible band, worst in dark mode. The user reported it twice. Final fix: **delete the scrim entirely** — the soft mobile card shadow (0 4px 14px) dissolves on its own inside the grid's 44px bottom padding; nothing needs covering.
 
 **Rules:**
 - When a shadow "won't soften," grep for later `!important` rules on the same selector before touching layout — the glass-styling blocks near the end of the stylesheet override component rules.
 - Every fade/vignette overlay must itself fade out on ALL edges that sit over visible background.
-- Cover scrims are only safe when their solid edge coincides with an element boundary over the same opaque background color.
+- Cover scrims are only safe when their solid edge coincides with an element boundary over the same opaque background color. On this site the showcase section background is translucent glass, so NO bottom scrim can ever match it — do not reintroduce one; rely on soft shadows + padding instead.
 - Keep `padding-bottom >= shadow offset-y + 2×blur` so shadows dissolve inside the scroller.
