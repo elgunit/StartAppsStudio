@@ -8055,6 +8055,18 @@
 
         overlay.addEventListener('touchmove', blockPageScroll, { passive: false });
 
+        // Backdrop tap: close when the finger lifts outside the sheet.
+        // Using touchend instead of click because iOS Safari does not fire click
+        // on non-interactive divs. preventDefault() stops the synthetic click
+        // from reaching carousel cards behind the overlay.
+        overlay.addEventListener('touchend', function(e) {
+          if (!overlay.classList.contains('open')) return;
+          if (!content.contains(e.target)) {
+            e.preventDefault();
+            closeShowcaseModal();
+          }
+        }, { passive: false });
+
         // ── Swipe-to-dismiss gesture ──────────────────────────────────────
         content.addEventListener('touchstart', function(e) {
           // Allow drag when at the very top of the scroll (which includes
