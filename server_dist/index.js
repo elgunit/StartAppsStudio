@@ -100,6 +100,9 @@ var init_schema = __esm({
       source: text("source"),
       userAgent: text("user_agent"),
       ipHash: text("ip_hash"),
+      // true when the same ipHash+toolName was already recorded within the prior 24 h
+      // (raw row is preserved; stats queries filter this out for unique-visitor counts)
+      isDuplicate: boolean("is_duplicate").notNull().default(false),
       createdAt: timestamp("created_at").notNull().defaultNow()
     });
     insertJournalLeadSchema = createInsertSchema(journalLeads).omit({
@@ -155,7 +158,12 @@ var init_db = __esm({
 });
 
 // server/storage.ts
+import crypto from "crypto";
 import { eq, desc, and, sql as sql2, inArray } from "drizzle-orm";
+function revealLockKey(ipHash, toolName) {
+  const buf = crypto.createHash("sha256").update(`${ipHash}::${toolName}`).digest();
+  return buf.readInt32BE(0);
+}
 var DatabaseStorage, storage;
 var init_storage = __esm({
   "server/storage.ts"() {
@@ -479,23 +487,85 @@ var init_storage = __esm({
       }
       // Toolkit reveals
       async recordToolkitReveal(reveal) {
-        const [row2] = await db.insert(toolkitReveals).values(reveal).returning();
-        return row2;
+        if (!reveal.ipHash) {
+          const [row2] = await db.insert(toolkitReveals).values({ ...reveal, isDuplicate: false }).returning();
+          return row2;
+        }
+        const lockKey = revealLockKey(reveal.ipHash, reveal.toolName);
+        const client = await pool.connect();
+        try {
+          await client.query("BEGIN");
+          await client.query("SELECT pg_advisory_xact_lock($1)", [lockKey]);
+          const windowStart = new Date(Date.now() - 24 * 60 * 60 * 1e3);
+          const { rows: existing } = await client.query(
+            `SELECT id FROM toolkit_reveals
+         WHERE ip_hash = $1 AND tool_name = $2 AND created_at >= $3
+         LIMIT 1`,
+            [reveal.ipHash, reveal.toolName, windowStart]
+          );
+          const isDuplicate = existing.length > 0;
+          const { rows } = await client.query(
+            `INSERT INTO toolkit_reveals
+           (tool_name, tool_group, source, user_agent, ip_hash, is_duplicate)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING *`,
+            [
+              reveal.toolName,
+              reveal.toolGroup ?? null,
+              reveal.source ?? null,
+              reveal.userAgent ?? null,
+              reveal.ipHash,
+              isDuplicate
+            ]
+          );
+          await client.query("COMMIT");
+          return rows[0];
+        } catch (err) {
+          await client.query("ROLLBACK");
+          throw err;
+        } finally {
+          client.release();
+        }
       }
       async getToolkitRevealStats(from, to) {
         const conditions = [];
         if (from) conditions.push(sql2`${toolkitReveals.createdAt} >= ${from}`);
         if (to) conditions.push(sql2`${toolkitReveals.createdAt} <= ${to}`);
+        const whereClause = conditions.length > 0 ? and(...conditions) : sql2`true`;
         const rows = await db.select({
           toolName: toolkitReveals.toolName,
           toolGroup: toolkitReveals.toolGroup,
-          reveals: sql2`count(*)::int`,
+          // unique: first-seen reveals only (is_duplicate = false)
+          reveals: sql2`count(*) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
+          // raw: every click recorded
+          rawReveals: sql2`count(*)::int`,
           lastSeen: sql2`max(${toolkitReveals.createdAt})`
-        }).from(toolkitReveals).where(conditions.length > 0 ? and(...conditions) : sql2`true`).groupBy(toolkitReveals.toolName, toolkitReveals.toolGroup).orderBy(desc(sql2`count(*)`));
+        }).from(toolkitReveals).where(whereClause).groupBy(toolkitReveals.toolName, toolkitReveals.toolGroup).orderBy(desc(sql2`count(*) filter (where ${toolkitReveals.isDuplicate} = false)`));
         return rows.map((r) => ({
           toolName: r.toolName,
           toolGroup: r.toolGroup,
           reveals: Number(r.reveals),
+          rawReveals: Number(r.rawReveals),
+          lastSeen: r.lastSeen
+        }));
+      }
+      async getToolkitGroupStats(from, to) {
+        const conditions = [];
+        if (from) conditions.push(sql2`${toolkitReveals.createdAt} >= ${from}`);
+        if (to) conditions.push(sql2`${toolkitReveals.createdAt} <= ${to}`);
+        const whereClause = conditions.length > 0 ? and(...conditions) : sql2`true`;
+        const rows = await db.select({
+          toolGroup: toolkitReveals.toolGroup,
+          reveals: sql2`count(*) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
+          rawReveals: sql2`count(*)::int`,
+          uniqueTools: sql2`count(distinct ${toolkitReveals.toolName}) filter (where ${toolkitReveals.isDuplicate} = false)::int`,
+          lastSeen: sql2`max(${toolkitReveals.createdAt})`
+        }).from(toolkitReveals).where(whereClause).groupBy(toolkitReveals.toolGroup).orderBy(desc(sql2`count(*) filter (where ${toolkitReveals.isDuplicate} = false)`));
+        return rows.map((r) => ({
+          toolGroup: r.toolGroup,
+          reveals: Number(r.reveals),
+          rawReveals: Number(r.rawReveals),
+          uniqueTools: Number(r.uniqueTools),
           lastSeen: r.lastSeen
         }));
       }
@@ -3389,14 +3459,8 @@ var init_render = __esm({
   .site-nav .brand { font-family:var(--display); }
   .container, .container-wide { position:relative; }
   .index-header, .article-kicker, .article-body, .article-footer, .post-grid, .article-cta { position:relative; }
-  .index-header { overflow:hidden; }
-  .index-header::before { content:""; position:absolute; inset:-28px -34px; z-index:-1;
-    /* keep within page padding so the glass panel never widens scrollWidth */
-  }
-  @media (max-width: 700px) {
-    .index-header::before { left:-14px; right:-14px; }
-  }
-  .index-header::before { border:1px solid var(--glass-line); border-radius:28px; background:var(--glass-panel); box-shadow:0 20px 60px rgba(13,58,67,.08),0 1px 0 rgba(255,255,255,.7) inset; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  /* The journal hero shares the page surface instead of sitting inside a
+     second rectangular glass panel. */
   .article-body { background:transparent; }
   .index-title, .article-title, .article-footer-title { color:var(--glass-ink); }
   .index-eyebrow, .article-kicker .kicker-cat { background:rgba(212,167,44,.18); border:1px solid rgba(212,167,44,.42); color:var(--glass-ink); box-shadow:none; border-radius:999px; }
@@ -3506,13 +3570,13 @@ var init_render = __esm({
 
 // server/routes.ts
 import { createServer } from "node:http";
-import crypto from "crypto";
+import crypto2 from "crypto";
 function requireAdminToken(req) {
   const token = (req.header("x-session-token") || "").trim();
   const secret = (process.env.SESSION_SECRET || "").trim();
   if (!secret || token.length < 16 || token.length !== secret.length) return false;
   try {
-    return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(secret));
+    return crypto2.timingSafeEqual(Buffer.from(token), Buffer.from(secret));
   } catch {
     return false;
   }
@@ -3974,9 +4038,13 @@ async function registerRoutes(app2) {
       };
       const from = parseDate(req.query.from);
       const to = parseDate(req.query.to);
-      const stats = await storage.getToolkitRevealStats(from, to);
-      const total = stats.reduce((acc, r) => acc + r.reveals, 0);
-      res.json({ totalReveals: total, stats });
+      const [stats, groupStats] = await Promise.all([
+        storage.getToolkitRevealStats(from, to),
+        storage.getToolkitGroupStats(from, to)
+      ]);
+      const totalReveals = stats.reduce((acc, r) => acc + r.reveals, 0);
+      const totalRawReveals = stats.reduce((acc, r) => acc + r.rawReveals, 0);
+      res.json({ totalReveals, totalRawReveals, groupStats, stats });
     } catch (err) {
       console.error("toolkit-reveals admin error:", err);
       res.status(500).json({ error: "Failed to fetch toolkit reveals" });
@@ -4164,7 +4232,7 @@ __export(index_exports, {
 import express from "express";
 import * as fs from "fs";
 import * as path from "path";
-import crypto2 from "node:crypto";
+import crypto3 from "node:crypto";
 function setupCors(app2) {
   app2.use((req, res, next) => {
     const origins = /* @__PURE__ */ new Set();
@@ -4206,7 +4274,7 @@ function setupBodyParsing(app2) {
 function hashIp(ip) {
   if (!ip) return null;
   const day = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-  return crypto2.createHash("sha256").update(`${IP_HASH_SALT}|${day}|${ip}`).digest("hex").slice(0, 16);
+  return crypto3.createHash("sha256").update(`${IP_HASH_SALT}|${day}|${ip}`).digest("hex").slice(0, 16);
 }
 function getClientIp(req) {
   const xff = req.header("x-forwarded-for");
