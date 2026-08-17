@@ -1042,8 +1042,8 @@
         align-items: center;
         justify-content: flex-start;
         text-align: center;
-        padding: clamp(18px, 2.4vw, 28px) clamp(14px, 2vw, 22px);
-        gap: 6px;
+        padding: clamp(14px, 1.8vw, 20px) clamp(12px, 1.6vw, 18px);
+        gap: 5px;
         transition: background 0.18s ease;
       }
       .ai-stat:hover {
@@ -1051,9 +1051,9 @@
       }
       /* Icon well */
       .ai-stat-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
         background: color-mix(in srgb, var(--dominant) 12%, transparent);
         border: 1px solid color-mix(in srgb, var(--dominant) 22%, transparent);
         display: flex;
@@ -1064,24 +1064,21 @@
         flex-shrink: 0;
       }
       .ai-stat-num {
-        font-size: clamp(22px, 2.8vw, 28px);
+        font-size: clamp(20px, 2.4vw, 25px);
         font-weight: 800;
         color: var(--dominant);
         letter-spacing: -0.02em;
         line-height: 1.1;
       }
       .ai-stat-title {
-        font-size: clamp(13px, 1.1vw, 14px);
+        font-size: clamp(11.5px, 1vw, 13px);
         font-weight: 600;
         color: var(--ink);
-        line-height: 1.3;
+        line-height: 1.35;
+        max-width: 150px;
       }
-      .ai-stat-label {
-        font-size: clamp(11px, 0.95vw, 12px);
-        color: var(--muted);
-        line-height: 1.4;
-        text-align: center;
-      }
+      /* Descriptor line removed — title now carries the meaning */
+      .ai-stat-label { display: none; }
       /* Hide the old flex dividers */
       .ai-stat-divider { display: none; }
       /* Quadrant borders: right on left column, top on bottom row */
@@ -1358,14 +1355,16 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
+      /* Selected-discipline card: label + title on top, tool icons in a
+         horizontal row below, drawer-style chevron pinned bottom-right
+         (same affordance as the Custom/Scale package cards). */
       .tke-summary {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        min-height: 42px;
-        padding: 7px 10px 7px 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px 44px 10px 12px;
         border: 1px solid color-mix(in srgb, var(--dominant) 18%, var(--border));
         border-radius: 13px;
         background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
@@ -1385,23 +1384,26 @@
       }
       .tke-summary-title {
         color: var(--text-primary);
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
         white-space: nowrap;
       }
-      /* Collapsed tool row — icon-only pills in a tight horizontal wrap */
+      /* Tool icons: single horizontal row under the title */
       .tke-summary-tools {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 4px;
+        justify-content: flex-start;
+        gap: 5px;
         min-width: 0;
-        flex: 1;
         transition: opacity 0.18s ease;
       }
       .tke-card.is-expanded .tke-summary-tools {
         display: none;
+      }
+      /* Collapse the card padding when tools hide (expanded state) */
+      .tke-card.is-expanded .tke-summary {
+        gap: 0;
       }
       /* Each tool: a small icon-only round chip — no text label */
       .tke-summary-tool {
@@ -1423,17 +1425,21 @@
       }
       /* Hide the text label inside each chip (we only want the icon) */
       .tke-summary-tool span { display: none; }
+      /* Drawer chevron: circular button anchored to the bottom-right corner */
       .tke-expand {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
         display: inline-flex;
         align-items: center;
-        gap: 5px;
-        flex-shrink: 0;
-        padding: 6px 9px;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        padding: 0;
         border: 1px solid color-mix(in srgb, var(--dominant) 32%, var(--border));
-        border-radius: 999px;
+        border-radius: 50%;
         background: color-mix(in srgb, var(--dominant) 9%, transparent);
         color: var(--dominant);
-        font: 700 10px/1 inherit;
         cursor: pointer;
         transition: background 0.18s ease, border-color 0.18s ease;
       }
@@ -1447,9 +1453,6 @@
       .tke-card.is-expanded .tke-expand svg {
         transform: rotate(180deg);
       }
-      .tke-card.is-expanded .tke-expand-label::after { content: 'Hide chart'; }
-      .tke-card.is-expanded .tke-expand-label { font-size: 0; }
-      .tke-card.is-expanded .tke-expand-label::after { font-size: 10px; }
       /* "For {Category}" title — hidden; summary bar already shows the discipline */
       .tke-for { display: none; }
       .tke-card.is-expanded .tke-for { display: none; }
@@ -1610,13 +1613,12 @@
       @media (max-width: 600px) {
         .tke-card { padding: 12px 12px 14px; }
         .tke-pill { font-size: 11.5px; padding: 5px 10px; }
-        /* Keep summary bar single-row on mobile: label+title on left, icons+button on right */
-        .tke-summary { align-items: center; gap: 8px; }
-        .tke-summary-copy { flex-shrink: 0; }
+        /* Summary card on mobile: same stacked layout, slightly tighter */
+        .tke-summary { padding: 9px 40px 9px 11px; gap: 7px; }
         /* Icon chips slightly smaller on mobile */
-        .tke-summary-tool { width: 24px; height: 24px; }
-        .tke-summary-tool svg { width: 13px; height: 13px; }
-        .tke-expand { padding: 5px 8px; flex-shrink: 0; }
+        .tke-summary-tool { width: 25px; height: 25px; }
+        .tke-summary-tool svg { width: 14px; height: 14px; }
+        .tke-expand { width: 28px; height: 28px; right: 8px; bottom: 8px; }
         .tke-stage { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
         .tke-card.is-expanded .tke-stage { padding: 6px 12px 0; }
         /* Stack value cards vertically on narrow phones */
@@ -4114,8 +4116,8 @@
           text-align: center;
           display: flex; flex-direction: column; align-items: center; gap: 10px;
           margin-bottom: 20px;
-          /* Pad away from the absolute close button on both sides equally */
-          padding: 0 44px;
+          /* Keep clear of the close button only at the very top; let text use the width */
+          padding: 0 8px;
         }
         .aem-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
@@ -4132,13 +4134,16 @@
           box-shadow: 0 0 10px color-mix(in srgb, var(--dominant) 85%, transparent);
         }
         .aem-title {
-          font-size: clamp(22px, 4vw, 27px); font-weight: 800;
-          line-height: 1.2; letter-spacing: -0.02em; margin: 0;
+          font-size: clamp(21px, 4.5vw, 27px); font-weight: 800;
+          line-height: 1.22; letter-spacing: -0.02em; margin: 0;
           text-align: center; width: 100%;
+          text-wrap: balance;
         }
         .aem-lede {
           color: var(--muted); font-size: 14px; line-height: 1.6;
-          margin: 0; text-align: center; width: 100%;
+          margin: 0 auto; text-align: center; width: 100%;
+          max-width: 420px;
+          text-wrap: pretty;
         }
 
         /* Segmented tab bar - glass pill container */
@@ -7029,32 +7034,28 @@
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
             </span>
             <span class="ai-stat-num">4</span>
-            <span class="ai-stat-title">Frontier models</span>
-            <span class="ai-stat-label">in active rotation, swapped as better ones ship</span>
+            <span class="ai-stat-title">Frontier models in rotation</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
             <span class="ai-stat-num">2+</span>
-            <span class="ai-stat-title">Models per build</span>
-            <span class="ai-stat-label">every decision reviewed by at least two AI perspectives</span>
+            <span class="ai-stat-title">Models review every build</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </span>
             <span class="ai-stat-num">Zero</span>
-            <span class="ai-stat-title">Vendor lock-in</span>
-            <span class="ai-stat-label">all code and accounts transfer to you on day one</span>
+            <span class="ai-stat-title">Vendor lock-in, you own it all</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/></svg>
             </span>
             <span class="ai-stat-num">$0</span>
-            <span class="ai-stat-title">Model bills for you</span>
-            <span class="ai-stat-label">we absorb every API cost inside our fixed scope</span>
+            <span class="ai-stat-title">Model bills, we absorb API costs</span>
           </div>
         </div>
 
@@ -7083,9 +7084,8 @@
               <span class="tke-summary-title" id="tkeSummaryTitle">Research</span>
             </div>
             <div class="tke-summary-tools" id="tkeSummaryTools" aria-label="Tools in this discipline"></div>
-            <button class="tke-expand" id="tkeExpand" type="button" aria-expanded="false" aria-controls="tkeStage">
-              <span class="tke-expand-label">Explore stack</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            <button class="tke-expand" id="tkeExpand" type="button" aria-expanded="false" aria-controls="tkeStage" aria-label="Explore stack">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </button>
           </div>
           <h3 class="tke-for" id="tkeFor">For Research</h3>
@@ -7300,7 +7300,7 @@
           <!-- Header -->
           <div class="aem-header">
             <span class="aem-eyebrow"><span class="aem-dot"></span>AI Efficiency &amp; Value</span>
-            <h2 class="aem-title" id="aiEfficiencyModalTitle">Stop burning credits.<br>Start shipping product.</h2>
+            <h2 class="aem-title" id="aiEfficiencyModalTitle">Stop burning credits. Start shipping product.</h2>
             <p class="aem-lede">Most founders quietly burn $10,000+ on AI tools before they ship anything real. We turn that spend into working product.</p>
           </div>
 
