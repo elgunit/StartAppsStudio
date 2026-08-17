@@ -1361,19 +1361,17 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
-      /* Selected-discipline card: compact label + tool icons in a horizontal
-         row, drawer-style chevron pinned bottom-right (same affordance as the
-         Custom/Scale package cards). The discipline name lives in the active
-         pill above, so it is not repeated here. */
+      /* Selected-discipline summary: one unified pill — label on the left,
+         tool icons in the middle (flex-grow), chevron as a natural flex
+         child on the right. No absolute positioning, no floating add-on. */
       .tke-summary {
-        position: relative;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        padding: 10px 44px 10px 12px;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 12px 12px 16px;
         border: 1px solid color-mix(in srgb, var(--dominant) 18%, var(--border));
-        border-radius: 13px;
+        border-radius: 999px;
         background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
       }
       .tke-summary-label {
@@ -1382,23 +1380,28 @@
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
-      /* Tool icons: single horizontal row under the label */
+      /* Tool icons: single non-wrapping row that fills the middle of the
+         pill; on narrow screens it scrolls horizontally (scrollbar hidden)
+         so the pill always stays one row tall. */
       .tke-summary-tools {
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: flex-start;
         gap: 5px;
         min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
         transition: opacity 0.18s ease;
       }
+      .tke-summary-tools::-webkit-scrollbar { display: none; }
       .tke-card.is-expanded .tke-summary-tools {
         display: none;
-      }
-      /* Collapse the card padding when tools hide (expanded state) */
-      .tke-card.is-expanded .tke-summary {
-        gap: 0;
       }
       /* Each tool: a small icon-only round chip — no text label */
       .tke-summary-tool {
@@ -1420,17 +1423,15 @@
       }
       /* Hide the text label inside each chip (we only want the icon) */
       .tke-summary-tool span { display: none; }
-      /* Drawer chevron: circular button vertically centred on the right edge
-         — the summary collapses to one short row when expanded, so a
-         bottom-anchored button would poke out of the container. */
+      /* Chevron: inline flex child pushed to the right edge — part of the
+         pill itself, with the row's own padding giving it even breathing
+         room above and below in both collapsed and expanded states. */
       .tke-expand {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
+        margin-left: auto;
         width: 30px;
         height: 30px;
         padding: 0;
@@ -1611,12 +1612,12 @@
       @media (max-width: 600px) {
         .tke-card { padding: 12px 12px 14px; }
         .tke-pill { font-size: 11.5px; padding: 5px 10px; }
-        /* Summary card on mobile: same stacked layout, slightly tighter */
-        .tke-summary { padding: 9px 40px 9px 11px; gap: 7px; }
+        /* Summary pill on mobile: same single-row layout, slightly tighter */
+        .tke-summary { padding: 10px 10px 10px 14px; gap: 8px; }
         /* Icon chips slightly smaller on mobile */
         .tke-summary-tool { width: 25px; height: 25px; }
         .tke-summary-tool svg { width: 14px; height: 14px; }
-        .tke-expand { width: 28px; height: 28px; right: 8px; }
+        .tke-expand { width: 28px; height: 28px; }
         .tke-stage { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
         .tke-card.is-expanded .tke-stage { padding: 6px 12px 0; }
         /* Stack value cards vertically on narrow phones */
@@ -3203,6 +3204,29 @@
       .footer-copyright {
         margin-top: 8px;
       }
+
+      /* Quiet back-to-top control: ghost pill matching the footer's tone */
+      .footer-top-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 18px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+      .footer-top-link:hover {
+        color: var(--text);
+        border-color: color-mix(in srgb, var(--dominant) 40%, var(--border));
+        background: color-mix(in srgb, var(--dominant) 6%, transparent);
+      }
+      .footer-top-link svg { flex-shrink: 0; }
       
 
 
@@ -7711,6 +7735,11 @@
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
            <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a>
         </div>
+        <button class="footer-top-link" type="button" aria-label="Scroll back to the top of the page"
+          onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+          Back to top
+        </button>
         <p class="footer-copyright">&copy; 2026 Start Apps Studio. All rights reserved.</p>
       </div>
     </footer>
@@ -7925,6 +7954,34 @@
       document.getElementById('aiEfficiencyModal').addEventListener('click', function(e) {
         if (e.target === this) closeAiEfficiencyModal();
       });
+
+      /* Swipe between the AI Efficiency tabs, mirroring the tap behaviour.
+         Horizontal-dominant gesture only: a mostly-vertical drag scrolls the
+         modal as usual and never switches tabs. */
+      (function () {
+        var shell = document.querySelector('#aiEfficiencyModal .aem-shell');
+        if (!shell) return;
+        var startX = 0, startY = 0, tracking = false;
+        shell.addEventListener('touchstart', function (e) {
+          if (e.touches.length !== 1) { tracking = false; return; }
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          tracking = true;
+        }, { passive: true });
+        shell.addEventListener('touchend', function (e) {
+          if (!tracking) return;
+          tracking = false;
+          var t = e.changedTouches[0];
+          var dx = t.clientX - startX;
+          var dy = t.clientY - startY;
+          /* Require a clear horizontal swipe: >=48px travel and at least
+             twice as much horizontal as vertical movement. */
+          if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 2) return;
+          var managedActive = document.getElementById('aemPanelManaged').classList.contains('active');
+          if (dx < 0 && !managedActive) switchAemTab('managed');
+          else if (dx > 0 && managedActive) switchAemTab('alone');
+        }, { passive: true });
+      })();
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
