@@ -65,16 +65,31 @@ function git(args) {
   return execSync(`git ${args}`, { encoding: "utf8", maxBuffer: MAX_BUF }).trim();
 }
 
-async function apiCall(path, options = {}) {
-  const resp = await connectors.proxy("github", path, options);
-  if (resp.status === 204) return null;
-  const body = await resp.json();
-  if (!resp.ok) {
-    throw new Error(
-      `GitHub API ${options.method || "GET"} ${path} → ${resp.status}: ${JSON.stringify(body)}`
-    );
+async function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+async function apiCall(path, options = {}, retries = 8) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const resp = await connectors.proxy("github", path, options);
+    if (resp.status === 204) return null;
+
+    // Retry on transient server errors (502, 503, 504)
+    if ((resp.status === 502 || resp.status === 503 || resp.status === 504) && attempt < retries) {
+      const delay = Math.min(3000 * Math.pow(1.8, attempt), 60000); // 3s, 5.4s, 9.7s … up to 60s
+      console.warn(`    ⚠ GitHub ${resp.status} on ${path} — retrying in ${(delay / 1000).toFixed(0)}s (attempt ${attempt + 1}/${retries})…`);
+      await sleep(delay);
+      continue;
+    }
+
+    const body = await resp.json();
+    if (!resp.ok) {
+      throw new Error(
+        `GitHub API ${options.method || "GET"} ${path} → ${resp.status}: ${JSON.stringify(body)}`
+      );
+    }
+    return body;
   }
-  return body;
 }
 
 async function post(path, payload) {
@@ -213,6 +228,8 @@ async function getRemoteTree(remoteCommitSha) {
 
 async function createBlob(localBlobSha) {
   const content = execFileSync("git", ["cat-file", "blob", localBlobSha], { maxBuffer: MAX_BUF }).toString("base64");
+  // Small delay to avoid saturating GitHub's blob API and triggering 503s
+  await sleep(150);
   try {
     const result = await post(`/repos/${OWNER}/${REPO}/git/blobs`, { content, encoding: "base64" });
     return result.sha;
@@ -444,8 +461,8 @@ async function main() {
       console.log(`    (remote SHA: ${remoteCommitSha.slice(0, 8)})`);
     }
 
-    // Save SHA map every 50 commits so a crash never loses all progress
-    if (shaMap.size % 50 === 0) saveShaMap(shaMap);
+    // Save SHA map after every commit so a crash never loses progress
+    saveShaMap(shaMap);
   }
 
   // ── Update remote ref ─────────────────────────────────────────────────────
