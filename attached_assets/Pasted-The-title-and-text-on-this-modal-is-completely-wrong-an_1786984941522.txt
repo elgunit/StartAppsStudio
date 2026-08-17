@@ -1,0 +1,29 @@
+The title and text on this modal is completely wrong and not even centered to fit the width of the modal.
+
+The selected discipline is still not well designed. We can show the icons horizontally below instead of sitting in between the title and dropdown button. To be frank we can keep the arrow on the bottom right like in previous drawer arrow we built.
+
+Also the quadrant is still too large and has repetitive elements that can be scrapped for reduced screen real estate.
+
+Please fix this accordingly.
+I’ll inspect the modal and toolkit/stat-card implementations, then align them directly to the uploaded references: centered modal typography, a cleaner horizontal icon row in the selected-discipline panel, a bottom-right drawer-style arrow control, and a tighter stats quadrant with less repeated copy.
+Let me read the relevant sections in parallel before making changes:
+Now I have everything I need. Three clear fixes to make:
+
+Modal — the aem-header has padding: 0 44px which squishes the text on mobile, plus the title/lede text isn't filling the modal width properly
+Selected discipline card — restructure: label + bold title on top row, icons in a horizontal row below, expand arrow in bottom-right corner (no inline expand button cluttering the top)
+Stats quadrant — the descriptor labels under each stat repeat info already in the title; strip them down to just icon + number + title (remove the .ai-stat-label descriptor text, reducing height significantly)
+Let me also read the stats HTML and the toolkit summary HTML to confirm the exact markup:
+Now I have everything I need. Making all three fixes in parallel:
+Let me look at the existing bottom-corner drawer affordance pattern the user referenced (Custom/Scale cards):
+Now I'll restructure the selected-discipline card (title top, icons horizontal below, drawer-style chevron bottom-right) and slim the stats quadrant. HTML first:
+Now updating the mobile overrides for the new summary layout and slimming the stats quadrant (removing the repetitive descriptor lines) in one batch:
+The modal title has a hard <br> that forces awkward 4-line wrapping on mobile — removing it so the text wraps naturally to the modal width:
+Now verifying all three fixes at a mobile viewport:
+All three fixes are in place and verified on a mobile viewport:
+
+Modal — removed the hard line break and the heavy side padding that was squeezing the title into a narrow column. The heading now wraps naturally across the modal width, and the badge, title, and intro paragraph are all properly centered.
+
+Selected discipline card — restructured: label and title sit on top, the tool icons run in a single horizontal row beneath them, and the expand control is now a small circular chevron pinned to the bottom-right corner, matching the drawer affordance on the Custom/Scale cards.
+
+Stats quadrant — dropped the repetitive descriptor sentences and folded the essentials into single title lines ("4 — Frontier models in rotation," "$0 — Model bills, we absorb API costs"). Combined with tighter padding and smaller icon wells, the whole grid is noticeably shorter.
+I think we should remove the bottom most text in the hero section as it may be a repeat in verbiage?
