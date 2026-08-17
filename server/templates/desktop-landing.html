@@ -1265,6 +1265,153 @@
         .toolkit-group-desc { font-size: 12.5px; margin-bottom: 10px; }
       }
 
+      /* ── Toolkit use-case explorer (liquid glass) ─────────────────── */
+      .tke-card {
+        max-width: 940px;
+        margin: 0 auto 34px;
+        padding: 18px 20px 20px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg-elevated) 72%, transparent);
+        -webkit-backdrop-filter: blur(12px) saturate(140%);
+        backdrop-filter: blur(12px) saturate(140%);
+        box-shadow: inset 0 1px 0 var(--specular), 0 10px 28px rgba(13, 32, 30, 0.06);
+        position: relative;
+        overflow: hidden;
+      }
+      .tke-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--refract-top);
+        pointer-events: none;
+        border-radius: inherit;
+      }
+      .tke-header {
+        position: relative;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tke-heading {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .tke-legend {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .tke-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .tke-dot { width: 8px; height: 8px; border-radius: 50%; }
+      .tke-dot--pro { background: var(--dominant); box-shadow: 0 0 6px color-mix(in srgb, var(--dominant) 55%, transparent); }
+      .tke-dot--beg { background: color-mix(in srgb, var(--text-secondary) 45%, transparent); }
+      .tke-tabs {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 14px 0;
+      }
+      .tke-pill {
+        padding: 6px 13px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg-elevated) 65%, transparent);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        color: var(--text-secondary);
+        font-size: 12.5px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+      }
+      .tke-pill:hover {
+        border-color: rgba(13, 148, 136, 0.4);
+        color: var(--text-primary);
+      }
+      .tke-pill.active {
+        background: var(--dominant);
+        border-color: var(--dominant);
+        color: #fff;
+        box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
+      }
+      .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
+      .tke-chips {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        min-height: 56px;
+      }
+      .tke-chip {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 14px 9px 10px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        box-shadow: inset 0 1px 0 var(--specular);
+        animation: tke-chip-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+      }
+      .tke-chip--pro {
+        border-color: color-mix(in srgb, var(--dominant) 45%, var(--border));
+        box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 14%, transparent), inset 0 1px 0 var(--specular-teal);
+      }
+      .tke-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        flex-shrink: 0;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+      }
+      .tke-chip--pro .tke-icon { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+      .tke-chip--beg .tke-icon { background: linear-gradient(135deg, #8aa5a1, #64807b); }
+      .tke-chip-text { display: flex; flex-direction: column; line-height: 1.2; }
+      .tke-chip-name { font-size: 13.5px; font-weight: 700; color: var(--text-primary); }
+      .tke-chip-level {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      .tke-chip--pro .tke-chip-level { color: var(--dominant); }
+      .tke-chip--beg .tke-chip-level { color: var(--text-secondary); }
+      @keyframes tke-chip-in {
+        from { opacity: 0; transform: translateY(8px) scale(0.96); }
+        to   { opacity: 1; transform: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tke-chip { animation: none; }
+      }
+      @media (max-width: 600px) {
+        .tke-card { padding: 14px 14px 16px; }
+        .tke-pill { font-size: 11.5px; padding: 5px 10px; }
+        .tke-chip { padding: 8px 12px 8px 8px; gap: 8px; }
+        .tke-icon { width: 30px; height: 30px; border-radius: 9px; }
+        .tke-chip-name { font-size: 12.5px; }
+      }
+
       /* Industries */
       .industries-grid {
         display: flex;
@@ -3695,207 +3842,6 @@
       /* ── AI Efficiency section & modal ───────────────────────────────── */
         #ai-efficiency { margin-bottom: 80px; }
 
-        /* ── AI Toolset chart card ──────────────────────────────────────── */
-        .atc-card {
-          margin-top: 18px;
-          border-radius: var(--r-lg);
-          border: 1px solid var(--line);
-          background: color-mix(in srgb, #0d1e1c 92%, var(--dominant));
-          box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06);
-          overflow: hidden;
-          position: relative;
-        }
-        .atc-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(20,184,166,0.12) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .atc-inner {
-          position: relative;
-          padding: 28px 28px 24px;
-        }
-        .atc-header {
-          display: flex;
-          align-items: baseline;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 8px;
-          margin-bottom: 20px;
-        }
-        .atc-heading {
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.45);
-          margin: 0;
-        }
-        .atc-legend {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-        .atc-legend-item {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 11px;
-          color: rgba(255,255,255,0.45);
-          font-weight: 500;
-        }
-        .atc-legend-dot {
-          width: 8px; height: 8px; border-radius: 50%;
-        }
-        .atc-legend-dot--pro { background: rgba(255,255,255,0.9); }
-        .atc-legend-dot--beg { background: rgba(255,255,255,0.32); }
-
-        /* Tab row */
-        .atc-tabs {
-          display: flex;
-          gap: 5px;
-          flex-wrap: wrap;
-          margin-bottom: 28px;
-        }
-        .atc-tab {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          padding: 6px 13px;
-          border-radius: 999px;
-          border: 1px solid rgba(255,255,255,0.12);
-          background: rgba(255,255,255,0.05);
-          color: rgba(255,255,255,0.5);
-          font-size: 12.5px;
-          font-weight: 600;
-          font-family: inherit;
-          cursor: pointer;
-          transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
-          white-space: nowrap;
-        }
-        .atc-tab:hover {
-          background: rgba(255,255,255,0.10);
-          color: rgba(255,255,255,0.8);
-        }
-        .atc-tab.active {
-          background: var(--dominant);
-          border-color: var(--dominant);
-          color: #fff;
-          box-shadow: 0 0 16px color-mix(in srgb, var(--dominant) 55%, transparent);
-        }
-
-        /* Bar chart area */
-        .atc-chart-scroll {
-          overflow-x: auto;
-          overflow-y: visible;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          margin: 0 -28px;
-          padding: 0 28px;
-        }
-        .atc-chart-scroll::-webkit-scrollbar { display: none; }
-        .atc-chart {
-          display: flex;
-          align-items: flex-end;
-          gap: 10px;
-          min-height: 200px;
-          padding-bottom: 12px;
-          /* min-width keeps all columns visible without squishing */
-          min-width: max-content;
-        }
-
-        /* Each column: icon + bar + name */
-        .atc-col {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0;
-          width: clamp(60px, 9vw, 82px);
-          flex-shrink: 0;
-        }
-
-        /* Level label above icon */
-        .atc-level-label {
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          margin-bottom: 5px;
-          white-space: nowrap;
-        }
-        .atc-level-label--pro { color: rgba(255,255,255,0.7); }
-        .atc-level-label--beg { color: rgba(255,255,255,0.35); }
-
-        /* Frosted glass icon circle */
-        .atc-icon {
-          width: 38px; height: 38px;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-          margin-bottom: 6px;
-          border: 1px solid rgba(255,255,255,0.18);
-          background: rgba(255,255,255,0.10);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.20), 0 2px 8px rgba(0,0,0,0.22);
-          color: #fff;
-          transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .atc-col:hover .atc-icon {
-          transform: translateY(-3px) scale(1.08);
-        }
-
-        /* Bar */
-        .atc-bar {
-          width: 100%;
-          border-radius: 6px 6px 2px 2px;
-          transform-origin: bottom center;
-          animation: atc-bar-in 0.55s cubic-bezier(0.34,1.2,0.64,1) both;
-        }
-        .atc-bar--pro {
-          background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.60) 100%);
-          box-shadow: 0 0 20px rgba(255,255,255,0.18), inset 0 1px 0 rgba(255,255,255,0.55);
-        }
-        .atc-bar--beg {
-          background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.14) 100%);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.20);
-        }
-
-        /* Tool name below bar */
-        .atc-name {
-          margin-top: 8px;
-          font-size: 10.5px;
-          font-weight: 600;
-          text-align: center;
-          line-height: 1.3;
-          white-space: nowrap;
-        }
-        .atc-name--pro { color: rgba(255,255,255,0.85); }
-        .atc-name--beg { color: rgba(255,255,255,0.38); }
-
-        @keyframes atc-bar-in {
-          from { transform: scaleY(0); opacity: 0; }
-          to   { transform: scaleY(1); opacity: 1; }
-        }
-
-        /* Panel fade transition */
-        .atc-panel { display: none; }
-        .atc-panel.active {
-          display: flex;
-          animation: atc-panel-in 0.25s cubic-bezier(0.22,0.61,0.36,1) both;
-        }
-        @keyframes atc-panel-in {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 720px) {
-          .atc-inner { padding: 20px 16px 16px; }
-          .atc-chart-scroll { margin: 0 -16px; padding: 0 16px; }
-          .atc-tab { font-size: 11.5px; padding: 5px 10px; }
-        }
         #ai-efficiency .ae-teaser {
           width: 100%;
           display: flex;
@@ -6887,6 +6833,27 @@
           <span><span id="toolkitAsOf">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>
         </div>
 
+        <!-- Use-case explorer: which AI tools per task -->
+        <div class="tke-card" id="tkeCard" aria-label="AI tools by use case">
+          <div class="tke-header">
+            <span class="tke-heading">Tools used to build your product</span>
+            <div class="tke-legend" aria-hidden="true">
+              <span class="tke-legend-item"><span class="tke-dot tke-dot--pro"></span>Professional</span>
+              <span class="tke-legend-item"><span class="tke-dot tke-dot--beg"></span>Beginner</span>
+            </div>
+          </div>
+          <div class="tke-tabs" role="tablist" aria-label="Use cases">
+            <button class="tke-pill active" role="tab" aria-selected="true"  data-cat="research"   aria-controls="tkeChips">Research</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="coding"     aria-controls="tkeChips">Coding</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="video"      aria-controls="tkeChips">Video</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="automation" aria-controls="tkeChips">Automation</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="writing"    aria-controls="tkeChips">Writing</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="websites"   aria-controls="tkeChips">Websites</button>
+            <button class="tke-pill"        role="tab" aria-selected="false" data-cat="business"   aria-controls="tkeChips">Business</button>
+          </div>
+          <div class="tke-chips" id="tkeChips" role="tabpanel" aria-live="polite"></div>
+        </div>
+
         <div class="toolkit-stack">
           <div class="toolkit-group">
             <div class="toolkit-group-label">Your idea, made visible</div>
@@ -7073,257 +7040,6 @@
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </span>
         </button>
-
-        <!-- Interactive AI Toolset Chart -->
-        <div class="atc-card" id="atcCard" aria-label="AI toolset used at Start Apps Studio">
-          <div class="atc-inner">
-            <!-- Header -->
-            <div class="atc-header">
-              <p class="atc-heading">Tools used to build your product</p>
-              <div class="atc-legend" aria-hidden="true">
-                <span class="atc-legend-item"><span class="atc-legend-dot atc-legend-dot--pro"></span>Professional</span>
-                <span class="atc-legend-item"><span class="atc-legend-dot atc-legend-dot--beg"></span>Beginner</span>
-              </div>
-            </div>
-
-            <!-- Category tabs -->
-            <div class="atc-tabs" role="tablist" aria-label="AI tool categories">
-              <button class="atc-tab active" role="tab" aria-selected="true"  data-cat="research"    aria-controls="atcPanel-research">🔬 Research</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="coding"      aria-controls="atcPanel-coding">💻 Coding</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="video"       aria-controls="atcPanel-video">🎬 Video</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="automation"  aria-controls="atcPanel-automation">⚙️ Automation</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="writing"     aria-controls="atcPanel-writing">✍️ Writing</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="websites"    aria-controls="atcPanel-websites">🌐 Websites</button>
-              <button class="atc-tab"        role="tab" aria-selected="false" data-cat="business"    aria-controls="atcPanel-business">🏢 Business</button>
-            </div>
-
-            <!-- ── Panels (one per category) ── -->
-            <div class="atc-chart-scroll">
-
-              <!-- Research -->
-              <div class="atc-panel active" id="atcPanel-research" role="tabpanel">
-                <div class="atc-chart" id="atcChart-research">
-                  <!-- Beginner: Gemini -->
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- Gemini -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 3Q17.5 10.5 25 14Q17.5 17.5 14 25Q10.5 17.5 3 14Q10.5 10.5 14 3Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:90px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">Gemini</span>
-                  </div>
-                  <!-- Beginner: ChatGPT -->
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- ChatGPT -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M22.5 11.8a5.5 5.5 0 0 0-.47-4.52 5.6 5.6 0 0 0-6.04-2.69A5.56 5.56 0 0 0 11.8 3a5.6 5.6 0 0 0-5.34 3.88 5.57 5.57 0 0 0-3.72 2.7 5.6 5.6 0 0 0 .69 6.57 5.5 5.5 0 0 0 .47 4.52 5.6 5.6 0 0 0 6.04 2.69A5.56 5.56 0 0 0 14 25a5.6 5.6 0 0 0 5.34-3.88 5.57 5.57 0 0 0 3.72-2.7 5.6 5.6 0 0 0-.56-6.62Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:110px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">ChatGPT</span>
-                  </div>
-                  <!-- Professional: Perplexity -->
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Perplexity -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 4L4 10v8l10 6 10-6v-8L14 4Z" stroke="white" stroke-width="1.8" fill="none" opacity="0.9"/><line x1="14" y1="4" x2="14" y2="24" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="10" x2="24" y2="10" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="18" x2="24" y2="18" stroke="white" stroke-width="1.5" opacity="0.7"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:160px;animation-delay:0.15s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Perplexity</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Coding -->
-              <div class="atc-panel" id="atcPanel-coding" role="tabpanel">
-                <div class="atc-chart" id="atcChart-coding">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- ChatGPT -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M22.5 11.8a5.5 5.5 0 0 0-.47-4.52 5.6 5.6 0 0 0-6.04-2.69A5.56 5.56 0 0 0 11.8 3a5.6 5.6 0 0 0-5.34 3.88 5.57 5.57 0 0 0-3.72 2.7 5.6 5.6 0 0 0 .69 6.57 5.5 5.5 0 0 0 .47 4.52 5.6 5.6 0 0 0 6.04 2.69A5.56 5.56 0 0 0 14 25a5.6 5.6 0 0 0 5.34-3.88 5.57 5.57 0 0 0 3.72-2.7 5.6 5.6 0 0 0-.56-6.62Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:95px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">ChatGPT</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- Lovable -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 22s-9-5.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-9 11-9 11Z" fill="white" opacity="0.85"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:105px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">Lovable</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Cursor -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M6 4l16 10-8 2-4 8L6 4Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:168px;animation-delay:0.15s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Cursor</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Video -->
-              <div class="atc-panel" id="atcPanel-video" role="tabpanel">
-                <div class="atc-chart" id="atcChart-video">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- InVideo -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="4" y="7" width="16" height="14" rx="2" stroke="white" stroke-width="1.8" fill="none" opacity="0.9"/><path d="M20 12l5 2-5 2V12Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:88px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">InVideo</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- CapCut -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="white" stroke-width="1.8" fill="none" opacity="0.9"/><path d="M11 10l8 4-8 4V10Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:100px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">CapCut</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Higgsfield -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="3" fill="white" opacity="0.9"/><circle cx="14" cy="14" r="7" stroke="white" stroke-width="1.6" fill="none" opacity="0.6"/><circle cx="14" cy="14" r="11" stroke="white" stroke-width="1" fill="none" opacity="0.3"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:155px;animation-delay:0.15s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Higgsfield</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Automation -->
-              <div class="atc-panel" id="atcPanel-automation" role="tabpanel">
-                <div class="atc-chart" id="atcChart-automation">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- Zapier -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 5v7H7l7 11v-7h7L14 5Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:100px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">Zapier</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- n8n -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="8" cy="14" r="3" fill="white" opacity="0.9"/><circle cx="20" cy="14" r="3" fill="white" opacity="0.9"/><path d="M11 14h6" stroke="white" stroke-width="2" opacity="0.7"/><path d="M14 8v4M14 16v4" stroke="white" stroke-width="1.8" opacity="0.5"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:162px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">n8n</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Writing -->
-              <div class="atc-panel" id="atcPanel-writing" role="tabpanel">
-                <div class="atc-chart" id="atcChart-writing">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- ChatGPT -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M22.5 11.8a5.5 5.5 0 0 0-.47-4.52 5.6 5.6 0 0 0-6.04-2.69A5.56 5.56 0 0 0 11.8 3a5.6 5.6 0 0 0-5.34 3.88 5.57 5.57 0 0 0-3.72 2.7 5.6 5.6 0 0 0 .69 6.57 5.5 5.5 0 0 0 .47 4.52 5.6 5.6 0 0 0 6.04 2.69A5.56 5.56 0 0 0 14 25a5.6 5.6 0 0 0 5.34-3.88 5.57 5.57 0 0 0 3.72-2.7 5.6 5.6 0 0 0-.56-6.62Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:98px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">ChatGPT</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Claude -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M8 20L14 6l6 14" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9"/><path d="M10.5 15.5h7" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:164px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Claude</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Websites -->
-              <div class="atc-panel" id="atcPanel-websites" role="tabpanel">
-                <div class="atc-chart" id="atcChart-websites">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- Shopify -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M20 7s-.5-1.5-2-1.5c0 0-.8-2.5-3-2.5-1.8 0-2.8 1.5-3.2 2.5H8l-1 16h14L20 7Z" stroke="white" stroke-width="1.6" fill="none" opacity="0.9"/><path d="M14 7v14" stroke="white" stroke-width="1.4" opacity="0.5"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:90px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">Shopify</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- Wix -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M4 10l4 8 3-5 3 5 4-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9"/><path d="M21 10l3 8" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:96px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">Wix</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Replit -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="white" opacity="0.9"/><rect x="15" y="5" width="8" height="8" rx="1.5" fill="white" opacity="0.7"/><rect x="5" y="15" width="8" height="8" rx="1.5" fill="white" opacity="0.7"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:158px;animation-delay:0.15s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Replit</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Business Stack -->
-              <div class="atc-panel" id="atcPanel-business" role="tabpanel">
-                <div class="atc-chart" id="atcChart-business">
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--beg">Beginner</span>
-                    <span class="atc-icon"><!-- ChatGPT -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M22.5 11.8a5.5 5.5 0 0 0-.47-4.52 5.6 5.6 0 0 0-6.04-2.69A5.56 5.56 0 0 0 11.8 3a5.6 5.6 0 0 0-5.34 3.88 5.57 5.57 0 0 0-3.72 2.7 5.6 5.6 0 0 0 .69 6.57 5.5 5.5 0 0 0 .47 4.52 5.6 5.6 0 0 0 6.04 2.69A5.56 5.56 0 0 0 14 25a5.6 5.6 0 0 0 5.34-3.88 5.57 5.57 0 0 0 3.72-2.7 5.6 5.6 0 0 0-.56-6.62Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--beg" style="height:92px;animation-delay:0.05s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--beg">ChatGPT</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Claude -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M8 20L14 6l6 14" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9"/><path d="M10.5 15.5h7" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:148px;animation-delay:0.10s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Claude</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Cursor -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M6 4l16 10-8 2-4 8L6 4Z" fill="white" opacity="0.9"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:155px;animation-delay:0.15s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Cursor</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Higgsfield -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="3" fill="white" opacity="0.9"/><circle cx="14" cy="14" r="7" stroke="white" stroke-width="1.6" fill="none" opacity="0.6"/><circle cx="14" cy="14" r="11" stroke="white" stroke-width="1" fill="none" opacity="0.3"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:140px;animation-delay:0.20s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Higgsfield</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- n8n -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><circle cx="8" cy="14" r="3" fill="white" opacity="0.9"/><circle cx="20" cy="14" r="3" fill="white" opacity="0.9"/><path d="M11 14h6" stroke="white" stroke-width="2" opacity="0.7"/><path d="M14 8v4M14 16v4" stroke="white" stroke-width="1.8" opacity="0.5"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:144px;animation-delay:0.25s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">n8n</span>
-                  </div>
-                  <div class="atc-col">
-                    <span class="atc-level-label atc-level-label--pro">Professional</span>
-                    <span class="atc-icon"><!-- Perplexity -->
-                      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M14 4L4 10v8l10 6 10-6v-8L14 4Z" stroke="white" stroke-width="1.8" fill="none" opacity="0.9"/><line x1="14" y1="4" x2="14" y2="24" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="10" x2="24" y2="10" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="18" x2="24" y2="18" stroke="white" stroke-width="1.5" opacity="0.7"/></svg>
-                    </span>
-                    <div class="atc-bar atc-bar--pro" style="height:150px;animation-delay:0.30s;" aria-hidden="true"></div>
-                    <span class="atc-name atc-name--pro">Perplexity</span>
-                  </div>
-                </div>
-              </div>
-
-            </div><!-- /.atc-chart-scroll -->
-          </div><!-- /.atc-inner -->
-        </div><!-- /.atc-card -->
 
       </section>
 
@@ -9504,60 +9220,82 @@
     })();
 
 
-    /* ── AI TOOLSET CHART TAB SWITCHER ─────────────────────────────────── */
+    /* ── TOOLKIT USE-CASE EXPLORER ─────────────────────────────────────── */
     (function () {
-      var tabs    = document.querySelectorAll('.atc-tab');
-      var panels  = document.querySelectorAll('.atc-panel');
-      if (!tabs.length) return;
+      var card  = document.getElementById('tkeCard');
+      var chips = document.getElementById('tkeChips');
+      if (!card || !chips) return;
 
-      function switchTab(targetCat) {
-        tabs.forEach(function (t) {
-          var isActive = t.dataset.cat === targetCat;
-          t.classList.toggle('active', isActive);
-          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      /* Inline SVG icons (24px viewbox scaled) */
+      var ICONS = {
+        gemini:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M14 3Q17.5 10.5 25 14Q17.5 17.5 14 25Q10.5 17.5 3 14Q10.5 10.5 14 3Z" fill="white" opacity="0.92"/></svg>',
+        chatgpt:    '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M22.5 11.8a5.5 5.5 0 0 0-.47-4.52 5.6 5.6 0 0 0-6.04-2.69A5.56 5.56 0 0 0 11.8 3a5.6 5.6 0 0 0-5.34 3.88 5.57 5.57 0 0 0-3.72 2.7 5.6 5.6 0 0 0 .69 6.57 5.5 5.5 0 0 0 .47 4.52 5.6 5.6 0 0 0 6.04 2.69A5.56 5.56 0 0 0 14 25a5.6 5.6 0 0 0 5.34-3.88 5.57 5.57 0 0 0 3.72-2.7 5.6 5.6 0 0 0-.56-6.62Z" fill="white" opacity="0.92"/></svg>',
+        perplexity: '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M14 4L4 10v8l10 6 10-6v-8L14 4Z" stroke="white" stroke-width="1.8" fill="none" opacity="0.92"/><line x1="14" y1="4" x2="14" y2="24" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="10" x2="24" y2="10" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="4" y1="18" x2="24" y2="18" stroke="white" stroke-width="1.5" opacity="0.7"/></svg>',
+        lovable:    '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M14 22s-9-5.5-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-9 11-9 11Z" fill="white" opacity="0.88"/></svg>',
+        cursor:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M6 4l16 10-8 2-4 8L6 4Z" fill="white" opacity="0.92"/></svg>',
+        invideo:    '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect x="4" y="7" width="16" height="14" rx="2" stroke="white" stroke-width="1.8" fill="none" opacity="0.92"/><path d="M20 12l5 2-5 2V12Z" fill="white" opacity="0.92"/></svg>',
+        capcut:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="white" stroke-width="1.8" fill="none" opacity="0.92"/><path d="M11 10l8 4-8 4V10Z" fill="white" opacity="0.92"/></svg>',
+        higgsfield: '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="3" fill="white" opacity="0.92"/><circle cx="14" cy="14" r="7" stroke="white" stroke-width="1.6" fill="none" opacity="0.6"/><circle cx="14" cy="14" r="11" stroke="white" stroke-width="1" fill="none" opacity="0.3"/></svg>',
+        zapier:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M14 5v7H7l7 11v-7h7L14 5Z" fill="white" opacity="0.92"/></svg>',
+        n8n:        '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><circle cx="8" cy="14" r="3" fill="white" opacity="0.92"/><circle cx="20" cy="14" r="3" fill="white" opacity="0.92"/><path d="M11 14h6" stroke="white" stroke-width="2" opacity="0.7"/><path d="M14 8v4M14 16v4" stroke="white" stroke-width="1.8" opacity="0.5"/></svg>',
+        claude:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M8 20L14 6l6 14" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.92"/><path d="M10.5 15.5h7" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/></svg>',
+        shopify:    '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M20 7s-.5-1.5-2-1.5c0 0-.8-2.5-3-2.5-1.8 0-2.8 1.5-3.2 2.5H8l-1 16h14L20 7Z" stroke="white" stroke-width="1.6" fill="none" opacity="0.92"/><path d="M14 7v14" stroke="white" stroke-width="1.4" opacity="0.5"/></svg>',
+        wix:        '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><path d="M4 10l4 8 3-5 3 5 4-8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.92"/><path d="M21 10l3 8" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.92"/></svg>',
+        replit:     '<svg width="18" height="18" viewBox="0 0 28 28" fill="none"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="white" opacity="0.92"/><rect x="15" y="5" width="8" height="8" rx="1.5" fill="white" opacity="0.7"/><rect x="5" y="15" width="8" height="8" rx="1.5" fill="white" opacity="0.7"/></svg>'
+      };
+
+      /* Category → tools (level: pro | beg) */
+      var DATA = {
+        research:   [ { n: 'Gemini',  i: 'gemini',  l: 'beg' }, { n: 'ChatGPT', i: 'chatgpt', l: 'beg' }, { n: 'Perplexity', i: 'perplexity', l: 'pro' } ],
+        coding:     [ { n: 'ChatGPT', i: 'chatgpt', l: 'beg' }, { n: 'Lovable', i: 'lovable', l: 'beg' }, { n: 'Cursor',     i: 'cursor',     l: 'pro' } ],
+        video:      [ { n: 'InVideo', i: 'invideo', l: 'beg' }, { n: 'CapCut',  i: 'capcut',  l: 'beg' }, { n: 'Higgsfield', i: 'higgsfield', l: 'pro' } ],
+        automation: [ { n: 'Zapier',  i: 'zapier',  l: 'beg' }, { n: 'n8n',     i: 'n8n',     l: 'pro' } ],
+        writing:    [ { n: 'ChatGPT', i: 'chatgpt', l: 'beg' }, { n: 'Claude',  i: 'claude',  l: 'pro' } ],
+        websites:   [ { n: 'Shopify', i: 'shopify', l: 'beg' }, { n: 'Wix',     i: 'wix',     l: 'beg' }, { n: 'Replit',     i: 'replit',     l: 'pro' } ],
+        business:   [ { n: 'ChatGPT', i: 'chatgpt', l: 'beg' }, { n: 'Claude',  i: 'claude',  l: 'pro' }, { n: 'Cursor', i: 'cursor', l: 'pro' }, { n: 'Higgsfield', i: 'higgsfield', l: 'pro' }, { n: 'n8n', i: 'n8n', l: 'pro' }, { n: 'Perplexity', i: 'perplexity', l: 'pro' } ]
+      };
+
+      function render(cat) {
+        var tools = DATA[cat] || [];
+        var html = '';
+        tools.forEach(function (t, idx) {
+          html +=
+            '<div class="tke-chip tke-chip--' + t.l + '" style="animation-delay:' + (idx * 55) + 'ms">' +
+              '<span class="tke-icon" aria-hidden="true">' + (ICONS[t.i] || '') + '</span>' +
+              '<span class="tke-chip-text">' +
+                '<span class="tke-chip-name">' + t.n + '</span>' +
+                '<span class="tke-chip-level">' + (t.l === 'pro' ? 'Professional' : 'Beginner') + '</span>' +
+              '</span>' +
+            '</div>';
         });
-        panels.forEach(function (p) {
-          var isActive = p.id === 'atcPanel-' + targetCat;
-          p.classList.toggle('active', isActive);
-          /* Re-trigger bar animations by cloning the bar elements */
-          if (isActive) {
-            var bars = p.querySelectorAll('.atc-bar');
-            bars.forEach(function (bar) {
-              bar.style.animation = 'none';
-              /* Force reflow so the browser registers the reset */
-              void bar.offsetWidth;
-              bar.style.animation = '';
-            });
-          }
-        });
+        chips.innerHTML = html;
       }
 
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          switchTab(tab.dataset.cat);
+      var pills = card.querySelectorAll('.tke-pill');
+      pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          pills.forEach(function (p) {
+            var isActive = p === pill;
+            p.classList.toggle('active', isActive);
+            p.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          render(pill.dataset.cat);
         });
       });
 
-      /* Scroll-reveal: animate bars when the chart card first enters view */
-      var card = document.getElementById('atcCard');
-      if (card && 'IntersectionObserver' in window) {
-        var atcIo = new IntersectionObserver(function (entries) {
+      /* Render first category when the card scrolls into view (fallback: immediately) */
+      if ('IntersectionObserver' in window) {
+        var tkeIo = new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
             if (e.isIntersecting) {
-              /* Trigger the initial bar animation for the active panel */
-              var activePanel = card.querySelector('.atc-panel.active');
-              if (activePanel) {
-                activePanel.querySelectorAll('.atc-bar').forEach(function (bar) {
-                  bar.style.animation = 'none';
-                  void bar.offsetWidth;
-                  bar.style.animation = '';
-                });
-              }
-              atcIo.unobserve(card);
+              render('research');
+              tkeIo.unobserve(card);
             }
           });
         }, { threshold: 0.15 });
-        atcIo.observe(card);
+        tkeIo.observe(card);
+      } else {
+        render('research');
       }
     }());
 
