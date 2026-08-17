@@ -1031,7 +1031,7 @@
         justify-content: center;
         gap: 0;
         max-width: 860px;
-        margin: 0 auto 32px;
+        margin: 0 auto 20px;
         background: color-mix(in srgb, var(--dominant) 5%, var(--surface));
         border: 1px solid color-mix(in srgb, var(--dominant) 18%, transparent);
         border-radius: var(--r-md);
@@ -1088,8 +1088,8 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        margin: -12px auto 20px;
-        padding: 6px 14px;
+        margin: -8px auto 14px;
+        padding: 5px 13px;
         width: fit-content;
         background: var(--bg-elevated);
         border: 1px solid var(--border);
@@ -1114,10 +1114,10 @@
       }
       .toolkit-stack {
         max-width: 940px;
-        margin: 0 auto 24px;
+        margin: 0 auto 16px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
       }
       .toolkit-group-label {
         display: flex;
@@ -1302,28 +1302,12 @@
         text-transform: uppercase;
         color: var(--text-secondary);
       }
-      .tke-legend {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .tke-legend-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 11px;
-        font-weight: 500;
-        color: var(--text-secondary);
-      }
-      .tke-dot { width: 8px; height: 8px; border-radius: 50%; }
-      .tke-dot--pro { background: var(--dominant); box-shadow: 0 0 6px color-mix(in srgb, var(--dominant) 55%, transparent); }
-      .tke-dot--beg { background: color-mix(in srgb, var(--text-secondary) 45%, transparent); }
       .tke-tabs {
         position: relative;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
-        margin: 14px 0;
+        margin: 12px 0 10px;
       }
       .tke-pill {
         padding: 6px 13px;
@@ -1351,15 +1335,113 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
+      .tke-summary {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 42px;
+        padding: 7px 10px 7px 12px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 18%, var(--border));
+        border-radius: 13px;
+        background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
+      }
+      .tke-summary-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+      .tke-summary-label {
+        color: var(--text-secondary);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .tke-summary-title {
+        color: var(--text-primary);
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .tke-summary-tools {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 5px;
+        min-width: 0;
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+      .tke-card.is-expanded .tke-summary-tools {
+        display: none;
+      }
+      .tke-summary-tool {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 7px 3px 4px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--surface) 76%, transparent);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .tke-summary-tool svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .tke-expand {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+        padding: 6px 9px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 32%, var(--border));
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--dominant) 9%, transparent);
+        color: var(--dominant);
+        font: 700 10px/1 inherit;
+        cursor: pointer;
+        transition: background 0.18s ease, border-color 0.18s ease;
+      }
+      .tke-expand:hover {
+        background: color-mix(in srgb, var(--dominant) 16%, transparent);
+        border-color: var(--dominant);
+      }
+      .tke-expand svg {
+        transition: transform 0.2s ease;
+      }
+      .tke-card.is-expanded .tke-expand svg {
+        transform: rotate(180deg);
+      }
+      .tke-card.is-expanded .tke-expand-label::after { content: 'Hide chart'; }
+      .tke-card.is-expanded .tke-expand-label { font-size: 0; }
+      .tke-card.is-expanded .tke-expand-label::after { font-size: 10px; }
       /* "For {Category}" dynamic title */
       .tke-for {
         position: relative;
         text-align: center;
-        margin: 6px 0 4px;
+        max-height: 0;
+        margin: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-4px);
         font-size: clamp(19px, 2.4vw, 24px);
         font-weight: 800;
         letter-spacing: -0.02em;
         color: var(--text-primary);
+        transition: max-height 0.28s ease, margin 0.28s ease, opacity 0.2s ease, transform 0.28s ease;
+      }
+      .tke-card.is-expanded .tke-for {
+        max-height: 48px;
+        margin: 10px 0 4px;
+        opacity: 1;
+        transform: none;
       }
       .tke-for::after {
         content: '';
@@ -1379,14 +1461,66 @@
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         margin: 0 -20px;
-        padding: 14px 20px 0;
+        max-height: 0;
+        padding: 0 20px;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.22s ease, transform 0.35s ease;
       }
+      .tke-card.is-expanded .tke-stage {
+        max-height: 240px;
+        padding: 8px 20px 0;
+        opacity: 1;
+        transform: none;
+      }
+      /* Founder vs client value strip — the "why this matters" payoff of expanding */
+      .tke-values {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin: 0;
+        transition: max-height 0.3s ease, margin 0.3s ease, opacity 0.22s ease;
+      }
+      .tke-card.is-expanded .tke-values {
+        max-height: 150px;
+        margin-top: 12px;
+        opacity: 1;
+      }
+      .tke-value {
+        padding: 9px 12px;
+        border-radius: 11px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--surface) 72%, transparent);
+      }
+      .tke-value--client {
+        border-color: color-mix(in srgb, var(--dominant) 30%, var(--border));
+        background: color-mix(in srgb, var(--dominant) 6%, transparent);
+      }
+      .tke-value-head {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+      .tke-value--client .tke-value-head { color: var(--dominant); }
+      .tke-value-copy {
+        font-size: 11.5px;
+        line-height: 1.45;
+        color: var(--text-secondary);
+      }
+      .tke-value--client .tke-value-copy { color: var(--text-primary); }
       .tke-stage::-webkit-scrollbar { display: none; }
       .tke-row {
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        gap: clamp(18px, 4.5vw, 46px);
+        gap: clamp(16px, 3.5vw, 34px);
         margin: 0 auto;
         min-width: max-content;
         /* baseline line above the tool names */
@@ -1470,12 +1604,19 @@
         to   { opacity: 1; transform: none; }
       }
       @media (prefers-reduced-motion: reduce) {
-        .tke-col { animation: none; }
+        .tke-col, .tke-for, .tke-stage { animation: none; transition: none; }
       }
       @media (max-width: 600px) {
         .tke-card { padding: 14px 14px 16px; }
         .tke-pill { font-size: 11.5px; padding: 5px 10px; }
-        .tke-stage { margin: 0 -14px; padding: 12px 14px 0; }
+        .tke-summary { align-items: flex-start; }
+        .tke-summary-tools { flex-wrap: wrap; justify-content: flex-end; }
+        .tke-summary-tool { font-size: 9px; }
+        .tke-expand { padding: 6px 8px; }
+        .tke-stage { margin: 0 -14px; padding-left: 14px; padding-right: 14px; }
+        .tke-card.is-expanded .tke-stage { padding: 8px 14px 0; }
+        .tke-values { grid-template-columns: 1fr; }
+        .tke-card.is-expanded .tke-values { max-height: 220px; }
         .tke-row { gap: 18px; }
         .tke-sil { width: 52px; border-radius: 34px 34px 0 0; }
         .tke-headicon { width: 38px; height: 38px; margin-bottom: -19px; }
@@ -6907,10 +7048,6 @@
         <div class="tke-card" id="tkeCard" aria-label="AI tools by use case">
           <div class="tke-header">
             <span class="tke-heading">Our AI toolkit, by discipline</span>
-            <div class="tke-legend" aria-hidden="true">
-              <span class="tke-legend-item"><span class="tke-dot tke-dot--pro"></span>Professional</span>
-              <span class="tke-legend-item"><span class="tke-dot tke-dot--beg"></span>Beginner</span>
-            </div>
           </div>
           <div class="tke-tabs" role="tablist" aria-label="Use cases">
             <button class="tke-pill active" role="tab" aria-selected="true"  data-cat="research"   aria-controls="tkeChips">Research</button>
@@ -6921,9 +7058,30 @@
             <button class="tke-pill"        role="tab" aria-selected="false" data-cat="websites"   aria-controls="tkeChips">Websites</button>
             <button class="tke-pill"        role="tab" aria-selected="false" data-cat="business"   aria-controls="tkeChips">Business AI Stack</button>
           </div>
+          <div class="tke-summary" id="tkeSummary">
+            <div class="tke-summary-copy">
+              <span class="tke-summary-label">Selected discipline</span>
+              <span class="tke-summary-title" id="tkeSummaryTitle">Research</span>
+            </div>
+            <div class="tke-summary-tools" id="tkeSummaryTools" aria-label="Tools in this discipline"></div>
+            <button class="tke-expand" id="tkeExpand" type="button" aria-expanded="false" aria-controls="tkeStage">
+              <span class="tke-expand-label">Explore stack</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
           <h3 class="tke-for" id="tkeFor">For Research</h3>
-          <div class="tke-stage">
+          <div class="tke-stage" id="tkeStage">
             <div class="tke-row" id="tkeChips" role="tabpanel" aria-live="polite"></div>
+          </div>
+          <div class="tke-values" id="tkeValues" aria-live="polite">
+            <div class="tke-value">
+              <span class="tke-value-head">If you do it yourself</span>
+              <span class="tke-value-copy" id="tkeValueFounder"></span>
+            </div>
+            <div class="tke-value tke-value--client">
+              <span class="tke-value-head">What our clients get</span>
+              <span class="tke-value-copy" id="tkeValueClient"></span>
+            </div>
           </div>
         </div>
 
@@ -9298,12 +9456,16 @@
       var card  = document.getElementById('tkeCard');
       var chips = document.getElementById('tkeChips');
       if (!card || !chips) return;
+      var stage = document.getElementById('tkeStage');
+      var expand = document.getElementById('tkeExpand');
+      var summaryTitle = document.getElementById('tkeSummaryTitle');
+      var summaryTools = document.getElementById('tkeSummaryTools');
 
       /* Brand-accurate SVG logos — full colour on the white glass circle */
       var ICONS = {
 
-        /* Gemini: Google's four-pointed colour star */
-        gemini: '<svg width="22" height="22" viewBox="0 0 24 24"><defs><linearGradient id="gG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4285F4"/><stop offset="33%" stop-color="#EA4335"/><stop offset="66%" stop-color="#FBBC05"/><stop offset="100%" stop-color="#34A853"/></linearGradient></defs><path d="M12 2Q15 9 22 12Q15 15 12 22Q9 15 2 12Q9 9 12 2Z" fill="url(#gG)"/></svg>',
+        /* Gemini: Google's four-pointed star (solid fill — gradient defs break when SVG is injected twice) */
+        gemini: '<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 2Q15 9 22 12Q15 15 12 22Q9 15 2 12Q9 9 12 2Z" fill="#4285F4"/><path d="M12 6.5Q14 10.5 18 12Q14 13.5 12 17.5Q10 13.5 6 12Q10 10.5 12 6.5Z" fill="#8AB4F8"/></svg>',
 
         /* ChatGPT: OpenAI's teal logomark */
         chatgpt: '<svg width="22" height="22" viewBox="0 0 41 41"><path fill="#10a37f" d="M37.53 16.18a10.4 10.4 0 0 0-.9-8.54 10.58 10.58 0 0 0-11.38-5.07A10.4 10.4 0 0 0 17.4 0a10.57 10.57 0 0 0-10.08 7.32 10.41 10.41 0 0 0-6.96 5.04 10.57 10.57 0 0 0 1.3 12.4 10.4 10.4 0 0 0 .9 8.54 10.58 10.58 0 0 0 11.38 5.07A10.4 10.4 0 0 0 21.7 41a10.58 10.58 0 0 0 10.09-7.33 10.41 10.41 0 0 0 6.96-5.04 10.57 10.57 0 0 0-1.3-12.44zm-15.83 22.2a7.84 7.84 0 0 1-5.03-1.82c.06-.04.17-.1.24-.15l8.35-4.82a1.39 1.39 0 0 0 .7-1.21V18.61l3.53 2.04a.13.13 0 0 1 .07.1v9.75a7.88 7.88 0 0 1-7.86 7.88zm-16.9-7.24a7.84 7.84 0 0 1-.94-5.28c.06.04.17.1.24.15l8.35 4.82a1.38 1.38 0 0 0 1.4 0l10.19-5.88v4.07a.13.13 0 0 1-.05.11l-8.44 4.87a7.88 7.88 0 0 1-10.76-2.86zm-2.2-18.3a7.85 7.85 0 0 1 4.1-3.46v9.91c0 .5.27.96.7 1.21l10.19 5.88-3.53 2.03a.13.13 0 0 1-.12.01L5.6 23.16a7.88 7.88 0 0 1-.97-10.32zm28.96 6.77-10.19-5.88 3.53-2.03a.13.13 0 0 1 .12-.01l8.44 4.87a7.87 7.87 0 0 1-1.22 14.2v-9.92a1.38 1.38 0 0 0-.68-1.23zm3.52-5.3a11.8 11.8 0 0 0-.24-.15l-8.35-4.82a1.38 1.38 0 0 0-1.4 0L14.91 15.1V11a.13.13 0 0 1 .05-.11l8.44-4.86a7.87 7.87 0 0 1 11.7 8.15zm-22.08 7.26-3.53-2.04a.13.13 0 0 1-.07-.1V10.3a7.87 7.87 0 0 1 12.93-6.04c-.06.04-.17.1-.24.15l-8.35 4.82a1.39 1.39 0 0 0-.7 1.21l-.04 11.77zm1.92-4.13 4.54-2.62 4.54 2.62v5.24l-4.54 2.62-4.54-2.62z"/></svg>',
@@ -9311,8 +9473,8 @@
         /* Perplexity: official nested-diamond mark */
         perplexity: '<svg width="22" height="22" viewBox="0 0 24 24" fill="#1FB8CD"><path d="M22.3977 7.0896h-2.3106V.0676l-7.5094 6.3542V.1577h-1.1554v6.1966L4.4904 0v7.0896H1.6023v10.3976h2.8882V24l6.932-6.3591v6.2005h1.1554v-6.0469l6.9318 6.1807v-6.4879h2.8882V7.0896zm-3.4657-4.531v4.531h-5.355l5.355-4.531zm-13.2862.0676 4.8691 4.4634H5.6458V2.6262zM2.7576 16.332V8.245h7.8476l-6.1149 6.1147v1.9723H2.7576zm2.8882 5.0404v-3.8852h.0001v-2.6488l5.7763-5.7764v7.0111l-5.7764 5.2993zm12.7086.0248-5.7766-5.1509V9.0618l5.7766 5.7766v6.5588zm2.8882-5.0652h-1.733v-1.9723L13.3948 8.245h7.8478v8.087z"/></svg>',
 
-        /* Lovable: pink/coral heart */
-        lovable: '<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 21C12 21 3 15 3 8.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3C21 15 12 21 12 21Z" fill="url(#lG)"/><defs><linearGradient id="lG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6B9D"/><stop offset="100%" stop-color="#FF8C42"/></linearGradient></defs></svg>',
+        /* Lovable: coral heart (solid fill — gradient defs break when SVG is injected twice) */
+        lovable: '<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 21C12 21 3 15 3 8.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3C21 15 12 21 12 21Z" fill="#FF6B8B"/></svg>',
 
         /* Cursor: official hexagonal arrow mark */
         cursor: '<svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23"/></svg>',
@@ -9368,12 +9530,54 @@
         business:   'Business AI Stack'
       };
       /* Silhouette heights (px) — kept shorter for compactness */
-      var H = { beg: [72, 84, 78], pro: [136, 124, 130, 118, 133, 122] };
+      var H = { beg: [64, 74, 68], pro: [118, 108, 114, 102, 116, 106] };
+
+      /* Founder-DIY vs client-outcome framing per discipline */
+      var VALUES = {
+        research: {
+          f: 'Hours lost cross-checking ChatGPT answers that sound right but cite nothing.',
+          c: 'Market and competitor research with sources attached, distilled into decisions before we write a line of code.'
+        },
+        coding: {
+          f: 'AI-generated code that demos well, then collapses the first time real users hit an edge case.',
+          c: 'Production code where AI drafts and senior engineers review, so your app survives launch day.'
+        },
+        video: {
+          f: 'Template videos that look like every other founder\u2019s launch post.',
+          c: 'Scroll-stopping product videos and ads produced in days, not agency weeks.'
+        },
+        automation: {
+          f: 'Zapier chains that silently break and nobody notices until a customer complains.',
+          c: 'Monitored automations for onboarding, billing and support that keep running while you sleep.'
+        },
+        writing: {
+          f: 'Copy that reads like AI wrote it \u2014 because it did.',
+          c: 'Landing pages, emails and app copy drafted by AI, sharpened by humans, tested against real users.'
+        },
+        websites: {
+          f: 'A site builder subscription and a weekend lost fighting templates.',
+          c: 'A conversion-focused site shipped in under a week, built on the platform that fits your stage.'
+        },
+        business: {
+          f: 'Six subscriptions, six logins, and no idea which tool should do what.',
+          c: 'The whole stack orchestrated for you \u2014 one team accountable for research, code, content and ops.'
+        }
+      };
 
       function render(cat) {
         var tools = DATA[cat] || [];
         var title = document.getElementById('tkeFor');
         if (title) title.textContent = TITLES[cat] || cat;
+        if (summaryTitle) summaryTitle.textContent = TITLES[cat] ? TITLES[cat].replace(/^For /, '') : cat;
+        if (summaryTools) {
+          summaryTools.innerHTML = tools.map(function (t) {
+            return '<span class="tke-summary-tool">' + (ICONS[t.i] || '') + '<span>' + t.n + '</span></span>';
+          }).join('');
+        }
+        var v = VALUES[cat];
+        var vf = document.getElementById('tkeValueFounder');
+        var vc = document.getElementById('tkeValueClient');
+        if (v && vf && vc) { vf.textContent = v.f; vc.textContent = v.c; }
 
         var begIdx = 0, proIdx = 0;
         /* Track which is the FIRST beg / FIRST pro column so we only show
@@ -9404,6 +9608,19 @@
         chips.innerHTML = html;
       }
 
+      function setExpanded(next) {
+        card.classList.toggle('is-expanded', next);
+        if (expand) {
+          expand.setAttribute('aria-expanded', next ? 'true' : 'false');
+        }
+      }
+
+      if (expand) {
+        expand.addEventListener('click', function () {
+          setExpanded(!card.classList.contains('is-expanded'));
+        });
+      }
+
       var pills = card.querySelectorAll('.tke-pill');
       pills.forEach(function (pill) {
         pill.addEventListener('click', function () {
@@ -9413,6 +9630,7 @@
             p.setAttribute('aria-selected', isActive ? 'true' : 'false');
           });
           render(pill.dataset.cat);
+          setExpanded(true);
         });
       });
 
