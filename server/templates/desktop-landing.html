@@ -3521,16 +3521,25 @@
         border-color: var(--line-strong);
       }
 
-      /* Floating close pill in the upper-right corner for the comparison and
-         AI Efficiency modals: absolute so it never displaces the centered
-         header content (sticky+float pushed the eyebrow/title off-center). */
-      #whyModal .modal-close,
-      #aiEfficiencyModal .modal-close {
+      /* Floating close pill in the upper-right corner for the comparison modal:
+         absolute so it never displaces the centered header content. */
+      #whyModal .modal-close {
         position: absolute;
         top: 16px;
         right: 16px;
         float: none;
         margin: 0;
+        z-index: 10;
+      }
+      /* The AI Efficiency shell is itself scrollable. Keep its X pinned to
+         the shell's top-right while the comparison content moves underneath. */
+      #aiEfficiencyModal .modal-close {
+        position: sticky;
+        top: 16px;
+        display: flex;
+        width: 36px;
+        height: 36px;
+        margin: -18px 0 -18px auto;
         z-index: 10;
       }
 
