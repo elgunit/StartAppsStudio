@@ -4696,7 +4696,7 @@
            glass panel, not on bare canvas, so any canvas-coloured gradient
            inevitably ends as a visible band (worst in dark mode). The soft
            mobile card shadow (0 4px 14px) dissolves on its own inside the
-           grid's 44px bottom padding - nothing needs covering. */
+           grid's 70px bottom padding - nothing needs covering. */
         .showcase-carousel-wrap {
           position: relative;
           margin: 0 0 4px;
@@ -4719,9 +4719,9 @@
              the cards ride this layer, which now sits above everything. */
           position: relative;
           z-index: 2;
-          /* 44px bottom padding: shadow below is 0 4px 14px, so its tail
+          /* 70px bottom padding: shadow below is 0 4px 14px, so its tail
              reaches ~4 + 28 = 32px - fully dissolved before the clip edge. */
-          padding: 10px 16px 44px;
+          padding: 10px 16px 70px;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
@@ -4783,7 +4783,7 @@
           display: block;
           position: absolute;
           top: 0;
-          bottom: 44px; /* match the 44px bottom padding of .showcase-grid */
+          bottom: 70px; /* match the 70px bottom padding of .showcase-grid */
           width: 40px;
           pointer-events: none;
           z-index: 2;
@@ -4901,7 +4901,7 @@
           -webkit-overflow-scrolling: touch;
           overscroll-behavior-x: contain;
           margin: 0;
-          padding: 10px 48px 20px 0; /* right padding = peek amount */
+          padding: 10px 48px 70px 0; /* right padding = peek amount */
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
@@ -5122,7 +5122,7 @@
         align-items: start;
         gap: clamp(20px, 3vw, 44px);
         max-width: 820px;
-        margin: 0 auto clamp(40px, 5.5vw, 64px);
+        margin: 64px auto clamp(40px, 5.5vw, 64px);
       }
 
       .founder-avatar {
@@ -5985,7 +5985,7 @@
         <!-- Project showcase: all cards in one grid; data-extra ones hidden until "See more" -->
         <div id="caseStudiesContainer">
           <div class="showcase-carousel-wrap">
-          <div class="showcase-grid">
+          <div class="showcase-grid pb-[70px]">
 
             <!-- Card 1: Mobile health app
                  REPLACE visual: swap .showcase-visual contents with
@@ -6674,7 +6674,7 @@
         <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person scoping your project is the same person designing, building, and shipping.</p>
 
         <!-- Identity block -->
-        <div class="studio-identity">
+        <div class="studio-identity mt-[64px]">
           <div class="founder-avatar">
             <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
           </div>
