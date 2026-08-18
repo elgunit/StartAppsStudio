@@ -1623,7 +1623,10 @@
         /* Stack value cards vertically on narrow phones */
         .tke-values { grid-template-columns: 1fr; }
         .tke-card.is-expanded .tke-values { max-height: 280px; }
-        .tke-row { gap: 16px; }
+        /* Tighten column gap and prevent the group label from widening its
+           host column — keeps the inter-column spacing even across all groups */
+        .tke-row { gap: 10px; }
+        .tke-col-label { font-size: 10px; white-space: nowrap; max-width: 0; overflow: visible; }
         .tke-sil { width: 50px; border-radius: 32px 32px 0 0; }
         .tke-headicon { width: 36px; height: 36px; margin-bottom: -18px; }
         .tke-col-name { font-size: 11px; }
@@ -2176,12 +2179,12 @@
       #whyModal .modal-content {
         max-width: 540px !important;
         /* svh = small viewport height (accounts for browser chrome on iOS Safari).
-           Fallback vh for older browsers. Clamp keeps a 24px gap top+bottom. */
-        max-height: calc(100vh - 48px) !important;
-        max-height: 88svh !important;
+           Fallback vh for older browsers. Near-full height so all rows fit. */
+        max-height: calc(100vh - 32px) !important;
+        max-height: 96svh !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        padding: 32px 28px 28px !important;
+        padding: 28px 28px !important;
         border-radius: var(--r-lg) !important;
         /* Solid canvas fallback ensures the modal is never transparent on iOS Safari */
         background: var(--canvas) !important;
@@ -2405,7 +2408,8 @@
       }
 
       @media (max-width: 560px) {
-        #whyModal .modal-content { padding: 16px 14px 20px !important; }
+        /* Balance vertical and horizontal padding: sides are 14px, top/bottom match */
+        #whyModal .modal-content { padding: 14px 14px !important; }
         .cmp-tabs { gap: 4px; padding: 4px; }
         .cmp-tab  {
           font-size: 12.5px;
@@ -2418,7 +2422,15 @@
         .cmp-tab svg { width: 13px; height: 13px; }
         .cmp-tab .cmp-tab-full { display: none; }
         .cmp-tab .cmp-tab-short { display: inline; }
-        .cmp-header { padding: 0; }
+        .cmp-header { padding: 0; margin-bottom: 12px; }
+        /* Tighten grid rows so all six items fit in one viewport */
+        .cmp-grid { gap: 6px; margin-bottom: 10px; }
+        .cmp-benefit, .cmp-pain { padding: 10px 12px; }
+        .cmp-icon { width: 30px; height: 30px; }
+        .cmp-item-title { font-size: 13px; }
+        .cmp-item-desc  { font-size: 11.5px; }
+        .cmp-action { padding: 12px 20px; min-height: 44px; font-size: 14px; margin-top: 0; }
+        .cmp-tabs { margin-bottom: 10px; }
       }
 
       /* Short-viewport pass — phones ≤ 700px tall (iPhone SE, older Androids).
