@@ -4233,6 +4233,21 @@ import express from "express";
 import * as fs from "fs";
 import * as path from "path";
 import crypto3 from "node:crypto";
+async function runMigrations() {
+  const migrationsDir = path.resolve(process.cwd(), "server", "migrations");
+  if (!fs.existsSync(migrationsDir)) return;
+  const files = fs.readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort();
+  const client = await pool.connect();
+  try {
+    for (const file of files) {
+      const sql3 = fs.readFileSync(path.join(migrationsDir, file), "utf8");
+      await client.query(sql3);
+      console.log(`[migrations] applied ${file}`);
+    }
+  } finally {
+    client.release();
+  }
+}
 function setupCors(app2) {
   app2.use((req, res, next) => {
     const origins = /* @__PURE__ */ new Set();
@@ -4402,6 +4417,7 @@ var init_index = __esm({
   "server/index.ts"() {
     init_routes();
     init_storage();
+    init_db();
     init_journal_report_sender();
     init_ai_crawlers();
     init_ai_bot_verifier();
@@ -4409,6 +4425,7 @@ var init_index = __esm({
     log = console.log;
     IP_HASH_SALT = process.env.AI_CRAWLER_IP_SALT || process.env.SESSION_SECRET || "ai-crawler-default-salt";
     (async () => {
+      await runMigrations();
       setupCors(app);
       setupBodyParsing(app);
       startAiBotVerifierAutoRefresh();

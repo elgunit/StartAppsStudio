@@ -4,6 +4,7 @@ import { registerRoutes } from "./routes";
 import * as fs from "fs";
 import * as path from "path";
 import { storage } from "./storage";
+import { pool } from "./db";
 import { sendJournalStatsReport } from "./journal-report-sender";
 import { detectAiBot } from "./ai-crawlers";
 import {
@@ -11,6 +12,32 @@ import {
   verifyAiBot,
 } from "./ai-bot-verifier";
 import crypto from "node:crypto";
+
+/**
+ * Runs all *.sql files in server/migrations/ in filename order.
+ * Every statement is idempotent (IF NOT EXISTS / IF EXISTS guards),
+ * so it is safe to re-run on every startup.
+ */
+async function runMigrations(): Promise<void> {
+  const migrationsDir = path.resolve(process.cwd(), "server", "migrations");
+  if (!fs.existsSync(migrationsDir)) return;
+
+  const files = fs
+    .readdirSync(migrationsDir)
+    .filter((f) => f.endsWith(".sql"))
+    .sort();
+
+  const client = await pool.connect();
+  try {
+    for (const file of files) {
+      const sql = fs.readFileSync(path.join(migrationsDir, file), "utf8");
+      await client.query(sql);
+      console.log(`[migrations] applied ${file}`);
+    }
+  } finally {
+    client.release();
+  }
+}
 
 const app = express();
 const log = console.log;
@@ -252,6 +279,8 @@ async function checkAndSendScheduledReport() {
 }
 
 (async () => {
+  await runMigrations();
+
   setupCors(app);
   setupBodyParsing(app);
   startAiBotVerifierAutoRefresh();
