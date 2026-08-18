@@ -1392,18 +1392,17 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
-      /* Selected-discipline summary: stacked block.
-         Collapsed → whole area is clickable; shows label row + icons below.
-         Expanded  → icons hidden; a small up-arrow circle appears on the
-         right of the label row so the user can collapse again. */
+      /* Selected-discipline summary: single horizontal row.
+         Collapsed → label + icons inline, no arrow.
+         Expanded  → icons hidden, up-arrow circle appears on the right. */
       .tke-summary {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
         gap: 8px;
-        padding: 11px 14px 12px;
+        padding: 10px 12px 10px 16px;
         border: 1px solid color-mix(in srgb, var(--dominant) 18%, var(--border));
-        border-radius: 16px;
+        border-radius: 999px;
         background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
         cursor: pointer;
         user-select: none;
@@ -1414,13 +1413,9 @@
         border-color: color-mix(in srgb, var(--dominant) 32%, var(--border));
         background: color-mix(in srgb, var(--bg-elevated) 72%, transparent);
       }
-      /* Top row inside the summary: label left, collapse-arrow right */
+      /* Inner top-row wrapper — keeps label + arrow at opposite ends */
       .tke-summary-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        gap: 8px;
+        display: contents; /* children participate directly in parent flex row */
       }
       .tke-summary-label {
         color: var(--text-secondary);
@@ -1431,12 +1426,17 @@
         white-space: nowrap;
         flex-shrink: 0;
       }
-      /* Tool icons row — wraps freely below the label */
+      /* Tool icons — inline, single non-wrapping row, fills the gap */
       .tke-summary-tools {
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 5px;
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
         transition: opacity 0.18s ease;
       }
       .tke-summary-tools::-webkit-scrollbar { display: none; }
@@ -1463,12 +1463,13 @@
         flex-shrink: 0;
       }
       .tke-summary-tool span { display: none; }
-      /* Collapse arrow — shown only when expanded, right side of top row */
+      /* Collapse arrow — hidden when collapsed, shown on the right when expanded */
       .tke-expand {
         display: none;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        margin-left: auto;
         width: 26px;
         height: 26px;
         padding: 0;
@@ -1487,7 +1488,7 @@
         background: color-mix(in srgb, var(--dominant) 18%, transparent);
         border-color: var(--dominant);
       }
-      /* Arrow always points up — button means "collapse" */
+      /* Arrow points up — means "collapse" */
       .tke-expand svg {
         transform: rotate(180deg);
         transition: none;
@@ -7269,21 +7270,21 @@
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
             </span>
             <span class="ai-stat-num">4</span>
-            <span class="ai-stat-title">Frontier AI models on every project</span>
+            <span class="ai-stat-title">Frontier AI models</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
             <span class="ai-stat-num">2+</span>
-            <span class="ai-stat-title">Independent AI reviews per build</span>
+            <span class="ai-stat-title">Independent AI reviews</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </span>
             <span class="ai-stat-num">100%</span>
-            <span class="ai-stat-title">Code and accounts owned by you</span>
+            <span class="ai-stat-title">Code owned by you</span>
           </div>
           <div class="ai-stat">
             <span class="ai-stat-icon" aria-hidden="true">
