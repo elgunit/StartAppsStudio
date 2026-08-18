@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Ship Your Product in Weeks | Start Apps Studio</title>
     <meta name="description" content="Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team." />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -311,7 +311,12 @@
         }
       }
       
-      html { scroll-behavior: auto; overflow-x: clip; }
+      html {
+        scroll-behavior: auto;
+        overflow-x: clip;
+        /* Keep touch panning available while preventing browser zoom gestures. */
+        touch-action: pan-x pan-y;
+      }
       .section,
       .why-section,
       .faq-section,
@@ -332,6 +337,7 @@
         overflow-x: clip;
         cursor: default;
         letter-spacing: -0.005em;
+        touch-action: pan-x pan-y;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -7809,6 +7815,17 @@
     </footer>
     
     <script>
+      /* Prevent accidental double-tap and pinch zoom on touch browsers.
+         touch-action handles modern browsers; gesture events cover iOS Safari
+         without cancelling ordinary vertical scroll or carousel swipes. */
+      (function () {
+        function preventBrowserZoom(e) { e.preventDefault(); }
+        document.addEventListener('dblclick', preventBrowserZoom, { passive: false });
+        document.addEventListener('gesturestart', preventBrowserZoom, { passive: false });
+        document.addEventListener('gesturechange', preventBrowserZoom, { passive: false });
+        document.addEventListener('gestureend', preventBrowserZoom, { passive: false });
+      })();
+
       (function () {
         var el = document.getElementById('toolkitAsOf');
         if (el) {
