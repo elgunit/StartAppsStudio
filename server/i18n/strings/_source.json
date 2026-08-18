@@ -1,0 +1,2457 @@
+[
+  {
+    "key": "Ship Your Product in Weeks | Start Apps Studio",
+    "kind": "unit",
+    "context": "title"
+  },
+  {
+    "key": "<span class=\"hero-line hero-line-nowrap\">Ship your <span class=\"accent-word\">product</span> in weeks.</span>",
+    "kind": "unit",
+    "context": "h1.hero-headline"
+  },
+  {
+    "key": "Start Apps Studio is the founder-led product partner for non-technical founders. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.",
+    "kind": "unit",
+    "context": "p.hero-subheadline"
+  },
+  {
+    "key": "Designer",
+    "kind": "text",
+    "context": "a.hat-showcase-item"
+  },
+  {
+    "key": "Developer",
+    "kind": "text",
+    "context": "a.hat-showcase-item"
+  },
+  {
+    "key": "Strategist",
+    "kind": "text",
+    "context": "a.hat-showcase-item"
+  },
+  {
+    "key": "Manager",
+    "kind": "text",
+    "context": "a.hat-showcase-item"
+  },
+  {
+    "key": "Analyst",
+    "kind": "text",
+    "context": "a.hat-showcase-item"
+  },
+  {
+    "key": "<span class=\"hero-stat-number\">~40</span> founder-led products shipped",
+    "kind": "unit",
+    "context": "div.hero-stat"
+  },
+  {
+    "key": "<span class=\"hero-stat-number\">3-8 weeks</span> to launch",
+    "kind": "unit",
+    "context": "div.hero-stat"
+  },
+  {
+    "key": "<a href=\"#contact\" class=\"cta-button\">Get a free plan</a> <a href=\"#pricing\" class=\"cta-button secondary\">See pricing</a>",
+    "kind": "unit",
+    "context": "div.hero-cta-group"
+  },
+  {
+    "key": "Common problems we solve",
+    "kind": "attr",
+    "context": "div.pain-strip[aria-label]"
+  },
+  {
+    "key": "Idea stuck in slides",
+    "kind": "unit",
+    "context": "div.pain-strip-pain"
+  },
+  {
+    "key": "We turn your concept into a working product in weeks, so you can stop planning and start validating.",
+    "kind": "unit",
+    "context": "div.pain-strip-resolve"
+  },
+  {
+    "key": "Hiring feels like a second job",
+    "kind": "unit",
+    "context": "div.pain-strip-pain"
+  },
+  {
+    "key": "One founder-led partner handles strategy, design, and build. No recruiters, no standups, no surprises.",
+    "kind": "unit",
+    "context": "div.pain-strip-resolve"
+  },
+  {
+    "key": "Agencies hand over code I can't control",
+    "kind": "unit",
+    "context": "div.pain-strip-pain"
+  },
+  {
+    "key": "You own every account, design file, and line of code. We build it with you, then hand it off cleanly.",
+    "kind": "unit",
+    "context": "div.pain-strip-resolve"
+  },
+  {
+    "key": "Selected projects",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "Real products in users' hands, across healthcare, fintech, retail, and more.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Industries served",
+    "kind": "attr",
+    "context": "div.industry-strip-inline[aria-label]"
+  },
+  {
+    "key": "Fintech",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Education",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Healthcare",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Fitness &amp; Wellness",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Hospitality",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Media &amp; Telecom",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Real Estate",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "SaaS",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "E-Commerce",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Logistics",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "HR &amp; Recruiting",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Cybersecurity",
+    "kind": "text",
+    "context": "span.industry-chip"
+  },
+  {
+    "key": "Wellness · iOS &amp; Android",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Coaching &amp; Tracking App",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "Non-technical founder needed iOS and Android live before a pre-seed pitch, with six weeks to ship and no technical co-founder.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Built a React Native app with push notifications, a coach-facing admin dashboard, and subscription billing via RevenueCat. Shipped to both stores on week six, one week before the pitch.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "Shipped in 6 weeks · Pre-seed raised",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "SaaS · Rescue Build",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Operations Dashboard",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "Six months of freelance work left a B2B founder with a broken prototype and a client demo in two weeks.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Audited the codebase, rebuilt the data model and API layer, redesigned the core UI, and delivered a stable, demo-ready product in 11 days. The client signed the day after the demo.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "Demo-ready in 11 days · Contract signed",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Fintech · Web Platform",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Payments &amp; Ledger MVP",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "A fintech founder needed a working product for a Series A meeting in seven weeks, not a clickable prototype.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Built a full-stack platform with Stripe Connect for multi-party payouts, real-time transaction feeds, and an admin console. Shipped in seven weeks with a clean codebase and full source handoff.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "Shipped in 7 weeks · Series A closed",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Education · Web App",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Course &amp; Learning Platform",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "An edtech founder had a solid audience but only a waitlist landing page, and investors wanted to see a working product.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Built a video course platform with progress tracking, a quiz engine, and Stripe-gated enrollment in five weeks. The first cohort sold out within a week of launch.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "First cohort sold out at launch",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Real Estate · iOS &amp; Android",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Property Discovery App",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "An outsourced build came back incomplete, over budget, and with no documentation to hand over to the client.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Took over the project, wrote the missing search and listing API, rebuilt the map integration from scratch, and delivered a clean codebase with full source handoff in four weeks.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "Rescued &amp; shipped in 4 weeks",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Pitch Prototype · Web",
+    "kind": "attr",
+    "context": "div.showcase-card[data-category]"
+  },
+  {
+    "key": "Investor-Ready Demo",
+    "kind": "attr",
+    "context": "div.showcase-card[data-name]"
+  },
+  {
+    "key": "A founder had a compelling deck but no live product, with a Series A meeting locked in for ten days out.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-problem]"
+  },
+  {
+    "key": "Built an interactive web prototype on real infrastructure, with working data flows, auth, and a demo mode investors could tap through on their phone. Live in nine days.",
+    "kind": "attr",
+    "context": "div.showcase-card[data-solution]"
+  },
+  {
+    "key": "Demo live in 9 days · Meeting secured",
+    "kind": "attr",
+    "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "See more builds",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "More recent builds",
+    "kind": "text",
+    "context": "div.recent-builds-header"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">Retail Inventory Dashboard</span> <span class=\"recent-build-result\">Shipped in 3 weeks</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">Healthcare Appointment Booking</span> <span class=\"recent-build-result\">Live in 5 weeks · 800 bookings in week one</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">Agency Client Portal</span> <span class=\"recent-build-result\">Replaced spreadsheets · 3 agencies onboarded</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">Restaurant Ordering &amp; Kitchen Display</span> <span class=\"recent-build-result\">Deployed across 4 locations</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">Nonprofit Donor Management</span> <span class=\"recent-build-result\">Shipped in 4 weeks · $120k raised at launch</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "<span class=\"recent-build-name\">AI Content Workflow Tool</span> <span class=\"recent-build-result\">Beta launched · 200 signups in 48 hours</span>",
+    "kind": "unit",
+    "context": "div.recent-build-main"
+  },
+  {
+    "key": "What we ship",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "From your first landing page to a full multi-platform product. Every package is built to get you closer to real users and real revenue.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Build",
+    "kind": "unit",
+    "context": "button.service-tab"
+  },
+  {
+    "key": "Grow",
+    "kind": "unit",
+    "context": "button.service-tab"
+  },
+  {
+    "key": "Landing Pages",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Validate demand before you build. A conversion-focused page with email capture, analytics, and SEO.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Designed for conversions, not just looks",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "SEO that ranks from day one",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Analytics so you know what's working",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Email capture and CRM hooks",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Native iOS & Android",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Ship to the App Store and Play Store. Your product lives on users' home screens, not just in a browser tab.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "iOS and Android from a single build",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Push notifications and deep links",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "App Store and Play Store submission",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Stripe and RevenueCat for payments",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Web Applications",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "A production-grade web app with accounts, payments, and a real database, ready for your first paying customers.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Modern, fast, and mobile-first",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Secure user accounts out of the box",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Database designed for growth",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Connected to anything you already use",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Full MVP",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "A real, launch-ready product for your first 100K–500K users. We scope, design, build, and launch the core experience in 1–2 months.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Scope the smallest product worth launching",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Design and engineering in lockstep",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Core infrastructure ready for real users",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Launch support and one post-launch iteration",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "SEO Audit",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "A full check of your site's health, with a plain-English fix list ranked by impact.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "150 to 750 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "Keyword Strategy",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "The exact searches your customers are typing, plus a plan to rank for them.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "300 to 900 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "Backlink Strategy &amp; Outreach",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "The links that decide who Google and AI engines recommend, earned through real outreach to real editors.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "600 to 1350 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "Content Plan",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "A 90-day editorial calendar with topics, outlines, and briefs your writer (or AI) can run with.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "300 to 1200 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "Paid Ads Setup",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Google and Meta campaigns set up properly the first time, with the creative and targeting to match.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "450 to 1350 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "Social Media Kit",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Branded post templates, a content calendar, and a clear voice across every channel.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Email Sequences",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Welcome flows, onboarding, and win-back campaigns that actually get opened.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Brand Identity",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "A complete visual system: logo, colors, type, and voice that investors take seriously.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "450 to 1650 credits",
+    "kind": "unit",
+    "context": "span.growth-credit-badge"
+  },
+  {
+    "key": "From idea to launch",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "We help you choose what to build, what to prove first, and which path gets you to a useful product without paying for the wrong version.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "1",
+    "kind": "unit",
+    "context": "div.how-card-ghost"
+  },
+  {
+    "key": "01",
+    "kind": "unit",
+    "context": "div.how-card-step"
+  },
+  {
+    "key": "Define the first useful version",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "We turn the idea, half-built app, or business brief into a sharp first release: the core user journey, the must-have features, and the work that can wait.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "2",
+    "kind": "unit",
+    "context": "div.how-card-ghost"
+  },
+  {
+    "key": "02",
+    "kind": "unit",
+    "context": "div.how-card-step"
+  },
+  {
+    "key": "Choose the right route",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Launch site, clickable prototype, web app, or native iOS and Android? We compare the options, platform trade-offs, and existing tools before recommending the route.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "3",
+    "kind": "unit",
+    "context": "div.how-card-ghost"
+  },
+  {
+    "key": "03",
+    "kind": "unit",
+    "context": "div.how-card-step"
+  },
+  {
+    "key": "Make the solution tangible",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "We map the flows, design the key screens, and build against real scenarios. You see the product working on your phone or browser while decisions are still easy to change.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "4",
+    "kind": "unit",
+    "context": "div.how-card-ghost"
+  },
+  {
+    "key": "04",
+    "kind": "unit",
+    "context": "div.how-card-step"
+  },
+  {
+    "key": "Launch with room to grow",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "We ship the working version, connect the accounts, and hand over the code and keys. You leave with a live product, plus a clear next move based on what users do.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Pricing & timelines",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "Strategy-first work for founders who want more than a typical site build. Every package starts with user flows and case scenarios, and includes unlimited revisions while we build.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Lovable &middot; Replit",
+    "kind": "text",
+    "context": "div.method-badge"
+  },
+  {
+    "key": "Launch Site",
+    "kind": "unit",
+    "context": "div.price-title"
+  },
+  {
+    "key": "Your site, built and live",
+    "kind": "unit",
+    "context": "div.price-subtitle"
+  },
+  {
+    "key": "Your direction turned into a polished responsive site",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Built in Lovable or Replit, ready for instant edits",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Deployed with the code and account access in your name",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "<span class=\"popular-badge-dot\"></span>Best for a working product",
+    "kind": "unit",
+    "context": "div.popular-badge"
+  },
+  {
+    "key": "Figma &middot; React &middot; Live infra",
+    "kind": "text",
+    "context": "div.method-badge"
+  },
+  {
+    "key": "Prototype",
+    "kind": "unit",
+    "context": "div.price-title"
+  },
+  {
+    "key": "Clickable &middot; investor-ready",
+    "kind": "unit",
+    "context": "div.price-subtitle"
+  },
+  {
+    "key": "Live on real infrastructure. Tap it on any phone",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Web-first: update content without an App Store review",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Full Figma design system + source code handed to you",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "React Native &middot; Node &middot; Postgres",
+    "kind": "text",
+    "context": "div.method-badge"
+  },
+  {
+    "key": "MVP",
+    "kind": "unit",
+    "context": "div.price-title"
+  },
+  {
+    "key": "Real users. Real data. Yours to own",
+    "kind": "unit",
+    "context": "div.price-subtitle"
+  },
+  {
+    "key": "iOS, Android, and web: one build, all platforms",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "User accounts, payments, and data from day one",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Every account and line of code transferred to you at launch",
+    "kind": "text",
+    "context": "div.price-feature"
+  },
+  {
+    "key": "Handcrafted",
+    "kind": "text",
+    "context": "div.special-badge"
+  },
+  {
+    "key": "Custom",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>",
+    "kind": "unit",
+    "context": "div.special-pins"
+  },
+  {
+    "key": "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.",
+    "kind": "unit",
+    "context": "p.special-summary"
+  },
+  {
+    "key": "Webflow",
+    "kind": "text",
+    "context": "div.special-feature"
+  },
+  {
+    "key": "Hand-written HTML/CSS",
+    "kind": "text",
+    "context": "div.special-feature"
+  },
+  {
+    "key": "Native mobile wrapper",
+    "kind": "text",
+    "context": "div.special-feature"
+  },
+  {
+    "key": "Separate database layer",
+    "kind": "text",
+    "context": "div.special-feature"
+  },
+  {
+    "key": "<span class=\"special-details-label\">Who this is for</span> For clients who want a bespoke, hand-built product and are willing to trade speed for it.",
+    "kind": "unit",
+    "context": "div.special-details"
+  },
+  {
+    "key": "Start a conversation",
+    "kind": "attr",
+    "context": "div.mid-cta-bridge[aria-label]"
+  },
+  {
+    "key": "<span class=\"mid-cta-heading\">Ready to scope your project?</span> <span class=\"mid-cta-sub\">You'll get a plan, a price, and a timeline back within 24 hours.</span>",
+    "kind": "unit",
+    "context": "div.mid-cta-text"
+  },
+  {
+    "key": "Get a free plan",
+    "kind": "unit",
+    "context": "a.cta-button"
+  },
+  {
+    "key": "One person.<br>Full accountability.",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "Not an agency handoff. Not a marketplace match. Scoping your project is the same person designing, building, and shipping.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Elgar Sirajov, Founder of Start Apps Studio",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
+    "key": "Elgar Sirajov",
+    "kind": "unit",
+    "context": "div.founder-name"
+  },
+  {
+    "key": "Founder · Designer · Developer · Strategist",
+    "kind": "unit",
+    "context": "div.founder-role"
+  },
+  {
+    "key": "View LinkedIn profile",
+    "kind": "text",
+    "context": "a.founder-link"
+  },
+  {
+    "key": "Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One owns the design, the code, the QA, and the deadline. You know who to call, and that person has the full context, so every decision moves your product forward.",
+    "kind": "unit",
+    "context": "p.founder-bio"
+  },
+  {
+    "key": "Direct access",
+    "kind": "unit",
+    "context": "div.stp-kicker"
+  },
+  {
+    "key": "One person, full context",
+    "kind": "unit",
+    "context": "div.stp-title"
+  },
+  {
+    "key": "You talk to the person making the decisions, not an account manager relaying them.",
+    "kind": "unit",
+    "context": "p.stp-body"
+  },
+  {
+    "key": "Live decisions",
+    "kind": "unit",
+    "context": "div.stp-kicker"
+  },
+  {
+    "key": "Feedback while it is easy",
+    "kind": "unit",
+    "context": "div.stp-title"
+  },
+  {
+    "key": "See working previews, respond quickly, and make changes before they become expensive.",
+    "kind": "unit",
+    "context": "p.stp-body"
+  },
+  {
+    "key": "Your foundation",
+    "kind": "unit",
+    "context": "div.stp-kicker"
+  },
+  {
+    "key": "Nothing held hostage",
+    "kind": "unit",
+    "context": "div.stp-title"
+  },
+  {
+    "key": "The code, accounts, and assets are yours, whether you keep working with me or bring in a team.",
+    "kind": "unit",
+    "context": "p.stp-body"
+  },
+  {
+    "key": "Room to grow",
+    "kind": "unit",
+    "context": "div.stp-kicker"
+  },
+  {
+    "key": "Scale without starting over",
+    "kind": "unit",
+    "context": "div.stp-title"
+  },
+  {
+    "key": "Your product never hits a ceiling. When it outgrows one builder, an established handoff path to a partner engineering organisation lets you scale up without starting over with someone new.",
+    "kind": "unit",
+    "context": "p.stp-body"
+  },
+  {
+    "key": "Problem: inconsistent visual output",
+    "kind": "text",
+    "context": "div.testimonial-problem-tag"
+  },
+  {
+    "key": "Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, boutique event studio<br><span class=\"testimonial-location\">Istanbul / Toronto</span>",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Content system",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "Problem: slow catalogue updates",
+    "kind": "text",
+    "context": "div.testimonial-problem-tag"
+  },
+  {
+    "key": "We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Owner, specialty food importer<br><span class=\"testimonial-location\">Etobicoke, ON</span>",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Catalogue system",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "Problem: indistinguishable product shots",
+    "kind": "text",
+    "context": "div.testimonial-problem-tag"
+  },
+  {
+    "key": "I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Homeowner<br><span class=\"testimonial-location\">Toronto · Onex install</span>",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Product creative",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "Why Start Apps Studio?",
+    "kind": "unit",
+    "context": "h2"
+  },
+  {
+    "key": "Built by a founder who has worn every hat, not just a dev team.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Live on iPhone and Android",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Most web-only tools struggle to build habit. We ship to both app stores so your product lives where users actually spend time.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Instant Updates",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "App store reviews can delay even urgent fixes. We push updates the moment you approve them, so you stay responsive to users.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Reach Users on Their Lock Screen",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Email gets ignored. Push notifications show up like a text message. We wire them in from day one so you can re-engage users at the right moment.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Start Earning From Day One",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Payment integrations should not delay launch. We ship subscriptions, upgrades, and one-time purchases as part of the build, ready to earn on launch day.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Grow Without Surprise Bills",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Most hosting bills spike right when you can least afford a distraction. Our infrastructure scales with your growth. The invoice doesn't.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "You Own It, Forever",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Too many founders discover they can't leave because the agency holds the accounts. Every line of code, every design file, and every API key is yours from day one.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "See the full comparison",
+    "kind": "text",
+    "context": "button.why-compare-btn"
+  },
+  {
+    "key": "&times;",
+    "kind": "unit",
+    "context": "button.modal-close"
+  },
+  {
+    "key": "Why founders choose us",
+    "kind": "unit",
+    "context": "div.cmp-eyebrow"
+  },
+  {
+    "key": "The Start Apps Studio Way",
+    "kind": "unit",
+    "context": "span.cmp-tab-full"
+  },
+  {
+    "key": "Our Way",
+    "kind": "unit",
+    "context": "span.cmp-tab-short"
+  },
+  {
+    "key": "Traditional Agencies",
+    "kind": "unit",
+    "context": "span.cmp-tab-full"
+  },
+  {
+    "key": "Agencies",
+    "kind": "unit",
+    "context": "span.cmp-tab-short"
+  },
+  {
+    "key": "Fixed pricing",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "What we quote is what you pay",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Everything included",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Design, dev, launch. No add-ons.",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Lifetime updates",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Never gated behind a subscription",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Weeks, not months",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Ship before competitors finish their RFP",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Live progress",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Watch your product come together in real time",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "You own everything",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Code, accounts, assets. Zero lock-in.",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Start your build &rarr;",
+    "kind": "unit",
+    "context": "a.cmp-action"
+  },
+  {
+    "key": "$50k-$80k upfront",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Before you've seen a single screen",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Add-on creep",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Every feature is a change order",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Six-month timelines",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "By the time it ships, the market moved",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Annual retainers for updates",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Pay forever to fix bugs",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Vendor lock-in",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "Try migrating off their stack later",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Black-box delivery",
+    "kind": "unit",
+    "context": "div.cmp-item-title"
+  },
+  {
+    "key": "You find out at the demo, not before",
+    "kind": "unit",
+    "context": "div.cmp-item-desc"
+  },
+  {
+    "key": "Most agencies quote $80k+ and take six months for what we ship in weeks, without the equity ask of a technical co-founder. <a href=\"#contact\" onclick=\"closeWhyModal()\" style=\"color:var(--accent);text-decoration:none;font-weight:600;\">Talk to us &rarr;</a>",
+    "kind": "unit",
+    "context": "div.cmp-footnote"
+  },
+  {
+    "key": "One partner across the product lifecycle",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "The five disciplines that keep an early-stage product coherent, learned by building, pivoting, and shipping my own products.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "&#9998;",
+    "kind": "unit",
+    "context": "div.card-icon"
+  },
+  {
+    "key": "Product design",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Make the product clear before making it polished",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Founders who know what they want to build but not how it should feel",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Products where users drop off because flows are unclear, not broken",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Early pitches that need to look credible before a line of code is written",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "&lt;/&gt;",
+    "kind": "unit",
+    "context": "div.card-icon"
+  },
+  {
+    "key": "Product engineering",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Turn the validated idea into dependable software",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Prototypes that look good but break when real data or real users arrive",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "AI output shipped without the review or structure a team needs to extend it safely.",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Products that need auth, payments, or app store deployment done properly the first time",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "&#9733;",
+    "kind": "unit",
+    "context": "div.card-icon"
+  },
+  {
+    "key": "Product strategy",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Reduce ambiguity before it becomes expensive",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Founders who need to decide what to build first, not just how to build it",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Products where scope keeps growing because no one has set a clear boundary",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Investor decks that need a credible build plan behind the pitch narrative",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "&#9776;",
+    "kind": "unit",
+    "context": "div.card-icon"
+  },
+  {
+    "key": "Delivery leadership",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Keep decisions, scope, and momentum aligned",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Builds that drift because feedback loops are slow or unclear",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Projects where scope creep has already cost one team their timeline",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Founders who want visibility into progress without micromanaging the build",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "&#931;",
+    "kind": "unit",
+    "context": "div.card-icon"
+  },
+  {
+    "key": "Product insight",
+    "kind": "unit",
+    "context": "h4"
+  },
+  {
+    "key": "Replace confident guesses with useful signals",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Products that launched but nobody knows if anyone is actually using them",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Founders making the next build decision on gut feel rather than early user behaviour",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "Teams that need to know whether to double down or change direction before spending more",
+    "kind": "text",
+    "context": "div.skill-item"
+  },
+  {
+    "key": "The stack behind every build",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "Every tool here is chosen for what it gives your product, not what's fashionable.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "AI is used throughout the work (the Custom tier is the exception, with code written by hand), which is why projects ship in weeks instead of months. Every build is reviewed and structured by a person who owns the outcome, so what ships is sound and extensible.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Frontier AI models on every project",
+    "kind": "unit",
+    "context": "span.ai-stat-title"
+  },
+  {
+    "key": "2+",
+    "kind": "unit",
+    "context": "span.ai-stat-num"
+  },
+  {
+    "key": "Independent AI reviews per build",
+    "kind": "unit",
+    "context": "span.ai-stat-title"
+  },
+  {
+    "key": "100%",
+    "kind": "unit",
+    "context": "span.ai-stat-num"
+  },
+  {
+    "key": "Code and accounts owned by you",
+    "kind": "unit",
+    "context": "span.ai-stat-title"
+  },
+  {
+    "key": "Priceless",
+    "kind": "unit",
+    "context": "span.ai-stat-num"
+  },
+  {
+    "key": "No surprise AI fees",
+    "kind": "unit",
+    "context": "span.ai-stat-title"
+  },
+  {
+    "key": "<span class=\"toolkit-meta-pulse\" aria-hidden=\"true\"></span> <span><span id=\"toolkitAsOf\">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>",
+    "kind": "unit",
+    "context": "div.toolkit-meta"
+  },
+  {
+    "key": "AI tools by use case",
+    "kind": "attr",
+    "context": "div#tkeCard.tke-card[aria-label]"
+  },
+  {
+    "key": "<span class=\"tke-heading\">Our AI toolkit, by discipline</span>",
+    "kind": "unit",
+    "context": "div.tke-header"
+  },
+  {
+    "key": "Use cases",
+    "kind": "attr",
+    "context": "div.tke-tabs[aria-label]"
+  },
+  {
+    "key": "Research",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Coding",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Video Creation",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Task Automation",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Writing",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Websites",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Business AI Stack",
+    "kind": "unit",
+    "context": "button.tke-pill"
+  },
+  {
+    "key": "Professional Tools",
+    "kind": "unit",
+    "context": "span.tke-summary-label"
+  },
+  {
+    "key": "Tools in this discipline",
+    "kind": "attr",
+    "context": "div#tkeSummaryTools.tke-summary-tools[aria-label]"
+  },
+  {
+    "key": "Explore stack",
+    "kind": "attr",
+    "context": "button#tkeExpand.tke-expand[aria-label]"
+  },
+  {
+    "key": "For Research",
+    "kind": "unit",
+    "context": "h3#tkeFor.tke-for"
+  },
+  {
+    "key": "<span class=\"tke-value-head\">If you do it yourself</span> <span class=\"tke-value-copy\" id=\"tkeValueFounder\"></span>",
+    "kind": "unit",
+    "context": "div.tke-value"
+  },
+  {
+    "key": "<span class=\"tke-value-head\">What our clients get</span> <span class=\"tke-value-copy\" id=\"tkeValueClient\"></span>",
+    "kind": "unit",
+    "context": "div.tke-value"
+  },
+  {
+    "key": "Your idea, made visible",
+    "kind": "unit",
+    "context": "div.toolkit-group-label"
+  },
+  {
+    "key": "How your concept becomes screens you can tap, share with investors, and test with real users.",
+    "kind": "unit",
+    "context": "p.toolkit-group-desc"
+  },
+  {
+    "key": "every screen designed before code",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "try it on a real phone in days",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "launch site live in days",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "working product you can run &amp; edit",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "Your product, built to last",
+    "kind": "unit",
+    "context": "div.toolkit-group-label"
+  },
+  {
+    "key": "The engineering that powers the app your users install, open, and pay for.",
+    "kind": "unit",
+    "context": "p.toolkit-group-desc"
+  },
+  {
+    "key": "one codebase, iOS + Android",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "native iOS, fastest on iPhone",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "native Android, full Play Store reach",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "your data, secure and yours to export",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "Revenue &amp; launch, day one",
+    "kind": "unit",
+    "context": "div.toolkit-group-label"
+  },
+  {
+    "key": "Payments, updates, and code safety wired in from the start, not bolted on after.",
+    "kind": "unit",
+    "context": "p.toolkit-group-desc"
+  },
+  {
+    "key": "one-time, subscriptions, upgrades",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "App Store &amp; Play Store billing",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "daily backups: your code is always safe",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "n8n + Make handle the busywork",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "AI in the background, not in your way",
+    "kind": "unit",
+    "context": "div.toolkit-group-label"
+  },
+  {
+    "key": "Multiple frontier models review every decision and catch weak spots before your users do.",
+    "kind": "unit",
+    "context": "p.toolkit-group-desc"
+  },
+  {
+    "key": "primary builder &amp; code reviewer",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "reviews the whole product at once",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "copy, flows &amp; creative direction",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "self-hosted: your data stays private",
+    "kind": "unit",
+    "context": "span.toolkit-chip-version"
+  },
+  {
+    "key": "You never pay the model bills, and you never get locked in. When a better tool ships, we swap it in. Your product always runs on what's best right now, and every line of code stays yours.",
+    "kind": "unit",
+    "context": "p.toolkit-footnote"
+  },
+  {
+    "key": "<span class=\"ae-eyebrow-dot\"></span>AI Efficiency &amp; Value",
+    "kind": "unit",
+    "context": "span.ae-teaser-badge"
+  },
+  {
+    "key": "Stop burning credits. Start shipping product.",
+    "kind": "unit",
+    "context": "span.ae-teaser-title"
+  },
+  {
+    "key": "Why a managed AI stack delivers <b>3-10x</b> the value of a raw one, with the math, the comparison, and the proof.",
+    "kind": "unit",
+    "context": "span.ae-teaser-sub"
+  },
+  {
+    "key": "See the comparison",
+    "kind": "text",
+    "context": "span.ae-teaser-cta"
+  },
+  {
+    "key": "Close",
+    "kind": "attr",
+    "context": "button.modal-close[aria-label]"
+  },
+  {
+    "key": "<span class=\"aem-dot\"></span>AI Efficiency &amp; Value",
+    "kind": "unit",
+    "context": "span.aem-eyebrow"
+  },
+  {
+    "key": "Most founders quietly burn $10,000+ on AI tools before they ship anything real. We turn that spend into working product.",
+    "kind": "unit",
+    "context": "p.aem-lede"
+  },
+  {
+    "key": "Raw AI stack",
+    "kind": "unit",
+    "context": "button#aemTabAlone.aem-tab"
+  },
+  {
+    "key": "Start Apps Studio",
+    "kind": "unit",
+    "context": "button#aemTabManaged.aem-tab"
+  },
+  {
+    "key": "Thousands of credits spent on prompts that almost work",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Generic outputs that ignore your niche, your users, and your voice",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Half-built assets with no one to stitch them together",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Open-ended bills that grow every month you delay shipping",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Proprietary in-house model stack tuned for product, code, and copy",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Expert prompting and review, so outputs land your niche on the first pass",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Full lifecycle: brand, design, code, and launch under one roof",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Fixed scope, fixed budget: no surprise bills mid-build",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Raw AI stack: about 68% of spend is lost to iteration.",
+    "kind": "attr",
+    "context": "div#aemRatio.aem-ratio[aria-label]"
+  },
+  {
+    "key": "<span class=\"aem-ratio-label\">Credit waste at a glance</span> <span class=\"aem-ratio-caption\" id=\"aemRatioCaption\">Raw AI stack loses about <b>68%</b> to iteration.</span>",
+    "kind": "unit",
+    "context": "div.aem-ratio-head"
+  },
+  {
+    "key": "<span><span class=\"aem-swatch aem-swatch--teal\"></span>Managed · ~32% iteration</span> <span><span class=\"aem-swatch aem-swatch--rose\"></span>Solo · ~68% lost</span>",
+    "kind": "unit",
+    "context": "div.aem-ratio-legend"
+  },
+  {
+    "key": "What managed delivery gives you",
+    "kind": "unit",
+    "context": "p.aem-section-label"
+  },
+  {
+    "key": "Proprietary AI stack",
+    "kind": "unit",
+    "context": "p.aem-proof-title"
+  },
+  {
+    "key": "Frontier and in-house models picked per task. You pay for output, not experimentation.",
+    "kind": "unit",
+    "context": "p.aem-proof-sub"
+  },
+  {
+    "key": "Full asset and code lifecycle",
+    "kind": "unit",
+    "context": "p.aem-proof-title"
+  },
+  {
+    "key": "One team owns brand, design, code, and launch. Nothing dropped between tools.",
+    "kind": "unit",
+    "context": "p.aem-proof-sub"
+  },
+  {
+    "key": "Fixed scope, fixed budget",
+    "kind": "unit",
+    "context": "p.aem-proof-title"
+  },
+  {
+    "key": "You agree the deliverables and price up front. We absorb the retries and late-night iterations.",
+    "kind": "unit",
+    "context": "p.aem-proof-sub"
+  },
+  {
+    "key": "Start your build",
+    "kind": "text",
+    "context": "a.aem-cta"
+  },
+  {
+    "key": "Let's scope a project.",
+    "kind": "unit",
+    "context": "h2"
+  },
+  {
+    "key": "Building your first launch site, Figma-led prototype, or real MVP? Tell us what you’re trying to ship, who it’s for, and where you’re stuck. You’ll get a clear plan, a fixed price, and a realistic timeline from the person who will own the work.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "24-hour reply",
+    "kind": "unit",
+    "context": "h5"
+  },
+  {
+    "key": "A real founder reads every message. No bots, no SDR follow-ups.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Source code, accounts, designs, domains. Yours from day one.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Ship in 3-8 weeks",
+    "kind": "unit",
+    "context": "h5"
+  },
+  {
+    "key": "Most builds go live within a month of kickoff.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "What we quote is what you pay. No surprises, ever.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "About you",
+    "kind": "unit",
+    "context": "span.form-section-title"
+  },
+  {
+    "key": "Full name",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Email address",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Investment range",
+    "kind": "unit",
+    "context": "span.form-section-title"
+  },
+  {
+    "key": "Enterprise",
+    "kind": "unit",
+    "context": "span.budget-tier"
+  },
+  {
+    "key": "What you're working on",
+    "kind": "unit",
+    "context": "span.form-section-title"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"landing\"> Landing Page",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"mobile\"> Mobile App",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"webapp\"> Web App",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"mvp\"> Full MVP",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"prototype\"> Prototype / Pitch Demo",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"rescue\"> Rescue / Takeover Existing App",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"aiml\"> AI / ML Feature",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"growth\"> Growth &amp; Marketing",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "<input type=\"checkbox\" name=\"interest\" value=\"outsourcing\"> Outsourcing / Team Extension",
+    "kind": "unit",
+    "context": "label.interest-option"
+  },
+  {
+    "key": "When do you need to launch? <span style=\"font-weight:400;color:var(--ink-2);font-size:0.8rem;\">(optional)</span>",
+    "kind": "unit",
+    "context": "span.form-section-title"
+  },
+  {
+    "key": "<input type=\"radio\" name=\"timeline\" value=\"asap\"> ASAP",
+    "kind": "unit",
+    "context": "label.timeline-chip"
+  },
+  {
+    "key": "<input type=\"radio\" name=\"timeline\" value=\"4weeks\"> Within 4 weeks",
+    "kind": "unit",
+    "context": "label.timeline-chip"
+  },
+  {
+    "key": "<input type=\"radio\" name=\"timeline\" value=\"1-3months\"> 1–3 months",
+    "kind": "unit",
+    "context": "label.timeline-chip"
+  },
+  {
+    "key": "<input type=\"radio\" name=\"timeline\" value=\"3-6months\"> 3–6 months",
+    "kind": "unit",
+    "context": "label.timeline-chip"
+  },
+  {
+    "key": "<input type=\"radio\" name=\"timeline\" value=\"exploring\"> Just exploring",
+    "kind": "unit",
+    "context": "label.timeline-chip"
+  },
+  {
+    "key": "Your project",
+    "kind": "unit",
+    "context": "span.form-section-title"
+  },
+  {
+    "key": "What are you building, who is it for, and when do you need it live?",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Get my free plan",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "You're in good hands.",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "I read every submission personally. Here is what happens next so you are not left guessing.",
+    "kind": "unit",
+    "context": "p.form-success-sub"
+  },
+  {
+    "key": "<span class=\"form-success-step-num\">1</span> <span>I review your brief within a few hours and map out what a realistic build looks like for your timeline and budget.</span>",
+    "kind": "unit",
+    "context": "div.form-success-step"
+  },
+  {
+    "key": "<span class=\"form-success-step-num\">2</span> <span>You will hear back within 24 hours with a direct reply, not a bot or a sales rep.</span>",
+    "kind": "unit",
+    "context": "div.form-success-step"
+  },
+  {
+    "key": "<span class=\"form-success-step-num\">3</span> <span>If it is a fit, we book a short call and I walk you through exactly how I would approach your project.</span>",
+    "kind": "unit",
+    "context": "div.form-success-step"
+  },
+  {
+    "key": "Confirmation sent to",
+    "kind": "text",
+    "context": "span.form-success-email"
+  },
+  {
+    "key": "Frequently asked questions",
+    "kind": "unit",
+    "context": "h2#faqTitle.faq-title"
+  },
+  {
+    "key": "Pricing, timelines, scope, ownership, and what happens after launch.",
+    "kind": "unit",
+    "context": "p.faq-subtitle"
+  },
+  {
+    "key": "How much does it cost to work with Start Apps Studio?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. The Launch Site is built directly in Lovable or Replit from your design direction, then deployed and handed over to you. The Prototype includes the full Figma design phase. Pricing is fixed up front, so you know the number before we start.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "How long does it take to ship an MVP?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "MVPs ship in 3 to 8 weeks from kickoff, depending on scope. Launch Sites are typically delivered in 3 to 5 business days and Prototypes in 5 to 10 days. We work in tight weekly cycles with shared previews so you see progress every few days, not at the end.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "What is included in an MVP build?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "An MVP includes product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough of how everything is wired together so a future team can pick it up.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "Who owns the code, designs, and accounts?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "You do. All source code, design files, and third-party accounts (App Store, Google Play, hosting, database, payments) are created in your name and transferred to you. There is no lock-in to Start Apps Studio. You can keep building with us, take it to another team, or hire in-house.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "What stack do you build on?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "We default to React and React Native (via Expo) on the front end, with Node and Postgres on the back end, deployed to Replit, Vercel, or your preferred host. We pick the stack to match the founder, not the other way around. If you have an existing codebase or a strong preference, we work in it.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "What happens after launch? Do you offer ongoing support?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "Do you work with non-technical founders?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "Yes. Most of our founders are non-technical. We translate vague ideas into clear scopes, run the technical decisions for you, and write everything down in plain English. You get a real product without needing to learn the stack or manage engineers.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "Can you help me build something to show investors?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "Absolutely. Pitch prototypes are one of our most common engagements. We build a polished, interactive app on real infrastructure that investors can tap through on their phone. We scope it to your deck timeline: typically 5 to 10 days for a Figma-led clickable prototype and 3 to 5 weeks for a fully functional pre-seed demo.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "Can I get just a landing page without a full app build?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "Yes. Our $1,599 Launch Site package is built directly in Lovable or Replit from your direction, then deployed as a responsive, editable website. It is ideal for a launch page, marketing site, or early SaaS presence. Figma is optional here; the full Figma design phase is part of the $4,999 Prototype package. We deliver Launch Sites in 3 to 5 business days.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "Can you take over an existing project or vibe-coded prototype?",
+    "kind": "unit",
+    "context": "summary"
+  },
+  {
+    "key": "Yes. We frequently take over half-built apps from Lovable, Bolt, v0, Cursor, or freelance teams. We start with a short paid audit, give you an honest read on what is salvageable, and either rebuild the weak parts or finish the MVP. Either way, you walk away with a clean, shippable codebase you actually own.",
+    "kind": "unit",
+    "context": "p.faq-answer"
+  },
+  {
+    "key": "From the Journal <em>· field notes</em>",
+    "kind": "unit",
+    "context": "h2#journalNotesTitle.journal-notes-title"
+  },
+  {
+    "key": "All notes &rarr;",
+    "kind": "unit",
+    "context": "a.journal-notes-link"
+  },
+  {
+    "key": "Apr 17 · 6 min",
+    "kind": "unit",
+    "context": "span.journal-note-meta"
+  },
+  {
+    "key": "The AI Overviews citation playbook for MVPs",
+    "kind": "unit",
+    "context": "h3.journal-note-title"
+  },
+  {
+    "key": "Five patterns we see in pages pulled into Google AI Overviews, applied to three Start Apps Studio MVPs.",
+    "kind": "unit",
+    "context": "p.journal-note-excerpt"
+  },
+  {
+    "key": "Read the note",
+    "kind": "unit",
+    "context": "span.journal-note-cta"
+  },
+  {
+    "key": "Apr 16 · 7 min",
+    "kind": "unit",
+    "context": "span.journal-note-meta"
+  },
+  {
+    "key": "How to make your brand visible in ChatGPT",
+    "kind": "unit",
+    "context": "h3.journal-note-title"
+  },
+  {
+    "key": "A 12-point GEO checklist so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
+    "kind": "unit",
+    "context": "p.journal-note-excerpt"
+  },
+  {
+    "key": "Apr · Field note",
+    "kind": "unit",
+    "context": "span.journal-note-meta"
+  },
+  {
+    "key": "Vibe-coded apps have an SEO problem",
+    "kind": "unit",
+    "context": "h3.journal-note-title"
+  },
+  {
+    "key": "Lovable, Bolt and v0 ship empty divs to crawlers. Here's the Cloudflare Worker SSR pattern that fixes it.",
+    "kind": "unit",
+    "context": "p.journal-note-excerpt"
+  },
+  {
+    "key": "create@startappsstudio.com",
+    "kind": "unit",
+    "context": "a"
+  },
+  {
+    "key": "Scroll back to the top of the page",
+    "kind": "attr",
+    "context": "button.footer-top-link[aria-label]"
+  },
+  {
+    "key": "Back to top",
+    "kind": "text",
+    "context": "button.footer-top-link"
+  },
+  {
+    "key": "Language",
+    "kind": "attr",
+    "context": "nav.footer-lang[aria-label]"
+  },
+  {
+    "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
+    "kind": "unit",
+    "context": "p.footer-copyright"
+  },
+  {
+    "key": "Reveal tool name",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Stack current as of {date}",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "{count} min",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Start Apps Studio: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Raw AI stack loses about <b>68%</b> to iteration.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Start Apps Studio keeps iteration to about <b>32%</b>.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Show less",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Sending…",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Start building",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Something went wrong. Please try again or email us directly at create@startappsstudio.com",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Discovery call within 24 hours",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Next handoff in 2 weeks",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "For Coding",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "For Writing",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Building Websites",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Hours lost cross-checking ChatGPT answers that sound right but cite nothing.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Market and competitor research with sources attached, distilled into decisions before we write a line of code.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "AI-generated code that demos well, then collapses the first time real users hit an edge case.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Production code where AI drafts and senior engineers review, so your app survives launch day.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Template videos that look like every other founder’s launch post.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Scroll-stopping product videos and ads produced in days, not agency weeks.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Zapier chains that silently break and nobody notices until a customer complains.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Monitored automations for onboarding, billing and support that keep running while you sleep.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Copy that reads like AI wrote it — because it did.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Landing pages, emails and app copy drafted by AI, sharpened by humans, tested against real users.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "A site builder subscription and a weekend lost fighting templates.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "A conversion-focused site shipped in under a week, built on the platform that fits your stage.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Six subscriptions, six logins, and no idea which tool should do what.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "The whole stack orchestrated for you — one person accountable for research, code, content and ops.",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Built for production",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Start here",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Start Apps Studio: from idea to shipped product in weeks",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "A founder-led product studio helping non-technical founders go from idea to shipped product in weeks, without giving up equity or managing a dev team.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Worldwide",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "MVP development",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "App rescue",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Landing pages",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "React",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "iOS apps",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Android apps",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Rapid prototyping",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Founder-led product studio for non-technical founders building launch sites, prototypes, and shippable MVPs.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "MVP design and development",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Founder-led studio building launch sites, Figma-led prototypes, and shippable MVPs for non-technical founders in 3 to 8 weeks.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Packages",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "A polished, responsive website built from your direction in Lovable or Replit, deployed and ready to share.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Clickable, end-to-end prototype built from mapped user flows and case scenarios, ready to demo and test.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "A real, shippable MVP with in-depth product strategy behind every flow. iOS, Android, or web, in 3 to 8 weeks.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Custom-Scale",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Bespoke multi-platform builds with full product strategy — every screen handcrafted to your brand and architecture.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  }
+]

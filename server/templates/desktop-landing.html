@@ -3251,6 +3251,44 @@
         background: color-mix(in srgb, var(--dominant) 6%, transparent);
       }
       .footer-top-link svg { flex-shrink: 0; }
+
+      /* Language switcher: deliberately quiet. Visitors are already served
+         their own language automatically, so this is an escape hatch, not a
+         call to action. Footer only — never in the header. */
+      .footer-lang {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 4px 2px;
+        margin-top: 4px;
+        max-width: 520px;
+      }
+      .footer-lang-link {
+        padding: 5px 10px;
+        border-radius: 999px;
+        color: var(--text-secondary);
+        font-size: 12.5px;
+        font-weight: 500;
+        text-decoration: none;
+        opacity: 0.75;
+        transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+      }
+      .footer-lang-link:hover {
+        color: var(--text);
+        opacity: 1;
+        background: color-mix(in srgb, var(--dominant) 8%, transparent);
+      }
+      .footer-lang-link.is-active {
+        color: var(--text);
+        opacity: 1;
+        background: color-mix(in srgb, var(--dominant) 12%, transparent);
+        cursor: default;
+      }
+      @media (max-width: 600px) {
+        .footer-lang { gap: 2px 0; }
+        .footer-lang-link { font-size: 12px; padding: 5px 8px; }
+      }
       
 
 
@@ -5914,6 +5952,22 @@
     </style>
   </head>
   <body>
+    <!--SAS_I18N_PAYLOAD-->
+    <script>
+      /* Translations for strings that only exist inside JavaScript. The server
+         injects the payload above for non-English visitors; with no payload
+         every lookup falls through to the English key, so this file still
+         renders correctly on its own. */
+      window.__SAS_I18N__ = window.__SAS_I18N__ || {};
+      function __t(key) {
+        var s = window.__SAS_I18N__.strings;
+        if (s && Object.prototype.hasOwnProperty.call(s, key) && s[key]) return s[key];
+        return key;
+      }
+      function __dateLocale() {
+        return window.__SAS_I18N__.dateLocale || 'en-US';
+      }
+    </script>
     <!-- Arrow-field canvas: directional arrows that track the mouse pointer -->
     <div class="container">
       <!-- Hero -->
@@ -7328,7 +7382,7 @@
             var toolGroup = groupForChip(chip);
             chip.setAttribute('role', 'button');
             chip.setAttribute('tabindex', '0');
-            chip.setAttribute('aria-label', 'Reveal tool name');
+            chip.setAttribute('aria-label', __t('Reveal tool name'));
             // Restore previously revealed chips within this session
             if (revealedSet.has(toolName)) {
               chip.classList.add('is-revealed');
@@ -7812,6 +7866,17 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
           Back to top
         </button>
+        <nav class="footer-lang" aria-label="Language">
+          <a class="footer-lang-link is-active" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
+          <a class="footer-lang-link"           href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
+          <a class="footer-lang-link"           href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
+          <a class="footer-lang-link"           href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
+          <a class="footer-lang-link"           href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
+          <a class="footer-lang-link"           href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
+          <a class="footer-lang-link"           href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
+          <a class="footer-lang-link"           href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
+          <a class="footer-lang-link"           href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
+        </nav>
         <p class="footer-copyright">&copy; 2026 Start Apps Studio. All rights reserved.</p>
       </div>
     </footer>
@@ -7831,8 +7896,8 @@
       (function () {
         var el = document.getElementById('toolkitAsOf');
         if (el) {
-          var asOf = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-          el.textContent = 'Stack current as of ' + asOf;
+          var asOf = new Date().toLocaleDateString(__dateLocale(), { month: 'long', year: 'numeric' });
+          el.textContent = __t('Stack current as of {date}').replace('{date}', asOf);
         }
       })();
 
@@ -7951,7 +8016,7 @@
           if (!iso) return '';
           var d = new Date(iso);
           if (isNaN(d.getTime())) return '';
-          return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          return d.toLocaleDateString(__dateLocale(), { month: 'short', day: 'numeric' });
         }
         fetch('/api/journal/posts', { headers: { 'Accept': 'application/json' } })
           .then(function(r) { return r.ok ? r.json() : null; })
@@ -7959,14 +8024,14 @@
             if (!data || !Array.isArray(data.posts) || data.posts.length === 0) return;
             var posts = data.posts.slice(0, 3);
             grid.innerHTML = posts.map(function(p) {
-              var meta = [fmtDate(p.publishedAt), (p.readMinutes ? p.readMinutes + ' min' : '')]
+              var meta = [fmtDate(p.publishedAt), (p.readMinutes ? __t('{count} min').replace('{count}', p.readMinutes) : '')]
                 .filter(Boolean).join(' · ');
               var excerpt = p.excerpt || p.description || '';
               return '<a class="journal-note" href="/journal/' + escapeHtml(p.slug) + '">' +
                 '<span class="journal-note-meta">' + escapeHtml(meta) + '</span>' +
                 '<h3 class="journal-note-title">' + escapeHtml(p.title) + '</h3>' +
                 '<p class="journal-note-excerpt">' + escapeHtml(excerpt) + '</p>' +
-                '<span class="journal-note-cta">Read the note</span>' +
+                '<span class="journal-note-cta">' + escapeHtml(__t('Read the note')) + '</span>' +
                 '</a>';
             }).join('');
           })
@@ -8066,14 +8131,14 @@
           ratio.setAttribute(
             'aria-label',
             showAlone
-              ? 'Raw AI stack: about 68% of spend is lost to iteration.'
-              : 'Start Apps Studio: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.'
+              ? __t('Raw AI stack: about 68% of spend is lost to iteration.')
+              : __t('Start Apps Studio: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.')
           );
         }
         if (ratioCaption) {
           ratioCaption.innerHTML = showAlone
-            ? 'Raw AI stack loses about <b>68%</b> to iteration.'
-            : 'Start Apps Studio keeps iteration to about <b>32%</b>.';
+            ? __t('Raw AI stack loses about <b>68%</b> to iteration.')
+            : __t('Start Apps Studio keeps iteration to about <b>32%</b>.');
         }
       }
 
@@ -8144,7 +8209,40 @@
         document.body.style.right    = '';
         document.body.style.width    = '';
         document.body.style.overflow = '';
+        // Restore scroll without triggering a re-flash of the scroll-reveal
+        // system. The position:fixed + top trick shifts the painted viewport,
+        // so restoring scroll causes the IO to fire on elements that were
+        // already revealed.  We suppress re-observation by briefly
+        // disconnecting the shared observer (defined below, hoisted here)
+        // and immediately reconnecting after the frame settles.
+        if (window._revealIo) { window._revealIo.disconnect(); }
         window.scrollTo(0, _sdmScrollY);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (window._revealIo && window._revealEls) {
+              window._revealEls.forEach(function (el) {
+                if (!el.classList.contains('revealed')) {
+                  window._revealIo.observe(el);
+                }
+              });
+            }
+          });
+        });
+      }
+
+      /* ── Lightweight scroll lock for the showcase sheet ──────────── */
+      // The showcase overlay already blocks page scrolling with a
+      // non-passive touchmove handler (blockPageScroll below), so it does
+      // not need the position:fixed body pin. Skipping the pin avoids the
+      // full-page re-composite + scroll-jump on unlock that made the
+      // projects section visibly "refresh" after a swipe-down dismiss.
+      function sdmLockScrollLight() {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      function sdmUnlockScrollLight() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
       }
 
       /* ── Showcase card detail modal ──────────────────────────────── */
@@ -8186,7 +8284,7 @@
 
         overlay.classList.remove('closing', 'sheet-ready');
         overlay.classList.add('open');
-        sdmLockScroll();
+        sdmLockScrollLight();
         // Two rAFs guarantee the browser has painted the off-screen starting
         // state (translateY(100%), opacity:0) before .sheet-ready triggers the
         // transition - avoids painting directly at the final position.
@@ -8221,12 +8319,12 @@
              display change in the same frame, so we do not rely on it. */
           setTimeout(function () {
             overlay.classList.remove('closing');
-            sdmUnlockScroll();
+            sdmUnlockScrollLight();
           }, 240);
         } else {
           // Desktop or reduced-motion: remove immediately, no animation wait
           overlay.classList.remove('open', 'closing', 'sheet-ready');
-          sdmUnlockScroll();
+          sdmUnlockScrollLight();
         }
       }
 
@@ -8432,13 +8530,13 @@
           extraCards.forEach(card => { card.style.display = ''; });
           document.getElementById('recentBuilds').style.display = 'block';
           btn.dataset.expanded = 'true';
-          btn.innerHTML = '<span>Show less</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+          btn.innerHTML = '<span>' + escapeHtml(__t('Show less')) + '</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
         } else {
           // Hide extra cards again
           extraCards.forEach(card => { card.style.display = 'none'; });
           document.getElementById('recentBuilds').style.display = 'none';
           btn.dataset.expanded = 'false';
-          btn.innerHTML = '<span>See more builds</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+          btn.innerHTML = '<span>' + escapeHtml(__t('See more builds')) + '</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
         }
 
         // Re-sync carousel dots (counts visible cards on mobile)
@@ -8450,7 +8548,7 @@
         const btn = document.getElementById('submitBtn');
         const btnLabel = btn.querySelector('span');
         btn.disabled = true;
-        if (btnLabel) btnLabel.textContent = 'Sending…';
+        if (btnLabel) btnLabel.textContent = __t('Sending…');
 
         const formData = new FormData(this);
         const interests = [];
@@ -8485,8 +8583,8 @@
           }
         } catch (error) {
           btn.disabled = false;
-          if (btnLabel) btnLabel.textContent = 'Start building';
-           alert('Something went wrong. Please try again or email us directly at create@startappsstudio.com');
+          if (btnLabel) btnLabel.textContent = __t('Start building');
+           alert(__t('Something went wrong. Please try again or email us directly at create@startappsstudio.com'));
         }
       });
       (function() {
@@ -8871,7 +8969,15 @@
         var el = document.getElementById('studioStatusText');
         if (!el) return;
 
-        var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        /* Month names come from the browser's own locale data so the status
+           strip reads naturally in every language we serve. */
+        var MONTHS = (function () {
+          var out = [];
+          for (var m = 0; m < 12; m++) {
+            out.push(new Date(2024, m, 1).toLocaleDateString(__dateLocale(), { month: 'long' }));
+          }
+          return out;
+        })();
         var DWELL_MS = 6500;
         var FADE_MS = 520;
 
@@ -8890,24 +8996,46 @@
           var ACTIVE_BUILDS = 3;
           var SEATS_OPEN = 2;
 
-          var seatsLine = SEATS_OPEN + ' founder seat' + (SEATS_OPEN === 1 ? '' : 's') + ' open for ';
-          var shippingLine = ACTIVE_BUILDS + ' founder' + (ACTIVE_BUILDS === 1 ? '' : 's') + ' shipping with us this week';
-          var callLine = 'Discovery call within 24 hours';
+          /* Full sentences are translated as single keys (rather than glued
+             together from fragments) so each language can order the count,
+             the noun and the month however its grammar requires. */
+          function line(key, vars) {
+            var out = __t(key);
+            Object.keys(vars).forEach(function (name) {
+              out = out.split('{' + name + '}').join(vars[name]);
+            });
+            return out;
+          }
+
+          var seatsKey = SEATS_OPEN === 1
+            ? '{count} founder seat open for {month}'
+            : '{count} founder seats open for {month}';
+          var shippingLine = line(
+            ACTIVE_BUILDS === 1
+              ? '{count} founder shipping with us this week'
+              : '{count} founders shipping with us this week',
+            { count: ACTIVE_BUILDS }
+          );
+          var callLine = __t('Discovery call within 24 hours');
 
           if (daysToMonthEnd <= 10) {
-            var dayWord = daysToMonthEnd === 1 ? 'day' : 'days';
             return [
-              seatsLine + nextMonthName,
+              line(seatsKey, { count: SEATS_OPEN, month: nextMonthName }),
               shippingLine,
               callLine,
-              monthName + ' intake closes in ' + daysToMonthEnd + ' ' + dayWord,
+              line(
+                daysToMonthEnd === 1
+                  ? '{month} intake closes in {count} day'
+                  : '{month} intake closes in {count} days',
+                { month: monthName, count: daysToMonthEnd }
+              ),
             ];
           }
           return [
-            seatsLine + monthName,
+            line(seatsKey, { count: SEATS_OPEN, month: monthName }),
             shippingLine,
             callLine,
-            'Next handoff in 2 weeks',
+            __t('Next handoff in 2 weeks'),
           ];
         }
 
@@ -9073,6 +9201,10 @@
         el.style.transitionDelay = (sibIdx * 55) + 'ms';
       });
 
+      // Expose to sdmUnlockScroll so it can briefly disconnect/reconnect the
+      // observer during scroll restoration without causing a re-flash.
+      window._revealEls = revealEls;
+
       if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
@@ -9082,6 +9214,7 @@
             }
           });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        window._revealIo = io;
         revealEls.forEach(function (el) { io.observe(el); });
       } else {
         /* Fallback: reveal everything immediately */
@@ -9753,13 +9886,13 @@
 
       /* Exact slide titles — used for both the "For X" h3 and the legend */
       var TITLES = {
-        research:   'For Research',
-        coding:     'For Coding',
-        video:      'Video Creation',
-        automation: 'Task Automation',
-        writing:    'For Writing',
-        websites:   'Building Websites',
-        business:   'Business AI Stack'
+        research:   __t('For Research'),
+        coding:     __t('For Coding'),
+        video:      __t('Video Creation'),
+        automation: __t('Task Automation'),
+        writing:    __t('For Writing'),
+        websites:   __t('Building Websites'),
+        business:   __t('Business AI Stack')
       };
       /* Silhouette heights (px) — kept shorter for compactness */
       var H = { start: [64, 74, 68], production: [118, 108, 114, 102, 116, 106] };
@@ -9767,32 +9900,32 @@
       /* Founder-DIY vs client-outcome framing per discipline */
       var VALUES = {
         research: {
-          f: 'Hours lost cross-checking ChatGPT answers that sound right but cite nothing.',
-          c: 'Market and competitor research with sources attached, distilled into decisions before we write a line of code.'
+          f: __t('Hours lost cross-checking ChatGPT answers that sound right but cite nothing.'),
+          c: __t('Market and competitor research with sources attached, distilled into decisions before we write a line of code.')
         },
         coding: {
-          f: 'AI-generated code that demos well, then collapses the first time real users hit an edge case.',
-          c: 'Production code where AI drafts and senior engineers review, so your app survives launch day.'
+          f: __t('AI-generated code that demos well, then collapses the first time real users hit an edge case.'),
+          c: __t('Production code where AI drafts and senior engineers review, so your app survives launch day.')
         },
         video: {
-          f: 'Template videos that look like every other founder\u2019s launch post.',
-          c: 'Scroll-stopping product videos and ads produced in days, not agency weeks.'
+          f: __t('Template videos that look like every other founder’s launch post.'),
+          c: __t('Scroll-stopping product videos and ads produced in days, not agency weeks.')
         },
         automation: {
-          f: 'Zapier chains that silently break and nobody notices until a customer complains.',
-          c: 'Monitored automations for onboarding, billing and support that keep running while you sleep.'
+          f: __t('Zapier chains that silently break and nobody notices until a customer complains.'),
+          c: __t('Monitored automations for onboarding, billing and support that keep running while you sleep.')
         },
         writing: {
-          f: 'Copy that reads like AI wrote it \u2014 because it did.',
-          c: 'Landing pages, emails and app copy drafted by AI, sharpened by humans, tested against real users.'
+          f: __t('Copy that reads like AI wrote it — because it did.'),
+          c: __t('Landing pages, emails and app copy drafted by AI, sharpened by humans, tested against real users.')
         },
         websites: {
-          f: 'A site builder subscription and a weekend lost fighting templates.',
-          c: 'A conversion-focused site shipped in under a week, built on the platform that fits your stage.'
+          f: __t('A site builder subscription and a weekend lost fighting templates.'),
+          c: __t('A conversion-focused site shipped in under a week, built on the platform that fits your stage.')
         },
         business: {
-          f: 'Six subscriptions, six logins, and no idea which tool should do what.',
-          c: 'The whole stack orchestrated for you \u2014 one person accountable for research, code, content and ops.'
+          f: __t('Six subscriptions, six logins, and no idea which tool should do what.'),
+          c: __t('The whole stack orchestrated for you — one person accountable for research, code, content and ops.')
         }
       };
 
@@ -9826,7 +9959,7 @@
           /* Show each founder-facing route label only on its first column */
           var showLabel = (isProduction && idx === firstProduction) || (!isProduction && idx === firstStart);
           var labelHtml = showLabel
-            ? '<span class="tke-col-label tke-col-label--' + t.l + '">' + (isProduction ? 'Built for production' : 'Start here') + '</span>'
+            ? '<span class="tke-col-label tke-col-label--' + t.l + '">' + (isProduction ? __t('Built for production') : __t('Start here')) + '</span>'
             : '<span class="tke-col-label" aria-hidden="true">&nbsp;</span>';
           html +=
             '<div class="tke-col" style="animation-delay:' + (idx * 70) + 'ms">' +

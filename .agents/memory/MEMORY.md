@@ -6,3 +6,5 @@
 - [GitHub push authentication](github-push-auth.md) — shell git push fails (askpass has no GitHub creds); replay commits via the GitHub connection API, SHAs stay identical.
 - [iOS scroll-container stacking](ios-scroll-container-stacking.md) — z-index on carousel cards can't beat an outside scrim on iOS Safari; layer the scroll container itself above the overlay.
 - [Workspace read-only recovery](workspace-readonly-recovery.md) — btrfs volume can remount ro (EROFS on every write); only a full Repl restart fixes it, workflow restarts don't.
+- [Landing i18n engine](landing-i18n-engine.md) — dictionaries keyed by exact English strings; template copy edits require regenerating the source inventory and topping up all locales.
+- [Bottom-sheet dismiss flash](sheet-dismiss-flash.md) — position:fixed body-pin + scrollTo restore re-fires scroll-reveal IO behind the sheet; use overflow lock when the overlay already blocks touchmove.

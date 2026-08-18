@@ -1,5 +1,6 @@
 import type { Block, Post } from "./posts";
 import { AUTHOR_NAME, allPostsNewestFirst } from "./posts";
+import { PREFIXED_CODES } from "../i18n/locales";
 
 /**
  * The single authoritative public origin for all SEO-facing URLs.
@@ -1192,6 +1193,12 @@ export function renderIndexHtml(origin: string): string {
 export function renderSitemapXml(origin: string): string {
   const urls: { loc: string; lastmod?: string; priority?: string }[] = [
     { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
+    // Localized landing pages (Journal remains English-only for now).
+    ...PREFIXED_CODES.map((code) => ({
+      loc: `${origin}/${code}`,
+      lastmod: HOMEPAGE_LAST_MODIFIED,
+      priority: "0.9",
+    })),
     { loc: `${origin}/journal`, priority: "0.8" },
   ];
   for (const p of allPostsNewestFirst()) {

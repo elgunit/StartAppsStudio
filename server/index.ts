@@ -12,6 +12,13 @@ import {
   verifyAiBot,
 } from "./ai-bot-verifier";
 import crypto from "node:crypto";
+import {
+  LOCALE_COOKIE,
+  LOCALE_COOKIE_MAX_AGE,
+  localeFromPath,
+  resolveLocale,
+} from "./i18n/detect";
+import { renderLandingPage } from "./i18n/render";
 
 /**
  * Runs all *.sql files in server/migrations/ in filename order.
@@ -208,14 +215,47 @@ function setupRequestLogging(app: express.Application) {
 }
 
 function serveLandingPage(req: Request, res: Response) {
-  const landingPagePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
-  if (fs.existsSync(landingPagePath)) {
+  const resolution = resolveLocale({
+    path: req.path,
+    cookieHeader: req.headers.cookie,
+    acceptLanguage: req.headers["accept-language"],
+  });
+
+  // Visiting an explicit language URL is a deliberate choice — remember it so
+  // "/" keeps serving that language on return visits.
+  if (resolution.source === "path") {
+    res.cookie(LOCALE_COOKIE, resolution.locale, {
+      maxAge: LOCALE_COOKIE_MAX_AGE * 1000,
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    // "/en" exists so the footer switcher can override a saved non-English
+    // cookie deterministically. Redirect to "/" so English has exactly one
+    // canonical URL and no duplicate content.
+    if (resolution.locale === "en") {
+      return res.redirect(302, "/");
+    }
+  }
+
+  try {
+    const html = renderLandingPage(resolution.locale);
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
-    return res.sendFile(landingPagePath);
+    // "/" varies by cookie and browser language; explicit /xx paths do not,
+    // but the header is harmless there and keeps proxies honest.
+    res.setHeader("Vary", "Accept-Language, Cookie");
+    return res.send(html);
+  } catch (error) {
+    console.error("[i18n] landing render failed, serving English file:", error);
+    const landingPagePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
+    if (fs.existsSync(landingPagePath)) {
+      return res.sendFile(landingPagePath);
+    }
+    return res.status(404).send("Landing page not found");
   }
-  res.status(404).send("Landing page not found");
 }
 
 function setupLandingPage(app: express.Application) {
@@ -226,7 +266,7 @@ function setupLandingPage(app: express.Application) {
       return next();
     }
 
-    if (req.path === "/") {
+    if (req.path === "/" || localeFromPath(req.path)) {
       return serveLandingPage(req, res);
     }
 

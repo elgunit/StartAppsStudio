@@ -1,0 +1,18 @@
+---
+name: Landing i18n engine
+description: Durable decisions for the multi-locale landing-page localization layer
+---
+
+# Landing i18n — durable decisions
+
+**Rule:** Missing translations fall back to English silently by design. After any landing-template copy change, regenerate the translation source inventory and top up every locale; measure coverage through the renderer's own dictionary loader (which drops entries it rejects), never by counting raw JSON entries.
+
+**Why:** Validation and coverage sharing one code path is the only way "100% translated" can be trusted — a stricter loader than the coverage check silently serves English.
+
+**Rule:** Translated values may carry non-inline markup only when their tag sequence is byte-identical to the English source key's — translators change text between tags, never the tags themselves. Void elements (inputs inside labels, images) must be visible to the traversal so their translatable attributes (alt, placeholder, aria-label) are extracted.
+
+**Why:** A blanket inline-tag whitelist either blocks our own authored markup or reopens the stored-XSS sink; skeleton equality permits authored markup while preventing translator-introduced elements/attributes.
+
+**Rule:** Explicit-English selection needs its own URL that sets the language cookie; a switcher link to bare `/` cannot override a saved non-English cookie because `/` resolves the cookie before the default.
+
+**Rule:** Treat malformed language-cookie values as absent; decoding an untrusted cookie can throw before route-level error handling and 500 the page.

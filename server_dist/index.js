@@ -457,10 +457,10 @@ var init_storage = __esm({
         for (const [botName, entry] of byBot) {
           let topPagePath = null;
           let topCount = -1;
-          for (const [path2, count] of entry.pages) {
+          for (const [path3, count] of entry.pages) {
             if (count > topCount) {
               topCount = count;
-              topPagePath = path2;
+              topPagePath = path3;
             }
           }
           out.push({
@@ -2247,6 +2247,113 @@ var init_posts = __esm({
   }
 });
 
+// server/i18n/locales.ts
+function isSupportedLocale(code) {
+  return !!code && BY_CODE.has(code);
+}
+function getLocale(code) {
+  return code && BY_CODE.get(code) || BY_CODE.get(DEFAULT_LOCALE);
+}
+function localeUrl(code) {
+  return code === DEFAULT_LOCALE ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}/${code}`;
+}
+var DEFAULT_LOCALE, LOCALES, BY_CODE, SUPPORTED_CODES, PREFIXED_CODES, SITE_ORIGIN;
+var init_locales = __esm({
+  "server/i18n/locales.ts"() {
+    "use strict";
+    DEFAULT_LOCALE = "en";
+    LOCALES = [
+      {
+        code: "en",
+        htmlLang: "en",
+        dateLocale: "en-US",
+        ogLocale: "en_US",
+        hreflang: "en",
+        nativeName: "English",
+        dir: "ltr"
+      },
+      {
+        code: "tr",
+        htmlLang: "tr",
+        dateLocale: "tr-TR",
+        ogLocale: "tr_TR",
+        hreflang: "tr",
+        nativeName: "T\xFCrk\xE7e",
+        dir: "ltr"
+      },
+      {
+        code: "ru",
+        htmlLang: "ru",
+        dateLocale: "ru-RU",
+        ogLocale: "ru_RU",
+        hreflang: "ru",
+        nativeName: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+        dir: "ltr"
+      },
+      {
+        code: "zh",
+        htmlLang: "zh-Hans",
+        dateLocale: "zh-CN",
+        ogLocale: "zh_CN",
+        hreflang: "zh-Hans",
+        nativeName: "\u7B80\u4F53\u4E2D\u6587",
+        dir: "ltr"
+      },
+      {
+        code: "fr",
+        htmlLang: "fr",
+        dateLocale: "fr-FR",
+        ogLocale: "fr_FR",
+        hreflang: "fr",
+        nativeName: "Fran\xE7ais",
+        dir: "ltr"
+      },
+      {
+        code: "es",
+        htmlLang: "es",
+        dateLocale: "es-ES",
+        ogLocale: "es_ES",
+        hreflang: "es",
+        nativeName: "Espa\xF1ol",
+        dir: "ltr"
+      },
+      {
+        code: "de",
+        htmlLang: "de",
+        dateLocale: "de-DE",
+        ogLocale: "de_DE",
+        hreflang: "de",
+        nativeName: "Deutsch",
+        dir: "ltr"
+      },
+      {
+        code: "uk",
+        htmlLang: "uk",
+        dateLocale: "uk-UA",
+        ogLocale: "uk_UA",
+        hreflang: "uk",
+        nativeName: "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430",
+        dir: "ltr"
+      },
+      {
+        code: "it",
+        htmlLang: "it",
+        dateLocale: "it-IT",
+        ogLocale: "it_IT",
+        hreflang: "it",
+        nativeName: "Italiano",
+        dir: "ltr"
+      }
+    ];
+    BY_CODE = new Map(LOCALES.map((l) => [l.code, l]));
+    SUPPORTED_CODES = LOCALES.map((l) => l.code);
+    PREFIXED_CODES = SUPPORTED_CODES.filter(
+      (c) => c !== DEFAULT_LOCALE
+    );
+    SITE_ORIGIN = "https://startappsstudio.com";
+  }
+});
+
 // server/journal/render.ts
 function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -2570,6 +2677,12 @@ function renderIndexHtml(origin) {
 function renderSitemapXml(origin) {
   const urls = [
     { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
+    // Localized landing pages (Journal remains English-only for now).
+    ...PREFIXED_CODES.map((code) => ({
+      loc: `${origin}/${code}`,
+      lastmod: HOMEPAGE_LAST_MODIFIED,
+      priority: "0.9"
+    })),
     { loc: `${origin}/journal`, priority: "0.8" }
   ];
   for (const p of allPostsNewestFirst()) {
@@ -2763,6 +2876,7 @@ var init_render = __esm({
   "server/journal/render.ts"() {
     "use strict";
     init_posts();
+    init_locales();
     CANONICAL_ORIGIN = (process.env.PUBLIC_SITE_URL || "https://startappsstudio.com").replace(/\/$/, "");
     HOMEPAGE_LAST_MODIFIED = "2026-08-11";
     ACCENT_PALETTE = [
@@ -4224,23 +4338,851 @@ var init_ai_crawlers = __esm({
   }
 });
 
+// server/i18n/detect.ts
+function matchLanguageTag(tag) {
+  const normalized = tag.trim().toLowerCase();
+  if (!normalized) return null;
+  const [base, ...rest] = normalized.split("-");
+  const script = rest.find((part) => part.length === 4);
+  const region = rest.find((part) => part.length === 2);
+  if (base === "zh") {
+    if (script === "hant") return null;
+    if (region === "tw" || region === "hk" || region === "mo") return null;
+    return "zh";
+  }
+  return SUPPORTED_CODES.includes(base) ? base : null;
+}
+function pickFromAcceptLanguage(header) {
+  if (!header) return null;
+  const candidates = header.split(",").map((part) => {
+    const [tag, ...params] = part.trim().split(";");
+    const qParam = params.find((p) => p.trim().startsWith("q="));
+    const q = qParam ? Number.parseFloat(qParam.trim().slice(2)) : 1;
+    return { tag: tag.trim(), q: Number.isFinite(q) ? q : 0 };
+  }).filter((c) => c.tag && c.q > 0).map((c, index) => ({ ...c, index })).sort((a, b) => b.q - a.q || a.index - b.index);
+  for (const candidate of candidates) {
+    if (candidate.tag === "*") continue;
+    const match = matchLanguageTag(candidate.tag);
+    if (match) return match;
+  }
+  return null;
+}
+function readLocaleCookie(cookieHeader) {
+  if (!cookieHeader) return null;
+  for (const part of cookieHeader.split(";")) {
+    const eq2 = part.indexOf("=");
+    if (eq2 === -1) continue;
+    if (part.slice(0, eq2).trim() !== LOCALE_COOKIE) continue;
+    let value;
+    try {
+      value = decodeURIComponent(part.slice(eq2 + 1).trim());
+    } catch {
+      return null;
+    }
+    return isSupportedLocale(value) ? value : null;
+  }
+  return null;
+}
+function localeFromPath(pathname) {
+  const match = /^\/([a-z-]{2,7})\/?$/i.exec(pathname);
+  if (!match) return null;
+  const code = match[1].toLowerCase();
+  return isSupportedLocale(code) ? code : null;
+}
+function resolveLocale(input) {
+  const fromPath = localeFromPath(input.path);
+  if (fromPath) return { locale: fromPath, source: "path" };
+  const fromCookie = readLocaleCookie(input.cookieHeader);
+  if (fromCookie) return { locale: fromCookie, source: "cookie" };
+  const fromHeader = pickFromAcceptLanguage(input.acceptLanguage);
+  if (fromHeader) return { locale: fromHeader, source: "header" };
+  return { locale: DEFAULT_LOCALE, source: "default" };
+}
+var LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE;
+var init_detect = __esm({
+  "server/i18n/detect.ts"() {
+    "use strict";
+    init_locales();
+    LOCALE_COOKIE = "sas_lang";
+    LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+  }
+});
+
+// server/i18n/html-tokenizer.ts
+function isNameChar(ch) {
+  return /[A-Za-z0-9:_.-]/.test(ch);
+}
+function parseTag(html, start) {
+  let i = start + 1;
+  let closing = false;
+  if (html[i] === "/") {
+    closing = true;
+    i++;
+  }
+  const nameStart = i;
+  while (i < html.length && isNameChar(html[i])) i++;
+  const name = html.slice(nameStart, i).toLowerCase();
+  const attrs = [];
+  let selfClosing = false;
+  while (i < html.length) {
+    while (i < html.length && /\s/.test(html[i])) i++;
+    if (i >= html.length) break;
+    if (html[i] === "/") {
+      selfClosing = true;
+      i++;
+      continue;
+    }
+    if (html[i] === ">") {
+      i++;
+      break;
+    }
+    const attrNameStart = i;
+    while (i < html.length && !/[\s=>/]/.test(html[i])) i++;
+    const attrName = html.slice(attrNameStart, i).toLowerCase();
+    if (!attrName) {
+      i++;
+      continue;
+    }
+    while (i < html.length && /\s/.test(html[i])) i++;
+    if (html[i] !== "=") {
+      attrs.push({ name: attrName, valueStart: i, valueEnd: i, value: "" });
+      continue;
+    }
+    i++;
+    while (i < html.length && /\s/.test(html[i])) i++;
+    const quote = html[i];
+    if (quote === '"' || quote === "'") {
+      i++;
+      const valueStart = i;
+      while (i < html.length && html[i] !== quote) i++;
+      const valueEnd = i;
+      i++;
+      attrs.push({
+        name: attrName,
+        valueStart,
+        valueEnd,
+        value: html.slice(valueStart, valueEnd)
+      });
+    } else {
+      const valueStart = i;
+      while (i < html.length && !/[\s>]/.test(html[i])) i++;
+      const valueEnd = i;
+      attrs.push({
+        name: attrName,
+        valueStart,
+        valueEnd,
+        value: html.slice(valueStart, valueEnd)
+      });
+    }
+  }
+  return { kind: "tag", name, closing, selfClosing, start, end: i, attrs };
+}
+function findOpaqueEnd(html, name, from) {
+  const needle = `</${name}`;
+  const idx = html.toLowerCase().indexOf(needle, from);
+  return idx === -1 ? html.length : idx;
+}
+function tokenize(html) {
+  const tokens = [];
+  let i = 0;
+  while (i < html.length) {
+    const lt = html.indexOf("<", i);
+    if (lt === -1) {
+      tokens.push({ kind: "text", start: i, end: html.length });
+      break;
+    }
+    if (lt > i) {
+      tokens.push({ kind: "text", start: i, end: lt });
+    }
+    if (html.startsWith("<!--", lt)) {
+      const close = html.indexOf("-->", lt + 4);
+      const end = close === -1 ? html.length : close + 3;
+      tokens.push({ kind: "other", start: lt, end });
+      i = end;
+      continue;
+    }
+    if (html[lt + 1] === "!" || html[lt + 1] === "?") {
+      const close = html.indexOf(">", lt);
+      const end = close === -1 ? html.length : close + 1;
+      tokens.push({ kind: "other", start: lt, end });
+      i = end;
+      continue;
+    }
+    if (!isNameChar(html[lt + 1] ?? "") && html[lt + 1] !== "/") {
+      tokens.push({ kind: "text", start: lt, end: lt + 1 });
+      i = lt + 1;
+      continue;
+    }
+    const tag = parseTag(html, lt);
+    tokens.push(tag);
+    i = tag.end;
+    if (!tag.closing && !tag.selfClosing && OPAQUE_ELEMENTS.has(tag.name) && tag.name !== "svg") {
+      const bodyEnd = findOpaqueEnd(html, tag.name, i);
+      if (bodyEnd > i) {
+        tokens.push({ kind: "other", start: i, end: bodyEnd });
+      }
+      i = bodyEnd;
+    }
+  }
+  return tokens;
+}
+function buildTree(html, tokens) {
+  const root = {
+    type: "element",
+    name: "#root",
+    open: {
+      kind: "tag",
+      name: "#root",
+      closing: false,
+      selfClosing: false,
+      start: 0,
+      end: 0,
+      attrs: []
+    },
+    innerStart: 0,
+    innerEnd: html.length,
+    opaque: false,
+    children: []
+  };
+  const stack = [root];
+  for (const token of tokens) {
+    const parent = stack[stack.length - 1];
+    if (token.kind === "text") {
+      parent.children.push({ type: "text", start: token.start, end: token.end });
+      continue;
+    }
+    if (token.kind === "other") continue;
+    if (token.closing) {
+      let depth = -1;
+      for (let d = stack.length - 1; d >= 1; d--) {
+        if (stack[d].name === token.name) {
+          depth = d;
+          break;
+        }
+      }
+      if (depth === -1) continue;
+      for (let d = stack.length - 1; d >= depth; d--) {
+        stack[d].innerEnd = d === depth ? token.start : token.start;
+        stack.pop();
+      }
+      continue;
+    }
+    if (VOID_ELEMENTS.has(token.name) || token.selfClosing) {
+      parent.children.push({
+        type: "element",
+        name: token.name,
+        open: token,
+        innerStart: token.end,
+        innerEnd: token.end,
+        opaque: false,
+        children: []
+      });
+      continue;
+    }
+    const node = {
+      type: "element",
+      name: token.name,
+      open: token,
+      innerStart: token.end,
+      innerEnd: token.end,
+      opaque: OPAQUE_ELEMENTS.has(token.name),
+      children: []
+    };
+    parent.children.push(node);
+    stack.push(node);
+  }
+  while (stack.length > 1) {
+    const node = stack.pop();
+    node.innerEnd = Math.max(node.innerEnd, node.innerStart);
+  }
+  return root;
+}
+function isTranslationUnit(html, node) {
+  if (node.opaque || node.name === "#root") return false;
+  let hasText = false;
+  for (const child of node.children) {
+    if (child.type === "text") {
+      if (html.slice(child.start, child.end).trim()) hasText = true;
+    } else {
+      if (VOID_ELEMENTS.has(child.name)) continue;
+      if (!INLINE_ELEMENTS.has(child.name)) return false;
+      if (child.opaque) return false;
+      if (!elementHasOnlyInlineDescendants(html, child)) return false;
+      if (textContent(html, child).trim()) hasText = true;
+    }
+  }
+  return hasText;
+}
+function elementHasOnlyInlineDescendants(html, node) {
+  for (const child of node.children) {
+    if (child.type === "text") continue;
+    if (VOID_ELEMENTS.has(child.name)) continue;
+    if (!INLINE_ELEMENTS.has(child.name)) return false;
+    if (!elementHasOnlyInlineDescendants(html, child)) return false;
+  }
+  return true;
+}
+function textContent(html, node) {
+  let out = "";
+  for (const child of node.children) {
+    if (child.type === "text") out += html.slice(child.start, child.end);
+    else out += textContent(html, child);
+  }
+  return out;
+}
+function normalizeKey(raw) {
+  return raw.replace(/\s+/g, " ").trim();
+}
+function applySplices(source, splices) {
+  const ordered = [...splices].sort((a, b) => a.start - b.start);
+  const safe = [];
+  let lastEnd = -1;
+  for (const splice of ordered) {
+    if (splice.start < lastEnd) continue;
+    safe.push(splice);
+    lastEnd = splice.end;
+  }
+  let out = "";
+  let cursor = 0;
+  for (const splice of safe) {
+    out += source.slice(cursor, splice.start);
+    out += splice.replacement;
+    cursor = splice.end;
+  }
+  out += source.slice(cursor);
+  return out;
+}
+function preserveEdgeWhitespace(raw) {
+  const lead = /^\s*/.exec(raw)?.[0] ?? "";
+  const trail = raw.trim() ? /\s*$/.exec(raw)?.[0] ?? "" : "";
+  return { lead, trail };
+}
+var VOID_ELEMENTS, OPAQUE_ELEMENTS, INLINE_ELEMENTS;
+var init_html_tokenizer = __esm({
+  "server/i18n/html-tokenizer.ts"() {
+    "use strict";
+    VOID_ELEMENTS = /* @__PURE__ */ new Set([
+      "area",
+      "base",
+      "br",
+      "col",
+      "embed",
+      "hr",
+      "img",
+      "input",
+      "link",
+      "meta",
+      "param",
+      "source",
+      "track",
+      "wbr"
+    ]);
+    OPAQUE_ELEMENTS = /* @__PURE__ */ new Set(["script", "style", "svg", "pre", "textarea"]);
+    INLINE_ELEMENTS = /* @__PURE__ */ new Set([
+      "a",
+      "abbr",
+      "b",
+      "br",
+      "code",
+      "em",
+      "i",
+      "mark",
+      "small",
+      "span",
+      "strong",
+      "sub",
+      "sup",
+      "u"
+    ]);
+  }
+});
+
+// server/i18n/translatable-attrs.ts
+var TRANSLATABLE_ATTRS;
+var init_translatable_attrs = __esm({
+  "server/i18n/translatable-attrs.ts"() {
+    "use strict";
+    TRANSLATABLE_ATTRS = /* @__PURE__ */ new Set([
+      "alt",
+      "aria-label",
+      "data-category",
+      "data-name",
+      "data-problem",
+      "data-result",
+      "data-solution",
+      "placeholder",
+      "title"
+    ]);
+  }
+});
+
+// server/i18n/localize.ts
+function classList(node) {
+  const cls = node.open.attrs.find((a) => a.name === "class")?.value;
+  return cls ? cls.split(/\s+/).filter(Boolean) : [];
+}
+function isSkipped(node) {
+  if (node.open.attrs.some((a) => a.name === "data-i18n-skip")) return true;
+  return classList(node).some((c) => SKIP_CLASSES.has(c));
+}
+function containsSkipped(node) {
+  for (const child of node.children) {
+    if (child.type !== "element") continue;
+    if (isSkipped(child)) return true;
+    if (containsSkipped(child)) return true;
+  }
+  return false;
+}
+function describe(node) {
+  const cls = classList(node)[0] ?? "";
+  const id = node.open.attrs.find((a) => a.name === "id")?.value ?? "";
+  return [node.name, id && `#${id}`, cls && `.${cls}`].filter(Boolean).join("");
+}
+function collectHits(html, root) {
+  const hits = [];
+  const visitAttrs = (node) => {
+    if (isSkipped(node)) return;
+    for (const attr of node.open.attrs) {
+      if (!TRANSLATABLE_ATTRS.has(attr.name)) continue;
+      if (!attr.value.trim()) continue;
+      hits.push({
+        key: normalizeKey(attr.value),
+        kind: "attr",
+        context: `${describe(node)}[${attr.name}]`,
+        start: attr.valueStart,
+        end: attr.valueEnd,
+        raw: attr.value
+      });
+    }
+  };
+  const visitAttrsDeep = (node) => {
+    visitAttrs(node);
+    for (const child of node.children) {
+      if (child.type === "element") visitAttrsDeep(child);
+    }
+  };
+  const walk = (node) => {
+    if (node.name !== "#root" && isSkipped(node)) return;
+    visitAttrs(node);
+    if (node.opaque) return;
+    if (node.name !== "#root" && isTranslationUnit(html, node) && !containsSkipped(node)) {
+      const raw = html.slice(node.innerStart, node.innerEnd);
+      hits.push({
+        key: normalizeKey(raw),
+        kind: "unit",
+        context: describe(node),
+        start: node.innerStart,
+        end: node.innerEnd,
+        raw
+      });
+      for (const child of node.children) {
+        if (child.type === "element") visitAttrsDeep(child);
+      }
+      return;
+    }
+    for (const child of node.children) {
+      if (child.type === "text") {
+        const raw = html.slice(child.start, child.end);
+        if (!raw.trim()) continue;
+        hits.push({
+          key: normalizeKey(raw),
+          kind: "text",
+          context: describe(node),
+          start: child.start,
+          end: child.end,
+          raw
+        });
+      } else {
+        walk(child);
+      }
+    }
+  };
+  walk(root);
+  return hits;
+}
+function parseHtml(html) {
+  return buildTree(html, tokenize(html));
+}
+function escapeAttr2(value) {
+  return value.replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#x[0-9a-fA-F]+);)/g, "&amp;").replace(/"/g, "&quot;");
+}
+function localizeHtml(html, dictionary) {
+  const hits = collectHits(html, parseHtml(html));
+  const splices = [];
+  for (const hit of hits) {
+    const translated = dictionary[hit.key];
+    if (!translated || translated === hit.key) continue;
+    if (hit.kind === "attr") {
+      splices.push({
+        start: hit.start,
+        end: hit.end,
+        replacement: escapeAttr2(translated)
+      });
+      continue;
+    }
+    const { lead, trail } = preserveEdgeWhitespace(hit.raw);
+    splices.push({
+      start: hit.start,
+      end: hit.end,
+      replacement: `${lead}${translated}${trail}`
+    });
+  }
+  return applySplices(html, splices);
+}
+var SKIP_CLASSES;
+var init_localize = __esm({
+  "server/i18n/localize.ts"() {
+    "use strict";
+    init_html_tokenizer();
+    init_translatable_attrs();
+    SKIP_CLASSES = /* @__PURE__ */ new Set([
+      "toolkit-avatar",
+      "toolkit-chip-name",
+      "hat-badge",
+      "tke-avatar",
+      "tke-chip-name",
+      "price-amount",
+      "budget-price",
+      "logo-mark",
+      "footer-brand-name",
+      // Language names are always written in their own language.
+      "footer-lang-link"
+    ]);
+  }
+});
+
+// server/i18n/meta.ts
+function decodeEntities(s) {
+  return s.replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+function encodeForAttr(s) {
+  return s.replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#x[0-9a-fA-F]+);)/g, "&amp;").replace(/"/g, "&quot;");
+}
+function walkJsonLd(node, visit, parentKey) {
+  if (Array.isArray(node)) {
+    return node.map(
+      (item) => typeof item === "string" && parentKey === "knowsAbout" ? visit(item) : walkJsonLd(item, visit, parentKey)
+    );
+  }
+  if (node && typeof node === "object") {
+    const out = {};
+    for (const [key, value] of Object.entries(node)) {
+      if (typeof value === "string" && JSONLD_TEXT_KEYS.has(key)) {
+        out[key] = visit(value);
+      } else {
+        out[key] = walkJsonLd(value, visit, key);
+      }
+    }
+    return out;
+  }
+  return node;
+}
+function localizeMeta(html, dictionary) {
+  const lookup = (raw) => {
+    const key = raw.replace(/\s+/g, " ").trim();
+    if (dictionary[key]) return dictionary[key];
+    for (const candidate of Object.keys(dictionary)) {
+      if (decodeEntities(candidate) === key) return dictionary[candidate];
+    }
+    return null;
+  };
+  let out = html.replace(
+    META_SELECTORS,
+    (_all, before, value, after) => {
+      const translated = lookup(value);
+      return translated ? `${before}${encodeForAttr(decodeEntities(translated))}${after}` : `${before}${value}${after}`;
+    }
+  );
+  out = out.replace(
+    JSONLD_BLOCK,
+    (all, open, body, close) => {
+      try {
+        const data = JSON.parse(body);
+        const translated = walkJsonLd(data, (value) => {
+          const hit = lookup(value);
+          return hit ? decodeEntities(hit) : value;
+        });
+        const json = JSON.stringify(translated, null, 2).replace(
+          /</g,
+          "\\u003c"
+        );
+        return `${open}
+    ${json.split("\n").join("\n    ")}
+    ${close}`;
+      } catch {
+        return all;
+      }
+    }
+  );
+  return out;
+}
+var META_SELECTORS, JSONLD_TEXT_KEYS, JSONLD_BLOCK;
+var init_meta = __esm({
+  "server/i18n/meta.ts"() {
+    "use strict";
+    META_SELECTORS = /(<meta (?:name|property)="(?:description|og:title|og:description|og:image:alt|twitter:title|twitter:description|twitter:image:alt)" content=")([^"]*)(")/g;
+    JSONLD_TEXT_KEYS = /* @__PURE__ */ new Set([
+      "name",
+      "description",
+      "text",
+      "serviceType",
+      "areaServed"
+    ]);
+    JSONLD_BLOCK = /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g;
+  }
+});
+
+// server/i18n/js-strings.ts
+function unescapeJsSingleQuoted(raw) {
+  return raw.replace(/\\(u[0-9a-fA-F]{4}|x[0-9a-fA-F]{2}|.)/g, (_m, esc2) => {
+    if (esc2[0] === "u") return String.fromCharCode(parseInt(esc2.slice(1), 16));
+    if (esc2[0] === "x") return String.fromCharCode(parseInt(esc2.slice(1), 16));
+    switch (esc2) {
+      case "n":
+        return "\n";
+      case "t":
+        return "	";
+      case "r":
+        return "\r";
+      default:
+        return esc2;
+    }
+  });
+}
+function extractJsStrings(html) {
+  const seen = /* @__PURE__ */ new Set();
+  const out = [];
+  T_CALL.lastIndex = 0;
+  let match;
+  while ((match = T_CALL.exec(html)) !== null) {
+    const key = unescapeJsSingleQuoted(match[1]);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(key);
+  }
+  return out;
+}
+var T_CALL;
+var init_js_strings = __esm({
+  "server/i18n/js-strings.ts"() {
+    "use strict";
+    T_CALL = /__t\(\s*'((?:[^'\\]|\\.)*)'\s*\)/g;
+  }
+});
+
+// server/i18n/render.ts
+import * as fs from "node:fs";
+import * as path from "node:path";
+function dictPath(code) {
+  return path.join(STRINGS_DIR, `${code}.json`);
+}
+function mtimeOrZero(file) {
+  try {
+    return fs.statSync(file).mtimeMs;
+  } catch {
+    return 0;
+  }
+}
+function isSafeTranslation(value) {
+  if (/\bon[a-z]+\s*=/i.test(value)) return false;
+  if (/(?:javascript|vbscript)\s*:/i.test(value)) return false;
+  if (/data\s*:\s*text\/html/i.test(value)) return false;
+  const tagRe = /<\s*\/?\s*([a-zA-Z][a-zA-Z0-9-]*)/g;
+  let m;
+  while ((m = tagRe.exec(value)) !== null) {
+    if (!SAFE_INLINE_TAGS.has(m[1].toLowerCase())) return false;
+  }
+  return true;
+}
+function tagSkeleton(s) {
+  return s.match(/<[^>]*>/g) ?? [];
+}
+function strippedText(s) {
+  return s.replace(/<[^>]*>/g, "");
+}
+function isSafeTranslationForKey(key, value) {
+  if (isSafeTranslation(value)) return true;
+  const keyTags = tagSkeleton(key);
+  const valueTags = tagSkeleton(value);
+  if (keyTags.length !== valueTags.length) return false;
+  for (let i = 0; i < keyTags.length; i++) {
+    if (keyTags[i] !== valueTags[i]) return false;
+  }
+  return !strippedText(value).includes("<");
+}
+function loadDictionary(code) {
+  const file = dictPath(code);
+  if (!fs.existsSync(file)) return {};
+  try {
+    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+    const safe = {};
+    for (const [key, value] of Object.entries(raw)) {
+      if (typeof value !== "string") continue;
+      if (!isSafeTranslationForKey(key, value)) {
+        console.error(
+          `[i18n] dropped unsafe ${code} translation for key: ${key.slice(0, 80)}`
+        );
+        continue;
+      }
+      safe[key] = value;
+    }
+    return safe;
+  } catch (error) {
+    console.error(`[i18n] failed to parse ${file}:`, error);
+    return {};
+  }
+}
+function hreflangBlock() {
+  const lines = LOCALES.map(
+    (l) => `    <link rel="alternate" hreflang="${l.hreflang}" href="${localeUrl(l.code)}" />`
+  );
+  lines.push(
+    `    <link rel="alternate" hreflang="x-default" href="${localeUrl(DEFAULT_LOCALE)}" />`
+  );
+  return lines.join("\n");
+}
+function escapeForJsonScript(json) {
+  return json.replace(/</g, "\\u003c");
+}
+function i18nPayloadScript(locale, dictionary, jsKeys) {
+  const strings = {};
+  for (const key of jsKeys) {
+    const translated = dictionary[key];
+    if (translated && translated !== key) strings[key] = translated;
+  }
+  const payload = { locale: locale.code, dateLocale: locale.dateLocale, strings };
+  return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
+}
+function setActiveSwitcherLink(html, code) {
+  if (code === DEFAULT_LOCALE) return html;
+  return html.replace(
+    /class="footer-lang-link is-active"(\s+href="[^"]*"\s+hreflang)/,
+    'class="footer-lang-link"$1'
+  ).replace(
+    new RegExp(
+      `class="footer-lang-link"((?:(?!>)[\\s\\S])*?data-lang="${code}")`
+    ),
+    'class="footer-lang-link is-active"$1'
+  );
+}
+function patchMetadata(html, locale) {
+  const url = localeUrl(locale.code);
+  let out = html;
+  out = out.replace('<html lang="en">', `<html lang="${locale.htmlLang}">`);
+  out = out.replace(
+    '<link rel="canonical" href="https://startappsstudio.com/" />',
+    `<link rel="canonical" href="${url}" />`
+  );
+  out = out.replace(
+    '<meta property="og:url" content="https://startappsstudio.com/" />',
+    `<meta property="og:url" content="${url}" />`
+  );
+  out = out.replace(
+    '<meta property="og:locale" content="en_US" />',
+    `<meta property="og:locale" content="${locale.ogLocale}" />
+    <meta property="og:locale:alternate" content="en_US" />`
+  );
+  out = out.replace(
+    '"inLanguage": "en-US"',
+    `"inLanguage": "${locale.htmlLang}"`
+  );
+  out = out.replace(
+    `"@type": "WebPage",
+      "@id": "https://startappsstudio.com/#webpage",
+      "url": "https://startappsstudio.com/",`,
+    `"@type": "WebPage",
+      "@id": "${url}#webpage",
+      "url": "${url}",`
+  );
+  return out;
+}
+function renderLandingPage(code) {
+  const locale = getLocale(code);
+  const templateMtimeMs = mtimeOrZero(TEMPLATE_PATH);
+  const dictMtimeMs = locale.code === DEFAULT_LOCALE ? 0 : mtimeOrZero(dictPath(locale.code));
+  const cached = cache.get(locale.code);
+  if (cached && cached.templateMtimeMs === templateMtimeMs && cached.dictMtimeMs === dictMtimeMs) {
+    return cached.html;
+  }
+  const template = fs.readFileSync(TEMPLATE_PATH, "utf8");
+  const jsKeys = extractJsStrings(template);
+  let html;
+  if (locale.code === DEFAULT_LOCALE) {
+    html = template.replace(
+      "<!--SAS_I18N_PAYLOAD-->",
+      i18nPayloadScript(locale, {}, jsKeys)
+    );
+  } else {
+    const dictionary = loadDictionary(locale.code);
+    html = localizeHtml(template, dictionary);
+    html = localizeMeta(html, dictionary);
+    html = patchMetadata(html, locale);
+    html = setActiveSwitcherLink(html, locale.code);
+    html = html.replace(
+      "<!--SAS_I18N_PAYLOAD-->",
+      i18nPayloadScript(locale, dictionary, jsKeys)
+    );
+  }
+  html = html.replace(
+    /(<link rel="canonical" href="[^"]*" \/>)/,
+    `$1
+${hreflangBlock()}`
+  );
+  cache.set(locale.code, { html, templateMtimeMs, dictMtimeMs });
+  return html;
+}
+var TEMPLATE_PATH, STRINGS_DIR, cache, SAFE_INLINE_TAGS;
+var init_render2 = __esm({
+  "server/i18n/render.ts"() {
+    "use strict";
+    init_localize();
+    init_meta();
+    init_js_strings();
+    init_locales();
+    TEMPLATE_PATH = path.resolve(
+      process.cwd(),
+      "server",
+      "templates",
+      "desktop-landing.html"
+    );
+    STRINGS_DIR = path.resolve(process.cwd(), "server", "i18n", "strings");
+    cache = /* @__PURE__ */ new Map();
+    SAFE_INLINE_TAGS = /* @__PURE__ */ new Set([
+      "a",
+      "abbr",
+      "b",
+      "br",
+      "code",
+      "em",
+      "i",
+      "mark",
+      "small",
+      "span",
+      "strong",
+      "sub",
+      "sup",
+      "u"
+    ]);
+  }
+});
+
 // server/index.ts
 var index_exports = {};
 __export(index_exports, {
   hashIp: () => hashIp
 });
 import express from "express";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs2 from "fs";
+import * as path2 from "path";
 import crypto3 from "node:crypto";
 async function runMigrations() {
-  const migrationsDir = path.resolve(process.cwd(), "server", "migrations");
-  if (!fs.existsSync(migrationsDir)) return;
-  const files = fs.readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort();
+  const migrationsDir = path2.resolve(process.cwd(), "server", "migrations");
+  if (!fs2.existsSync(migrationsDir)) return;
+  const files = fs2.readdirSync(migrationsDir).filter((f) => f.endsWith(".sql")).sort();
   const client = await pool.connect();
   try {
     for (const file of files) {
-      const sql3 = fs.readFileSync(path.join(migrationsDir, file), "utf8");
+      const sql3 = fs2.readFileSync(path2.join(migrationsDir, file), "utf8");
       await client.query(sql3);
       console.log(`[migrations] applied ${file}`);
     }
@@ -4339,7 +5281,7 @@ function setupAiCrawlerLogging(app2) {
 function setupRequestLogging(app2) {
   app2.use((req, res, next) => {
     const start = Date.now();
-    const path2 = req.path;
+    const path3 = req.path;
     let capturedJsonResponse = void 0;
     const originalResJson = res.json;
     res.json = function(bodyJson, ...args) {
@@ -4347,9 +5289,9 @@ function setupRequestLogging(app2) {
       return originalResJson.apply(res, [bodyJson, ...args]);
     };
     res.on("finish", () => {
-      if (!path2.startsWith("/api")) return;
+      if (!path3.startsWith("/api")) return;
       const duration = Date.now() - start;
-      let logLine = `${req.method} ${path2} ${res.statusCode} in ${duration}ms`;
+      let logLine = `${req.method} ${path3} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
@@ -4362,26 +5304,50 @@ function setupRequestLogging(app2) {
   });
 }
 function serveLandingPage(req, res) {
-  const landingPagePath = path.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
-  if (fs.existsSync(landingPagePath)) {
+  const resolution = resolveLocale({
+    path: req.path,
+    cookieHeader: req.headers.cookie,
+    acceptLanguage: req.headers["accept-language"]
+  });
+  if (resolution.source === "path") {
+    res.cookie(LOCALE_COOKIE, resolution.locale, {
+      maxAge: LOCALE_COOKIE_MAX_AGE * 1e3,
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/"
+    });
+    if (resolution.locale === "en") {
+      return res.redirect(302, "/");
+    }
+  }
+  try {
+    const html = renderLandingPage(resolution.locale);
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
-    return res.sendFile(landingPagePath);
+    res.setHeader("Vary", "Accept-Language, Cookie");
+    return res.send(html);
+  } catch (error) {
+    console.error("[i18n] landing render failed, serving English file:", error);
+    const landingPagePath = path2.resolve(process.cwd(), "server", "templates", "desktop-landing.html");
+    if (fs2.existsSync(landingPagePath)) {
+      return res.sendFile(landingPagePath);
+    }
+    return res.status(404).send("Landing page not found");
   }
-  res.status(404).send("Landing page not found");
 }
 function setupLandingPage(app2) {
   app2.use((req, res, next) => {
     if (req.path.startsWith("/api") || req.path.startsWith("/journal") || req.path === "/sitemap.xml" || req.path === "/robots.txt" || req.path === "/llms.txt" || req.path === "/llms-full.txt") {
       return next();
     }
-    if (req.path === "/") {
+    if (req.path === "/" || localeFromPath(req.path)) {
       return serveLandingPage(req, res);
     }
     next();
   });
-  app2.use("/assets", express.static(path.resolve(process.cwd(), "assets")));
+  app2.use("/assets", express.static(path2.resolve(process.cwd(), "assets")));
 }
 function setupErrorHandler(app2) {
   app2.use((err, _req, res, next) => {
@@ -4421,6 +5387,8 @@ var init_index = __esm({
     init_journal_report_sender();
     init_ai_crawlers();
     init_ai_bot_verifier();
+    init_detect();
+    init_render2();
     app = express();
     log = console.log;
     IP_HASH_SALT = process.env.AI_CRAWLER_IP_SALT || process.env.SESSION_SECRET || "ai-crawler-default-salt";
