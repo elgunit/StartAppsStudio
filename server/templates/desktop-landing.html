@@ -876,15 +876,37 @@
       .service-card:hover { border-color: rgba(29,89,96,.35); }
       .service-card.expanded { border-color: var(--dominant); transform: none; }
 
-      /* Recent builds compact list */
+      /* Recent builds compact list — animated show/hide */
       .recent-builds {
-        display: none;
-        margin-top: 20px;
-        border: 1px solid var(--line);
-        border-radius: var(--r-md);
+        /* max-height/opacity transition instead of display:none so the
+           reveal is animated. JS toggles .rb-open to expand. */
+        display: block;
+        max-height: 0;
+        opacity: 0;
         overflow: hidden;
+        margin-top: 0;
+        border: 1px solid transparent;
+        border-radius: var(--r-md);
         background: var(--surface);
+        box-shadow: none;
+        pointer-events: none;
+        transition:
+          max-height  0.44s cubic-bezier(0.4,0,0.2,1),
+          opacity     0.28s ease,
+          margin-top  0.36s ease,
+          border-color 0.28s ease,
+          box-shadow  0.28s ease;
+      }
+      .recent-builds.rb-open {
+        max-height: 1200px; /* generous ceiling — never actually clamps */
+        opacity: 1;
+        margin-top: 20px;
+        border-color: var(--line);
         box-shadow: var(--shadow);
+        pointer-events: auto;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .recent-builds { transition: none; }
       }
       .recent-builds-header {
         display: flex;
@@ -1100,11 +1122,14 @@
         line-height: 1.1;
       }
       .ai-stat-title {
-        font-size: clamp(11.5px, 1vw, 13px);
+        font-size: clamp(10px, 0.85vw, 11.5px);
         font-weight: 600;
         color: var(--ink);
-        line-height: 1.35;
-        max-width: 150px;
+        line-height: 1.2;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       /* Descriptor line removed — title now carries the meaning */
       .ai-stat-label { display: none; }
@@ -1367,18 +1392,35 @@
         box-shadow: 0 4px 14px color-mix(in srgb, var(--dominant) 35%, transparent), inset 0 1px 0 rgba(255,255,255,0.28);
       }
       .tke-pill:focus-visible { outline: 2px solid #14b8a6; outline-offset: 2px; }
-      /* Selected-discipline summary: one unified pill — label on the left,
-         tool icons in the middle (flex-grow), chevron as a natural flex
-         child on the right. No absolute positioning, no floating add-on. */
+      /* Selected-discipline summary: stacked block.
+         Collapsed → whole area is clickable; shows label row + icons below.
+         Expanded  → icons hidden; a small up-arrow circle appears on the
+         right of the label row so the user can collapse again. */
       .tke-summary {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 12px 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 11px 14px 12px;
         border: 1px solid color-mix(in srgb, var(--dominant) 18%, var(--border));
-        border-radius: 999px;
+        border-radius: 16px;
         background: color-mix(in srgb, var(--bg-elevated) 58%, transparent);
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        transition: border-color 0.18s ease, background 0.18s ease;
+      }
+      .tke-summary:hover {
+        border-color: color-mix(in srgb, var(--dominant) 32%, var(--border));
+        background: color-mix(in srgb, var(--bg-elevated) 72%, transparent);
+      }
+      /* Top row inside the summary: label left, collapse-arrow right */
+      .tke-summary-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 8px;
       }
       .tke-summary-label {
         color: var(--text-secondary);
@@ -1389,27 +1431,20 @@
         white-space: nowrap;
         flex-shrink: 0;
       }
-      /* Tool icons: single non-wrapping row that fills the middle of the
-         pill; on narrow screens it scrolls horizontally (scrollbar hidden)
-         so the pill always stays one row tall. */
+      /* Tool icons row — wraps freely below the label */
       .tke-summary-tools {
         display: flex;
         align-items: center;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
+        flex-wrap: wrap;
         gap: 5px;
-        min-width: 0;
-        flex: 1;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
         transition: opacity 0.18s ease;
       }
       .tke-summary-tools::-webkit-scrollbar { display: none; }
+      /* Hide icons while stage is open */
       .tke-card.is-expanded .tke-summary-tools {
         display: none;
       }
-      /* Each tool: a small icon-only round chip — no text label */
+      /* Each tool: small icon-only round chip */
       .tke-summary-tool {
         display: inline-flex;
         align-items: center;
@@ -1427,36 +1462,35 @@
         height: 16px;
         flex-shrink: 0;
       }
-      /* Hide the text label inside each chip (we only want the icon) */
       .tke-summary-tool span { display: none; }
-      /* Chevron: inline flex child pushed to the right edge — part of the
-         pill itself, with the row's own padding giving it even breathing
-         room above and below in both collapsed and expanded states. */
+      /* Collapse arrow — shown only when expanded, right side of top row */
       .tke-expand {
-        display: inline-flex;
+        display: none;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        margin-left: auto;
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         padding: 0;
         border: 1px solid color-mix(in srgb, var(--dominant) 32%, var(--border));
         border-radius: 50%;
         background: color-mix(in srgb, var(--dominant) 9%, transparent);
         color: var(--dominant);
         cursor: pointer;
+        pointer-events: auto;
         transition: background 0.18s ease, border-color 0.18s ease;
       }
+      .tke-card.is-expanded .tke-expand {
+        display: inline-flex;
+      }
       .tke-expand:hover {
-        background: color-mix(in srgb, var(--dominant) 16%, transparent);
+        background: color-mix(in srgb, var(--dominant) 18%, transparent);
         border-color: var(--dominant);
       }
+      /* Arrow always points up — button means "collapse" */
       .tke-expand svg {
-        transition: transform 0.2s ease;
-      }
-      .tke-card.is-expanded .tke-expand svg {
         transform: rotate(180deg);
+        transition: none;
       }
       /* "For {Category}" title — hidden; summary bar already shows the discipline */
       .tke-for { display: none; }
@@ -1623,7 +1657,7 @@
         /* Icon chips slightly smaller on mobile */
         .tke-summary-tool { width: 25px; height: 25px; }
         .tke-summary-tool svg { width: 14px; height: 14px; }
-        .tke-expand { width: 28px; height: 28px; }
+        .tke-card.is-expanded .tke-expand { width: 26px; height: 26px; }
         .tke-stage { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
         .tke-card.is-expanded .tke-stage { padding: 6px 12px 0; }
         /* Stack value cards vertically on narrow phones */
@@ -3252,17 +3286,55 @@
       }
       .footer-top-link svg { flex-shrink: 0; }
 
-      /* Language switcher: deliberately quiet. Visitors are already served
-         their own language automatically, so this is an escape hatch, not a
-         call to action. Footer only — never in the header. */
+      /* Language picker: collapsed "Language" trigger, expands list below */
+      .footer-lang-wrap {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 4px;
+      }
+      .footer-lang-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 13px 6px 11px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
+        color: var(--text-secondary);
+        font-size: 12px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+      }
+      .footer-lang-trigger:hover {
+        border-color: color-mix(in srgb, var(--dominant) 35%, var(--border));
+        color: var(--text);
+        background: color-mix(in srgb, var(--dominant) 7%, transparent);
+      }
+      .footer-lang-trigger svg { flex-shrink: 0; transition: transform 0.2s ease; }
+      .footer-lang-wrap.is-open .footer-lang-trigger svg { transform: rotate(180deg); }
+      /* Dropdown list — collapsed by default */
       .footer-lang {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         gap: 4px 2px;
-        margin-top: 4px;
-        max-width: 520px;
+        max-width: 320px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin-top: 0;
+        transition: max-height 0.32s ease, opacity 0.22s ease, margin-top 0.22s ease;
+      }
+      .footer-lang-wrap.is-open .footer-lang {
+        max-height: 200px;
+        opacity: 1;
+        margin-top: 8px;
       }
       .footer-lang-link {
         padding: 5px 10px;
@@ -3286,7 +3358,7 @@
         cursor: default;
       }
       @media (max-width: 600px) {
-        .footer-lang { gap: 2px 0; }
+        .footer-lang { gap: 2px 0; max-width: 280px; }
         .footer-lang-link { font-size: 12px; padding: 5px 8px; }
       }
       
@@ -4611,6 +4683,35 @@
         transition: transform 0.25s ease, border-color 0.25s ease;
         min-height: 420px;
         cursor: default;
+      }
+
+      /* Extra showcase cards — collapsed by default, expanded via JS.
+         Two-step animation: .sc-visible re-enters the layout (display),
+         then .sc-expanded (added one frame later) fades/rises the card in.
+         Collapse runs in reverse: drop .sc-expanded, and after the fade-out
+         completes JS removes .sc-visible so the card leaves the flow.
+         A card that stayed in-flow at opacity:0 would leave an empty gap
+         in the track, so display must still toggle — the classes just
+         sequence it so the opacity transition gets painted frames. */
+      .showcase-extra {
+        display: none;
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition:
+          opacity   0.38s cubic-bezier(0.16,1,0.3,1),
+          transform 0.38s cubic-bezier(0.16,1,0.3,1);
+      }
+      .showcase-extra.sc-visible {
+        display: flex; /* same as base .showcase-card */
+      }
+      .showcase-extra.sc-expanded {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .showcase-extra { transition: opacity 0.15s ease; transform: none !important; }
       }
       .showcase-card:hover {
         border-color: color-mix(in srgb, var(--dominant) 35%, transparent);
@@ -6323,7 +6424,6 @@
               data-result="Rescued &amp; shipped in 4 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"
               onclick="openShowcaseModal(this)"
-              style="display:none;"
             >
               <div class="showcase-visual">
                 <div class="showcase-visual-bg" style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"></div>
@@ -6377,7 +6477,6 @@
               data-result="Demo live in 9 days · Meeting secured"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"
               onclick="openShowcaseModal(this)"
-              style="display:none;"
             >
               <div class="showcase-visual">
                 <div class="showcase-visual-bg" style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"></div>
@@ -7197,7 +7296,7 @@
 
         <div class="toolkit-meta">
           <span class="toolkit-meta-pulse" aria-hidden="true"></span>
-          <span><span id="toolkitAsOf">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>
+          <span><span id="toolkitAsOf">Stack current · August 2026</span></span>
         </div>
 
         <!-- Use-case explorer: which AI tools per task -->
@@ -7214,12 +7313,14 @@
             <button class="tke-pill"        role="tab" aria-selected="false" data-cat="websites"   aria-controls="tkeChips">Websites</button>
             <button class="tke-pill"        role="tab" aria-selected="false" data-cat="business"   aria-controls="tkeChips">Business AI Stack</button>
           </div>
-          <div class="tke-summary" id="tkeSummary">
-            <span class="tke-summary-label">Professional Tools</span>
+          <div class="tke-summary" id="tkeSummary" role="button" tabindex="0" aria-expanded="false" aria-controls="tkeStage" aria-label="Expand professional tools">
+            <div class="tke-summary-top">
+              <span class="tke-summary-label">Professional Tools</span>
+              <button class="tke-expand" id="tkeExpand" type="button" tabindex="-1" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+            </div>
             <div class="tke-summary-tools" id="tkeSummaryTools" aria-label="Tools in this discipline"></div>
-            <button class="tke-expand" id="tkeExpand" type="button" aria-expanded="false" aria-controls="tkeStage" aria-label="Explore stack">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
           </div>
           <h3 class="tke-for" id="tkeFor">For Research</h3>
           <div class="tke-stage" id="tkeStage">
@@ -7866,17 +7967,26 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
           Back to top
         </button>
-        <nav class="footer-lang" aria-label="Language">
-          <a class="footer-lang-link is-active" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
-          <a class="footer-lang-link"           href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
-          <a class="footer-lang-link"           href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
-          <a class="footer-lang-link"           href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
-          <a class="footer-lang-link"           href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
-          <a class="footer-lang-link"           href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
-          <a class="footer-lang-link"           href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
-          <a class="footer-lang-link"           href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
-          <a class="footer-lang-link"           href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
-        </nav>
+        <div class="footer-lang-wrap" id="footerLangWrap">
+          <button class="footer-lang-trigger" type="button" id="footerLangTrigger"
+            aria-expanded="false" aria-controls="footerLangList"
+            aria-label="Change language">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Language
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <nav class="footer-lang" id="footerLangList" aria-label="Language">
+            <a class="footer-lang-link is-active" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
+            <a class="footer-lang-link"           href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
+            <a class="footer-lang-link"           href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
+            <a class="footer-lang-link"           href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
+            <a class="footer-lang-link"           href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
+            <a class="footer-lang-link"           href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
+            <a class="footer-lang-link"           href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
+            <a class="footer-lang-link"           href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
+            <a class="footer-lang-link"           href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
+          </nav>
+        </div>
         <p class="footer-copyright">&copy; 2026 Start Apps Studio. All rights reserved.</p>
       </div>
     </footer>
@@ -7897,7 +8007,7 @@
         var el = document.getElementById('toolkitAsOf');
         if (el) {
           var asOf = new Date().toLocaleDateString(__dateLocale(), { month: 'long', year: 'numeric' });
-          el.textContent = __t('Stack current as of {date}').replace('{date}', asOf);
+          el.textContent = __t('Stack current · {date}').replace('{date}', asOf);
         }
       })();
 
@@ -8431,7 +8541,9 @@
 
         function visibleCards() {
           return Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
-            return c.style.display !== 'none';
+            // Extra cards are collapsed via classes now (display comes from
+            // .sc-visible), so check the computed style, not the inline one.
+            return getComputedStyle(c).display !== 'none';
           });
         }
 
@@ -8520,27 +8632,62 @@
         observer.observe(grid);
       })();
 
+      var _moreWorkAnimating = false;
       function toggleMoreWork() {
+        if (_moreWorkAnimating) return; // ignore double-taps mid-animation
         const btn = document.getElementById('viewMoreBtn');
         const isExpanded = btn.dataset.expanded === 'true';
         const extraCards = Array.from(document.querySelectorAll('#caseStudiesContainer .showcase-extra'));
+        const recentBuilds = document.getElementById('recentBuilds');
+        const FADE_MS = 400; // matches .showcase-extra transition (0.38s + headroom)
+
+        _moreWorkAnimating = true;
 
         if (!isExpanded) {
-          // Show extra cards - they're already in the grid, just hidden
-          extraCards.forEach(card => { card.style.display = ''; });
-          document.getElementById('recentBuilds').style.display = 'block';
+          // Expand: enter layout first, force a synchronous reflow so the
+          // display change is committed, then add the animated state. A
+          // forced reflow is deterministic where rAF can be throttled
+          // (backgrounded tabs, headless browsers).
+          extraCards.forEach(card => { card.classList.add('sc-visible'); });
+          void document.getElementById('caseStudiesContainer').offsetHeight; // flush layout
+          extraCards.forEach((card, i) => {
+            // Small stagger so cards cascade in left-to-right
+            card.style.transitionDelay = (i * 70) + 'ms';
+            card.classList.add('sc-expanded');
+          });
+          recentBuilds.classList.add('rb-open');
           btn.dataset.expanded = 'true';
-          btn.innerHTML = '<span>' + escapeHtml(__t('Show less')) + '</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>';
+          // Update label + arrow in place (textContent is XSS-safe, and the
+          // journal IIFE's escapeHtml isn't reachable from this scope).
+          btn.querySelector('span').textContent = __t('Show less');
+          btn.querySelector('svg path').setAttribute('d', 'M18 15l-6-6-6 6');
+          // Dots: re-sync after the cards have joined the layout so the
+          // count is right, and the dot-intro animation plays on the new set.
+          setTimeout(function () {
+            if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
+            _moreWorkAnimating = false;
+          }, 60);
         } else {
-          // Hide extra cards again
-          extraCards.forEach(card => { card.style.display = 'none'; });
-          document.getElementById('recentBuilds').style.display = 'none';
+          // Collapse: fade out first, then leave the layout once invisible.
+          extraCards.forEach((card, i) => {
+            card.style.transitionDelay = (i * 40) + 'ms';
+            card.classList.remove('sc-expanded');
+          });
+          recentBuilds.classList.remove('rb-open');
           btn.dataset.expanded = 'false';
-          btn.innerHTML = '<span>' + escapeHtml(__t('See more builds')) + '</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+          btn.querySelector('span').textContent = __t('See more builds');
+          btn.querySelector('svg path').setAttribute('d', 'M6 9l6 6 6-6');
+          setTimeout(function () {
+            extraCards.forEach(card => {
+              card.classList.remove('sc-visible');
+              card.style.transitionDelay = '';
+            });
+            // Re-sync dots only after the cards left the flow — the mobile
+            // dot count is derived from visible cards.
+            if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
+            _moreWorkAnimating = false;
+          }, FADE_MS);
         }
-
-        // Re-sync carousel dots (counts visible cards on mobile)
-        if (typeof refreshCarouselDots === 'function') refreshCarouselDots();
       }
       
       document.getElementById('contactForm').addEventListener('submit', async function(e) {
@@ -9194,6 +9341,10 @@
            causes cards to pop in mid-scroll. Skip the reveal for them
            on mobile — the section title already reveals the block. */
         if (isMobileCarousel && el.classList.contains('testimonial-card')) return;
+        /* Extra showcase cards manage their own entrance via .sc-expanded
+           when "See more builds" opens them — the scroll-reveal transition
+           would override theirs (its injected stylesheet loads last). */
+        if (el.classList.contains('showcase-extra')) return;
         el.classList.add('will-reveal');
         /* Stagger siblings in the same parent grid/flex row */
         var siblings = el.parentElement ? el.parentElement.querySelectorAll('.will-reveal') : [];
@@ -9972,16 +10123,26 @@
         chips.innerHTML = html;
       }
 
+      var summary = document.getElementById('tkeSummary');
+
       function setExpanded(next) {
         card.classList.toggle('is-expanded', next);
-        if (expand) {
-          expand.setAttribute('aria-expanded', next ? 'true' : 'false');
-        }
+        if (summary) summary.setAttribute('aria-expanded', next ? 'true' : 'false');
+        if (expand)  expand.setAttribute('aria-hidden', next ? 'false' : 'true');
       }
 
-      if (expand) {
-        expand.addEventListener('click', function () {
+      // Whole summary area toggles expand/collapse (keyboard + pointer)
+      if (summary) {
+        summary.addEventListener('click', function (e) {
+          // The inner expand button is cosmetic (tabindex=-1, aria-hidden);
+          // clicks on it bubble up here — that is intentional.
           setExpanded(!card.classList.contains('is-expanded'));
+        });
+        summary.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setExpanded(!card.classList.contains('is-expanded'));
+          }
         });
       }
 
@@ -10012,6 +10173,31 @@
       } else {
         render('research');
       }
+    }());
+
+    /* ── FOOTER LANGUAGE PICKER ───────────────────────────────────────── */
+    (function () {
+      var wrap    = document.getElementById('footerLangWrap');
+      var trigger = document.getElementById('footerLangTrigger');
+      var list    = document.getElementById('footerLangList');
+      if (!wrap || !trigger || !list) return;
+
+      function openLang(open) {
+        wrap.classList.toggle('is-open', open);
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      trigger.addEventListener('click', function () {
+        openLang(!wrap.classList.contains('is-open'));
+      });
+      trigger.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLang(!wrap.classList.contains('is-open')); }
+        if (e.key === 'Escape') openLang(false);
+      });
+      // Close when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!wrap.contains(e.target)) openLang(false);
+      });
     }());
 
     </script>

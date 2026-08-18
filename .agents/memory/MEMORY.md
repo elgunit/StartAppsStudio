@@ -8,3 +8,4 @@
 - [Workspace read-only recovery](workspace-readonly-recovery.md) — btrfs volume can remount ro (EROFS on every write); only a full Repl restart fixes it, workflow restarts don't.
 - [Landing i18n engine](landing-i18n-engine.md) — dictionaries keyed by exact English strings; template copy edits require regenerating the source inventory and topping up all locales.
 - [Bottom-sheet dismiss flash](sheet-dismiss-flash.md) — position:fixed body-pin + scrollTo restore re-fires scroll-reveal IO behind the sheet; use overflow lock when the overlay already blocks touchmove.
+- [Inline-script scoping & enter animations](inline-script-scoping.md) — global onclick handlers can't reach IIFE-scoped helpers; start display→animate transitions with a forced reflow, not double rAF.

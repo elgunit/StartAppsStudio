@@ -1460,7 +1460,7 @@
     "context": "span.ai-stat-title"
   },
   {
-    "key": "<span class=\"toolkit-meta-pulse\" aria-hidden=\"true\"></span> <span><span id=\"toolkitAsOf\">Stack current as of July 2026</span> · we swap in new model versions the week they ship.</span>",
+    "key": "<span class=\"toolkit-meta-pulse\" aria-hidden=\"true\"></span> <span><span id=\"toolkitAsOf\">Stack current · August 2026</span></span>",
     "kind": "unit",
     "context": "div.toolkit-meta"
   },
@@ -1515,6 +1515,11 @@
     "context": "button.tke-pill"
   },
   {
+    "key": "Expand professional tools",
+    "kind": "attr",
+    "context": "div#tkeSummary.tke-summary[aria-label]"
+  },
+  {
     "key": "Professional Tools",
     "kind": "unit",
     "context": "span.tke-summary-label"
@@ -1523,11 +1528,6 @@
     "key": "Tools in this discipline",
     "kind": "attr",
     "context": "div#tkeSummaryTools.tke-summary-tools[aria-label]"
-  },
-  {
-    "key": "Explore stack",
-    "kind": "attr",
-    "context": "button#tkeExpand.tke-expand[aria-label]"
   },
   {
     "key": "For Research",
@@ -2185,9 +2185,14 @@
     "context": "button.footer-top-link"
   },
   {
-    "key": "Language",
+    "key": "Change language",
     "kind": "attr",
-    "context": "nav.footer-lang[aria-label]"
+    "context": "button#footerLangTrigger.footer-lang-trigger[aria-label]"
+  },
+  {
+    "key": "Language",
+    "kind": "text",
+    "context": "button#footerLangTrigger.footer-lang-trigger"
   },
   {
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
@@ -2200,7 +2205,7 @@
     "context": "inline script"
   },
   {
-    "key": "Stack current as of {date}",
+    "key": "Stack current · {date}",
     "kind": "js",
     "context": "inline script"
   },

@@ -489,5 +489,6 @@
   "Bespoke multi-platform builds with full product strategy — every screen handcrafted to your brand and architecture.": "Индивидуальные мультиплатформенные проекты с полной продуктовой стратегией — каждый экран создаётся вручную под ваш бренд и архитектуру.",
   "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.": "У нас четыре публичных пакета: Лендинг для запуска за $1,599, прототип на базе Figma за $4,999, MVP от $9,000 до $19,000 и Custom-Scale от $30,000. Каждый пакет начинается со стратегии и чёткого объёма. Цена фиксируется заранее, поэтому вы знаете сумму ещё до старта, и стоимость проекта покрывает согласованные дизайн, разработку и передачу при запуске.",
   "Elgar Sirajov, Founder of Start Apps Studio": "Elgar Sirajov — основатель Start Apps Studio",
-  "Reveal tool name": "Показать название инструмента"
+  "Reveal tool name": "Показать название инструмента",
+  "Stack current · {date}": "Стек актуален на {date}"
 }

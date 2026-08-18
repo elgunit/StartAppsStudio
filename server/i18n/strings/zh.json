@@ -489,5 +489,6 @@
   "Bespoke multi-platform builds with full product strategy — every screen handcrafted to your brand and architecture.": "配备完整产品策略的纯定制多平台构建——每一个界面都依据你的品牌和架构纯手工打造。",
   "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.": "我们有四个公开方案：$1,599 的上线站点、$4,999 的 Figma 主导原型、$9,000 至 $19,000 的 MVP，以及起价 $30,000 的 Custom-Scale 构建。每个方案都以策略和清晰的范围界定为起点。价格提前固定，因此在我们开始前你就知道确切数字，且项目价格涵盖约定好的设计、构建和上线交接。",
   "Elgar Sirajov, Founder of Start Apps Studio": "Elgar Sirajov，Start Apps Studio 创始人",
-  "Reveal tool name": "显示工具名称"
+  "Reveal tool name": "显示工具名称",
+  "Stack current · {date}": "技术栈截至 {date}"
 }
