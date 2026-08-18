@@ -1623,10 +1623,18 @@
         /* Stack value cards vertically on narrow phones */
         .tke-values { grid-template-columns: 1fr; }
         .tke-card.is-expanded .tke-values { max-height: 280px; }
-        /* Tighten column gap and prevent the group label from widening its
-           host column — keeps the inter-column spacing even across all groups */
+        /* Tighten column gap. Labels are right-aligned and clipped to the
+           column width so "Start here" never bleeds into the next pillar. */
         .tke-row { gap: 10px; }
-        .tke-col-label { font-size: 10px; white-space: nowrap; max-width: 0; overflow: visible; }
+        .tke-col-label {
+          font-size: 10px;
+          white-space: nowrap;
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: clip;
+          text-align: right;
+        }
         .tke-sil { width: 50px; border-radius: 32px 32px 0 0; }
         .tke-headicon { width: 36px; height: 36px; margin-bottom: -18px; }
         .tke-col-name { font-size: 11px; }
@@ -4477,12 +4485,58 @@
         .mid-cta-btn { align-self: stretch; text-align: center; }
       }
 
-      /* --- Pain strip */
-      .pain-strip { display:flex; flex-wrap:wrap; gap:12px; padding:4px 0 40px; justify-content:center; }
-      .pain-strip-item { display:flex; align-items:flex-start; gap:12px; flex:1; min-width:210px; max-width:310px; background:color-mix(in srgb,var(--surface) 80%,transparent); border:1px solid var(--line); border-radius:var(--r-md); padding:14px 16px; }
-      .pain-strip-icon { flex-shrink:0; color:var(--dominant); width:30px; height:30px; border-radius:var(--r-sm); background:var(--support); display:flex; align-items:center; justify-content:center; }
-      .pain-strip-pain { font-size:0.7rem; font-weight:700; color:#c46a7a; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px; }
-      .pain-strip-resolve { font-size:0.82rem; color:var(--ink); line-height:1.45; }
+      /* --- Pain cards (formerly pain-strip) */
+      .pain-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+        padding: var(--space-4) 0;
+      }
+      .pain-strip-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: var(--space-3);
+        box-shadow: var(--shadow);
+        position: relative;
+      }
+      .pain-strip-icon {
+        flex-shrink: 0;
+        color: var(--dominant);
+        width: 44px;
+        height: 44px;
+        border-radius: var(--r-sm);
+        background: var(--support);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .pain-strip-icon svg { width: 20px; height: 20px; }
+      .pain-strip-pain {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--rose);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+      .pain-strip-resolve {
+        font-size: 15px;
+        color: var(--ink);
+        line-height: 1.6;
+        flex: 1;
+      }
+      @media (max-width: 700px) {
+        .pain-strip {
+          grid-template-columns: 1fr;
+          padding: var(--space-3) 0;
+        }
+      }
       /* --- Timeline chips */
       .timeline-grid { display:flex; flex-wrap:wrap; gap:8px; }
       .timeline-chip { display:inline-flex; align-items:center; padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:color-mix(in srgb,var(--surface) 70%,transparent); cursor:pointer; font-size:0.85rem; color:var(--ink); transition:border-color .2s,background .2s,color .2s; user-select:none; }
@@ -5309,8 +5363,50 @@
         .founder-avatar { width: 96px; height: 96px; }
         .studio-contrast { grid-template-columns: 1fr; }
         .contrast-col-ours { border-left: none; border-top: 2px solid color-mix(in srgb, var(--dominant) 22%, transparent); }
-        .testimonials-grid { grid-template-columns: 1fr; }
+
+        /* ── Mobile testimonial carousel ─────────────────────────────── */
+        .testimonials-grid {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          gap: 14px;
+          /* bleed to edge then restore with padding so cards are full-width */
+          margin: 0 calc(-1 * clamp(16px, 4vw, 56px));
+          padding: 4px clamp(16px, 4vw, 56px) 20px;
+          scrollbar-width: none;
+        }
+        .testimonials-grid::-webkit-scrollbar { display: none; }
+        .testimonial-card {
+          scroll-snap-align: center;
+          flex: 0 0 min(calc(100% - 40px), 340px);
+          /* ensure equal height within the row */
+          align-self: stretch;
+        }
+        /* Pagination dots */
+        .testimonials-grid ~ .testimonial-dots {
+          display: flex;
+          justify-content: center;
+          gap: 6px;
+          margin-top: 4px;
+        }
+        .testimonial-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--line-strong);
+          transition: background 0.2s, transform 0.2s;
+          cursor: pointer;
+          border: none;
+          padding: 0;
+        }
+        .testimonial-dot.active {
+          background: var(--dominant);
+          transform: scale(1.4);
+        }
       }
+      /* Hide dots on desktop */
+      .testimonial-dots { display: none; }
+
       @media (min-width: 681px) and (max-width: 920px) {
         .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
         .testimonial-card:last-child {
@@ -5775,7 +5871,7 @@
         <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
-        <p class="hero-subheadline">Start Apps Studio is the founder-led product partner for non-technical founders. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs and no one needs to be briefed twice.</p>
+        <p class="hero-subheadline">Start Apps Studio is the founder-led product partner for non-technical founders. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
 
         <!-- 5 Hats Showcase -->
         <div class="hats-showcase">
@@ -5822,34 +5918,28 @@
         </div>
       </section>
 
-      <!-- Pain strip - 3 core problems surfaced before any benefits claim -->
-      <div class="pain-strip" aria-label="Common problems we solve">
+      <!-- Problem cards - 3 core founder problems surfaced before any benefits claim -->
+      <div class="pain-strip container" aria-label="Common problems we solve">
         <div class="pain-strip-item">
           <div class="pain-strip-icon">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div>
-            <div class="pain-strip-pain">Idea stuck in slides</div>
-            <div class="pain-strip-resolve">We turn your concept into a working product in weeks, so you can stop planning and start validating.</div>
-          </div>
+          <div class="pain-strip-pain">Idea stuck in slides</div>
+          <div class="pain-strip-resolve">We turn your concept into a working product in weeks, so you can stop planning and start validating.</div>
         </div>
         <div class="pain-strip-item">
           <div class="pain-strip-icon">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
           </div>
-          <div>
-            <div class="pain-strip-pain">Hiring feels like a second job</div>
-            <div class="pain-strip-resolve">One founder-led partner handles strategy, design, and build. No recruiters, no standups, no surprises.</div>
-          </div>
+          <div class="pain-strip-pain">Hiring feels like a second job</div>
+          <div class="pain-strip-resolve">One founder-led partner handles strategy, design, and build. No recruiters, no standups, no surprises.</div>
         </div>
         <div class="pain-strip-item">
           <div class="pain-strip-icon">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           </div>
-          <div>
-            <div class="pain-strip-pain">Agencies hand over code I can't control</div>
-            <div class="pain-strip-resolve">You own every account, design file, and line of code. We build it with you, then hand it off cleanly.</div>
-          </div>
+          <div class="pain-strip-pain">Agencies hand over code I can't control</div>
+          <div class="pain-strip-resolve">You own every account, design file, and line of code. We build it with you, then hand it off cleanly.</div>
         </div>
       </div>
 
@@ -6690,6 +6780,12 @@
               <span class="method-badge">Product creative</span>
             </div>
           </div>
+        </div>
+        <!-- Pagination dots (visible on mobile only via CSS) -->
+        <div class="testimonial-dots" id="testimonialDots" aria-hidden="true">
+          <button class="testimonial-dot active" data-idx="0"></button>
+          <button class="testimonial-dot" data-idx="1"></button>
+          <button class="testimonial-dot" data-idx="2"></button>
         </div>
       </section>
 
@@ -9039,6 +9135,35 @@
         '@media(prefers-reduced-motion:reduce){.testimonial-quote-mark{animation:none;}}'
       ].join('');
       document.head.appendChild(quoteStyle);
+
+      /* ── Testimonial carousel dots ────────────────────────────────── */
+      (function () {
+        var grid = document.querySelector('.testimonials-grid');
+        var dotsEl = document.getElementById('testimonialDots');
+        if (!grid || !dotsEl) return;
+        var dots = dotsEl.querySelectorAll('.testimonial-dot');
+        var cards = grid.querySelectorAll('.testimonial-card');
+        if (!dots.length || !cards.length) return;
+        function updateDot() {
+          var center = grid.scrollLeft + grid.offsetWidth / 2;
+          var closest = 0, minDist = Infinity;
+          cards.forEach(function (card, i) {
+            var dist = Math.abs((card.offsetLeft + card.offsetWidth / 2) - center);
+            if (dist < minDist) { minDist = dist; closest = i; }
+          });
+          dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+        }
+        grid.addEventListener('scroll', updateDot, { passive: true });
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            var idx = parseInt(dot.getAttribute('data-idx'), 10);
+            var card = cards[idx];
+            if (!card) return;
+            var left = card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
+            grid.scrollTo({ left: left, behavior: 'smooth' });
+          });
+        });
+      })();
 
       /* ── 8. HERO STAT COUNTER TICK-UP ─────────────────────────────
          Numbers in .hero-stat-number count up from 0 once when the

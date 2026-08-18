@@ -5,3 +5,4 @@
 - [Mobile carousel edge treatment](carousel-edge-treatment.md) — no fade overlays from translucent tokens, no overflow:hidden wrappers, size cards to container not vw.
 - [GitHub push authentication](github-push-auth.md) — shell git push fails (askpass has no GitHub creds); replay commits via the GitHub connection API, SHAs stay identical.
 - [iOS scroll-container stacking](ios-scroll-container-stacking.md) — z-index on carousel cards can't beat an outside scrim on iOS Safari; layer the scroll container itself above the overlay.
+- [Workspace read-only recovery](workspace-readonly-recovery.md) — btrfs volume can remount ro (EROFS on every write); only a full Repl restart fixes it, workflow restarts don't.
