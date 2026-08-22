@@ -3359,6 +3359,7 @@
         cursor: default;
       }
       .footer-lang-link.is-hidden { display: none; }
+      .footer-lang-wrap.is-current-english { display: none; }
       @media (max-width: 600px) {
         .footer-lang { gap: 2px 0; max-width: 280px; }
         .footer-lang-link { font-size: 12px; padding: 5px 8px; }
@@ -7969,7 +7970,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
           Back to top
         </button>
-        <div class="footer-lang-wrap" id="footerLangWrap">
+        <div class="footer-lang-wrap is-current-english" id="footerLangWrap">
           <button class="footer-lang-trigger" type="button" id="footerLangTrigger"
             aria-expanded="false" aria-controls="footerLangList"
             aria-label="Change language">
@@ -7978,7 +7979,7 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <nav class="footer-lang" id="footerLangList" aria-label="Language">
-            <a class="footer-lang-link is-active" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
+            <a class="footer-lang-link is-active is-hidden" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
             <a class="footer-lang-link is-hidden" href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
             <a class="footer-lang-link is-hidden" href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
             <a class="footer-lang-link is-hidden" href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
