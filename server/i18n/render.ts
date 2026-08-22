@@ -183,9 +183,9 @@ function i18nPayloadScript(
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
 
-/** Marks the switcher's active language without touching other markup. */
-function setActiveSwitcherLink(html: string, code: string): string {
-  if (code === DEFAULT_LOCALE) return html; // template default is English-active
+/** Shows only the matched locale and English in the footer switcher. */
+function setActiveSwitcherLink(html: string, locale: LocaleDefinition): string {
+  if (locale.code === DEFAULT_LOCALE) return html; // template default is English-active
   return html
     .replace(
       /class="footer-lang-link is-active"(\s+href="[^"]*"\s+hreflang)/,
@@ -193,9 +193,13 @@ function setActiveSwitcherLink(html: string, code: string): string {
     )
     .replace(
       new RegExp(
-        `class="footer-lang-link"((?:(?!>)[\\s\\S])*?data-lang="${code}")`,
+        `class="footer-lang-link is-hidden"((?:(?!>)[\\s\\S])*?data-lang="${locale.code}")`,
       ),
       'class="footer-lang-link is-active"$1',
+    )
+    .replace(
+      '<span class="footer-lang-current" data-i18n-skip="true">English</span>',
+      `<span class="footer-lang-current" data-i18n-skip="true">${locale.nativeName}</span>`,
     );
 }
 
@@ -274,7 +278,7 @@ export function renderLandingPage(code: string): string {
     html = localizeHtml(template, dictionary);
     html = localizeMeta(html, dictionary);
     html = patchMetadata(html, locale);
-    html = setActiveSwitcherLink(html, locale.code);
+    html = setActiveSwitcherLink(html, locale);
     html = html.replace(
       "<!--SAS_I18N_PAYLOAD-->",
       i18nPayloadScript(locale, dictionary, jsKeys),

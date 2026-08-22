@@ -3287,7 +3287,7 @@
       }
       .footer-top-link svg { flex-shrink: 0; }
 
-      /* Language picker: collapsed "Language" trigger, expands list below */
+      /* Language picker: collapsed current-language trigger, expands alternatives below */
       .footer-lang-wrap {
         display: inline-flex;
         flex-direction: column;
@@ -3358,6 +3358,7 @@
         background: color-mix(in srgb, var(--dominant) 12%, transparent);
         cursor: default;
       }
+      .footer-lang-link.is-hidden { display: none; }
       @media (max-width: 600px) {
         .footer-lang { gap: 2px 0; max-width: 280px; }
         .footer-lang-link { font-size: 12px; padding: 5px 8px; }
@@ -7973,19 +7974,19 @@
             aria-expanded="false" aria-controls="footerLangList"
             aria-label="Change language">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            Language
+            <span class="footer-lang-current" data-i18n-skip="true">English</span>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <nav class="footer-lang" id="footerLangList" aria-label="Language">
             <a class="footer-lang-link is-active" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
-            <a class="footer-lang-link"           href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
-            <a class="footer-lang-link"           href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
-            <a class="footer-lang-link"           href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
-            <a class="footer-lang-link"           href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
-            <a class="footer-lang-link"           href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
-            <a class="footer-lang-link"           href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
-            <a class="footer-lang-link"           href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
-            <a class="footer-lang-link"           href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
+            <a class="footer-lang-link is-hidden" href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
+            <a class="footer-lang-link is-hidden" href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
+            <a class="footer-lang-link is-hidden" href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
+            <a class="footer-lang-link is-hidden" href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
+            <a class="footer-lang-link is-hidden" href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
+            <a class="footer-lang-link is-hidden" href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
+            <a class="footer-lang-link is-hidden" href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
+            <a class="footer-lang-link is-hidden" href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
           </nav>
         </div>
         <p class="footer-copyright">&copy; 2026 Start Apps Studio. All rights reserved.</p>
