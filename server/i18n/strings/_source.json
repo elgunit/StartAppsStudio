@@ -1425,7 +1425,7 @@
     "context": "p.section-subtitle"
   },
   {
-    "key": "Frontier AI models on every project",
+    "key": "Frontier AI models",
     "kind": "unit",
     "context": "span.ai-stat-title"
   },
@@ -1435,7 +1435,7 @@
     "context": "span.ai-stat-num"
   },
   {
-    "key": "Independent AI reviews per build",
+    "key": "Independent AI reviews",
     "kind": "unit",
     "context": "span.ai-stat-title"
   },
@@ -1445,7 +1445,7 @@
     "context": "span.ai-stat-num"
   },
   {
-    "key": "Code and accounts owned by you",
+    "key": "Code owned by you",
     "kind": "unit",
     "context": "span.ai-stat-title"
   },
@@ -2191,8 +2191,8 @@
   },
   {
     "key": "Language",
-    "kind": "text",
-    "context": "button#footerLangTrigger.footer-lang-trigger"
+    "kind": "attr",
+    "context": "nav#footerLangList.footer-lang[aria-label]"
   },
   {
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",

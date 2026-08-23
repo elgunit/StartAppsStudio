@@ -98,7 +98,7 @@ The desktop landing page is served in 7 languages: English (default), Turkish, R
 
 - **URLs**: `/` auto-detects (explicit path > `sas_lang` cookie > `Accept-Language` > English). Shareable locale URLs: `/tr`, `/ru`, `/zh`, `/fr`, `/es`, `/de`, `/uk`, `/it`. `/en` sets the English cookie then 302-redirects to `/` (footer switcher override only — English canonical is `/`).
 - **Engine**: `server/i18n/` — position-preserving HTML tokenizer + splice substitution over `server/templates/desktop-landing.html`. English render stays byte-identical apart from the injected `__SAS_I18N__` JS payload and hreflang links. `meta.ts` localizes `<meta>` content and JSON-LD blocks. Dictionary values are validated at load (`isSafeTranslation`) — only inline formatting tags allowed, unsafe entries dropped.
-- **Dictionaries**: `server/i18n/strings/<code>.json`, keyed by exact English source strings. Regenerate the source inventory with `npx tsx scripts/build-i18n-source.ts` (reports per-locale coverage). After editing the landing template, re-run it and top up any missing keys in all eight dictionaries.
+- **Dictionaries**: `server/i18n/strings/<code>.json`, keyed by exact English source strings. Regenerate the source inventory with `npx tsx scripts/build-i18n-source.ts` (reports per-locale coverage). After editing the landing template, re-run it and top up any missing keys in all nine dictionaries.
 - **Dynamic JS strings**: translated via `window.__SAS_I18N__` + `__t()` helper in the template; extraction lives in `server/i18n/js-strings.ts`.
 - **SEO**: per-locale canonical, `og:locale`, hreflang alternates (incl. `x-default` → `/`), localized JSON-LD, locale URLs in the sitemap. Journal remains English-only.
 

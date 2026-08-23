@@ -3,7 +3,7 @@
  *
  * URL strategy:
  *   /            → auto-detected (cookie, then Accept-Language), x-default
- *   /tr /ru /zh
+ *   /az /tr /ru /zh
  *   /fr /es /de  → explicit, shareable, self-canonical
  *
  * English is always the fallback: any string missing from a dictionary is
@@ -24,7 +24,7 @@ export interface LocaleDefinition {
   hreflang: string;
   /** Name shown in the footer switcher, in the language itself. */
   nativeName: string;
-  /** Text direction; all seven launch languages are LTR. */
+  /** Text direction; all launch languages are LTR. */
   dir: "ltr" | "rtl";
 }
 
@@ -36,6 +36,15 @@ export const LOCALES: LocaleDefinition[] = [
     ogLocale: "en_US",
     hreflang: "en",
     nativeName: "English",
+    dir: "ltr",
+  },
+  {
+    code: "az",
+    htmlLang: "az",
+    dateLocale: "az-AZ",
+    ogLocale: "az_AZ",
+    hreflang: "az",
+    nativeName: "Azərbaycanca",
     dir: "ltr",
   },
   {
