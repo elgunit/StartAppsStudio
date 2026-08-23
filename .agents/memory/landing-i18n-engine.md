@@ -16,3 +16,9 @@ description: Durable decisions for the multi-locale landing-page localization la
 **Rule:** Explicit-English selection needs its own URL that sets the language cookie; a switcher link to bare `/` cannot override a saved non-English cookie because `/` resolves the cookie before the default.
 
 **Rule:** Treat malformed language-cookie values as absent; decoding an untrusted cookie can throw before route-level error handling and 500 the page.
+
+**Rule:** A locale with complete renderable dictionary coverage is not automatically ready to ship; render representative long and short strings, then perform a linguistic audit for cross-language leakage and unnatural copy.
+
+**Why:** Coverage validates source-key parity and markup safety, but it cannot detect a dictionary that reads as a mixture of closely related languages.
+
+**How to apply:** For every newly added locale, test its explicit URL and `Accept-Language` resolution, review the visible hero and long sales/FAQ copy, and scan for known language-specific leakage before declaring it complete.
