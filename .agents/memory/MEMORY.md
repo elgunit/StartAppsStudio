@@ -10,3 +10,4 @@
 - [Bottom-sheet dismiss flash](sheet-dismiss-flash.md) — position:fixed body-pin + scrollTo restore re-fires scroll-reveal IO behind the sheet; use overflow lock when the overlay already blocks touchmove.
 - [Inline-script scoping & enter animations](inline-script-scoping.md) — global onclick handlers can't reach IIFE-scoped helpers; start display→animate transitions with a forced reflow, not double rAF.
 - [Canvas iframe stale previews](canvas-iframe-stale-previews.md) — a canvas iframe can retain a prior 404 after its mockup route is fixed; force a new URL before re-presenting.
+- [Shared studio landing direction](shared-studio-landing-direction.md) — keep the full-page concept adaptable between Start Apps Studio and startupstudio.business until branding is chosen.
