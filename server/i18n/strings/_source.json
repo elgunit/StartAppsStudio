@@ -5,11 +5,6 @@
     "context": "title"
   },
   {
-    "key": "Page sections",
-    "kind": "attr",
-    "context": "nav#journeyRail.journey-rail[aria-label]"
-  },
-  {
     "key": "<span class=\"hero-line hero-line-nowrap\">Ship your <span class=\"accent-word\">product</span> in weeks.</span>",
     "kind": "unit",
     "context": "h1.hero-headline"
