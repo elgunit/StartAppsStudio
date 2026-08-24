@@ -3404,6 +3404,12 @@
         outline: 2px solid color-mix(in srgb, var(--dominant) 60%, transparent);
         outline-offset: 3px;
       }
+      .english-escape.is-hero-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-4px);
+      }
       .english-escape.is-hidden { display: none; }
       @media (max-width: 600px) {
         .english-escape {
@@ -10254,6 +10260,23 @@
       document.addEventListener('click', function (e) {
         if (!wrap.contains(e.target)) openLang(false);
       });
+    }());
+
+    /* Keep the English escape hatch relevant to the hero only. It remains
+       mounted while hidden so it can reappear when the hero comes back into
+       view, including when the visitor scrolls back to the top. */
+    (function () {
+      var escapeLink = document.querySelector('.english-escape:not(.is-hidden)');
+      var hero = document.querySelector('.hero');
+      if (!escapeLink || !hero || !('IntersectionObserver' in window)) return;
+
+      var heroIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          escapeLink.classList.toggle('is-hero-hidden', !entry.isIntersecting);
+        });
+      }, { threshold: 0.01 });
+
+      heroIo.observe(hero);
     }());
 
     </script>
