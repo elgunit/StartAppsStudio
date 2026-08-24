@@ -188,6 +188,10 @@ function setActiveSwitcherLink(html: string, locale: LocaleDefinition): string {
   if (locale.code === DEFAULT_LOCALE) return html; // template default is English-active
   return html
     .replace(
+      'class="english-escape is-hidden"',
+      'class="english-escape"',
+    )
+    .replace(
       'class="footer-lang-wrap is-current-english"',
       'class="footer-lang-wrap"',
     )

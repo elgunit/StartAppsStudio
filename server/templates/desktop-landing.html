@@ -3364,6 +3364,56 @@
         .footer-lang { gap: 2px 0; max-width: 280px; }
         .footer-lang-link { font-size: 12px; padding: 5px 8px; }
       }
+
+      /* Quiet English escape hatch for visitors whose language was
+         auto-selected from their browser, VPN, or access country. */
+      .english-escape {
+        position: fixed;
+        top: max(14px, env(safe-area-inset-top));
+        right: max(18px, env(safe-area-inset-right));
+        z-index: 1000;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 34px;
+        min-height: 30px;
+        padding: 5px 9px;
+        border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--bg-elevated) 76%, transparent);
+        color: var(--text-secondary);
+        box-shadow: 0 4px 18px color-mix(in srgb, var(--text) 8%, transparent);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        text-decoration: none;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        transition: color 0.18s ease, border-color 0.18s ease,
+          background 0.18s ease, transform 0.18s ease;
+      }
+      .english-escape:hover,
+      .english-escape:focus-visible {
+        border-color: color-mix(in srgb, var(--dominant) 42%, var(--border));
+        background: color-mix(in srgb, var(--dominant) 10%, var(--bg-elevated));
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+      .english-escape:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--dominant) 60%, transparent);
+        outline-offset: 3px;
+      }
+      .english-escape.is-hidden { display: none; }
+      @media (max-width: 600px) {
+        .english-escape {
+          top: max(10px, env(safe-area-inset-top));
+          right: max(12px, env(safe-area-inset-right));
+          min-width: 32px;
+          min-height: 28px;
+          padding: 5px 8px;
+        }
+      }
       
 
 
@@ -6056,6 +6106,8 @@
     </style>
   </head>
   <body>
+    <a class="english-escape is-hidden" href="/" hreflang="en" lang="en"
+      data-i18n-skip="true" aria-label="Switch to English">EN</a>
     <!--SAS_I18N_PAYLOAD-->
     <script>
       /* Translations for strings that only exist inside JavaScript. The server
