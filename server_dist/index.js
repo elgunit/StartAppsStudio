@@ -2273,6 +2273,15 @@ var init_locales = __esm({
         dir: "ltr"
       },
       {
+        code: "az",
+        htmlLang: "az",
+        dateLocale: "az-AZ",
+        ogLocale: "az_AZ",
+        hreflang: "az",
+        nativeName: "Az\u0259rbaycanca",
+        dir: "ltr"
+      },
+      {
         code: "tr",
         htmlLang: "tr",
         dateLocale: "tr-TR",
@@ -5053,16 +5062,25 @@ function i18nPayloadScript(locale, dictionary, jsKeys) {
   const payload = { locale: locale.code, dateLocale: locale.dateLocale, strings };
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
-function setActiveSwitcherLink(html, code) {
-  if (code === DEFAULT_LOCALE) return html;
+function setActiveSwitcherLink(html, locale) {
+  if (locale.code === DEFAULT_LOCALE) return html;
   return html.replace(
-    /class="footer-lang-link is-active"(\s+href="[^"]*"\s+hreflang)/,
+    'class="english-escape is-hidden"',
+    'class="english-escape"'
+  ).replace(
+    'class="footer-lang-wrap is-current-english"',
+    'class="footer-lang-wrap"'
+  ).replace(
+    /class="footer-lang-link is-active is-hidden"(\s+href="[^"]*"\s+hreflang)/,
     'class="footer-lang-link"$1'
   ).replace(
     new RegExp(
-      `class="footer-lang-link"((?:(?!>)[\\s\\S])*?data-lang="${code}")`
+      `class="footer-lang-link is-hidden"((?:(?!>)[\\s\\S])*?data-lang="${locale.code}")`
     ),
     'class="footer-lang-link is-active"$1'
+  ).replace(
+    '<span class="footer-lang-current" data-i18n-skip="true">English</span>',
+    `<span class="footer-lang-current" data-i18n-skip="true">${locale.nativeName}</span>`
   );
 }
 function patchMetadata(html, locale) {
@@ -5117,7 +5135,7 @@ function renderLandingPage(code) {
     html = localizeHtml(template, dictionary);
     html = localizeMeta(html, dictionary);
     html = patchMetadata(html, locale);
-    html = setActiveSwitcherLink(html, locale.code);
+    html = setActiveSwitcherLink(html, locale);
     html = html.replace(
       "<!--SAS_I18N_PAYLOAD-->",
       i18nPayloadScript(locale, dictionary, jsKeys)
