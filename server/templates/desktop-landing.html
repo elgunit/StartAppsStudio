@@ -5102,8 +5102,8 @@
         .showcase-carousel-wrap {
           position: relative;
           overflow: visible; /* let the liquid-glass card glow dissolve naturally */
-          /* Give the card glow and hover shadow a full 30px breathing margin. */
-          padding: 30px;
+          /* Keep the outer gradient container flush with the section. */
+          padding: 0;
           margin-bottom: 0;
         }
         .showcase-grid {
@@ -5117,7 +5117,9 @@
           -webkit-overflow-scrolling: touch;
           overscroll-behavior-x: contain;
           margin: 0;
-          padding: 10px 48px 70px 0; /* right padding = peek amount */
+          /* Keep the card glow and hover shadow inside the track with a
+             consistent 30px inset on every side. */
+          padding: 30px;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
