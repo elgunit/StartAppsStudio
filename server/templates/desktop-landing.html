@@ -5116,7 +5116,9 @@
           scroll-snap-type: x mandatory;
           -webkit-overflow-scrolling: touch;
           overscroll-behavior-x: contain;
-          margin: 0;
+          /* Move the scroll viewport inward so its clipped edge is not
+             also the section edge where the card glow is meant to dissolve. */
+          margin: 30px;
           /* Keep the card glow and hover shadow inside the track with a
              consistent 30px inset on every side. */
           padding: 30px;
