@@ -5096,7 +5096,7 @@
         .showcase-card { cursor: default; }
       }
 
-      /* Desktop: three cards fill the row, fourth peeks right so users
+      /* Desktop: two cards fill the row, third peeks right so users
          know there's more to scroll. Dots sit below the track. */
       @media (min-width: 769px) {
         .showcase-carousel-wrap {
@@ -5109,7 +5109,7 @@
         .showcase-grid {
           display: flex;
           flex-direction: row;
-          /* 3 cards visible + 48px peek of card 4, 20px gaps */
+          /* 2 cards visible + 48px peek of card 3, 20px gap */
           gap: 20px;
           overflow-x: auto;
           overflow-y: visible;
@@ -5121,9 +5121,9 @@
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
-        /* Each card = (full width − 2 gaps − peek) / 3 */
+        /* Each card = (full width − gap − peek) / 2 */
         .showcase-card {
-          flex: 0 0 calc((100% - 40px - 48px) / 3);
+          flex: 0 0 calc((100% - 20px - 48px) / 2);
           min-width: 260px;
           scroll-snap-align: start;
           scroll-snap-stop: always;
