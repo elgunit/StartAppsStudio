@@ -6061,15 +6061,16 @@
          painted by .showcase-carousel-wrap::before so the scroll viewport
          cannot chop it into a hard edge. */
       @media (min-width: 769px) {
+        #caseStudiesContainer.showcase-carousel-wrap {
+          overflow: visible !important;
+        }
         .showcase-card {
-          box-shadow:
-            inset 0 1px 0 var(--specular),
-            0 12px 24px -18px color-mix(in srgb, var(--dominant) 18%, transparent) !important;
+          /* Do not paint a wide shadow from inside the scrollport. The
+             non-scrolling shell owns the ambient fade below. */
+          box-shadow: inset 0 1px 0 var(--specular) !important;
         }
         .showcase-card:hover {
-          box-shadow:
-            inset 0 1px 0 var(--specular-teal),
-            0 16px 30px -18px color-mix(in srgb, var(--dominant) 18%, rgba(0,0,0,0.10)) !important;
+          box-shadow: inset 0 1px 0 var(--specular-teal) !important;
         }
       }
 
