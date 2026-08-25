@@ -5103,9 +5103,30 @@
           position: relative;
           overflow: visible; /* let the liquid-glass card glow dissolve naturally */
           width: 100%;
+          isolation: isolate;
           /* Keep the outer gradient container flush with the section. */
           padding: 0;
           margin: 0;
+        }
+        /* Ambient glow belongs to the non-scrolling shell, not the clipped
+           horizontal scroll layer. The radial falloff dissolves the teal
+           backdrop on the left, right, and bottom edges. */
+        .showcase-carousel-wrap::before {
+          content: '';
+          position: absolute;
+          z-index: 0;
+          pointer-events: none;
+          inset: 24px 0 18px;
+          border-radius: 48px;
+          background:
+            radial-gradient(
+              ellipse 78% 68% at 50% 42%,
+              color-mix(in srgb, var(--dominant) 24%, transparent) 0%,
+              color-mix(in srgb, var(--dominant) 12%, transparent) 46%,
+              transparent 78%
+            );
+          filter: blur(20px);
+          opacity: 0.9;
         }
         .showcase-grid {
           display: flex;
@@ -5123,6 +5144,8 @@
              with a consistent 30px inset, then leave a 40px fade runway
              before the pagination dots. */
           padding: 30px 30px 40px;
+          position: relative;
+          z-index: 1;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
@@ -6033,6 +6056,22 @@
         transition: opacity 0.4s ease;
       }
       .showcase-card:hover .showcase-visual::after { opacity: 1; }
+
+      /* Desktop cards use a contained lift; the wide ambient teal glow is
+         painted by .showcase-carousel-wrap::before so the scroll viewport
+         cannot chop it into a hard edge. */
+      @media (min-width: 769px) {
+        .showcase-card {
+          box-shadow:
+            inset 0 1px 0 var(--specular),
+            0 12px 24px -18px color-mix(in srgb, var(--dominant) 18%, transparent) !important;
+        }
+        .showcase-card:hover {
+          box-shadow:
+            inset 0 1px 0 var(--specular-teal),
+            0 16px 30px -18px color-mix(in srgb, var(--dominant) 18%, rgba(0,0,0,0.10)) !important;
+        }
+      }
 
       /* --- Contact form: glass depth ----------------------------------- */
       .contact-form {
