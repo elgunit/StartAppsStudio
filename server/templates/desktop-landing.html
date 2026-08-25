@@ -5102,9 +5102,10 @@
         .showcase-carousel-wrap {
           position: relative;
           overflow: visible; /* let the liquid-glass card glow dissolve naturally */
+          width: 100%;
           /* Keep the outer gradient container flush with the section. */
           padding: 0;
-          margin-bottom: 0;
+          margin: 0;
         }
         .showcase-grid {
           display: flex;
@@ -5116,12 +5117,12 @@
           scroll-snap-type: x mandatory;
           -webkit-overflow-scrolling: touch;
           overscroll-behavior-x: contain;
-          /* Move the scroll viewport inward so its clipped edge is not
-             also the section edge where the card glow is meant to dissolve. */
-          margin: 30px;
-          /* Keep the card glow and hover shadow inside the track with a
-             consistent 30px inset on every side. */
-          padding: 30px;
+          width: 100%;
+          margin: 0;
+          /* Keep the card glow and hover shadow inside the full-width track
+             with a consistent 30px inset, then leave a 40px fade runway
+             before the pagination dots. */
+          padding: 30px 30px 40px;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
@@ -5137,7 +5138,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 10px;
+          margin-top: 40px;
           margin-bottom: 4px;
           pointer-events: none;
           position: static; /* override any inherited absolute */
