@@ -5101,7 +5101,8 @@
       @media (min-width: 769px) {
         .showcase-carousel-wrap {
           position: relative;
-          overflow: hidden; /* clips the scrollbar without clipping shadows above */
+          overflow: visible; /* let the liquid-glass card glow dissolve naturally */
+          padding-inline: 24px;
           /* Extend padding so the right-peek card's shadow is not cut */
           padding-bottom: 8px;
           margin-bottom: 0;
