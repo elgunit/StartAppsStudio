@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#061921"/><stop offset=".55" stop-color="#103C43"/><stop offset="1" stop-color="#071D27"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1A646C"/><stop offset="1" stop-color="#0A252C"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1050" cy="90" r="250" fill="#1D5960" opacity=".3"/><path d="M0 540c180-100 290-50 470-126 170-72 280-80 730 44v172H0z" fill="#06161D" opacity=".7"/>
+  <rect x="62" y="68" width="650" height="360" rx="24" fill="#0A2931" stroke="#5DA5A3" stroke-width="2" transform="rotate(4 62 68)"/>
+  <path d="M154 116v294M154 116h490" stroke="#5DA5A3" stroke-opacity=".35" transform="rotate(4 62 68)"/>
+  <g fill="#153F47" stroke="#4E8587"><circle cx="106" cy="157" r="22"/><circle cx="106" cy="221" r="22"/><circle cx="106" cy="285" r="22"/><circle cx="106" cy="349" r="22"/></g>
+  <g fill="#65CFC2"><circle cx="106" cy="157" r="9"/><circle cx="106" cy="221" r="9"/><circle cx="106" cy="285" r="9"/><circle cx="106" cy="349" r="9"/></g>
+  <path d="M190 167h405M190 223h430M190 279h390M190 335h450" stroke="#719A99" stroke-opacity=".7" stroke-width="9" stroke-linecap="round"/>
+  <path d="M610 168h35M630 224h30M590 280h45M650 336h25" stroke="#F1B467" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(680 120) rotate(-8 210 124)">
+    <rect width="420" height="248" rx="24" fill="url(#card)" stroke="#E8B56D" stroke-width="3"/>
+    <path d="M0 180c120-115 190-80 420-160v228H0z" fill="#092B35" opacity=".5"/>
+    <path d="M70 142c55-56 102 20 158-28 55-46 92 12 144-41" stroke="#7DE1D2" stroke-width="5" opacity=".85"/>
+    <path d="M70 151c55-56 102 20 158-28 55-46 92 12 144-41" stroke="#F2B96F" stroke-width="2" opacity=".85"/>
+    <rect x="40" y="46" width="50" height="38" rx="9" fill="#D8D9C8"/><path d="M48 56h34M48 67h34M62 46v38" stroke="#8C978C" stroke-width="2"/>
+    <rect x="315" y="175" width="63" height="30" rx="15" fill="#173F46" stroke="#7FA8A3"/>
+  </g>
+  <g stroke-linecap="round" stroke-width="4"><path d="M340 510c145-88 220-14 345-81 100-53 183-42 302 28" stroke="#5DDED0"/><path d="M340 510c145-88 220-14 345-81 100-53 183-42 302 28" stroke="#F28B78" stroke-dasharray="2 34"/></g>
+  <g fill="#0B2830" stroke="#73D6CC" stroke-width="3"><rect x="264" y="474" width="76" height="76" rx="18"/><rect x="664" y="391" width="76" height="76" rx="18"/><rect x="957" y="430" width="76" height="76" rx="18"/><rect x="1060" y="474" width="76" height="76" rx="18"/></g>
+  <g fill="#F2B96F"><circle cx="302" cy="512" r="12"/><circle cx="702" cy="429" r="12"/></g><g fill="#F28B78"><circle cx="995" cy="468" r="12"/><circle cx="1098" cy="512" r="12"/></g>
+  <rect x="790" y="424" width="270" height="128" rx="18" fill="#0A2931" stroke="#4E8587"/><path d="M820 514c40-12 41-65 82-38 36 25 51-38 87-14 33 22 45-20 67-34" stroke="#73D6CC" stroke-width="4"/>
+</svg>
