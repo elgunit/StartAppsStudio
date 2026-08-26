@@ -12,3 +12,4 @@
 - [Canvas iframe stale previews](canvas-iframe-stale-previews.md) — a canvas iframe can retain a prior 404 after its mockup route is fixed; force a new URL before re-presenting.
 - [Shared studio landing direction](shared-studio-landing-direction.md) — keep the full-page concept adaptable between Start Apps Studio and startupstudio.business until branding is chosen.
 - [Carousel ambient glow layering](carousel-ambient-glow-layering.md) — horizontal scrollports clip child shadows; paint broad edge-fading glow on a non-scrolling parent layer instead.
+- [Journal date policy](journal-date-policy.md) — hide reader-facing publication dates to keep the journal timeless; retain structured-data dates for SEO and sorting.
