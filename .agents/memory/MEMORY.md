@@ -13,3 +13,4 @@
 - [Shared studio landing direction](shared-studio-landing-direction.md) — keep the full-page concept adaptable between Start Apps Studio and startupstudio.business until branding is chosen.
 - [Carousel ambient glow layering](carousel-ambient-glow-layering.md) — horizontal scrollports clip child shadows; paint broad edge-fading glow on a non-scrolling parent layer instead.
 - [Journal date policy](journal-date-policy.md) — hide reader-facing publication dates to keep the journal timeless; retain structured-data dates for SEO and sorting.
+- [Project mockup content policy](project-mockup-content-policy.md) — showcase SVGs should depict believable product interfaces without embedded brand names or logos.
