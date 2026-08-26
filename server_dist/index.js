@@ -1381,8 +1381,8 @@ var init_posts = __esm({
         description: "A 12-point GEO checklist covering answer-first writing, Q&A structure, schema, entity signals, social proof, fresh content and E-E-A-T, so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.",
         seoDescription: "A 12-point GEO checklist so ChatGPT and AI Overviews surface your brand: answer-first writing, schema, entity signals, social proof, and E-E-A-T.",
         excerpt: "If ChatGPT never names your product when someone asks for a recommendation, your site is failing 12 specific tests. Here's the checklist we run on every MVP we ship.",
-        publishedAt: "2026-04-16",
-        updatedAt: "2026-04-17",
+        publishedAt: "2026-07-24",
+        updatedAt: "2026-07-25",
         readMinutes: 7,
         category: "Playbook",
         tags: ["GEO", "LLM SEO", "Brand", "MVP"],
@@ -1570,8 +1570,8 @@ var init_posts = __esm({
         description: "Lovable, Bolt and v0 ship empty divs to crawlers. This is how to fix it: a Cloudflare Worker SSR proxy pattern, or a full migration to Claude Code + Supabase + Vercel when you need to rank.",
         seoDescription: "Lovable, Bolt, and v0 ship empty divs to crawlers. Fix it with a Cloudflare Worker SSR proxy for a quick win, or migrate to a real stack when ranking matters.",
         excerpt: "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it: a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
-        publishedAt: "2026-04-16",
-        updatedAt: "2026-04-17",
+        publishedAt: "2026-06-06",
+        updatedAt: "2026-06-07",
         readMinutes: 9,
         category: "Field Notes",
         tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"],
@@ -1719,8 +1719,8 @@ var init_posts = __esm({
         description: "74.5% of programmers are AI-exposed, observed usage trails theoretical capability, and HubSpot's 2026 marketing report is about lead generation, not content. What that means if you're building an MVP in 2026.",
         seoDescription: "74.5% of programmers are AI-exposed yet real usage lags capability. What the 2026 AI data means for founders building and marketing MVPs right now.",
         excerpt: "The gap between what AI can do and what workers actually use it for is now the biggest arbitrage of the decade. Here's how to read the 2026 data as a founder.",
-        publishedAt: "2026-04-16",
-        updatedAt: "2026-04-17",
+        publishedAt: "2026-02-22",
+        updatedAt: "2026-02-23",
         readMinutes: 8,
         category: "Research",
         tags: ["AI at work", "State of marketing 2026", "Founders", "Research"],
@@ -1869,7 +1869,7 @@ var init_posts = __esm({
         description: "Why backlinks remain the single biggest off-page signal for both Google and AI answer engines, what a healthy MVP backlink profile actually looks like, and the four-step outreach loop we run for every Start Apps Studio launch.",
         seoDescription: "Backlinks remain the top off-page signal for Google and AI answer engines. Learn what a healthy MVP backlink profile looks like and our four-step outreach loop.",
         excerpt: "Schema and answer-first writing get you eligible to be cited. Backlinks are what tip a brand-new MVP from eligible to actually recommended.",
-        publishedAt: "2026-04-22",
+        publishedAt: "2026-05-26",
         readMinutes: 6,
         category: "Playbook",
         tags: ["SEO", "Backlinks", "Off-page", "MVP"],
@@ -1987,7 +1987,7 @@ var init_posts = __esm({
         description: "A field guide for founders on the shift from static dashboards to generative interfaces, the four stages every AI-native product moves through, and the three things you must do today so AI agents can actually use your product.",
         seoDescription: "A field guide on generative UI and AI-native products: the four stages every product moves through and three steps to make your product agent-ready today.",
         excerpt: "Replacing your dashboard with a chat bar is a downgrade. The real shift is to interfaces that get generated on the fly for the task at hand, and to backends that an agent can drive without ever touching your UI.",
-        publishedAt: "2026-04-24",
+        publishedAt: "2026-03-09",
         readMinutes: 7,
         category: "Essay",
         tags: ["AI-native", "Generative UI", "Design", "API"],
@@ -2131,7 +2131,7 @@ var init_posts = __esm({
         description: "When AI generates your interface, the quality of the output is bounded by the quality of your design system. A tour of why APIs become the new product surface, why a strong system is now a force multiplier, why every product has two users, and why design as judgment is more valuable than ever.",
         seoDescription: "When AI generates your UI, your design system sets the quality ceiling. See why APIs become the product surface and why design judgment matters more.",
         excerpt: "If AI is going to generate your screens, the ceiling on what it can produce is your design system. A weak system means weak output, every time. Here is what changes.",
-        publishedAt: "2026-04-23",
+        publishedAt: "2026-01-13",
         readMinutes: 6,
         category: "Essay",
         tags: ["Design Systems", "AI-native", "API", "Design"],
@@ -2237,6 +2237,120 @@ var init_posts = __esm({
               {
                 q: "Is design as a career going away?",
                 a: "The opposite. The pixel-pushing portion shrinks, but judgment, taste, systems thinking, and user empathy become the highest-leverage skills in the building of software. Designers who own the system the model assembles from will be more valuable, not less."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        slug: "the-mvp-brief-is-your-first-product-decision",
+        title: "The MVP brief is your first product decision",
+        seoTitle: "MVP Briefs: Your First Product Decision | Start Apps Studio",
+        description: "A useful MVP brief does more than describe an idea. It names the user, draws a hard line around version one, and defines the evidence that tells you whether to keep building.",
+        seoDescription: "Your MVP brief is a product decision, not paperwork. Learn the three things a useful brief must define before design or code starts.",
+        excerpt: "The best MVP briefs are not long. They decide who the product is for, what version one refuses to do, and what evidence earns the next week of work.",
+        publishedAt: "2026-08-12",
+        readMinutes: 6,
+        category: "Field Notes",
+        tags: ["MVP", "Product strategy", "Founders", "Scope"],
+        body: [
+          {
+            type: "answer",
+            text: "A useful MVP brief makes three decisions before design starts: who the product is for, what version one will deliberately leave out, and what user evidence will justify the next investment. That is why the brief is not paperwork. It is the first product decision."
+          },
+          {
+            type: "p",
+            text: "Founders often arrive with a brief that is really a description of the idea: a few paragraphs about the market, a feature list, and a sentence about where the product could go someday. It is enough to start a conversation, but not enough to ship against. A build team needs a smaller, sharper document that turns ambition into a sequence of testable choices."
+          },
+          {
+            type: "h2",
+            text: "A useful brief does three jobs",
+            id: "three-jobs"
+          },
+          {
+            type: "h3",
+            text: "1. It names the person who has the problem",
+            id: "name-the-user"
+          },
+          {
+            type: "p",
+            text: "\u201CSmall businesses\u201D is a market. It is not a first user. A good brief names the person, the moment they are in, and the workaround they use today. A clinic manager trying to fill tomorrow's cancellations has a different problem from a patient looking for a new appointment, even if both belong to healthcare. The more specific the first user is, the easier it becomes to decide what the product should do next."
+          },
+          {
+            type: "h3",
+            text: "2. It draws a line around version one",
+            id: "draw-the-line"
+          },
+          {
+            type: "p",
+            text: "A feature list tells you what has been imagined. A scope line tells you what will be built. Write the core loop in one sentence, then list the work that makes that loop reliable: the main screen, the one meaningful action, the data behind it, and the feedback that tells the user it worked. Everything else is a candidate for later, not a silent requirement for launch."
+          },
+          {
+            type: "h3",
+            text: "3. It defines the proof that comes next",
+            id: "define-the-proof"
+          },
+          {
+            type: "p",
+            text: "\u201CLaunch and see what happens\u201D is not a learning plan. Decide what you expect to observe in the first few weeks: a completed workflow, a repeat action, a paid conversion, or a founder-led interview with a specific type of user. The measure does not need to be sophisticated. It needs to be close enough to the user's behaviour that it can change the next product decision."
+          },
+          {
+            type: "h2",
+            text: "What to write down before a screen",
+            id: "before-a-screen"
+          },
+          {
+            type: "ul",
+            items: [
+              "The first user: one role, one situation, and one painful workaround",
+              "The core loop: the smallest action that creates value and can happen repeatedly",
+              "The launch boundary: what is explicitly out of scope for version one",
+              "The trust requirement: what the user must see, control, or understand before they act",
+              "The next proof point: the behaviour or conversation that earns another round of build work"
+            ]
+          },
+          {
+            type: "h2",
+            text: "The scope test we use",
+            id: "scope-test"
+          },
+          {
+            type: "p",
+            text: "Take every proposed feature and ask one question: does this make the core loop more likely to succeed for the first user? If the answer is no, move it out of the first release. If the answer is maybe, write down the assumption it is protecting and find a cheaper way to test that assumption. This keeps a useful feature from becoming a permanent excuse to delay the product."
+          },
+          {
+            type: "quote",
+            text: "The goal of a brief is not to capture everything you might build. It is to make the next build decision obvious.",
+            cite: "a rule we use in product kickoffs"
+          },
+          {
+            type: "callout",
+            title: "How we use this at Start Apps Studio",
+            text: "Before we quote a build, we turn the founder's idea into a one-page scope: one user, one core loop, the screens and infrastructure that support it, and the evidence that should change the next decision. The document becomes the handoff between strategy, design, engineering, and launch\u2014and the reference point when a new feature asks to sneak into version one."
+          },
+          {
+            type: "h2",
+            text: "Frequently asked questions",
+            id: "faq"
+          },
+          {
+            type: "faq",
+            items: [
+              {
+                q: "How long should an MVP brief be?",
+                a: "Short enough to read in one sitting and specific enough to make trade-offs. One to two pages is usually plenty when it names the first user, core loop, launch boundary, trust requirements, and next proof point."
+              },
+              {
+                q: "Should the brief include a full feature list?",
+                a: "Include the features that make the core loop work, then keep the rest in a later-ideas section. A separate parking lot protects good ideas without letting them quietly become launch requirements."
+              },
+              {
+                q: "What if the target user is still uncertain?",
+                a: "Write down the two strongest candidates and the evidence that would distinguish them. Uncertainty is useful when it is explicit; it becomes expensive when it is hidden inside a broad product scope."
+              },
+              {
+                q: "Does the brief need to be finished before design starts?",
+                a: "It should be clear enough to guide the first design pass, not frozen forever. Design is allowed to expose a better question, but every change should update the scope and the proof you are trying to collect."
               }
             ]
           }
@@ -2481,19 +2595,6 @@ function renderArticleJsonLd(post, canonical, origin) {
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
-function formatDate(iso) {
-  try {
-    const d = /* @__PURE__ */ new Date(iso + "T00:00:00Z");
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      timeZone: "UTC"
-    });
-  } catch {
-    return iso;
-  }
-}
 function shell({
   title,
   description,
@@ -2566,7 +2667,7 @@ function renderArticleHtml(post, origin) {
     const cat = p.category || "Journal";
     return `
       <a href="/journal/${esc(p.slug)}" class="next-card">
-        <div class="next-card-meta">${esc(cat)} \xB7 ${esc(formatDate(p.publishedAt))}</div>
+        <div class="next-card-meta">${esc(cat)}</div>
         <h3 class="next-card-title">${esc(p.title)}</h3>
         <p class="next-card-excerpt">${esc(p.excerpt)}</p>
         <span class="next-card-cta">Read note &rarr;</span>
@@ -2586,8 +2687,6 @@ function renderArticleHtml(post, origin) {
     <article>
       <div class="article-kicker">
         <span class="kicker-cat">${esc(category)}</span>
-        <span class="kicker-sep">\xB7</span>
-        <time class="kicker-meta" datetime="${esc(post.publishedAt)}">${esc(formatDate(post.publishedAt))}</time>
         <span class="kicker-sep">\xB7</span>
         <span class="kicker-meta">${post.readMinutes} min read</span>
       </div>
@@ -2656,8 +2755,6 @@ function renderIndexHtml(origin) {
         <h2>${esc(p.title)}</h2>
         <p>${esc(p.excerpt)}</p>
         <div class="post-card-meta">
-          <time datetime="${esc(p.publishedAt)}">${esc(formatDate(p.publishedAt))}</time>
-          <span class="dot"></span>
           <span>${p.readMinutes} min read</span>
         </div>
       </div>

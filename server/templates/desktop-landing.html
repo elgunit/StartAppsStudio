@@ -4915,11 +4915,9 @@
         margin-top: auto;
       }
 
-      /* Carousel UI (dots, edge fades) exists in the DOM for both carousels
-         but is a mobile-only affordance. Hide by default; the mobile media
-         query below re-enables it. */
-      .carousel-ui,
-      .showcase-edge-fade {
+      /* Carousel UI exists in the DOM for both carousels but is a mobile-only
+         affordance. Hide by default; the mobile media query below re-enables it. */
+      .carousel-ui {
         display: none;
       }
 
@@ -5008,53 +5006,6 @@
           border-style: solid !important;
           font-size: 14px !important;
           display: flex !important;
-        }
-
-        /* ── Carousel edge fades (mobile only) ──────────────────────────
-           Soft vignette: uses rgba black/white with low opacity so it
-           reads correctly on any background colour in light or dark mode,
-           never creating a hard coloured wall at the card edges. */
-        .showcase-edge-fade {
-          display: block;
-          position: absolute;
-          top: 0;
-          bottom: 70px; /* match the 70px bottom padding of .showcase-grid */
-          width: 40px;
-          pointer-events: none;
-          z-index: 2;
-          /* Dissolve the vignette toward its bottom so it never terminates
-             on a hard horizontal edge above the pagination dots. */
-          -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-          mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
-        }
-        .showcase-edge-fade-left {
-          left: 0;
-          background: linear-gradient(to right,
-            rgba(0,0,0,.18) 0%,
-            rgba(0,0,0,.06) 50%,
-            transparent 100%);
-        }
-        .showcase-edge-fade-right {
-          right: 0;
-          background: linear-gradient(to left,
-            rgba(0,0,0,.18) 0%,
-            rgba(0,0,0,.06) 50%,
-            transparent 100%);
-        }
-        /* Light mode: swap for a white-tinted vignette */
-        @media (prefers-color-scheme: light) {
-          .showcase-edge-fade-left {
-            background: linear-gradient(to right,
-              rgba(255,255,255,.30) 0%,
-              rgba(255,255,255,.08) 50%,
-              transparent 100%);
-          }
-          .showcase-edge-fade-right {
-            background: linear-gradient(to left,
-              rgba(255,255,255,.30) 0%,
-              rgba(255,255,255,.08) 50%,
-              transparent 100%);
-          }
         }
 
         /* ── Pagination dots ─────────────────────────────────────────────
@@ -6333,7 +6284,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-wellness-hero.svg" alt="Wellness coaching app hero mockup" width="1200" height="630" decoding="async" fetchpriority="high">
+                <img src="/assets/images/project-wellness-cover.jpg" alt="Wellness coaching app showcase" width="1200" height="630" decoding="async" fetchpriority="high">
               </div>
               <div class="showcase-body">
                 <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
@@ -6368,7 +6319,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-operations-hero.svg" alt="Operations dashboard hero mockup" width="1200" height="630" loading="lazy" decoding="async">
+                <img src="/assets/images/project-operations-cover.jpg" alt="Operations dashboard showcase" width="1200" height="630" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
@@ -6403,7 +6354,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-fintech-hero.svg" alt="Payments and ledger platform hero mockup" width="1200" height="630" loading="lazy" decoding="async">
+                <img src="/assets/images/project-fintech-cover.jpg" alt="Payments and ledger platform showcase" width="1200" height="630" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
@@ -6438,7 +6389,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-learning-hero.svg" alt="Course and learning platform hero mockup" width="1200" height="630" loading="lazy" decoding="async">
+                <img src="/assets/images/project-learning-cover.jpg" alt="Course and learning platform showcase" width="1200" height="630" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
@@ -6473,7 +6424,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-property-hero.svg" alt="Property discovery app hero mockup" width="1200" height="630" loading="lazy" decoding="async">
+                <img src="/assets/images/project-property-cover.jpg" alt="Property discovery app showcase" width="1200" height="630" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <div class="showcase-category">Real Estate · iOS &amp; Android</div>
@@ -6507,7 +6458,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-pitch-hero.svg" alt="Investor-ready web prototype hero mockup" width="1200" height="630" loading="lazy" decoding="async">
+                <img src="/assets/images/project-pitch-cover.jpg" alt="Investor-ready web prototype showcase" width="1200" height="630" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <div class="showcase-category">Pitch Prototype · Web</div>
@@ -6530,9 +6481,6 @@
             </div>
 
           </div><!-- /.showcase-grid -->
-          <!-- Edge fades: visible only on mobile, pointer-events:none -->
-          <div class="showcase-edge-fade showcase-edge-fade-left" aria-hidden="true"></div>
-          <div class="showcase-edge-fade showcase-edge-fade-right" aria-hidden="true"></div>
           <!-- Pagination dots: shown on all viewports -->
           <div class="carousel-ui" id="carouselUiPrimary">
             <div class="carousel-dots" id="carouselDotsPrimary"><!-- dots generated by JS, one per visible card --></div>
