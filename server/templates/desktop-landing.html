@@ -5157,12 +5157,14 @@
           scroll-snap-align: start;
           scroll-snap-stop: always;
         }
-        /* Desktop dots: normal flow row beneath the grid (not absolute) */
+        /* Desktop dots: normal flow row beneath the grid. The grid's 60px
+           bottom runway provides the visual separation, so a second 40px
+           margin would detach pagination from the cards. */
         .carousel-ui {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: 40px;
+          margin-top: 0;
           margin-bottom: 4px;
           pointer-events: none;
           position: static; /* override any inherited absolute */
@@ -8642,9 +8644,10 @@
         var dotsContainer = document.getElementById('carouselDotsPrimary');
         if (!primaryGrid || !dotsContainer) return;
 
-        // How many cards fit across the desktop track at once.
-        // Must match the CSS: flex: 0 0 calc((100% - 40px - 48px) / 3)
-        var DESKTOP_VISIBLE = 3;
+        // Desktop shows two full cards plus a peek of the next card.
+        // Pagination therefore advances through the card that leads each
+        // reachable two-card view, rather than counting the peek as full.
+        var DESKTOP_FULL_CARDS = 2;
 
         function visibleCards() {
           return Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
@@ -8661,15 +8664,16 @@
           var isDesktop = window.matchMedia('(min-width: 769px)').matches;
 
           if (isDesktop) {
-            // Each dot represents one reachable snap position: the card whose
-            // left edge aligns with the track's left edge when snapped there.
-            // We find the snap position closest to the current scrollLeft.
+            // Each dot represents one reachable snap position. The 30px
+            // scroll-padding-left keeps the first card inset, so compare
+            // against the actual snap scroll position rather than offsetLeft.
             var cards = visibleCards();
             var bestIdx = 0;
             var bestDist = Infinity;
-            var snapCount = Math.max(1, cards.length - DESKTOP_VISIBLE + 1);
+            var snapCount = Math.max(1, cards.length - DESKTOP_FULL_CARDS + 1);
+            var snapPaddingLeft = parseFloat(getComputedStyle(primaryGrid).scrollPaddingLeft) || 0;
             for (var i = 0; i < snapCount; i++) {
-              var snapX = cards[i] ? cards[i].offsetLeft : 0;
+              var snapX = cards[i] ? Math.max(0, cards[i].offsetLeft - snapPaddingLeft) : 0;
               var dist = Math.abs(primaryGrid.scrollLeft - snapX);
               if (dist < bestDist) { bestDist = dist; bestIdx = i; }
             }
@@ -8699,7 +8703,7 @@
           var cards = visibleCards();
           var isDesktop = window.matchMedia('(min-width: 769px)').matches;
           var dotCount = isDesktop
-            ? Math.max(1, cards.length - DESKTOP_VISIBLE + 1)
+            ? Math.max(1, cards.length - DESKTOP_FULL_CARDS + 1)
             : cards.length;
           dotsContainer.innerHTML = '';
           for (var i = 0; i < dotCount; i++) {
