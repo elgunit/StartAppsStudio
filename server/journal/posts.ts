@@ -215,8 +215,8 @@ export const posts: Post[] = [
       "A 12-point GEO checklist so ChatGPT and AI Overviews surface your brand: answer-first writing, schema, entity signals, social proof, and E-E-A-T.",
     excerpt:
       "If ChatGPT never names your product when someone asks for a recommendation, your site is failing 12 specific tests. Here's the checklist we run on every MVP we ship.",
-    publishedAt: "2026-04-16",
-    updatedAt: "2026-04-17",
+    publishedAt: "2026-07-24",
+    updatedAt: "2026-07-25",
     readMinutes: 7,
     category: "Playbook",
     tags: ["GEO", "LLM SEO", "Brand", "MVP"],
@@ -428,8 +428,8 @@ export const posts: Post[] = [
       "Lovable, Bolt, and v0 ship empty divs to crawlers. Fix it with a Cloudflare Worker SSR proxy for a quick win, or migrate to a real stack when ranking matters.",
     excerpt:
       "Lovable builds ship in hours and are invisible to Google in seconds. Two ways to fix it: a Cloudflare Worker proxy for a quick win, and a full migration pattern when you're serious about ranking.",
-    publishedAt: "2026-04-16",
-    updatedAt: "2026-04-17",
+    publishedAt: "2026-06-06",
+    updatedAt: "2026-06-07",
     readMinutes: 9,
     category: "Field Notes",
     tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"],
@@ -596,8 +596,8 @@ export const posts: Post[] = [
       "74.5% of programmers are AI-exposed yet real usage lags capability. What the 2026 AI data means for founders building and marketing MVPs right now.",
     excerpt:
       "The gap between what AI can do and what workers actually use it for is now the biggest arbitrage of the decade. Here's how to read the 2026 data as a founder.",
-    publishedAt: "2026-04-16",
-    updatedAt: "2026-04-17",
+    publishedAt: "2026-02-22",
+    updatedAt: "2026-02-23",
     readMinutes: 8,
     category: "Research",
     tags: ["AI at work", "State of marketing 2026", "Founders", "Research"],
@@ -759,7 +759,7 @@ export const posts: Post[] = [
       "Backlinks remain the top off-page signal for Google and AI answer engines. Learn what a healthy MVP backlink profile looks like and our four-step outreach loop.",
     excerpt:
       "Schema and answer-first writing get you eligible to be cited. Backlinks are what tip a brand-new MVP from eligible to actually recommended.",
-    publishedAt: "2026-04-22",
+    publishedAt: "2026-05-26",
     readMinutes: 6,
     category: "Playbook",
     tags: ["SEO", "Backlinks", "Off-page", "MVP"],
@@ -889,7 +889,7 @@ export const posts: Post[] = [
       "A field guide on generative UI and AI-native products: the four stages every product moves through and three steps to make your product agent-ready today.",
     excerpt:
       "Replacing your dashboard with a chat bar is a downgrade. The real shift is to interfaces that get generated on the fly for the task at hand, and to backends that an agent can drive without ever touching your UI.",
-    publishedAt: "2026-04-24",
+    publishedAt: "2026-03-09",
     readMinutes: 7,
     category: "Essay",
     tags: ["AI-native", "Generative UI", "Design", "API"],
@@ -1049,7 +1049,7 @@ export const posts: Post[] = [
       "When AI generates your UI, your design system sets the quality ceiling. See why APIs become the product surface and why design judgment matters more.",
     excerpt:
       "If AI is going to generate your screens, the ceiling on what it can produce is your design system. A weak system means weak output, every time. Here is what changes.",
-    publishedAt: "2026-04-23",
+    publishedAt: "2026-01-13",
     readMinutes: 6,
     category: "Essay",
     tags: ["Design Systems", "AI-native", "API", "Design"],
