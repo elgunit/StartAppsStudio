@@ -1960,7 +1960,7 @@
     "context": "span.form-section-title"
   },
   {
-    "key": "What are you building, who is it for, and when do you need it live?",
+    "key": "What are you looking to build?",
     "kind": "unit",
     "context": "label.floating-label"
   },
@@ -1970,32 +1970,32 @@
     "context": "span"
   },
   {
-    "key": "You're in good hands.",
+    "key": "Project brief received",
+    "kind": "unit",
+    "context": "span.form-success-kicker"
+  },
+  {
+    "key": "Your project brief is in.",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "I read every submission personally. Here is what happens next so you are not left guessing.",
+    "key": "I’ll review the scope, priorities, and timeline myself, then send you a clear next step within one business day.",
     "kind": "unit",
     "context": "p.form-success-sub"
   },
   {
-    "key": "<span class=\"form-success-step-num\">1</span> <span>I review your brief within a few hours and map out what a realistic build looks like for your timeline and budget.</span>",
+    "key": "What happens next",
     "kind": "unit",
-    "context": "div.form-success-step"
+    "context": "span.form-success-next-label"
   },
   {
-    "key": "<span class=\"form-success-step-num\">2</span> <span>You will hear back within 24 hours with a direct reply, not a bot or a sales rep.</span>",
+    "key": "You’ll receive a considered reply, not a generic sales sequence.",
     "kind": "unit",
-    "context": "div.form-success-step"
+    "context": "p"
   },
   {
-    "key": "<span class=\"form-success-step-num\">3</span> <span>If it is a fit, we book a short call and I walk you through exactly how I would approach your project.</span>",
-    "kind": "unit",
-    "context": "div.form-success-step"
-  },
-  {
-    "key": "Confirmation sent to",
+    "key": "We’ll reply to",
     "kind": "text",
     "context": "span.form-success-email"
   },
@@ -2120,7 +2120,7 @@
     "context": "a.journal-notes-link"
   },
   {
-    "key": "Apr 17 · 6 min",
+    "key": "6 min",
     "kind": "unit",
     "context": "span.journal-note-meta"
   },
@@ -2140,7 +2140,7 @@
     "context": "span.journal-note-cta"
   },
   {
-    "key": "Apr 16 · 7 min",
+    "key": "7 min",
     "kind": "unit",
     "context": "span.journal-note-meta"
   },
@@ -2155,7 +2155,7 @@
     "context": "p.journal-note-excerpt"
   },
   {
-    "key": "Apr · Field note",
+    "key": "Field note",
     "kind": "unit",
     "context": "span.journal-note-meta"
   },

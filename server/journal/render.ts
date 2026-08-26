@@ -163,20 +163,6 @@ function renderArticleJsonLd(post: Post, canonical: string, origin: string): str
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
 
-function formatDate(iso: string): string {
-  try {
-    const d = new Date(iso + "T00:00:00Z");
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      timeZone: "UTC",
-    });
-  } catch {
-    return iso;
-  }
-}
-
 const STYLE = `
   /* Self-hosted variable fonts (latin + latin-ext subsets) — replaces render-blocking Google Fonts */
   @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
@@ -1058,7 +1044,7 @@ export function renderArticleHtml(post: Post, origin: string): string {
       const cat = p.category || "Journal";
       return `
       <a href="/journal/${esc(p.slug)}" class="next-card">
-        <div class="next-card-meta">${esc(cat)} · ${esc(formatDate(p.publishedAt))}</div>
+        <div class="next-card-meta">${esc(cat)}</div>
         <h3 class="next-card-title">${esc(p.title)}</h3>
         <p class="next-card-excerpt">${esc(p.excerpt)}</p>
         <span class="next-card-cta">Read note &rarr;</span>
@@ -1082,8 +1068,6 @@ export function renderArticleHtml(post: Post, origin: string): string {
     <article>
       <div class="article-kicker">
         <span class="kicker-cat">${esc(category)}</span>
-        <span class="kicker-sep">·</span>
-        <time class="kicker-meta" datetime="${esc(post.publishedAt)}">${esc(formatDate(post.publishedAt))}</time>
         <span class="kicker-sep">·</span>
         <span class="kicker-meta">${post.readMinutes} min read</span>
       </div>
@@ -1158,8 +1142,6 @@ export function renderIndexHtml(origin: string): string {
         <h2>${esc(p.title)}</h2>
         <p>${esc(p.excerpt)}</p>
         <div class="post-card-meta">
-          <time datetime="${esc(p.publishedAt)}">${esc(formatDate(p.publishedAt))}</time>
-          <span class="dot"></span>
           <span>${p.readMinutes} min read</span>
         </div>
       </div>

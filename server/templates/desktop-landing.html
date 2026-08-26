@@ -3070,26 +3070,48 @@
         to   { stroke-dashoffset: 0; }
       }
 
+      .contact-inner.contact-complete {
+        display: block;
+        max-width: 860px;
+      }
+      .contact-inner.contact-complete .contact-right {
+        width: 100%;
+        max-width: 100%;
+      }
       .form-success {
         width: 100%;
         box-sizing: border-box;
-        padding: clamp(40px, 6vw, 64px) clamp(20px, 5vw, 48px) clamp(36px, 5vw, 56px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0;
+        position: relative;
+        overflow: hidden;
+        padding: clamp(40px, 6vw, 68px);
+        background: color-mix(in srgb, var(--surface) 86%, var(--dominant) 14%);
+        border: 1px solid color-mix(in srgb, var(--dominant) 32%, var(--line));
+        border-radius: var(--r-md);
+        box-shadow: 0 22px 60px color-mix(in srgb, var(--dominant) 14%, transparent);
+        text-align: left;
+        scroll-margin-top: 112px;
       }
-
-      /* Icon ring */
-      .form-success-icon {
-        width: 68px; height: 68px;
+      .form-success::before {
+        content: '';
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        top: -230px;
+        right: -120px;
         border-radius: 50%;
-        background: color-mix(in srgb, var(--dominant) 10%, transparent);
-        border: 2px solid color-mix(in srgb, var(--dominant) 35%, transparent);
+        background: radial-gradient(circle, color-mix(in srgb, var(--dominant) 24%, transparent), transparent 68%);
+        pointer-events: none;
+      }
+      .form-success > * { position: relative; z-index: 1; }
+
+      .form-success-icon {
+        width: 54px; height: 54px;
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--dominant) 11%, transparent);
+        border: 1px solid color-mix(in srgb, var(--dominant) 35%, transparent);
         display: flex; align-items: center; justify-content: center;
         color: var(--dominant);
-        margin-bottom: 24px;
+        margin-bottom: 20px;
         opacity: 0;
         animation:
           fs-pop  0.52s cubic-bezier(.34,1.56,.64,1) 0.05s forwards,
@@ -3100,77 +3122,77 @@
         stroke-dashoffset: 60;
         animation: fs-check 0.4s ease-out 0.38s forwards;
       }
+      .form-success-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        color: var(--dominant);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fs-rise 0.42s ease-out 0.24s forwards;
+      }
+      .form-success-kicker::before {
+        content: '';
+        width: 18px;
+        height: 2px;
+        border-radius: 2px;
+        background: currentColor;
+      }
 
-      /* Headline */
       .form-success h3 {
-        font-size: clamp(22px, 3.5vw, 30px);
+        font-size: clamp(30px, 4vw, 46px);
         font-weight: 800;
         letter-spacing: -0.025em;
-        line-height: 1.15;
+        line-height: 1.05;
         color: var(--ink);
-        margin: 0 0 10px;
-        max-width: 22ch;
+        margin: 0 0 16px;
+        max-width: 16ch;
         opacity: 0;
-        animation: fs-rise 0.42s ease-out 0.36s forwards;
+        animation: fs-rise 0.42s ease-out 0.34s forwards;
       }
 
-      /* Subheading */
       .form-success-sub {
-        font-size: clamp(13.5px, 1.6vw, 15px);
+        font-size: clamp(15px, 1.7vw, 17px);
         color: var(--muted);
         line-height: 1.65;
-        margin: 0 0 32px;
-        max-width: 38ch;
+        margin: 0;
+        max-width: 59ch;
         opacity: 0;
-        animation: fs-rise 0.42s ease-out 0.46s forwards;
+        animation: fs-rise 0.42s ease-out 0.44s forwards;
       }
 
-      /* Steps container */
-      .form-success-steps {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-        max-width: 400px;
-        text-align: left;
-        margin-bottom: 32px;
+      .form-success-next {
+        max-width: 59ch;
+        margin-top: 30px;
+        padding: 18px 0 0 18px;
+        border-top: 1px solid color-mix(in srgb, var(--dominant) 20%, var(--line));
+        border-left: 2px solid var(--dominant);
+        opacity: 0;
+        animation: fs-rise 0.42s ease-out 0.56s forwards;
       }
-
-      /* Each step row */
-      .form-success-step {
-        display: grid;
-        grid-template-columns: 28px 1fr;
-        align-items: flex-start;
-        gap: 14px;
-        padding: 14px 0;
-        border-bottom: 1px solid color-mix(in srgb, var(--dominant) 12%, transparent);
-        font-size: clamp(13px, 1.5vw, 14px);
+      .form-success-next-label {
+        display: block;
+        margin-bottom: 6px;
         color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .form-success-next p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
         line-height: 1.55;
-        opacity: 0;
-      }
-      .form-success-step:first-child { border-top: 1px solid color-mix(in srgb, var(--dominant) 12%, transparent); }
-      .form-success-step:nth-child(1) { animation: fs-rise 0.38s ease-out 0.58s forwards; }
-      .form-success-step:nth-child(2) { animation: fs-rise 0.38s ease-out 0.72s forwards; }
-      .form-success-step:nth-child(3) { animation: fs-rise 0.38s ease-out 0.86s forwards; }
-
-      .form-success-step-num {
-        flex-shrink: 0;
-        width: 26px; height: 26px;
-        border-radius: 50%;
-        background: var(--dominant);
-        color: #fff;
-        font-size: 11.5px;
-        font-weight: 700;
-        display: flex; align-items: center; justify-content: center;
-        margin-top: 1px;
       }
 
-      /* Email pill */
       .form-success-email {
         display: inline-flex;
         align-items: center;
         gap: 7px;
+        margin-top: 28px;
         font-size: 12.5px;
         font-weight: 500;
         color: var(--muted);
@@ -3183,7 +3205,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         opacity: 0;
-        animation: fs-rise 0.38s ease-out 1.0s forwards;
+        animation: fs-rise 0.38s ease-out 0.68s forwards;
       }
       .form-success-email strong {
         color: var(--dominant);
@@ -3195,9 +3217,10 @@
       /* Honour reduced-motion: skip all transitions, show content immediately */
       @media (prefers-reduced-motion: reduce) {
         .form-success-icon,
+        .form-success-kicker,
         .form-success h3,
         .form-success-sub,
-        .form-success-step,
+        .form-success-next,
         .form-success-email {
           animation: none;
           opacity: 1;
@@ -3209,13 +3232,10 @@
       /* Narrow phone: tighten vertical rhythm */
       @media (max-width: 390px) {
         .form-success {
-          padding: 32px 16px 28px;
-        }
-        .form-success-steps {
-          max-width: 100%;
+          padding: 30px 22px;
         }
         .form-success h3 {
-          max-width: 100%;
+          font-size: 30px;
         }
       }
       
@@ -3905,17 +3925,16 @@
         /* Timeline pills: smaller text + padding so they wrap predictably */
         .timeline-chip { font-size: 0.8rem; padding: 7px 12px; }
 
-        /* Success panel: reduce outer padding, let steps use full width */
-        .form-success { padding: 24px 14px; }
+        /* Keep the desktop confirmation panel balanced on narrow phones. */
+        .form-success { padding: 30px 22px; }
         .form-success-sub { font-size: 13.5px; max-width: 100%; }
-        .form-success-steps { max-width: 100%; }
-        .form-success-step { font-size: 12.5px; gap: 10px; }
+        .form-success-next { margin-top: 24px; padding-left: 14px; }
 
         /* Email confirmation badge: wrap so a long address doesn't overflow */
         .form-success-email {
           flex-wrap: wrap;
-          justify-content: center;
-          text-align: center;
+          justify-content: flex-start;
+          text-align: left;
           padding: 8px 12px;
           font-size: 12px;
           gap: 4px;
@@ -7821,7 +7840,7 @@
             <span class="form-section-title">Your project</span>
             <div class="form-group">
               <textarea id="message" name="message" required placeholder=" "></textarea>
-              <label for="message" class="floating-label">What are you building, who is it for, and when do you need it live?</label>
+              <label for="message" class="floating-label">What are you looking to build?</label>
             </div>
           </div>
 
@@ -7831,31 +7850,22 @@
           </button>
         </form>
         
-        <div class="form-success" id="formSuccess" style="display: none;">
+        <div class="form-success" id="formSuccess" style="display: none;" role="status" aria-live="polite" tabindex="-1">
           <div class="form-success-icon">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
               <path class="check-path" d="M20 6L9 17l-5-5"/>
             </svg>
           </div>
-          <h3>You're in good hands.</h3>
-          <p class="form-success-sub">I read every submission personally. Here is what happens next so you are not left guessing.</p>
-          <div class="form-success-steps">
-            <div class="form-success-step">
-              <span class="form-success-step-num">1</span>
-              <span>I review your brief within a few hours and map out what a realistic build looks like for your timeline and budget.</span>
-            </div>
-            <div class="form-success-step">
-              <span class="form-success-step-num">2</span>
-              <span>You will hear back within 24 hours with a direct reply, not a bot or a sales rep.</span>
-            </div>
-            <div class="form-success-step">
-              <span class="form-success-step-num">3</span>
-              <span>If it is a fit, we book a short call and I walk you through exactly how I would approach your project.</span>
-            </div>
+          <span class="form-success-kicker">Project brief received</span>
+          <h3>Your project brief is in.</h3>
+          <p class="form-success-sub">I’ll review the scope, priorities, and timeline myself, then send you a clear next step within one business day.</p>
+          <div class="form-success-next">
+            <span class="form-success-next-label">What happens next</span>
+            <p>You’ll receive a considered reply, not a generic sales sequence.</p>
           </div>
           <span class="form-success-email">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Confirmation sent to <strong id="confirmEmail"></strong>
+            We’ll reply to <strong id="confirmEmail"></strong>
           </span>
         </div>
           </div><!-- /.contact-right -->
@@ -7925,19 +7935,19 @@
       </div>
       <div class="journal-notes-grid" id="journalNotesGrid">
         <a class="journal-note" href="/journal/ai-overviews-citation-playbook-for-mvps">
-          <span class="journal-note-meta">Apr 17 · 6 min</span>
+           <span class="journal-note-meta">6 min</span>
           <h3 class="journal-note-title">The AI Overviews citation playbook for MVPs</h3>
           <p class="journal-note-excerpt">Five patterns we see in pages pulled into Google AI Overviews, applied to three Start Apps Studio MVPs.</p>
           <span class="journal-note-cta">Read the note</span>
         </a>
         <a class="journal-note" href="/journal/make-your-brand-visible-in-chatgpt">
-          <span class="journal-note-meta">Apr 16 · 7 min</span>
+           <span class="journal-note-meta">7 min</span>
           <h3 class="journal-note-title">How to make your brand visible in ChatGPT</h3>
           <p class="journal-note-excerpt">A 12-point GEO checklist so ChatGPT, Perplexity and Google AI Overviews actually surface your brand.</p>
           <span class="journal-note-cta">Read the note</span>
         </a>
         <a class="journal-note" href="/journal/vibe-coded-apps-have-an-seo-problem">
-          <span class="journal-note-meta">Apr · Field note</span>
+           <span class="journal-note-meta">Field note</span>
           <h3 class="journal-note-title">Vibe-coded apps have an SEO problem</h3>
           <p class="journal-note-excerpt">Lovable, Bolt and v0 ship empty divs to crawlers. Here's the Cloudflare Worker SSR pattern that fixes it.</p>
           <span class="journal-note-cta">Read the note</span>
@@ -8113,20 +8123,13 @@
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
           });
         }
-        function fmtDate(iso) {
-          if (!iso) return '';
-          var d = new Date(iso);
-          if (isNaN(d.getTime())) return '';
-          return d.toLocaleDateString(__dateLocale(), { month: 'short', day: 'numeric' });
-        }
         fetch('/api/journal/posts', { headers: { 'Accept': 'application/json' } })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(data) {
             if (!data || !Array.isArray(data.posts) || data.posts.length === 0) return;
             var posts = data.posts.slice(0, 3);
             grid.innerHTML = posts.map(function(p) {
-              var meta = [fmtDate(p.publishedAt), (p.readMinutes ? __t('{count} min').replace('{count}', p.readMinutes) : '')]
-                .filter(Boolean).join(' · ');
+             var meta = p.readMinutes ? __t('{count} min').replace('{count}', p.readMinutes) : __t('Field note');
               var excerpt = p.excerpt || p.description || '';
               return '<a class="journal-note" href="/journal/' + escapeHtml(p.slug) + '">' +
                 '<span class="journal-note-meta">' + escapeHtml(meta) + '</span>' +
@@ -8714,10 +8717,23 @@
           });
           
           if (response.ok) {
+            const contactInner = document.querySelector('#contact .contact-inner');
+            const successPanel = document.getElementById('formSuccess');
             document.getElementById('formHeader').style.display = 'none';
             document.getElementById('contactForm').style.display = 'none';
-            document.getElementById('formSuccess').style.display = 'block';
+            if (contactInner) contactInner.classList.add('contact-complete');
+            successPanel.style.display = 'block';
             document.getElementById('confirmEmail').textContent = data.email;
+            requestAnimationFrame(function() {
+              requestAnimationFrame(function() {
+                const panelTop = successPanel.getBoundingClientRect().top + window.scrollY - 112;
+                window.scrollTo({
+                  top: Math.max(0, panelTop),
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+                });
+                successPanel.focus({ preventScroll: true });
+              });
+            });
           } else {
             throw new Error('Failed to send');
           }
