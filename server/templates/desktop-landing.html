@@ -5154,6 +5154,36 @@
           content: '';
           flex: 0 0 20px;
         }
+        /* Soften the horizontal scrollport's hard side cuts. These overlays
+           fade the card artwork into the page canvas without removing the
+           carousel's native horizontal scrolling. */
+        .showcase-edge-fade {
+          display: block;
+          position: absolute;
+          top: 30px;
+          bottom: 60px;
+          width: 32px;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .showcase-edge-fade-left {
+          left: 0;
+          background: linear-gradient(
+            to right,
+            color-mix(in srgb, var(--canvas) 94%, transparent) 0%,
+            color-mix(in srgb, var(--canvas) 64%, transparent) 38%,
+            transparent 100%
+          );
+        }
+        .showcase-edge-fade-right {
+          right: 0;
+          background: linear-gradient(
+            to left,
+            color-mix(in srgb, var(--canvas) 94%, transparent) 0%,
+            color-mix(in srgb, var(--canvas) 64%, transparent) 38%,
+            transparent 100%
+          );
+        }
         /* Each card = (full width − gap − peek) / 2 */
         .showcase-card {
           flex: 0 0 calc((100% - 20px - 48px) / 2);
