@@ -5142,7 +5142,7 @@
           margin: 0;
            /* Keep the card glow and hover shadow inside the full-width track
               with a 30px trailing inset, then leave a 60px fade runway
-              before the pagination dots. The leading 20px is an explicit
+              before the pagination dots. The leading 30px is an explicit
               flex spacer below so the first card cannot align flush-left. */
           padding: 30px 30px 60px 0;
           position: relative;
@@ -5152,37 +5152,7 @@
         .showcase-grid::-webkit-scrollbar { display: none; }
         .showcase-grid::before {
           content: '';
-          flex: 0 0 20px;
-        }
-        /* Soften the horizontal scrollport's hard side cuts. These overlays
-           fade the card artwork into the page canvas without removing the
-           carousel's native horizontal scrolling. */
-        .showcase-edge-fade {
-          display: block;
-          position: absolute;
-          top: 30px;
-          bottom: 60px;
-          width: 32px;
-          pointer-events: none;
-          z-index: 2;
-        }
-        .showcase-edge-fade-left {
-          left: 0;
-          background: linear-gradient(
-            to right,
-            color-mix(in srgb, var(--canvas) 94%, transparent) 0%,
-            color-mix(in srgb, var(--canvas) 64%, transparent) 38%,
-            transparent 100%
-          );
-        }
-        .showcase-edge-fade-right {
-          right: 0;
-          background: linear-gradient(
-            to left,
-            color-mix(in srgb, var(--canvas) 94%, transparent) 0%,
-            color-mix(in srgb, var(--canvas) 64%, transparent) 38%,
-            transparent 100%
-          );
+          flex: 0 0 30px;
         }
         /* Each card = (full width − gap − peek) / 2 */
         .showcase-card {
