@@ -5292,6 +5292,18 @@
         background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.09) 1px, transparent 0);
         background-size: 20px 20px;
       }
+      .sdm-visual-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        display: none;
+      }
+      .sdm-visual-img[src]:not([src=""]) {
+        display: block;
+      }
       .sdm-category {
         font-size: 11px;
         font-weight: 700;
@@ -6283,6 +6295,7 @@
               data-tags="React Native,Expo,RevenueCat,PostgreSQL"
               data-result="Shipped in 6 weeks · Pre-seed raised"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 55%, var(--rose)) 100%);"
+              data-image="/assets/images/project-wellness-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -6318,6 +6331,7 @@
               data-tags="React,TypeScript,Node.js,PostgreSQL"
               data-result="Demo-ready in 11 days · Contract signed"
               data-visual-style="background: linear-gradient(145deg, #234348 0%, var(--dominant) 60%, color-mix(in srgb, var(--dominant) 70%, var(--canvas)) 100%);"
+              data-image="/assets/images/project-operations-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -6353,6 +6367,7 @@
               data-tags="React,Stripe Connect,Node.js,PostgreSQL"
               data-result="Shipped in 7 weeks · Series A closed"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 60%, var(--dominant)) 0%, var(--dominant) 100%);"
+              data-image="/assets/images/project-fintech-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -6388,6 +6403,7 @@
               data-tags="React,Node.js,Stripe,PostgreSQL"
               data-result="First cohort sold out at launch"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--dominant) 70%, black) 0%, color-mix(in srgb, var(--dominant) 50%, var(--rose)) 100%);"
+              data-image="/assets/images/project-learning-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -6423,6 +6439,7 @@
               data-tags="React Native,Mapbox,Node.js,PostgreSQL"
               data-result="Rescued &amp; shipped in 4 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"
+              data-image="/assets/images/project-property-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -6457,6 +6474,7 @@
               data-tags="React,Vite,Node.js,Vercel"
               data-result="Demo live in 9 days · Meeting secured"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"
+              data-image="/assets/images/project-pitch-cover.jpg"
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
@@ -7014,6 +7032,7 @@
           <div class="sdm-scroll">
             <div class="sdm-visual">
               <div class="sdm-visual-bg" id="sdmVisualBg"></div>
+              <img class="sdm-visual-img" id="sdmVisualImg" src="" alt="" decoding="async">
             </div>
             <div class="sdm-category" id="sdmCategory"></div>
             <div class="sdm-name" id="sdmName"></div>
@@ -8316,6 +8335,7 @@
         var tags     = card.dataset.tags       || '';
         var result   = card.dataset.result     || '';
         var vis      = card.dataset.visualStyle || '';
+        var image    = card.dataset.image      || '';
 
         overlay.querySelector('#sdmCategory').innerHTML    = cat;
         overlay.querySelector('#sdmName').innerHTML        = name;
@@ -8323,6 +8343,9 @@
         overlay.querySelector('#sdmSolution').textContent  = solution;
         overlay.querySelector('#sdmResultText').innerHTML  = result;
         overlay.querySelector('#sdmVisualBg').style.cssText = vis;
+        var sdmImg = overlay.querySelector('#sdmVisualImg');
+        sdmImg.src = image;
+        sdmImg.alt = name ? name + ' preview' : '';
 
         // Rebuild tags
         var tagsEl = overlay.querySelector('#sdmTags');
