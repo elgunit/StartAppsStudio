@@ -1169,6 +1169,131 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "the-mvp-brief-is-your-first-product-decision",
+    title: "The MVP brief is your first product decision",
+    seoTitle: "MVP Briefs: Your First Product Decision | Start Apps Studio",
+    description:
+      "A useful MVP brief does more than describe an idea. It names the user, draws a hard line around version one, and defines the evidence that tells you whether to keep building.",
+    seoDescription:
+      "Your MVP brief is a product decision, not paperwork. Learn the three things a useful brief must define before design or code starts.",
+    excerpt:
+      "The best MVP briefs are not long. They decide who the product is for, what version one refuses to do, and what evidence earns the next week of work.",
+    publishedAt: "2026-08-12",
+    readMinutes: 6,
+    category: "Field Notes",
+    tags: ["MVP", "Product strategy", "Founders", "Scope"],
+    body: [
+      {
+        type: "answer",
+        text:
+          "A useful MVP brief makes three decisions before design starts: who the product is for, what version one will deliberately leave out, and what user evidence will justify the next investment. That is why the brief is not paperwork. It is the first product decision.",
+      },
+      {
+        type: "p",
+        text:
+          "Founders often arrive with a brief that is really a description of the idea: a few paragraphs about the market, a feature list, and a sentence about where the product could go someday. It is enough to start a conversation, but not enough to ship against. A build team needs a smaller, sharper document that turns ambition into a sequence of testable choices.",
+      },
+      {
+        type: "h2",
+        text: "A useful brief does three jobs",
+        id: "three-jobs",
+      },
+      {
+        type: "h3",
+        text: "1. It names the person who has the problem",
+        id: "name-the-user",
+      },
+      {
+        type: "p",
+        text:
+          "“Small businesses” is a market. It is not a first user. A good brief names the person, the moment they are in, and the workaround they use today. A clinic manager trying to fill tomorrow's cancellations has a different problem from a patient looking for a new appointment, even if both belong to healthcare. The more specific the first user is, the easier it becomes to decide what the product should do next.",
+      },
+      {
+        type: "h3",
+        text: "2. It draws a line around version one",
+        id: "draw-the-line",
+      },
+      {
+        type: "p",
+        text:
+          "A feature list tells you what has been imagined. A scope line tells you what will be built. Write the core loop in one sentence, then list the work that makes that loop reliable: the main screen, the one meaningful action, the data behind it, and the feedback that tells the user it worked. Everything else is a candidate for later, not a silent requirement for launch.",
+      },
+      {
+        type: "h3",
+        text: "3. It defines the proof that comes next",
+        id: "define-the-proof",
+      },
+      {
+        type: "p",
+        text:
+          "“Launch and see what happens” is not a learning plan. Decide what you expect to observe in the first few weeks: a completed workflow, a repeat action, a paid conversion, or a founder-led interview with a specific type of user. The measure does not need to be sophisticated. It needs to be close enough to the user's behaviour that it can change the next product decision.",
+      },
+      {
+        type: "h2",
+        text: "What to write down before a screen",
+        id: "before-a-screen",
+      },
+      {
+        type: "ul",
+        items: [
+          "The first user: one role, one situation, and one painful workaround",
+          "The core loop: the smallest action that creates value and can happen repeatedly",
+          "The launch boundary: what is explicitly out of scope for version one",
+          "The trust requirement: what the user must see, control, or understand before they act",
+          "The next proof point: the behaviour or conversation that earns another round of build work",
+        ],
+      },
+      {
+        type: "h2",
+        text: "The scope test we use",
+        id: "scope-test",
+      },
+      {
+        type: "p",
+        text:
+          "Take every proposed feature and ask one question: does this make the core loop more likely to succeed for the first user? If the answer is no, move it out of the first release. If the answer is maybe, write down the assumption it is protecting and find a cheaper way to test that assumption. This keeps a useful feature from becoming a permanent excuse to delay the product.",
+      },
+      {
+        type: "quote",
+        text:
+          "The goal of a brief is not to capture everything you might build. It is to make the next build decision obvious.",
+        cite: "a rule we use in product kickoffs",
+      },
+      {
+        type: "callout",
+        title: "How we use this at Start Apps Studio",
+        text:
+          "Before we quote a build, we turn the founder's idea into a one-page scope: one user, one core loop, the screens and infrastructure that support it, and the evidence that should change the next decision. The document becomes the handoff between strategy, design, engineering, and launch—and the reference point when a new feature asks to sneak into version one.",
+      },
+      {
+        type: "h2",
+        text: "Frequently asked questions",
+        id: "faq",
+      },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "How long should an MVP brief be?",
+            a: "Short enough to read in one sitting and specific enough to make trade-offs. One to two pages is usually plenty when it names the first user, core loop, launch boundary, trust requirements, and next proof point.",
+          },
+          {
+            q: "Should the brief include a full feature list?",
+            a: "Include the features that make the core loop work, then keep the rest in a later-ideas section. A separate parking lot protects good ideas without letting them quietly become launch requirements.",
+          },
+          {
+            q: "What if the target user is still uncertain?",
+            a: "Write down the two strongest candidates and the evidence that would distinguish them. Uncertainty is useful when it is explicit; it becomes expensive when it is hidden inside a broad product scope.",
+          },
+          {
+            q: "Does the brief need to be finished before design starts?",
+            a: "It should be clear enough to guide the first design pass, not frozen forever. Design is allowed to expose a better question, but every change should update the scope and the proof you are trying to collect.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const AUTHOR_NAME = AUTHOR;

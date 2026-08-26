@@ -2125,12 +2125,12 @@
     "context": "span.journal-note-meta"
   },
   {
-    "key": "The AI Overviews citation playbook for MVPs",
+    "key": "The MVP brief is your first product decision",
     "kind": "unit",
     "context": "h3.journal-note-title"
   },
   {
-    "key": "Five patterns we see in pages pulled into Google AI Overviews, applied to three Start Apps Studio MVPs.",
+    "key": "The best MVP briefs are not long. They decide who the product is for, what version one refuses to do, and what evidence earns the next week of work.",
     "kind": "unit",
     "context": "p.journal-note-excerpt"
   },
