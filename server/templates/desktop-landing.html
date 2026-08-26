@@ -5140,20 +5140,16 @@
           overscroll-behavior-x: contain;
           width: 100%;
           margin: 0;
-           /* Keep the card glow and hover shadow inside the full-width track
-              with a 30px trailing inset, then leave a 60px fade runway
-              before the pagination dots. The leading 30px is an explicit
-              flex spacer below so the first card cannot align flush-left. */
-          padding: 30px 30px 60px 0;
+           /* Keep a physical 30px inset around the horizontal track and
+              reserve the same leading space for snap alignment. Without
+              scroll-padding, snapping the first card would erase the gutter. */
+          padding: 30px 30px 60px;
+          scroll-padding-left: 30px;
           position: relative;
           z-index: 1;
           scrollbar-width: none;
         }
         .showcase-grid::-webkit-scrollbar { display: none; }
-        .showcase-grid::before {
-          content: '';
-          flex: 0 0 30px;
-        }
         /* Each card = (full width − gap − peek) / 2 */
         .showcase-card {
           flex: 0 0 calc((100% - 20px - 48px) / 2);
