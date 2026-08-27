@@ -106,18 +106,24 @@ export interface ActiveVisitorOpts {
   userAgent?: string;
   referrer?: string;
   timestamp?: string;
+  city?: string | null;
+  isReturning?: boolean;
 }
 
 export function activeVisitorNotification(opts: ActiveVisitorOpts): { subject: string; html: string } {
   const ts = opts.timestamp || new Date().toISOString();
-  const subject = `Active visitor on ${opts.pagePath}`;
+  const cityLabel = opts.city && opts.city.trim() ? opts.city.trim() : "Unknown location";
+  const visitorLabel = opts.isReturning ? "Returning visitor" : "New visitor";
+  const subject = `${visitorLabel} from ${cityLabel} on ${opts.pagePath}`;
   const html = baseTemplate({
-    preheader: `Someone is actively browsing ${opts.pagePath} right now.`,
+    preheader: `${visitorLabel} from ${cityLabel} is actively browsing ${opts.pagePath} right now.`,
     title: "An active visitor is on your site",
     bodyHtml: `
-      <p style="margin:0 0 18px 0;">A new visitor has scrolled past <strong style="color:${BRAND.text};">${opts.scrollPercent}%</strong> of <strong style="color:${BRAND.text};">${escapeHtml(opts.pagePath)}</strong> — they're engaged.</p>
+      <p style="margin:0 0 18px 0;">A <strong style="color:${BRAND.text};">${visitorLabel.toLowerCase()}</strong> from <strong style="color:${BRAND.text};">${escapeHtml(cityLabel)}</strong> has scrolled past <strong style="color:${BRAND.text};">${opts.scrollPercent}%</strong> of <strong style="color:${BRAND.text};">${escapeHtml(opts.pagePath)}</strong> — they're engaged.</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;padding:16px;">
         ${row("Page", opts.pagePath)}
+        ${row("City", cityLabel)}
+        ${row("Visitor type", visitorLabel)}
         ${row("Visitor", opts.visitorId.slice(0, 12) + "…")}
         ${row("Referrer", opts.referrer || "Direct")}
         ${row("User Agent", (opts.userAgent || "Unknown").slice(0, 80))}

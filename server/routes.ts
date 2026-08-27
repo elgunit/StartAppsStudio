@@ -5,6 +5,7 @@ import { z } from "zod";
 import crypto from "crypto";
 import { getUncachableResendClient } from "./resend";
 import { activeVisitorNotification, socialClickNotification, journalLeadNotification } from "./email-templates";
+import { lookupCityFromIp } from "./geo";
 import { sendJournalStatsReport } from "./journal-report-sender";
 import {
   refreshAiBotIpRanges,
@@ -353,22 +354,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
       if (!visitorId) return res.status(400).json({ error: "visitorId required" });
 
+      const visitorIdStr = String(visitorId).slice(0, 120);
+
+      // Determine new vs. returning BEFORE inserting this event, so this
+      // visit itself doesn't count as "prior activity".
+      const isReturning = await storage
+        .hasPriorVisitorActivity(visitorIdStr)
+        .catch((err) => {
+          console.error("hasPriorVisitorActivity check failed:", err?.message || err);
+          return false;
+        });
+
       await storage.createVisitorEvent({
         eventType: "active_visitor",
-        visitorId: String(visitorId).slice(0, 120),
+        visitorId: visitorIdStr,
         pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
         eventData: JSON.stringify({ scrollPercent, userAgent, referrer }).slice(0, 4000),
         userId: userId || null,
       } as any);
 
       try {
+        const ipRaw =
+          (req.header("x-forwarded-for") || "").split(",")[0]?.trim() ||
+          req.socket.remoteAddress ||
+          "";
+        const geo = await lookupCityFromIp(ipRaw);
+
         const { client, fromEmail } = await getUncachableResendClient();
         const { subject, html } = activeVisitorNotification({
-          visitorId: String(visitorId),
+          visitorId: visitorIdStr,
           pagePath: pagePath ? String(pagePath) : "/",
           scrollPercent: typeof scrollPercent === "number" ? scrollPercent : 0,
           userAgent: userAgent ? String(userAgent) : undefined,
           referrer: referrer ? String(referrer) : undefined,
+          city: geo.label,
+          isReturning,
         });
         const sendResult: any = await client.emails.send({
           from: fromEmail,

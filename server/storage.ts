@@ -75,6 +75,7 @@ export interface IStorage {
   // Visitor Analytics
   createSectionView(view: InsertSectionView): Promise<SectionView>;
   createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent>;
+  hasPriorVisitorActivity(visitorId: string): Promise<boolean>;
   getSectionViews(limit?: number): Promise<SectionView[]>;
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
   getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
@@ -153,6 +154,24 @@ export class DatabaseStorage implements IStorage {
   async createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent> {
     const [row] = await db.insert(visitorEvents).values(event).returning();
     return row;
+  }
+
+  // True if this visitorId has any recorded activity (event or section view)
+  // from before now — used to label an incoming visitor as "returning"
+  // rather than "new" in the visitor notification email.
+  async hasPriorVisitorActivity(visitorId: string): Promise<boolean> {
+    const [eventRow] = await db
+      .select({ id: visitorEvents.id })
+      .from(visitorEvents)
+      .where(eq(visitorEvents.visitorId, visitorId))
+      .limit(1);
+    if (eventRow) return true;
+    const [sectionRow] = await db
+      .select({ id: sectionViews.id })
+      .from(sectionViews)
+      .where(eq(sectionViews.visitorId, visitorId))
+      .limit(1);
+    return !!sectionRow;
   }
 
   async getSectionViews(limit: number = 200): Promise<SectionView[]> {

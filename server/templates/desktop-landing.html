@@ -5274,7 +5274,13 @@
         padding: 0;   /* desktop: no extra padding needed */
       }
       .sdm-visual {
-        height: 140px;
+        /* Fallback ratio until the real cover image loads and JS sets the
+           exact aspect-ratio - keeps the sheet from jumping. Height is
+           driven by aspect-ratio (not a fixed px height) so each project's
+           full cover image shows uncropped instead of being clipped into a
+           short letterbox strip. */
+        aspect-ratio: 1200 / 820;
+        height: auto;
         border-radius: calc(var(--r-md) - 4px);
         overflow: hidden;
         margin-bottom: 20px;
@@ -8344,8 +8350,18 @@
         overlay.querySelector('#sdmResultText').innerHTML  = result;
         overlay.querySelector('#sdmVisualBg').style.cssText = vis;
         var sdmImg = overlay.querySelector('#sdmVisualImg');
+        var sdmVisual = overlay.querySelector('.sdm-visual');
+        // Size the preview box to each image's real aspect ratio so the
+        // full cover shows uncropped instead of a fixed-height crop.
+        function applySdmImgRatio() {
+          if (sdmImg.naturalWidth && sdmImg.naturalHeight) {
+            sdmVisual.style.aspectRatio = sdmImg.naturalWidth + ' / ' + sdmImg.naturalHeight;
+          }
+        }
+        sdmImg.onload = applySdmImgRatio;
         sdmImg.src = image;
         sdmImg.alt = name ? name + ' preview' : '';
+        if (sdmImg.complete) applySdmImgRatio();
 
         // Rebuild tags
         var tagsEl = overlay.querySelector('#sdmTags');
