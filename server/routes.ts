@@ -81,14 +81,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/llms.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.setHeader("cache-control", "public, max-age=300, must-revalidate");
-    res.setHeader("last-modified", "Wed, 27 Aug 2026 00:00:00 GMT");
+    res.setHeader("last-modified", "Thu, 27 Aug 2026 00:00:00 GMT");
     res.send(renderLlmsTxt(CANONICAL_ORIGIN));
   });
 
   app.get("/llms-full.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.setHeader("cache-control", "public, max-age=300, must-revalidate");
-    res.setHeader("last-modified", "Wed, 27 Aug 2026 00:00:00 GMT");
+    res.setHeader("last-modified", "Thu, 27 Aug 2026 00:00:00 GMT");
     res.send(renderLlmsFullTxt(CANONICAL_ORIGIN));
   });
 

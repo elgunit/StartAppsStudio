@@ -205,6 +205,15 @@ var init_storage = __esm({
         const [row2] = await db.insert(visitorEvents).values(event).returning();
         return row2;
       }
+      // True if this visitorId has any recorded activity (event or section view)
+      // from before now — used to label an incoming visitor as "returning"
+      // rather than "new" in the visitor notification email.
+      async hasPriorVisitorActivity(visitorId) {
+        const [eventRow] = await db.select({ id: visitorEvents.id }).from(visitorEvents).where(eq(visitorEvents.visitorId, visitorId)).limit(1);
+        if (eventRow) return true;
+        const [sectionRow] = await db.select({ id: sectionViews.id }).from(sectionViews).where(eq(sectionViews.visitorId, visitorId)).limit(1);
+        return !!sectionRow;
+      }
       async getSectionViews(limit = 200) {
         return await db.select().from(sectionViews).orderBy(desc(sectionViews.createdAt)).limit(limit);
       }
@@ -705,14 +714,18 @@ function row(label, value) {
 }
 function activeVisitorNotification(opts) {
   const ts = opts.timestamp || (/* @__PURE__ */ new Date()).toISOString();
-  const subject = `Active visitor on ${opts.pagePath}`;
+  const cityLabel = opts.city && opts.city.trim() ? opts.city.trim() : "Unknown location";
+  const visitorLabel = opts.isReturning ? "Returning visitor" : "New visitor";
+  const subject = `${visitorLabel} from ${cityLabel} on ${opts.pagePath}`;
   const html = baseTemplate({
-    preheader: `Someone is actively browsing ${opts.pagePath} right now.`,
+    preheader: `${visitorLabel} from ${cityLabel} is actively browsing ${opts.pagePath} right now.`,
     title: "An active visitor is on your site",
     bodyHtml: `
-      <p style="margin:0 0 18px 0;">A new visitor has scrolled past <strong style="color:${BRAND.text};">${opts.scrollPercent}%</strong> of <strong style="color:${BRAND.text};">${escapeHtml(opts.pagePath)}</strong> \u2014 they're engaged.</p>
+      <p style="margin:0 0 18px 0;">A <strong style="color:${BRAND.text};">${visitorLabel.toLowerCase()}</strong> from <strong style="color:${BRAND.text};">${escapeHtml(cityLabel)}</strong> has scrolled past <strong style="color:${BRAND.text};">${opts.scrollPercent}%</strong> of <strong style="color:${BRAND.text};">${escapeHtml(opts.pagePath)}</strong> \u2014 they're engaged.</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;padding:16px;">
         ${row("Page", opts.pagePath)}
+        ${row("City", cityLabel)}
+        ${row("Visitor type", visitorLabel)}
         ${row("Visitor", opts.visitorId.slice(0, 12) + "\u2026")}
         ${row("Referrer", opts.referrer || "Direct")}
         ${row("User Agent", (opts.userAgent || "Unknown").slice(0, 80))}
@@ -843,6 +856,45 @@ var init_email_templates = __esm({
       textMuted: "#a1a1aa",
       border: "#27272a"
     };
+  }
+});
+
+// server/geo.ts
+function isPrivateOrLocalIp(ip) {
+  if (!ip) return true;
+  const v = ip.trim();
+  return v === "" || v === "::1" || v === "127.0.0.1" || v.startsWith("10.") || v.startsWith("192.168.") || v.startsWith("172.16.") || v.startsWith("172.17.") || v.startsWith("172.18.") || v.startsWith("172.19.") || v.startsWith("172.2") || v.startsWith("172.30.") || v.startsWith("172.31.") || v.startsWith("::ffff:127.") || v.startsWith("fc") || v.startsWith("fd");
+}
+async function lookupCityFromIp(ipRaw, timeoutMs = 2500) {
+  const ip = (ipRaw || "").trim();
+  if (isPrivateOrLocalIp(ip)) return UNKNOWN;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, {
+      signal: controller.signal,
+      headers: { Accept: "application/json" }
+    });
+    if (!res.ok) return UNKNOWN;
+    const data = await res.json();
+    if (!data || data.error) return UNKNOWN;
+    const city = data.city || null;
+    const region = data.region || null;
+    const country = data.country_name || data.country || null;
+    const parts = [city, region || country].filter(Boolean);
+    const label = parts.length > 0 ? parts.join(", ") : UNKNOWN.label;
+    return { city, region, country, label };
+  } catch {
+    return UNKNOWN;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+var UNKNOWN;
+var init_geo = __esm({
+  "server/geo.ts"() {
+    "use strict";
+    UNKNOWN = { city: null, region: null, country: null, label: "Unknown location" };
   }
 });
 
@@ -2845,32 +2897,35 @@ Sitemap: ${origin}/sitemap.xml
 function renderLlmsTxt(origin) {
   return `# Start Apps Studio
 
-> A strategy-first product studio building mockups, prototypes, and shippable MVPs for early-stage founders. From $1,399 mockups to full apps in 3 to 8 weeks.
+> A founder-led product studio helping non-technical founders choose, design, and ship launch sites, prototypes, web apps, native mobile apps, and full MVPs. Current public packages start at $1,599.
 
-We are a small team augmented by the best AI models available (Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, and Llama 4), so we ship at the pace of a much larger studio. Founders work directly with the people building their product.
+Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
 ## Services
 
-- Mockups: polished, founder-ready visual mockups of your product idea
-- Prototypes: clickable, end-to-end prototype of the core flow, ready to demo
-- MVPs: real, shippable MVPs delivered in 3 to 8 weeks for iOS, Android, or web
-- Custom-Scale: handcrafted multi-platform builds for funded teams ready to scale
+- Launch Sites: polished, responsive websites built in Lovable or Replit, deployed and handed over to you
+- Prototypes: Figma-led, clickable, end-to-end product flows ready to demo and test
+- Web Applications: production-grade web apps with accounts, payments, and a real database
+- Native Mobile: iOS and Android apps, including store submission
+- Full MVPs: real, launch-ready products scoped, designed, built, and launched in 1 to 2 months
+- Custom: bespoke multi-platform work for teams with larger or more complex requirements
 
 ## Pricing
 
-- Mockup: $1,399, fixed price
-- Prototype: $4,799, fixed price
+- Launch Site: $1,599, fixed price
+- Prototype: $4,999, fixed price
 - MVP: $9,000 to $19,000, fixed price
-- Custom-Scale: $30,000+, custom quote
+- Custom: $30,000+, custom quote
+- Enterprise: $75,000+, custom scope
 
-All packages are fixed-price. Timeline is 3 to 8 weeks for MVP-tier and below.
+Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
 
 ## Toolkit
 
-- Reasoning & Code: Claude Opus 5 & Fable 5, Gemini 2.5 Pro, GPT-5.6 Sol, Llama 4
-- Mockups & Prototyping: Figma, Replit, Lovable, Rork
-- Production & Delivery: Webflow, WordPress, GitHub, Swift (iOS), Kotlin and Compose UI (Android), n8n, Make, custom webhooks
-- Content & Media: ElevenLabs, Seedance 2.0
+- AI review and coding: Claude, Gemini, GPT-5, and Llama 4
+- Design and prototyping: Figma, Rork, Lovable, and Replit
+- Production: React Native, Swift, Kotlin, Node.js, PostgreSQL, Stripe, RevenueCat, and GitHub
+- Automation and content: n8n, Make, custom webhooks, and ElevenLabs
 
 ## Contact
 
@@ -2893,9 +2948,13 @@ function renderLlmsFullTxt(origin) {
   });
   return `# Start Apps Studio: Full Overview
 
+> Current public information: August 2026. Use this overview and the homepage rather than older cached descriptions.
+
 ## Who we are
 
-Start Apps Studio is an AI-native product studio for early-stage founders. We design mockups, build clickable prototypes, and ship real MVPs in 3 to 8 weeks. Our small team is paired with multiple frontier AI models that act as a second set of eyes, brainstorming alternatives, stress-testing flows, and quietly playing tester and QA before any work reaches you.
+Start Apps Studio is a founder-led product studio for early-stage founders and teams. We help choose the right route, make the product tangible, and ship a useful first release. Work can include a launch site, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
+
+AI is used throughout most of the work to accelerate exploration, coding, and review. A person owns the product decisions, architecture, quality bar, and client outcome. The Custom tier is the exception, with code written by hand.
 
 ## Who we serve
 
@@ -2907,58 +2966,57 @@ Start Apps Studio is an AI-native product studio for early-stage founders. We de
 ## How we work
 
 1. You share the idea and your audience.
-2. We propose the smallest fixed-price package that proves the core hypothesis.
-3. We ship in weeks, not months. You can see daily progress on GitHub if you want it.
-4. Every build is paired with multiple AI models that critique each other's output, flag weak flows, and spot edge cases before you do.
+2. We compare the platform options and propose the smallest package that proves the core hypothesis.
+3. We map the core flow, design the key screens, and build against real scenarios.
+4. We ship in days or weeks, depending on scope, with shared previews and a clear handoff.
 
 ## Packages
 
-### Mockup: $1,399, fixed
-Polished visual mockups of your product idea. Use them to talk to users, raise pre-seed, or decide whether to commit to a real build.
+### Launch Site: $1,599, fixed
+A polished, responsive website built from your direction in Lovable or Replit, deployed and handed over to you. Typical timing is 3 to 5 business days.
 
-### Prototype: $4,799, fixed
-A clickable, end-to-end prototype of your core flow. Real navigation, realistic data, demo-ready in 5 to 10 days.
+### Prototype: $4,999, fixed
+A Figma-led, clickable, end-to-end prototype of your core flow with real navigation and realistic data. Typical timing is 5 to 10 days.
 
 ### MVP: $9,000 to $19,000, fixed
-A real, shippable MVP. iOS, Android, or web. 3 to 8 weeks from kickoff to launch. Your product is in the App Store, Play Store, or live on the web by the end.
+A real, launch-ready MVP for iOS, Android, or web. Scope, design, engineering, launch support, and one post-launch iteration are included. Typical timing is 3 to 8 weeks from kickoff.
 
-### Custom-Scale: $30,000+
-Handcrafted multi-platform builds for funded teams ready to scale. Quoted per engagement.
+### Custom: $30,000+
+Bespoke multi-platform work for funded teams or larger requirements. Quoted per engagement.
+
+### Enterprise: $75,000+
+Custom-scoped work for larger organizations and more complex delivery needs.
 
 ## Toolkit (current as of ${toolkitAsOf})
 
-We swap in new model versions the week they ship.
-
 **Reasoning & Code**
-- Claude Opus 5 & Fable 5: primary builder
-- Gemini 2.5 Pro: long-context review
-- GPT-5.6 Sol: creative & copy
+- Claude, Gemini, and GPT-5: AI-assisted exploration, coding, and review
 - Llama 4: self-hosted fallback
 
 **Mockups & Prototyping**
 - Figma: design system + Dev Mode
-- Replit: React hybrid builds
-- Lovable: rapid mockups
+- Lovable: launch sites
+- Replit: working web products
 - Rork: iOS & Android prototypes
 
 **Production & Delivery**
-- Webflow: marketing site builds
-- WordPress: content sites & blogs
-- GitHub: daily updates + version control
+- React Native: cross-platform mobile apps
 - Swift: native iOS apps
-- Kotlin and Compose UI: native Android apps
+- Kotlin: native Android apps
+- Node.js + PostgreSQL: web application backends
+- Stripe and RevenueCat: payments and subscriptions
+- GitHub: daily updates + version control
 - Automation: n8n + Make + custom webhooks
 
 **Content & Media**
 - ElevenLabs: voiceover & speech
-- Seedance 2.0: video & image gen
 
 ## What makes us different
 
 - **Fixed price.** No hourly billing surprises. You know what every package costs before kickoff.
-- **3 to 8 weeks.** We bias toward shipping. If a feature can't be shipped in that window, it gets descoped or split into a follow-up.
-- **AI-native, not AI-only.** Real humans own every decision; AI accelerates the work and reviews it.
-- **Daily updates.** GitHub commits and short async messages keep you in the loop without endless meetings.
+- **Right-sized route.** We compare a launch site, prototype, web app, native app, and MVP instead of defaulting to the most expensive build.
+- **AI-assisted, human-owned.** AI accelerates the work; a person owns every meaningful product and engineering decision.
+- **Direct collaboration.** Shared previews, GitHub updates, and clear written handoffs keep you in the loop.
 
 ## Contact
 
@@ -2984,7 +3042,7 @@ var init_render = __esm({
     init_posts();
     init_locales();
     CANONICAL_ORIGIN = (process.env.PUBLIC_SITE_URL || "https://startappsstudio.com").replace(/\/$/, "");
-    HOMEPAGE_LAST_MODIFIED = "2026-08-11";
+    HOMEPAGE_LAST_MODIFIED = "2026-08-27";
     ACCENT_PALETTE = [
       "#0d9488",
       // teal
@@ -3837,12 +3895,14 @@ async function registerRoutes(app2) {
   });
   app2.get("/llms.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.setHeader("cache-control", "public, max-age=3600");
+    res.setHeader("cache-control", "public, max-age=300, must-revalidate");
+    res.setHeader("last-modified", "Thu, 27 Aug 2026 00:00:00 GMT");
     res.send(renderLlmsTxt(CANONICAL_ORIGIN));
   });
   app2.get("/llms-full.txt", (_req, res) => {
     res.setHeader("content-type", "text/plain; charset=utf-8");
-    res.setHeader("cache-control", "public, max-age=3600");
+    res.setHeader("cache-control", "public, max-age=300, must-revalidate");
+    res.setHeader("last-modified", "Thu, 27 Aug 2026 00:00:00 GMT");
     res.send(renderLlmsFullTxt(CANONICAL_ORIGIN));
   });
   app2.get("/api/journal/posts", (_req, res) => {
@@ -4069,21 +4129,30 @@ async function registerRoutes(app2) {
     try {
       const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
       if (!visitorId) return res.status(400).json({ error: "visitorId required" });
+      const visitorIdStr = String(visitorId).slice(0, 120);
+      const isReturning = await storage.hasPriorVisitorActivity(visitorIdStr).catch((err) => {
+        console.error("hasPriorVisitorActivity check failed:", err?.message || err);
+        return false;
+      });
       await storage.createVisitorEvent({
         eventType: "active_visitor",
-        visitorId: String(visitorId).slice(0, 120),
+        visitorId: visitorIdStr,
         pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
         eventData: JSON.stringify({ scrollPercent, userAgent, referrer }).slice(0, 4e3),
         userId: userId || null
       });
       try {
+        const ipRaw = (req.header("x-forwarded-for") || "").split(",")[0]?.trim() || req.socket.remoteAddress || "";
+        const geo = await lookupCityFromIp(ipRaw);
         const { client, fromEmail } = await getUncachableResendClient();
         const { subject, html } = activeVisitorNotification({
-          visitorId: String(visitorId),
+          visitorId: visitorIdStr,
           pagePath: pagePath ? String(pagePath) : "/",
           scrollPercent: typeof scrollPercent === "number" ? scrollPercent : 0,
           userAgent: userAgent ? String(userAgent) : void 0,
-          referrer: referrer ? String(referrer) : void 0
+          referrer: referrer ? String(referrer) : void 0,
+          city: geo.label,
+          isReturning
         });
         const sendResult = await client.emails.send({
           from: fromEmail,
@@ -4376,6 +4445,7 @@ var init_routes = __esm({
     init_storage();
     init_resend();
     init_email_templates();
+    init_geo();
     init_journal_report_sender();
     init_ai_bot_verifier();
     init_render();
