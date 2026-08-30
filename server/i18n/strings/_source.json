@@ -505,9 +505,9 @@
     "context": "p"
   },
   {
-    "key": "150 to 750 credits",
+    "key": "Search strategy · 1–2 weeks",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Keyword Strategy",
@@ -520,9 +520,9 @@
     "context": "p"
   },
   {
-    "key": "300 to 900 credits",
+    "key": "Focused sprint · 1–2 weeks",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Backlink Strategy &amp; Outreach",
@@ -535,9 +535,9 @@
     "context": "p"
   },
   {
-    "key": "600 to 1350 credits",
+    "key": "Sustained outreach · 4–8 weeks",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Content Plan",
@@ -550,9 +550,9 @@
     "context": "p"
   },
   {
-    "key": "300 to 1200 credits",
+    "key": "90-day editorial runway",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Paid Ads Setup",
@@ -565,9 +565,9 @@
     "context": "p"
   },
   {
-    "key": "450 to 1350 credits",
+    "key": "Launch sprint · 2–3 weeks",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Social Media Kit",
@@ -580,6 +580,11 @@
     "context": "p"
   },
   {
+    "key": "30-day content system",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
     "key": "Email Sequences",
     "kind": "unit",
     "context": "h4"
@@ -588,6 +593,11 @@
     "key": "Welcome flows, onboarding, and win-back campaigns that actually get opened.",
     "kind": "unit",
     "context": "p"
+  },
+  {
+    "key": "Ongoing lifecycle support",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
   },
   {
     "key": "Brand Identity",
@@ -600,9 +610,9 @@
     "context": "p"
   },
   {
-    "key": "450 to 1650 credits",
+    "key": "Brand deep dive · 3–5 weeks",
     "kind": "unit",
-    "context": "span.growth-credit-badge"
+    "context": "span.growth-time-badge"
   },
   {
     "key": "From idea to launch",
