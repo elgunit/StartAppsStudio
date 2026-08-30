@@ -270,6 +270,7 @@
         --bg: var(--canvas);
         --bg-elevated: var(--surface);
         --text: var(--ink);
+        --text-primary: var(--ink);
         --text-secondary: var(--muted);
         --border: var(--line);
         --success: #16a34a;
@@ -6315,6 +6316,99 @@
           );
           -webkit-background-clip: text;
           background-clip: text;
+        }
+
+        .hero-aurora {
+          background:
+            radial-gradient(circle at 50% 30%, rgba(89,185,173,.34), transparent 38%),
+            radial-gradient(circle at 80% 20%, rgba(72,133,157,.24), transparent 36%),
+            radial-gradient(circle at 65% 75%, rgba(89,185,173,.18), transparent 38%),
+            radial-gradient(circle at 25% 70%, rgba(239,150,127,.16), transparent 38%);
+          opacity: .42;
+        }
+
+        .hero-eyebrow-dot {
+          background: var(--success);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--success) 22%, transparent);
+        }
+
+        /* Bring older interactive components into the same dark-mode role
+           system instead of letting their legacy light-theme values show. */
+        .tke-pill.active,
+        .budget-chip.selected {
+          background: var(--action);
+          border-color: var(--action);
+          color: var(--on-accent);
+        }
+
+        .tke-pill.active {
+          box-shadow:
+            0 4px 14px color-mix(in srgb, var(--action) 30%, transparent),
+            inset 0 1px 0 rgba(255,255,255,.18);
+        }
+
+        .tke-pill:focus-visible,
+        .budget-chip:focus-within {
+          outline: 3px solid color-mix(in srgb, var(--rose) 78%, var(--action));
+          outline-offset: 3px;
+        }
+
+        .tke-headicon {
+          background: var(--surface-strong);
+          border-color: color-mix(in srgb, var(--action) 34%, var(--line));
+          box-shadow:
+            0 4px 16px rgba(0,0,0,.36),
+            inset 0 1px 0 var(--specular);
+        }
+
+        .tke-sil--pro,
+        .tke-sil--beg {
+          background: linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--action) 34%, var(--surface-strong)) 0%,
+            color-mix(in srgb, var(--action) 10%, var(--surface-strong)) 100%
+          );
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+          border-color: var(--action) !important;
+          background: var(--action-soft) !important;
+          box-shadow: 0 0 0 4px color-mix(in srgb, var(--action) 16%, transparent) !important;
+        }
+
+        .form-group input:focus + .floating-label,
+        .form-group input:not(:placeholder-shown) + .floating-label,
+        .form-group input:-webkit-autofill + .floating-label,
+        .form-group textarea:focus + .floating-label,
+        .form-group textarea:not(:placeholder-shown) + .floating-label,
+        .form-group textarea:-webkit-autofill + .floating-label,
+        .form-group select:focus + .floating-label,
+        .form-group select:not([data-empty="true"]) + .floating-label {
+          color: var(--action) !important;
+        }
+
+        .budget-chip:hover,
+        .faq-item[open] > summary::after {
+          border-color: var(--action);
+          color: var(--action);
+        }
+
+        .budget-chip.selected {
+          background:
+            linear-gradient(
+              135deg,
+              color-mix(in srgb, var(--action) 18%, transparent),
+              color-mix(in srgb, var(--rose) 7%, transparent)
+            );
+          color: var(--ink);
+          box-shadow: 0 8px 22px -10px color-mix(in srgb, var(--action) 38%, transparent);
+        }
+
+        #aiEfficiencyModal .aem-cta {
+          background: var(--action);
+          color: var(--on-accent);
         }
       }
 
