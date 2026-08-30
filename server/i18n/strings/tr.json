@@ -11,7 +11,7 @@
   "Strategist": "Stratejist",
   "Manager": "Yönetici",
   "Analyst": "Analist",
-  "<span class=\"hero-stat-number\">Next</span> up: your product": "<span class=\"hero-stat-number\">Sırada</span> sizin ürününüz var",
+  "<span class=\"hero-stat-number\">Ready?</span> Let’s build it": "<span class=\"hero-stat-number\">Hazır mısınız?</span> Hadi inşa edelim",
   "<span class=\"hero-stat-number\">3-8 weeks</span> to launch": "lansmana <span class=\"hero-stat-number\">3-8 hafta</span>",
   "<a href=\"#contact\" class=\"cta-button\">Get a free plan</a> <a href=\"#pricing\" class=\"cta-button secondary\">See pricing</a>": "<a href=\"#contact\" class=\"cta-button\">Ücretsiz plan alın</a> <a href=\"#pricing\" class=\"cta-button secondary\">Fiyatları görün</a>",
   "Common problems we solve": "Çözdüğümüz yaygın sorunlar",
