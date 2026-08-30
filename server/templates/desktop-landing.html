@@ -6,7 +6,8 @@
     <title>Ship Your Product in Weeks | Start Apps Studio</title>
     <meta name="description" content="Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team." />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="theme-color" content="#0d9488" />
+    <meta name="theme-color" content="#eef2f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b181b" media="(prefers-color-scheme: dark)" />
     <meta name="author" content="Start Apps Studio" />
     <meta name="keywords" content="MVP studio, product strategy, product design, product engineering, app rescue, rapid prototyping, startup MVP, React app development, AI-native studio, founders, landing page design, mobile app development" />
     <link rel="canonical" href="https://startappsstudio.com/" />
@@ -287,6 +288,10 @@
         --accent: #1d5960;
         --rose: #e07a5f;
         --signal: #d4a72c;
+        --action: var(--dominant);
+        --action-hover: #2d747b;
+        --action-soft: rgba(29,89,96,.12);
+        --glow-teal: rgba(29,89,96,.16);
         --on-accent: #fff8f2;
         --shadow: 0 18px 55px rgba(29,72,73,.12);
         --r-sm: 12px; --r-md: 20px; --r-lg: 30px;
@@ -303,19 +308,37 @@
       @media (prefers-color-scheme: dark) {
         :root {
           /* Active dark tokens */
-          --canvas: #102124; --surface: rgba(28,52,55,.72); --surface-strong: #1d393b;
-          --ink: #edf4ef; --muted: #afc1bc; --line: rgba(237,244,239,.16);
-          --line-strong: rgba(237,244,239,.3); --dominant: #8bc8bd;
-          --support: #234348; --accent: #8bc8bd; --rose: #ef987e; --signal: #e6c45a;
-          --on-accent: #1b2d2d; --shadow: 0 20px 60px rgba(0,0,0,.25);
+          --canvas: #0b181b;
+          --surface: rgba(20,40,44,.82);
+          --surface-strong: #183338;
+          --ink: #f4f0e7;
+          --muted: #a9b8b3;
+          --line: rgba(239,244,239,.13);
+          --line-strong: rgba(239,244,239,.28);
+          --success: #63c7a5;
+          --success-bg: rgba(99,199,165,.14);
+          --dominant: #59b9ad;
+          --support: #214248;
+          --accent: #59b9ad;
+          --rose: #ef967f;
+          --signal: #e5c56b;
+          --action: #59b9ad;
+          --action-hover: #78d2c3;
+          --action-soft: rgba(89,185,173,.14);
+          --glow-teal: rgba(89,185,173,.18);
+          --on-accent: #0b181b;
+          --shadow: 0 20px 60px rgba(0,0,0,.58);
         }
       }
       
       html {
         scroll-behavior: auto;
         overflow-x: clip;
-        /* Keep touch panning available while preventing browser zoom gestures. */
+        color-scheme: light;
         touch-action: pan-x pan-y;
+      }
+      @media (prefers-color-scheme: dark) {
+        html { color-scheme: dark; }
       }
       .section,
       .why-section,
@@ -6223,6 +6246,76 @@
         box-shadow:
           inset 0 1px 0 var(--specular),
           0 18px 52px -30px color-mix(in srgb, var(--dominant) 28%, transparent) !important;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        /* Dark mode gets its own composition: cool ink canvas, restrained
+           jade atmosphere, and warm editorial highlights. */
+        body {
+          background-image:
+            radial-gradient(
+              ellipse 48% 32% at 14% 0%,
+              color-mix(in srgb, var(--glow-teal) 72%, transparent),
+              transparent 38rem
+            ),
+            radial-gradient(
+              ellipse 42% 34% at 88% 18%,
+              color-mix(in srgb, var(--rose) 7%, transparent),
+              transparent 32rem
+            );
+        }
+
+        .section::before,
+        .why-section::before,
+        .faq-section::before,
+        .journal-notes::before,
+        .contact::before {
+          background:
+            linear-gradient(
+              155deg,
+              color-mix(in srgb, var(--glow-teal) 38%, transparent),
+              transparent 48%
+            ),
+            color-mix(in srgb, var(--surface) 92%, transparent) !important;
+          box-shadow:
+            inset 0 1px 0 var(--specular),
+            0 22px 58px -34px rgba(0, 0, 0, 0.78) !important;
+        }
+
+        .cta-button:not(.secondary),
+        .submit-btn {
+          background: var(--action);
+          border-color: var(--action);
+          color: var(--on-accent);
+        }
+
+        .cta-button:not(.secondary):hover,
+        .submit-btn:hover {
+          background: var(--action-hover);
+          border-color: var(--action-hover);
+        }
+
+        .cta-button.secondary:hover {
+          background: var(--action-soft);
+          border-color: color-mix(in srgb, var(--action) 48%, var(--line));
+          box-shadow: none;
+        }
+
+        .faq-item[open],
+        .price-card.featured,
+        .expandable-card.expanded {
+          border-color: color-mix(in srgb, var(--action) 72%, var(--line)) !important;
+        }
+
+        .hero-headline .accent-word {
+          background: linear-gradient(
+            100deg,
+            var(--action-hover) 0%,
+            var(--rose) 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
       }
 
       /* Make the scroll reveal a quiet cue rather than a theatrical entrance.
