@@ -1,0 +1,96 @@
+CONTEXT
+This is the marketing site for Start Apps Studio, a founder-led product
+studio. I am adding one new section to the homepage. Before writing any
+code, read the existing homepage and component files and match what is
+already there: the design tokens, spacing scale, typography scale,
+button and card components, animation approach, and file structure. Do
+not introduce a new design language, a new CSS approach, or any new
+dependency. Reuse existing components wherever one fits.
+
+PLACEMENT
+Insert the new section on the homepage directly below the pricing /
+price ladder section and above the FAQ. It should read as a full width
+band, visually distinct from the sections above and below it, but built
+from the same tokens. If neighbouring sections alternate background
+treatment, follow that alternation rather than inventing a new one.
+
+STRUCTURE
+1. Section heading: "One build. Web, iOS, and Android."
+2. A short lead paragraph.
+3. Three subsections, each with a subheading and body copy:
+   a. What that actually means
+   b. You own the whole thing
+   c. And it does not double the bill
+4. A closing eligibility line.
+
+Layout: on desktop, the three subsections sit as a three column row
+below the lead paragraph. On tablet, two columns with the third
+wrapping. On mobile, a single stacked column. If the existing site uses
+a card pattern for grouped content, use that same card for each of the
+three. If it does not, use plain typographic blocks with generous
+vertical rhythm and no borders.
+
+COPY
+Use this copy verbatim. Do not rewrite, shorten, or add to it.
+
+Heading: One build. Web, iOS, and Android.
+
+Lead: Most studios treat mobile as a second project. New codebase, new
+budget, new timeline, and a version of your product that drifts out of
+sync with the web one by month three. That is not how these ship. Your
+product is built once. When it needs to live on a phone, the same build
+goes to the App Store and Google Play as a real native binary with real
+device access.
+
+Subhead 1: What that actually means
+Body 1: Face ID and Touch ID sign in. Push notifications that reach
+people who are not looking at their inbox. Background location. Native
+camera and photo library. In app purchases billed through Apple and
+Google, so you keep the conversion rate that comes with a payment sheet
+people already trust. Encrypted storage that survives a reinstall.
+Offline media that works on a plane. Not a bookmark with an icon. A
+signed binary in both stores.
+
+Subhead 2: You own the whole thing
+Body 2: Native project files are handed over with the rest of your
+code. Xcode and Android Studio, full source, in your account. Most app
+builders keep the native layer locked in a platform you rent. If you
+leave, you leave with a web app and start mobile over. Here, if you
+grow past this studio, your next team opens the projects and keeps
+building. The exit is designed in from the first commit.
+
+Subhead 3: And it does not double the bill
+Body 3: One codebase means one thing to design, one thing to test, one
+thing to maintain. Store submission, code signing, and provisioning are
+handled. Updates reach your users the day you ship them instead of the
+week review gets to them.
+
+Closing line, styled smaller and muted, centred below the three
+columns: Store delivery is available on Prototype and above.
+
+CONSTRAINTS
+- Do not name or reference any third party vendor, platform, or tool
+  anywhere in this section, in the copy, in class names, in file names,
+  or in code comments.
+- No stock imagery, no device mockups, no phone frames, no app store
+  badges.
+- If the site already uses an icon set, you may use one small icon per
+  subsection, drawn from that set only. If it does not use icons, use
+  none.
+- No new npm packages, no new fonts, no new colour values. Everything
+  comes from existing tokens or variables.
+- Keep the section as one self contained component in the same
+  directory and naming convention as the site's other homepage
+  sections.
+
+ACCESSIBILITY AND QUALITY
+- Semantic markup: a section element, one h2 for the heading, h3 for
+  each subheading.
+- Body text at the site's existing base size or larger. Do not shrink
+  text to make the three columns fit; let them wrap instead.
+- Verify contrast against whichever background you place it on.
+- Test at 375px, 768px, 1280px, and 1920px before you finish.
+
+DELIVERABLE
+Show me the new component file and the one line diff where it is
+imported into the homepage. Do not touch any other section.
