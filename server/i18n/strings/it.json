@@ -155,7 +155,7 @@
   "Clear message and focused page": "Messaggio chiaro e pagina mirata",
   "Editable site you own": "Sito modificabile di tua proprietà",
   "<span class=\"popular-badge-dot\"></span>Best for tangible proof": "<span class=\"popular-badge-dot\"></span>Ideale per una prova concreta",
-  "Web &middot; Mobile &middot; Actions": "Web &middot; Mobile &middot; Azioni",
+  "Responsive Web &middot; Actions": "Web responsive · Azioni",
   "Prototype": "Prototipo",
   "Make the idea real enough to react to": "Rendi l’idea abbastanza concreta da suscitare reazioni",
   "Interactive proof for validation": "Prova interattiva per la validazione",
@@ -518,5 +518,5 @@
   "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.": "I file nativi del progetto vengono consegnati insieme al resto del codice. Xcode e Android Studio, con tutto il codice sorgente, nel tuo account. La maggior parte degli app builder mantiene il livello nativo bloccato in una piattaforma che noleggi. Se te ne vai, porti via un'app web e devi ricominciare da capo con il mobile. Qui, se cresci oltre lo studio, il tuo prossimo team apre i progetti e continua a costruire. L'uscita è progettata fin dal primo commit.",
   "And it does not double the bill": "E non raddoppia il conto",
   "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.": "Una sola codebase significa una sola cosa da progettare, testare e mantenere. Gestiamo l'invio agli store, la firma del codice e il provisioning. Gli aggiornamenti arrivano agli utenti il giorno in cui li rilasci, non la settimana in cui termina la revisione.",
-  "Store delivery is available on Prototype and above.": "La distribuzione sugli store è disponibile da Prototype in su."
+  "Prototype is responsive web only. Native app delivery is part of the MVP package.": "Prototype è solo un'esperienza web responsive. La distribuzione di un'app nativa fa parte del pacchetto MVP."
 }

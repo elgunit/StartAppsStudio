@@ -155,7 +155,7 @@
   "Clear message and focused page": "Понятное сообщение и сфокусированная страница",
   "Editable site you own": "Редактируемый сайт в вашей собственности",
   "<span class=\"popular-badge-dot\"></span>Best for tangible proof": "<span class=\"popular-badge-dot\"></span>Лучший способ получить осязаемое подтверждение",
-  "Web &middot; Mobile &middot; Actions": "Веб &middot; Мобильные приложения &middot; Действия",
+  "Responsive Web &middot; Actions": "Адаптивный Web · Действия",
   "Prototype": "Прототип",
   "Make the idea real enough to react to": "Сделайте идею достаточно реальной для реакции",
   "Interactive proof for validation": "Интерактивное подтверждение для валидации",
@@ -518,5 +518,5 @@
   "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.": "Файлы нативного проекта передаются вместе с остальным кодом. Xcode и Android Studio, полный исходный код, находятся в вашем аккаунте. Большинство конструкторов приложений запирают нативный слой на платформе, которую вы арендуете. Уходя, вы забираете веб-приложение и начинаете мобильную часть заново. Здесь следующая команда сможет открыть проекты и продолжить работу, когда вы перерастёте студию. Возможность выйти заложена с первого коммита.",
   "And it does not double the bill": "И это не удваивает счёт",
   "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.": "Одна кодовая база означает один объект для дизайна, тестирования и поддержки. Публикация в магазинах, подпись кода и provisioning берём на себя. Обновления доходят до пользователей в день выпуска, а не на той неделе, когда до них добирается проверка.",
-  "Store delivery is available on Prototype and above.": "Публикация в магазинах доступна для Prototype и выше."
+  "Prototype is responsive web only. Native app delivery is part of the MVP package.": "Prototype — это только адаптивный веб-интерфейс. Публикация нативного приложения входит в пакет MVP."
 }

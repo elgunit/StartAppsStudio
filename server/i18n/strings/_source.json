@@ -780,7 +780,7 @@
     "context": "div.popular-badge"
   },
   {
-    "key": "Web &middot; Mobile &middot; Actions",
+    "key": "Responsive Web &middot; Actions",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -925,7 +925,7 @@
     "context": "p"
   },
   {
-    "key": "Store delivery is available on Prototype and above.",
+    "key": "Prototype is responsive web only. Native app delivery is part of the MVP package.",
     "kind": "unit",
     "context": "p.native-delivery-note"
   },

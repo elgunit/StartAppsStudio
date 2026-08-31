@@ -155,7 +155,7 @@
   "Clear message and focused page": "Aydın mesaj və fokuslanmış səhifə",
   "Editable site you own": "Sahibi olduğunuz redaktə olunan sayt",
   "<span class=\"popular-badge-dot\"></span>Best for tangible proof": "<span class=\"popular-badge-dot\"></span>Konkret sübut üçün ən yaxşı seçim",
-  "Web &middot; Mobile &middot; Actions": "Veb &middot; Mobil &middot; Fəaliyyətlər",
+  "Responsive Web &middot; Actions": "Responsiv Veb &middot; Fəaliyyətlər",
   "Prototype": "Prototip",
   "Make the idea real enough to react to": "İdeyaya reaksiya vermək üçün onu kifayət qədər real edin",
   "Interactive proof for validation": "Validasiya üçün interaktiv sübut",
@@ -518,5 +518,5 @@
   "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.": "Native layihə faylları kodunuzun qalan hissəsi ilə birlikdə təhvil verilir. Xcode və Android Studio, tam mənbə kodu, sizin hesabınızda. Əksər tətbiq qurucuları native qatı kirayə götürdüyünüz platformada kilidli saxlayır. Ayrılsanız, veb tətbiqlə qalır və mobili yenidən başlamaq məcburiyyətində olursunuz. Burada studiyanı keçən növbəti komandanız layihələri açıb davam edə bilər. Çıxış ilk commit-dən planlaşdırılır.",
   "And it does not double the bill": "Və bu, hesabı ikiqat etmir",
   "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.": "Bir kod bazası dizayn ediləcək, test ediləcək və saxlanılacaq bir şey deməkdir. Mağazaya göndəriş, kod imzalama və provisioning işləri həll olunur. Yeniləmələr yoxlamanın tamamlandığı həftəni gözləmədən, yayımladığınız gün istifadəçilərinizə çatır.",
-  "Store delivery is available on Prototype and above.": "Mağazalara çatdırılma Prototype və yuxarı paketlərdə mövcuddur."
+  "Prototype is responsive web only. Native app delivery is part of the MVP package.": "Prototip yalnız responsiv veb təcrübəsidir. Native tətbiq çatdırılması MVP paketinin bir hissəsidir."
 }

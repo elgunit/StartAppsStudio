@@ -155,7 +155,7 @@
   "Clear message and focused page": "清晰的信息与聚焦的页面",
   "Editable site you own": "归你所有的可编辑网站",
   "<span class=\"popular-badge-dot\"></span>Best for tangible proof": "<span class=\"popular-badge-dot\"></span>最适合提供具体证明",
-  "Web &middot; Mobile &middot; Actions": "Web &middot; 移动端 &middot; 操作",
+  "Responsive Web &middot; Actions": "响应式 Web · 操作",
   "Prototype": "原型",
   "Make the idea real enough to react to": "让想法真实到足以获得反馈",
   "Interactive proof for validation": "用于验证的互动证明",
@@ -518,5 +518,5 @@
   "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.": "原生项目文件会与其余代码一起交付。Xcode 和 Android Studio 项目及完整源代码都在你的账号中。大多数应用构建工具会把原生层锁在你租用的平台里。离开后，你只带走一个 Web 应用，还要从头开始移动端开发。在这里，当你发展到超出工作室服务范围时，下一支团队可以打开这些项目并继续构建。从第一次提交代码开始，我们就把退出路径设计好了。",
   "And it does not double the bill": "而且成本不会翻倍",
   "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.": "一套代码库意味着只需设计、测试和维护一套产品。应用商店提交、代码签名和配置由我们处理。更新会在你发布的当天到达用户手中，而不是等到审核完成的那一周。",
-  "Store delivery is available on Prototype and above.": "Prototype 及以上方案支持应用商店交付。"
+  "Prototype is responsive web only. Native app delivery is part of the MVP package.": "Prototype 仅提供响应式 Web 体验。原生应用交付包含在 MVP 方案中。"
 }
