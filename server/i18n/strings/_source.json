@@ -885,6 +885,51 @@
     "context": "div.special-details"
   },
   {
+    "key": "One build. Web, iOS, and Android.",
+    "kind": "unit",
+    "context": "h2#nativeDeliveryTitle.section-title"
+  },
+  {
+    "key": "Most studios treat mobile as a second project. New codebase, new budget, new timeline, and a version of your product that drifts out of sync with the web one by month three. That is not how these ship. Your product is built once. When it needs to live on a phone, the same build goes to the App Store and Google Play as a real native binary with real device access.",
+    "kind": "unit",
+    "context": "p.native-delivery-lead"
+  },
+  {
+    "key": "What that actually means",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Face ID and Touch ID sign in. Push notifications that reach people who are not looking at their inbox. Background location. Native camera and photo library. In app purchases billed through Apple and Google, so you keep the conversion rate that comes with a payment sheet people already trust. Encrypted storage that survives a reinstall. Offline media that works on a plane. Not a bookmark with an icon. A signed binary in both stores.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "You own the whole thing",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "And it does not double the bill",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Store delivery is available on Prototype and above.",
+    "kind": "unit",
+    "context": "p.native-delivery-note"
+  },
+  {
     "key": "Start a conversation",
     "kind": "attr",
     "context": "div.mid-cta-bridge[aria-label]"

@@ -1861,6 +1861,73 @@
       .price-card.featured { border-color: var(--dominant); border-width: 2px; padding-top: calc(var(--space-3) + 18px); }
       .price-card.expanded { border-color: var(--dominant); }
 
+      /* Native delivery */
+      .native-delivery-section {
+        padding: clamp(40px, 6vw, 76px) clamp(20px, 4vw, 64px);
+        overflow: hidden;
+      }
+      .native-delivery-section::before {
+        background:
+          radial-gradient(ellipse 70% 80% at 10% 0%, color-mix(in srgb, var(--dominant) 12%, transparent), transparent 70%),
+          linear-gradient(145deg, color-mix(in srgb, var(--support) 68%, var(--surface)) 0%, var(--surface) 72%) !important;
+        border-color: color-mix(in srgb, var(--dominant) 24%, var(--line)) !important;
+      }
+      .native-delivery-inner {
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+      .native-delivery-lead {
+        max-width: 72ch;
+        margin: 0 auto var(--space-4);
+        color: var(--muted);
+        text-align: center;
+        font-size: var(--type-body);
+        line-height: 1.65;
+        text-wrap: balance;
+      }
+      .native-delivery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-3);
+      }
+      .native-delivery-card {
+        padding: var(--space-3);
+        background: color-mix(in srgb, var(--surface) 68%, transparent);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        box-shadow: 0 12px 30px -20px color-mix(in srgb, var(--dominant) 32%, transparent);
+      }
+      .native-delivery-card h3 {
+        margin: 0 0 var(--space-2);
+        font-size: var(--type-h3);
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.15;
+        text-wrap: balance;
+      }
+      .native-delivery-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: var(--type-body);
+        line-height: 1.65;
+      }
+      .native-delivery-note {
+        margin: var(--space-4) auto 0;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .native-delivery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .native-delivery-card:last-child {
+          grid-column: 1 / -1;
+          max-width: calc(50% - var(--space-3) / 2);
+          justify-self: center;
+        }
+      }
+
       /* The featured card reserves 18px for its pin and carries a 2px border.
          Offset the neighboring cards on desktop so their content aligns with
          the featured card instead of stopping short at the bottom. */
@@ -3916,6 +3983,9 @@
         .modal-content { padding: 24px 16px; }
         .app-section { padding: 24px 16px; margin-bottom: 48px; }
         .store-btn { padding: 10px 16px; gap: 8px; }
+        .native-delivery-section { padding: 36px 18px 40px; }
+        .native-delivery-grid { grid-template-columns: 1fr; gap: 14px; }
+        .native-delivery-card { padding: 24px 20px; }
       }
       /* ── Narrow phone pass (320–390px) ─────────────────────────── */
       @media (max-width: 390px) {
@@ -7343,6 +7413,29 @@
           </div>
         </div>
 
+      </section>
+
+      <!-- Native delivery -->
+      <section class="section native-delivery-section" id="native-delivery" aria-labelledby="nativeDeliveryTitle" data-section-name="native-delivery">
+        <div class="native-delivery-inner">
+          <h2 class="section-title" id="nativeDeliveryTitle">One build. Web, iOS, and Android.</h2>
+          <p class="native-delivery-lead">Most studios treat mobile as a second project. New codebase, new budget, new timeline, and a version of your product that drifts out of sync with the web one by month three. That is not how these ship. Your product is built once. When it needs to live on a phone, the same build goes to the App Store and Google Play as a real native binary with real device access.</p>
+          <div class="native-delivery-grid">
+            <article class="native-delivery-card">
+              <h3>What that actually means</h3>
+              <p>Face ID and Touch ID sign in. Push notifications that reach people who are not looking at their inbox. Background location. Native camera and photo library. In app purchases billed through Apple and Google, so you keep the conversion rate that comes with a payment sheet people already trust. Encrypted storage that survives a reinstall. Offline media that works on a plane. Not a bookmark with an icon. A signed binary in both stores.</p>
+            </article>
+            <article class="native-delivery-card">
+              <h3>You own the whole thing</h3>
+              <p>Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.</p>
+            </article>
+            <article class="native-delivery-card">
+              <h3>And it does not double the bill</h3>
+              <p>One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.</p>
+            </article>
+          </div>
+          <p class="native-delivery-note">Store delivery is available on Prototype and above.</p>
+        </div>
       </section>
       
             <!-- Mid-page CTA bridge -->
