@@ -190,6 +190,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "Coaching and tracking app hero design",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
     "key": "SaaS · Rescue Build",
     "kind": "attr",
     "context": "div.showcase-card[data-category]"
@@ -213,6 +218,11 @@
     "key": "Demo-ready in 11 days · Contract signed",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Operations dashboard hero design",
+    "kind": "attr",
+    "context": "img[alt]"
   },
   {
     "key": "Fintech · Web Platform",
@@ -240,6 +250,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "Payments and ledger MVP hero design",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
     "key": "Education · Web App",
     "kind": "attr",
     "context": "div.showcase-card[data-category]"
@@ -263,6 +278,11 @@
     "key": "First cohort sold out at launch",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Course platform hero design",
+    "kind": "attr",
+    "context": "img[alt]"
   },
   {
     "key": "Real Estate · iOS &amp; Android",
@@ -290,6 +310,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "Property discovery app hero design",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
     "key": "Pitch Prototype · Web",
     "kind": "attr",
     "context": "div.showcase-card[data-category]"
@@ -313,6 +338,11 @@
     "key": "Demo live in 9 days · Meeting secured",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "Investor-ready demo hero design",
+    "kind": "attr",
+    "context": "img[alt]"
   },
   {
     "key": "See more builds",
@@ -505,7 +535,7 @@
     "context": "p"
   },
   {
-    "key": "Search strategy · 1–2 weeks",
+    "key": "Focused sprint · 1–2 weeks",
     "kind": "unit",
     "context": "span.growth-time-badge"
   },
@@ -520,7 +550,7 @@
     "context": "p"
   },
   {
-    "key": "Focused sprint · 1–2 weeks",
+    "key": "Search strategy · 1–2 weeks",
     "kind": "unit",
     "context": "span.growth-time-badge"
   },
@@ -705,12 +735,12 @@
     "context": "p"
   },
   {
-    "key": "Choose the next move",
+    "key": "Choose the milestone your product needs next",
     "kind": "unit",
     "context": "h2.section-title"
   },
   {
-    "key": "Whether you need to look credible, prove the idea, learn from real users, or build the larger product, start with the smallest route that moves you forward.",
+    "key": "Launch the story, make the idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Start with the smallest route that earns the next decision.",
     "kind": "unit",
     "context": "p.section-subtitle"
   },
@@ -725,32 +755,32 @@
     "context": "div.price-title"
   },
   {
-    "key": "Look credible before you build the whole product",
+    "key": "For a founder who needs a credible story before building the full product",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "A polished launch page that explains the idea clearly",
+    "key": "Credibility for your next launch, partner, or customer conversation",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A live, editable site you can share with customers and partners",
+    "key": "A clear message and focused page that makes the idea easy to understand",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Built and handed over in your Lovable or Replit account",
+    "key": "An editable site in your account that you own and can build from",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "<span class=\"popular-badge-dot\"></span>Best for proving the idea",
+    "key": "<span class=\"popular-badge-dot\"></span>Best for making the idea tangible",
     "kind": "unit",
     "context": "div.popular-badge"
   },
   {
-    "key": "Figma &middot; Mobile &middot; Live infra",
+    "key": "Figma &middot; Clickable &middot; Live infra",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -760,22 +790,22 @@
     "context": "div.price-title"
   },
   {
-    "key": "Give people something real to react to",
+    "key": "For a founder who needs people to experience the idea, not hear another pitch",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "A clickable product story people can understand in minutes",
+    "key": "Validation from a product people can actually react to",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Real navigation and data for investor or customer conversations",
+    "key": "A realistic flow for investor, partner, or customer conversations",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Figma system and source code you can keep building from",
+    "key": "A Figma system and source code you can keep building from",
     "kind": "text",
     "context": "div.price-feature"
   },
@@ -790,22 +820,22 @@
     "context": "div.price-title"
   },
   {
-    "key": "Put the first real version in users' hands",
+    "key": "For a team ready to put a real product in front of real users",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "Core flows designed around the people you need to serve",
+    "key": "User learning from the core flows that matter most",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Accounts, payments, and data when the product needs them",
+    "key": "Accounts, payments, and data where they support the first useful release",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A launch-ready codebase, accounts, and handoff you own",
+    "key": "A launch-ready product, accounts, and handoff you own",
     "kind": "text",
     "context": "div.price-feature"
   },
@@ -825,32 +855,32 @@
     "context": "div.special-pricing"
   },
   {
-    "key": "For funded teams or complex products that need a bespoke system, not a quick first version. We bring product strategy, architecture, and hand-built execution together across a 1–6 month engagement.",
+    "key": "For a funded team or complex requirement that needs a bespoke product and one accountable partner. Start with a $45,000+ engagement or fund a 1–6 month build through a monthly retainer, with strategy, architecture, and hand-built delivery kept together.",
     "kind": "unit",
     "context": "p.special-summary"
   },
   {
-    "key": "Architecture shaped around your product",
+    "key": "A product approach shaped around the stage ahead",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "Hand-written web and mobile experience",
+    "key": "A hand-built web or mobile product for the requirements that matter",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "A product partner accountable through launch",
+    "key": "One accountable partner through launch and the next decision",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "Separate data layer with room to grow",
+    "key": "An ownership-ready foundation with room to grow",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product to build, a complex system to untangle, or a need for one accountable partner.",
+    "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product to build, a complex requirement to untangle, or a need for one accountable partner through the next stage.",
     "kind": "unit",
     "context": "div.special-details"
   },
@@ -860,7 +890,7 @@
     "context": "div.mid-cta-bridge[aria-label]"
   },
   {
-    "key": "<span class=\"mid-cta-heading\">Ready to scope your project?</span> <span class=\"mid-cta-sub\">You'll get a plan, a price, and a timeline back within 24 hours.</span>",
+    "key": "<span class=\"mid-cta-heading\">Know which milestone comes next?</span> <span class=\"mid-cta-sub\">Tell us where you are and you'll get a recommended route, price, and timeline within 24 hours.</span>",
     "kind": "unit",
     "context": "div.mid-cta-text"
   },
@@ -1890,6 +1920,26 @@
     "context": "span.form-section-title"
   },
   {
+    "key": "Launch Site · credible story",
+    "kind": "unit",
+    "context": "span.budget-tier"
+  },
+  {
+    "key": "Prototype · tangible proof",
+    "kind": "unit",
+    "context": "span.budget-tier"
+  },
+  {
+    "key": "MVP · real user learning",
+    "kind": "unit",
+    "context": "span.budget-tier"
+  },
+  {
+    "key": "Custom · bespoke next stage",
+    "kind": "unit",
+    "context": "span.budget-tier"
+  },
+  {
     "key": "What you're working on",
     "kind": "unit",
     "context": "span.form-section-title"
@@ -2020,7 +2070,7 @@
     "context": "h2#faqTitle.faq-title"
   },
   {
-    "key": "Pricing, timelines, scope, ownership, and what happens after launch.",
+    "key": "Pricing, timelines, and what each route lets you do next.",
     "kind": "unit",
     "context": "p.faq-subtitle"
   },
@@ -2030,7 +2080,7 @@
     "context": "summary"
   },
   {
-    "key": "We keep the public path simple: a $2,000 Launch Site for a credible launch presence, a $7,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $10,000 to $30,000 to put a real product in users' hands, and Custom from $45,000 or monthly retainer for bespoke work. Each starts with a clear scope and fixed price, so you know what the next step costs before we begin.",
+    "key": "The public path has four routes: a $1,800 Launch Site for a credible story before the full product, a $5,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $9,000 to $30,000 to put a real product in users' hands, and Custom from $45,000+ or monthly retainer for a bespoke system. We agree on scope and price before work starts, so you know the investment behind the next milestone.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2040,7 +2090,7 @@
     "context": "summary"
   },
   {
-    "key": "MVPs ship in 3 to 8 weeks from kickoff, depending on scope. Launch Sites are typically delivered in 3 to 5 business days and Prototypes in 5 to 10 days. We work in tight weekly cycles with shared previews so you see progress every few days, not at the end.",
+    "key": "The MVP route typically ships in 3 to 8 weeks from kickoff, depending on scope. Launch Sites are typically delivered in 3 to 5 business days and Prototypes in 5 to 10 days. We work in tight weekly cycles with shared previews, so you can make the next decision from what you see rather than waiting until the end.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2050,7 +2100,7 @@
     "context": "summary"
   },
   {
-    "key": "An MVP includes product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough of how everything is wired together so a future team can pick it up.",
+    "key": "An MVP gives you the core product to learn from with real users: product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough so a future team can pick up the next stage.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2080,7 +2130,7 @@
     "context": "summary"
   },
   {
-    "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
+    "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, you can run with the codebase, bring in an in-house engineer, or keep us accountable for the next stage through a monthly retainer. For larger or more complex products, Custom engagements can be structured around the 1–6 month build you need.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2100,7 +2150,7 @@
     "context": "summary"
   },
   {
-    "key": "Absolutely. Pitch prototypes are one of our most common engagements. We build a polished, interactive app on real infrastructure that investors can tap through on their phone. We scope it to your deck timeline: typically 5 to 10 days for a Figma-led clickable prototype and 3 to 5 weeks for a fully functional pre-seed demo.",
+    "key": "Yes. If people need to experience the idea before you build the full product, the $5,000 Prototype gives investors, partners, or customers something interactive to react to. It typically takes 5 to 10 days for a Figma-led clickable prototype; if you need real users to use the product, an MVP is the better route and typically takes 3 to 8 weeks.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2110,7 +2160,7 @@
     "context": "summary"
   },
   {
-    "key": "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
+    "key": "Yes. If your next milestone is a credible launch or marketing presence, our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2445,7 +2495,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Founder-led studio building launch sites, Figma-led prototypes, and shippable MVPs for non-technical founders in 3 to 8 weeks.",
+    "key": "Founder-led studio helping non-technical founders choose the right next milestone: a credible launch story, a tangible product proof, a real MVP, or a bespoke system.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2455,27 +2505,47 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A polished, responsive launch site that makes the idea clear, earns trust, and is ready to share.",
+    "key": "For founders who need a credible launch or marketing presence before building the full product.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A clickable product experience for validation, fundraising, and early customer conversations.",
+    "key": "For founders who need people, partners, or investors to experience the idea instead of hearing another pitch.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A launch-ready product for real users, with strategy behind the core flows and ownership handed over.",
+    "key": "For teams ready to put a real product in front of real users and learn from usage.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Custom-Scale",
+    "key": "For funded teams or complex requirements that need a bespoke, hand-built product and longer-term accountability.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A bespoke, hand-built product for funded teams or complex requirements, with one accountable partner from scope to launch.",
+    "key": "MVPs ship in 3 to 8 weeks from kickoff, depending on scope. Launch Sites are typically delivered in 3 to 5 business days and Prototypes in 5 to 10 days. We work in tight weekly cycles with shared previews so you see progress every few days, not at the end.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "An MVP includes product design, a working iOS, Android, or web app, authentication, a database, payments where relevant, deployment to your accounts, and a basic landing page. You get the source code, a written handoff doc, and a walkthrough of how everything is wired together so a future team can pick it up.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Absolutely. Pitch prototypes are one of our most common engagements. We build a polished, interactive app on real infrastructure that investors can tap through on their phone. We scope it to your deck timeline: typically 5 to 10 days for a Figma-led clickable prototype and 3 to 5 weeks for a fully functional pre-seed demo.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Yes. Our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   }

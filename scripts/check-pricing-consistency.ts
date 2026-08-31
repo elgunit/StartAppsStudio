@@ -17,16 +17,16 @@ const sourceFile = "server/i18n/strings/_source.json";
 
 const currentPrices = {
   "Launch Site": {
-    template: "$2,000",
-    journal: "$2,000",
+    template: "$1,800",
+    journal: "$1,800",
   },
   Prototype: {
-    template: "$7,000",
-    journal: "$7,000",
+    template: "$5,000",
+    journal: "$5,000",
   },
   MVP: {
-    template: "$10,000–$30,000",
-    journal: "$10,000 to $30,000",
+    template: "$9,000–$30,000",
+    journal: "$9,000 to $30,000",
   },
   Custom: {
     template: "$45,000+",
@@ -40,7 +40,7 @@ const currentPrices = {
  * localizer skips numeric price classes.
  */
 const pricingTranslationKeys = [
-  "Choose the next move",
+  "Choose the milestone your product needs next",
   "Launch Site",
   "Prototype",
   "MVP",
@@ -51,8 +51,8 @@ const pricingTranslationKeys = [
   "How much does it cost to work with Start Apps Studio?",
   "What is included in the price?",
   "Scope and price are agreed before work starts.",
-  "We keep the public path simple: a $2,000 Launch Site for a credible launch presence, a $7,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $10,000 to $30,000 to put a real product in users' hands, and Custom from $45,000 or monthly retainer for bespoke work. Each starts with a clear scope and fixed price, so you know what the next step costs before we begin.",
-  "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
+  "The public path has four routes: a $1,800 Launch Site for a credible story before the full product, a $5,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $9,000 to $30,000 to put a real product in users' hands, and Custom from $45,000+ or monthly retainer for a bespoke system. We agree on scope and price before work starts, so you know the investment behind the next milestone.",
+  "Yes. If your next milestone is a credible launch or marketing presence, our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
 ] as const;
 
 type JsonRecord = Record<string, unknown>;
@@ -196,9 +196,9 @@ function checkTemplate(template: string): void {
 
   const pricingSurface = `${templatePricing}\n${templateContact}\n${templateFaq}`;
   const templateAllowedPrices = new Set([
-    "$2,000",
-    "$7,000",
-    "$10,000",
+    "$1,800",
+    "$5,000",
+    "$9,000",
     "$30,000",
     "$45,000",
     "$45,000+",
@@ -208,19 +208,19 @@ function checkTemplate(template: string): void {
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">Launch Site<\/div>[\s\S]{0,300}<div class="price-amount">\$2,000<\/div>/,
+    /<div class="price-title">Launch Site<\/div>[\s\S]{0,300}<div class="price-amount">\$1,800<\/div>/,
     `Launch Site anchor ${currentPrices["Launch Site"].template}`,
   );
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">Prototype<\/div>[\s\S]{0,300}<div class="price-amount">\$7,000<\/div>/,
+    /<div class="price-title">Prototype<\/div>[\s\S]{0,300}<div class="price-amount">\$5,000<\/div>/,
     `Prototype anchor ${currentPrices.Prototype.template}`,
   );
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">MVP<\/div>[\s\S]{0,300}<div class="price-amount">\$10,000–\$30,000<\/div>/,
+    /<div class="price-title">MVP<\/div>[\s\S]{0,300}<div class="price-amount">\$9,000–\$30,000<\/div>/,
     `MVP anchor ${currentPrices.MVP.template}`,
   );
   requireMatch(
@@ -259,7 +259,7 @@ function checkTemplate(template: string): void {
   requireValue(
     templateFile,
     professionalService.priceRange,
-    "$2,000 - $45,000+",
+    "$1,800 - $45,000+",
     "structured price range",
   );
 
@@ -279,7 +279,7 @@ function checkTemplate(template: string): void {
   const launchOffer = offerByName.get("Launch Site");
   const prototypeOffer = offerByName.get("Prototype");
   const mvpOffer = offerByName.get("MVP");
-  const customOffer = offerByName.get("Custom-Scale");
+  const customOffer = offerByName.get("Custom");
   if (!launchOffer) {
     errors.push(
       `${displayPath(templateFile)}: structured metadata missing offer "Launch Site"`,
@@ -288,7 +288,7 @@ function checkTemplate(template: string): void {
     requireValue(
       templateFile,
       launchOffer.price,
-      "2000",
+      "1800",
       'Launch Site "price"',
     );
   }
@@ -300,7 +300,7 @@ function checkTemplate(template: string): void {
     requireValue(
       templateFile,
       prototypeOffer.price,
-      "7000",
+      "5000",
       'Prototype "price"',
     );
   }
@@ -313,7 +313,7 @@ function checkTemplate(template: string): void {
     requireValue(
       templateFile,
       specification?.minPrice,
-      "10000",
+      "9000",
       'MVP "minPrice"',
     );
     requireValue(
@@ -325,7 +325,7 @@ function checkTemplate(template: string): void {
   }
   if (!customOffer) {
     errors.push(
-      `${displayPath(templateFile)}: structured metadata missing offer "Custom-Scale"`,
+      `${displayPath(templateFile)}: structured metadata missing offer "Custom"`,
     );
   } else {
     const specification = customOffer.priceSpecification as
@@ -335,7 +335,7 @@ function checkTemplate(template: string): void {
       templateFile,
       specification?.minPrice,
       "45000",
-      'Custom-Scale "minPrice"',
+      'Custom "minPrice"',
     );
   }
 
@@ -346,7 +346,7 @@ function checkTemplate(template: string): void {
     checkCurrencyTokens(
       templateFile,
       structuredPricing,
-    new Set(["$2,000", "$45,000+"]),
+      new Set(["$1,800", "$45,000+"]),
     );
   }
 }
@@ -369,9 +369,9 @@ function checkJournal(journal: string): void {
 
   const journalPricing = `${llms}\n${llmsFull}`;
   const journalAllowedPrices = new Set([
-    "$2,000",
-    "$7,000",
-    "$10,000",
+    "$1,800",
+    "$5,000",
+    "$9,000",
     "$30,000",
     "$45,000+",
   ]);
