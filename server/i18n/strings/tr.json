@@ -511,7 +511,7 @@
   "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.": "Evet. $2,000 Launch Site, tam ürünü geliştirme taahhüdü olmadan size özenli ve responsive bir web sitesi sunar. Mesajı ve sayfayı kitlenize göre şekillendirir, Lovable veya Replit hesabınızda geliştirir ve 3–5 iş gününde düzenlenebilir şekilde teslim ederiz."
 ,
   "Shared core. Web, iOS, and Android.": "Ortak çekirdek. Web, iOS ve Android.",
-  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.": "Prototip fikri responsive bir web uygulamasında kanıtlar. MVP, ortak web uygulaması çekirdeğini Web, iOS ve Android'de gerçek kullanıcıların eline ulaştırır; her platform için native UI ve UX geliştirilir.",
+  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.": "Prototip fikri responsive bir web uygulamasında kanıtlar. MVP, ortak web uygulaması çekirdeğini Web, iOS ve Android'de gerçek kullanıcıların eline ulaştırır; her platform için native UI ve UX geliştirilir.",
   "See how the shared core scales": "Ortak çekirdeğin nasıl ölçeklendiğini görün",
   "Close native delivery details": "Native uygulama teslimatı ayrıntılarını kapat",
   "One shared core. Three experiences.": "Tek ortak çekirdek. Üç deneyim.",
@@ -556,7 +556,7 @@
   "Project files": "Proje dosyaları",
   "Xcode": "Xcode",
   "Android Studio": "Android Studio",
-  "Your native project files and full source code are handed over to you—not locked inside a rental platform.": "Native proje dosyalarınız ve tam kaynak kodunuz size teslim edilir; kiralık bir platformun içinde kilitli kalmaz.",
+  "Your native project files and full source code are handed over to you, not locked inside a rental platform.": "Native proje dosyalarınız ve tam kaynak kodunuz size teslim edilir; kiralık bir platformun içinde kilitli kalmaz.",
   "Open the project in Xcode or Android Studio": "Projeyi Xcode veya Android Studio’da açın",
   "Keep building with your own team": "Kendi ekibinizle geliştirmeye devam edin",
   "Leave with the actual files, not just access": "Sadece erişimle değil, gerçek dosyalarla ayrılın",

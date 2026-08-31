@@ -890,7 +890,7 @@
     "context": "h2#nativeDeliveryTitle.section-title"
   },
   {
-    "key": "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.",
+    "key": "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.",
     "kind": "unit",
     "context": "p.native-delivery-lead"
   },
@@ -1100,7 +1100,7 @@
     "context": "h3"
   },
   {
-    "key": "Your native project files and full source code are handed over to you—not locked inside a rental platform.",
+    "key": "Your native project files and full source code are handed over to you, not locked inside a rental platform.",
     "kind": "unit",
     "context": "p.native-proof-description"
   },
@@ -1410,7 +1410,7 @@
     "context": "button.why-compare-btn"
   },
   {
-    "key": "What the handoff looks like",
+    "key": "Your handoff",
     "kind": "unit",
     "context": "div.cmp-eyebrow"
   },
@@ -1418,11 +1418,6 @@
     "key": "A handoff you can own",
     "kind": "unit",
     "context": "span.cmp-tab-full"
-  },
-  {
-    "key": "Your handoff",
-    "kind": "unit",
-    "context": "span.cmp-tab-short"
   },
   {
     "key": "Questions worth asking",

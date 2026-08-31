@@ -511,7 +511,7 @@
   "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.": "Bəli. $2,000-lıq Açılış saytı tam məhsulun hazırlanmasına öhdəlik götürmədən sizə peşəkar, adaptiv veb-sayt verir. Mesajı və səhifəni auditoriyanıza uyğunlaşdırır, onu Lovable və ya Replit hesabınızda hazırlayır, sonra 3–5 iş gününə redaktəolunan saytı yayımlayıb təhvil veririk."
 ,
   "Shared core. Web, iOS, and Android.": "Ortaq əsas. Veb, iOS və Android.",
-  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.": "Prototip ideyanı responsiv veb tətbiqində sübut edir. MVP isə ortaq veb tətbiqi əsasını Veb, iOS və Android üzərindən real istifadəçilərə çatdırır; hər platforma üçün native UI və UX hazırlanır.",
+  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.": "Prototip ideyanı responsiv veb tətbiqində sübut edir. MVP isə ortaq veb tətbiqi əsasını Veb, iOS və Android üzərindən real istifadəçilərə çatdırır; hər platforma üçün native UI və UX hazırlanır.",
   "See how the shared core scales": "Ortaq əsasın necə genişləndiyini görün",
   "Close native delivery details": "Native çatdırılma təfərrüatlarını bağla",
   "One shared core. Three experiences.": "Bir ortaq əsas. Üç təcrübə.",
@@ -556,7 +556,7 @@
   "Project files": "Layihə faylları",
   "Xcode": "Xcode",
   "Android Studio": "Android Studio",
-  "Your native project files and full source code are handed over to you—not locked inside a rental platform.": "Native layihə fayllarınız və tam mənbə kodunuz sizə təhvil verilir — kirayə platformasında kilidlənmir.",
+  "Your native project files and full source code are handed over to you, not locked inside a rental platform.": "Native layihə fayllarınız və tam mənbə kodunuz sizə təhvil verilir, kirayə platformasında kilidlənmir.",
   "Open the project in Xcode or Android Studio": "Layihəni Xcode və ya Android Studio-da açın",
   "Keep building with your own team": "Öz komandanızla qurmağa davam edin",
   "Leave with the actual files, not just access": "Sadəcə girişlə deyil, real fayllarla ayrılın",

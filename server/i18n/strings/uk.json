@@ -511,7 +511,7 @@
   "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.": "Так. Launch Site за $2,000 дає вам якісний адаптивний сайт без зобов’язання створювати весь продукт. Ми адаптуємо повідомлення й сторінку до аудиторії, створюємо їх у вашому акаунті Lovable або Replit і передаємо редагований сайт за 3–5 робочих днів."
 ,
   "Shared core. Web, iOS, and Android.": "Спільне ядро. Web, iOS та Android.",
-  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.": "Прототип підтверджує ідею в адаптивному вебзастосунку. MVP переносить спільне ядро вебзастосунку до реальних користувачів у Web, iOS та Android, із нативними UI та UX для кожної платформи.",
+  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.": "Прототип підтверджує ідею в адаптивному вебзастосунку. MVP переносить спільне ядро вебзастосунку до реальних користувачів у Web, iOS та Android, із нативними UI та UX для кожної платформи.",
   "See how the shared core scales": "Переглянути, як масштабується спільне ядро",
   "Close native delivery details": "Закрити подробиці нативної доставки",
   "One shared core. Three experiences.": "Одне спільне ядро. Три інтерфейси.",
@@ -556,7 +556,7 @@
   "Project files": "Файли проєкту",
   "Xcode": "Xcode",
   "Android Studio": "Android Studio",
-  "Your native project files and full source code are handed over to you—not locked inside a rental platform.": "Ваші нативні файли проєкту та повний вихідний код передаються вам, а не блокуються всередині орендованої платформи.",
+  "Your native project files and full source code are handed over to you, not locked inside a rental platform.": "Ваші нативні файли проєкту та повний вихідний код передаються вам, а не блокуються всередині орендованої платформи.",
   "Open the project in Xcode or Android Studio": "Відкривайте проєкт у Xcode або Android Studio",
   "Keep building with your own team": "Продовжуйте розробку власною командою",
   "Leave with the actual files, not just access": "Забирайте справжні файли, а не лише доступ",

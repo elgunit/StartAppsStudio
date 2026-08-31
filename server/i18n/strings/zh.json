@@ -511,7 +511,7 @@
   "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.": "可以。$2,000 的 Launch Site 可以在不承诺完整产品开发的情况下，为你提供精致、响应式的网站。我们围绕你的受众打磨信息和页面，在你的 Lovable 或 Replit 账号中构建，并在 3–5 个工作日内交付可编辑网站。"
 ,
   "Shared core. Web, iOS, and Android.": "共享核心，覆盖 Web、iOS 和 Android。",
-  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.": "原型通过响应式 Web 应用验证想法。MVP 将共享的 Web 应用核心交到 Web、iOS 和 Android 的真实用户手中，并为每个平台构建原生 UI 和 UX。",
+  "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.": "原型通过响应式 Web 应用验证想法。MVP 将共享的 Web 应用核心交到 Web、iOS 和 Android 的真实用户手中，并为每个平台构建原生 UI 和 UX。",
   "See how the shared core scales": "看看共享核心如何扩展",
   "Close native delivery details": "关闭原生交付详情",
   "One shared core. Three experiences.": "一个共享核心，三种体验。",
@@ -556,7 +556,7 @@
   "Project files": "项目文件",
   "Xcode": "Xcode",
   "Android Studio": "Android Studio",
-  "Your native project files and full source code are handed over to you—not locked inside a rental platform.": "你的原生项目文件和完整源代码都会交付给你，不会被锁在租用的平台里。",
+  "Your native project files and full source code are handed over to you, not locked inside a rental platform.": "你的原生项目文件和完整源代码都会交付给你，不会被锁在租用的平台里。",
   "Open the project in Xcode or Android Studio": "在 Xcode 或 Android Studio 中打开项目",
   "Keep building with your own team": "与自己的团队继续构建",
   "Leave with the actual files, not just access": "带走真正的文件，而不只是访问权限",
