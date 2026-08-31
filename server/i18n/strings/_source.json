@@ -735,12 +735,12 @@
     "context": "p"
   },
   {
-    "key": "Choose the milestone your product needs next",
+    "key": "Choose your next milestone",
     "kind": "unit",
     "context": "h2.section-title"
   },
   {
-    "key": "Launch the story, make the idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Start with the smallest route that earns the next decision.",
+    "key": "A clear route for your story, prototype, first product, or bigger build.",
     "kind": "unit",
     "context": "p.section-subtitle"
   },
@@ -755,27 +755,27 @@
     "context": "div.price-title"
   },
   {
-    "key": "For a founder who needs a credible story before building the full product",
+    "key": "A credible story before the full product",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "Credibility for your next launch, partner, or customer conversation",
+    "key": "Credible launch story",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A clear message and focused page that makes the idea easy to understand",
+    "key": "Clear message and focused page",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "An editable site in your account that you own and can build from",
+    "key": "Editable site you own",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "<span class=\"popular-badge-dot\"></span>Best for making the idea tangible",
+    "key": "<span class=\"popular-badge-dot\"></span>Best for tangible proof",
     "kind": "unit",
     "context": "div.popular-badge"
   },
@@ -790,22 +790,22 @@
     "context": "div.price-title"
   },
   {
-    "key": "For a founder who needs people to experience the idea, not hear another pitch",
+    "key": "Make the idea real enough to react to",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "Validation from a product people can actually react to",
+    "key": "Interactive proof for validation",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A realistic flow for investor, partner, or customer conversations",
+    "key": "Realistic flow for key conversations",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A Figma system and source code you can keep building from",
+    "key": "Figma system + source code",
     "kind": "text",
     "context": "div.price-feature"
   },
@@ -820,22 +820,22 @@
     "context": "div.price-title"
   },
   {
-    "key": "For a team ready to put a real product in front of real users",
+    "key": "Put the first real product in users' hands",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "User learning from the core flows that matter most",
+    "key": "Learn from the core user flows",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Accounts, payments, and data where they support the first useful release",
+    "key": "Accounts, payments, and data",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "A launch-ready product, accounts, and handoff you own",
+    "key": "Launch-ready product you own",
     "kind": "text",
     "context": "div.price-feature"
   },
@@ -855,32 +855,32 @@
     "context": "div.special-pricing"
   },
   {
-    "key": "For a funded team or complex requirement that needs a bespoke product and one accountable partner. Start with a $25,000+ engagement or fund a 1–6 month build through a monthly retainer, with strategy, architecture, and hand-built delivery kept together.",
+    "key": "For complex products that need one accountable partner. Choose a $25,000+ engagement or a 1–6 month retainer.",
     "kind": "unit",
     "context": "p.special-summary"
   },
   {
-    "key": "A product approach shaped around the stage ahead",
+    "key": "Strategy for the stage ahead",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "A hand-built web or mobile product for the requirements that matter",
+    "key": "Hand-built web or mobile product",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "One accountable partner through launch and the next decision",
+    "key": "One partner through launch",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "An ownership-ready foundation with room to grow",
+    "key": "Ownership-ready foundation",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product to build, a complex requirement to untangle, or a need for one accountable partner through the next stage.",
+    "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product, complex requirements, or a need for one accountable partner.",
     "kind": "unit",
     "context": "div.special-details"
   },
@@ -1920,7 +1920,7 @@
     "context": "span.form-section-title"
   },
   {
-    "key": "Launch Site · credible story",
+    "key": "Launch Site · clear story",
     "kind": "unit",
     "context": "span.budget-tier"
   },
@@ -1935,7 +1935,7 @@
     "context": "span.budget-tier"
   },
   {
-    "key": "Custom · bespoke next stage",
+    "key": "Custom · bespoke build",
     "kind": "unit",
     "context": "span.budget-tier"
   },

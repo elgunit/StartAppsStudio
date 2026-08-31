@@ -40,7 +40,7 @@ const currentPrices = {
  * localizer skips numeric price classes.
  */
 const pricingTranslationKeys = [
-  "Choose the milestone your product needs next",
+  "Choose your next milestone",
   "Launch Site",
   "Prototype",
   "MVP",

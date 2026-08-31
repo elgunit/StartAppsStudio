@@ -216,7 +216,7 @@ async function main(): Promise<void> {
       .innerText();
     assert(
       localizedHeading ===
-        "Məhsulunuzun növbəti ehtiyac duyduğu mərhələni seçin",
+       "Növbəti mərhələnizi seçin",
       `Azerbaijani pricing heading was not localized: "${localizedHeading}"`,
     );
     assert(
