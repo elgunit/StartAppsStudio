@@ -163,7 +163,7 @@
   "Every account and line of code transferred to you at launch": "Кожен акаунт і рядок коду передаються вам при запуску",
   "Handcrafted": "Ручна робота",
   "Custom": "Індивідуально",
-  "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>": "<span class=\"special-pin strong\">$30k+ або щомісячний ретейнер</span> <span class=\"special-pin\">1–6 місяців</span>",
+  "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">або щомісячний ретейнер</span> <span class=\"special-duration\">1–6 місяців</span>",
   "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.": "На 100% індивідуальний за замовленням, із фронтендом на Webflow, окремим шаром бази даних і нативною мобільною оболонкою. Код пишеться та перевіряється вручну, а не за допомогою AI, що займає більше часу та коштує дорожче.",
   "Webflow": "Webflow",
   "Hand-written HTML/CSS": "HTML/CSS, написаний вручну",

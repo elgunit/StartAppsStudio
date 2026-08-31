@@ -163,7 +163,7 @@
   "Every account and line of code transferred to you at launch": "Jeder Account und jede Zeile Code beim Launch an Sie übertragen",
   "Handcrafted": "Handgefertigt",
   "Custom": "Custom",
-  "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>": "<span class=\"special-pin strong\">$30k+ oder monatliches Retainer</span> <span class=\"special-pin\">1–6 Monate</span>",
+  "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">oder monatliches Retainer</span> <span class=\"special-duration\">1–6 Monate</span>",
   "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.": "Zu 100 % maßgeschneidert, mit einem Webflow-Frontend, einer separaten Datenbankschicht und einem nativen Mobile-Wrapper. Der Code wird von Hand geschrieben und geprüft statt KI-gestützt, was länger dauert und mehr kostet.",
   "Webflow": "Webflow",
   "Hand-written HTML/CSS": "Handgeschriebenes HTML/CSS",

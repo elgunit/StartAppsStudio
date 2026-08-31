@@ -163,7 +163,7 @@
   "Every account and line of code transferred to you at launch": "Her hesap ve kod satırı lansmanda size devredilir",
   "Handcrafted": "El İşçiliği",
   "Custom": "Özel",
-  "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>": "<span class=\"special-pin strong\">$30k+ veya aylık retainer</span> <span class=\"special-pin\">1–6 ay</span>",
+  "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">veya aylık retainer</span> <span class=\"special-duration\">1–6 ay</span>",
   "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.": "Webflow ön yüzü, ayrı bir veritabanı katmanı ve native bir mobil wrapper ile tasarımı gereği %100 özel. Kod, yapay zeka destekli yerine elle yazılır ve incelenir; bu daha uzun sürer ve daha pahalıya mal olur.",
   "Webflow": "Webflow",
   "Hand-written HTML/CSS": "Elle yazılmış HTML/CSS",

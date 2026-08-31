@@ -820,9 +820,9 @@
     "context": "h4"
   },
   {
-    "key": "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>",
+    "key": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
     "kind": "unit",
-    "context": "div.special-pins"
+    "context": "div.special-pricing"
   },
   {
     "key": "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.",

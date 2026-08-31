@@ -163,7 +163,7 @@
   "Every account and line of code transferred to you at launch": "每一个账号和每一行代码都在上线时移交给你",
   "Handcrafted": "纯手工打造",
   "Custom": "定制",
-  "<span class=\"special-pin strong\">$30k+ or monthly retainer</span> <span class=\"special-pin\">1–6 months</span>": "<span class=\"special-pin strong\">$30k+ 或按月聘用</span> <span class=\"special-pin\">1–6 个月</span>",
+  "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">或按月聘用</span> <span class=\"special-duration\">1–6 个月</span>",
   "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.": "100% 纯定制设计，采用 Webflow 前端、独立的数据库层和原生移动端外壳。代码由人工编写和审查，而非 AI 辅助，因此耗时更长、成本更高。",
   "Webflow": "Webflow",
   "Hand-written HTML/CSS": "手写 HTML/CSS",
