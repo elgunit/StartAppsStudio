@@ -3871,9 +3871,9 @@
 
       /* Native delivery detail modal */
       #nativeDeliveryModal .modal-content {
-        max-width: 980px;
-        max-height: min(90vh, 900px);
-        padding: clamp(24px, 4vw, 48px);
+        max-width: 620px;
+        max-height: 85vh;
+        padding: 34px 30px 26px;
         border-radius: var(--r-lg);
         background: var(--canvas);
         box-shadow:
@@ -3883,12 +3883,13 @@
         animation: native-delivery-modal-in 0.28s cubic-bezier(.22,.61,.36,1) both;
       }
       #nativeDeliveryModal .modal-close {
-        position: absolute;
+        position: sticky;
         top: 16px;
-        right: 16px;
-        z-index: 3;
-        float: none;
-        margin: 0;
+        display: flex;
+        width: 36px;
+        height: 36px;
+        margin: -18px 0 -18px auto;
+        z-index: 10;
       }
       @keyframes native-delivery-modal-in {
         from { opacity: 0; transform: translateY(14px) scale(0.985); }
@@ -4264,13 +4265,19 @@
       }
       @media (max-width: 600px) {
         #nativeDeliveryModal {
-          align-items: flex-end;
-          padding: max(10px, env(safe-area-inset-top, 10px)) 0 0;
+          align-items: center;
+          padding: max(24px, env(safe-area-inset-top, 24px))
+                   max(20px, env(safe-area-inset-right, 20px))
+                   max(24px, env(safe-area-inset-bottom, 24px))
+                   max(20px, env(safe-area-inset-left, 20px));
         }
         #nativeDeliveryModal .modal-content {
-          max-height: calc(100svh - 10px);
+          max-height: calc(100vh - 48px);
+          max-height: calc(100svh - 48px);
           padding: 28px 18px calc(22px + env(safe-area-inset-bottom, 0px));
-          border-radius: var(--r-lg) var(--r-lg) 0 0;
+          border-radius: var(--r-lg);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
         .native-delivery-modal-header { margin-bottom: 24px; }
         .native-delivery-modal-title { font-size: clamp(27px, 8vw, 36px); }
@@ -8703,7 +8710,7 @@
           <div class="aem-tabs" role="tablist">
             <button class="aem-tab active" id="aemTabAlone" role="tab" aria-selected="true"
               aria-controls="aemPanelAlone" onclick="switchAemTab('alone',this)">
-               Self-serve experimentation
+               Self-serve
             </button>
             <button class="aem-tab" id="aemTabManaged" role="tab" aria-selected="false"
               aria-controls="aemPanelManaged" onclick="switchAemTab('managed',this)">

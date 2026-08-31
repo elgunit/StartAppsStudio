@@ -2020,7 +2020,7 @@
     "context": "p.aem-lede"
   },
   {
-    "key": "Self-serve experimentation",
+    "key": "Self-serve",
     "kind": "unit",
     "context": "button#aemTabAlone.aem-tab"
   },
