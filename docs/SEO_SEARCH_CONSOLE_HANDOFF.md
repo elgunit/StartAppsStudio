@@ -66,6 +66,43 @@ After deploy, run each of these once to confirm the SEO pass landed:
 2. If the homepage still hasn't been indexed, re-run **URL Inspection → Request indexing**.
 3. If a journal post is performing well, consider promoting its key keyword in the homepage hero copy.
 
+## 9. Live indexing audit — 31 August 2026
+
+The production deployment at `https://startappsstudio.com` was checked after the latest publish. The
+authenticated Search Console and Bing Webmaster dashboards are not connected to this workspace, so
+the sitemap submission and URL Inspection clicks remain manual actions for the site owner.
+
+### Crawlability and canonical checks
+
+| URL group                                                                     | Result                                                                                                                                    |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Homepage `/`                                                                  | `200`; `lang="en"`; canonical is `https://startappsstudio.com/`; `index, follow`                                                          |
+| Localized pages `/az`, `/tr`, `/ru`, `/zh`, `/fr`, `/es`, `/de`, `/uk`, `/it` | All `200`; each has its matching HTML language, self-canonical, `index, follow`, all ten reciprocal hreflang links, and `x-default` → `/` |
+| English override `/en`                                                        | `302` → `/`; not present in the sitemap                                                                                                   |
+| `sitemap.xml`                                                                 | `200`; 20 URLs total, including the homepage, all nine prefixed locales, Journal, and Journal posts; no `/en` entry                       |
+| `robots.txt`                                                                  | `200`; allows `/`, disallows `/api/` and `/admin/`, and references `https://startappsstudio.com/sitemap.xml`                              |
+| Alternate domains                                                             | `301` to the canonical `startappsstudio.com` host                                                                                         |
+
+The automated locale regression also passes:
+
+```text
+SEO locale consistency check passed: 10 locales, sitemap, robots, and LLM sources verified.
+```
+
+### Search visibility spot-check
+
+Public search results returned the canonical homepage, Journal, and `/tr` (Turkish) localized
+page. The other localized URLs were not returned by the spot-check; that is not proof that they are
+excluded, and their authoritative status must be read from Search Console and Bing Webmaster Tools
+after submission.
+
+### Outstanding dashboard actions
+
+1. In Google Search Console, submit `https://startappsstudio.com/sitemap.xml` under the verified `startappsstudio.com` property.
+2. In Bing Webmaster Tools, import the verified Google property or add `startappsstudio.com`, then submit the same canonical sitemap URL.
+3. Inspect `/`, `/az`, `/tr`, `/ru`, `/zh`, `/fr`, `/es`, `/de`, `/uk`, and `/it` in both tools.
+4. Record any **alternate page**, **duplicate without user-selected canonical**, or **excluded by noindex** result. No such warning was found in the production HTML audit above.
+
 ## Files touched in this SEO pass
 
 - `server/templates/desktop-landing.html` — head: title, meta, canonical, Open Graph, Twitter Card, JSON-LD (Organization, WebSite, ProfessionalService with all four packages and prices)
