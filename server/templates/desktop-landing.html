@@ -6991,6 +6991,24 @@
         }
       }
 
+      /* Keep the supporting modals on the same layered canvas as the
+         comparison modal. The local/scroll fades remain visible as each
+         panel's content moves underneath its fixed shell. */
+      #whyModal .modal-content,
+      #aiEfficiencyModal .aem-shell,
+      #nativeDeliveryModal .modal-content {
+        background: var(--canvas) !important;
+        background-attachment: local, local, scroll, scroll !important;
+        background-image:
+          linear-gradient(var(--canvas) 30%, transparent),
+          linear-gradient(transparent, var(--canvas) 70%),
+          radial-gradient(farthest-side at 50% 0%, rgba(0,0,0,.08), transparent),
+          radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.08), transparent) !important;
+        background-size: 100% 48px, 100% 48px, 100% 14px, 100% 14px !important;
+        background-repeat: no-repeat !important;
+        background-position: 0 0, 0 100%, 0 0, 0 100% !important;
+      }
+
     </style>
   </head>
   <body>
