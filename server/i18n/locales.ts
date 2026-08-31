@@ -14,6 +14,8 @@ export const DEFAULT_LOCALE = "en";
 export interface LocaleDefinition {
   /** Short code used in the URL path and the cookie. */
   code: string;
+  /** English language name used in machine-readable coverage statements. */
+  englishName: string;
   /** Value for <html lang>. */
   htmlLang: string;
   /** BCP 47 tag handed to toLocaleDateString in the browser. */
@@ -31,6 +33,7 @@ export interface LocaleDefinition {
 export const LOCALES: LocaleDefinition[] = [
   {
     code: "en",
+    englishName: "English",
     htmlLang: "en",
     dateLocale: "en-US",
     ogLocale: "en_US",
@@ -40,6 +43,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "az",
+    englishName: "Azerbaijani",
     htmlLang: "az",
     dateLocale: "az-AZ",
     ogLocale: "az_AZ",
@@ -49,6 +53,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "tr",
+    englishName: "Turkish",
     htmlLang: "tr",
     dateLocale: "tr-TR",
     ogLocale: "tr_TR",
@@ -58,6 +63,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "ru",
+    englishName: "Russian",
     htmlLang: "ru",
     dateLocale: "ru-RU",
     ogLocale: "ru_RU",
@@ -67,6 +73,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "zh",
+    englishName: "Simplified Chinese",
     htmlLang: "zh-Hans",
     dateLocale: "zh-CN",
     ogLocale: "zh_CN",
@@ -76,6 +83,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "fr",
+    englishName: "French",
     htmlLang: "fr",
     dateLocale: "fr-FR",
     ogLocale: "fr_FR",
@@ -85,6 +93,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "es",
+    englishName: "Spanish",
     htmlLang: "es",
     dateLocale: "es-ES",
     ogLocale: "es_ES",
@@ -94,6 +103,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "de",
+    englishName: "German",
     htmlLang: "de",
     dateLocale: "de-DE",
     ogLocale: "de_DE",
@@ -103,6 +113,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "uk",
+    englishName: "Ukrainian",
     htmlLang: "uk",
     dateLocale: "uk-UA",
     ogLocale: "uk_UA",
@@ -112,6 +123,7 @@ export const LOCALES: LocaleDefinition[] = [
   },
   {
     code: "it",
+    englishName: "Italian",
     htmlLang: "it",
     dateLocale: "it-IT",
     ogLocale: "it_IT",
@@ -129,6 +141,15 @@ export const SUPPORTED_CODES = LOCALES.map((l) => l.code);
 export const PREFIXED_CODES = SUPPORTED_CODES.filter(
   (c) => c !== DEFAULT_LOCALE,
 );
+
+/** The languages represented by the public landing-page experience. */
+export const SUPPORTED_LANGUAGE_NAMES = LOCALES.map(
+  (locale) => locale.englishName,
+);
+
+/** Confirmed service geography and delivery model; this is not a local-office claim. */
+export const SERVICE_AREA = "Worldwide";
+export const DELIVERY_MODEL = "Remote delivery worldwide";
 
 export function isSupportedLocale(code: string | undefined | null): boolean {
   return !!code && BY_CODE.has(code);

@@ -1,6 +1,11 @@
 import type { Block, Post } from "./posts";
 import { AUTHOR_NAME, allPostsNewestFirst } from "./posts";
-import { PREFIXED_CODES } from "../i18n/locales";
+import {
+  DELIVERY_MODEL,
+  PREFIXED_CODES,
+  SERVICE_AREA,
+  SUPPORTED_LANGUAGE_NAMES,
+} from "../i18n/locales";
 
 /**
  * The single authoritative public origin for all SEO-facing URLs.
@@ -1226,6 +1231,8 @@ export function renderRobotsTxt(origin: string): string {
     .map((ua) => `User-agent: ${ua}\nAllow: /`)
     .join("\n\n");
   return `# Start Apps Studio — robots.txt
+# Public landing pages, localized routes, and the Journal are crawlable.
+# Service geography: ${SERVICE_AREA}; delivery model: ${DELIVERY_MODEL}.
 # We explicitly welcome AI crawlers so model overviews stay accurate.
 
 User-agent: *
@@ -1247,6 +1254,13 @@ export function renderLlmsTxt(origin: string): string {
  > A founder-led product studio helping non-technical founders choose the next milestone: launch the story, make the idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
+
+## Language and delivery coverage
+
+- Supported landing-page languages: ${SUPPORTED_LANGUAGE_NAMES.join(", ")}.
+- Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), and Italian (${origin}/it).
+- Service area: ${SERVICE_AREA}.
+- Delivery model: ${DELIVERY_MODEL}. Localized pages describe language access, not local offices or in-person availability.
 
 ## Services
 
@@ -1302,6 +1316,17 @@ export function renderLlmsFullTxt(origin: string): string {
 Start Apps Studio is a founder-led product studio for early-stage founders and teams. We help choose the right route, make the product tangible, and ship a useful first release. Work can include a launch site, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
 
 AI is used throughout most of the work to accelerate exploration, coding, and review. A person owns the product decisions, architecture, quality bar, and client outcome. The Custom tier is the exception, with code written by hand.
+
+## Language and regional coverage
+
+The studio's public landing experience is available in ${SUPPORTED_LANGUAGE_NAMES.join(", ")}. The canonical language URLs are:
+
+${SUPPORTED_LANGUAGE_NAMES.map((name, index) => {
+  const code = index === 0 ? "" : `/${PREFIXED_CODES[index - 1]}`;
+  return `- ${name}: ${origin}${code || "/"}`;
+}).join("\n")}
+
+Start Apps Studio serves clients worldwide through remote delivery. The language routes are translation and discovery paths; they do not represent local offices, country-specific branches, or a promise of in-person service.
 
 ## Who we serve
 

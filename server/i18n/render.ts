@@ -179,7 +179,11 @@ function i18nPayloadScript(
     const translated = dictionary[key];
     if (translated && translated !== key) strings[key] = translated;
   }
-  const payload = { locale: locale.code, dateLocale: locale.dateLocale, strings };
+  const payload = {
+    locale: locale.code,
+    dateLocale: locale.dateLocale,
+    strings,
+  };
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
 
@@ -187,10 +191,7 @@ function i18nPayloadScript(
 function setActiveSwitcherLink(html: string, locale: LocaleDefinition): string {
   if (locale.code === DEFAULT_LOCALE) return html; // template default is English-active
   return html
-    .replace(
-      'class="english-escape is-hidden"',
-      'class="english-escape"',
-    )
+    .replace('class="english-escape is-hidden"', 'class="english-escape"')
     .replace(
       'class="footer-lang-wrap is-current-english"',
       'class="footer-lang-wrap"',
@@ -237,8 +238,10 @@ function patchMetadata(html: string, locale: LocaleDefinition): string {
   // JSON-LD: language + page URL. WebSite/Organization keep the canonical
   // root URL (they describe the site, not this page); WebPage gets the
   // locale URL.
+  // Keep every page-level JSON-LD entity in the rendered document aligned.
+  // This matters once both WebSite and WebPage expose inLanguage.
   out = out.replace(
-    '"inLanguage": "en-US"',
+    /"inLanguage": "en-US"/g,
     `"inLanguage": "${locale.htmlLang}"`,
   );
   out = out.replace(
