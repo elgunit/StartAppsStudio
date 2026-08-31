@@ -985,6 +985,11 @@
     "context": "p.native-route-copy"
   },
   {
+    "key": "✓",
+    "kind": "unit",
+    "context": "span.native-route-selection"
+  },
+  {
     "key": "Make it tangible",
     "kind": "unit",
     "context": "h3.native-route-title"
@@ -1015,9 +1020,79 @@
     "context": "h3"
   },
   {
-    "key": "Face ID and Touch ID sign in. Push notifications that reach people who are not looking at their inbox. Background location. Native camera and photo library. In app purchases billed through Apple and Google, so you keep the conversion rate that comes with a payment sheet people already trust. Encrypted storage that survives a reinstall. Offline media that works on a plane. Not a bookmark with an icon. A signed binary in both stores.",
+    "key": "Native capabilities",
+    "kind": "attr",
+    "context": "ul.native-capability-list[aria-label]"
+  },
+  {
+    "key": "<strong>Face ID and Touch ID</strong> sign in.",
     "kind": "unit",
-    "context": "p"
+    "context": "li"
+  },
+  {
+    "key": "<strong>Push notifications</strong> reach people who are not looking at their inbox.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "<strong>Background location</strong> keeps working when the app is not in front of you.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "<strong>Camera and photo library</strong> work as native device features.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "<strong>In-app purchases</strong> use Apple and Google’s trusted payment sheets.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "<strong>Encrypted storage</strong> protects data across a reinstall.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "<strong>Offline media</strong> works on a plane.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "Not a bookmark with an icon: a signed binary in both stores.",
+    "kind": "unit",
+    "context": "li"
+  },
+  {
+    "key": "FULL SOURCE HANDOFF",
+    "kind": "unit",
+    "context": "span.native-proof-badge"
+  },
+  {
+    "key": "Source code, project files, Xcode, and Android Studio are handed over to you.",
+    "kind": "attr",
+    "context": "div.native-proof-visual[aria-label]"
+  },
+  {
+    "key": "Source code",
+    "kind": "text",
+    "context": "span.native-file-chip"
+  },
+  {
+    "key": "Project files",
+    "kind": "text",
+    "context": "span.native-file-chip"
+  },
+  {
+    "key": "Xcode",
+    "kind": "text",
+    "context": "span.native-file-chip"
+  },
+  {
+    "key": "Android Studio",
+    "kind": "text",
+    "context": "span.native-file-chip"
   },
   {
     "key": "You own the whole thing",
@@ -1025,9 +1100,39 @@
     "context": "h3"
   },
   {
-    "key": "Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.",
+    "key": "Your native project files and full source code are handed over to you—not locked inside a rental platform.",
     "kind": "unit",
-    "context": "p"
+    "context": "p.native-proof-description"
+  },
+  {
+    "key": "Open the project in Xcode or Android Studio",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Keep building with your own team",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Leave with the actual files, not just access",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "SHARED FOUNDATION",
+    "kind": "unit",
+    "context": "span.native-proof-badge"
+  },
+  {
+    "key": "One shared core plus one chosen product surface equals one coherent build.",
+    "kind": "attr",
+    "context": "div.native-foundation-visual[aria-label]"
+  },
+  {
+    "key": "<span class=\"native-foundation-block\">One shared core</span> <span class=\"native-foundation-symbol\" aria-hidden=\"true\">+</span> <span class=\"native-foundation-block is-surface\">One chosen product surface</span> <span class=\"native-foundation-symbol native-foundation-equals\" aria-hidden=\"true\">=</span> <span class=\"native-foundation-block\">One coherent build</span>",
+    "kind": "unit",
+    "context": "div.native-foundation-visual"
   },
   {
     "key": "And it does not double the bill",
@@ -1035,9 +1140,29 @@
     "context": "h3"
   },
   {
-    "key": "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.",
+    "key": "One codebase means one thing to design, test, and maintain. The shared foundation keeps future work from becoming a second disconnected build.",
     "kind": "unit",
-    "context": "p"
+    "context": "p.native-proof-description"
+  },
+  {
+    "key": "One product logic layer",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "One visual system",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "One path for future updates",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Store submission, code signing, and provisioning are handled when native delivery is included.",
+    "kind": "unit",
+    "context": "p.native-foundation-note"
   },
   {
     "key": "Start a conversation",

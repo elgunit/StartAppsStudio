@@ -4025,6 +4025,8 @@
         margin-bottom: var(--space-4);
       }
       .native-route-card {
+        position: relative;
+        min-height: 148px;
         padding: 18px;
         border: 1px solid var(--line);
         border-radius: var(--r-md);
@@ -4032,7 +4034,24 @@
       }
       .native-route-card.is-featured {
         border-color: color-mix(in srgb, var(--dominant) 48%, var(--line));
-        background: linear-gradient(145deg, color-mix(in srgb, var(--support) 60%, var(--surface)), var(--surface));
+        background: color-mix(in srgb, var(--support) 62%, var(--surface));
+      }
+      .native-route-selection {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 23px;
+        height: 23px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 42%, var(--line));
+        border-radius: 50%;
+        background: var(--dominant);
+        color: var(--canvas);
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1;
       }
       .native-route-kicker {
         margin-bottom: 8px;
@@ -4060,8 +4079,12 @@
       .native-modal-detail-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 12px;
+        align-items: stretch;
       }
       .native-modal-detail-grid .native-delivery-card {
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
         padding: 18px;
         background: color-mix(in srgb, var(--surface) 68%, transparent);
         box-shadow: none;
@@ -4075,6 +4098,158 @@
       .native-modal-detail-grid .native-delivery-card p {
         font-size: 13px;
         line-height: 1.55;
+      }
+      .native-capability-list {
+        display: grid;
+        gap: 9px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .native-capability-list li {
+        position: relative;
+        padding-left: 16px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .native-capability-list li::before {
+        position: absolute;
+        top: 0.42em;
+        left: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--dominant);
+        content: "";
+      }
+      .native-capability-list strong {
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .native-proof-card {
+        border-color: color-mix(in srgb, var(--dominant) 20%, var(--line)) !important;
+        background: color-mix(in srgb, var(--support) 22%, var(--surface)) !important;
+      }
+      .native-proof-badge {
+        align-self: flex-start;
+        margin-bottom: 11px;
+        padding: 5px 8px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 30%, var(--line));
+        border-radius: 999px;
+        color: var(--dominant);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+      .native-proof-visual {
+        display: grid;
+        gap: 7px;
+        min-height: 98px;
+        margin-bottom: 16px;
+        padding: 11px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 16%, var(--line));
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--canvas) 58%, var(--support));
+      }
+      .native-file-stack {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        align-content: center;
+      }
+      .native-file-chip {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        gap: 6px;
+        padding: 7px 8px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 20%, var(--line));
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .native-file-chip svg {
+        flex: 0 0 auto;
+        color: var(--dominant);
+      }
+      .native-proof-description {
+        margin: 0 0 15px !important;
+        color: var(--ink) !important;
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+      }
+      .native-proof-points {
+        display: grid;
+        gap: 9px;
+        margin: auto 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .native-proof-points li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.45;
+      }
+      .native-proof-points svg {
+        flex: 0 0 auto;
+        margin-top: 2px;
+        color: var(--dominant);
+      }
+      .native-foundation-visual {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        gap: 7px;
+        min-height: 98px;
+        margin-bottom: 16px;
+        padding: 11px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 16%, var(--line));
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--canvas) 58%, var(--support));
+      }
+      .native-foundation-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 55px;
+        padding: 8px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 27%, var(--line));
+        border-radius: 9px;
+        background: color-mix(in srgb, var(--surface) 84%, transparent);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.25;
+        text-align: center;
+      }
+      .native-foundation-block.is-surface {
+        border-color: color-mix(in srgb, var(--rose) 34%, var(--line));
+      }
+      .native-foundation-symbol {
+        color: var(--dominant);
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+      }
+      .native-foundation-equals {
+        color: var(--ink);
+      }
+      .native-foundation-note {
+        margin: auto 0 14px !important;
+        padding-top: 10px;
+        border-top: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line));
+        font-size: 11.5px !important;
+        line-height: 1.5 !important;
       }
       .native-modal-note {
         margin: var(--space-3) 0 0;
@@ -4113,6 +4288,14 @@
         .native-build-source span,
         .native-build-target span { font-size: 11px; }
         .native-route-card { padding: 16px; }
+        .native-proof-visual,
+        .native-foundation-visual { margin-bottom: 14px; }
+        .native-foundation-visual {
+          grid-template-columns: 1fr;
+          gap: 5px;
+        }
+        .native-foundation-block { min-height: 45px; }
+        .native-foundation-symbol { padding: 1px 0; }
       }
 
       
@@ -7770,6 +7953,7 @@
               <p class="native-route-copy">Story, message, and a credible page to put in front of people.</p>
             </article>
             <article class="native-route-card is-featured">
+              <span class="native-route-selection" aria-hidden="true">✓</span>
               <div class="native-route-kicker">Prototype</div>
               <h3 class="native-route-title">Make it tangible</h3>
               <p class="native-route-copy">Responsive web proof for validation, fundraising, and key conversations.</p>
@@ -7783,17 +7967,54 @@
 
           <h3 class="native-modal-section-title">What the shared-core path includes</h3>
           <div class="native-delivery-grid native-modal-detail-grid">
-            <article class="native-delivery-card">
+            <article class="native-delivery-card native-capability-card">
               <h3>What that actually means</h3>
-              <p>Face ID and Touch ID sign in. Push notifications that reach people who are not looking at their inbox. Background location. Native camera and photo library. In app purchases billed through Apple and Google, so you keep the conversion rate that comes with a payment sheet people already trust. Encrypted storage that survives a reinstall. Offline media that works on a plane. Not a bookmark with an icon. A signed binary in both stores.</p>
+              <ul class="native-capability-list" aria-label="Native capabilities">
+                <li><strong>Face ID and Touch ID</strong> sign in.</li>
+                <li><strong>Push notifications</strong> reach people who are not looking at their inbox.</li>
+                <li><strong>Background location</strong> keeps working when the app is not in front of you.</li>
+                <li><strong>Camera and photo library</strong> work as native device features.</li>
+                <li><strong>In-app purchases</strong> use Apple and Google’s trusted payment sheets.</li>
+                <li><strong>Encrypted storage</strong> protects data across a reinstall.</li>
+                <li><strong>Offline media</strong> works on a plane.</li>
+                <li>Not a bookmark with an icon: a signed binary in both stores.</li>
+              </ul>
             </article>
-            <article class="native-delivery-card">
+            <article class="native-delivery-card native-proof-card">
+              <span class="native-proof-badge">FULL SOURCE HANDOFF</span>
+              <div class="native-proof-visual" role="img" aria-label="Source code, project files, Xcode, and Android Studio are handed over to you.">
+                <div class="native-file-stack">
+                  <span class="native-file-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h11l5 5v11H4z"/><path d="M15 4v5h5"/></svg>Source code</span>
+                  <span class="native-file-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v11H3z"/><path d="M3 7V4h7l2 3"/></svg>Project files</span>
+                  <span class="native-file-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></svg>Xcode</span>
+                  <span class="native-file-chip"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 7h6M9 17h6"/></svg>Android Studio</span>
+                </div>
+              </div>
               <h3>You own the whole thing</h3>
-              <p>Native project files are handed over with the rest of your code. Xcode and Android Studio, full source, in your account. Most app builders keep the native layer locked in a platform you rent. If you leave, you leave with a web app and start mobile over. Here, if you grow past this studio, your next team opens the projects and keeps building. The exit is designed in from the first commit.</p>
+              <p class="native-proof-description">Your native project files and full source code are handed over to you—not locked inside a rental platform.</p>
+              <ul class="native-proof-points">
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Open the project in Xcode or Android Studio</span></li>
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Keep building with your own team</span></li>
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Leave with the actual files, not just access</span></li>
+              </ul>
             </article>
-            <article class="native-delivery-card">
+            <article class="native-delivery-card native-proof-card">
+              <span class="native-proof-badge">SHARED FOUNDATION</span>
+              <div class="native-foundation-visual" role="img" aria-label="One shared core plus one chosen product surface equals one coherent build.">
+                <span class="native-foundation-block">One shared core</span>
+                <span class="native-foundation-symbol" aria-hidden="true">+</span>
+                <span class="native-foundation-block is-surface">One chosen product surface</span>
+                <span class="native-foundation-symbol native-foundation-equals" aria-hidden="true">=</span>
+                <span class="native-foundation-block">One coherent build</span>
+              </div>
               <h3>And it does not double the bill</h3>
-              <p>One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.</p>
+              <p class="native-proof-description">One codebase means one thing to design, test, and maintain. The shared foundation keeps future work from becoming a second disconnected build.</p>
+              <ul class="native-proof-points">
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>One product logic layer</span></li>
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>One visual system</span></li>
+                <li><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>One path for future updates</span></li>
+              </ul>
+              <p class="native-foundation-note">Store submission, code signing, and provisioning are handled when native delivery is included.</p>
             </article>
           </div>
           <p class="native-modal-note">Prototype is responsive web only. Native app delivery is part of the MVP package.</p>
