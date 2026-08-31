@@ -14,3 +14,4 @@
 - [Carousel ambient glow layering](carousel-ambient-glow-layering.md) — horizontal scrollports clip child shadows; paint broad edge-fading glow on a non-scrolling parent layer instead.
 - [Journal date policy](journal-date-policy.md) — publish one field note per month on varied days; hide dates in reader UI but retain them for SEO and sorting.
 - [Project mockup content policy](project-mockup-content-policy.md) — showcase SVGs should depict believable product interfaces without embedded brand names or logos.
+- [Comparison copy framing](comparison-copy-framing.md) — frame comparisons around what clients can review, own, operate, and hand off—not adversarial vendor-versus-vendor claims.
