@@ -1860,6 +1860,13 @@
       .price-card:hover { border-color: rgba(29,89,96,.35); }
       .price-card.featured { border-color: var(--dominant); border-width: 2px; padding-top: calc(var(--space-3) + 18px); }
       .price-card.expanded { border-color: var(--dominant); }
+
+      /* The featured card reserves 18px for its pin and carries a 2px border.
+         Offset the neighboring cards on desktop so their content aligns with
+         the featured card instead of stopping short at the bottom. */
+      @media (min-width: 601px) {
+        .pricing-grid .price-card:not(.featured) { margin-top: 19px; }
+      }
       
       .popular-badge {
         position: absolute;
