@@ -1918,6 +1918,32 @@
         font-size: 13px;
         line-height: 1.5;
       }
+      .native-delivery-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        margin: 0 auto;
+        padding: 12px 28px;
+        border: 1px solid var(--dominant);
+        border-radius: 999px;
+        background: var(--dominant);
+        color: var(--canvas);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .native-delivery-cta:hover {
+        box-shadow: 0 10px 24px color-mix(in srgb, var(--dominant) 28%, transparent);
+        transform: translateY(-1px);
+      }
+      .native-delivery-cta:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--dominant) 42%, transparent);
+        outline-offset: 3px;
+      }
 
       @media (min-width: 769px) and (max-width: 1024px) {
         .native-delivery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3841,6 +3867,252 @@
         color: var(--muted);
         text-align: center;
         margin-bottom: 32px;
+      }
+
+      /* Native delivery detail modal */
+      #nativeDeliveryModal .modal-content {
+        max-width: 980px;
+        max-height: min(90vh, 900px);
+        padding: clamp(24px, 4vw, 48px);
+        border-radius: var(--r-lg);
+        background: var(--canvas);
+        box-shadow:
+          inset 0 1px 0 var(--specular-teal),
+          0 0 0 1px color-mix(in srgb, var(--dominant) 14%, transparent),
+          0 32px 80px -16px rgba(0,0,0,0.3);
+        animation: native-delivery-modal-in 0.28s cubic-bezier(.22,.61,.36,1) both;
+      }
+      #nativeDeliveryModal .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 3;
+        float: none;
+        margin: 0;
+      }
+      @keyframes native-delivery-modal-in {
+        from { opacity: 0; transform: translateY(14px) scale(0.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .native-delivery-modal-header {
+        max-width: 700px;
+        margin: 0 auto var(--space-4);
+        text-align: center;
+      }
+      .native-delivery-modal-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 5px 13px;
+        margin-bottom: 14px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 28%, transparent);
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--dominant) 10%, transparent);
+        color: var(--dominant);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .native-delivery-modal-eyebrow::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--rose);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--rose) 70%, transparent);
+      }
+      .native-delivery-modal-title {
+        margin: 0 0 10px;
+        color: var(--ink);
+        font-family: var(--section-display);
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+        text-wrap: balance;
+      }
+      .native-delivery-modal-intro {
+        max-width: 58ch;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: var(--type-body);
+        line-height: 1.6;
+        text-wrap: balance;
+      }
+      .native-build-visual {
+        display: grid;
+        grid-template-columns: minmax(160px, 0.7fr) auto minmax(0, 1.5fr);
+        align-items: center;
+        gap: clamp(12px, 2vw, 24px);
+        margin: 0 0 var(--space-4);
+        padding: clamp(16px, 3vw, 24px);
+        border: 1px solid color-mix(in srgb, var(--dominant) 20%, var(--line));
+        border-radius: var(--r-md);
+        background:
+          radial-gradient(ellipse 80% 120% at 0% 0%, color-mix(in srgb, var(--dominant) 12%, transparent), transparent 68%),
+          color-mix(in srgb, var(--surface) 75%, transparent);
+      }
+      .native-build-source,
+      .native-build-target {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 92px;
+        padding: 16px 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--r-sm);
+        background: color-mix(in srgb, var(--surface) 78%, transparent);
+        text-align: center;
+      }
+      .native-build-source {
+        border-color: color-mix(in srgb, var(--dominant) 42%, var(--line));
+        background: linear-gradient(145deg, color-mix(in srgb, var(--support) 68%, var(--surface)), var(--surface));
+      }
+      .native-build-source strong,
+      .native-build-target strong {
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.2;
+      }
+      .native-build-source span,
+      .native-build-target span {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+      .native-build-source-icon,
+      .native-build-target-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        margin-bottom: 8px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 28%, transparent);
+        border-radius: 9px;
+        background: color-mix(in srgb, var(--dominant) 12%, transparent);
+        color: var(--dominant);
+      }
+      .native-build-flow-arrow {
+        color: var(--dominant);
+        font-size: 30px;
+        line-height: 1;
+        text-align: center;
+      }
+      .native-build-targets {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .native-build-target:nth-child(2) { border-color: color-mix(in srgb, var(--rose) 28%, var(--line)); }
+      .native-build-target:nth-child(3) { border-color: color-mix(in srgb, var(--signal) 32%, var(--line)); }
+      .native-modal-section-title {
+        margin: 0 0 var(--space-2);
+        padding: 0 !important;
+        color: var(--ink);
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        text-align: left !important;
+      }
+      .native-route-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: var(--space-4);
+      }
+      .native-route-card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        background: color-mix(in srgb, var(--surface) 72%, transparent);
+      }
+      .native-route-card.is-featured {
+        border-color: color-mix(in srgb, var(--dominant) 48%, var(--line));
+        background: linear-gradient(145deg, color-mix(in srgb, var(--support) 60%, var(--surface)), var(--surface));
+      }
+      .native-route-kicker {
+        margin-bottom: 8px;
+        color: var(--dominant);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+      .native-route-title {
+        margin: 0 0 7px !important;
+        padding: 0 !important;
+        color: var(--ink);
+        font-size: 19px !important;
+        font-weight: 700 !important;
+        line-height: 1.2;
+        text-align: left !important;
+      }
+      .native-route-copy {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13.5px;
+        line-height: 1.55;
+      }
+      .native-modal-detail-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .native-modal-detail-grid .native-delivery-card {
+        padding: 18px;
+        background: color-mix(in srgb, var(--surface) 68%, transparent);
+        box-shadow: none;
+      }
+      .native-modal-detail-grid .native-delivery-card h3 {
+        margin-bottom: 9px;
+        padding: 0;
+        font-size: 18px;
+        text-align: left;
+      }
+      .native-modal-detail-grid .native-delivery-card p {
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .native-modal-note {
+        margin: var(--space-3) 0 0;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.5;
+        text-align: center;
+      }
+      @media (max-width: 960px) {
+        .native-route-grid,
+        .native-modal-detail-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 600px) {
+        #nativeDeliveryModal {
+          align-items: flex-end;
+          padding: max(10px, env(safe-area-inset-top, 10px)) 0 0;
+        }
+        #nativeDeliveryModal .modal-content {
+          max-height: calc(100svh - 10px);
+          padding: 28px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+          border-radius: var(--r-lg) var(--r-lg) 0 0;
+        }
+        .native-delivery-modal-header { margin-bottom: 24px; }
+        .native-delivery-modal-title { font-size: clamp(27px, 8vw, 36px); }
+        .native-build-visual {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 14px;
+        }
+        .native-build-flow-arrow { transform: rotate(90deg); }
+        .native-build-targets { gap: 8px; }
+        .native-build-target { padding: 12px 6px; min-height: 84px; }
+        .native-build-source { min-height: 84px; }
+        .native-build-source strong,
+        .native-build-target strong { font-size: 13px; }
+        .native-build-source span,
+        .native-build-target span { font-size: 11px; }
+        .native-route-card { padding: 16px; }
       }
 
       
@@ -7419,8 +7691,80 @@
       <section class="section native-delivery-section" id="native-delivery" aria-labelledby="nativeDeliveryTitle" data-section-name="native-delivery">
         <div class="native-delivery-inner">
           <h2 class="section-title" id="nativeDeliveryTitle">One build. Web, iOS, and Android.</h2>
-          <p class="native-delivery-lead">Most studios treat mobile as a second project. New codebase, new budget, new timeline, and a version of your product that drifts out of sync with the web one by month three. That is not how these ship. Your product is built once. When it needs to live on a phone, the same build goes to the App Store and Google Play as a real native binary with real device access.</p>
-          <div class="native-delivery-grid">
+          <p class="native-delivery-lead">Prototype proves the idea in a responsive web app. MVP carries the same product into real users’ hands across Web, iOS, and Android—without splitting the build into three projects.</p>
+          <button class="native-delivery-cta" type="button" onclick="openNativeDeliveryModal()" aria-haspopup="dialog" aria-controls="nativeDeliveryModal">
+            See what one build unlocks
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <p class="native-delivery-note">Prototype is responsive web only. Native app delivery is part of the MVP package.</p>
+        </div>
+      </section>
+
+      <div class="modal-overlay" id="nativeDeliveryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="nativeDeliveryModalTitle" aria-describedby="nativeDeliveryModalIntro">
+        <div class="modal-content native-delivery-modal-content">
+          <button class="modal-close" type="button" onclick="closeNativeDeliveryModal()" aria-label="Close native delivery details">&times;</button>
+
+          <div class="native-delivery-modal-header">
+            <span class="native-delivery-modal-eyebrow">One product. Three surfaces.</span>
+            <h2 class="native-delivery-modal-title" id="nativeDeliveryModalTitle">One build. Web, iOS, and Android.</h2>
+            <p class="native-delivery-modal-intro" id="nativeDeliveryModalIntro">Build the proof once, then keep the path to native open when real users are ready.</p>
+          </div>
+
+          <div class="native-build-visual" aria-label="One shared product build connects to Web, iOS, and Android.">
+            <div class="native-build-source">
+              <span class="native-build-source-icon" aria-hidden="true">
+                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </span>
+              <strong>One product build</strong>
+              <span>Shared source</span>
+            </div>
+            <div class="native-build-flow-arrow" aria-hidden="true">→</div>
+            <div class="native-build-targets">
+              <div class="native-build-target">
+                <span class="native-build-target-icon" aria-hidden="true">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </span>
+                <strong>Web</strong>
+                <span>Responsive prototype</span>
+              </div>
+              <div class="native-build-target">
+                <span class="native-build-target-icon" aria-hidden="true">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></svg>
+                </span>
+                <strong>iOS</strong>
+                <span>Native in MVP</span>
+              </div>
+              <div class="native-build-target">
+                <span class="native-build-target-icon" aria-hidden="true">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 7h6M9 17h6"/></svg>
+                </span>
+                <strong>Android</strong>
+                <span>Native in MVP</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="native-modal-section-title">Choose the next proof</h3>
+          <div class="native-route-grid">
+            <article class="native-route-card">
+              <div class="native-route-kicker">Launch Site</div>
+              <h3 class="native-route-title">Tell the story</h3>
+              <p class="native-route-copy">Story, message, and a credible page to put in front of people.</p>
+            </article>
+            <article class="native-route-card is-featured">
+              <div class="native-route-kicker">Prototype</div>
+              <h3 class="native-route-title">Make it tangible</h3>
+              <p class="native-route-copy">Responsive web proof for validation, fundraising, and key conversations.</p>
+            </article>
+            <article class="native-route-card">
+              <div class="native-route-kicker">MVP</div>
+              <h3 class="native-route-title">Put it in users’ hands</h3>
+              <p class="native-route-copy">Working product with native delivery when the product needs a real phone experience.</p>
+            </article>
+          </div>
+
+          <h3 class="native-modal-section-title">What the one-build path includes</h3>
+          <div class="native-delivery-grid native-modal-detail-grid">
             <article class="native-delivery-card">
               <h3>What that actually means</h3>
               <p>Face ID and Touch ID sign in. Push notifications that reach people who are not looking at their inbox. Background location. Native camera and photo library. In app purchases billed through Apple and Google, so you keep the conversion rate that comes with a payment sheet people already trust. Encrypted storage that survives a reinstall. Offline media that works on a plane. Not a bookmark with an icon. A signed binary in both stores.</p>
@@ -7434,9 +7778,9 @@
               <p>One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.</p>
             </article>
           </div>
-          <p class="native-delivery-note">Prototype is responsive web only. Native app delivery is part of the MVP package.</p>
+          <p class="native-modal-note">Prototype is responsive web only. Native app delivery is part of the MVP package.</p>
         </div>
-      </section>
+      </div>
       
             <!-- Mid-page CTA bridge -->
       <div class="mid-cta-bridge" aria-label="Start a conversation">
@@ -8767,13 +9111,25 @@
         }, true);
       })();
 
+      function anotherSiteModalIsOpen(exceptId) {
+        return ['whyModal', 'nativeDeliveryModal', 'aiEfficiencyModal', 'showcaseDetailModal'].some(function(id) {
+          if (id === exceptId) return false;
+          var modal = document.getElementById(id);
+          return modal && modal.classList.contains('open');
+        });
+      }
+
       function openWhyModal() {
-        document.getElementById('whyModal').classList.add('open');
+        var modal = document.getElementById('whyModal');
+        if (!modal || modal.classList.contains('open') || anotherSiteModalIsOpen('whyModal')) return;
+        modal.classList.add('open');
         sdmLockScroll();
       }
 
       function closeWhyModal() {
-        document.getElementById('whyModal').classList.remove('open');
+        var modal = document.getElementById('whyModal');
+        if (!modal || !modal.classList.contains('open')) return;
+        modal.classList.remove('open');
         sdmUnlockScroll();
       }
 
@@ -8781,13 +9137,64 @@
         if (e.target === this) closeWhyModal();
       });
 
+      var _nativeDeliveryLastFocus = null;
+      function openNativeDeliveryModal() {
+        var modal = document.getElementById('nativeDeliveryModal');
+        if (!modal || modal.classList.contains('open') || anotherSiteModalIsOpen('nativeDeliveryModal')) return;
+        _nativeDeliveryLastFocus = document.activeElement;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        sdmLockScroll();
+        var closeButton = modal.querySelector('.modal-close');
+        if (closeButton) closeButton.focus({ preventScroll: true });
+      }
+
+      function closeNativeDeliveryModal() {
+        var modal = document.getElementById('nativeDeliveryModal');
+        if (!modal || !modal.classList.contains('open')) return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        sdmUnlockScroll();
+        if (_nativeDeliveryLastFocus && typeof _nativeDeliveryLastFocus.focus === 'function') {
+          _nativeDeliveryLastFocus.focus({ preventScroll: true });
+        }
+        _nativeDeliveryLastFocus = null;
+      }
+
+      var nativeDeliveryModal = document.getElementById('nativeDeliveryModal');
+      if (nativeDeliveryModal) {
+        nativeDeliveryModal.addEventListener('click', function(e) {
+          if (e.target === this) closeNativeDeliveryModal();
+        });
+        nativeDeliveryModal.addEventListener('keydown', function(e) {
+          if (e.key !== 'Tab') return;
+          var focusable = Array.prototype.slice.call(this.querySelectorAll(
+            'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          ));
+          if (!focusable.length) return;
+          var first = focusable[0];
+          var last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        });
+      }
+
       function openAiEfficiencyModal() {
-        document.getElementById('aiEfficiencyModal').classList.add('open');
+        var modal = document.getElementById('aiEfficiencyModal');
+        if (!modal || modal.classList.contains('open') || anotherSiteModalIsOpen('aiEfficiencyModal')) return;
+        modal.classList.add('open');
         sdmLockScroll();
       }
 
       function closeAiEfficiencyModal() {
-        document.getElementById('aiEfficiencyModal').classList.remove('open');
+        var modal = document.getElementById('aiEfficiencyModal');
+        if (!modal || !modal.classList.contains('open')) return;
+        modal.classList.remove('open');
         sdmUnlockScroll();
       }
 
@@ -8855,10 +9262,21 @@
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
+          var nativeModal = document.getElementById('nativeDeliveryModal');
+          if (nativeModal && nativeModal.classList.contains('open')) {
+            closeNativeDeliveryModal();
+            return;
+          }
           var whyModal = document.getElementById('whyModal');
-          if (whyModal && whyModal.classList.contains('open')) closeWhyModal();
+          if (whyModal && whyModal.classList.contains('open')) {
+            closeWhyModal();
+            return;
+          }
           var aeModal = document.getElementById('aiEfficiencyModal');
-          if (aeModal && aeModal.classList.contains('open')) closeAiEfficiencyModal();
+          if (aeModal && aeModal.classList.contains('open')) {
+            closeAiEfficiencyModal();
+            return;
+          }
           var sdModal = document.getElementById('showcaseDetailModal');
           if (sdModal && sdModal.classList.contains('open')) closeShowcaseModal();
         }
@@ -8870,7 +9288,10 @@
       // record scrollY → pin body position:fixed at -scrollY → on unlock,
       // restore the styles and re-scroll to the recorded position.
       var _sdmScrollY = 0;
+      var _sdmScrollLocked = false;
       function sdmLockScroll() {
+        if (_sdmScrollLocked) return;
+        _sdmScrollLocked = true;
         _sdmScrollY = window.scrollY || window.pageYOffset || 0;
         document.documentElement.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
@@ -8881,6 +9302,8 @@
         document.body.style.overflow = 'hidden';
       }
       function sdmUnlockScroll() {
+        if (!_sdmScrollLocked) return;
+        _sdmScrollLocked = false;
         document.documentElement.style.overflow = '';
         document.body.style.position = '';
         document.body.style.top      = '';
@@ -8931,7 +9354,7 @@
         if (window.matchMedia('(min-width: 769px)').matches) return;
 
         var overlay = document.getElementById('showcaseDetailModal');
-        if (!overlay) return;
+        if (!overlay || overlay.classList.contains('open') || anotherSiteModalIsOpen('showcaseDetailModal')) return;
 
         // Populate from data attributes
         var cat      = card.dataset.category   || '';

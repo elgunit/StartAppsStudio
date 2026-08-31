@@ -890,9 +890,124 @@
     "context": "h2#nativeDeliveryTitle.section-title"
   },
   {
-    "key": "Most studios treat mobile as a second project. New codebase, new budget, new timeline, and a version of your product that drifts out of sync with the web one by month three. That is not how these ship. Your product is built once. When it needs to live on a phone, the same build goes to the App Store and Google Play as a real native binary with real device access.",
+    "key": "Prototype proves the idea in a responsive web app. MVP carries the same product into real users’ hands across Web, iOS, and Android—without splitting the build into three projects.",
     "kind": "unit",
     "context": "p.native-delivery-lead"
+  },
+  {
+    "key": "See what one build unlocks",
+    "kind": "text",
+    "context": "button.native-delivery-cta"
+  },
+  {
+    "key": "Prototype is responsive web only. Native app delivery is part of the MVP package.",
+    "kind": "unit",
+    "context": "p.native-delivery-note"
+  },
+  {
+    "key": "Close native delivery details",
+    "kind": "attr",
+    "context": "button.modal-close[aria-label]"
+  },
+  {
+    "key": "&times;",
+    "kind": "unit",
+    "context": "button.modal-close"
+  },
+  {
+    "key": "One product. Three surfaces.",
+    "kind": "unit",
+    "context": "span.native-delivery-modal-eyebrow"
+  },
+  {
+    "key": "Build the proof once, then keep the path to native open when real users are ready.",
+    "kind": "unit",
+    "context": "p#nativeDeliveryModalIntro.native-delivery-modal-intro"
+  },
+  {
+    "key": "One shared product build connects to Web, iOS, and Android.",
+    "kind": "attr",
+    "context": "div.native-build-visual[aria-label]"
+  },
+  {
+    "key": "One product build",
+    "kind": "unit",
+    "context": "strong"
+  },
+  {
+    "key": "Shared source",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "→",
+    "kind": "unit",
+    "context": "div.native-build-flow-arrow"
+  },
+  {
+    "key": "Web",
+    "kind": "unit",
+    "context": "strong"
+  },
+  {
+    "key": "Responsive prototype",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "iOS",
+    "kind": "unit",
+    "context": "strong"
+  },
+  {
+    "key": "Native in MVP",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
+    "key": "Android",
+    "kind": "unit",
+    "context": "strong"
+  },
+  {
+    "key": "Choose the next proof",
+    "kind": "unit",
+    "context": "h3.native-modal-section-title"
+  },
+  {
+    "key": "Tell the story",
+    "kind": "unit",
+    "context": "h3.native-route-title"
+  },
+  {
+    "key": "Story, message, and a credible page to put in front of people.",
+    "kind": "unit",
+    "context": "p.native-route-copy"
+  },
+  {
+    "key": "Make it tangible",
+    "kind": "unit",
+    "context": "h3.native-route-title"
+  },
+  {
+    "key": "Responsive web proof for validation, fundraising, and key conversations.",
+    "kind": "unit",
+    "context": "p.native-route-copy"
+  },
+  {
+    "key": "Put it in users’ hands",
+    "kind": "unit",
+    "context": "h3.native-route-title"
+  },
+  {
+    "key": "Working product with native delivery when the product needs a real phone experience.",
+    "kind": "unit",
+    "context": "p.native-route-copy"
+  },
+  {
+    "key": "What the one-build path includes",
+    "kind": "unit",
+    "context": "h3.native-modal-section-title"
   },
   {
     "key": "What that actually means",
@@ -923,11 +1038,6 @@
     "key": "One codebase means one thing to design, one thing to test, one thing to maintain. Store submission, code signing, and provisioning are handled. Updates reach your users the day you ship them instead of the week review gets to them.",
     "kind": "unit",
     "context": "p"
-  },
-  {
-    "key": "Prototype is responsive web only. Native app delivery is part of the MVP package.",
-    "kind": "unit",
-    "context": "p.native-delivery-note"
   },
   {
     "key": "Start a conversation",
@@ -1173,11 +1283,6 @@
     "key": "See the full comparison",
     "kind": "text",
     "context": "button.why-compare-btn"
-  },
-  {
-    "key": "&times;",
-    "kind": "unit",
-    "context": "button.modal-close"
   },
   {
     "key": "What the handoff looks like",
