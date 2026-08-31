@@ -1105,157 +1105,157 @@
     "context": "button.modal-close"
   },
   {
-    "key": "Why founders choose us",
+    "key": "What the handoff looks like",
     "kind": "unit",
     "context": "div.cmp-eyebrow"
   },
   {
-    "key": "The Start Apps Studio Way",
+    "key": "A handoff you can own",
     "kind": "unit",
     "context": "span.cmp-tab-full"
   },
   {
-    "key": "Our Way",
+    "key": "Your handoff",
     "kind": "unit",
     "context": "span.cmp-tab-short"
   },
   {
-    "key": "Traditional Agencies",
+    "key": "Questions worth asking",
     "kind": "unit",
     "context": "span.cmp-tab-full"
   },
   {
-    "key": "Agencies",
+    "key": "Before you sign",
     "kind": "unit",
     "context": "span.cmp-tab-short"
   },
   {
-    "key": "Fixed pricing",
+    "key": "A budget you can plan around",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "What we quote is what you pay",
+    "key": "Scope and price are agreed before work starts.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Everything included",
+    "key": "A complete product at handoff",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Design, dev, launch. No add-ons.",
+    "key": "Design, build, launch, and the agreed handoff are one plan.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Lifetime updates",
+    "key": "Working progress before launch",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Never gated behind a subscription",
+    "key": "Review real product decisions while changes are still easy to make.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Weeks, not months",
+    "key": "A timeline tied to learning",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Ship before competitors finish their RFP",
+    "key": "Get something real in front of users before the market moves again.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Live progress",
+    "key": "A team can take over",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Watch your product come together in real time",
+    "key": "Code, accounts, assets, and deployment access stay in your name.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "You own everything",
+    "key": "Support without dependency",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Code, accounts, assets. Zero lock-in.",
+    "key": "Run it yourself, bring in a team, or keep going with us without starting over.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Start your build &rarr;",
+    "key": "Talk through your handoff &rarr;",
     "kind": "unit",
     "context": "a.cmp-action"
   },
   {
-    "key": "$50k-$80k upfront",
+    "key": "What is included in the price?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Before you've seen a single screen",
+    "key": "Ask which deliverables, revisions, and launch tasks are covered before work begins.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Add-on creep",
+    "key": "When do you see working product?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Every feature is a change order",
+    "key": "A final presentation is not the same as reviewing real progress throughout the build.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Six-month timelines",
+    "key": "Who owns the full picture?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "By the time it ships, the market moved",
+    "key": "Separate strategy, design, and engineering teams can leave context gaps at handoff.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Annual retainers for updates",
+    "key": "What happens after launch?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Pay forever to fix bugs",
+    "key": "Clarify who fixes issues, how support works, and what the next phase costs.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Vendor lock-in",
+    "key": "Can you leave cleanly?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "Try migrating off their stack later",
+    "key": "Make sure code, accounts, assets, and deployment access can move with you.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Black-box delivery",
+    "key": "Will the next team understand it?",
     "kind": "unit",
     "context": "div.cmp-item-title"
   },
   {
-    "key": "You find out at the demo, not before",
+    "key": "A useful handoff includes the context and documentation needed to continue.",
     "kind": "unit",
     "context": "div.cmp-item-desc"
   },
   {
-    "key": "Most agencies quote $80k+ and take six months for what we ship in weeks, without the equity ask of a technical co-founder. <a href=\"#contact\" onclick=\"closeWhyModal()\" style=\"color:var(--accent);text-decoration:none;font-weight:600;\">Talk to us &rarr;</a>",
+    "key": "The right question is not only who can build the product. It is whether you can run, own, and evolve what you receive. <a href=\"#contact\" onclick=\"closeWhyModal()\" style=\"color:var(--accent);text-decoration:none;font-weight:600;\">Talk through your handoff &rarr;</a>",
     "kind": "unit",
     "context": "div.cmp-footnote"
   },
@@ -1685,12 +1685,12 @@
     "context": "span.ae-teaser-badge"
   },
   {
-    "key": "Stop burning credits. Start shipping product.",
+    "key": "Turn AI spend into a product you can own.",
     "kind": "unit",
     "context": "span.ae-teaser-title"
   },
   {
-    "key": "Why a managed AI stack delivers <b>3-10x</b> the value of a raw one, with the math, the comparison, and the proof.",
+    "key": "The value is not in generating more output. It is in getting to a working product, with a clear handoff.",
     "kind": "unit",
     "context": "span.ae-teaser-sub"
   },
@@ -1710,112 +1710,112 @@
     "context": "span.aem-eyebrow"
   },
   {
-    "key": "Most founders quietly burn $10,000+ on AI tools before they ship anything real. We turn that spend into working product.",
+    "key": "AI can lower the cost of production, but only when the output becomes a coherent product your team can run, improve, and hand off.",
     "kind": "unit",
     "context": "p.aem-lede"
   },
   {
-    "key": "Raw AI stack",
+    "key": "Self-serve experimentation",
     "kind": "unit",
     "context": "button#aemTabAlone.aem-tab"
   },
   {
-    "key": "Start Apps Studio",
+    "key": "Managed delivery",
     "kind": "unit",
     "context": "button#aemTabManaged.aem-tab"
   },
   {
-    "key": "Thousands of credits spent on prompts that almost work",
+    "key": "You pay for attempts before anything is usable",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Generic outputs that ignore your niche, your users, and your voice",
+    "key": "You assemble the work between tools",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Half-built assets with no one to stitch them together",
+    "key": "You carry the review and quality burden",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Open-ended bills that grow every month you delay shipping",
+    "key": "The budget stays open while the scope moves",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Proprietary in-house model stack tuned for product, code, and copy",
+    "key": "A route to launch shaped around your milestone",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Expert prompting and review, so outputs land your niche on the first pass",
+    "key": "One accountable owner across the work",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Full lifecycle: brand, design, code, and launch under one roof",
+    "key": "Working progress you can review early",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Fixed scope, fixed budget: no surprise bills mid-build",
+    "key": "A product your team can take over",
     "kind": "unit",
     "context": "span"
   },
   {
-    "key": "Raw AI stack: about 68% of spend is lost to iteration.",
+    "key": "Self-serve AI: about 68% of spend is lost to iteration.",
     "kind": "attr",
     "context": "div#aemRatio.aem-ratio[aria-label]"
   },
   {
-    "key": "<span class=\"aem-ratio-label\">Credit waste at a glance</span> <span class=\"aem-ratio-caption\" id=\"aemRatioCaption\">Raw AI stack loses about <b>68%</b> to iteration.</span>",
+    "key": "<span class=\"aem-ratio-label\">Iteration cost at a glance</span> <span class=\"aem-ratio-caption\" id=\"aemRatioCaption\">Self-serve AI loses about <b>68%</b> to iteration.</span>",
     "kind": "unit",
     "context": "div.aem-ratio-head"
   },
   {
-    "key": "<span><span class=\"aem-swatch aem-swatch--teal\"></span>Managed · ~32% iteration</span> <span><span class=\"aem-swatch aem-swatch--rose\"></span>Solo · ~68% lost</span>",
+    "key": "<span><span class=\"aem-swatch aem-swatch--teal\"></span>Managed delivery · ~32% iteration</span> <span><span class=\"aem-swatch aem-swatch--rose\"></span>Self-serve · ~68% lost</span>",
     "kind": "unit",
     "context": "div.aem-ratio-legend"
   },
   {
-    "key": "What managed delivery gives you",
+    "key": "What your handoff includes",
     "kind": "unit",
     "context": "p.aem-section-label"
   },
   {
-    "key": "Proprietary AI stack",
+    "key": "A product-focused workflow",
     "kind": "unit",
     "context": "p.aem-proof-title"
   },
   {
-    "key": "Frontier and in-house models picked per task. You pay for output, not experimentation.",
+    "key": "Models and tools are chosen for the task. You pay for decisions and output, not trial and error.",
     "kind": "unit",
     "context": "p.aem-proof-sub"
   },
   {
-    "key": "Full asset and code lifecycle",
+    "key": "One connected delivery",
     "kind": "unit",
     "context": "p.aem-proof-title"
   },
   {
-    "key": "One team owns brand, design, code, and launch. Nothing dropped between tools.",
+    "key": "Strategy, design, code, QA, and launch stay connected from brief to handoff.",
     "kind": "unit",
     "context": "p.aem-proof-sub"
   },
   {
-    "key": "Fixed scope, fixed budget",
+    "key": "A budget you can explain",
     "kind": "unit",
     "context": "p.aem-proof-title"
   },
   {
-    "key": "You agree the deliverables and price up front. We absorb the retries and late-night iterations.",
+    "key": "You agree the scope and price up front. We own the iteration required to get there.",
     "kind": "unit",
     "context": "p.aem-proof-sub"
   },
   {
-    "key": "Start your build",
+    "key": "Talk through your project",
     "kind": "text",
     "context": "a.aem-cta"
   },
@@ -1840,6 +1840,11 @@
     "context": "p"
   },
   {
+    "key": "You own everything",
+    "kind": "unit",
+    "context": "h5"
+  },
+  {
     "key": "Source code, accounts, designs, domains. Yours from day one.",
     "kind": "unit",
     "context": "p"
@@ -1853,6 +1858,11 @@
     "key": "Most builds go live within a month of kickoff.",
     "kind": "unit",
     "context": "p"
+  },
+  {
+    "key": "Fixed pricing",
+    "kind": "unit",
+    "context": "h5"
   },
   {
     "key": "What we quote is what you pay. No surprises, ever.",
@@ -2180,6 +2190,11 @@
     "context": "p.journal-note-excerpt"
   },
   {
+    "key": "Start Apps Studio",
+    "kind": "unit",
+    "context": "div.footer-brand"
+  },
+  {
     "key": "create@startappsstudio.com",
     "kind": "unit",
     "context": "a"
@@ -2225,17 +2240,17 @@
     "context": "inline script"
   },
   {
-    "key": "Start Apps Studio: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.",
+    "key": "Managed delivery: about 32% of spend goes to iteration, with roughly 68% directed to shipped product.",
     "kind": "js",
     "context": "inline script"
   },
   {
-    "key": "Raw AI stack loses about <b>68%</b> to iteration.",
+    "key": "Self-serve AI loses about <b>68%</b> to iteration.",
     "kind": "js",
     "context": "inline script"
   },
   {
-    "key": "Start Apps Studio keeps iteration to about <b>32%</b>.",
+    "key": "Managed delivery keeps iteration to about <b>32%</b>.",
     "kind": "js",
     "context": "inline script"
   },
