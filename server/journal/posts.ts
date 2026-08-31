@@ -1294,6 +1294,251 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "base44-vs-lovable-which-one-for-your-next-app",
+    title: "Base44 vs. Lovable: which one is right for your next app?",
+    seoTitle:
+      "Base44 vs. Lovable: Which One Is Right for Your Next App? | Start Apps Studio",
+    description:
+      "Base44 and Lovable optimize for different kinds of speed. Compare their backend control, AI workflow, SEO, and handoff paths before you choose where to build.",
+    seoDescription:
+      "Base44 is a fast path to a contained app. Lovable offers a more open backend and a stronger starting point for public, searchable pages. Compare the trade-offs before you build.",
+    excerpt:
+      "Base44 and Lovable can both get an idea moving quickly. The important difference appears later, when your app needs custom auth, search visibility, or a clean handoff.",
+    publishedAt: "2026-09-15",
+    readMinutes: 8,
+    category: "Field Notes",
+    tags: ["Base44", "Lovable", "Vibe coding", "SEO", "Product strategy"],
+    body: [
+      {
+        type: "answer",
+        text:
+          "Base44 is the better fit for a contained, authenticated app where speed and built-in conventions matter. Lovable is the better fit when you need an open Supabase backend, room for custom integrations, or public pages that search engines can read. If the product becomes business-critical, treat either one as a starting point and plan the handoff before you build too much.",
+      },
+      {
+        type: "p",
+        text:
+          "Choosing an AI app builder is easy when the only measure is how quickly it produces a first screen. The harder question is what happens after that screen: when a login flow gets unusual, the data model needs to change, Google needs to crawl a landing page, or another engineer has to take over the code.",
+      },
+      {
+        type: "p",
+        text:
+          "Base44 and Lovable are both good at turning a rough idea into a working flow. They make different trade-offs to get there. Base44 feels more contained and operationally convenient. Lovable gives you more familiar, portable primitives around Supabase. Neither is the universal winner. The right choice depends on where you need control.",
+      },
+      {
+        type: "h2",
+        text: "The real decision is where you need control",
+        id: "where-you-need-control",
+      },
+      {
+        type: "p",
+        text:
+          "A builder is not just a writing surface for prompts. It is also a decision about your backend, your deployment model, your search surface, and your future maintenance loop. Those choices can stay invisible while an app is small. They become expensive once users, payments, private data, and marketing traffic depend on them.",
+      },
+      {
+        type: "h2",
+        text: "1. Backend: open primitives or a contained platform?",
+        id: "backend-control",
+      },
+      {
+        type: "h3",
+        text: "Lovable: familiar building blocks",
+        id: "lovable-backend",
+      },
+      {
+        type: "p",
+        text:
+          "Lovable is built around Supabase, which gives the project a backend many engineers already understand: Postgres for data, standard authentication patterns, storage, and documented APIs. That does not make every implementation automatically good, but it gives you a more portable foundation when the product needs custom roles, a less common OAuth provider, or an integration that does not fit the happy path.",
+      },
+      {
+        type: "p",
+        text:
+          "The practical benefit is not that Supabase removes complexity. It is that the complexity is visible. You can inspect the database, reason about the auth flow, and find engineers who have worked with the same primitives before.",
+      },
+      {
+        type: "h3",
+        text: "Base44: faster inside a boundary",
+        id: "base44-backend",
+      },
+      {
+        type: "p",
+        text:
+          "Base44 takes more of the backend experience into its own managed environment. That can be exactly what a non-technical founder wants: fewer services to configure, sensible defaults, and less time wiring the first version together. For a private dashboard, internal tool, or straightforward authenticated workflow, that convenience has real value.",
+      },
+      {
+        type: "p",
+        text:
+          "The trade-off is that unusual requirements can push you toward workarounds. Proprietary backend boundaries may limit how freely you can design custom authentication, bring in a specialised identity provider, or move one part of the system somewhere else. It is a good reason to test the hardest requirement first, not last.",
+      },
+      {
+        type: "callout",
+        title: "Ask this before you choose",
+        text:
+          "What is the least standard thing this product must do? Test that flow before you invest in the rest of the interface. A builder that handles the demo beautifully but cannot support the defining constraint is not saving you time.",
+      },
+      {
+        type: "h2",
+        text: "2. AI workflow: convenience or deliberate choice?",
+        id: "ai-workflow",
+      },
+      {
+        type: "p",
+        text:
+          "The two tools also differ in how much of the model decision they expose. This matters less for a landing page and more for a product with tangled state, unfamiliar domain rules, or a debugging problem where consistency is more useful than novelty.",
+      },
+      {
+        type: "h3",
+        text: "Lovable keeps the loop frictionless",
+        id: "lovable-ai-workflow",
+      },
+      {
+        type: "p",
+        text:
+          "Lovable's auto-mode chooses the model for the task, which keeps the experience simple. You describe the change, review the result, and keep moving. That is useful when the main bottleneck is getting a founder's idea into a testable form rather than tuning the implementation process.",
+      },
+      {
+        type: "h3",
+        text: "Base44 gives you a model picker",
+        id: "base44-ai-workflow",
+      },
+      {
+        type: "p",
+        text:
+          "Base44 puts more choice in the builder's hands. Selecting between models such as Opus or Sonnet can be useful when you know that one is better for a particular debugging task, integration, or large refactor. It also makes it easier to keep a preferred model consistent across a sensitive part of the project.",
+      },
+      {
+        type: "p",
+        text:
+          "Model control is not the same as product control. A stronger model can still produce the wrong abstraction, and a fast model can still make a risky change. Whichever tool you use, keep a written scope, review the data model, and test the core workflow outside the happy path.",
+      },
+      {
+        type: "h2",
+        text: "3. SEO: can a crawler see the product?",
+        id: "seo-and-crawling",
+      },
+      {
+        type: "p",
+        text:
+          "SEO only matters for the parts of your product that need to be discovered. A private operations dashboard does not need to rank. A public landing page, directory, comparison page, or product-led acquisition loop absolutely does.",
+      },
+      {
+        type: "h3",
+        text: "Lovable has the stronger starting point for public pages",
+        id: "lovable-seo",
+      },
+      {
+        type: "p",
+        text:
+          "Lovable's server-side rendering means a crawler can receive meaningful HTML instead of waiting for a client-side bundle to execute. That gives Googlebot and other discovery systems a better first look at the headings, copy, links, and structured content that explain what the page is about.",
+      },
+      {
+        type: "p",
+        text:
+          "SSR is not a ranking guarantee. You still need useful content, stable URLs, internal links, metadata, and schema that matches what people see. It is simply a much better foundation than assuming every crawler will render a React app correctly on a second pass.",
+      },
+      {
+        type: "h3",
+        text: "Base44 is often the sensible choice for private apps",
+        id: "base44-seo",
+      },
+      {
+        type: "p",
+        text:
+          "Base44's React and Vite approach can be perfectly adequate when the app lives behind authentication and the public acquisition pages are elsewhere. It becomes a concern when the Base44 app itself is the marketing site. Metadata settings do not necessarily mean a raw crawler can see the full page content, so test the initial HTML before you commit to an organic-growth plan.",
+      },
+      {
+        type: "h2",
+        text: "4. The handoff test: can you leave responsibly?",
+        id: "handoff",
+      },
+      {
+        type: "p",
+        text:
+          "The best builder is not only the one that gets you to version one. It is the one you can leave without losing the product. Before starting, answer four unglamorous questions:",
+      },
+      {
+        type: "ul",
+        items: [
+          "Can you export or inspect the code, data, and configuration without the builder?",
+          "Can another engineer run the project locally and understand where the important decisions live?",
+          "Can you replace the default authentication, payments, or data service if the product outgrows it?",
+          "What is the migration path if the first version works and the requirements stop being standard?",
+        ],
+      },
+      {
+        type: "p",
+        text:
+          "These questions are not an argument against managed tools. They are a way to use them deliberately. A contained internal app may never need a migration. A public product with a growing team probably will need a clearer ownership and handoff plan than its first prompt suggests.",
+      },
+      {
+        type: "h2",
+        text: "Which one should you pick?",
+        id: "decision-guide",
+      },
+      {
+        type: "ul",
+        items: [
+          "Choose Lovable for a public landing page, searchable product surface, or app that needs Supabase's open backend primitives.",
+          "Choose Base44 for a private dashboard, internal tool, or straightforward authenticated workflow where managed setup is the main advantage.",
+          "Choose Lovable when custom authentication, unusual data relationships, or third-party integrations are central to the product.",
+          "Choose either for a short validation sprint, but write down the handoff plan before real users, payments, or sensitive data arrive.",
+          "Choose a normal codebase sooner when the product's value depends on requirements that no builder supports cleanly.",
+        ],
+      },
+      {
+        type: "quote",
+        text:
+          "The fastest tool is the one that makes your next product decision cheaper, not the one that generates the most code in the first afternoon.",
+        cite: "a rule we use when choosing a build path",
+      },
+      {
+        type: "callout",
+        title: "How we approach this at Start Apps Studio",
+        text:
+          "We use AI builders when they shorten the path to evidence, not when they let a team postpone the hard decisions. Before we build, we identify the first user, the core workflow, the trust requirements, and the part of the system that must remain flexible. That is how a fast prototype becomes a product instead of an impressive first draft.",
+      },
+      {
+        type: "h2",
+        text: "Frequently asked questions",
+        id: "faq",
+      },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Is Base44 better than Lovable?",
+            a: "Neither is better in every situation. Base44 is compelling for contained authenticated apps where managed setup and model choice matter. Lovable is a stronger fit when you need a more open Supabase backend, custom integrations, or public pages that need to be crawlable.",
+          },
+          {
+            q: "Can I use Base44 or Lovable for an MVP?",
+            a: "Yes, especially when the MVP is designed to answer a focused product question. Keep the scope narrow, test the defining constraint early, and decide what happens to the code and data if the experiment earns a larger build.",
+          },
+          {
+            q: "Which platform is better for SEO?",
+            a: "Lovable has the stronger starting point for public SEO because server-rendered HTML gives crawlers content to read immediately. You should still inspect the actual initial response and test your metadata, links, and schema rather than relying on a platform label.",
+          },
+          {
+            q: "When should I move beyond an AI app builder?",
+            a: "Move when the product's important requirements are becoming workarounds: custom identity, complex permissions, unusual integrations, performance constraints, or a team that needs predictable ownership. A migration is easier when you plan the exit before the first version becomes business-critical.",
+          },
+        ],
+      },
+    ],
+    sources: [
+      {
+        label:
+          "Comparison source supplied for this field note: backend architecture and authentication discussion (0:55–13:05).",
+      },
+      {
+        label:
+          "Comparison source supplied for this field note: AI model workflow and model selection discussion (27:41–34:12).",
+      },
+      {
+        label:
+          "Comparison source supplied for this field note: SEO, SSR, and final platform recommendations (37:16–1:22:23).",
+      },
+    ],
+  },
 ];
 
 export const AUTHOR_NAME = AUTHOR;
