@@ -2897,7 +2897,7 @@ Sitemap: ${origin}/sitemap.xml
 function renderLlmsTxt(origin) {
   return `# Start Apps Studio
 
-> A founder-led product studio helping non-technical founders choose the smallest useful next move: a credible launch presence, a tangible product proof, a real MVP, or a bespoke build. Public packages start at $1,800.
+> A founder-led product studio helping non-technical founders choose the smallest useful next move: a credible launch presence, a tangible product proof, a real MVP, or a bespoke build. Public packages start at $2,000.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
@@ -2912,9 +2912,9 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 
 ## Pricing
 
-- Launch Site: $1,800, fixed price
-- Prototype: $5,000, fixed price
-- MVP: $9,000 to $30,000, fixed price
+- Launch Site: $2,000, fixed price
+- Prototype: $7,000, fixed price
+- MVP: $10,000 to $30,000, fixed price
 - Custom: $45,000+, custom quote or monthly retainer
 
 Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
@@ -2971,13 +2971,13 @@ AI is used throughout most of the work to accelerate exploration, coding, and re
 
 ## Packages
 
-### Launch Site: $1,800, fixed
+### Launch Site: $2,000, fixed
 A credible, responsive launch presence that explains the idea clearly, is ready to share, and is handed over in your account. Typical timing is 3 to 5 business days.
 
-### Prototype: $5,000, fixed
+### Prototype: $7,000, fixed
 A clickable product experience with real navigation and realistic data, built for validation, fundraising, or early customer conversations. Typical timing is 5 to 10 days.
 
-### MVP: $9,000 to $30,000, fixed
+### MVP: $10,000 to $30,000, fixed
 A real, launch-ready MVP for iOS, Android, or web, built to put the first useful version in users' hands. Scope, design, engineering, launch support, and one post-launch iteration are included. Typical timing is 3 to 8 weeks from kickoff.
 
 ### Custom: $45,000+
