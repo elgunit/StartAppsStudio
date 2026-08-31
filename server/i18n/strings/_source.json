@@ -915,7 +915,7 @@
     "context": "div.stp-title"
   },
   {
-    "key": "You talk to the person making the decisions, not an account manager relaying them.",
+    "key": "Speak directly with the person making decisions, not an account manager passing messages.",
     "kind": "unit",
     "context": "p.stp-body"
   },
@@ -930,7 +930,7 @@
     "context": "div.stp-title"
   },
   {
-    "key": "See working previews, respond quickly, and make changes before they become expensive.",
+    "key": "See working previews, respond quickly, and fix issues before they become expensive.",
     "kind": "unit",
     "context": "p.stp-body"
   },
@@ -945,7 +945,7 @@
     "context": "div.stp-title"
   },
   {
-    "key": "The code, accounts, and assets are yours, whether you keep working with me or bring in a team.",
+    "key": "Your code, accounts, and assets stay yours, whether you continue with me or bring in a team.",
     "kind": "unit",
     "context": "p.stp-body"
   },
@@ -960,7 +960,7 @@
     "context": "div.stp-title"
   },
   {
-    "key": "Your product never hits a ceiling. When it outgrows one builder, an established handoff path to a partner engineering organisation lets you scale up without starting over with someone new.",
+    "key": "When your product outgrows one builder, a trusted partner path helps you scale without starting over.",
     "kind": "unit",
     "context": "p.stp-body"
   },

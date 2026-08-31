@@ -5450,6 +5450,9 @@
         border-bottom: 1px solid var(--line);
       }
       .studio-principle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: clamp(22px, 3vw, 30px) clamp(18px, 3vw, 34px);
         text-align: center;
         position: relative;
@@ -5493,6 +5496,9 @@
         line-height: 1.25;
       }
       .stp-body {
+        flex: 1;
+        max-width: 18rem;
+        margin: 0;
         color: var(--muted);
         font-size: clamp(12.5px, 1.1vw, 13.5px);
         line-height: 1.6;
@@ -5509,6 +5515,10 @@
           column-gap: 14px;
           padding: 18px 0;
           text-align: left;
+          align-items: start;
+        }
+        .stp-body {
+          max-width: none;
         }
         .studio-principle + .studio-principle::before {
           left: 0;
@@ -7254,7 +7264,7 @@
             </div>
             <div class="stp-kicker">Direct access</div>
             <div class="stp-title">One person, full context</div>
-            <p class="stp-body">You talk to the person making the decisions, not an account manager relaying them.</p>
+            <p class="stp-body">Speak directly with the person making decisions, not an account manager passing messages.</p>
           </div>
           <div class="studio-principle">
             <div class="stp-icon-wrap">
@@ -7262,7 +7272,7 @@
             </div>
             <div class="stp-kicker">Live decisions</div>
             <div class="stp-title">Feedback while it is easy</div>
-            <p class="stp-body">See working previews, respond quickly, and make changes before they become expensive.</p>
+            <p class="stp-body">See working previews, respond quickly, and fix issues before they become expensive.</p>
           </div>
           <div class="studio-principle">
             <div class="stp-icon-wrap">
@@ -7270,7 +7280,7 @@
             </div>
             <div class="stp-kicker">Your foundation</div>
             <div class="stp-title">Nothing held hostage</div>
-            <p class="stp-body">The code, accounts, and assets are yours, whether you keep working with me or bring in a team.</p>
+            <p class="stp-body">Your code, accounts, and assets stay yours, whether you continue with me or bring in a team.</p>
           </div>
           <div class="studio-principle">
             <div class="stp-icon-wrap">
@@ -7278,7 +7288,7 @@
             </div>
             <div class="stp-kicker">Room to grow</div>
               <div class="stp-title">Scale without starting over</div>
-            <p class="stp-body">Your product never hits a ceiling. When it outgrows one builder, an established handoff path to a partner engineering organisation lets you scale up without starting over with someone new.</p>
+            <p class="stp-body">When your product outgrows one builder, a trusted partner path helps you scale without starting over.</p>
           </div>
         </div>
 
