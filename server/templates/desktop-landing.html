@@ -3871,9 +3871,9 @@
 
       /* Native delivery detail modal */
       #nativeDeliveryModal .modal-content {
-        max-width: 620px;
-        max-height: 85vh;
-        padding: 34px 30px 26px;
+        max-width: 980px;
+        max-height: min(90vh, 900px);
+        padding: clamp(24px, 4vw, 48px);
         border-radius: var(--r-lg);
         background: var(--canvas);
         box-shadow:
