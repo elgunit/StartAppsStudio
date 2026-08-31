@@ -780,7 +780,7 @@
     "context": "div.popular-badge"
   },
   {
-    "key": "Responsive Web &middot; Actions",
+    "key": "Responsive Web App",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -855,7 +855,7 @@
     "context": "div.special-pricing"
   },
   {
-    "key": "Need more than an AI-generated first draft? Choose a thoughtful custom build at $25,000+ or a monthly retainer.",
+    "key": "Need more than an AI-generated draft? Choose a thoughtful custom build at $25,000+ or a monthly retainer.",
     "kind": "unit",
     "context": "p.special-summary"
   },
