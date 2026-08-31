@@ -129,6 +129,7 @@ export function loadDictionary(code: string): Record<string, string> {
   const file = dictPath(code);
   if (!fs.existsSync(file)) return {};
   try {
+    const sharedFile = path.join(STRINGS_DIR, "_audience.json");
     const raw = JSON.parse(fs.readFileSync(file, "utf8")) as Record<
       string,
       string
@@ -143,6 +144,13 @@ export function loadDictionary(code: string): Record<string, string> {
         continue;
       }
       safe[key] = value;
+    }
+    if (fs.existsSync(sharedFile)) {
+      const shared = JSON.parse(fs.readFileSync(sharedFile, "utf8")) as Record<string, string>;
+      for (const [key, value] of Object.entries(shared)) {
+        if (safe[key] || typeof value !== "string" || !isSafeTranslationForKey(key, value)) continue;
+        safe[key] = value;
+      }
     }
     return safe;
   } catch (error) {

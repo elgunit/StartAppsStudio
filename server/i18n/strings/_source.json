@@ -5,12 +5,32 @@
     "context": "title"
   },
   {
+    "key": "Help us improve the site",
+    "kind": "unit",
+    "context": "strong#analyticsConsentTitle"
+  },
+  {
+    "key": "With your permission, we record anonymous counts of sections, buttons, and referral sources. We do not identify visitors or use this for advertising.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Allow anonymous insights",
+    "kind": "unit",
+    "context": "button"
+  },
+  {
+    "key": "Continue without",
+    "kind": "unit",
+    "context": "button"
+  },
+  {
     "key": "<span class=\"hero-line hero-line-nowrap\">Ship your <span class=\"accent-word\">product</span> in weeks.</span>",
     "kind": "unit",
     "context": "h1.hero-headline"
   },
   {
-    "key": "Start Apps Studio is the founder-led product partner for non-technical founders. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.",
+    "key": "Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.",
     "kind": "unit",
     "context": "p.hero-subheadline"
   },
@@ -50,7 +70,7 @@
     "context": "div.hero-stat"
   },
   {
-    "key": "<a href=\"#contact\" class=\"cta-button\">Get a free plan</a> <a href=\"#pricing\" class=\"cta-button secondary\">See pricing</a>",
+    "key": "<a href=\"#contact\" class=\"cta-button\" data-track-cta=\"hero_free_plan\">Get a free plan</a> <a href=\"#pricing\" class=\"cta-button secondary\" data-track-cta=\"hero_pricing\">See pricing</a>",
     "kind": "unit",
     "context": "div.hero-cta-group"
   },
@@ -88,6 +108,76 @@
     "key": "You own every account, design file, and line of code. We build it with you, then hand it off cleanly.",
     "kind": "unit",
     "context": "div.pain-strip-resolve"
+  },
+  {
+    "key": "A useful next step for where you are",
+    "kind": "unit",
+    "context": "h2.section-title"
+  },
+  {
+    "key": "You do not need to arrive with a product brief. Bring the business, the idea, or the digital gap; we will help turn it into the right next milestone.",
+    "kind": "unit",
+    "context": "p.section-subtitle"
+  },
+  {
+    "key": "Starting something new",
+    "kind": "unit",
+    "context": "span.audience-kicker"
+  },
+  {
+    "key": "A venture that needs a credible beginning",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Shape the story, brand, and first product experience before you spend months building the wrong thing.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Already in business",
+    "kind": "unit",
+    "context": "span.audience-kicker"
+  },
+  {
+    "key": "A website or brand that no longer fits",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Refresh an outdated presence so customers understand what you do, trust you, and know what to do next.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Ready to grow",
+    "kind": "unit",
+    "context": "span.audience-kicker"
+  },
+  {
+    "key": "An operation that needs a digital product",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Turn a manual process, customer service gap, or proven offer into a useful web or mobile experience.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Need a clear read",
+    "kind": "unit",
+    "context": "span.audience-kicker"
+  },
+  {
+    "key": "A product or website that needs direction",
+    "kind": "unit",
+    "context": "h3"
+  },
+  {
+    "key": "Get an honest route forward: improve what exists, prove the next idea, or build the system the next stage requires.",
+    "kind": "unit",
+    "context": "p"
   },
   {
     "key": "Selected projects",
@@ -175,7 +265,7 @@
     "context": "div.showcase-card[data-name]"
   },
   {
-    "key": "Non-technical founder needed iOS and Android live before a pre-seed pitch, with six weeks to ship and no technical co-founder.",
+    "key": "A growing wellness business needed iOS and Android live before a pre-seed pitch, with six weeks to ship.",
     "kind": "attr",
     "context": "div.showcase-card[data-problem]"
   },
@@ -390,7 +480,7 @@
     "context": "h2.section-title"
   },
   {
-    "key": "From your first landing page to a full multi-platform product. Every package is built to get you closer to real users and real revenue.",
+    "key": "From a credible brand presence to a full multi-platform product. Every package is built around the business outcome you need next: be understood, be trusted, validate demand, or serve real users.",
     "kind": "unit",
     "context": "p.section-subtitle"
   },
@@ -2185,6 +2275,116 @@
     "context": "label.floating-label"
   },
   {
+    "key": "Choose a stage",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "New venture or idea",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Growing business",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Established business",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Existing product team",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Exploring the next move",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Where are you in the journey?",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Choose one",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "No meaningful digital presence yet",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "An outdated website or brand",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "A website, but no digital product",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "An idea, prototype, or half-built app",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "A working product to improve or grow",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "What exists today?",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Business or project name (optional)",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
+    "key": "Choose an outcome",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Be understood and trusted",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Launch a credible presence",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Validate demand",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Serve customers with a product",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "Improve what already exists",
+    "kind": "unit",
+    "context": "option"
+  },
+  {
+    "key": "What would success look like?",
+    "kind": "unit",
+    "context": "label.floating-label"
+  },
+  {
     "key": "Investment range",
     "kind": "unit",
     "context": "span.form-section-title"
@@ -2695,7 +2895,7 @@
     "context": "inline script"
   },
   {
-    "key": "Founder-led product studio for non-technical founders. Go from idea to shipped product in weeks, without giving up equity or managing a dev team.",
+    "key": "Founder-led digital product studio for new ventures, family businesses, and established teams. Refresh your brand, launch a credible website, validate an idea, or ship the product your business needs.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2705,7 +2905,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A founder-led product studio helping non-technical founders go from idea to shipped product in weeks, without giving up equity or managing a dev team.",
+    "key": "A founder-led studio helping entrepreneurs and operating businesses turn ideas, outdated websites, and missing digital presence into credible brands and working products.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2755,7 +2955,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Founder-led product studio for non-technical founders building launch sites, prototypes, and shippable MVPs.",
+    "key": "Founder-led studio for launch sites, brand presence, prototypes, MVPs, and custom digital systems.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2765,7 +2965,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Founder-led studio helping non-technical founders choose the right next milestone: a credible launch story, a tangible product proof, a real MVP, or a bespoke system.",
+    "key": "Founder-led studio helping entrepreneurs, family businesses, and established teams choose the right next milestone: a credible launch story, a tangible product proof, a real MVP, or a bespoke system.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2775,12 +2975,12 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "For founders who need a credible launch or marketing presence before building the full product.",
+    "key": "For a new venture or established business that needs a credible launch or marketing presence.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "For founders who need people, partners, or investors to experience the idea instead of hearing another pitch.",
+    "key": "For teams that need customers, partners, or investors to experience an idea instead of hearing another pitch.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2806,6 +3006,16 @@
   },
   {
     "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Can you help if I already run a business?",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
+    "key": "Yes. We work with new ventures, family businesses, and established teams. We can refresh an outdated website, shape a stronger brand presence, or turn an existing operation into a useful digital product. You stay close to the decisions while one accountable partner owns the build.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },

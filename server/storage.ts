@@ -47,6 +47,20 @@ export interface JournalTrendRow {
   buckets: TrendBucket[];
 }
 
+export interface BusinessInsights {
+  from: Date | null;
+  to: Date | null;
+  inquiries: number;
+  inquiryThemes: { label: string; count: number }[];
+  businessStages: { label: string; count: number }[];
+  digitalPresence: { label: string; count: number }[];
+  desiredOutcomes: { label: string; count: number }[];
+  sources: { label: string; visits: number; ctaClicks: number; inquiries: number }[];
+  ctas: { label: string; clicks: number }[];
+  sections: { label: string; views: number }[];
+  privacyNote: string;
+}
+
 import crypto from "crypto";
 import { db, pool } from "./db";
 import { eq, desc, and, sql, inArray } from "drizzle-orm";
@@ -67,6 +81,7 @@ export interface IStorage {
   // Contact Submissions
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getContactSubmissions(): Promise<ContactSubmission[]>;
+  getBusinessInsights(from?: Date, to?: Date): Promise<BusinessInsights>;
 
   // Journal Leads
   createJournalLead(lead: InsertJournalLead): Promise<{ lead: JournalLead; created: boolean }>;
@@ -117,6 +132,97 @@ export class DatabaseStorage implements IStorage {
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
     return await db.select().from(contactSubmissions).orderBy(sql`created_at DESC`);
+  }
+
+  async getBusinessInsights(from?: Date, to?: Date): Promise<BusinessInsights> {
+    const dateConditions = [] as ReturnType<typeof sql>[];
+    if (from) dateConditions.push(sql`${contactSubmissions.createdAt} >= ${from}`);
+    if (to) dateConditions.push(sql`${contactSubmissions.createdAt} <= ${to}`);
+    const eventConditions = [] as ReturnType<typeof sql>[];
+    if (from) eventConditions.push(sql`${visitorEvents.createdAt} >= ${from}`);
+    if (to) eventConditions.push(sql`${visitorEvents.createdAt} <= ${to}`);
+    const sectionConditions = [] as ReturnType<typeof sql>[];
+    if (from) sectionConditions.push(sql`${sectionViews.createdAt} >= ${from}`);
+    if (to) sectionConditions.push(sql`${sectionViews.createdAt} <= ${to}`);
+
+    const [inquiries, events, views] = await Promise.all([
+      db.select().from(contactSubmissions).where(
+        dateConditions.length ? and(...dateConditions) : undefined,
+      ),
+      db.select({
+        eventType: visitorEvents.eventType,
+        eventData: visitorEvents.eventData,
+      }).from(visitorEvents).where(
+        eventConditions.length ? and(...eventConditions) : undefined,
+      ),
+      db.select({ sectionName: sectionViews.sectionName })
+        .from(sectionViews)
+        .where(sectionConditions.length ? and(...sectionConditions) : undefined),
+    ]);
+
+    const tally = (values: (string | null | undefined)[]) => {
+      const counts = new Map<string, number>();
+      for (const value of values) {
+        const label = typeof value === "string" && value.trim() ? value.trim() : "Not specified";
+        counts.set(label, (counts.get(label) ?? 0) + 1);
+      }
+      return Array.from(counts, ([label, count]) => ({ label, count }))
+        .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+        .slice(0, 12);
+    };
+    const parseEventData = (raw: string | null): Record<string, unknown> => {
+      if (!raw) return {};
+      try {
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === "object" ? parsed as Record<string, unknown> : {};
+      } catch {
+        return {};
+      }
+    };
+    const inquiryInterests = inquiries.flatMap((inquiry) => inquiry.interests ?? []);
+    const sourceMap = new Map<string, { visits: number; ctaClicks: number; inquiries: number }>();
+    const ctaMap = new Map<string, number>();
+    for (const event of events) {
+      const data = parseEventData(event.eventData);
+      const source = typeof data.source === "string" && data.source.trim()
+        ? data.source.trim()
+        : "Direct / unknown";
+      const sourceRow = sourceMap.get(source) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+      if (event.eventType === "landing_visit") sourceRow.visits += 1;
+      if (event.eventType === "landing_cta") {
+        sourceRow.ctaClicks += 1;
+        const cta = typeof data.cta === "string" && data.cta.trim() ? data.cta.trim() : "Unlabelled CTA";
+        ctaMap.set(cta, (ctaMap.get(cta) ?? 0) + 1);
+      }
+      sourceMap.set(source, sourceRow);
+    }
+    for (const inquiry of inquiries) {
+      const source = inquiry.attributionSource?.trim() || "Direct / unknown";
+      const sourceRow = sourceMap.get(source) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+      sourceRow.inquiries += 1;
+      sourceMap.set(source, sourceRow);
+    }
+
+    return {
+      from: from ?? null,
+      to: to ?? null,
+      inquiries: inquiries.length,
+      inquiryThemes: tally(inquiryInterests),
+      businessStages: tally(inquiries.map((inquiry) => inquiry.businessStage)),
+      digitalPresence: tally(inquiries.map((inquiry) => inquiry.digitalPresence)),
+      desiredOutcomes: tally(inquiries.map((inquiry) => inquiry.desiredOutcome)),
+      sources: Array.from(sourceMap, ([label, values]) => ({ label, ...values }))
+        .sort((a, b) => (b.inquiries + b.ctaClicks + b.visits) - (a.inquiries + a.ctaClicks + a.visits))
+        .slice(0, 12),
+      ctas: Array.from(ctaMap, ([label, clicks]) => ({ label, clicks }))
+        .sort((a, b) => b.clicks - a.clicks)
+        .slice(0, 12),
+      sections: tally(views.map((view) => view.sectionName)).map(({ label, count }) => ({
+        label,
+        views: count,
+      })),
+      privacyNote: "Aggregate counts only. Anonymous visitor IDs, names, emails, raw IPs, and message text are not included in this summary.",
+    };
   }
 
   // Journal Leads

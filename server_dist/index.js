@@ -70,6 +70,14 @@ var init_schema = __esm({
       company: text("company"),
       budget: text("budget"),
       interests: text("interests").array(),
+      timeline: text("timeline"),
+      businessStage: text("business_stage"),
+      digitalPresence: text("digital_presence"),
+      desiredOutcome: text("desired_outcome"),
+      attributionSource: text("attribution_source"),
+      attributionCampaign: text("attribution_campaign"),
+      attributionPage: text("attribution_page"),
+      attributionSection: text("attribution_section"),
       message: text("message").notNull(),
       createdAt: timestamp("created_at").notNull().defaultNow()
     });
@@ -178,6 +186,83 @@ var init_storage = __esm({
       }
       async getContactSubmissions() {
         return await db.select().from(contactSubmissions).orderBy(sql2`created_at DESC`);
+      }
+      async getBusinessInsights(from, to) {
+        const dateConditions = [];
+        if (from) dateConditions.push(sql2`${contactSubmissions.createdAt} >= ${from}`);
+        if (to) dateConditions.push(sql2`${contactSubmissions.createdAt} <= ${to}`);
+        const eventConditions = [];
+        if (from) eventConditions.push(sql2`${visitorEvents.createdAt} >= ${from}`);
+        if (to) eventConditions.push(sql2`${visitorEvents.createdAt} <= ${to}`);
+        const sectionConditions = [];
+        if (from) sectionConditions.push(sql2`${sectionViews.createdAt} >= ${from}`);
+        if (to) sectionConditions.push(sql2`${sectionViews.createdAt} <= ${to}`);
+        const [inquiries, events, views] = await Promise.all([
+          db.select().from(contactSubmissions).where(
+            dateConditions.length ? and(...dateConditions) : void 0
+          ),
+          db.select({
+            eventType: visitorEvents.eventType,
+            eventData: visitorEvents.eventData
+          }).from(visitorEvents).where(
+            eventConditions.length ? and(...eventConditions) : void 0
+          ),
+          db.select({ sectionName: sectionViews.sectionName }).from(sectionViews).where(sectionConditions.length ? and(...sectionConditions) : void 0)
+        ]);
+        const tally = (values) => {
+          const counts = /* @__PURE__ */ new Map();
+          for (const value of values) {
+            const label = typeof value === "string" && value.trim() ? value.trim() : "Not specified";
+            counts.set(label, (counts.get(label) ?? 0) + 1);
+          }
+          return Array.from(counts, ([label, count]) => ({ label, count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label)).slice(0, 12);
+        };
+        const parseEventData = (raw) => {
+          if (!raw) return {};
+          try {
+            const parsed = JSON.parse(raw);
+            return parsed && typeof parsed === "object" ? parsed : {};
+          } catch {
+            return {};
+          }
+        };
+        const inquiryInterests = inquiries.flatMap((inquiry) => inquiry.interests ?? []);
+        const sourceMap = /* @__PURE__ */ new Map();
+        const ctaMap = /* @__PURE__ */ new Map();
+        for (const event of events) {
+          const data = parseEventData(event.eventData);
+          const source = typeof data.source === "string" && data.source.trim() ? data.source.trim() : "Direct / unknown";
+          const sourceRow = sourceMap.get(source) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+          if (event.eventType === "landing_visit") sourceRow.visits += 1;
+          if (event.eventType === "landing_cta") {
+            sourceRow.ctaClicks += 1;
+            const cta = typeof data.cta === "string" && data.cta.trim() ? data.cta.trim() : "Unlabelled CTA";
+            ctaMap.set(cta, (ctaMap.get(cta) ?? 0) + 1);
+          }
+          sourceMap.set(source, sourceRow);
+        }
+        for (const inquiry of inquiries) {
+          const source = inquiry.attributionSource?.trim() || "Direct / unknown";
+          const sourceRow = sourceMap.get(source) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+          sourceRow.inquiries += 1;
+          sourceMap.set(source, sourceRow);
+        }
+        return {
+          from: from ?? null,
+          to: to ?? null,
+          inquiries: inquiries.length,
+          inquiryThemes: tally(inquiryInterests),
+          businessStages: tally(inquiries.map((inquiry) => inquiry.businessStage)),
+          digitalPresence: tally(inquiries.map((inquiry) => inquiry.digitalPresence)),
+          desiredOutcomes: tally(inquiries.map((inquiry) => inquiry.desiredOutcome)),
+          sources: Array.from(sourceMap, ([label, values]) => ({ label, ...values })).sort((a, b) => b.inquiries + b.ctaClicks + b.visits - (a.inquiries + a.ctaClicks + a.visits)).slice(0, 12),
+          ctas: Array.from(ctaMap, ([label, clicks]) => ({ label, clicks })).sort((a, b) => b.clicks - a.clicks).slice(0, 12),
+          sections: tally(views.map((view) => view.sectionName)).map(({ label, count }) => ({
+            label,
+            views: count
+          })),
+          privacyNote: "Aggregate counts only. Anonymous visitor IDs, names, emails, raw IPs, and message text are not included in this summary."
+        };
       }
       // Journal Leads
       async createJournalLead(lead) {
@@ -2640,7 +2725,7 @@ function getLocale(code) {
 function localeUrl(code) {
   return code === DEFAULT_LOCALE ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}/${code}`;
 }
-var DEFAULT_LOCALE, LOCALES, BY_CODE, SUPPORTED_CODES, PREFIXED_CODES, SITE_ORIGIN;
+var DEFAULT_LOCALE, LOCALES, BY_CODE, SUPPORTED_CODES, PREFIXED_CODES, SUPPORTED_LANGUAGE_NAMES, SERVICE_AREA, DELIVERY_MODEL, SITE_ORIGIN;
 var init_locales = __esm({
   "server/i18n/locales.ts"() {
     "use strict";
@@ -2648,6 +2733,7 @@ var init_locales = __esm({
     LOCALES = [
       {
         code: "en",
+        englishName: "English",
         htmlLang: "en",
         dateLocale: "en-US",
         ogLocale: "en_US",
@@ -2657,6 +2743,7 @@ var init_locales = __esm({
       },
       {
         code: "az",
+        englishName: "Azerbaijani",
         htmlLang: "az",
         dateLocale: "az-AZ",
         ogLocale: "az_AZ",
@@ -2666,6 +2753,7 @@ var init_locales = __esm({
       },
       {
         code: "tr",
+        englishName: "Turkish",
         htmlLang: "tr",
         dateLocale: "tr-TR",
         ogLocale: "tr_TR",
@@ -2675,6 +2763,7 @@ var init_locales = __esm({
       },
       {
         code: "ru",
+        englishName: "Russian",
         htmlLang: "ru",
         dateLocale: "ru-RU",
         ogLocale: "ru_RU",
@@ -2684,6 +2773,7 @@ var init_locales = __esm({
       },
       {
         code: "zh",
+        englishName: "Simplified Chinese",
         htmlLang: "zh-Hans",
         dateLocale: "zh-CN",
         ogLocale: "zh_CN",
@@ -2693,6 +2783,7 @@ var init_locales = __esm({
       },
       {
         code: "fr",
+        englishName: "French",
         htmlLang: "fr",
         dateLocale: "fr-FR",
         ogLocale: "fr_FR",
@@ -2702,6 +2793,7 @@ var init_locales = __esm({
       },
       {
         code: "es",
+        englishName: "Spanish",
         htmlLang: "es",
         dateLocale: "es-ES",
         ogLocale: "es_ES",
@@ -2711,6 +2803,7 @@ var init_locales = __esm({
       },
       {
         code: "de",
+        englishName: "German",
         htmlLang: "de",
         dateLocale: "de-DE",
         ogLocale: "de_DE",
@@ -2720,6 +2813,7 @@ var init_locales = __esm({
       },
       {
         code: "uk",
+        englishName: "Ukrainian",
         htmlLang: "uk",
         dateLocale: "uk-UA",
         ogLocale: "uk_UA",
@@ -2729,6 +2823,7 @@ var init_locales = __esm({
       },
       {
         code: "it",
+        englishName: "Italian",
         htmlLang: "it",
         dateLocale: "it-IT",
         ogLocale: "it_IT",
@@ -2742,6 +2837,11 @@ var init_locales = __esm({
     PREFIXED_CODES = SUPPORTED_CODES.filter(
       (c) => c !== DEFAULT_LOCALE
     );
+    SUPPORTED_LANGUAGE_NAMES = LOCALES.map(
+      (locale) => locale.englishName
+    );
+    SERVICE_AREA = "Worldwide";
+    DELIVERY_MODEL = "Remote delivery worldwide";
     SITE_ORIGIN = "https://startappsstudio.com";
   }
 });
@@ -3097,6 +3197,8 @@ function renderRobotsTxt(origin) {
   const aiBlocks = aiBots.map((ua) => `User-agent: ${ua}
 Allow: /`).join("\n\n");
   return `# Start Apps Studio \u2014 robots.txt
+# Public landing pages, localized routes, and the Journal are crawlable.
+# Service geography: ${SERVICE_AREA}; delivery model: ${DELIVERY_MODEL}.
 # We explicitly welcome AI crawlers so model overviews stay accurate.
 
 User-agent: *
@@ -3114,14 +3216,22 @@ Sitemap: ${origin}/sitemap.xml
 function renderLlmsTxt(origin) {
   return `# Start Apps Studio
 
- > A founder-led product studio helping non-technical founders choose the next milestone: launch the story, make the idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
+ > A founder-led digital product studio helping new ventures, family businesses, and established teams choose the next milestone: launch a credible presence, make an idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
+## Language and delivery coverage
+
+- Supported landing-page languages: ${SUPPORTED_LANGUAGE_NAMES.join(", ")}.
+- Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), and Italian (${origin}/it).
+- Service area: ${SERVICE_AREA}.
+- Delivery model: ${DELIVERY_MODEL}. Localized pages describe language access, not local offices or in-person availability.
+
 ## Services
 
-- Launch Sites: credible, responsive launch presences for founders who need to share the story before building the full product
-- Prototypes: clickable product experiences that let investors, partners, or customers experience the idea and react to it
+ - Launch Sites: credible, responsive launch presences for a new venture or established business
+ - Brand presence: refreshed identity and websites for businesses with an outdated or missing digital presence
+ - Prototypes: clickable product experiences that let customers, partners, or investors experience the idea and react to it
 - Web Applications: production-grade web apps with accounts, payments, and a real database
 - Native Mobile: iOS and Android apps, including store submission
 - Full MVPs: real, launch-ready products built to put the first useful version in users' hands and learn from usage
@@ -3134,7 +3244,11 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 - MVP: $9,000 to $20,000, fixed price
 - Custom: $25,000+ or monthly retainer
 
-Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
+ Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
+
+## Measurement and privacy
+
+The landing site can collect consented, aggregate-only business insights such as section views, CTA counts, broad inquiry themes, business stage, digital presence, desired outcome, and referral source. Names, email addresses, message text, raw IP addresses, fingerprinting, ad retargeting, and selling visitor data are excluded from analytics summaries. Third-party analytics scripts load only after explicit consent.
 
 ## Toolkit
 
@@ -3168,16 +3282,27 @@ function renderLlmsFullTxt(origin) {
 
 ## Who we are
 
-Start Apps Studio is a founder-led product studio for early-stage founders and teams. We help choose the right route, make the product tangible, and ship a useful first release. Work can include a launch site, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
+ Start Apps Studio is a founder-led digital product studio for new ventures, family businesses, operators, and established teams. We help choose the right route, refresh an outdated presence, make a product tangible, and ship a useful first release. Work can include a launch site, brand identity, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
 
 AI is used throughout most of the work to accelerate exploration, coding, and review. A person owns the product decisions, architecture, quality bar, and client outcome. The Custom tier is the exception, with code written by hand.
 
+## Language and regional coverage
+
+The studio's public landing experience is available in ${SUPPORTED_LANGUAGE_NAMES.join(", ")}. The canonical language URLs are:
+
+${SUPPORTED_LANGUAGE_NAMES.map((name, index) => {
+    const code = index === 0 ? "" : `/${PREFIXED_CODES[index - 1]}`;
+    return `- ${name}: ${origin}${code || "/"}`;
+  }).join("\n")}
+
+Start Apps Studio serves clients worldwide through remote delivery. The language routes are translation and discovery paths; they do not represent local offices, country-specific branches, or a promise of in-person service.
+
 ## Who we serve
 
-- First-time founders who need a real product before raising
-- Funded teams who want a small studio to ship faster than their internal team can
-- Operators with a market and customers who need their idea expressed as a working product
-- Indie makers who want a polished mockup or prototype before committing to a full build
+ - Entrepreneurs and first-time founders who need a credible beginning
+ - Family-business owners and operators who need a stronger digital presence
+ - Established businesses with an outdated website or a manual process worth turning into a product
+ - Funded teams who want one accountable partner to ship faster than an internal team can
 
 ## How we work
 
@@ -3189,7 +3314,7 @@ AI is used throughout most of the work to accelerate exploration, coding, and re
 ## Packages
 
 ### Launch Site: $2,000, fixed
-For a founder who needs a credible story before building the full product. You get a responsive launch presence that is ready to share and handed over in your account. Typical timing is 3 to 5 business days.
+ For a new venture or established business that needs a credible story before building the full product. You get a responsive launch presence that is ready to share and handed over in your account. Typical timing is 3 to 5 business days.
 
 ### Prototype: $5,000, fixed
 For a founder who needs people to experience the idea, not hear another pitch. You get a clickable product experience for validation, fundraising, or early customer conversations. Typical timing is 5 to 10 days.
@@ -3199,6 +3324,10 @@ For a team ready to put a real product in front of real users and learn from usa
 
 ### Custom: $25,000+ or monthly retainer
 For funded teams or complex requirements that need a bespoke, hand-built product and one accountable partner through the next stage. Structure the larger engagement as a quoted 1\u20136 month build or a monthly retainer.
+
+## Measurement and privacy
+
+The site uses consent-aware, aggregate-only measurement to understand which sections and calls to action help visitors. Inquiry context is summarized by theme rather than exposed in analytics reports. Names, email addresses, message text, raw IP addresses, fingerprinting, ad retargeting, and selling visitor data are excluded from the business-insights summary. Google Analytics and Microsoft Clarity load only after explicit visitor consent.
 
 ## Toolkit (current as of ${toolkitAsOf})
 
@@ -4247,19 +4376,49 @@ async function registerRoutes(app2) {
   });
   app2.post("/api/contact", async (req, res) => {
     try {
-      const { fullName, email, company, budget, interests, timeline, message } = req.body;
+      const {
+        fullName,
+        email,
+        company,
+        budget,
+        interests,
+        timeline,
+        message,
+        businessStage,
+        digitalPresence,
+        desiredOutcome,
+        attributionSource,
+        attributionCampaign,
+        attributionPage,
+        attributionSection
+      } = req.body;
       if (!fullName || !email || !message) {
         return res.status(400).json({ error: "Name, email, and message are required" });
       }
+      const allowed = (value, max = 120) => typeof value === "string" && value.trim() ? value.trim().slice(0, max) : null;
+      const allowedInterests = Array.isArray(interests) ? interests.filter((value) => typeof value === "string").map((value) => value.slice(0, 80)).slice(0, 20) : [];
       await storage.createContactSubmission({
-        fullName,
-        email,
-        company: company || null,
-        budget: budget || null,
-        interests: interests || [],
-        message
+        fullName: String(fullName).trim().slice(0, 200),
+        email: String(email).trim().slice(0, 320),
+        company: allowed(company, 200),
+        budget: allowed(budget),
+        interests: allowedInterests,
+        timeline: allowed(timeline, 40),
+        businessStage: allowed(businessStage, 80),
+        digitalPresence: allowed(digitalPresence, 120),
+        desiredOutcome: allowed(desiredOutcome, 120),
+        attributionSource: allowed(attributionSource, 120),
+        attributionCampaign: allowed(attributionCampaign, 160),
+        attributionPage: allowed(attributionPage, 500),
+        attributionSection: allowed(attributionSection, 120),
+        message: String(message).trim().slice(0, 1e4)
       });
-      console.log("Contact form submission:", { fullName, email, company, budget, interests, timeline, message });
+      console.log("Contact form submission received:", {
+        budget: allowed(budget),
+        interestCount: allowedInterests.length,
+        businessStage: allowed(businessStage, 80),
+        desiredOutcome: allowed(desiredOutcome, 120)
+      });
       try {
         const { client, fromEmail } = await getUncachableResendClient();
         const esc2 = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -4271,7 +4430,7 @@ async function registerRoutes(app2) {
           exploring: "Just exploring"
         };
         const timelineLabel = timeline && Object.prototype.hasOwnProperty.call(timelineLabels, timeline) ? timelineLabels[timeline] : "Not specified";
-        const interestsList = Array.isArray(interests) && interests.length > 0 ? interests.map(esc2).join(", ") : "Not specified";
+        const interestsList = allowedInterests.length > 0 ? allowedInterests.map(esc2).join(", ") : "Not specified";
         const emailResult = await client.emails.send({
           from: fromEmail,
           to: "elgunit@gmail.com",
@@ -4280,10 +4439,14 @@ async function registerRoutes(app2) {
             <h2>New Contact Form Submission</h2>
             <p><strong>Name:</strong> ${esc2(fullName)}</p>
             <p><strong>Email:</strong> ${esc2(email)}</p>
-            <p><strong>Company:</strong> ${esc2(company) || "Not specified"}</p>
+            <p><strong>Company:</strong> ${esc2(allowed(company, 200)) || "Not specified"}</p>
             <p><strong>Budget:</strong> ${esc2(budget) || "Not specified"}</p>
             <p><strong>Interested in:</strong> ${interestsList}</p>
             <p><strong>Launch timeline:</strong> ${timelineLabel}</p>
+            <p><strong>Business stage:</strong> ${esc2(allowed(businessStage, 80)) || "Not specified"}</p>
+            <p><strong>Current digital presence:</strong> ${esc2(allowed(digitalPresence, 120)) || "Not specified"}</p>
+            <p><strong>Desired outcome:</strong> ${esc2(allowed(desiredOutcome, 120)) || "Not specified"}</p>
+            <p><strong>Source:</strong> ${esc2(allowed(attributionSource, 120)) || "Not specified"}</p>
             <h3>Message:</h3>
             <p>${esc2(message)}</p>
           `
@@ -4325,17 +4488,60 @@ async function registerRoutes(app2) {
       if (!eventType || !visitorId) {
         return res.status(400).json({ error: "eventType and visitorId required" });
       }
+      const eventTypeValue = String(eventType).slice(0, 80);
+      let safeEventData = eventData == null ? null : (typeof eventData === "string" ? eventData : JSON.stringify(eventData)).slice(0, 4e3);
+      if (eventTypeValue.startsWith("landing_")) {
+        let parsed = {};
+        try {
+          const candidate = typeof eventData === "string" ? JSON.parse(eventData) : eventData;
+          if (candidate && typeof candidate === "object" && !Array.isArray(candidate)) {
+            parsed = candidate;
+          }
+        } catch (_) {
+        }
+        const keep = (key, max = 120) => typeof parsed[key] === "string" ? String(parsed[key]).trim().slice(0, max) : null;
+        const interests = Array.isArray(parsed.interests) ? parsed.interests.filter((value) => typeof value === "string").map((value) => value.slice(0, 80)).slice(0, 20) : void 0;
+        safeEventData = JSON.stringify({
+          source: keep("source"),
+          medium: keep("medium"),
+          campaign: keep("campaign", 160),
+          content: keep("content", 160),
+          referrer: keep("referrer"),
+          cta: keep("cta"),
+          section: keep("section"),
+          businessStage: keep("businessStage"),
+          digitalPresence: keep("digitalPresence"),
+          desiredOutcome: keep("desiredOutcome"),
+          interests
+        }).slice(0, 4e3);
+      }
       await storage.createVisitorEvent({
-        eventType: String(eventType).slice(0, 80),
+        eventType: eventTypeValue,
         visitorId: String(visitorId).slice(0, 120),
         pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
-        eventData: eventData == null ? null : (typeof eventData === "string" ? eventData : JSON.stringify(eventData)).slice(0, 4e3),
+        eventData: safeEventData,
         userId: userId || null
       });
       res.json({ ok: true });
     } catch (error) {
       console.error("visitor-event error:", error);
       res.status(500).json({ error: "Failed to record visitor event" });
+    }
+  });
+  app2.get("/api/admin/business-insights", async (req, res) => {
+    try {
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
+      const parseDate = (value) => {
+        if (typeof value !== "string" || !value) return void 0;
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? void 0 : parsed;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      res.json(await storage.getBusinessInsights(from, to));
+    } catch (error) {
+      console.error("business insights error:", error);
+      res.status(500).json({ error: "Failed to fetch business insights" });
     }
   });
   app2.post("/api/track/active-visitor", async (req, res) => {
@@ -5403,6 +5609,7 @@ function loadDictionary(code) {
   const file = dictPath(code);
   if (!fs.existsSync(file)) return {};
   try {
+    const sharedFile = path.join(STRINGS_DIR, "_audience.json");
     const raw = JSON.parse(fs.readFileSync(file, "utf8"));
     const safe = {};
     for (const [key, value] of Object.entries(raw)) {
@@ -5414,6 +5621,13 @@ function loadDictionary(code) {
         continue;
       }
       safe[key] = value;
+    }
+    if (fs.existsSync(sharedFile)) {
+      const shared = JSON.parse(fs.readFileSync(sharedFile, "utf8"));
+      for (const [key, value] of Object.entries(shared)) {
+        if (safe[key] || typeof value !== "string" || !isSafeTranslationForKey(key, value)) continue;
+        safe[key] = value;
+      }
     }
     return safe;
   } catch (error) {
@@ -5439,15 +5653,16 @@ function i18nPayloadScript(locale, dictionary, jsKeys) {
     const translated = dictionary[key];
     if (translated && translated !== key) strings[key] = translated;
   }
-  const payload = { locale: locale.code, dateLocale: locale.dateLocale, strings };
+  const payload = {
+    locale: locale.code,
+    dateLocale: locale.dateLocale,
+    strings
+  };
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
 function setActiveSwitcherLink(html, locale) {
   if (locale.code === DEFAULT_LOCALE) return html;
-  return html.replace(
-    'class="english-escape is-hidden"',
-    'class="english-escape"'
-  ).replace(
+  return html.replace('class="english-escape is-hidden"', 'class="english-escape"').replace(
     'class="footer-lang-wrap is-current-english"',
     'class="footer-lang-wrap"'
   ).replace(
@@ -5481,7 +5696,7 @@ function patchMetadata(html, locale) {
     <meta property="og:locale:alternate" content="en_US" />`
   );
   out = out.replace(
-    '"inLanguage": "en-US"',
+    /"inLanguage": "en-US"/g,
     `"inLanguage": "${locale.htmlLang}"`
   );
   out = out.replace(

@@ -1251,7 +1251,7 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
- > A founder-led product studio helping non-technical founders choose the next milestone: launch the story, make the idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
+ > A founder-led digital product studio helping new ventures, family businesses, and established teams choose the next milestone: launch a credible presence, make an idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
@@ -1264,8 +1264,9 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 
 ## Services
 
-- Launch Sites: credible, responsive launch presences for founders who need to share the story before building the full product
-- Prototypes: clickable product experiences that let investors, partners, or customers experience the idea and react to it
+ - Launch Sites: credible, responsive launch presences for a new venture or established business
+ - Brand presence: refreshed identity and websites for businesses with an outdated or missing digital presence
+ - Prototypes: clickable product experiences that let customers, partners, or investors experience the idea and react to it
 - Web Applications: production-grade web apps with accounts, payments, and a real database
 - Native Mobile: iOS and Android apps, including store submission
 - Full MVPs: real, launch-ready products built to put the first useful version in users' hands and learn from usage
@@ -1278,7 +1279,11 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 - MVP: $9,000 to $20,000, fixed price
 - Custom: $25,000+ or monthly retainer
 
-Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
+ Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
+
+## Measurement and privacy
+
+The landing site can collect consented, aggregate-only business insights such as section views, CTA counts, broad inquiry themes, business stage, digital presence, desired outcome, and referral source. Names, email addresses, message text, raw IP addresses, fingerprinting, ad retargeting, and selling visitor data are excluded from analytics summaries. Third-party analytics scripts load only after explicit consent.
 
 ## Toolkit
 
@@ -1313,7 +1318,7 @@ export function renderLlmsFullTxt(origin: string): string {
 
 ## Who we are
 
-Start Apps Studio is a founder-led product studio for early-stage founders and teams. We help choose the right route, make the product tangible, and ship a useful first release. Work can include a launch site, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
+ Start Apps Studio is a founder-led digital product studio for new ventures, family businesses, operators, and established teams. We help choose the right route, refresh an outdated presence, make a product tangible, and ship a useful first release. Work can include a launch site, brand identity, Figma-led prototype, production web application, native iOS or Android app, or full MVP.
 
 AI is used throughout most of the work to accelerate exploration, coding, and review. A person owns the product decisions, architecture, quality bar, and client outcome. The Custom tier is the exception, with code written by hand.
 
@@ -1330,10 +1335,10 @@ Start Apps Studio serves clients worldwide through remote delivery. The language
 
 ## Who we serve
 
-- First-time founders who need a real product before raising
-- Funded teams who want a small studio to ship faster than their internal team can
-- Operators with a market and customers who need their idea expressed as a working product
-- Indie makers who want a polished mockup or prototype before committing to a full build
+ - Entrepreneurs and first-time founders who need a credible beginning
+ - Family-business owners and operators who need a stronger digital presence
+ - Established businesses with an outdated website or a manual process worth turning into a product
+ - Funded teams who want one accountable partner to ship faster than an internal team can
 
 ## How we work
 
@@ -1345,7 +1350,7 @@ Start Apps Studio serves clients worldwide through remote delivery. The language
 ## Packages
 
 ### Launch Site: $2,000, fixed
-For a founder who needs a credible story before building the full product. You get a responsive launch presence that is ready to share and handed over in your account. Typical timing is 3 to 5 business days.
+ For a new venture or established business that needs a credible story before building the full product. You get a responsive launch presence that is ready to share and handed over in your account. Typical timing is 3 to 5 business days.
 
 ### Prototype: $5,000, fixed
 For a founder who needs people to experience the idea, not hear another pitch. You get a clickable product experience for validation, fundraising, or early customer conversations. Typical timing is 5 to 10 days.
@@ -1355,6 +1360,10 @@ For a team ready to put a real product in front of real users and learn from usa
 
 ### Custom: $25,000+ or monthly retainer
 For funded teams or complex requirements that need a bespoke, hand-built product and one accountable partner through the next stage. Structure the larger engagement as a quoted 1–6 month build or a monthly retainer.
+
+## Measurement and privacy
+
+The site uses consent-aware, aggregate-only measurement to understand which sections and calls to action help visitors. Inquiry context is summarized by theme rather than exposed in analytics reports. Names, email addresses, message text, raw IP addresses, fingerprinting, ad retargeting, and selling visitor data are excluded from the business-insights summary. Google Analytics and Microsoft Clarity load only after explicit visitor consent.
 
 ## Toolkit (current as of ${toolkitAsOf})
 

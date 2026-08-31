@@ -18,3 +18,4 @@
 - [Localized pricing drift](pricing-consistency.md) — current English translation keys can hide stale numeric amounts in localized values; compare normalized currency amounts with locale-aware formatting.
 - [CodeExecution file access](codeexecution-file-io.md) — use the registered readFile/writeFile callbacks; node:fs/promises is unavailable in the durable sandbox.
 - [Pricing browser smoke](pricing-browser-smoke.md) — Playwright checks run against the local server; Replit needs Chromium runtime libraries declared in `.replit`.
+- [Drizzle schema push safety](drizzle-schema-push-safety.md) — this app's schema snapshot can make `drizzle-kit push` propose dropping unrelated tables; use additive SQL for isolated columns.

@@ -240,22 +240,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/contact", async (req, res) => {
     try {
-      const { fullName, email, company, budget, interests, timeline, message } = req.body;
+      const {
+        fullName, email, company, budget, interests, timeline, message,
+        businessStage, digitalPresence, desiredOutcome,
+        attributionSource, attributionCampaign, attributionPage, attributionSection,
+      } = req.body;
 
       if (!fullName || !email || !message) {
         return res.status(400).json({ error: "Name, email, and message are required" });
       }
 
+      const allowed = (value: unknown, max = 120) =>
+        typeof value === "string" && value.trim() ? value.trim().slice(0, max) : null;
+      const allowedInterests = Array.isArray(interests)
+        ? interests.filter((value): value is string => typeof value === "string").map((value) => value.slice(0, 80)).slice(0, 20)
+        : [];
       await storage.createContactSubmission({
-        fullName,
-        email,
-        company: company || null,
-        budget: budget || null,
-        interests: interests || [],
-        message,
+        fullName: String(fullName).trim().slice(0, 200),
+        email: String(email).trim().slice(0, 320),
+        company: allowed(company, 200),
+        budget: allowed(budget),
+        interests: allowedInterests,
+        timeline: allowed(timeline, 40),
+        businessStage: allowed(businessStage, 80),
+        digitalPresence: allowed(digitalPresence, 120),
+        desiredOutcome: allowed(desiredOutcome, 120),
+        attributionSource: allowed(attributionSource, 120),
+        attributionCampaign: allowed(attributionCampaign, 160),
+        attributionPage: allowed(attributionPage, 500),
+        attributionSection: allowed(attributionSection, 120),
+        message: String(message).trim().slice(0, 10000),
       });
 
-      console.log("Contact form submission:", { fullName, email, company, budget, interests, timeline, message });
+      console.log("Contact form submission received:", {
+        budget: allowed(budget),
+        interestCount: allowedInterests.length,
+        businessStage: allowed(businessStage, 80),
+        desiredOutcome: allowed(desiredOutcome, 120),
+      });
 
       try {
         const { client, fromEmail } = await getUncachableResendClient();
@@ -276,8 +298,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ? timelineLabels[timeline as string]
           : 'Not specified';
 
-        const interestsList = Array.isArray(interests) && interests.length > 0
-          ? interests.map(esc).join(', ')
+        const interestsList = allowedInterests.length > 0
+          ? allowedInterests.map(esc).join(', ')
           : 'Not specified';
 
         const emailResult = await client.emails.send({
@@ -288,10 +310,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             <h2>New Contact Form Submission</h2>
             <p><strong>Name:</strong> ${esc(fullName)}</p>
             <p><strong>Email:</strong> ${esc(email)}</p>
-            <p><strong>Company:</strong> ${esc(company) || 'Not specified'}</p>
+            <p><strong>Company:</strong> ${esc(allowed(company, 200)) || 'Not specified'}</p>
             <p><strong>Budget:</strong> ${esc(budget) || 'Not specified'}</p>
             <p><strong>Interested in:</strong> ${interestsList}</p>
             <p><strong>Launch timeline:</strong> ${timelineLabel}</p>
+            <p><strong>Business stage:</strong> ${esc(allowed(businessStage, 80)) || 'Not specified'}</p>
+            <p><strong>Current digital presence:</strong> ${esc(allowed(digitalPresence, 120)) || 'Not specified'}</p>
+            <p><strong>Desired outcome:</strong> ${esc(allowed(desiredOutcome, 120)) || 'Not specified'}</p>
+            <p><strong>Source:</strong> ${esc(allowed(attributionSource, 120)) || 'Not specified'}</p>
             <h3>Message:</h3>
             <p>${esc(message)}</p>
           `,
@@ -337,17 +363,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!eventType || !visitorId) {
         return res.status(400).json({ error: "eventType and visitorId required" });
       }
+      const eventTypeValue = String(eventType).slice(0, 80);
+      let safeEventData = eventData == null
+        ? null
+        : (typeof eventData === "string" ? eventData : JSON.stringify(eventData)).slice(0, 4000);
+      // Landing analytics is intentionally allowlisted at the server boundary.
+      // A public browser endpoint must not become a place to persist arbitrary
+      // form text, email addresses, or other visitor-provided data.
+      if (eventTypeValue.startsWith("landing_")) {
+        let parsed: Record<string, unknown> = {};
+        try {
+          const candidate = typeof eventData === "string" ? JSON.parse(eventData) : eventData;
+          if (candidate && typeof candidate === "object" && !Array.isArray(candidate)) {
+            parsed = candidate as Record<string, unknown>;
+          }
+        } catch (_) {}
+        const keep = (key: string, max = 120) =>
+          typeof parsed[key] === "string" ? String(parsed[key]).trim().slice(0, max) : null;
+        const interests = Array.isArray(parsed.interests)
+          ? parsed.interests.filter((value): value is string => typeof value === "string").map((value) => value.slice(0, 80)).slice(0, 20)
+          : undefined;
+        safeEventData = JSON.stringify({
+          source: keep("source"),
+          medium: keep("medium"),
+          campaign: keep("campaign", 160),
+          content: keep("content", 160),
+          referrer: keep("referrer"),
+          cta: keep("cta"),
+          section: keep("section"),
+          businessStage: keep("businessStage"),
+          digitalPresence: keep("digitalPresence"),
+          desiredOutcome: keep("desiredOutcome"),
+          interests,
+        }).slice(0, 4000);
+      }
       await storage.createVisitorEvent({
-        eventType: String(eventType).slice(0, 80),
+        eventType: eventTypeValue,
         visitorId: String(visitorId).slice(0, 120),
         pagePath: pagePath ? String(pagePath).slice(0, 500) : null,
-        eventData: eventData == null ? null : (typeof eventData === "string" ? eventData : JSON.stringify(eventData)).slice(0, 4000),
+        eventData: safeEventData,
         userId: userId || null,
       } as any);
       res.json({ ok: true });
     } catch (error) {
       console.error("visitor-event error:", error);
       res.status(500).json({ error: "Failed to record visitor event" });
+    }
+  });
+
+  app.get("/api/admin/business-insights", async (req, res) => {
+    try {
+      if (!requireAdminToken(req)) return res.status(403).json({ error: "Forbidden" });
+      const parseDate = (value: unknown): Date | undefined => {
+        if (typeof value !== "string" || !value) return undefined;
+        const parsed = new Date(value);
+        return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+      };
+      const from = parseDate(req.query.from);
+      const to = parseDate(req.query.to);
+      res.json(await storage.getBusinessInsights(from, to));
+    } catch (error) {
+      console.error("business insights error:", error);
+      res.status(500).json({ error: "Failed to fetch business insights" });
     }
   });
 
