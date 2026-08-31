@@ -775,7 +775,7 @@
     "context": "div.price-feature"
   },
   {
-    "key": "<span class=\"popular-badge-dot\"></span>Best for tangible proof",
+    "key": "<span class=\"popular-badge-dot\"></span>Best for proof",
     "kind": "unit",
     "context": "div.popular-badge"
   },
