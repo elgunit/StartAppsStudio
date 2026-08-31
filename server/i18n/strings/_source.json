@@ -780,7 +780,7 @@
     "context": "div.popular-badge"
   },
   {
-    "key": "Figma &middot; Clickable &middot; Live infra",
+    "key": "Web &middot; Mobile &middot; Actions",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -850,12 +850,12 @@
     "context": "h4"
   },
   {
-    "key": "<span class=\"special-price-amount\">$45,000+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
+    "key": "<span class=\"special-price-amount\">$25,000+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
     "kind": "unit",
     "context": "div.special-pricing"
   },
   {
-    "key": "For a funded team or complex requirement that needs a bespoke product and one accountable partner. Start with a $45,000+ engagement or fund a 1–6 month build through a monthly retainer, with strategy, architecture, and hand-built delivery kept together.",
+    "key": "For a funded team or complex requirement that needs a bespoke product and one accountable partner. Start with a $25,000+ engagement or fund a 1–6 month build through a monthly retainer, with strategy, architecture, and hand-built delivery kept together.",
     "kind": "unit",
     "context": "p.special-summary"
   },
@@ -2080,7 +2080,7 @@
     "context": "summary"
   },
   {
-    "key": "The public path has four routes: a $1,800 Launch Site for a credible story before the full product, a $5,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $9,000 to $30,000 to put a real product in users' hands, and Custom from $45,000+ or monthly retainer for a bespoke system. We agree on scope and price before work starts, so you know the investment behind the next milestone.",
+    "key": "The public path has four routes: a $2,000 Launch Site for a credible story before the full product, a $5,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $9,000 to $20,000 to put a real product in users' hands, and Custom from $25,000+ or monthly retainer for a bespoke system. We agree on scope and price before work starts, so you know the investment behind the next milestone.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2160,7 +2160,7 @@
     "context": "summary"
   },
   {
-    "key": "Yes. If your next milestone is a credible launch or marketing presence, our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
+    "key": "Yes. If your next milestone is a credible launch or marketing presence, our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2545,7 +2545,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Yes. Our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
+    "key": "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   }
