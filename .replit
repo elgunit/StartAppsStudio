@@ -33,7 +33,7 @@ stack = "nodejs"
 integrations = ["javascript_database:1.0.0", "resend:1.0.0"]
 
 [workflows]
-runButton = "Start Backend"
+runButton = "Project"
 
 [[workflows.workflow]]
 name = "Start Backend"
@@ -65,6 +65,10 @@ args = "Auto Push to GitHub"
 task = "workflow.run"
 args = "Start Backend"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "pricing"
+
 [[workflows.workflow]]
 name = "Push to GitHub"
 author = "agent"
@@ -86,6 +90,17 @@ args = "bash scripts/auto-push-watch.sh"
 
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow]]
+name = "pricing"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run check:pricing"
+
+[workflows.workflow.metadata]
+isValidation = true
 
 [postMerge]
 path = "scripts/post-merge.sh"
