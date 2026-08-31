@@ -2104,6 +2104,12 @@
       /* Narrow screens: badge drops under the title and pricing wraps cleanly. */
       @media (max-width: 600px) {
         .special-header { gap: 12px; }
+        .popular-badge {
+          max-width: calc(100% - 20px);
+          justify-content: center;
+          text-align: center;
+          white-space: normal;
+        }
         .special-identity-row {
           align-items: flex-start;
           flex-wrap: wrap;
@@ -2118,7 +2124,12 @@
         }
         .special-badge { margin-bottom: 8px; }
         .special-summary { margin-top: 12px; }
-        .special-feature { font-size: 12.5px; padding: 6px 12px; }
+        .special-feature {
+          font-size: 12.5px;
+          padding: 6px 12px;
+          max-width: 100%;
+          white-space: normal;
+        }
       }
       
       /* How It Works - Bento Cards */

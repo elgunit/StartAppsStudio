@@ -17,3 +17,4 @@
 - [Comparison copy framing](comparison-copy-framing.md) — frame comparisons around what clients can review, own, operate, and hand off—not adversarial vendor-versus-vendor claims.
 - [Localized pricing drift](pricing-consistency.md) — current English translation keys can hide stale numeric amounts in localized values; compare normalized currency amounts with locale-aware formatting.
 - [CodeExecution file access](codeexecution-file-io.md) — use the registered readFile/writeFile callbacks; node:fs/promises is unavailable in the durable sandbox.
+- [Pricing browser smoke](pricing-browser-smoke.md) — Playwright checks run against the local server; Replit needs Chromium runtime libraries declared in `.replit`.
