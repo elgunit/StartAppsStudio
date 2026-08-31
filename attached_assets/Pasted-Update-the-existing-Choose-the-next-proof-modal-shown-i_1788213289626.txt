@@ -1,0 +1,192 @@
+Update the existing “Choose the next proof” modal shown in the attached screenshot.
+
+Do not redesign the modal structure from scratch. Keep the existing two-row card layout:
+
+1. The top row contains the three selectable paths:
+   - Launch site
+   - Prototype
+   - MVP
+
+2. The bottom row contains the shared-core explanation cards:
+   - What that actually means
+   - You own the whole thing
+   - And it does not double the bill
+
+The main goal is to improve the visual design and scannability of the LAST TWO bottom-row cards while preserving their messaging.
+
+## Top row
+
+Keep the three top selection cards as the primary choices:
+
+### Launch site
+Label: “LAUNCH SITE”
+Title: “Tell the story”
+Description: “Story, message, and a credible page to put in front of people.”
+
+### Prototype
+Label: “PROTOTYPE”
+Title: “Make it tangible”
+Description: “Responsive web proof for validation, fundraising, and key conversations.”
+
+### MVP
+Label: “MVP”
+Title: “Put it in users’ hands”
+Description: “Working product with the shared core and native UI/UX for each platform.”
+
+Preserve the existing selected-state behavior. The selected card should have a stronger accent border, lightly tinted background, and a visible selection indicator.
+
+## Bottom row
+
+Keep the heading:
+
+“What the shared-core path includes”
+
+Keep the first card, “What that actually means,” as the broad explanation card, but make the layout and typography more consistent with the other two cards.
+
+### Card 1: What that actually means
+
+Title:
+“What that actually means”
+
+Keep the existing detailed explanation, but improve readability by:
+
+- Increasing line height.
+- Breaking the content into shorter paragraphs or bullet points.
+- Highlighting important capabilities such as:
+  - Face ID and Touch ID
+  - Push notifications
+  - Camera and photo library
+  - Background location
+  - Offline media
+  - Encrypted storage
+  - In-app purchases
+- Avoiding one uninterrupted wall of text.
+
+## Redesign Card 2: You own the whole thing
+
+Keep the title:
+
+“You own the whole thing”
+
+Do not present this as a large paragraph-only card. Turn it into an ownership-focused feature card.
+
+Add a small visual element near the top, such as a stack of labeled file/project chips:
+
+- Source code
+- Project files
+- Xcode
+- Android Studio
+
+Include a small accent label or badge:
+
+“FULL SOURCE HANDOFF”
+
+Replace the long paragraph with a concise description:
+
+“Your native project files and full source code are handed over to you—not locked inside a rental platform.”
+
+Below that, show three compact supporting points:
+
+- “Open the project in Xcode or Android Studio”
+- “Keep building with your own team”
+- “Leave with the actual files, not just access”
+
+The card should visually communicate ownership and portability. Use a simple file-stack, folder, code, or handoff icon if an existing icon library is already available. Do not add a new dependency just for this.
+
+## Redesign Card 3: And it does not double the bill
+
+Keep the title:
+
+“And it does not double the bill”
+
+Turn this into a simple visual cost/value explanation instead of a dense paragraph.
+
+Add a compact comparison or equation:
+
+“One shared core”
+“+”
+“One chosen product surface”
+“=”
+“One coherent build”
+
+Make the “one shared core” and “one chosen product surface” visually distinct using small bordered pills or stacked blocks.
+
+Add a small accent label or badge:
+
+“SHARED FOUNDATION”
+
+Use this concise supporting copy:
+
+“One codebase means one thing to design, test, and maintain. The shared foundation keeps future work from becoming a second disconnected build.”
+
+Below it, show three short supporting points:
+
+- “One product logic layer”
+- “One visual system”
+- “One path for future updates”
+
+Add a subtle clarification at the bottom:
+
+“Store submission, code signing, and provisioning are handled when native delivery is included.”
+
+Do not make claims that every path includes native app delivery. Clearly distinguish between the shared foundation and the native MVP extension.
+
+## Visual treatment for the bottom cards
+
+The last two cards should feel more visual than the first explanatory card:
+
+- Add a small visual or diagram area at the top of each card.
+- Use a lightly tinted background panel for the visual.
+- Keep the visual simple and editorial, not overly decorative.
+- Use stronger internal hierarchy:
+  1. Small badge
+  2. Visual
+  3. Card title
+  4. Short explanation
+  5. Supporting points
+- Use checkmarks, compact bullets, tags, or small labels instead of long paragraphs.
+- Keep the cards equal height on desktop.
+- Align the visual areas, headings, and supporting content consistently across both cards.
+- Give the last two cards slightly more emphasis than the first card without making them look like selectable options.
+
+## Layout
+
+Preserve the current three-column desktop grid.
+
+Use:
+
+- Consistent card padding.
+- Rounded corners around 14–16px.
+- Subtle neutral borders.
+- A pale green or neutral tinted background for the new visual areas.
+- Dark charcoal/green typography.
+- Accent green for badges, checkmarks, diagram labels, and selected states.
+- Minimal shadows.
+- No large gradients.
+- No unnecessary illustrations.
+
+The bottom section should feel like an explanation of the shared core, not a second selection step.
+
+## Responsive behavior
+
+On tablet and mobile:
+
+- Stack the bottom cards vertically.
+- Keep the visual area at the top of each card.
+- Make the supporting points easy to scan.
+- Avoid overly tall paragraphs.
+- Ensure the ownership visual and shared-foundation equation remain readable at narrow widths.
+- Preserve adequate spacing between the top selection cards and bottom information cards.
+- Allow the modal content to scroll naturally on short screens.
+
+## Accessibility and behavior
+
+- Keep the top three cards as the only selectable elements.
+- Do not make the bottom information cards selectable.
+- Preserve existing modal close, Back, and Continue behavior.
+- Ensure all interactive elements have visible focus states.
+- Use accessible labels for any icons or diagrams.
+- Do not communicate meaning through color alone.
+- Verify the layout at desktop, tablet, and mobile widths.
+
+The final result should preserve the current content structure while making “You own the whole thing” and “And it does not double the bill” feel like polished visual proof points rather than dense text cards.
