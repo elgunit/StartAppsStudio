@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Ship your product in weeks — Start Apps Studio</title>
+  <desc id="desc">Founder-led product studio for non-technical founders.</desc>
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7faf8"/>
+      <stop offset="1" stop-color="#dce9e5"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#b7d7d0" stop-opacity=".28"/>
+    </linearGradient>
+    <filter id="blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#wash)"/>
+  <circle cx="1040" cy="95" r="180" fill="#8ad3c8" opacity=".34" filter="url(#blur)"/>
+  <circle cx="280" cy="570" r="145" fill="#e6a0b0" opacity=".22" filter="url(#blur)"/>
+  <g opacity=".3" fill="#0b3438">
+    <circle cx="710" cy="84" r="3"/><circle cx="738" cy="84" r="3"/><circle cx="766" cy="84" r="3"/>
+    <circle cx="710" cy="112" r="3"/><circle cx="738" cy="112" r="3"/><circle cx="766" cy="112" r="3"/>
+    <circle cx="710" cy="140" r="3"/><circle cx="738" cy="140" r="3"/><circle cx="766" cy="140" r="3"/>
+    <circle cx="710" cy="168" r="3"/><circle cx="738" cy="168" r="3"/><circle cx="766" cy="168" r="3"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="72" y="86" font-size="18" font-weight="700" letter-spacing="6" fill="#129f98">START APPS STUDIO</text>
+    <text x="72" y="205" font-size="78" font-weight="800" letter-spacing="-3" fill="#0b181b">Ship your</text>
+    <text x="72" y="292" font-size="78" font-weight="800" letter-spacing="-3" fill="#0b181b">product</text>
+    <text x="430" y="292" font-size="78" font-weight="800" letter-spacing="-3" fill="#d96f8b">in weeks.</text>
+    <rect x="74" y="350" width="510" height="2" fill="#0b181b" opacity=".14"/>
+    <text x="72" y="399" font-size="25" font-weight="500" fill="#4b6263">Founder-led product studio for</text>
+    <text x="72" y="434" font-size="25" font-weight="500" fill="#4b6263">non-technical founders.</text>
+    <rect x="72" y="486" width="254" height="52" rx="26" fill="#0b3438"/>
+    <text x="199" y="519" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Launch Sites · Prototypes</text>
+    <rect x="342" y="486" width="206" height="52" rx="26" fill="#ffffff" fill-opacity=".62" stroke="#129f98" stroke-width="2"/>
+    <text x="445" y="519" text-anchor="middle" font-size="15" font-weight="700" fill="#0b3438">MVPs · Full source</text>
+    <text x="72" y="585" font-size="18" font-weight="700" letter-spacing="2" fill="#0b3438">startappsstudio.com</text>
+  </g>
+  <g transform="translate(900 205) rotate(-6)">
+    <rect width="260" height="190" rx="24" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".86" stroke-width="3"/>
+    <circle cx="28" cy="28" r="7" fill="#129f98" opacity=".78"/>
+    <circle cx="52" cy="28" r="7" fill="#d96f8b" opacity=".7"/>
+    <circle cx="76" cy="28" r="7" fill="#0b3438" opacity=".55"/>
+    <rect x="26" y="70" width="150" height="12" rx="6" fill="#0b3438" opacity=".28"/>
+    <rect x="26" y="98" width="200" height="8" rx="4" fill="#0b3438" opacity=".14"/>
+    <rect x="26" y="126" width="168" height="8" rx="4" fill="#0b3438" opacity=".14"/>
+    <rect x="26" y="150" width="96" height="22" rx="11" fill="#129f98" opacity=".72"/>
+  </g>
+  <g transform="translate(945 125) rotate(7)" opacity=".76">
+    <rect width="260" height="190" rx="24" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".78" stroke-width="3"/>
+    <circle cx="28" cy="28" r="7" fill="#129f98" opacity=".78"/>
+    <circle cx="52" cy="28" r="7" fill="#d96f8b" opacity=".7"/>
+    <circle cx="76" cy="28" r="7" fill="#0b3438" opacity=".55"/>
+    <rect x="26" y="70" width="180" height="12" rx="6" fill="#0b3438" opacity=".22"/>
+    <rect x="26" y="103" width="200" height="8" rx="4" fill="#0b3438" opacity=".12"/>
+    <rect x="26" y="131" width="150" height="8" rx="4" fill="#0b3438" opacity=".12"/>
+  </g>
+</svg>
