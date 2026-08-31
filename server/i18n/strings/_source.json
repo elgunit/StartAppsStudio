@@ -820,7 +820,7 @@
     "context": "h4"
   },
   {
-    "key": "<span class=\"special-price-amount\">$30k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
+    "key": "<span class=\"special-price-amount\">$45k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
     "kind": "unit",
     "context": "div.special-pricing"
   },
@@ -2035,7 +2035,7 @@
     "context": "summary"
   },
   {
-    "key": "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. The Launch Site is built directly in Lovable or Replit from your design direction, then deployed and handed over to you. The Prototype includes the full Figma design phase. Pricing is fixed up front, so you know the number before we start.",
+    "key": "We have four public packages: a $1,799 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $30,000, and a Custom-Scale build starting at $45,000. The Launch Site is built directly in Lovable or Replit from your design direction, then deployed and handed over to you. The Prototype includes the full Figma design phase. Pricing is fixed up front, so you know the number before we start.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2115,7 +2115,7 @@
     "context": "summary"
   },
   {
-    "key": "Yes. Our $1,599 Launch Site package is built directly in Lovable or Replit from your direction, then deployed as a responsive, editable website. It is ideal for a launch page, marketing site, or early SaaS presence. Figma is optional here; the full Figma design phase is part of the $4,999 Prototype package. We deliver Launch Sites in 3 to 5 business days.",
+    "key": "Yes. Our $1,799 Launch Site package is built directly in Lovable or Replit from your direction, then deployed as a responsive, editable website. It is ideal for a launch page, marketing site, or early SaaS presence. Figma is optional here; the full Figma design phase is part of the $4,999 Prototype package. We deliver Launch Sites in 3 to 5 business days.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2480,7 +2480,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "We have four public packages: a $1,599 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $19,000, and a Custom-Scale build starting at $30,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.",
+    "key": "We have four public packages: a $1,799 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $30,000, and a Custom-Scale build starting at $45,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   }

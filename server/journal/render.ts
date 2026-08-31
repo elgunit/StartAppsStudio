@@ -1244,7 +1244,7 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
-> A founder-led product studio helping non-technical founders choose, design, and ship launch sites, prototypes, web apps, native mobile apps, and full MVPs. Current public packages start at $1,599.
+> A founder-led product studio helping non-technical founders choose, design, and ship launch sites, prototypes, web apps, native mobile apps, and full MVPs. Current public packages start at $1,799.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
@@ -1259,10 +1259,10 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 
 ## Pricing
 
-- Launch Site: $1,599, fixed price
+- Launch Site: $1,799, fixed price
 - Prototype: $4,999, fixed price
-- MVP: $9,000 to $19,000, fixed price
-- Custom: $30,000+, custom quote
+- MVP: $9,000 to $30,000, fixed price
+- Custom: $45,000+, custom quote or monthly retainer
 - Enterprise: $75,000+, custom scope
 
 Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
@@ -1320,16 +1320,16 @@ AI is used throughout most of the work to accelerate exploration, coding, and re
 
 ## Packages
 
-### Launch Site: $1,599, fixed
+### Launch Site: $1,799, fixed
 A polished, responsive website built from your direction in Lovable or Replit, deployed and handed over to you. Typical timing is 3 to 5 business days.
 
 ### Prototype: $4,999, fixed
 A Figma-led, clickable, end-to-end prototype of your core flow with real navigation and realistic data. Typical timing is 5 to 10 days.
 
-### MVP: $9,000 to $19,000, fixed
+### MVP: $9,000 to $30,000, fixed
 A real, launch-ready MVP for iOS, Android, or web. Scope, design, engineering, launch support, and one post-launch iteration are included. Typical timing is 3 to 8 weeks from kickoff.
 
-### Custom: $30,000+
+### Custom: $45,000+
 Bespoke multi-platform work for funded teams or larger requirements. Quoted per engagement.
 
 ### Enterprise: $75,000+
