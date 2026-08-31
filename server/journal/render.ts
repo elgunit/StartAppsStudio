@@ -1244,26 +1244,25 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
-> A founder-led product studio helping non-technical founders choose, design, and ship launch sites, prototypes, web apps, native mobile apps, and full MVPs. Current public packages start at $1,799.
+> A founder-led product studio helping non-technical founders choose the smallest useful next move: a credible launch presence, a tangible product proof, a real MVP, or a bespoke build. Public packages start at $1,800.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
 ## Services
 
-- Launch Sites: polished, responsive websites built in Lovable or Replit, deployed and handed over to you
-- Prototypes: Figma-led, clickable, end-to-end product flows ready to demo and test
+- Launch Sites: credible, responsive launch presences built in Lovable or Replit, ready to share and handed over to you
+- Prototypes: clickable product experiences for validation, fundraising, and early customer conversations
 - Web Applications: production-grade web apps with accounts, payments, and a real database
 - Native Mobile: iOS and Android apps, including store submission
-- Full MVPs: real, launch-ready products scoped, designed, built, and launched in 1 to 2 months
-- Custom: bespoke multi-platform work for teams with larger or more complex requirements
+- Full MVPs: real, launch-ready products built to put the first useful version in users' hands
+- Custom: bespoke, hand-built products for funded teams or more complex requirements
 
 ## Pricing
 
-- Launch Site: $1,799, fixed price
-- Prototype: $4,999, fixed price
+- Launch Site: $1,800, fixed price
+- Prototype: $5,000, fixed price
 - MVP: $9,000 to $30,000, fixed price
 - Custom: $45,000+, custom quote or monthly retainer
-- Enterprise: $75,000+, custom scope
 
 Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
 
@@ -1320,20 +1319,17 @@ AI is used throughout most of the work to accelerate exploration, coding, and re
 
 ## Packages
 
-### Launch Site: $1,799, fixed
-A polished, responsive website built from your direction in Lovable or Replit, deployed and handed over to you. Typical timing is 3 to 5 business days.
+### Launch Site: $1,800, fixed
+A credible, responsive launch presence that explains the idea clearly, is ready to share, and is handed over in your account. Typical timing is 3 to 5 business days.
 
-### Prototype: $4,999, fixed
-A Figma-led, clickable, end-to-end prototype of your core flow with real navigation and realistic data. Typical timing is 5 to 10 days.
+### Prototype: $5,000, fixed
+A clickable product experience with real navigation and realistic data, built for validation, fundraising, or early customer conversations. Typical timing is 5 to 10 days.
 
 ### MVP: $9,000 to $30,000, fixed
-A real, launch-ready MVP for iOS, Android, or web. Scope, design, engineering, launch support, and one post-launch iteration are included. Typical timing is 3 to 8 weeks from kickoff.
+A real, launch-ready MVP for iOS, Android, or web, built to put the first useful version in users' hands. Scope, design, engineering, launch support, and one post-launch iteration are included. Typical timing is 3 to 8 weeks from kickoff.
 
 ### Custom: $45,000+
-Bespoke multi-platform work for funded teams or larger requirements. Quoted per engagement.
-
-### Enterprise: $75,000+
-Custom-scoped work for larger organizations and more complex delivery needs.
+Bespoke, hand-built work for funded teams or complex products that need one accountable partner from scope through launch. Available as a quoted engagement or monthly retainer.
 
 ## Toolkit (current as of ${toolkitAsOf})
 

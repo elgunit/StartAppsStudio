@@ -705,12 +705,12 @@
     "context": "p"
   },
   {
-    "key": "Pricing & timelines",
+    "key": "Choose the next move",
     "kind": "unit",
     "context": "h2.section-title"
   },
   {
-    "key": "Strategy-first work for founders who want more than a typical site build. Every package starts with user flows and case scenarios, and includes unlimited revisions while we build.",
+    "key": "Whether you need to look credible, prove the idea, learn from real users, or build the larger product, start with the smallest route that moves you forward.",
     "kind": "unit",
     "context": "p.section-subtitle"
   },
@@ -725,32 +725,32 @@
     "context": "div.price-title"
   },
   {
-    "key": "Your site, built and live",
+    "key": "Look credible before you build the whole product",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "Your direction turned into a polished responsive site",
+    "key": "A polished launch page that explains the idea clearly",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Built in Lovable or Replit, ready for instant edits",
+    "key": "A live, editable site you can share with customers and partners",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Deployed with the code and account access in your name",
+    "key": "Built and handed over in your Lovable or Replit account",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "<span class=\"popular-badge-dot\"></span>Best for a working product",
+    "key": "<span class=\"popular-badge-dot\"></span>Best for proving the idea",
     "kind": "unit",
     "context": "div.popular-badge"
   },
   {
-    "key": "Figma &middot; React &middot; Live infra",
+    "key": "Figma &middot; Clickable &middot; Live infra",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -760,27 +760,27 @@
     "context": "div.price-title"
   },
   {
-    "key": "Clickable &middot; investor-ready",
+    "key": "Give people something real to react to",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "Live on real infrastructure. Tap it on any phone",
+    "key": "A clickable product story people can understand in minutes",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Web-first: update content without an App Store review",
+    "key": "Real navigation and data for investor or customer conversations",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Full Figma design system + source code handed to you",
+    "key": "Figma system and source code you can keep building from",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "React Native &middot; Node &middot; Postgres",
+    "key": "iOS &middot; Android &middot; Web",
     "kind": "text",
     "context": "div.method-badge"
   },
@@ -790,22 +790,22 @@
     "context": "div.price-title"
   },
   {
-    "key": "Real users. Real data. Yours to own",
+    "key": "Put the first real version in users' hands",
     "kind": "unit",
     "context": "div.price-subtitle"
   },
   {
-    "key": "iOS, Android, and web: one build, all platforms",
+    "key": "Core flows designed around the people you need to serve",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "User accounts, payments, and data from day one",
+    "key": "Accounts, payments, and data when the product needs them",
     "kind": "text",
     "context": "div.price-feature"
   },
   {
-    "key": "Every account and line of code transferred to you at launch",
+    "key": "A launch-ready codebase, accounts, and handoff you own",
     "kind": "text",
     "context": "div.price-feature"
   },
@@ -820,37 +820,37 @@
     "context": "h4"
   },
   {
-    "key": "<span class=\"special-price-amount\">$45k+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
+    "key": "<span class=\"special-price-amount\">$45,000+</span> <span class=\"special-price-note\">or monthly retainer</span> <span class=\"special-duration\">1–6 months</span>",
     "kind": "unit",
     "context": "div.special-pricing"
   },
   {
-    "key": "100% bespoke by design, with a Webflow front end, a separate database layer, and a native mobile wrapper. Code is written and reviewed by hand rather than AI-assisted, which takes longer and costs more.",
+    "key": "For funded teams or complex products that need a bespoke system, not a quick first version. We bring product strategy, architecture, and hand-built execution together across a 1–6 month engagement.",
     "kind": "unit",
     "context": "p.special-summary"
   },
   {
-    "key": "Webflow",
+    "key": "Architecture shaped around your product",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "Hand-written HTML/CSS",
+    "key": "Hand-written web and mobile experience",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "Native mobile wrapper",
+    "key": "A product partner accountable through launch",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "Separate database layer",
+    "key": "Separate data layer with room to grow",
     "kind": "text",
     "context": "div.special-feature"
   },
   {
-    "key": "<span class=\"special-details-label\">Who this is for</span> For clients who want a bespoke, hand-built product and are willing to trade speed for it.",
+    "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product to build, a complex system to untangle, or a need for one accountable partner.",
     "kind": "unit",
     "context": "div.special-details"
   },
@@ -1890,11 +1890,6 @@
     "context": "span.form-section-title"
   },
   {
-    "key": "Enterprise",
-    "kind": "unit",
-    "context": "span.budget-tier"
-  },
-  {
     "key": "What you're working on",
     "kind": "unit",
     "context": "span.form-section-title"
@@ -2035,7 +2030,7 @@
     "context": "summary"
   },
   {
-    "key": "We have four public packages: a $1,799 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $30,000, and a Custom-Scale build starting at $45,000. The Launch Site is built directly in Lovable or Replit from your design direction, then deployed and handed over to you. The Prototype includes the full Figma design phase. Pricing is fixed up front, so you know the number before we start.",
+    "key": "We keep the public path simple: a $1,800 Launch Site for a credible launch presence, a $5,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $9,000 to $30,000 to put a real product in users' hands, and Custom from $45,000 or monthly retainer for bespoke work. Each starts with a clear scope and fixed price, so you know what the next step costs before we begin.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2115,7 +2110,7 @@
     "context": "summary"
   },
   {
-    "key": "Yes. Our $1,799 Launch Site package is built directly in Lovable or Replit from your direction, then deployed as a responsive, editable website. It is ideal for a launch page, marketing site, or early SaaS presence. Figma is optional here; the full Figma design phase is part of the $4,999 Prototype package. We deliver Launch Sites in 3 to 5 business days.",
+    "key": "Yes. Our $1,800 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -2430,6 +2425,11 @@
     "context": "head metadata / JSON-LD"
   },
   {
+    "key": "Webflow",
+    "kind": "meta",
+    "context": "head metadata / JSON-LD"
+  },
+  {
     "key": "Rapid prototyping",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
@@ -2455,17 +2455,17 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A polished, responsive website built from your direction in Lovable or Replit, deployed and ready to share.",
+    "key": "A polished, responsive launch site that makes the idea clear, earns trust, and is ready to share.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Clickable, end-to-end prototype built from mapped user flows and case scenarios, ready to demo and test.",
+    "key": "A clickable product experience for validation, fundraising, and early customer conversations.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "A real, shippable MVP with in-depth product strategy behind every flow. iOS, Android, or web, in 3 to 8 weeks.",
+    "key": "A launch-ready product for real users, with strategy behind the core flows and ownership handed over.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
@@ -2475,12 +2475,7 @@
     "context": "head metadata / JSON-LD"
   },
   {
-    "key": "Bespoke multi-platform builds with full product strategy — every screen handcrafted to your brand and architecture.",
-    "kind": "meta",
-    "context": "head metadata / JSON-LD"
-  },
-  {
-    "key": "We have four public packages: a $1,799 Launch Site, a $4,999 Figma-led Prototype, an MVP between $9,000 and $30,000, and a Custom-Scale build starting at $45,000. Every package starts with strategy and a clear scope. Pricing is fixed up front, so you know the number before we start, and the project price covers the agreed design, build, and launch handoff.",
+    "key": "A bespoke, hand-built product for funded teams or complex requirements, with one accountable partner from scope to launch.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   }
