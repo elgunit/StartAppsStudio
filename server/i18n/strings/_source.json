@@ -885,17 +885,17 @@
     "context": "div.special-details"
   },
   {
-    "key": "One build. Web, iOS, and Android.",
+    "key": "Shared core. Web, iOS, and Android.",
     "kind": "unit",
     "context": "h2#nativeDeliveryTitle.section-title"
   },
   {
-    "key": "Prototype proves the idea in a responsive web app. MVP carries the same product into real users’ hands across Web, iOS, and Android—without splitting the build into three projects.",
+    "key": "Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android—with native UI and UX built for each platform.",
     "kind": "unit",
     "context": "p.native-delivery-lead"
   },
   {
-    "key": "See what one build unlocks",
+    "key": "See how the shared core scales",
     "kind": "text",
     "context": "button.native-delivery-cta"
   },
@@ -915,27 +915,27 @@
     "context": "button.modal-close"
   },
   {
-    "key": "One product. Three surfaces.",
+    "key": "One shared core. Three experiences.",
     "kind": "unit",
     "context": "span.native-delivery-modal-eyebrow"
   },
   {
-    "key": "Build the proof once, then keep the path to native open when real users are ready.",
+    "key": "Build the web-app core once, then shape native UI and UX for each platform when real users are ready.",
     "kind": "unit",
     "context": "p#nativeDeliveryModalIntro.native-delivery-modal-intro"
   },
   {
-    "key": "One shared product build connects to Web, iOS, and Android.",
+    "key": "A shared web-app core connects to Web, iOS, and Android experiences.",
     "kind": "attr",
     "context": "div.native-build-visual[aria-label]"
   },
   {
-    "key": "One product build",
+    "key": "Shared web-app core",
     "kind": "unit",
     "context": "strong"
   },
   {
-    "key": "Shared source",
+    "key": "Common logic and data",
     "kind": "unit",
     "context": "span"
   },
@@ -950,7 +950,7 @@
     "context": "strong"
   },
   {
-    "key": "Responsive prototype",
+    "key": "Responsive web app",
     "kind": "unit",
     "context": "span"
   },
@@ -960,7 +960,7 @@
     "context": "strong"
   },
   {
-    "key": "Native in MVP",
+    "key": "Native UI/UX",
     "kind": "unit",
     "context": "span"
   },
@@ -1000,12 +1000,12 @@
     "context": "h3.native-route-title"
   },
   {
-    "key": "Working product with native delivery when the product needs a real phone experience.",
+    "key": "Working product with the shared core and native UI/UX for each platform when the product needs a real phone experience.",
     "kind": "unit",
     "context": "p.native-route-copy"
   },
   {
-    "key": "What the one-build path includes",
+    "key": "What the shared-core path includes",
     "kind": "unit",
     "context": "h3.native-modal-section-title"
   },
