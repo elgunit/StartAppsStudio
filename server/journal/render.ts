@@ -1328,6 +1328,17 @@ const STYLE = `
     .article-body { font-size:16px; }
     .article-cta { padding:var(--space-3); }
   }
+  @media (max-width:420px) {
+    .site-nav { gap:10px; border-radius:24px; }
+    .site-nav .brand { flex:0 0 94px; max-width:94px; font-size:16px; }
+    .site-nav .nav-links { min-width:0; gap:5px; font-size:9.5px; letter-spacing:.11em; }
+    .site-nav .nav-links a { white-space:nowrap; }
+  }
+  @media (max-width:360px) {
+    .site-nav { row-gap:10px; }
+    .site-nav .brand { flex-basis:100px; max-width:100px; }
+    .site-nav .nav-links { flex:0 0 100%; justify-content:space-between; gap:6px; font-size:9.5px; }
+  }
 `;
 
 function shell({
