@@ -199,7 +199,7 @@ function checkTemplate(template: string): void {
   // Exclude that nested surface so the currency-token check only audits
   // public package/FAQ pricing.
   const pricingAndProof = templatePricing.replace(
-    /<div class="testimonials-grid">[\s\S]*?<\/div>\s*<!-- Pagination dots \(visible on mobile only via CSS\) -->/,
+    /<div class="testimonial-carousel-wrap">[\s\S]*?<\/div>\s*<\/section>/,
     "",
   );
   const pricingSurface = `${pricingAndProof}\n${templateContact}\n${templateFaq}`;

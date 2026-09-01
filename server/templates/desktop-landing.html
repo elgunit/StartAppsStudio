@@ -7346,6 +7346,140 @@
         }
       }
 
+      /* Testimonials use the same two-up desktop / snap-scroll mobile
+         treatment as the project showcase. Keep the glow on the shell so the
+         scrollport can clip only its own contents and not the ambient effect. */
+      .testimonial-carousel-wrap {
+        position: relative;
+        width: 100%;
+        overflow: visible;
+        isolation: isolate;
+      }
+
+      .testimonials-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        width: 100%;
+        margin: 0;
+        padding: 30px 30px 60px 44px;
+        scroll-padding-left: 44px;
+        position: relative;
+        z-index: 1;
+        scrollbar-width: none;
+      }
+
+      .testimonials-grid::-webkit-scrollbar { display: none; }
+
+      .testimonial-card {
+        flex: 0 0 calc((100% - 20px - 48px) / 2);
+        min-width: 260px;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
+
+      .testimonial-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin: 0 0 4px;
+        pointer-events: none;
+      }
+
+      .testimonial-dot {
+        width: 6px;
+        height: 6px;
+        border: none;
+        border-radius: 50%;
+        padding: 0;
+        flex-shrink: 0;
+        background: color-mix(in srgb, var(--dominant) 28%, var(--line));
+        transition:
+          width 0.28s cubic-bezier(.4,0,.2,1),
+          background 0.28s ease,
+          border-radius 0.28s ease;
+        cursor: pointer;
+        pointer-events: auto;
+      }
+
+      .testimonial-dot.active {
+        width: 18px;
+        border-radius: 3px;
+        background: var(--dominant);
+      }
+
+      @media (min-width: 769px) {
+        .testimonial-carousel-wrap::before {
+          content: '';
+          position: absolute;
+          z-index: 0;
+          pointer-events: none;
+          inset: 24px 0 18px;
+          border-radius: 48px;
+          background:
+            radial-gradient(
+              ellipse 78% 68% at 50% 42%,
+              color-mix(in srgb, var(--dominant) 24%, transparent) 0%,
+              color-mix(in srgb, var(--dominant) 12%, transparent) 46%,
+              transparent 78%
+            );
+          filter: blur(20px);
+          opacity: 0.9;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .testimonial-carousel-wrap {
+          margin: 0 0 4px;
+        }
+
+        .testimonials-grid {
+          gap: 12px;
+          padding: 10px 16px 70px;
+          scroll-padding-left: 0;
+          z-index: 2;
+        }
+
+        /* Endpoint spacers let the first and last cards center-snap without
+           relying on viewport-relative card widths. */
+        .testimonials-grid::before,
+        .testimonials-grid::after {
+          content: '';
+          flex: 0 0 max(12px, calc(50% - 182px));
+        }
+
+        .testimonial-card {
+          flex: 0 0 auto;
+          width: min(calc(100% - 48px), 340px);
+          min-width: 0;
+          scroll-snap-align: center;
+          scroll-snap-stop: always;
+          align-self: stretch;
+          box-shadow:
+            inset 0 1px 0 var(--specular-teal),
+            inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
+            0 4px 14px rgba(29,72,73,.08) !important;
+          opacity: 1 !important;
+          transform: none !important;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }
+
+        .testimonial-dots {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 14px;
+          z-index: 3;
+          margin: 0;
+        }
+      }
+
       /* Native disclosure cards need a usable keyboard affordance and a
          stable shape when details open. */
       .expandable-card[role="button"] {
@@ -8687,6 +8821,7 @@
         </div>
 
         <!-- Client voices - specific outcomes from real engagements -->
+        <div class="testimonial-carousel-wrap">
         <div class="testimonials-grid">
           <div class="testimonial-card">
             <div class="testimonial-problem-tag" aria-label="Problem: inconsistent visual output">
@@ -8905,19 +9040,116 @@
               <span class="method-badge">Beta launched · 200 signups in 48 hours</span>
             </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>One Autism Health</strong>
+              <span>Healthcare · web + iOS + Android</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: no way for families to find local providers">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: no way for families to find local providers">No way for families to find local providers</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">Families were searching a global database and getting results that meant nothing where they actually lived. We needed localised search on live data across web and both mobile platforms, and we needed it built properly the first time because of who uses it. The MVP was live in three months and we were at 10,000 users six months after that.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, autism care platform</div>
+              <span class="method-badge">MVP in 3 months · 10K users in 6 months</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Wivity</strong>
+              <span>Connectivity · brand + web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: no cohesive brand identity">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: no cohesive brand identity">No cohesive brand identity</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">We had a product and no visual language holding it together, which was a problem the moment anyone serious looked at us. The identity was designed in Figma and the site was built and live in under a month. The consortium acquisition came through the following week.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, connectivity company</div>
+              <span class="method-badge">Design to shipped in 3 months</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Noiseaware</strong>
+              <span>SaaS · UI/UX overhaul</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: incomplete interface, broken user flows">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: incomplete interface, broken user flows">Incomplete interface, broken user flows</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">The product worked but the experience had gaps nobody had mapped, and users were falling into flows that just ended. The overhaul went through every state, including the ones we'd never designed for. Three to four months and we had an interface that matched what the product could actually do.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Product lead, property monitoring platform</div>
+              <span class="method-badge">Full UI/UX redesign in 3-4 months</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Opensend</strong>
+              <span>SaaS · CRM + email platform</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: no CRM dashboard, no intake system">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: no CRM dashboard, no intake system">No CRM dashboard, no intake system</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">We were running email blasts with nothing behind them. No dashboard, no intake, no way for a client to manage their own sends. Five months later we had email push management, per-client customisation, and every flow designed end to end.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, email platform</div>
+              <span class="method-badge">Built in 5 months</span>
+            </div>
+          </div>
         </div>
-        <!-- Pagination dots (visible on mobile only via CSS) -->
-        <div class="testimonial-dots" id="testimonialDots" aria-hidden="true">
-          <button class="testimonial-dot active" data-idx="0" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="1" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="2" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="3" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="4" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="5" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="6" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="7" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="8" tabindex="-1"></button>
-          <button class="testimonial-dot" data-idx="9" tabindex="-1"></button>
+        <!-- Pagination dots are rebuilt to match the available snap positions. -->
+        <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination">
+          <button class="testimonial-dot active" type="button" data-idx="0" role="tab" aria-label="Testimonial 1" aria-selected="true"></button>
+          <button class="testimonial-dot" type="button" data-idx="1" role="tab" aria-label="Testimonial 2" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="2" role="tab" aria-label="Testimonial 3" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="3" role="tab" aria-label="Testimonial 4" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="4" role="tab" aria-label="Testimonial 5" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="5" role="tab" aria-label="Testimonial 6" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="6" role="tab" aria-label="Testimonial 7" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="7" role="tab" aria-label="Testimonial 8" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="8" role="tab" aria-label="Testimonial 9" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="9" role="tab" aria-label="Testimonial 10" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="10" role="tab" aria-label="Testimonial 11" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="11" role="tab" aria-label="Testimonial 12" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="12" role="tab" aria-label="Testimonial 13" aria-selected="false"></button>
+          <button class="testimonial-dot" type="button" data-idx="13" role="tab" aria-label="Testimonial 14" aria-selected="false"></button>
+        </div>
         </div>
       </section>
 
@@ -11492,28 +11724,99 @@
         var grid = document.querySelector('.testimonials-grid');
         var dotsEl = document.getElementById('testimonialDots');
         if (!grid || !dotsEl) return;
-        var dots = dotsEl.querySelectorAll('.testimonial-dot');
-        var cards = grid.querySelectorAll('.testimonial-card');
-        if (!dots.length || !cards.length) return;
-        function updateDot() {
-          var center = grid.scrollLeft + grid.offsetWidth / 2;
-          var closest = 0, minDist = Infinity;
-          cards.forEach(function (card, i) {
-            var dist = Math.abs((card.offsetLeft + card.offsetWidth / 2) - center);
-            if (dist < minDist) { minDist = dist; closest = i; }
-          });
-          dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+
+        var DESKTOP_FULL_CARDS = 2;
+
+        function cards() {
+          return Array.from(grid.querySelectorAll('.testimonial-card'));
         }
-        grid.addEventListener('scroll', updateDot, { passive: true });
-        dots.forEach(function (dot) {
-          dot.addEventListener('click', function () {
-            var idx = parseInt(dot.getAttribute('data-idx'), 10);
-            var card = cards[idx];
-            if (!card) return;
-            var left = card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
-            grid.scrollTo({ left: left, behavior: 'smooth' });
+
+        function updateDot() {
+          var dots = dotsEl.querySelectorAll('.testimonial-dot');
+          var currentCards = cards();
+          if (!dots.length || !currentCards.length) return;
+
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+          var bestIdx = 0;
+
+          if (isDesktop) {
+            var snapCount = Math.max(1, currentCards.length - DESKTOP_FULL_CARDS + 1);
+            var snapPaddingLeft = parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0;
+            var bestDist = Infinity;
+            for (var i = 0; i < snapCount; i++) {
+              var snapX = currentCards[i]
+                ? Math.max(0, currentCards[i].offsetLeft - snapPaddingLeft)
+                : 0;
+              var desktopDist = Math.abs(grid.scrollLeft - snapX);
+              if (desktopDist < bestDist) {
+                bestDist = desktopDist;
+                bestIdx = i;
+              }
+            }
+          } else {
+            var trackCx = grid.scrollLeft + grid.clientWidth / 2;
+            var mobileDist = Infinity;
+            currentCards.forEach(function (card, i) {
+              var cardCx = card.offsetLeft + card.offsetWidth / 2;
+              var distance = Math.abs(cardCx - trackCx);
+              if (distance < mobileDist) {
+                mobileDist = distance;
+                bestIdx = i;
+              }
+            });
+          }
+
+          dots.forEach(function (dot, i) {
+            var active = i === bestIdx;
+            dot.classList.toggle('active', active);
+            dot.setAttribute('aria-selected', active ? 'true' : 'false');
           });
-        });
+        }
+
+        function scrollToCard(idx) {
+          var currentCards = cards();
+          var card = currentCards[idx];
+          if (!card) return;
+
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+          var left = isDesktop
+            ? Math.max(
+                0,
+                card.offsetLeft -
+                  (parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0),
+              )
+            : card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
+          grid.scrollTo({ left: left, behavior: 'smooth' });
+        }
+
+        function refreshDots() {
+          var currentCards = cards();
+          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+          var dotCount = isDesktop
+            ? Math.max(1, currentCards.length - DESKTOP_FULL_CARDS + 1)
+            : currentCards.length;
+
+          dotsEl.innerHTML = '';
+          for (var i = 0; i < dotCount; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'testimonial-dot';
+            dot.type = 'button';
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+            dot.setAttribute('data-idx', String(i));
+            dot.addEventListener('click', function () {
+              scrollToCard(parseInt(this.getAttribute('data-idx'), 10));
+            });
+            dotsEl.appendChild(dot);
+          }
+          updateDot();
+        }
+
+        grid.addEventListener('scroll', updateDot, { passive: true });
+        window.addEventListener('resize', refreshDots, { passive: true });
+        refreshDots();
+        setTimeout(updateDot, 300);
       })();
 
       /* ── 8. HERO STAT COUNTER TICK-UP ─────────────────────────────

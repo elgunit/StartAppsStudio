@@ -1655,6 +1655,201 @@
     "context": "span.method-badge"
   },
   {
+    "key": "<strong>One Autism Health</strong> <span>Healthcare · web + iOS + Android</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: no way for families to find local providers",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "No way for families to find local providers",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "Families were searching a global database and getting results that meant nothing where they actually lived. We needed localised search on live data across web and both mobile platforms, and we needed it built properly the first time because of who uses it. The MVP was live in three months and we were at 10,000 users six months after that.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, autism care platform",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "MVP in 3 months · 10K users in 6 months",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Wivity</strong> <span>Connectivity · brand + web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: no cohesive brand identity",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "No cohesive brand identity",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "We had a product and no visual language holding it together, which was a problem the moment anyone serious looked at us. The identity was designed in Figma and the site was built and live in under a month. The consortium acquisition came through the following week.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, connectivity company",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Design to shipped in 3 months",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Noiseaware</strong> <span>SaaS · UI/UX overhaul</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: incomplete interface, broken user flows",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Incomplete interface, broken user flows",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "The product worked but the experience had gaps nobody had mapped, and users were falling into flows that just ended. The overhaul went through every state, including the ones we'd never designed for. Three to four months and we had an interface that matched what the product could actually do.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Product lead, property monitoring platform",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Full UI/UX redesign in 3-4 months",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Opensend</strong> <span>SaaS · CRM + email platform</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: no CRM dashboard, no intake system",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "No CRM dashboard, no intake system",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "We were running email blasts with nothing behind them. No dashboard, no intake, no way for a client to manage their own sends. Five months later we had email push management, per-client customisation, and every flow designed end to end.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, email platform",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Built in 5 months",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "Testimonial carousel pagination",
+    "kind": "attr",
+    "context": "div#testimonialDots.testimonial-dots[aria-label]"
+  },
+  {
+    "key": "Testimonial 1",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 2",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 3",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 4",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 5",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 6",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 7",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 8",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 9",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 10",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 11",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 12",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 13",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
+    "key": "Testimonial 14",
+    "kind": "attr",
+    "context": "button.testimonial-dot[aria-label]"
+  },
+  {
     "key": "Why Start Apps Studio?",
     "kind": "unit",
     "context": "h2"
