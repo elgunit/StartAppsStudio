@@ -9841,8 +9841,17 @@
           }
         }
         function aboutDone() {
-          var n = document.getElementById('fullName'), e = document.getElementById('email');
-          return n && e && n.value.trim().length > 1 && /.+@.+\..+/.test(e.value);
+          var n = document.getElementById('fullName');
+          var e = document.getElementById('email');
+          var stage = document.getElementById('businessStage');
+          var presence = document.getElementById('digitalPresence');
+          var outcome = document.getElementById('desiredOutcome');
+          return n && e && stage && presence && outcome &&
+            n.value.trim().length > 1 &&
+            /.+@.+\..+/.test(e.value) &&
+            stage.value &&
+            presence.value &&
+            outcome.value;
         }
         function budgetDone() { return !!form.querySelector('input[name="budget"]:checked'); }
         function interestDone() { return !!form.querySelector('input[name="interest"]:checked'); }
@@ -9861,13 +9870,34 @@
       (function() {
         var grid = document.getElementById('budgetGrid');
         if (!grid) return;
+        var budgetToInterests = {
+          'launch-site': ['landing'],
+          'prototype': ['prototype'],
+          'mvp': ['mvp'],
+          'custom': ['webapp', 'mvp']
+        };
+
+        function preselectInterests(budgetValue) {
+          var interestValues = budgetToInterests[budgetValue] || [];
+          interestValues.forEach(function(value) {
+            var input = document.querySelector('input[name="interest"][value="' + value + '"]');
+            if (!input) return;
+            input.checked = true;
+            var option = input.closest('.interest-option');
+            if (option) option.classList.add('selected');
+          });
+        }
+
         grid.addEventListener('click', function(e) {
           var chip = e.target.closest('.budget-chip');
           if (!chip) return;
           grid.querySelectorAll('.budget-chip').forEach(function(c) { c.classList.remove('selected'); });
           chip.classList.add('selected');
           var input = chip.querySelector('input');
-          if (input) input.checked = true;
+          if (input) {
+            input.checked = true;
+            preselectInterests(input.value);
+          }
         });
       })();
 
