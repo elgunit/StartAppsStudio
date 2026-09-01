@@ -1,0 +1,15 @@
+Here's how the two pieces fit together in this project:
+
+1. Visitor identity + geo (location)
+
+src/hooks/useSectionTracker.ts mints a persistent visitor_id (UUID in localStorage), and on idle fires the track-visitor-geo edge function once per session.
+supabase/functions/track-visitor-geo/index.ts reads the real IP from x-forwarded-for / cf-connecting-ip, skips the lookup if a visitor_geo row is fresher than 7 days, calls free ip-api.com for lat/lon/city/country/region/ISP/ASN, keyword-matches ISP/org/ASN for VPN/datacenter detection, and upserts into visitor_geo on visitor_id using the service role key.
+Engagement is logged separately: visitor_events (scroll depth via useScrollDepth.ts, clicks via useVisitorEvent.ts) and section_views.
+2. Email push on active visitor
+
+src/hooks/useActiveVisitorNotification.ts decides "this is a real human": ≥8% scroll depth, or first pointer/touch with ≥3% scroll, or 10s dwell — whichever hits first. One send per browser session (sessionStorage flag), with a pending guard and 2 retries at 7.5s.
+It invokes send-resend-notification with templateName, templateData (page path, visitor id, scroll depth, trigger, Istanbul-local timestamp) and an idempotency key of active-visitor-${visitorId}-${sessionId}.
+That edge function: CORS, Zod body validation, in-memory per-IP rate limit (5 per 10 min), a strict template allowlist, then server-side enrichment — joins visitor_geo (city/country), visitor_nicknames, and counts older visitor_events to flag returning visitors. Recipient is fixed by the template (entry.to), never taken from the browser.
+Rendering/sending lives in _shared/transactional-email-templates/: a registry maps template names to React Email components + subject functions; send-email.ts renders HTML + plaintext and posts to the mail API with idempotency_key and an HMAC-signed unsubscribe token. Every attempt is written to email_send_log as sent/suppressed/failed.
+Bonus: check-traffic-spike/index.ts shows the aggregate pattern — unique visitors in a rolling window, thresholds read from app_settings, and a cooldown enforced by querying email_send_log.
+Key portability notes for Replit: the send path must stay server-side (service-role key + mail API key), ip-api.com is HTTP-only and rate-limited to 45 req/min (swap for ipinfo/ipapi.co with a key in production), and the in-memory rate limiter resets per instance — use Redis or a table if you run multiple.

@@ -1,13 +1,14 @@
 import {
   contactSubmissions,
   sectionViews, visitorEvents, journalLeads,
-  journalReportSchedules, aiCrawlerHits, toolkitReveals,
+  journalReportSchedules, aiCrawlerHits, toolkitReveals, visitorGeo, emailSendLogs,
   type ContactSubmission, type InsertContactSubmission,
   type SectionView, type InsertSectionView, type VisitorEvent, type InsertVisitorEvent,
   type JournalLead, type InsertJournalLead,
   type JournalReportSchedule,
   type AiCrawlerHit, type InsertAiCrawlerHit,
   type ToolkitReveal, type InsertToolkitReveal,
+  type VisitorGeo, type InsertVisitorGeo,
 } from "@shared/schema";
 
 export interface JournalConversionRow {
@@ -91,6 +92,10 @@ export interface IStorage {
   createSectionView(view: InsertSectionView): Promise<SectionView>;
   createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent>;
   hasPriorVisitorActivity(visitorId: string): Promise<boolean>;
+  getVisitorGeo(visitorId: string): Promise<VisitorGeo | null>;
+  upsertVisitorGeo(geo: InsertVisitorGeo): Promise<VisitorGeo>;
+  claimEmailSend(idempotencyKey: string, templateName: string, recipientEmail: string): Promise<boolean>;
+  completeEmailSend(idempotencyKey: string, status: "sent" | "failed", errorMessage?: string): Promise<void>;
   getSectionViews(limit?: number): Promise<SectionView[]>;
   getVisitorEvents(limit?: number): Promise<VisitorEvent[]>;
   getJournalConversionStats(from?: Date, to?: Date): Promise<JournalConversionRow[]>;
@@ -260,6 +265,84 @@ export class DatabaseStorage implements IStorage {
   async createVisitorEvent(event: InsertVisitorEvent): Promise<VisitorEvent> {
     const [row] = await db.insert(visitorEvents).values(event).returning();
     return row;
+  }
+
+  async getVisitorGeo(visitorId: string): Promise<VisitorGeo | null> {
+    const [row] = await db
+      .select()
+      .from(visitorGeo)
+      .where(eq(visitorGeo.visitorId, visitorId))
+      .limit(1);
+    return row ?? null;
+  }
+
+  async upsertVisitorGeo(geo: InsertVisitorGeo): Promise<VisitorGeo> {
+    const [row] = await db
+      .insert(visitorGeo)
+      .values(geo)
+      .onConflictDoUpdate({
+        target: visitorGeo.visitorId,
+        set: {
+          city: geo.city ?? null,
+          region: geo.region ?? null,
+          country: geo.country ?? null,
+          isp: geo.isp ?? null,
+          asn: geo.asn ?? null,
+          isProxy: geo.isProxy ?? false,
+          updatedAt: sql`now()`,
+        },
+      })
+      .returning();
+    return row;
+  }
+
+  async claimEmailSend(
+    idempotencyKey: string,
+    templateName: string,
+    recipientEmail: string,
+  ): Promise<boolean> {
+    const [inserted] = await db
+      .insert(emailSendLogs)
+      .values({
+        idempotencyKey,
+        templateName,
+        recipientEmail,
+        status: "sending",
+      })
+      .onConflictDoNothing({ target: emailSendLogs.idempotencyKey })
+      .returning({ id: emailSendLogs.id });
+    if (inserted) return true;
+
+    // A failed delivery may be reclaimed by a client retry. "sent" and
+    // "sending" rows remain deduplicated across all app instances.
+    const [reclaimed] = await db
+      .update(emailSendLogs)
+      .set({
+        status: "sending",
+        errorMessage: null,
+        updatedAt: sql`now()`,
+      })
+      .where(and(
+        eq(emailSendLogs.idempotencyKey, idempotencyKey),
+        eq(emailSendLogs.status, "failed"),
+      ))
+      .returning({ id: emailSendLogs.id });
+    return !!reclaimed;
+  }
+
+  async completeEmailSend(
+    idempotencyKey: string,
+    status: "sent" | "failed",
+    errorMessage?: string,
+  ): Promise<void> {
+    await db
+      .update(emailSendLogs)
+      .set({
+        status,
+        errorMessage: errorMessage ? errorMessage.slice(0, 1000) : null,
+        updatedAt: sql`now()`,
+      })
+      .where(eq(emailSendLogs.idempotencyKey, idempotencyKey));
   }
 
   // True if this visitorId has any recorded activity (event or section view)

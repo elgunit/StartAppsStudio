@@ -19,3 +19,4 @@
 - [CodeExecution file access](codeexecution-file-io.md) — use the registered readFile/writeFile callbacks; node:fs/promises is unavailable in the durable sandbox.
 - [Pricing browser smoke](pricing-browser-smoke.md) — Playwright checks run against the local server; Replit needs Chromium runtime libraries declared in `.replit`.
 - [Drizzle schema push safety](drizzle-schema-push-safety.md) — this app's schema snapshot can make `drizzle-kit push` propose dropping unrelated tables; use additive SQL for isolated columns.
+- [Replit database schema flow](replit-db-schema-flow.md) — managed Postgres changes belong in schema source plus dev/Publish flow, not new startup-time DDL.

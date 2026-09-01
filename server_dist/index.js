@@ -13,23 +13,27 @@ var schema_exports = {};
 __export(schema_exports, {
   aiCrawlerHits: () => aiCrawlerHits,
   contactSubmissions: () => contactSubmissions,
+  emailSendLogs: () => emailSendLogs,
   insertAiCrawlerHitSchema: () => insertAiCrawlerHitSchema,
   insertContactSubmissionSchema: () => insertContactSubmissionSchema,
+  insertEmailSendLogSchema: () => insertEmailSendLogSchema,
   insertJournalLeadSchema: () => insertJournalLeadSchema,
   insertJournalReportScheduleSchema: () => insertJournalReportScheduleSchema,
   insertSectionViewSchema: () => insertSectionViewSchema,
   insertToolkitRevealSchema: () => insertToolkitRevealSchema,
   insertVisitorEventSchema: () => insertVisitorEventSchema,
+  insertVisitorGeoSchema: () => insertVisitorGeoSchema,
   journalLeads: () => journalLeads,
   journalReportSchedules: () => journalReportSchedules,
   sectionViews: () => sectionViews,
   toolkitReveals: () => toolkitReveals,
-  visitorEvents: () => visitorEvents
+  visitorEvents: () => visitorEvents,
+  visitorGeo: () => visitorGeo
 });
 import { sql } from "drizzle-orm";
 import { pgTable, text, varchar, integer, timestamp, boolean, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
-var sectionViews, visitorEvents, journalLeads, contactSubmissions, journalReportSchedules, aiCrawlerHits, toolkitReveals, insertJournalLeadSchema, insertContactSubmissionSchema, insertJournalReportScheduleSchema, insertAiCrawlerHitSchema, insertToolkitRevealSchema, insertSectionViewSchema, insertVisitorEventSchema;
+var sectionViews, visitorEvents, visitorGeo, emailSendLogs, journalLeads, contactSubmissions, journalReportSchedules, aiCrawlerHits, toolkitReveals, insertJournalLeadSchema, insertContactSubmissionSchema, insertJournalReportScheduleSchema, insertAiCrawlerHitSchema, insertToolkitRevealSchema, insertSectionViewSchema, insertVisitorEventSchema, insertVisitorGeoSchema, insertEmailSendLogSchema;
 var init_schema = __esm({
   "shared/schema.ts"() {
     "use strict";
@@ -53,6 +57,28 @@ var init_schema = __esm({
       userId: varchar("user_id"),
       createdAt: timestamp("created_at").notNull().defaultNow()
     });
+    visitorGeo = pgTable("visitor_geo", {
+      visitorId: varchar("visitor_id").primaryKey(),
+      city: text("city"),
+      region: text("region"),
+      country: text("country"),
+      isp: text("isp"),
+      asn: text("asn"),
+      isProxy: boolean("is_proxy").notNull().default(false),
+      updatedAt: timestamp("updated_at").notNull().defaultNow()
+    });
+    emailSendLogs = pgTable("email_send_logs", {
+      id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+      idempotencyKey: text("idempotency_key").notNull(),
+      templateName: text("template_name").notNull(),
+      status: text("status").notNull().default("sending"),
+      recipientEmail: text("recipient_email"),
+      errorMessage: text("error_message"),
+      createdAt: timestamp("created_at").notNull().defaultNow(),
+      updatedAt: timestamp("updated_at").notNull().defaultNow()
+    }, (table) => ({
+      idempotencyKeyUnique: uniqueIndex("email_send_logs_idempotency_key_unique").on(table.idempotencyKey)
+    }));
     journalLeads = pgTable("journal_leads", {
       id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
       slug: text("slug").notNull(),
@@ -142,6 +168,14 @@ var init_schema = __esm({
     insertVisitorEventSchema = createInsertSchema(visitorEvents).omit({
       id: true,
       createdAt: true
+    });
+    insertVisitorGeoSchema = createInsertSchema(visitorGeo).omit({
+      updatedAt: true
+    });
+    insertEmailSendLogSchema = createInsertSchema(emailSendLogs).omit({
+      id: true,
+      createdAt: true,
+      updatedAt: true
     });
   }
 });
@@ -289,6 +323,50 @@ var init_storage = __esm({
       async createVisitorEvent(event) {
         const [row2] = await db.insert(visitorEvents).values(event).returning();
         return row2;
+      }
+      async getVisitorGeo(visitorId) {
+        const [row2] = await db.select().from(visitorGeo).where(eq(visitorGeo.visitorId, visitorId)).limit(1);
+        return row2 ?? null;
+      }
+      async upsertVisitorGeo(geo) {
+        const [row2] = await db.insert(visitorGeo).values(geo).onConflictDoUpdate({
+          target: visitorGeo.visitorId,
+          set: {
+            city: geo.city ?? null,
+            region: geo.region ?? null,
+            country: geo.country ?? null,
+            isp: geo.isp ?? null,
+            asn: geo.asn ?? null,
+            isProxy: geo.isProxy ?? false,
+            updatedAt: sql2`now()`
+          }
+        }).returning();
+        return row2;
+      }
+      async claimEmailSend(idempotencyKey, templateName, recipientEmail) {
+        const [inserted] = await db.insert(emailSendLogs).values({
+          idempotencyKey,
+          templateName,
+          recipientEmail,
+          status: "sending"
+        }).onConflictDoNothing({ target: emailSendLogs.idempotencyKey }).returning({ id: emailSendLogs.id });
+        if (inserted) return true;
+        const [reclaimed] = await db.update(emailSendLogs).set({
+          status: "sending",
+          errorMessage: null,
+          updatedAt: sql2`now()`
+        }).where(and(
+          eq(emailSendLogs.idempotencyKey, idempotencyKey),
+          eq(emailSendLogs.status, "failed")
+        )).returning({ id: emailSendLogs.id });
+        return !!reclaimed;
+      }
+      async completeEmailSend(idempotencyKey, status, errorMessage) {
+        await db.update(emailSendLogs).set({
+          status,
+          errorMessage: errorMessage ? errorMessage.slice(0, 1e3) : null,
+          updatedAt: sql2`now()`
+        }).where(eq(emailSendLogs.idempotencyKey, idempotencyKey));
       }
       // True if this visitorId has any recorded activity (event or section view)
       // from before now — used to label an incoming visitor as "returning"
@@ -945,6 +1023,13 @@ var init_email_templates = __esm({
 });
 
 // server/geo.ts
+function looksLikeProxyOrDatacenter(data) {
+  if (data?.proxy === true || data?.hosting === true || data?.vpn === true || data?.tor === true) {
+    return true;
+  }
+  const network = [data?.org, data?.isp, data?.asn, data?.as].filter(Boolean).join(" ").toLowerCase();
+  return NETWORK_PRIVACY_KEYWORDS.some((keyword) => network.includes(keyword));
+}
 function isPrivateOrLocalIp(ip) {
   if (!ip) return true;
   const v = ip.trim();
@@ -966,20 +1051,47 @@ async function lookupCityFromIp(ipRaw, timeoutMs = 2500) {
     const city = data.city || null;
     const region = data.region || null;
     const country = data.country_name || data.country || null;
+    const isp = data.org || data.isp || null;
+    const asn = data.asn || data.as || null;
     const parts = [city, region || country].filter(Boolean);
     const label = parts.length > 0 ? parts.join(", ") : UNKNOWN.label;
-    return { city, region, country, label };
+    return { city, region, country, isp, asn, isProxy: looksLikeProxyOrDatacenter(data), label };
   } catch {
     return UNKNOWN;
   } finally {
     clearTimeout(timer);
   }
 }
-var UNKNOWN;
+var UNKNOWN, NETWORK_PRIVACY_KEYWORDS;
 var init_geo = __esm({
   "server/geo.ts"() {
     "use strict";
-    UNKNOWN = { city: null, region: null, country: null, label: "Unknown location" };
+    UNKNOWN = {
+      city: null,
+      region: null,
+      country: null,
+      isp: null,
+      asn: null,
+      isProxy: false,
+      label: "Unknown location"
+    };
+    NETWORK_PRIVACY_KEYWORDS = [
+      "vpn",
+      "proxy",
+      "hosting",
+      "cloud",
+      "datacenter",
+      "data center",
+      "digitalocean",
+      "amazon",
+      "aws",
+      "google cloud",
+      "microsoft azure",
+      "ovh",
+      "hetzner",
+      "linode",
+      "tor"
+    ];
   }
 });
 
@@ -4190,6 +4302,7 @@ var init_render = __esm({
 
 // server/routes.ts
 import { createServer } from "node:http";
+import { z } from "zod";
 import crypto2 from "crypto";
 function requireAdminToken(req) {
   const token = (req.header("x-session-token") || "").trim();
@@ -4200,6 +4313,32 @@ function requireAdminToken(req) {
   } catch {
     return false;
   }
+}
+function requestIp(req) {
+  return ((req.header("x-forwarded-for") || "").split(",")[0]?.trim() || req.ip || req.socket.remoteAddress || "unknown").slice(0, 120);
+}
+function allowActiveVisitorRequest(ip) {
+  const now = Date.now();
+  const recent = (activeVisitorIpHits.get(ip) || []).filter(
+    (timestamp2) => now - timestamp2 < ACTIVE_VISITOR_RATE_WINDOW_MS
+  );
+  if (recent.length >= ACTIVE_VISITOR_RATE_LIMIT) {
+    activeVisitorIpHits.set(ip, recent);
+    return false;
+  }
+  recent.push(now);
+  activeVisitorIpHits.set(ip, recent);
+  return true;
+}
+function claimActiveVisitorNotification(key) {
+  const now = Date.now();
+  for (const [storedKey, expiresAt2] of activeVisitorNotificationKeys) {
+    if (expiresAt2 <= now) activeVisitorNotificationKeys.delete(storedKey);
+  }
+  const expiresAt = activeVisitorNotificationKeys.get(key);
+  if (expiresAt && expiresAt > now) return false;
+  activeVisitorNotificationKeys.set(key, now + ACTIVE_VISITOR_KEY_TTL_MS);
+  return true;
 }
 async function registerRoutes(app2) {
   const canonicalHost = new URL(CANONICAL_ORIGIN).host;
@@ -4545,10 +4684,36 @@ async function registerRoutes(app2) {
     }
   });
   app2.post("/api/track/active-visitor", async (req, res) => {
+    let claimedKey = null;
     try {
-      const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
-      if (!visitorId) return res.status(400).json({ error: "visitorId required" });
-      const visitorIdStr = String(visitorId).slice(0, 120);
+      const parsed = activeVisitorPayloadSchema.safeParse(req.body || {});
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid active visitor payload" });
+      }
+      const { visitorId, sessionId, idempotencyKey, pagePath, scrollPercent, userAgent, referrer, userId } = parsed.data;
+      const visitorIdStr = visitorId.slice(0, 120);
+      const ipRaw = requestIp(req);
+      if (!allowActiveVisitorRequest(ipRaw)) {
+        return res.status(429).json({ error: "Too many active visitor notifications" });
+      }
+      const deliveryKey = (idempotencyKey || `active-visitor-${visitorIdStr}-${sessionId || pagePath || "/"}`).slice(0, 300);
+      if (!claimActiveVisitorNotification(deliveryKey)) {
+        return res.json({ ok: true, duplicate: true });
+      }
+      claimedKey = deliveryKey;
+      const hasDurableIdempotencyKey = Boolean(idempotencyKey);
+      if (hasDurableIdempotencyKey) {
+        const claimedEmail = await storage.claimEmailSend(
+          deliveryKey,
+          "active_visitor",
+          "elgunit@gmail.com"
+        );
+        if (!claimedEmail) {
+          activeVisitorNotificationKeys.delete(deliveryKey);
+          claimedKey = null;
+          return res.json({ ok: true, duplicate: true });
+        }
+      }
       const isReturning = await storage.hasPriorVisitorActivity(visitorIdStr).catch((err) => {
         console.error("hasPriorVisitorActivity check failed:", err?.message || err);
         return false;
@@ -4560,9 +4725,35 @@ async function registerRoutes(app2) {
         eventData: JSON.stringify({ scrollPercent, userAgent, referrer }).slice(0, 4e3),
         userId: userId || null
       });
+      let notificationSent = false;
       try {
-        const ipRaw = (req.header("x-forwarded-for") || "").split(",")[0]?.trim() || req.socket.remoteAddress || "";
-        const geo = await lookupCityFromIp(ipRaw);
+        const cachedGeo = await storage.getVisitorGeo(visitorIdStr);
+        let geo;
+        if (cachedGeo && Date.now() - cachedGeo.updatedAt.getTime() < VISITOR_GEO_CACHE_TTL_MS) {
+          const parts = [cachedGeo.city, cachedGeo.region || cachedGeo.country].filter(Boolean);
+          geo = {
+            city: cachedGeo.city,
+            region: cachedGeo.region,
+            country: cachedGeo.country,
+            isp: cachedGeo.isp,
+            asn: cachedGeo.asn,
+            isProxy: cachedGeo.isProxy,
+            label: parts.length > 0 ? parts.join(", ") : "Unknown location"
+          };
+        } else {
+          geo = await lookupCityFromIp(ipRaw);
+          if (geo.city || geo.region || geo.country || geo.isp || geo.asn) {
+            await storage.upsertVisitorGeo({
+              visitorId: visitorIdStr,
+              city: geo.city,
+              region: geo.region,
+              country: geo.country,
+              isp: geo.isp,
+              asn: geo.asn,
+              isProxy: geo.isProxy
+            });
+          }
+        }
         const { client, fromEmail } = await getUncachableResendClient();
         const { subject, html } = activeVisitorNotification({
           visitorId: visitorIdStr,
@@ -4580,15 +4771,35 @@ async function registerRoutes(app2) {
           html
         });
         if (sendResult?.error) {
-          console.error("active-visitor email rejected by Resend:", JSON.stringify(sendResult.error));
-        } else {
-          console.log("active-visitor email sent ok. id=", sendResult?.data?.id, "from=", fromEmail);
+          throw new Error(`Resend rejected active visitor email: ${JSON.stringify(sendResult.error)}`);
         }
+        notificationSent = true;
+        console.log("active-visitor email sent ok. id=", sendResult?.data?.id, "from=", fromEmail);
       } catch (emailError) {
         console.error("active-visitor email threw:", emailError?.message || emailError);
       }
+      if (!notificationSent) {
+        if (hasDurableIdempotencyKey) {
+          await storage.completeEmailSend(
+            deliveryKey,
+            "failed",
+            "Resend rejected or threw while sending the notification"
+          ).catch((logError) => {
+            console.error("active-visitor failed-delivery log error:", logError);
+          });
+        }
+        activeVisitorNotificationKeys.delete(deliveryKey);
+        claimedKey = null;
+        return res.status(502).json({ error: "Active visitor notification failed" });
+      }
+      if (hasDurableIdempotencyKey) {
+        await storage.completeEmailSend(deliveryKey, "sent").catch((logError) => {
+          console.error("active-visitor sent-delivery log error:", logError);
+        });
+      }
       res.json({ ok: true });
     } catch (error) {
+      if (claimedKey) activeVisitorNotificationKeys.delete(claimedKey);
       console.error("active-visitor error:", error);
       res.status(500).json({ error: "Failed to record active visitor" });
     }
@@ -4858,6 +5069,7 @@ async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   return httpServer;
 }
+var activeVisitorNotificationKeys, activeVisitorIpHits, ACTIVE_VISITOR_KEY_TTL_MS, ACTIVE_VISITOR_RATE_WINDOW_MS, ACTIVE_VISITOR_RATE_LIMIT, VISITOR_GEO_CACHE_TTL_MS, activeVisitorPayloadSchema;
 var init_routes = __esm({
   "server/routes.ts"() {
     "use strict";
@@ -4869,6 +5081,23 @@ var init_routes = __esm({
     init_ai_bot_verifier();
     init_render();
     init_posts();
+    activeVisitorNotificationKeys = /* @__PURE__ */ new Map();
+    activeVisitorIpHits = /* @__PURE__ */ new Map();
+    ACTIVE_VISITOR_KEY_TTL_MS = 10 * 60 * 1e3;
+    ACTIVE_VISITOR_RATE_WINDOW_MS = 10 * 60 * 1e3;
+    ACTIVE_VISITOR_RATE_LIMIT = 5;
+    VISITOR_GEO_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1e3;
+    activeVisitorPayloadSchema = z.object({
+      visitorId: z.string().trim().min(1).max(120),
+      sessionId: z.string().trim().min(1).max(120).optional(),
+      idempotencyKey: z.string().trim().min(1).max(300).optional(),
+      pagePath: z.string().trim().max(500).optional(),
+      scrollPercent: z.number().min(0).max(100).optional(),
+      trigger: z.enum(["scroll", "pointer", "touch", "dwell"]).optional(),
+      userAgent: z.string().max(500).optional(),
+      referrer: z.string().max(500).optional(),
+      userId: z.string().max(120).nullable().optional()
+    }).strict();
   }
 });
 

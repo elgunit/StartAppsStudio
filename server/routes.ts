@@ -35,6 +35,59 @@ function requireAdminToken(req: Request): boolean {
   }
 }
 
+const activeVisitorNotificationKeys = new Map<string, number>();
+const activeVisitorIpHits = new Map<string, number[]>();
+const ACTIVE_VISITOR_KEY_TTL_MS = 10 * 60 * 1000;
+const ACTIVE_VISITOR_RATE_WINDOW_MS = 10 * 60 * 1000;
+const ACTIVE_VISITOR_RATE_LIMIT = 5;
+const VISITOR_GEO_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+const activeVisitorPayloadSchema = z.object({
+  visitorId: z.string().trim().min(1).max(120),
+  sessionId: z.string().trim().min(1).max(120).optional(),
+  idempotencyKey: z.string().trim().min(1).max(300).optional(),
+  pagePath: z.string().trim().max(500).optional(),
+  scrollPercent: z.number().min(0).max(100).optional(),
+  trigger: z.enum(["scroll", "pointer", "touch", "dwell"]).optional(),
+  userAgent: z.string().max(500).optional(),
+  referrer: z.string().max(500).optional(),
+  userId: z.string().max(120).nullable().optional(),
+}).strict();
+
+function requestIp(req: Request): string {
+  return (
+    (req.header("x-forwarded-for") || "").split(",")[0]?.trim() ||
+    req.ip ||
+    req.socket.remoteAddress ||
+    "unknown"
+  ).slice(0, 120);
+}
+
+function allowActiveVisitorRequest(ip: string): boolean {
+  const now = Date.now();
+  const recent = (activeVisitorIpHits.get(ip) || []).filter(
+    (timestamp) => now - timestamp < ACTIVE_VISITOR_RATE_WINDOW_MS,
+  );
+  if (recent.length >= ACTIVE_VISITOR_RATE_LIMIT) {
+    activeVisitorIpHits.set(ip, recent);
+    return false;
+  }
+  recent.push(now);
+  activeVisitorIpHits.set(ip, recent);
+  return true;
+}
+
+function claimActiveVisitorNotification(key: string): boolean {
+  const now = Date.now();
+  for (const [storedKey, expiresAt] of activeVisitorNotificationKeys) {
+    if (expiresAt <= now) activeVisitorNotificationKeys.delete(storedKey);
+  }
+  const expiresAt = activeVisitorNotificationKeys.get(key);
+  if (expiresAt && expiresAt > now) return false;
+  activeVisitorNotificationKeys.set(key, now + ACTIVE_VISITOR_KEY_TTL_MS);
+  return true;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // ─── Canonical-domain redirect ─────────────────────────────────────────
   const canonicalHost = new URL(CANONICAL_ORIGIN).host;
@@ -429,11 +482,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/track/active-visitor", async (req, res) => {
+    let claimedKey: string | null = null;
     try {
-      const { visitorId, pagePath, scrollPercent, userAgent, referrer, userId } = req.body || {};
-      if (!visitorId) return res.status(400).json({ error: "visitorId required" });
+      const parsed = activeVisitorPayloadSchema.safeParse(req.body || {});
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid active visitor payload" });
+      }
+      const { visitorId, sessionId, idempotencyKey, pagePath, scrollPercent, userAgent, referrer, userId } = parsed.data;
 
-      const visitorIdStr = String(visitorId).slice(0, 120);
+      const visitorIdStr = visitorId.slice(0, 120);
+      const ipRaw = requestIp(req);
+      if (!allowActiveVisitorRequest(ipRaw)) {
+        return res.status(429).json({ error: "Too many active visitor notifications" });
+      }
+      const deliveryKey = (idempotencyKey || `active-visitor-${visitorIdStr}-${sessionId || pagePath || "/"}`).slice(0, 300);
+      if (!claimActiveVisitorNotification(deliveryKey)) {
+        return res.json({ ok: true, duplicate: true });
+      }
+      claimedKey = deliveryKey;
+      const hasDurableIdempotencyKey = Boolean(idempotencyKey);
+      if (hasDurableIdempotencyKey) {
+        const claimedEmail = await storage.claimEmailSend(
+          deliveryKey,
+          "active_visitor",
+          "elgunit@gmail.com",
+        );
+        if (!claimedEmail) {
+          activeVisitorNotificationKeys.delete(deliveryKey);
+          claimedKey = null;
+          return res.json({ ok: true, duplicate: true });
+        }
+      }
 
       // Determine new vs. returning BEFORE inserting this event, so this
       // visit itself doesn't count as "prior activity".
@@ -452,12 +531,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: userId || null,
       } as any);
 
+      let notificationSent = false;
       try {
-        const ipRaw =
-          (req.header("x-forwarded-for") || "").split(",")[0]?.trim() ||
-          req.socket.remoteAddress ||
-          "";
-        const geo = await lookupCityFromIp(ipRaw);
+        const cachedGeo = await storage.getVisitorGeo(visitorIdStr);
+        let geo: Awaited<ReturnType<typeof lookupCityFromIp>>;
+        if (cachedGeo && Date.now() - cachedGeo.updatedAt.getTime() < VISITOR_GEO_CACHE_TTL_MS) {
+          const parts = [cachedGeo.city, cachedGeo.region || cachedGeo.country].filter(Boolean);
+          geo = {
+            city: cachedGeo.city,
+            region: cachedGeo.region,
+            country: cachedGeo.country,
+            isp: cachedGeo.isp,
+            asn: cachedGeo.asn,
+            isProxy: cachedGeo.isProxy,
+            label: parts.length > 0 ? parts.join(", ") : "Unknown location",
+          };
+        } else {
+          geo = await lookupCityFromIp(ipRaw);
+          if (geo.city || geo.region || geo.country || geo.isp || geo.asn) {
+            await storage.upsertVisitorGeo({
+              visitorId: visitorIdStr,
+              city: geo.city,
+              region: geo.region,
+              country: geo.country,
+              isp: geo.isp,
+              asn: geo.asn,
+              isProxy: geo.isProxy,
+            });
+          }
+        }
 
         const { client, fromEmail } = await getUncachableResendClient();
         const { subject, html } = activeVisitorNotification({
@@ -476,15 +578,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
           html,
         });
         if (sendResult?.error) {
-          console.error("active-visitor email rejected by Resend:", JSON.stringify(sendResult.error));
-        } else {
-          console.log("active-visitor email sent ok. id=", sendResult?.data?.id, "from=", fromEmail);
+          throw new Error(`Resend rejected active visitor email: ${JSON.stringify(sendResult.error)}`);
         }
+        notificationSent = true;
+        console.log("active-visitor email sent ok. id=", sendResult?.data?.id, "from=", fromEmail);
       } catch (emailError: any) {
         console.error("active-visitor email threw:", emailError?.message || emailError);
       }
+      if (!notificationSent) {
+        if (hasDurableIdempotencyKey) {
+          await storage.completeEmailSend(
+            deliveryKey,
+            "failed",
+            "Resend rejected or threw while sending the notification",
+          ).catch((logError) => {
+            console.error("active-visitor failed-delivery log error:", logError);
+          });
+        }
+        activeVisitorNotificationKeys.delete(deliveryKey);
+        claimedKey = null;
+        return res.status(502).json({ error: "Active visitor notification failed" });
+      }
+      if (hasDurableIdempotencyKey) {
+        await storage.completeEmailSend(deliveryKey, "sent").catch((logError) => {
+          // The email was already accepted; retain the in-flight DB row so
+          // a retry cannot send a duplicate if the status update fails.
+          console.error("active-visitor sent-delivery log error:", logError);
+        });
+      }
       res.json({ ok: true });
     } catch (error) {
+      if (claimedKey) activeVisitorNotificationKeys.delete(claimedKey);
       console.error("active-visitor error:", error);
       res.status(500).json({ error: "Failed to record active visitor" });
     }

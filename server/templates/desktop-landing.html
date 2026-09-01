@@ -11584,67 +11584,114 @@
         } catch (_) {}
       })();
 
-      // Active visitor notification - fires once per session when the user
-      // genuinely scrolls (not just a tap or a momentum bounce).
+      // Active visitor notification - fires once per session after meaningful
+      // engagement, with a dwell fallback and retry-safe delivery.
       (function trackActiveVisitor() {
         try {
-           if (!window.__sasAnalyticsEnabled) return;
+          if (!window.__sasAnalyticsEnabled) return;
           var SENT_KEY = 'sas_active_sent_v1';
-          var ID_KEY   = 'sas_visitor_id_v1';
+          var PENDING_KEY = 'sas_active_pending_v1';
+          var SESSION_KEY = 'sas_analytics_session_v1';
+          var pendingAt = Number(sessionStorage.getItem(PENDING_KEY) || 0);
           if (sessionStorage.getItem(SENT_KEY)) return;
+          if (pendingAt && Date.now() - pendingAt < 60000) return;
+          if (pendingAt) {
+            try { sessionStorage.removeItem(PENDING_KEY); } catch (_) {}
+          }
 
-          var visitorId = localStorage.getItem(ID_KEY);
-          if (!visitorId) {
-            visitorId = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
-            try { localStorage.setItem(ID_KEY, visitorId); } catch (_) {}
+          var visitorId = window.__sasVisitorId ? window.__sasVisitorId() : null;
+          if (!visitorId) return;
+          var sessionId = sessionStorage.getItem(SESSION_KEY);
+          if (!sessionId) {
+            sessionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+            try { sessionStorage.setItem(SESSION_KEY, sessionId); } catch (_) {}
           }
 
           var startY = window.scrollY || window.pageYOffset || 0;
           var fired = false;
+          var attempts = 0;
+          var dwellTimer = null;
+          var ticking = false;
 
-          function maybeFire() {
-            if (fired) return;
+          function scrollPercent() {
             var y = window.scrollY || window.pageYOffset || 0;
             var doc = document.documentElement;
             var max = Math.max(1, (doc.scrollHeight || 0) - (window.innerHeight || 0));
-            var pct = Math.min(100, Math.round((y / max) * 100));
-            // Require a meaningful scroll: 250px past start OR >=15% of page.
-            if ((y - startY) < 250 && pct < 15) return;
+            return Math.min(100, Math.round((y / max) * 100));
+          }
 
-            fired = true;
+          function cleanup() {
             window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('pointerdown', onPointer);
+            window.removeEventListener('touchstart', onTouch);
+            if (dwellTimer) window.clearTimeout(dwellTimer);
+          }
 
-            try { sessionStorage.setItem(SENT_KEY, '1'); } catch (_) {}
+          function sendActiveVisitor(trigger) {
+            if (fired) return;
+            fired = true;
+            cleanup();
+            try { sessionStorage.setItem(PENDING_KEY, '1'); } catch (_) {}
 
             var payload = {
               visitorId: visitorId,
+              sessionId: sessionId,
+              idempotencyKey: 'active-visitor-' + visitorId + '-' + sessionId,
               pagePath: location.pathname + location.search,
-              scrollPercent: pct,
+              scrollPercent: scrollPercent(),
+              trigger: trigger,
               userAgent: navigator.userAgent,
               referrer: document.referrer || ''
             };
 
-            try {
-              var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-              if (!(navigator.sendBeacon && navigator.sendBeacon('/api/track/active-visitor', blob))) {
-                fetch('/api/track/active-visitor', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(payload),
-                  keepalive: true
-                }).catch(function(){});
-              }
-            } catch (_) {}
+            function attempt() {
+              attempts += 1;
+              fetch('/api/track/active-visitor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+                keepalive: true
+              }).then(function (response) {
+                if (!response.ok) throw new Error('active visitor request failed');
+                try {
+                  sessionStorage.setItem(SENT_KEY, '1');
+                  sessionStorage.removeItem(PENDING_KEY);
+                } catch (_) {}
+              }).catch(function () {
+                if (attempts < 3) window.setTimeout(attempt, 7500);
+                else {
+                  try { sessionStorage.removeItem(PENDING_KEY); } catch (_) {}
+                }
+              });
+            }
+            attempt();
           }
 
-          var ticking = false;
+          function maybeFire(trigger, minimumPercent) {
+            if (scrollPercent() >= minimumPercent) sendActiveVisitor(trigger);
+          }
+
           function onScroll() {
             if (ticking) return;
             ticking = true;
-            requestAnimationFrame(function () { ticking = false; maybeFire(); });
+            requestAnimationFrame(function () {
+              ticking = false;
+              var pct = scrollPercent();
+              var y = window.scrollY || window.pageYOffset || 0;
+              // A normal scroll or 8% page depth indicates real engagement.
+              if ((y - startY) >= 120 || pct >= 8) sendActiveVisitor('scroll');
+            });
           }
 
+          function onPointer() { maybeFire('pointer', 3); }
+          function onTouch() { maybeFire('touch', 3); }
+
           window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('pointerdown', onPointer, { passive: true });
+          window.addEventListener('touchstart', onTouch, { passive: true });
+          dwellTimer = window.setTimeout(function () {
+            sendActiveVisitor('dwell');
+          }, 10000);
         } catch (_) {}
       })();
 

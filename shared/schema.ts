@@ -27,6 +27,34 @@ export const visitorEvents = pgTable("visitor_events", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+// Coarse geo/network enrichment cached by anonymous visitor ID. Raw IP
+// addresses are never persisted, and entries are refreshed by the server.
+export const visitorGeo = pgTable("visitor_geo", {
+  visitorId: varchar("visitor_id").primaryKey(),
+  city: text("city"),
+  region: text("region"),
+  country: text("country"),
+  isp: text("isp"),
+  asn: text("asn"),
+  isProxy: boolean("is_proxy").notNull().default(false),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+// Durable idempotency records for notification delivery. A unique key
+// prevents a retry or a second app instance from sending the same email.
+export const emailSendLogs = pgTable("email_send_logs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  idempotencyKey: text("idempotency_key").notNull(),
+  templateName: text("template_name").notNull(),
+  status: text("status").notNull().default("sending"),
+  recipientEmail: text("recipient_email"),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => ({
+  idempotencyKeyUnique: uniqueIndex("email_send_logs_idempotency_key_unique").on(table.idempotencyKey),
+}));
+
 // Journal leads — guest emails captured from Journal article CTAs
 export const journalLeads = pgTable("journal_leads", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -134,6 +162,16 @@ export const insertVisitorEventSchema = createInsertSchema(visitorEvents).omit({
   createdAt: true,
 });
 
+export const insertVisitorGeoSchema = createInsertSchema(visitorGeo).omit({
+  updatedAt: true,
+});
+
+export const insertEmailSendLogSchema = createInsertSchema(emailSendLogs).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type JournalLead = typeof journalLeads.$inferSelect;
 export type InsertJournalLead = z.infer<typeof insertJournalLeadSchema>;
@@ -149,3 +187,7 @@ export type SectionView = typeof sectionViews.$inferSelect;
 export type InsertSectionView = z.infer<typeof insertSectionViewSchema>;
 export type VisitorEvent = typeof visitorEvents.$inferSelect;
 export type InsertVisitorEvent = z.infer<typeof insertVisitorEventSchema>;
+export type VisitorGeo = typeof visitorGeo.$inferSelect;
+export type InsertVisitorGeo = z.infer<typeof insertVisitorGeoSchema>;
+export type EmailSendLog = typeof emailSendLogs.$inferSelect;
+export type InsertEmailSendLog = z.infer<typeof insertEmailSendLogSchema>;
