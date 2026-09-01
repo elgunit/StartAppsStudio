@@ -7495,53 +7495,30 @@
         opacity: 0.72;
       }
 
+      .carousel-dots-viewport {
+        width: 114px;
+        overflow: hidden;
+        flex: 0 0 auto;
+      }
+
       .carousel-dots-track {
         display: flex;
         align-items: center;
         gap: 6px;
         flex: 0 0 auto;
-        will-change: transform, opacity;
+        transform: translate3d(0, 0, 0);
+        transition: none;
+        will-change: transform;
       }
 
-      @keyframes carousel-dots-shift-forward {
-        from {
-          opacity: 0.52;
-          transform: translateX(-12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes carousel-dots-shift-backward {
-        from {
-          opacity: 0.52;
-          transform: translateX(12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      .carousel-dots-track.is-moving-forward {
-        animation: carousel-dots-shift-forward 0.34s cubic-bezier(.22,.8,.28,1) both;
-      }
-
-      .carousel-dots-track.is-moving-backward {
-        animation: carousel-dots-shift-backward 0.34s cubic-bezier(.22,.8,.28,1) both;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .carousel-dots-track {
-          animation: none !important;
-        }
+      .carousel-dots-track.is-ready {
+        transition: transform 0.42s cubic-bezier(.22,.8,.28,1);
       }
 
       .carousel-dot,
       .testimonial-dot {
-        width: 7px;
+        position: relative;
+        width: 18px;
         height: 7px;
         display: inline-flex;
         align-items: center;
@@ -7550,28 +7527,54 @@
         padding: 0;
         border: 0;
         border-radius: 50%;
-        background: color-mix(in srgb, var(--dominant) 28%, var(--line));
+        background: transparent;
         cursor: pointer;
         opacity: 0.78;
+        animation: none;
+        transition: opacity 0.28s ease;
+      }
+
+      .carousel-dot::before,
+      .testimonial-dot::before {
+        content: '';
+        display: block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--dominant) 28%, var(--line));
         transition:
-          width 0.28s cubic-bezier(.4,0,.2,1),
+          width 0.42s cubic-bezier(.22,.8,.28,1),
           background 0.28s ease,
-          border-radius 0.28s ease,
-          opacity 0.28s ease;
+          border-radius 0.42s cubic-bezier(.22,.8,.28,1);
       }
 
       .carousel-dot.active,
       .testimonial-dot.active {
+        opacity: 1;
+      }
+
+      .carousel-dot.active::before,
+      .testimonial-dot.active::before {
         width: 18px;
         border-radius: 3px;
         background: var(--dominant);
-        opacity: 1;
       }
 
       .carousel-dot:focus-visible,
       .testimonial-dot:focus-visible {
         outline: 3px solid color-mix(in srgb, var(--rose) 78%, var(--dominant));
         outline-offset: 4px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-dots-track,
+        .carousel-dots-track.is-ready,
+        .carousel-dot,
+        .testimonial-dot,
+        .carousel-dot::before,
+        .testimonial-dot::before {
+          transition: none;
+        }
       }
 
       @media (min-width: 769px) {
@@ -10970,6 +10973,7 @@
         var lastActive = -1;
         var lastTotal = -1;
         var lastStart = -1;
+        var dotsViewport = null;
         var dotsTrack = null;
 
         if (!grid || !dotsContainer) return null;
@@ -11056,17 +11060,14 @@
             return;
           }
 
-          var movement = lastActive < 0
-            ? null
-            : active > lastActive
-              ? 'forward'
-              : active < lastActive
-                ? 'backward'
-                : null;
+          var wasInitialized = lastActive >= 0;
           if (!dotsTrack) {
+            dotsViewport = document.createElement('div');
+            dotsViewport.className = 'carousel-dots-viewport';
             dotsTrack = document.createElement('div');
             dotsTrack.className = 'carousel-dots-track';
-            dotsContainer.appendChild(dotsTrack);
+            dotsViewport.appendChild(dotsTrack);
+            dotsContainer.appendChild(dotsViewport);
           }
 
           lastActive = active;
@@ -11074,52 +11075,69 @@
           lastStart = start;
           dotsContainer.classList.toggle('has-before', start > 0);
           dotsContainer.classList.toggle('has-after', start + maxVisibleDots < total);
-          dotsTrack.classList.remove('is-moving-forward', 'is-moving-backward');
-          dotsTrack.innerHTML = '';
 
           var end = Math.min(total, start + maxVisibleDots);
           var currentCards = cards();
-          for (var i = start; i < end; i++) {
-            var dot = document.createElement('button');
-            var card = currentCards[i];
-            dot.className = 'carousel-dot';
-            dot.type = 'button';
-            dot.setAttribute('role', 'tab');
-            dot.setAttribute('data-idx', String(i));
-            dot.setAttribute('aria-label', 'Show ' + label.toLowerCase() + ' ' + (i + 1) + ' of ' + total);
-            dot.setAttribute('aria-selected', i === active ? 'true' : 'false');
-            dot.setAttribute('aria-current', i === active ? 'true' : 'false');
-            if (card) {
-              if (!card.id) card.id = cardIdPrefix + '-' + i;
-              dot.setAttribute('aria-controls', card.id);
+          var visibleCount = Math.min(total, maxVisibleDots);
+          dotsViewport.style.width = (
+            visibleCount * 18 + Math.max(0, visibleCount - 1) * 6
+          ) + 'px';
+
+          if (dotsTrack.children.length !== total) {
+            dotsTrack.innerHTML = '';
+            for (var i = 0; i < total; i++) {
+              var dot = document.createElement('button');
+              dot.className = 'carousel-dot';
+              dot.type = 'button';
+              dot.setAttribute('role', 'tab');
+              dot.setAttribute('data-idx', String(i));
+              dot.addEventListener('click', function() {
+                var target = parseInt(this.getAttribute('data-idx'), 10);
+                scrollToPosition(target);
+              });
+              dot.addEventListener('keydown', function(event) {
+                var current = parseInt(this.getAttribute('data-idx'), 10);
+                var target = current;
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') target = Math.min(total - 1, current + 1);
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') target = Math.max(0, current - 1);
+                if (event.key === 'Home') target = 0;
+                if (event.key === 'End') target = total - 1;
+                if (target === current) return;
+                event.preventDefault();
+                render(target, total);
+                scrollToPosition(target);
+                var next = dotsContainer.querySelector('[data-idx="' + target + '"]');
+                if (next) next.focus();
+              });
+              dotsTrack.appendChild(dot);
             }
-            dot.classList.toggle('active', i === active);
-            dot.addEventListener('click', function() {
-              var target = parseInt(this.getAttribute('data-idx'), 10);
-              scrollToPosition(target);
-            });
-            dot.addEventListener('keydown', function(event) {
-              var current = parseInt(this.getAttribute('data-idx'), 10);
-              var target = current;
-              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') target = Math.min(total - 1, current + 1);
-              if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') target = Math.max(0, current - 1);
-              if (event.key === 'Home') target = 0;
-              if (event.key === 'End') target = total - 1;
-              if (target === current) return;
-              event.preventDefault();
-              render(target, total);
-              scrollToPosition(target);
-              var next = dotsContainer.querySelector('[data-idx="' + target + '"]');
-              if (next) next.focus();
-            });
-            dotsTrack.appendChild(dot);
           }
 
-          if (movement) {
-            // Restart the group animation for each new position, including
-            // changes that keep the active dot inside the visible window.
+          for (var j = 0; j < total; j++) {
+            var currentDot = dotsTrack.children[j];
+            var currentCard = currentCards[j];
+            var isVisible = j >= start && j < end;
+            currentDot.setAttribute('aria-label', 'Show ' + label.toLowerCase() + ' ' + (j + 1) + ' of ' + total);
+            currentDot.setAttribute('aria-selected', j === active ? 'true' : 'false');
+            currentDot.setAttribute('aria-current', j === active ? 'true' : 'false');
+            currentDot.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+            currentDot.tabIndex = isVisible ? 0 : -1;
+            if (currentCard) {
+              if (!currentCard.id) currentCard.id = cardIdPrefix + '-' + j;
+              currentDot.setAttribute('aria-controls', currentCard.id);
+            } else {
+              currentDot.removeAttribute('aria-controls');
+            }
+            currentDot.classList.toggle('active', j === active);
+          }
+
+          if (!wasInitialized) {
+            dotsTrack.classList.remove('is-ready');
+          }
+          dotsTrack.style.transform = 'translate3d(-' + (start * 24) + 'px, 0, 0)';
+          if (!wasInitialized) {
             void dotsTrack.offsetWidth;
-            dotsTrack.classList.add('is-moving-' + movement);
+            dotsTrack.classList.add('is-ready');
           }
         }
 
