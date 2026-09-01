@@ -7495,6 +7495,50 @@
         opacity: 0.72;
       }
 
+      .carousel-dots-track {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 0 0 auto;
+        will-change: transform, opacity;
+      }
+
+      @keyframes carousel-dots-shift-forward {
+        from {
+          opacity: 0.52;
+          transform: translateX(-12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes carousel-dots-shift-backward {
+        from {
+          opacity: 0.52;
+          transform: translateX(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .carousel-dots-track.is-moving-forward {
+        animation: carousel-dots-shift-forward 0.34s cubic-bezier(.22,.8,.28,1) both;
+      }
+
+      .carousel-dots-track.is-moving-backward {
+        animation: carousel-dots-shift-backward 0.34s cubic-bezier(.22,.8,.28,1) both;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-dots-track {
+          animation: none !important;
+        }
+      }
+
       .carousel-dot,
       .testimonial-dot {
         width: 7px;
@@ -10926,6 +10970,7 @@
         var lastActive = -1;
         var lastTotal = -1;
         var lastStart = -1;
+        var dotsTrack = null;
 
         if (!grid || !dotsContainer) return null;
 
@@ -11011,17 +11056,32 @@
             return;
           }
 
+          var movement = lastActive < 0
+            ? null
+            : active > lastActive
+              ? 'forward'
+              : active < lastActive
+                ? 'backward'
+                : null;
+          if (!dotsTrack) {
+            dotsTrack = document.createElement('div');
+            dotsTrack.className = 'carousel-dots-track';
+            dotsContainer.appendChild(dotsTrack);
+          }
+
           lastActive = active;
           lastTotal = total;
           lastStart = start;
           dotsContainer.classList.toggle('has-before', start > 0);
           dotsContainer.classList.toggle('has-after', start + maxVisibleDots < total);
-          dotsContainer.innerHTML = '';
+          dotsTrack.classList.remove('is-moving-forward', 'is-moving-backward');
+          dotsTrack.innerHTML = '';
 
           var end = Math.min(total, start + maxVisibleDots);
+          var currentCards = cards();
           for (var i = start; i < end; i++) {
             var dot = document.createElement('button');
-            var card = cards()[i];
+            var card = currentCards[i];
             dot.className = 'carousel-dot';
             dot.type = 'button';
             dot.setAttribute('role', 'tab');
@@ -11052,7 +11112,14 @@
               var next = dotsContainer.querySelector('[data-idx="' + target + '"]');
               if (next) next.focus();
             });
-            dotsContainer.appendChild(dot);
+            dotsTrack.appendChild(dot);
+          }
+
+          if (movement) {
+            // Restart the group animation for each new position, including
+            // changes that keep the active dot inside the visible window.
+            void dotsTrack.offsetWidth;
+            dotsTrack.classList.add('is-moving-' + movement);
           }
         }
 
