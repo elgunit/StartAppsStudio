@@ -1022,6 +1022,75 @@ const STYLE = `
   .resource-article-card h3 { margin-bottom:10px; color:var(--glass-ink); font-family:var(--display); font-size:23px; line-height:1.15; }
   .resource-article-card p { color:var(--glass-muted); font-size:14px; line-height:1.5; }
   .resource-article-card .article-link { display:inline-block; margin-top:16px; color:var(--glass-coral); font-family:var(--kicker); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .resource-toolkit-stack { display:grid; gap:12px; }
+  .resource-toolkit-group {
+    overflow:hidden; border:1px solid var(--glass-line); border-radius:20px;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 52%),var(--glass-panel);
+    box-shadow:0 18px 48px rgba(13,58,67,.08),inset 0 1px 0 rgba(255,255,255,.64);
+  }
+  .resource-toolkit-group summary {
+    display:flex; align-items:center; justify-content:space-between; gap:18px;
+    padding:20px 22px; cursor:pointer; list-style:none;
+  }
+  .resource-toolkit-group summary::-webkit-details-marker { display:none; }
+  .resource-toolkit-group summary:hover .resource-toolkit-label { color:var(--glass-teal); }
+  .resource-toolkit-group summary:focus-visible {
+    outline:3px solid color-mix(in srgb,var(--glass-teal) 42%,transparent);
+    outline-offset:-3px;
+  }
+  .resource-toolkit-label {
+    display:block; color:var(--glass-ink); font-family:var(--display);
+    font-size:clamp(21px,3vw,29px); line-height:1.05; transition:color .2s ease;
+  }
+  .resource-toolkit-desc {
+    display:block; max-width:64ch; margin-top:7px; color:var(--glass-muted);
+    font-size:14px; line-height:1.45;
+  }
+  .resource-toolkit-toggle {
+    display:grid; flex:0 0 32px; place-items:center; width:32px; height:32px;
+    border:1px solid var(--glass-line); border-radius:50%; color:var(--glass-teal);
+    font-size:23px; font-weight:300; line-height:1; transition:transform .25s ease,background .25s ease;
+  }
+  .resource-toolkit-group[open] .resource-toolkit-toggle {
+    transform:rotate(45deg); background:color-mix(in srgb,var(--glass-teal) 12%,transparent);
+  }
+  .resource-toolkit-grid {
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;
+    padding:0 22px 22px;
+  }
+  .resource-tool {
+    display:flex; align-items:center; gap:11px; min-width:0; padding:12px;
+    border:1px solid var(--glass-line); border-radius:14px;
+    background:color-mix(in srgb,var(--glass-panel) 76%,transparent);
+  }
+  .resource-tool-avatar {
+    display:grid; flex:0 0 38px; place-items:center; width:38px; height:38px;
+    border-radius:11px; color:#fff; font-size:14px; font-weight:800; letter-spacing:-.04em;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .resource-tool-avatar--figma { background:linear-gradient(135deg,#f24e1e,#a259ff); }
+  .resource-tool-avatar--rork { background:linear-gradient(135deg,#6366f1,#8b5cf6); }
+  .resource-tool-avatar--lovable { background:linear-gradient(135deg,#ff7a7a,#e84d6f); }
+  .resource-tool-avatar--replit { background:linear-gradient(135deg,#f26207,#d44900); }
+  .resource-tool-avatar--expo { background:linear-gradient(135deg,#61dafb,#1b6f8f); }
+  .resource-tool-avatar--swift { background:linear-gradient(135deg,#fa7343,#f05138); }
+  .resource-tool-avatar--kotlin { background:linear-gradient(135deg,#7f52ff,#e44857); }
+  .resource-tool-avatar--node { background:linear-gradient(135deg,#539e43,#2f6a28); }
+  .resource-tool-avatar--stripe { background:linear-gradient(135deg,#635bff,#4338ca); }
+  .resource-tool-avatar--revenuecat { background:linear-gradient(135deg,#f2545b,#c62f4a); }
+  .resource-tool-avatar--github { background:linear-gradient(135deg,#4a5568,#1a202c); }
+  .resource-tool-avatar--hooks { background:linear-gradient(135deg,#0d9488,#06b6d4); }
+  .resource-tool-avatar--claude { background:linear-gradient(135deg,#e8956b,#c4623a); }
+  .resource-tool-avatar--gemini { background:linear-gradient(135deg,#4285f4,#9b72cb); }
+  .resource-tool-avatar--gpt { background:linear-gradient(135deg,#10a37f,#0d7a5f); }
+  .resource-tool-avatar--llama { background:linear-gradient(135deg,#7c4dff,#5e35b1); }
+  .resource-tool-copy { display:flex; min-width:0; flex-direction:column; gap:3px; }
+  .resource-tool-copy strong { overflow:hidden; color:var(--glass-ink); font-size:14px; text-overflow:ellipsis; white-space:nowrap; }
+  .resource-tool-copy small { color:var(--glass-muted); font-size:12px; line-height:1.35; }
+  .resource-toolkit-footnote {
+    max-width:66ch; margin:14px auto 0; color:var(--glass-muted);
+    font-size:14px; line-height:1.55; text-align:center;
+  }
   .resource-cta {
     display:flex; align-items:center; justify-content:space-between; gap:24px;
     margin-top:var(--j-space-4); padding:28px; border:1px solid var(--glass-line);
@@ -1034,6 +1103,8 @@ const STYLE = `
     .resource-section-heading, .resource-cta { align-items:flex-start; flex-direction:column; }
     .resource-card { min-height:0; }
     .resource-cta .cta-btn { width:100%; }
+    .resource-toolkit-group summary { padding:18px; }
+    .resource-toolkit-grid { grid-template-columns:1fr; padding:0 18px 18px; }
   }
   /* Shared landing type and interaction system.
      The landing page uses Fraunces for the main point of view, DM Serif
@@ -1498,6 +1569,80 @@ export function renderResourcesHtml(origin: string): string {
     )
     .join("");
 
+  const toolkitGroups = [
+    {
+      label: "Your idea, made visible",
+      description:
+        "How a concept becomes screens you can tap, share with investors, and test with real users.",
+      tools: [
+        ["Figma", "every screen designed before code", "figma"],
+        ["Rork", "try it on a real phone in days", "rork"],
+        ["Lovable", "launch site live in days", "lovable"],
+        ["Replit", "working product you can run and edit", "replit"],
+      ],
+    },
+    {
+      label: "Your product, built to last",
+      description:
+        "The engineering that powers the app your users install, open, and pay for.",
+      tools: [
+        ["React Native", "one codebase, iOS + Android", "expo"],
+        ["Swift", "native iOS, fastest on iPhone", "swift"],
+        ["Kotlin", "native Android, full Play Store reach", "kotlin"],
+        ["Node + PostgreSQL", "your data, secure and yours to export", "node"],
+      ],
+    },
+    {
+      label: "Revenue & launch, day one",
+      description:
+        "Payments, updates, and code safety wired in from the start, not bolted on after.",
+      tools: [
+        ["Stripe", "one-time, subscriptions, upgrades", "stripe"],
+        ["RevenueCat", "App Store & Play Store billing", "revenuecat"],
+        ["GitHub", "daily backups: your code is always safe", "github"],
+        ["Automation", "n8n + Make handle the busywork", "hooks"],
+      ],
+    },
+    {
+      label: "AI in the background, not in your way",
+      description:
+        "AI can support research, implementation, and review while a person owns the direction and quality bar.",
+      tools: [
+        ["Claude", "primary builder and code reviewer", "claude"],
+        ["Gemini", "reviews the whole product at once", "gemini"],
+        ["GPT-5", "copy, flows & creative direction", "gpt"],
+        ["Llama 4", "self-hosted option for sensitive work", "llama"],
+      ],
+    },
+  ]
+    .map(
+      (group) => `
+        <details class="resource-toolkit-group" open>
+          <summary>
+            <span>
+              <span class="resource-toolkit-label">${esc(group.label)}</span>
+              <span class="resource-toolkit-desc">${esc(group.description)}</span>
+            </span>
+            <span class="resource-toolkit-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="resource-toolkit-grid">
+            ${group.tools
+              .map(
+                ([name, note, tone]) => `
+                  <div class="resource-tool">
+                    <span class="resource-tool-avatar resource-tool-avatar--${esc(tone)}">${esc(name.slice(0, name === "React Native" ? 2 : 1))}</span>
+                    <span class="resource-tool-copy">
+                      <strong>${esc(name)}</strong>
+                      <small>${esc(note)}</small>
+                    </span>
+                  </div>`,
+              )
+              .join("")}
+          </div>
+        </details>`,
+    )
+    .join("");
+
   const jsonLd = `<script type="application/ld+json">${safeJson({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -1613,28 +1758,8 @@ export function renderResourcesHtml(origin: string): string {
           <p>Tools are selected for the product outcome, the team taking it over, and the stage of the business.</p>
         </div>
       </div>
-      <div class="resource-grid">
-        <article class="resource-card">
-          <div class="resource-card-kicker">Reasoning &amp; code</div>
-          <h3>AI-assisted exploration</h3>
-          <p>Claude, Gemini, GPT-5, and Llama 4 support research, implementation, refactoring, and review. Human judgment sets the direction and quality bar.</p>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">Mockups &amp; prototyping</div>
-          <h3>From idea to something tangible</h3>
-          <p>Figma, Lovable, Replit, and Rork help turn a brief into a visual system, a working web experience, or an early mobile direction.</p>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">Production &amp; delivery</div>
-          <h3>Ready for real users</h3>
-          <p>React Native, Swift, Kotlin, Node.js, PostgreSQL, Stripe, RevenueCat, and GitHub support products that need accounts, payments, data, and a clean handoff.</p>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">Automation &amp; content</div>
-          <h3>Connected where it matters</h3>
-          <p>n8n, Make, custom webhooks, and ElevenLabs can extend the product when automation, communication, or media are part of the core experience.</p>
-        </article>
-      </div>
+      <div class="resource-toolkit-stack">${toolkitGroups}</div>
+      <p class="resource-toolkit-footnote">You keep the code, accounts, and working files. When a better tool ships, it can be swapped in without holding your product hostage.</p>
     </section>
 
     <section class="resource-section" aria-labelledby="resource-journal-title">

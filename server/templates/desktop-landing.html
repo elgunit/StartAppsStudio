@@ -7381,6 +7381,47 @@
         background: var(--dominant);
       }
 
+      .testimonial-load-more-wrap {
+        display: flex;
+        justify-content: center;
+        margin: -26px 0 4px;
+        position: relative;
+        z-index: 4;
+      }
+
+      .testimonial-load-more {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 16px;
+        border: 1px solid color-mix(in srgb, var(--dominant) 34%, var(--line));
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        box-shadow: inset 0 1px 0 var(--specular), 0 8px 22px -14px color-mix(in srgb, var(--dominant) 40%, transparent);
+        color: var(--ink);
+        font: 700 11px/1 var(--kicker);
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform var(--motion-fast) ease, border-color var(--motion-fast) ease, background-color var(--motion-fast) ease;
+      }
+
+      .testimonial-load-more svg {
+        transition: transform var(--motion-fast) ease;
+      }
+
+      .testimonial-load-more:hover {
+        transform: translateY(-2px);
+        border-color: var(--dominant);
+        background: var(--action-soft);
+      }
+
+      .testimonial-load-more[aria-expanded="true"] svg {
+        transform: rotate(180deg);
+      }
+
       @media (min-width: 769px) {
         .testimonial-carousel-wrap::before {
           content: '';
@@ -7441,6 +7482,17 @@
           bottom: 14px;
           z-index: 3;
           margin: 0;
+        }
+
+        .testimonial-load-more-wrap {
+          margin-top: -44px;
+          margin-bottom: 8px;
+        }
+
+        .testimonial-load-more {
+          min-height: 42px;
+          padding-inline: 14px;
+          font-size: 10px;
         }
       }
 
@@ -9243,21 +9295,72 @@
         </div>
         <!-- Pagination dots are rebuilt to match the available snap positions. -->
         <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination"></div>
+        <div class="testimonial-load-more-wrap">
+          <button
+            class="testimonial-load-more"
+            id="testimonialLoadMore"
+            type="button"
+            aria-expanded="false"
+            data-track-cta="load_more_testimonials"
+          >
+            <span>Load more testimonials</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
         </div>
          <script>
-           /* Keep the proof layer focused on the four engagements that map
-              directly to the public packages. The full set remains available
-              in the project archive rather than interrupting the lead path. */
+           /* Keep the proof layer focused on four package-relevant voices at
+              first, while letting interested visitors browse the full set. */
            (function () {
              var cards = document.querySelectorAll('.testimonials-grid .testimonial-card');
+             var button = document.getElementById('testimonialLoadMore');
+             if (!cards.length || !button) return;
+             var label = button.querySelector('span');
+             var initialStart = 3;
+             var initialEnd = 6;
+             var extraCards = Array.prototype.filter.call(cards, function (card, index) {
+               return index < initialStart || index > initialEnd;
+             });
+             var revealedExtras = 0;
+             var revealStep = 3;
+
+             function setVisible(card, visible) {
+               card.hidden = !visible;
+               card.inert = !visible;
+               card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+               card.style.display = visible ? '' : 'none';
+             }
+
              cards.forEach(function (card, index) {
-               if (index < 3 || index > 6) {
-                 card.hidden = true;
-                 card.inert = true;
-                 card.setAttribute('aria-hidden', 'true');
-                 card.style.display = 'none';
+               setVisible(card, index >= initialStart && index <= initialEnd);
+             });
+
+             function refresh() {
+               var hasMore = revealedExtras < extraCards.length;
+               button.setAttribute('aria-expanded', hasMore ? 'false' : 'true');
+               if (label) label.textContent = hasMore ? __t('Load more testimonials') : __t('Show fewer testimonials');
+             }
+
+             button.addEventListener('click', function () {
+               var hasMore = revealedExtras < extraCards.length;
+               if (hasMore) {
+                 extraCards.slice(revealedExtras, revealedExtras + revealStep).forEach(function (card) {
+                   setVisible(card, true);
+                 });
+                 revealedExtras = Math.min(extraCards.length, revealedExtras + revealStep);
+               } else {
+                 extraCards.forEach(function (card) { setVisible(card, false); });
+                 revealedExtras = 0;
+                 var grid = document.querySelector('.testimonials-grid');
+                 if (grid) grid.scrollTo({ left: 0, behavior: 'auto' });
+               }
+               refresh();
+               if (window.__testimonialCarouselController) {
+                 window.__testimonialCarouselController.refresh();
                }
              });
+
+             refresh();
            })();
          </script>
       </section>
@@ -12016,7 +12119,7 @@
         var grid = document.querySelector('.testimonials-grid');
         var dotsEl = document.getElementById('testimonialDots');
         if (!grid || !dotsEl || !window.__initCarouselPagination) return;
-        window.__initCarouselPagination({
+        window.__testimonialCarouselController = window.__initCarouselPagination({
           grid: grid,
           dotsContainer: dotsEl,
           cardSelector: '.testimonial-card',
