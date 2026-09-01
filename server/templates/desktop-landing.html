@@ -5824,6 +5824,188 @@
         padding: 28px 28px 32px;
       }
 
+      /* ── Hero hat detail modal ─────────────────────────────────────── */
+      #hatDetailModal .modal-content {
+        max-width: 560px;
+        padding: 32px 32px 30px;
+      }
+      #hatDetailModal .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        float: none;
+        margin: 0;
+        z-index: 2;
+      }
+      .hat-detail-head {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        align-items: center;
+        gap: 16px;
+        padding-right: 42px;
+        margin-bottom: 22px;
+      }
+      .hat-detail-icon {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: color-mix(in srgb, var(--dominant) 12%, var(--surface));
+        border: 1px solid color-mix(in srgb, var(--dominant) 28%, var(--line));
+        color: var(--dominant);
+        font-size: 21px;
+        font-weight: 700;
+        line-height: 1;
+        box-shadow: inset 0 1px 0 var(--specular-teal);
+      }
+      .hat-detail-kicker {
+        margin-bottom: 5px;
+        color: var(--dominant);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+      .hat-detail-title {
+        margin: 0 0 5px;
+        color: var(--ink);
+        font-family: var(--section-display);
+        font-size: clamp(25px, 4vw, 34px);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+      .hat-detail-intro {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .hat-detail-list {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 22px;
+      }
+      .hat-detail-item {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        align-items: start;
+        gap: 10px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        background: color-mix(in srgb, var(--surface) 82%, transparent);
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 1.5;
+        box-shadow: inset 0 1px 0 var(--specular);
+      }
+      .hat-detail-item-mark {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--dominant) 14%, transparent);
+        color: var(--dominant);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .hat-detail-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: var(--dominant);
+        color: var(--canvas);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 10px 24px color-mix(in srgb, var(--dominant) 24%, transparent);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      }
+      .hat-detail-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px color-mix(in srgb, var(--dominant) 32%, transparent);
+      }
+      @media (max-width: 768px) {
+        #hatDetailModal {
+          align-items: flex-end;
+          padding: 0;
+          background: rgba(0,0,0,0);
+          transition: background 0.32s ease;
+        }
+        #hatDetailModal.open {
+          background: rgba(0,0,0,0.52);
+        }
+        #hatDetailModal .modal-content {
+          width: 100%;
+          max-width: 100%;
+          max-height: 86vh;
+          max-height: 86svh;
+          padding: 36px 20px calc(22px + env(safe-area-inset-bottom, 0px));
+          border-radius: 20px 20px 0 0;
+          border-bottom: none;
+          background: var(--canvas) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          box-shadow: 0 -8px 40px rgba(0,0,0,0.22);
+          transform: translateY(100%);
+          opacity: 0;
+          transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.22s ease;
+          will-change: transform;
+        }
+        #hatDetailModal.open.sheet-ready .modal-content {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        #hatDetailModal.closing {
+          display: flex;
+          background: rgba(0,0,0,0) !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          transition: none !important;
+        }
+        #hatDetailModal.closing .modal-content {
+          transform: translateY(100%) !important;
+          opacity: 0 !important;
+          transition: transform 200ms cubic-bezier(0.4, 0, 1, 1), opacity 100ms linear !important;
+        }
+        #hatDetailModal .modal-content::before {
+          content: '';
+          display: block;
+          width: 36px;
+          height: 4px;
+          margin: -22px auto 18px;
+          border-radius: 999px;
+          background: color-mix(in srgb, var(--line) 70%, var(--muted));
+        }
+        .hat-detail-head {
+          grid-template-columns: 46px minmax(0, 1fr);
+          gap: 13px;
+          margin-bottom: 18px;
+        }
+        .hat-detail-icon {
+          width: 46px;
+          height: 46px;
+          border-radius: 14px;
+        }
+        .hat-detail-title { font-size: 29px; }
+        .hat-detail-item { padding: 11px 12px; }
+      }
+      @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+        #hatDetailModal,
+        #hatDetailModal .modal-content,
+        .hat-detail-cta { transition: none; }
+      }
+
       /* Mobile: bottom-sheet that slides up from the screen edge */
       @media (max-width: 768px) {
         /* Override the base overlay so it aligns to the bottom,
@@ -8096,7 +8278,7 @@
         <p class="hero-subheadline">Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
 
         <!-- 5 Hats Showcase -->
-        <div class="hats-showcase" hidden inert aria-hidden="true">
+        <div class="hats-showcase" aria-label="One partner across the product lifecycle">
           <a href="#hat-designer" class="hat-showcase-item hat-designer" aria-controls="hat-designer" aria-expanded="false" onclick="openHatCard('hat-designer',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
@@ -8491,9 +8673,9 @@
       <section class="section" id="what-we-ship" data-section-name="what-we-ship">
         <h2 class="section-title">What we ship</h2>
         <p class="section-subtitle">From a credible brand presence to a full multi-platform product. Every package is built around the business outcome you need next: be understood, be trusted, validate demand, or serve real users.</p>
-        <div class="service-tabs">
-          <button class="service-tab active" onclick="switchTab('build', this)">Build</button>
-          
+        <div class="service-tabs" role="tablist" aria-label="What we ship">
+          <button class="service-tab active" id="serviceTabBuild" role="tab" aria-selected="true" aria-controls="tab-build" onclick="switchTab('build', this)">Build</button>
+          <button class="service-tab" id="serviceTabGrow" role="tab" aria-selected="false" aria-controls="tab-grow" onclick="switchTab('grow', this)">Grow</button>
         </div>
         <div id="tab-build" class="tab-content active">
         <div class="services-grid">
@@ -8559,7 +8741,7 @@
           </div>
         </div>
         </div>
-        <div id="tab-grow" class="tab-content" hidden inert aria-hidden="true">
+        <div id="tab-grow" class="tab-content" aria-hidden="true">
         <div class="growth-grid">
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
@@ -9441,6 +9623,26 @@
               </span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Hero hat detail modal (mobile: bottom-sheet; desktop: centred dialog) -->
+      <div class="modal-overlay" id="hatDetailModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="hatDetailTitle">
+        <div class="modal-content">
+          <button class="modal-close" type="button" onclick="closeHatCard()" aria-label="Close">&times;</button>
+          <div class="hat-detail-head">
+            <div class="hat-detail-icon" id="hatDetailIcon" aria-hidden="true"></div>
+            <div>
+              <div class="hat-detail-kicker">One partner across the product lifecycle</div>
+              <h2 class="hat-detail-title" id="hatDetailTitle"></h2>
+              <p class="hat-detail-intro" id="hatDetailIntro"></p>
+            </div>
+          </div>
+          <div class="hat-detail-list" id="hatDetailList"></div>
+          <a class="hat-detail-cta" href="#contact" data-track-cta="hat_detail_contact" onclick="closeHatCard()">
+            Talk through your project
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
 
@@ -10417,32 +10619,6 @@
         el.setAttribute('aria-expanded', el.classList.contains('expanded') ? 'true' : 'false');
       }
 
-      function openHatCard(hatId, event) {
-        if (event) event.preventDefault();
-        var card = document.getElementById(hatId);
-        if (!card) return;
-        // Close all other expertise cards first
-        document.querySelectorAll('#expertise .expandable-card').forEach(function(c) {
-          if (c !== card) {
-            c.classList.remove('expanded');
-            c.setAttribute('aria-expanded', 'false');
-          }
-        });
-        // Open the target card
-        card.classList.add('expanded');
-        card.setAttribute('aria-expanded', 'true');
-        document.querySelectorAll('.hat-showcase-item[aria-controls]').forEach(function(trigger) {
-          trigger.setAttribute('aria-expanded', trigger.getAttribute('aria-controls') === hatId ? 'true' : 'false');
-        });
-        // Smooth scroll to the opened card with a 20px breathing room above it.
-        // The expanded skill list can continue below the viewport on smaller
-        // screens instead of being pushed below the section heading.
-        setTimeout(function() {
-          var cardTop = card.getBoundingClientRect().top + window.pageYOffset - 20;
-          window.scrollTo({ top: Math.max(0, cardTop), behavior: 'smooth' });
-        }, 50);
-      }
-
       // The card remains a div for layout, but behaves like a disclosure
       // control for keyboard users. Enter and Space mirror a pointer click.
       document.querySelectorAll('.expandable-card[role="button"]').forEach(function(card) {
@@ -10594,10 +10770,21 @@
       })();
       
       function switchTab(tab, el) {
-        document.querySelectorAll('.service-tab').forEach(function(t) { t.classList.remove('active'); });
-        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-        document.getElementById('tab-' + tab).classList.add('active');
-        el.classList.add('active');
+        var contentId = 'tab-' + tab;
+        var content = document.getElementById(contentId);
+        if (!content || !el) return;
+        document.querySelectorAll('.service-tab').forEach(function(t) {
+          var isActive = t === el;
+          t.classList.toggle('active', isActive);
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        document.querySelectorAll('.tab-content').forEach(function(c) {
+          var isActive = c === content;
+          c.classList.toggle('active', isActive);
+          c.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+          c.toggleAttribute('hidden', !isActive);
+          c.toggleAttribute('inert', !isActive);
+        });
       }
 
       /* Swipe between the Build and Grow views without interfering with
@@ -10644,7 +10831,7 @@
       })();
 
       function anotherSiteModalIsOpen(exceptId) {
-        return ['whyModal', 'nativeDeliveryModal', 'aiEfficiencyModal', 'showcaseDetailModal'].some(function(id) {
+        return ['whyModal', 'nativeDeliveryModal', 'aiEfficiencyModal', 'showcaseDetailModal', 'hatDetailModal'].some(function(id) {
           if (id === exceptId) return false;
           var modal = document.getElementById(id);
           return modal && modal.classList.contains('open');
@@ -10664,6 +10851,89 @@
         modal.classList.remove('open');
         sdmUnlockScroll();
       }
+
+      var _hatModalLastFocus = null;
+      function openHatCard(hatId, event) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        var card = document.getElementById(hatId);
+        var modal = document.getElementById('hatDetailModal');
+        if (!card || !modal || modal.classList.contains('open') || anotherSiteModalIsOpen('hatDetailModal')) return;
+
+        document.querySelectorAll('#expertise .expandable-card').forEach(function(c) {
+          c.classList.toggle('expanded', c === card);
+          c.setAttribute('aria-expanded', c === card ? 'true' : 'false');
+        });
+        document.querySelectorAll('.hat-showcase-item[aria-controls]').forEach(function(trigger) {
+          trigger.setAttribute('aria-expanded', trigger.getAttribute('aria-controls') === hatId ? 'true' : 'false');
+        });
+
+        var sourceIcon = card.querySelector('.card-icon');
+        var sourceTitle = card.querySelector('.card-info h4');
+        var sourceIntro = card.querySelector('.card-info p');
+        var list = modal.querySelector('#hatDetailList');
+        modal.querySelector('#hatDetailIcon').textContent = sourceIcon ? sourceIcon.textContent.trim() : '';
+        modal.querySelector('#hatDetailTitle').textContent = sourceTitle ? sourceTitle.textContent.trim() : '';
+        modal.querySelector('#hatDetailIntro').textContent = sourceIntro ? sourceIntro.textContent.trim() : '';
+        list.innerHTML = '';
+        card.querySelectorAll('.card-details .skill-item').forEach(function(item) {
+          var row = document.createElement('div');
+          row.className = 'hat-detail-item';
+          var mark = document.createElement('span');
+          mark.className = 'hat-detail-item-mark';
+          mark.setAttribute('aria-hidden', 'true');
+          mark.textContent = '✓';
+          var copy = document.createElement('span');
+          copy.textContent = item.textContent.trim();
+          row.appendChild(mark);
+          row.appendChild(copy);
+          list.appendChild(row);
+        });
+
+        _hatModalLastFocus = document.activeElement;
+        modal.classList.remove('closing', 'sheet-ready');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.classList.add('open');
+        sdmLockScroll();
+        var closeButton = modal.querySelector('.modal-close');
+        if (closeButton) closeButton.focus({ preventScroll: true });
+        void modal.querySelector('.modal-content').offsetHeight;
+        modal.classList.add('sheet-ready');
+      }
+
+      function closeHatCard() {
+        var modal = document.getElementById('hatDetailModal');
+        if (!modal || !modal.classList.contains('open')) return;
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var finish = function() {
+          modal.classList.remove('closing');
+          modal.setAttribute('aria-hidden', 'true');
+          sdmUnlockScroll();
+          document.querySelectorAll('.hat-showcase-item[aria-controls]').forEach(function(trigger) {
+            trigger.setAttribute('aria-expanded', 'false');
+          });
+          if (_hatModalLastFocus && typeof _hatModalLastFocus.focus === 'function') {
+            _hatModalLastFocus.focus({ preventScroll: true });
+          }
+          _hatModalLastFocus = null;
+        };
+        if (isMobile && !reducedMotion) {
+          modal.classList.remove('open', 'sheet-ready');
+          modal.classList.add('closing');
+          void modal.querySelector('.modal-content').offsetHeight;
+          setTimeout(finish, 240);
+        } else {
+          modal.classList.remove('open', 'sheet-ready', 'closing');
+          finish();
+        }
+      }
+
+      document.getElementById('hatDetailModal').addEventListener('click', function(e) {
+        if (e.target === this) closeHatCard();
+      });
 
       document.getElementById('whyModal').addEventListener('click', function(e) {
         if (e.target === this) closeWhyModal();
@@ -10811,6 +11081,8 @@
           }
           var sdModal = document.getElementById('showcaseDetailModal');
           if (sdModal && sdModal.classList.contains('open')) closeShowcaseModal();
+          var hatModal = document.getElementById('hatDetailModal');
+          if (hatModal && hatModal.classList.contains('open')) closeHatCard();
         }
       });
 

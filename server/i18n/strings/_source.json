@@ -35,6 +35,11 @@
     "context": "p.hero-subheadline"
   },
   {
+    "key": "One partner across the product lifecycle",
+    "kind": "attr",
+    "context": "div.hats-showcase[aria-label]"
+  },
+  {
     "key": "Designer",
     "kind": "text",
     "context": "a.hat-showcase-item"
@@ -417,12 +422,12 @@
   {
     "key": "Build",
     "kind": "unit",
-    "context": "button.service-tab"
+    "context": "button#serviceTabBuild.service-tab"
   },
   {
     "key": "Grow",
     "kind": "unit",
-    "context": "button.service-tab"
+    "context": "button#serviceTabGrow.service-tab"
   },
   {
     "key": "Landing Pages",
@@ -1725,6 +1730,11 @@
     "context": "div#testimonialDots.testimonial-dots[aria-label]"
   },
   {
+    "key": "Load more testimonials",
+    "kind": "unit",
+    "context": "span"
+  },
+  {
     "key": "Why Start Apps Studio?",
     "kind": "unit",
     "context": "h2"
@@ -1798,6 +1808,16 @@
     "key": "See the full comparison",
     "kind": "text",
     "context": "button.why-compare-btn"
+  },
+  {
+    "key": "Close",
+    "kind": "attr",
+    "context": "button.modal-close[aria-label]"
+  },
+  {
+    "key": "Talk through your project",
+    "kind": "text",
+    "context": "a.hat-detail-cta"
   },
   {
     "key": "Your handoff",
@@ -1948,11 +1968,6 @@
     "key": "The right question is not only who can build the product. It is whether you can run, own, and evolve what you receive. <a href=\"#contact\" onclick=\"closeWhyModal()\" style=\"color:var(--accent);text-decoration:none;font-weight:600;\">Talk through your handoff &rarr;</a>",
     "kind": "unit",
     "context": "div.cmp-footnote"
-  },
-  {
-    "key": "One partner across the product lifecycle",
-    "kind": "unit",
-    "context": "h2.section-title"
   },
   {
     "key": "The five disciplines that keep an early-stage product coherent, learned by building, pivoting, and shipping my own products.",
@@ -2390,11 +2405,6 @@
     "context": "span.ae-teaser-cta"
   },
   {
-    "key": "Close",
-    "kind": "attr",
-    "context": "button.modal-close[aria-label]"
-  },
-  {
     "key": "<span class=\"aem-dot\"></span>AI Efficiency &amp; Value",
     "kind": "unit",
     "context": "span.aem-eyebrow"
@@ -2503,11 +2513,6 @@
     "key": "You agree the scope and price up front. We own the iteration required to get there.",
     "kind": "unit",
     "context": "p.aem-proof-sub"
-  },
-  {
-    "key": "Talk through your project",
-    "kind": "text",
-    "context": "a.aem-cta"
   },
   {
     "key": "Let's scope a project.",
@@ -3040,6 +3045,11 @@
     "context": "p.footer-copyright"
   },
   {
+    "key": "Show fewer testimonials",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
     "key": "Reveal tool name",
     "kind": "js",
     "context": "inline script"
@@ -3306,16 +3316,6 @@
   },
   {
     "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
-    "kind": "meta",
-    "context": "head metadata / JSON-LD"
-  },
-  {
-    "key": "Absolutely. Pitch prototypes are one of our most common engagements. We build a polished, interactive app on real infrastructure that investors can tap through on their phone. We scope it to your deck timeline: typically 5 to 10 days for a Figma-led clickable prototype and 3 to 5 weeks for a fully functional pre-seed demo.",
-    "kind": "meta",
-    "context": "head metadata / JSON-LD"
-  },
-  {
-    "key": "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   }
