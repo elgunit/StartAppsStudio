@@ -97,8 +97,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       req.header("x-forwarded-host") || req.get("host") || "";
     const isLocalhost =
       reqHost.startsWith("localhost") || reqHost.startsWith("127.0.0.1");
+    const previewHosts = [
+      process.env.REPLIT_DEV_DOMAIN,
+      ...(process.env.REPLIT_DOMAINS || "").split(","),
+    ]
+      .map((host) => host.trim().toLowerCase())
+      .filter(Boolean);
+    const isReplitPreview =
+      previewHosts.includes(reqHost.toLowerCase()) ||
+      reqHost.toLowerCase().endsWith(".replit.dev");
     const isApi = req.path.startsWith("/api/");
-    if (!isLocalhost && !isApi && reqHost && reqHost !== canonicalHost) {
+    if (
+      !isLocalhost &&
+      !isReplitPreview &&
+      !isApi &&
+      reqHost &&
+      reqHost !== canonicalHost
+    ) {
       return res.redirect(301, `${CANONICAL_ORIGIN}${req.originalUrl}`);
     }
     next();
