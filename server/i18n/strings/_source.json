@@ -1600,7 +1600,7 @@
     "context": "span.method-badge"
   },
   {
-    "key": "<strong>One Autism Health</strong> <span>Healthcare · web + iOS + Android</span>",
+    "key": "<strong>Local Care Finder</strong> <span>Healthcare · web + iOS + Android</span>",
     "kind": "unit",
     "context": "div.testimonial-project"
   },
@@ -1630,7 +1630,7 @@
     "context": "span.method-badge"
   },
   {
-    "key": "<strong>Wivity</strong> <span>Connectivity · brand + web</span>",
+    "key": "<strong>Connectivity Brand System</strong> <span>Connectivity · brand + web</span>",
     "kind": "unit",
     "context": "div.testimonial-project"
   },
@@ -1660,7 +1660,7 @@
     "context": "span.method-badge"
   },
   {
-    "key": "<strong>Noiseaware</strong> <span>SaaS · UI/UX overhaul</span>",
+    "key": "<strong>Product Experience Overhaul</strong> <span>SaaS · UI/UX overhaul</span>",
     "kind": "unit",
     "context": "div.testimonial-project"
   },
@@ -1690,7 +1690,7 @@
     "context": "span.method-badge"
   },
   {
-    "key": "<strong>Opensend</strong> <span>SaaS · CRM + email platform</span>",
+    "key": "<strong>Client Email Platform</strong> <span>SaaS · CRM + email platform</span>",
     "kind": "unit",
     "context": "div.testimonial-project"
   },
@@ -1723,76 +1723,6 @@
     "key": "Testimonial carousel pagination",
     "kind": "attr",
     "context": "div#testimonialDots.testimonial-dots[aria-label]"
-  },
-  {
-    "key": "Testimonial 1",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 2",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 3",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 4",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 5",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 6",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 7",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 8",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 9",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 10",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 11",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 12",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 13",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
-  },
-  {
-    "key": "Testimonial 14",
-    "kind": "attr",
-    "context": "button.testimonial-dot[aria-label]"
   },
   {
     "key": "Why Start Apps Studio?",

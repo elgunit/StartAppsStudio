@@ -7282,8 +7282,8 @@
 
       @media (max-width: 680px) {
         .testimonial-card {
-          min-height: 390px;
-          padding: 22px;
+          min-height: 0;
+          padding: 24px;
         }
 
         .testimonial-project {
@@ -7418,8 +7418,8 @@
         }
 
         .testimonials-grid {
-          gap: 12px;
-          padding: 10px 16px 70px;
+          gap: 16px;
+          padding: 12px 12px 70px;
           scroll-padding-left: 0;
           z-index: 2;
         }
@@ -7429,12 +7429,12 @@
         .testimonials-grid::before,
         .testimonials-grid::after {
           content: '';
-          flex: 0 0 max(12px, calc(50% - 182px));
+          flex: 0 0 max(12px, calc(50% - 202px));
         }
 
         .testimonial-card {
           flex: 0 0 auto;
-          width: min(calc(100% - 48px), 340px);
+          width: min(calc(100% - 12px), 390px);
           min-width: 0;
           scroll-snap-align: center;
           scroll-snap-stop: always;
@@ -7455,6 +7455,119 @@
           bottom: 14px;
           z-index: 3;
           margin: 0;
+        }
+      }
+
+      /* ── Shared carousel rhythm and five-position pagination window ── */
+      .carousel-dots {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 18px;
+      }
+
+      .carousel-dots::before,
+      .carousel-dots::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 6px;
+        flex: 0 0 0;
+        border-radius: 999px;
+        opacity: 0;
+        transition: width 0.28s ease, opacity 0.28s ease;
+      }
+
+      .carousel-dots::before {
+        background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--dominant) 42%, var(--line)));
+      }
+
+      .carousel-dots::after {
+        background: linear-gradient(90deg, color-mix(in srgb, var(--dominant) 42%, var(--line)), transparent);
+      }
+
+      .carousel-dots.has-before::before,
+      .carousel-dots.has-after::after {
+        width: 10px;
+        flex-basis: 10px;
+        opacity: 0.72;
+      }
+
+      .carousel-dot,
+      .testimonial-dot {
+        width: 7px;
+        height: 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--dominant) 28%, var(--line));
+        cursor: pointer;
+        opacity: 0.78;
+        transition:
+          width 0.28s cubic-bezier(.4,0,.2,1),
+          background 0.28s ease,
+          border-radius 0.28s ease,
+          opacity 0.28s ease;
+      }
+
+      .carousel-dot.active,
+      .testimonial-dot.active {
+        width: 18px;
+        border-radius: 3px;
+        background: var(--dominant);
+        opacity: 1;
+      }
+
+      .carousel-dot:focus-visible,
+      .testimonial-dot:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--rose) 78%, var(--dominant));
+        outline-offset: 4px;
+      }
+
+      @media (min-width: 769px) {
+        .showcase-card,
+        .testimonial-card {
+          flex-basis: calc((100% - 20px - 32px) / 2);
+          min-width: 280px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .showcase-grid,
+        .testimonials-grid {
+          gap: 16px;
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .showcase-grid::before,
+        .showcase-grid::after,
+        .testimonials-grid::before,
+        .testimonials-grid::after {
+          flex-basis: max(12px, calc(50% - 202px));
+        }
+
+        .showcase-card,
+        .testimonial-card {
+          width: min(390px, 100%);
+        }
+
+        .showcase-body {
+          padding: 20px;
+        }
+
+        .showcase-category,
+        .showcase-name {
+          overflow: visible;
+          text-overflow: clip;
+          white-space: normal;
+          overflow-wrap: anywhere;
         }
       }
 
@@ -9005,7 +9118,7 @@
 
           <div class="testimonial-card">
             <div class="testimonial-project">
-              <strong>One Autism Health</strong>
+              <strong>Local Care Finder</strong>
               <span>Healthcare · web + iOS + Android</span>
             </div>
             <div class="testimonial-problem-tag" aria-label="Problem: no way for families to find local providers">
@@ -9028,7 +9141,7 @@
 
           <div class="testimonial-card">
             <div class="testimonial-project">
-              <strong>Wivity</strong>
+              <strong>Connectivity Brand System</strong>
               <span>Connectivity · brand + web</span>
             </div>
             <div class="testimonial-problem-tag" aria-label="Problem: no cohesive brand identity">
@@ -9051,7 +9164,7 @@
 
           <div class="testimonial-card">
             <div class="testimonial-project">
-              <strong>Noiseaware</strong>
+              <strong>Product Experience Overhaul</strong>
               <span>SaaS · UI/UX overhaul</span>
             </div>
             <div class="testimonial-problem-tag" aria-label="Problem: incomplete interface, broken user flows">
@@ -9074,7 +9187,7 @@
 
           <div class="testimonial-card">
             <div class="testimonial-project">
-              <strong>Opensend</strong>
+              <strong>Client Email Platform</strong>
               <span>SaaS · CRM + email platform</span>
             </div>
             <div class="testimonial-problem-tag" aria-label="Problem: no CRM dashboard, no intake system">
@@ -9096,22 +9209,7 @@
           </div>
         </div>
         <!-- Pagination dots are rebuilt to match the available snap positions. -->
-        <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination">
-          <button class="testimonial-dot active" type="button" data-idx="0" role="tab" aria-label="Testimonial 1" aria-selected="true"></button>
-          <button class="testimonial-dot" type="button" data-idx="1" role="tab" aria-label="Testimonial 2" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="2" role="tab" aria-label="Testimonial 3" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="3" role="tab" aria-label="Testimonial 4" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="4" role="tab" aria-label="Testimonial 5" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="5" role="tab" aria-label="Testimonial 6" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="6" role="tab" aria-label="Testimonial 7" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="7" role="tab" aria-label="Testimonial 8" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="8" role="tab" aria-label="Testimonial 9" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="9" role="tab" aria-label="Testimonial 10" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="10" role="tab" aria-label="Testimonial 11" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="11" role="tab" aria-label="Testimonial 12" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="12" role="tab" aria-label="Testimonial 13" aria-selected="false"></button>
-          <button class="testimonial-dot" type="button" data-idx="13" role="tab" aria-label="Testimonial 14" aria-selected="false"></button>
-        </div>
+        <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination"></div>
         </div>
       </section>
 
@@ -10815,89 +10913,186 @@
       })();
 
 
-      /* ── Carousel pagination dots ────────────────────────────────── */
-      var refreshCarouselDots; // re-syncs dot count after cards are added/removed
-      (function() {
-        var primaryGrid = document.querySelector('#caseStudiesContainer .showcase-grid');
-        var dotsContainer = document.getElementById('carouselDotsPrimary');
-        if (!primaryGrid || !dotsContainer) return;
+      /* ── Shared carousel pagination dots ───────────────────────────── */
+      var refreshCarouselDots;
+      window.__initCarouselPagination = function(config) {
+        var grid = config.grid;
+        var dotsContainer = config.dotsContainer;
+        var cardSelector = config.cardSelector;
+        var label = config.label;
+        var cardIdPrefix = config.cardIdPrefix;
+        var desktopFullCards = config.desktopFullCards || 1;
+        var maxVisibleDots = 5;
+        var lastActive = -1;
+        var lastTotal = -1;
+        var lastStart = -1;
 
-        // Desktop shows two full cards plus a peek of the next card.
-        // Pagination therefore advances through the card that leads each
-        // reachable two-card view, rather than counting the peek as full.
-        var DESKTOP_FULL_CARDS = 2;
+        if (!grid || !dotsContainer) return null;
 
-        function visibleCards() {
-          return Array.from(primaryGrid.querySelectorAll('.showcase-card')).filter(function(c) {
-            // Extra cards are collapsed via classes now (display comes from
-            // .sc-visible), so check the computed style, not the inline one.
-            return getComputedStyle(c).display !== 'none';
+        function cards() {
+          return Array.from(grid.querySelectorAll(cardSelector)).filter(function(card) {
+            return getComputedStyle(card).display !== 'none';
           });
         }
 
-        function updateDots() {
-          var dots = dotsContainer.querySelectorAll('.carousel-dot');
-          if (!dots.length) return;
+        function isDesktop() {
+          return window.matchMedia('(min-width: 769px)').matches;
+        }
 
-          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+        function totalPositions(currentCards) {
+          return isDesktop()
+            ? Math.max(1, currentCards.length - desktopFullCards + 1)
+            : Math.max(1, currentCards.length);
+        }
 
-          if (isDesktop) {
-            // Each dot represents one reachable snap position. The 30px
-            // scroll-padding-left keeps the first card inset, so compare
-            // against the actual snap scroll position rather than offsetLeft.
-            var cards = visibleCards();
+        function activePosition(currentCards, total) {
+          if (!currentCards.length) return 0;
+          if (isDesktop()) {
+            var paddingLeft = parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0;
             var bestIdx = 0;
             var bestDist = Infinity;
-            var snapCount = Math.max(1, cards.length - DESKTOP_FULL_CARDS + 1);
-            var snapPaddingLeft = parseFloat(getComputedStyle(primaryGrid).scrollPaddingLeft) || 0;
-            for (var i = 0; i < snapCount; i++) {
-              var snapX = cards[i] ? Math.max(0, cards[i].offsetLeft - snapPaddingLeft) : 0;
-              var dist = Math.abs(primaryGrid.scrollLeft - snapX);
-              if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+            for (var i = 0; i < total; i++) {
+              var snapX = currentCards[i]
+                ? Math.max(0, currentCards[i].offsetLeft - paddingLeft)
+                : 0;
+              var desktopDist = Math.abs(grid.scrollLeft - snapX);
+              if (desktopDist < bestDist) {
+                bestDist = desktopDist;
+                bestIdx = i;
+              }
             }
-            dots.forEach(function(dot, i) {
-              dot.classList.toggle('active', i === bestIdx);
+            return bestIdx;
+          }
+
+          var trackCenter = grid.scrollLeft + grid.clientWidth / 2;
+          var mobileIdx = 0;
+          var mobileDist = Infinity;
+          currentCards.forEach(function(card, i) {
+            var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            var distance = Math.abs(cardCenter - trackCenter);
+            if (distance < mobileDist) {
+              mobileDist = distance;
+              mobileIdx = i;
+            }
+          });
+          return mobileIdx;
+        }
+
+        function windowStart(active, total) {
+          return Math.min(
+            Math.max(0, active - Math.floor(maxVisibleDots / 2)),
+            Math.max(0, total - maxVisibleDots),
+          );
+        }
+
+        function scrollToPosition(index) {
+          var currentCards = cards();
+          var card = currentCards[index];
+          if (!card) return;
+
+          var left = isDesktop()
+            ? Math.max(
+                0,
+                card.offsetLeft -
+                  (parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0),
+              )
+            : card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
+          grid.scrollTo({
+            left: left,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+              ? 'auto'
+              : 'smooth',
+          });
+        }
+
+        function render(active, total) {
+          var start = windowStart(active, total);
+          if (active === lastActive && total === lastTotal && start === lastStart) {
+            return;
+          }
+
+          lastActive = active;
+          lastTotal = total;
+          lastStart = start;
+          dotsContainer.classList.toggle('has-before', start > 0);
+          dotsContainer.classList.toggle('has-after', start + maxVisibleDots < total);
+          dotsContainer.innerHTML = '';
+
+          var end = Math.min(total, start + maxVisibleDots);
+          for (var i = start; i < end; i++) {
+            var dot = document.createElement('button');
+            var card = cards()[i];
+            dot.className = 'carousel-dot';
+            dot.type = 'button';
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('data-idx', String(i));
+            dot.setAttribute('aria-label', 'Show ' + label.toLowerCase() + ' ' + (i + 1) + ' of ' + total);
+            dot.setAttribute('aria-selected', i === active ? 'true' : 'false');
+            dot.setAttribute('aria-current', i === active ? 'true' : 'false');
+            if (card) {
+              if (!card.id) card.id = cardIdPrefix + '-' + i;
+              dot.setAttribute('aria-controls', card.id);
+            }
+            dot.classList.toggle('active', i === active);
+            dot.addEventListener('click', function() {
+              var target = parseInt(this.getAttribute('data-idx'), 10);
+              scrollToPosition(target);
             });
-          } else {
-            // Mobile: mark the card whose centre is closest to the track centre.
-            var cards = visibleCards();
-            var trackCx = primaryGrid.scrollLeft + primaryGrid.clientWidth / 2;
-            var bestIdx = 0;
-            var bestDist = Infinity;
-            cards.forEach(function(card, i) {
-              var cardCx = card.offsetLeft + card.offsetWidth / 2;
-              var dist = Math.abs(cardCx - trackCx);
-              if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+            dot.addEventListener('keydown', function(event) {
+              var current = parseInt(this.getAttribute('data-idx'), 10);
+              var target = current;
+              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') target = Math.min(total - 1, current + 1);
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') target = Math.max(0, current - 1);
+              if (event.key === 'Home') target = 0;
+              if (event.key === 'End') target = total - 1;
+              if (target === current) return;
+              event.preventDefault();
+              render(target, total);
+              scrollToPosition(target);
+              var next = dotsContainer.querySelector('[data-idx="' + target + '"]');
+              if (next) next.focus();
             });
-            dots.forEach(function(dot, i) {
-              dot.classList.toggle('active', i === bestIdx);
-            });
+            dotsContainer.appendChild(dot);
           }
         }
 
-        // Rebuild dots: desktop gets one dot per reachable snap position,
-        // mobile gets one dot per visible card.
-        refreshCarouselDots = function() {
-          var cards = visibleCards();
-          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
-          var dotCount = isDesktop
-            ? Math.max(1, cards.length - DESKTOP_FULL_CARDS + 1)
-            : cards.length;
-          dotsContainer.innerHTML = '';
-          for (var i = 0; i < dotCount; i++) {
-            var dot = document.createElement('div');
-            dot.className = 'carousel-dot';
-            dotsContainer.appendChild(dot);
-          }
-          updateDots();
+        function update() {
+          var currentCards = cards();
+          if (!currentCards.length) return;
+          var total = totalPositions(currentCards);
+          var active = Math.min(activePosition(currentCards, total), total - 1);
+          render(active, total);
+        }
+
+        var controller = {
+          refresh: function() {
+            lastActive = -1;
+            lastTotal = -1;
+            lastStart = -1;
+            update();
+          },
+          update: update,
         };
 
-        primaryGrid.addEventListener('scroll', updateDots, { passive: true });
-        // Re-calculate after resize (maxScroll changes when window width changes)
-        window.addEventListener('resize', updateDots, { passive: true });
-        refreshCarouselDots();
-        // Re-run after fonts/layout settle so the initial active dot is correct
-        setTimeout(updateDots, 300);
+        grid.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', controller.refresh, { passive: true });
+        controller.refresh();
+        setTimeout(update, 300);
+        return controller;
+      };
+
+      (function() {
+        var primaryGrid = document.querySelector('#caseStudiesContainer .showcase-grid');
+        var dotsContainer = document.getElementById('carouselDotsPrimary');
+        var controller = window.__initCarouselPagination({
+          grid: primaryGrid,
+          dotsContainer: dotsContainer,
+          cardSelector: '.showcase-card',
+          label: 'project',
+          cardIdPrefix: 'showcase-card',
+          desktopFullCards: 2,
+        });
+        refreshCarouselDots = controller ? controller.refresh : function() {};
       })();
 
 
@@ -11685,100 +11880,15 @@
       (function () {
         var grid = document.querySelector('.testimonials-grid');
         var dotsEl = document.getElementById('testimonialDots');
-        if (!grid || !dotsEl) return;
-
-        var DESKTOP_FULL_CARDS = 2;
-
-        function cards() {
-          return Array.from(grid.querySelectorAll('.testimonial-card'));
-        }
-
-        function updateDot() {
-          var dots = dotsEl.querySelectorAll('.testimonial-dot');
-          var currentCards = cards();
-          if (!dots.length || !currentCards.length) return;
-
-          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
-          var bestIdx = 0;
-
-          if (isDesktop) {
-            var snapCount = Math.max(1, currentCards.length - DESKTOP_FULL_CARDS + 1);
-            var snapPaddingLeft = parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0;
-            var bestDist = Infinity;
-            for (var i = 0; i < snapCount; i++) {
-              var snapX = currentCards[i]
-                ? Math.max(0, currentCards[i].offsetLeft - snapPaddingLeft)
-                : 0;
-              var desktopDist = Math.abs(grid.scrollLeft - snapX);
-              if (desktopDist < bestDist) {
-                bestDist = desktopDist;
-                bestIdx = i;
-              }
-            }
-          } else {
-            var trackCx = grid.scrollLeft + grid.clientWidth / 2;
-            var mobileDist = Infinity;
-            currentCards.forEach(function (card, i) {
-              var cardCx = card.offsetLeft + card.offsetWidth / 2;
-              var distance = Math.abs(cardCx - trackCx);
-              if (distance < mobileDist) {
-                mobileDist = distance;
-                bestIdx = i;
-              }
-            });
-          }
-
-          dots.forEach(function (dot, i) {
-            var active = i === bestIdx;
-            dot.classList.toggle('active', active);
-            dot.setAttribute('aria-selected', active ? 'true' : 'false');
-          });
-        }
-
-        function scrollToCard(idx) {
-          var currentCards = cards();
-          var card = currentCards[idx];
-          if (!card) return;
-
-          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
-          var left = isDesktop
-            ? Math.max(
-                0,
-                card.offsetLeft -
-                  (parseFloat(getComputedStyle(grid).scrollPaddingLeft) || 0),
-              )
-            : card.offsetLeft - (grid.offsetWidth - card.offsetWidth) / 2;
-          grid.scrollTo({ left: left, behavior: 'smooth' });
-        }
-
-        function refreshDots() {
-          var currentCards = cards();
-          var isDesktop = window.matchMedia('(min-width: 769px)').matches;
-          var dotCount = isDesktop
-            ? Math.max(1, currentCards.length - DESKTOP_FULL_CARDS + 1)
-            : currentCards.length;
-
-          dotsEl.innerHTML = '';
-          for (var i = 0; i < dotCount; i++) {
-            var dot = document.createElement('button');
-            dot.className = 'testimonial-dot';
-            dot.type = 'button';
-            dot.setAttribute('role', 'tab');
-            dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
-            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-            dot.setAttribute('data-idx', String(i));
-            dot.addEventListener('click', function () {
-              scrollToCard(parseInt(this.getAttribute('data-idx'), 10));
-            });
-            dotsEl.appendChild(dot);
-          }
-          updateDot();
-        }
-
-        grid.addEventListener('scroll', updateDot, { passive: true });
-        window.addEventListener('resize', refreshDots, { passive: true });
-        refreshDots();
-        setTimeout(updateDot, 300);
+        if (!grid || !dotsEl || !window.__initCarouselPagination) return;
+        window.__initCarouselPagination({
+          grid: grid,
+          dotsContainer: dotsEl,
+          cardSelector: '.testimonial-card',
+          label: 'testimonial',
+          cardIdPrefix: 'testimonial-card',
+          desktopFullCards: 2,
+        });
       })();
 
       /* ── 8. HERO STAT COUNTER TICK-UP ─────────────────────────────
