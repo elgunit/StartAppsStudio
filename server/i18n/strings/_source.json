@@ -1295,6 +1295,11 @@
     "context": "p.stp-body"
   },
   {
+    "key": "<strong>Content system</strong> <span>Brand content engagement</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
     "key": "Problem: inconsistent visual output",
     "kind": "attr",
     "context": "div.testimonial-problem-tag[aria-label]"
@@ -1325,6 +1330,11 @@
     "context": "span.method-badge"
   },
   {
+    "key": "<strong>Catalogue system</strong> <span>Specialty food catalogue</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
     "key": "Problem: slow catalogue updates",
     "kind": "attr",
     "context": "div.testimonial-problem-tag[aria-label]"
@@ -1348,6 +1358,11 @@
     "key": "Catalogue system",
     "kind": "unit",
     "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Product creative</strong> <span>Product demonstration</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
   },
   {
     "key": "Problem: same-looking product shots",

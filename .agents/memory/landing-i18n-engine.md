@@ -13,6 +13,10 @@ description: Durable decisions for the multi-locale landing-page localization la
 
 **Why:** A blanket inline-tag whitelist either blocks our own authored markup or reopens the stored-XSS sink; skeleton equality permits authored markup while preventing translator-introduced elements/attributes.
 
+**Rule:** A testimonial project header containing inline `<strong>` and `<span>` text is one translation unit keyed by its complete markup; adding only the child phrases does not satisfy locale coverage.
+
+**Why:** The extractor groups the header as a compound unit, so the shared English fallback must contain the exact tag skeleton and normalized spacing.
+
 **Rule:** Explicit-English selection needs its own URL that sets the language cookie; a switcher link to bare `/` cannot override a saved non-English cookie because `/` resolves the cookie before the default.
 
 **Rule:** Treat malformed language-cookie values as absent; decoding an untrusted cookie can throw before route-level error handling and 500 the page.
