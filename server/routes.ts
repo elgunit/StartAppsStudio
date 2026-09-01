@@ -14,6 +14,7 @@ import {
 import {
   renderArticleHtml,
   renderIndexHtml,
+  renderResourcesHtml,
   renderLlmsFullTxt,
   renderLlmsTxt,
   renderRobotsTxt,
@@ -107,6 +108,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/journal", (_req, res) => {
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderIndexHtml(CANONICAL_ORIGIN));
+  });
+
+  app.get("/resources", (_req, res) => {
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    res.send(renderResourcesHtml(CANONICAL_ORIGIN));
   });
 
   app.get("/journal/:slug", (req, res) => {

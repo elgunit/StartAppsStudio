@@ -3119,13 +3119,14 @@ ${jsonLd}
     <a href="/" class="brand">${esc(AUTHOR_NAME)}</a>
     <div class="nav-links">
       <a href="/journal">Journal</a>
+      <a href="/resources">Resources</a>
       <a href="/#pricing">Pricing</a>
       <a href="/#contact">Contact</a>
     </div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/resources">Resources</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
   </footer>
 </body>
 </html>`;
@@ -3261,6 +3262,185 @@ function renderIndexHtml(origin) {
     bodyInner
   });
 }
+function renderResourcesHtml(origin) {
+  const canonical = `${origin}/resources`;
+  const posts2 = allPostsNewestFirst().slice(0, 6);
+  const articleCards = posts2.map(
+    (p) => `
+        <a class="resource-article-card" href="/journal/${esc(p.slug)}">
+          <div class="article-meta">${esc(p.category || "Journal")} \xB7 ${p.readMinutes} min read</div>
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(p.excerpt)}</p>
+          <span class="article-link">Read the note &rarr;</span>
+        </a>`
+  ).join("");
+  const jsonLd = `<script type="application/ld+json">${safeJson({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Product Studio Resources | Start Apps Studio",
+    description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    url: canonical,
+    isPartOf: {
+      "@type": "WebSite",
+      name: AUTHOR_NAME,
+      url: `${origin}/`
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: posts2.map((p, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: p.title,
+        url: `${origin}/journal/${p.slug}`
+      }))
+    }
+  })}</script>`;
+  const bodyInner = `
+  <main class="container-wide resources-page">
+    <header class="resource-header">
+      <div class="resource-eyebrow">Start Apps Studio \xB7 Resources</div>
+      <h1 class="resource-title">Build the right thing, then build it well.</h1>
+      <p class="resource-lede">Practical guidance for founders and operators choosing a product route, working with AI, evaluating a build partner, and leaving with something they can own.</p>
+      <div class="resource-actions">
+        <a class="cta-btn" href="/#contact">Talk through your project &rarr;</a>
+        <a class="secondary-action" href="/journal">Read the Journal</a>
+      </div>
+    </header>
+
+    <section class="resource-section" aria-labelledby="resource-routes-title">
+      <div class="resource-section-heading">
+        <div>
+          <h2 id="resource-routes-title">Choose the next route</h2>
+          <p>The right first milestone depends on what you need to prove\u2014not on how much software you can imagine.</p>
+        </div>
+      </div>
+      <div class="resource-grid">
+        <article class="resource-card">
+          <div class="resource-card-kicker">01 \xB7 Direction</div>
+          <h3>Start with the smallest useful proof</h3>
+          <p>A launch site answers whether people understand the offer. A prototype answers whether they can react to the experience. An MVP answers what real users do.</p>
+          <ul>
+            <li>Choose one decision the next release must unlock</li>
+            <li>Keep the first version narrow enough to learn from</li>
+            <li>Use the package that matches the evidence you need</li>
+          </ul>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">02 \xB7 AI-assisted delivery</div>
+          <h3>Speed is useful when the structure holds</h3>
+          <p>AI can accelerate exploration, coding, and review. It does not replace product judgment, architecture, testing, or the person accountable for the result.</p>
+          <ul>
+            <li>Use AI to explore options and reduce repetition</li>
+            <li>Review generated code against real user flows</li>
+            <li>Keep the shipped system understandable and extensible</li>
+          </ul>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">03 \xB7 Ownership</div>
+          <h3>Ask what arrives at handoff</h3>
+          <p>A successful build is more than a final presentation. The source code, design files, accounts, deployment access, and context should be ready for you or your next team.</p>
+          <ul>
+            <li>Confirm who owns the accounts and working files</li>
+            <li>Review working progress before the final week</li>
+            <li>Leave with a documented, maintainable foundation</li>
+          </ul>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">04 \xB7 Partner fit</div>
+          <h3>Compare the way of working</h3>
+          <p>Before choosing a product partner, compare scope clarity, feedback loops, responsibility, support after launch, and whether the route fits the stage of your business.</p>
+          <ul>
+            <li>Who makes the product decisions?</li>
+            <li>When will you see something real?</li>
+            <li>Can another team continue without starting over?</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="resource-section" aria-labelledby="resource-packages-title">
+      <div class="resource-section-heading">
+        <div>
+          <h2 id="resource-packages-title">Package routing guide</h2>
+          <p>Use the public packages as a starting point for the conversation. Scope is agreed before work starts.</p>
+        </div>
+      </div>
+      <div class="resource-table-wrap">
+        <table class="resource-table">
+          <thead>
+            <tr><th>Route</th><th>Investment</th><th>Typical timing</th><th>Best when you need to</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Launch Site</td><td>$2,000</td><td>3\u20135 business days</td><td>Explain the offer and create a credible digital presence</td></tr>
+            <tr><td>Prototype</td><td>$5,000</td><td>5\u201310 days</td><td>Make an idea tangible for validation, fundraising, or early conversations</td></tr>
+            <tr><td>MVP</td><td>$9,000\u2013$20,000</td><td>3\u20138 weeks</td><td>Put a real web, iOS, or Android product in users\u2019 hands</td></tr>
+            <tr><td>Custom</td><td>$25,000+</td><td>1\u20136 months</td><td>Build a larger or more complex system with longer-term accountability</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="resource-section" aria-labelledby="resource-toolkit-title">
+      <div class="resource-section-heading">
+        <div>
+          <h2 id="resource-toolkit-title">The toolkit behind the work</h2>
+          <p>Tools are selected for the product outcome, the team taking it over, and the stage of the business.</p>
+        </div>
+      </div>
+      <div class="resource-grid">
+        <article class="resource-card">
+          <div class="resource-card-kicker">Reasoning &amp; code</div>
+          <h3>AI-assisted exploration</h3>
+          <p>Claude, Gemini, GPT-5, and Llama 4 support research, implementation, refactoring, and review. Human judgment sets the direction and quality bar.</p>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">Mockups &amp; prototyping</div>
+          <h3>From idea to something tangible</h3>
+          <p>Figma, Lovable, Replit, and Rork help turn a brief into a visual system, a working web experience, or an early mobile direction.</p>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">Production &amp; delivery</div>
+          <h3>Ready for real users</h3>
+          <p>React Native, Swift, Kotlin, Node.js, PostgreSQL, Stripe, RevenueCat, and GitHub support products that need accounts, payments, data, and a clean handoff.</p>
+        </article>
+        <article class="resource-card">
+          <div class="resource-card-kicker">Automation &amp; content</div>
+          <h3>Connected where it matters</h3>
+          <p>n8n, Make, custom webhooks, and ElevenLabs can extend the product when automation, communication, or media are part of the core experience.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="resource-section" aria-labelledby="resource-journal-title">
+      <div class="resource-section-heading">
+        <div>
+          <h2 id="resource-journal-title">Field notes from the Journal</h2>
+          <p>Longer notes on MVP strategy, SEO, GEO, vibe-coded apps, and the decisions that make a product easier to ship.</p>
+        </div>
+        <a class="secondary-action" href="/journal">All journal notes &rarr;</a>
+      </div>
+      <div class="resource-article-grid">${articleCards}</div>
+    </section>
+
+    <section class="resource-cta" aria-labelledby="resource-cta-title">
+      <div>
+        <h2 id="resource-cta-title">Have a route in mind?</h2>
+        <p>Share where you are, what you need to prove, and what is currently stuck.</p>
+      </div>
+      <a class="cta-btn" href="/#contact">Get a clear next step &rarr;</a>
+    </section>
+  </main>`;
+  return shell({
+    title: `Product Studio Resources: AI, MVPs & Handoffs | ${AUTHOR_NAME}`,
+    description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    canonical,
+    origin,
+    ogImage: "/assets/images/og-journal-default.png",
+    ogType: "website",
+    jsonLd,
+    bodyInner
+  });
+}
 function renderSitemapXml(origin) {
   const urls = [
     { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
@@ -3270,6 +3450,7 @@ function renderSitemapXml(origin) {
       lastmod: HOMEPAGE_LAST_MODIFIED,
       priority: "0.9"
     })),
+    { loc: `${origin}/resources`, priority: "0.8" },
     { loc: `${origin}/journal`, priority: "0.8" }
   ];
   for (const p of allPostsNewestFirst()) {
@@ -3378,6 +3559,7 @@ The landing site can collect consented, aggregate-only business insights such as
 ## Key URLs
 
 - [Homepage](${origin}/)
+- [Resources](${origin}/resources)
 - [Journal](${origin}/journal)
 - [Sitemap](${origin}/sitemap.xml)
 - [Full overview for LLMs](${origin}/llms-full.txt)
@@ -3478,10 +3660,12 @@ The site uses consent-aware, aggregate-only measurement to understand which sect
 - Inquiry form: ${origin}/#contact
 - Website: ${origin}/
 - Journal: ${origin}/journal
+- Resources: ${origin}/resources
 
 ## Source links
 
 - Homepage: ${origin}/
+- Resources: ${origin}/resources
 - Journal index: ${origin}/journal
 - Sitemap: ${origin}/sitemap.xml
 - Robots: ${origin}/robots.txt
@@ -4296,6 +4480,88 @@ var init_render = __esm({
     .article-body blockquote { font-size:clamp(20px,6vw,26px); }
     .next-grid,.post-grid { grid-template-columns:1fr; }
   }
+  /* Resources hub */
+  .resources-page { padding-top:var(--j-space-4); }
+  .resource-header { max-width:760px; margin-bottom:var(--j-space-4); }
+  .resource-eyebrow {
+    display:inline-block; margin-bottom:18px; padding:5px 11px;
+    border:1px solid rgba(212,167,44,.42); border-radius:999px;
+    background:color-mix(in srgb,var(--glass-signal) 18%,transparent);
+    color:var(--glass-ink); font-family:var(--kicker); font-size:11.5px;
+    font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  }
+  .resource-title {
+    margin-bottom:18px; color:var(--glass-ink); font-family:var(--display);
+    font-size:clamp(44px,7vw,80px); font-weight:900; line-height:.98;
+    letter-spacing:-.03em;
+  }
+  .resource-lede {
+    max-width:58ch; color:var(--glass-muted); font-family:var(--display);
+    font-size:clamp(18px,2.1vw,23px); font-style:italic; line-height:1.45;
+  }
+  .resource-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+  .resource-actions a { text-decoration:none; }
+  .resource-actions .secondary-action {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:48px; padding:12px 20px; border:1px solid var(--glass-line);
+    border-radius:999px; color:var(--glass-ink); background:var(--glass-panel);
+  }
+  .resource-section { margin-top:var(--j-space-4); }
+  .resource-section-heading {
+    display:flex; align-items:end; justify-content:space-between; gap:18px;
+    margin-bottom:var(--j-space-2); padding-bottom:14px;
+    border-bottom:1px solid var(--glass-line);
+  }
+  .resource-section-heading h2 {
+    color:var(--glass-ink); font-family:var(--display); font-size:clamp(28px,4vw,44px);
+    line-height:1.04; letter-spacing:-.025em;
+  }
+  .resource-section-heading p { max-width:44ch; color:var(--glass-muted); font-size:14px; line-height:1.5; }
+  .resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:var(--j-space-2); }
+  .resource-card {
+    min-height:220px; padding:24px; border:1px solid var(--glass-line);
+    border-radius:20px; background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 52%),var(--glass-panel);
+    box-shadow:0 18px 48px rgba(13,58,67,.09),inset 0 1px 0 rgba(255,255,255,.64);
+  }
+  .resource-card-kicker {
+    margin-bottom:14px; color:var(--glass-coral); font-family:var(--kicker);
+    font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .resource-card h3 { margin-bottom:10px; color:var(--glass-ink); font-family:var(--display); font-size:25px; line-height:1.12; }
+  .resource-card p { color:var(--glass-muted); font-size:15px; line-height:1.55; }
+  .resource-card ul { display:grid; gap:7px; margin-top:16px; padding-left:18px; color:var(--glass-muted); font-size:14px; line-height:1.45; }
+  .resource-card li::marker { color:var(--glass-coral); }
+  .resource-table-wrap { overflow-x:auto; border:1px solid var(--glass-line); border-radius:18px; background:var(--glass-panel); box-shadow:0 18px 48px rgba(13,58,67,.08); }
+  .resource-table { width:100%; min-width:650px; border-collapse:collapse; }
+  .resource-table th, .resource-table td { padding:16px 18px; border-bottom:1px solid var(--glass-line); text-align:left; vertical-align:top; }
+  .resource-table tr:last-child td { border-bottom:0; }
+  .resource-table th { color:var(--glass-muted); font-family:var(--kicker); font-size:11px; letter-spacing:.13em; text-transform:uppercase; }
+  .resource-table td { color:var(--glass-muted); font-size:14px; line-height:1.45; }
+  .resource-table td:first-child, .resource-table td:nth-child(2) { color:var(--glass-ink); font-weight:700; white-space:nowrap; }
+  .resource-article-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:var(--j-space-2); }
+  .resource-article-card {
+    display:block; padding:22px; border:1px solid var(--glass-line); border-radius:20px;
+    color:inherit; text-decoration:none; background:var(--glass-panel);
+    box-shadow:0 18px 48px rgba(13,58,67,.08); transition:transform .25s ease,border-color .25s ease;
+  }
+  .resource-article-card:hover { transform:translateY(-4px); border-color:rgba(8,127,131,.5); text-decoration:none; }
+  .resource-article-card .article-meta { margin-bottom:12px; color:var(--glass-teal); font-family:var(--kicker); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .resource-article-card h3 { margin-bottom:10px; color:var(--glass-ink); font-family:var(--display); font-size:23px; line-height:1.15; }
+  .resource-article-card p { color:var(--glass-muted); font-size:14px; line-height:1.5; }
+  .resource-article-card .article-link { display:inline-block; margin-top:16px; color:var(--glass-coral); font-family:var(--kicker); font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .resource-cta {
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    margin-top:var(--j-space-4); padding:28px; border:1px solid var(--glass-line);
+    border-radius:20px; background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 52%),var(--glass-panel);
+    box-shadow:0 18px 55px rgba(29,72,73,.1);
+  }
+  .resource-cta h2 { margin-bottom:7px; color:var(--glass-ink); font-family:var(--display); font-size:clamp(25px,3vw,36px); line-height:1.05; }
+  .resource-cta p { color:var(--glass-muted); font-size:15px; }
+  @media (max-width:640px) {
+    .resource-section-heading, .resource-cta { align-items:flex-start; flex-direction:column; }
+    .resource-card { min-height:0; }
+    .resource-cta .cta-btn { width:100%; }
+  }
 `;
   }
 });
@@ -4354,6 +4620,10 @@ async function registerRoutes(app2) {
   app2.get("/journal", (_req, res) => {
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderIndexHtml(CANONICAL_ORIGIN));
+  });
+  app2.get("/resources", (_req, res) => {
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    res.send(renderResourcesHtml(CANONICAL_ORIGIN));
   });
   app2.get("/journal/:slug", (req, res) => {
     const post = getPost(req.params.slug);
