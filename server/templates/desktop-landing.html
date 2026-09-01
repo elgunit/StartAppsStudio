@@ -6227,6 +6227,27 @@
         flex-direction: column;
         position: relative;
       }
+      .testimonial-project {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin: -2px 0 18px;
+      }
+      .testimonial-project strong {
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        line-height: 1.25;
+      }
+      .testimonial-project span {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1.25;
+        text-transform: uppercase;
+      }
       .testimonial-problem-tag {
         display: flex;
         align-items: center;
@@ -6316,7 +6337,8 @@
         margin: 0 0 0 auto;
         flex: 0 0 auto;
         align-self: flex-end;
-        white-space: nowrap;
+        white-space: normal;
+        text-align: right;
       }
       .testimonial-client {
         font-size: 12.5px;
@@ -6329,6 +6351,9 @@
         font-weight: 500;
         color: var(--text-secondary);
         letter-spacing: 0;
+      }
+      .testimonial-project + .testimonial-problem-tag {
+        margin-top: 0;
       }
 
       /* ── Responsive ─────────────────────────────────────────────────── */
@@ -7276,6 +7301,7 @@
         margin: 0;
         padding: 5px 10px;
         line-height: 1.2;
+        text-align: left;
       }
 
       .testimonial-dot:focus-visible {
@@ -8718,12 +8744,180 @@
               <span class="method-badge">Product creative</span>
             </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Investor-Ready Demo</strong>
+              <span>Pitch prototype · web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: strong deck, nothing live to show">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: strong deck, nothing live to show">Strong deck, nothing live to show</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">The meeting was locked in for ten days out and all I had was slides. What mattered was that it ran on real infrastructure, not a click-through mockup, because the first thing they did was hand it to their analyst to poke at. Live in nine days and the demo mode held up on someone else's phone.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, pitch prototype</div>
+              <span class="method-badge">Live in 9 days</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Retail Inventory Dashboard</strong>
+              <span>E-commerce · web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: stock counts living in three different spreadsheets">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: stock counts living in three different spreadsheets">Stock counts across three spreadsheets</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">We were reconciling by hand every Monday and still getting it wrong. Three weeks from kickoff we had one dashboard the whole team actually opens. The part I didn't expect was how much of the scoping conversation was about what to leave out.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Operations lead, e-commerce retailer</div>
+              <span class="method-badge">Shipped in 3 weeks</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Healthcare Appointment Booking</strong>
+              <span>Health · iOS &amp; Android</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: phone-only booking, front desk overwhelmed">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: phone-only booking, front desk overwhelmed">Phone-only booking, front desk overwhelmed</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0-3 1.34-3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">Every appointment came through a phone call, which meant our front desk spent the day on hold instead of with patients. We took 800 bookings through the app in the first week alone. Getting it onto both stores without me having to learn what any of that involved was worth the engagement on its own.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Practice manager, healthcare provider</div>
+              <span class="method-badge">Live in 5 weeks · 800 bookings in week one</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Agency Client Portal</strong>
+              <span>SaaS · web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: client reporting run entirely on spreadsheets">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: client reporting run entirely on spreadsheets">Client reporting on spreadsheets</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">Every client had their own sheet and none of them matched. Now three agencies are onboarded on the same portal and I've stopped dreading the end of the month. The handover doc meant my own developer could pick it up without a single call back.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, agency portal</div>
+              <span class="method-badge">Replaced spreadsheets · 3 agencies onboarded</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Restaurant Ordering &amp; Kitchen Display</strong>
+              <span>Hospitality · iOS &amp; Android</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: paper tickets across four locations">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: paper tickets across four locations">Paper tickets across four locations</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">Orders were coming in on paper and the kitchen was working blind during a rush. It's running across all four locations now. What sold me during the build was seeing it on a screen in the actual kitchen halfway through, not at the end.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Owner, multi-location restaurant group</div>
+              <span class="method-badge">Deployed across 4 locations</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>Nonprofit Donor Management</strong>
+              <span>Non-profit · web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: donor records scattered, campaign deadline fixed">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: donor records scattered, campaign deadline fixed">Donor records scattered, campaign deadline fixed</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">We had donor history in a mailing list, a spreadsheet, and someone's memory. Four weeks later we launched with all of it in one place and raised $120k in the campaign. Being told upfront which features to cut is what got us there on time.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Development director, nonprofit</div>
+              <span class="method-badge">Shipped in 4 weeks · $120k raised at launch</span>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-project">
+              <strong>AI Content Workflow Tool</strong>
+              <span>SaaS · web</span>
+            </div>
+            <div class="testimonial-problem-tag" aria-label="Problem: idea validated, nothing built to test it">
+              <span class="testimonial-problem-label">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Problem
+              </span>
+              <span class="testimonial-problem-copy" title="Problem: idea validated, nothing built to test it">Idea validated, nothing built to test it</span>
+            </div>
+            <div class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3H4V5zm11 0h5v6c0 3.31-2.69 6-6 6v-3c1.66 0 3-1.34 3-3h-2V5z"/></svg>
+            </div>
+            <p class="testimonial-text">I needed something real in front of users before I committed to a full build. The beta went out and we had 200 signups in 48 hours, which answered the question I was actually asking. Owning the codebase from day one meant the next version didn't start from scratch.</p>
+            <div class="testimonial-sep"></div>
+            <div class="testimonial-footer">
+              <div class="testimonial-client">Founder, AI content SaaS</div>
+              <span class="method-badge">Beta launched · 200 signups in 48 hours</span>
+            </div>
+          </div>
         </div>
         <!-- Pagination dots (visible on mobile only via CSS) -->
         <div class="testimonial-dots" id="testimonialDots" aria-hidden="true">
           <button class="testimonial-dot active" data-idx="0" tabindex="-1"></button>
           <button class="testimonial-dot" data-idx="1" tabindex="-1"></button>
           <button class="testimonial-dot" data-idx="2" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="3" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="4" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="5" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="6" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="7" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="8" tabindex="-1"></button>
+          <button class="testimonial-dot" data-idx="9" tabindex="-1"></button>
         </div>
       </section>
 

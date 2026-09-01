@@ -194,7 +194,15 @@ function checkTemplate(template: string): void {
     "landing contact budget section",
   );
 
-  const pricingSurface = `${templatePricing}\n${templateContact}\n${templateFaq}`;
+  // The proof section lives inside the pricing section's page wrapper, but
+  // testimonial outcome amounts (for example "$120k raised") are not offers.
+  // Exclude that nested surface so the currency-token check only audits
+  // public package/FAQ pricing.
+  const pricingAndProof = templatePricing.replace(
+    /<div class="testimonials-grid">[\s\S]*?<\/div>\s*<!-- Pagination dots \(visible on mobile only via CSS\) -->/,
+    "",
+  );
+  const pricingSurface = `${pricingAndProof}\n${templateContact}\n${templateFaq}`;
   const templateAllowedPrices = new Set([
     "$2,000",
     "$5,000",

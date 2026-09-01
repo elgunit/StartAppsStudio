@@ -1,0 +1,46 @@
+One Autism Health — Healthcare, web + iOS + Android
+
+Problem: no way for families to find local providers
+
+Families were searching a global database and getting results that meant
+nothing where they actually lived. We needed localised search on live data
+across web and both mobile platforms, and we needed it built properly the
+first time because of who uses it. The MVP was live in three months and we
+were at 10,000 users six months after that.
+
+Founder, autism care platform  ·  MVP in 3 months · 10K users in 6 months
+
+Wivity — Connectivity, brand + web
+
+Problem: no cohesive brand identity
+
+We had a product and no visual language holding it together, which was a
+problem the moment anyone serious looked at us. The identity was designed in
+Figma and the site was built and live in under a month. The consortium
+acquisition came through the following week.
+
+Founder, connectivity company  ·  Design to shipped in 3 months
+
+A note on that one: I've written "the acquisition came through the following week" as sequence, not cause. Worth keeping it that way — the timing is impressive on its own and claiming credit for an acquisition is the kind of thing that reads as overreach to anyone who's been through one.
+
+Noiseaware — SaaS, UI/UX overhaul
+
+Problem: incomplete interface, broken user flows
+
+The product worked but the experience had gaps nobody had mapped, and users
+were falling into flows that just ended. The overhaul went through every
+state, including the ones we'd never designed for. Three to four months and
+we had an interface that matched what the product could actually do.
+
+Product lead, property monitoring platform  ·  Full UI/UX redesign in 3-4 months
+
+Opensend — SaaS, CRM + email platform
+
+Problem: no CRM dashboard, no intake system
+
+We were running email blasts with nothing behind them. No dashboard, no
+intake, no way for a client to manage their own sends. Five months later we
+had email push management, per-client customisation, and every flow designed
+end to end.
+
+Founder, email platform  ·  Built in 5 months

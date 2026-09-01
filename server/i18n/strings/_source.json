@@ -1366,8 +1366,18 @@
   },
   {
     "key": "Problem: inconsistent visual output",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Problem",
     "kind": "text",
-    "context": "div.testimonial-problem-tag"
+    "context": "span.testimonial-problem-label"
+  },
+  {
+    "key": "Inconsistent visual output",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
   },
   {
     "key": "Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.",
@@ -1386,8 +1396,13 @@
   },
   {
     "key": "Problem: slow catalogue updates",
-    "kind": "text",
-    "context": "div.testimonial-problem-tag"
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Slow catalogue updates",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
   },
   {
     "key": "We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.",
@@ -1406,8 +1421,13 @@
   },
   {
     "key": "Problem: same-looking product shots",
-    "kind": "text",
-    "context": "div.testimonial-problem-tag"
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Same-looking product shots",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
   },
   {
     "key": "I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.",
@@ -1421,6 +1441,216 @@
   },
   {
     "key": "Product creative",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Investor-Ready Demo</strong> <span>Pitch prototype · web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: strong deck, nothing live to show",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Strong deck, nothing live to show",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "The meeting was locked in for ten days out and all I had was slides. What mattered was that it ran on real infrastructure, not a click-through mockup, because the first thing they did was hand it to their analyst to poke at. Live in nine days and the demo mode held up on someone else's phone.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, pitch prototype",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Live in 9 days",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Retail Inventory Dashboard</strong> <span>E-commerce · web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: stock counts living in three different spreadsheets",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Stock counts across three spreadsheets",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "We were reconciling by hand every Monday and still getting it wrong. Three weeks from kickoff we had one dashboard the whole team actually opens. The part I didn't expect was how much of the scoping conversation was about what to leave out.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Operations lead, e-commerce retailer",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Shipped in 3 weeks",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Healthcare Appointment Booking</strong> <span>Health · iOS &amp; Android</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: phone-only booking, front desk overwhelmed",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Phone-only booking, front desk overwhelmed",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "Every appointment came through a phone call, which meant our front desk spent the day on hold instead of with patients. We took 800 bookings through the app in the first week alone. Getting it onto both stores without me having to learn what any of that involved was worth the engagement on its own.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Practice manager, healthcare provider",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Live in 5 weeks · 800 bookings in week one",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Agency Client Portal</strong> <span>SaaS · web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: client reporting run entirely on spreadsheets",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Client reporting on spreadsheets",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "Every client had their own sheet and none of them matched. Now three agencies are onboarded on the same portal and I've stopped dreading the end of the month. The handover doc meant my own developer could pick it up without a single call back.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, agency portal",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Replaced spreadsheets · 3 agencies onboarded",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Restaurant Ordering &amp; Kitchen Display</strong> <span>Hospitality · iOS &amp; Android</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: paper tickets across four locations",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Paper tickets across four locations",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "Orders were coming in on paper and the kitchen was working blind during a rush. It's running across all four locations now. What sold me during the build was seeing it on a screen in the actual kitchen halfway through, not at the end.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Owner, multi-location restaurant group",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Deployed across 4 locations",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>Nonprofit Donor Management</strong> <span>Non-profit · web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: donor records scattered, campaign deadline fixed",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Donor records scattered, campaign deadline fixed",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "We had donor history in a mailing list, a spreadsheet, and someone's memory. Four weeks later we launched with all of it in one place and raised $120k in the campaign. Being told upfront which features to cut is what got us there on time.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Development director, nonprofit",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Shipped in 4 weeks · $120k raised at launch",
+    "kind": "unit",
+    "context": "span.method-badge"
+  },
+  {
+    "key": "<strong>AI Content Workflow Tool</strong> <span>SaaS · web</span>",
+    "kind": "unit",
+    "context": "div.testimonial-project"
+  },
+  {
+    "key": "Problem: idea validated, nothing built to test it",
+    "kind": "attr",
+    "context": "div.testimonial-problem-tag[aria-label]"
+  },
+  {
+    "key": "Idea validated, nothing built to test it",
+    "kind": "unit",
+    "context": "span.testimonial-problem-copy"
+  },
+  {
+    "key": "I needed something real in front of users before I committed to a full build. The beta went out and we had 200 signups in 48 hours, which answered the question I was actually asking. Owning the codebase from day one meant the next version didn't start from scratch.",
+    "kind": "unit",
+    "context": "p.testimonial-text"
+  },
+  {
+    "key": "Founder, AI content SaaS",
+    "kind": "unit",
+    "context": "div.testimonial-client"
+  },
+  {
+    "key": "Beta launched · 200 signups in 48 hours",
     "kind": "unit",
     "context": "span.method-badge"
   },
@@ -2605,12 +2835,12 @@
     "context": "p.faq-answer"
   },
   {
-    "key": "Do you work with non-technical founders?",
+    "key": "Can you help if I already run a business?",
     "kind": "unit",
     "context": "summary"
   },
   {
-    "key": "Yes. Most of our founders are non-technical. We translate vague ideas into clear scopes, run the technical decisions for you, and write everything down in plain English. You get a real product without needing to learn the stack or manage engineers.",
+    "key": "Yes. We work with new ventures, family businesses, and established teams. We can refresh an outdated website, shape a stronger brand presence, or turn an existing operation into a useful digital product. You stay close to the decisions while one accountable partner owns the build.",
     "kind": "unit",
     "context": "p.faq-answer"
   },
@@ -3006,16 +3236,6 @@
   },
   {
     "key": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage.",
-    "kind": "meta",
-    "context": "head metadata / JSON-LD"
-  },
-  {
-    "key": "Can you help if I already run a business?",
-    "kind": "meta",
-    "context": "head metadata / JSON-LD"
-  },
-  {
-    "key": "Yes. We work with new ventures, family businesses, and established teams. We can refresh an outdated website, shape a stronger brand presence, or turn an existing operation into a useful digital product. You stay close to the decisions while one accountable partner owns the build.",
     "kind": "meta",
     "context": "head metadata / JSON-LD"
   },
