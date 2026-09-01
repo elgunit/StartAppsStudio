@@ -9501,7 +9501,6 @@
                return index < initialStart || index > initialEnd;
              });
              var revealedExtras = 0;
-             var revealStep = 3;
 
              function setVisible(card, visible) {
                card.hidden = !visible;
@@ -9523,10 +9522,10 @@
              button.addEventListener('click', function () {
                var hasMore = revealedExtras < extraCards.length;
                if (hasMore) {
-                 extraCards.slice(revealedExtras, revealedExtras + revealStep).forEach(function (card) {
+                  extraCards.forEach(function (card) {
                    setVisible(card, true);
                  });
-                 revealedExtras = Math.min(extraCards.length, revealedExtras + revealStep);
+                  revealedExtras = extraCards.length;
                } else {
                  extraCards.forEach(function (card) { setVisible(card, false); });
                  revealedExtras = 0;
