@@ -7384,6 +7384,310 @@
         background-position: 0 0, 0 100%, 0 0, 0 100% !important;
       }
 
+      /* ----------------------------------------------------------------
+         Contact form responsive UX
+         Keep labels in a stable reading order instead of making visitors
+         remember which fields have floated. The form remains the same
+         contract, but gets a calmer desktop rhythm and larger touch targets.
+         ---------------------------------------------------------------- */
+      .contact-inner {
+        width: min(100%, 1180px);
+        grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.12fr);
+        gap: clamp(40px, 6vw, 88px);
+      }
+
+      .contact-left {
+        padding-top: clamp(4px, 2vw, 28px);
+      }
+
+      .contact-left > p {
+        max-width: 52ch;
+        margin-bottom: clamp(32px, 4vw, 54px);
+      }
+
+      .contact-right {
+        min-width: 0;
+      }
+
+      .contact-form {
+        box-sizing: border-box;
+        width: 100%;
+        padding: clamp(28px, 3.4vw, 44px);
+        border-radius: clamp(20px, 2.5vw, 28px);
+      }
+
+      .form-section {
+        margin-bottom: 30px;
+      }
+
+      .form-section + .form-section {
+        padding-top: 28px;
+      }
+
+      .form-section > .form-section-title {
+        margin-bottom: 16px;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        line-height: 1.35;
+      }
+
+      .form-row {
+        gap: 16px;
+      }
+
+      .form-row + .form-row,
+      .context-grid {
+        margin-top: 16px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .form-group .floating-label {
+        position: static !important;
+        order: -1 !important;
+        display: block !important;
+        top: auto !important;
+        left: auto !important;
+        max-width: none !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        padding: 0 !important;
+        transform: none !important;
+        color: var(--text-secondary) !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.035em !important;
+        line-height: 1.35 !important;
+        text-transform: none !important;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        box-sizing: border-box;
+        order: 1;
+        min-height: 54px;
+        padding: 14px 15px;
+        border-radius: 14px;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .form-group select {
+        padding-right: 44px;
+        color: var(--ink);
+      }
+
+      .form-group select[data-empty="true"] {
+        color: var(--text-secondary);
+      }
+
+      .form-group textarea {
+        min-height: 156px;
+        padding: 15px;
+        line-height: 1.55;
+      }
+
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: color-mix(in srgb, var(--text-secondary) 72%, transparent);
+      }
+
+      .form-group:has(input:focus) .floating-label,
+      .form-group:has(select:focus) .floating-label,
+      .form-group:has(textarea:focus) .floating-label {
+        color: var(--dominant) !important;
+      }
+
+      .budget-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .budget-chip {
+        min-width: 0;
+        min-height: 78px;
+        box-sizing: border-box;
+        justify-content: center;
+        padding: 14px;
+        border-radius: 14px;
+      }
+
+      .budget-chip .budget-price {
+        font-size: 15px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .budget-chip .budget-tier {
+        line-height: 1.35;
+        white-space: normal;
+      }
+
+      .interest-scroll {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .interest-scroll .interest-option {
+        min-height: 48px;
+        box-sizing: border-box;
+        padding: 11px 13px;
+        line-height: 1.35;
+      }
+
+      .timeline-grid {
+        gap: 10px;
+      }
+
+      .timeline-chip {
+        min-height: 44px;
+        box-sizing: border-box;
+        padding: 9px 14px;
+        line-height: 1.3;
+      }
+
+      /* Keep custom choice controls keyboard reachable without exposing the
+         browser's default radio/checkbox chrome. */
+      .budget-chip input,
+      .interest-option input,
+      .timeline-chip input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .interest-option input {
+        display: block !important;
+      }
+
+      .budget-chip:focus-within,
+      .interest-option:focus-within,
+      .timeline-chip:focus-within {
+        outline: 3px solid color-mix(in srgb, var(--rose) 78%, var(--dominant));
+        outline-offset: 3px;
+      }
+
+      .submit-btn {
+        min-height: 58px;
+        margin-top: 2px;
+        border-radius: 16px;
+      }
+
+      @media (max-width: 900px) {
+        .contact-inner {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+
+        .contact-left {
+          padding-top: 0;
+        }
+
+        .contact-trust {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 22px 28px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .contact {
+          padding: 40px 10px;
+        }
+
+        .contact-inner {
+          gap: 28px;
+        }
+
+        .contact-left {
+          padding-inline: 6px;
+        }
+
+        .contact-left > p {
+          margin-bottom: 30px;
+        }
+
+        .contact-trust {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .contact-form {
+          padding: 24px 18px;
+          border-radius: 22px;
+        }
+
+        .form-section {
+          margin-bottom: 26px;
+        }
+
+        .form-section + .form-section {
+          padding-top: 24px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .form-row + .form-row,
+        .context-grid {
+          margin-top: 16px;
+        }
+
+        .interest-scroll {
+          grid-template-columns: 1fr;
+        }
+
+        .budget-chip {
+          min-height: 72px;
+          padding: 12px 10px;
+        }
+
+        .submit-btn {
+          min-height: 56px;
+        }
+      }
+
+      @media (max-width: 390px) {
+        .contact {
+          padding-inline: 6px;
+        }
+
+        .contact-form {
+          padding: 22px 14px;
+        }
+
+        .form-section > .form-section-title {
+          font-size: 11px;
+        }
+
+        .budget-grid {
+          gap: 8px;
+        }
+
+        .budget-chip .budget-price {
+          font-size: 13px;
+        }
+
+        .budget-chip .budget-tier {
+          font-size: 10px;
+        }
+      }
+
     </style>
   </head>
   <body>
