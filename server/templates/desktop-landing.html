@@ -6615,12 +6615,12 @@
 
       /* --- Cards: specular inset on every glass surface ---------------- */
       /* Shallow glass (plain specular top edge) - price/showcase/journal/proof cards */
-      .price-card, .showcase-card, .journal-note, .ae-proof-card {
+      .price-card, .showcase-card, .testimonial-card, .journal-note, .ae-proof-card {
         box-shadow: inset 0 1px 0 var(--specular), var(--shadow) !important;
         background: var(--refract-top), var(--surface) !important;
       }
       /* Full liquid-glass surface - matches the why-card recipe */
-      .service-card, .growth-card, .faq-item, .how-card, .testimonial-card {
+      .service-card, .growth-card, .faq-item, .how-card {
         border: 1px solid color-mix(in srgb, var(--dominant) 14%, var(--line)) !important;
         background:
           linear-gradient(160deg,
@@ -6788,12 +6788,14 @@
         #caseStudiesContainer.showcase-carousel-wrap {
           overflow: visible !important;
         }
-        .showcase-card {
+        .showcase-card,
+        .testimonial-card {
           /* Do not paint a wide shadow from inside the scrollport. The
              non-scrolling shell owns the ambient fade below. */
           box-shadow: inset 0 1px 0 var(--specular) !important;
         }
-        .showcase-card:hover {
+        .showcase-card:hover,
+        .testimonial-card:hover {
           box-shadow: inset 0 1px 0 var(--specular-teal) !important;
         }
       }
@@ -6852,12 +6854,11 @@
           box-shadow: inset 0 1px 0 var(--specular),
             0 4px 14px rgba(29,72,73,.08) !important;
         }
-        /* Same fix for testimonial cards in the mobile carousel */
+        /* Keep both horizontal carousels on the same soft mobile shadow. */
+        .showcase-card,
         .testimonial-card {
-          box-shadow:
-            inset 0 1px 0 var(--specular-teal),
-            inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
-            0 4px 20px rgba(29,72,73,.10) !important;
+          box-shadow: inset 0 1px 0 var(--specular),
+            0 4px 14px rgba(29,72,73,.08) !important;
         }
         .hero {
           backdrop-filter: blur(16px) saturate(140%) !important;
@@ -6873,7 +6874,7 @@
           -webkit-backdrop-filter: blur(12px) saturate(132%) !important;
         }
         /* Reduce liquid-glass blur on cards for mobile performance */
-        .service-card, .growth-card, .faq-item, .how-card, .testimonial-card {
+        .service-card, .growth-card, .faq-item, .how-card {
           backdrop-filter: blur(8px) saturate(128%) !important;
           -webkit-backdrop-filter: blur(8px) saturate(128%) !important;
         }
@@ -7188,7 +7189,8 @@
       .testimonial-card {
         min-height: 404px;
         padding: clamp(22px, 2.35vw, 30px);
-        border-radius: var(--section-radius);
+        /* Match the project carousel's card silhouette at every width. */
+        border-radius: var(--r-lg);
         transition:
           transform var(--motion-standard) cubic-bezier(0.22, 0.61, 0.36, 1),
           border-color var(--motion-standard) ease,
@@ -7439,10 +7441,7 @@
           scroll-snap-align: center;
           scroll-snap-stop: always;
           align-self: stretch;
-          box-shadow:
-            inset 0 1px 0 var(--specular-teal),
-            inset 0 0 0 1px color-mix(in srgb, var(--dominant) 6%, transparent),
-            0 4px 14px rgba(29,72,73,.08) !important;
+          box-shadow: 0 4px 14px rgba(29,72,73,.08);
           opacity: 1 !important;
           transform: none !important;
           transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
