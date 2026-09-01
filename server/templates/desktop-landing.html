@@ -189,42 +189,10 @@
         },
         {
           "@type": "Question",
-          "name": "What stack do you build on?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We default to React and React Native (via Expo) on the front end, with Node and Postgres on the back end, deployed to Replit, Vercel, or your preferred host. We pick the stack to match the founder, not the other way around. If you have an existing codebase or a strong preference, we work in it."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "What happens after launch? Do you offer ongoing support?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, founders typically either run with the codebase themselves, hire an in-house engineer, or keep us on as a fractional product team on a small monthly retainer. We will tell you honestly which option fits your stage."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you help if I already run a business?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. We work with new ventures, family businesses, and established teams. We can refresh an outdated website, shape a stronger brand presence, or turn an existing operation into a useful digital product. You stay close to the decisions while one accountable partner owns the build."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you help me build something to show investors?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Absolutely. Pitch prototypes are one of our most common engagements. We build a polished, interactive app on real infrastructure that investors can tap through on their phone. We scope it to your deck timeline: typically 5 to 10 days for a Figma-led clickable prototype and 3 to 5 weeks for a fully functional pre-seed demo."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I get just a landing page without a full app build?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message and page around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days."
           }
         },
         {
@@ -8065,7 +8033,7 @@
         <p class="hero-subheadline">Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
 
         <!-- 5 Hats Showcase -->
-        <div class="hats-showcase">
+        <div class="hats-showcase" hidden inert aria-hidden="true">
           <a href="#hat-designer" class="hat-showcase-item hat-designer" aria-controls="hat-designer" aria-expanded="false" onclick="openHatCard('hat-designer',event)">
             <div class="hat-icon">
               <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
@@ -8398,13 +8366,13 @@
           </div>
         </div><!-- /#caseStudiesContainer -->
 
-        <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()">
+        <button class="view-more-btn" id="viewMoreBtn" onclick="toggleMoreWork()" hidden aria-hidden="true">
           <span>See more builds</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </button>
 
         <!-- Compact list of recent builds beyond the featured cards -->
-        <div class="recent-builds" id="recentBuilds">
+        <div class="recent-builds" id="recentBuilds" hidden aria-hidden="true">
           <div class="recent-builds-header">
             <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             More recent builds
@@ -8462,7 +8430,7 @@
         <p class="section-subtitle">From a credible brand presence to a full multi-platform product. Every package is built around the business outcome you need next: be understood, be trusted, validate demand, or serve real users.</p>
         <div class="service-tabs">
           <button class="service-tab active" onclick="switchTab('build', this)">Build</button>
-          <button class="service-tab" onclick="switchTab('grow', this)">Grow</button>
+          
         </div>
         <div id="tab-build" class="tab-content active">
         <div class="services-grid">
@@ -8528,7 +8496,7 @@
           </div>
         </div>
         </div>
-        <div id="tab-grow" class="tab-content">
+        <div id="tab-grow" class="tab-content" hidden inert aria-hidden="true">
         <div class="growth-grid">
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
@@ -8731,7 +8699,7 @@
       </section>
 
       <!-- Native delivery -->
-      <section class="section native-delivery-section" id="native-delivery" aria-labelledby="nativeDeliveryTitle" data-section-name="native-delivery">
+      <section class="section native-delivery-section" id="native-delivery" aria-labelledby="nativeDeliveryTitle" data-section-name="native-delivery" hidden inert aria-hidden="true">
         <div class="native-delivery-inner">
           <h2 class="section-title" id="nativeDeliveryTitle">Shared core. Web, iOS, and Android.</h2>
           <p class="native-delivery-lead">Prototype proves the idea in a responsive web app. MVP carries the shared web-app core into real users’ hands across Web, iOS, and Android, with native UI and UX built for each platform.</p>
@@ -8743,7 +8711,7 @@
         </div>
       </section>
 
-      <div class="modal-overlay" id="nativeDeliveryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="nativeDeliveryModalTitle" aria-describedby="nativeDeliveryModalIntro">
+      <div class="modal-overlay" id="nativeDeliveryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="nativeDeliveryModalTitle" aria-describedby="nativeDeliveryModalIntro" hidden inert>
         <div class="modal-content native-delivery-modal-content">
           <button class="modal-close" type="button" onclick="closeNativeDeliveryModal()" aria-label="Close native delivery details">&times;</button>
 
@@ -9265,10 +9233,26 @@
         <!-- Pagination dots are rebuilt to match the available snap positions. -->
         <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination"></div>
         </div>
+         <script>
+           /* Keep the proof layer focused on the four engagements that map
+              directly to the public packages. The full set remains available
+              in the project archive rather than interrupting the lead path. */
+           (function () {
+             var cards = document.querySelectorAll('.testimonials-grid .testimonial-card');
+             cards.forEach(function (card, index) {
+               if (index < 3 || index > 6) {
+                 card.hidden = true;
+                 card.inert = true;
+                 card.setAttribute('aria-hidden', 'true');
+                 card.style.display = 'none';
+               }
+             });
+           })();
+         </script>
       </section>
 
       <!-- Why Start Apps Studio -->
-      <div class="why-section" data-section-name="why">
+      <div class="why-section" data-section-name="why" hidden inert aria-hidden="true">
         <div class="section-header">
           <h2>Why Start Apps Studio?</h2>
           <p>Built by a founder who has worn every hat, not just a dev team.</p>
@@ -9346,7 +9330,7 @@
         </div>
       </div>
 
-      <div class="modal-overlay" id="whyModal">
+      <div class="modal-overlay" id="whyModal" hidden inert aria-hidden="true">
         <div class="modal-content">
           <button class="modal-close" onclick="closeWhyModal()">&times;</button>
 
@@ -9434,7 +9418,7 @@
       </div>
       
       <!-- Expertise -->
-      <section class="section" id="expertise" data-section-name="expertise">
+      <section class="section" id="expertise" data-section-name="expertise" hidden inert aria-hidden="true">
         <h2 class="section-title">One partner across the product lifecycle</h2>
         <p class="section-subtitle">The five disciplines that keep an early-stage product coherent, learned by building, pivoting, and shipping my own products.</p>
         
@@ -9532,7 +9516,7 @@
       </section>
       
       <!-- Our Toolkit -->
-      <section class="section" id="toolkit" data-section-name="toolkit">
+      <section class="section" id="toolkit" data-section-name="toolkit" hidden inert aria-hidden="true">
         <h2 class="section-title">The stack behind every build</h2>
         <p class="section-subtitle">Every tool here is chosen for what it gives your product, not what's fashionable.</p>
         <p class="section-subtitle">AI is used throughout the work (the Custom tier is the exception, with code written by hand), which is why projects ship in weeks instead of months. Every build is reviewed and structured by a person who owns the outcome, so what ships is sound and extensible.</p>
@@ -9789,7 +9773,7 @@
       </script>
 
       <!-- AI Efficiency & Value -->
-      <section class="section" id="ai-efficiency" data-section-name="ai-efficiency">
+      <section class="section" id="ai-efficiency" data-section-name="ai-efficiency" hidden inert aria-hidden="true">
         <button class="ae-teaser" type="button" onclick="openAiEfficiencyModal()" aria-haspopup="dialog" aria-controls="aiEfficiencyModal">
           <span class="ae-teaser-badge"><span class="ae-eyebrow-dot"></span>AI Efficiency &amp; Value</span>
            <span class="ae-teaser-title">Turn AI spend into a product you can own.</span>
@@ -9802,7 +9786,7 @@
 
       </section>
 
-      <div class="modal-overlay" id="aiEfficiencyModal" role="dialog" aria-modal="true" aria-labelledby="aiEfficiencyModalTitle">
+      <div class="modal-overlay" id="aiEfficiencyModal" role="dialog" aria-modal="true" aria-labelledby="aiEfficiencyModalTitle" hidden inert>
         <div class="modal-content aem-shell">
           <button class="modal-close" onclick="closeAiEfficiencyModal()" aria-label="Close">&times;</button>
 
@@ -10201,7 +10185,7 @@
           <summary>Who owns the code, designs, and accounts?</summary>
           <p class="faq-answer">You do. All source code, design files, and third-party accounts (App Store, Google Play, hosting, database, payments) are created in your name and transferred to you. There is no lock-in to Start Apps Studio. You can keep building with us, take it to another team, or hire in-house.</p>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" hidden aria-hidden="true">
           <summary>What stack do you build on?</summary>
           <p class="faq-answer">We default to React and React Native (via Expo) on the front end, with Node and Postgres on the back end, deployed to Replit, Vercel, or your preferred host. We pick the stack to match the founder, not the other way around. If you have an existing codebase or a strong preference, we work in it.</p>
         </details>
@@ -10209,15 +10193,15 @@
           <summary>What happens after launch? Do you offer ongoing support?</summary>
           <p class="faq-answer">Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, you can run with the codebase, bring in an in-house engineer, or keep us accountable for the next stage through a monthly retainer. For larger or more complex products, Custom engagements can be structured around the 1–6 month build you need.</p>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" hidden aria-hidden="true">
           <summary>Can you help if I already run a business?</summary>
           <p class="faq-answer">Yes. We work with new ventures, family businesses, and established teams. We can refresh an outdated website, shape a stronger brand presence, or turn an existing operation into a useful digital product. You stay close to the decisions while one accountable partner owns the build.</p>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" hidden aria-hidden="true">
           <summary>Can you help me build something to show investors?</summary>
           <p class="faq-answer">Yes. If people need to experience the idea before you build the full product, the $5,000 Prototype gives investors, partners, or customers something interactive to react to. It typically takes 5 to 10 days for a Figma-led clickable prototype; if you need real users to use the product, an MVP is the better route and typically takes 3 to 8 weeks.</p>
         </details>
-        <details class="faq-item">
+        <details class="faq-item" hidden aria-hidden="true">
           <summary>Can I get just a landing page without a full app build?</summary>
           <p class="faq-answer">Yes. If your next milestone is a credible launch or marketing presence, our $2,000 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.</p>
         </details>
@@ -10231,7 +10215,7 @@
     <!-- Journal "book notes" - pulled from /api/journal/posts at runtime,
          with a static fallback baked in so SEO crawlers + no-JS visitors
          still see the latest articles. -->
-    <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle" data-section-name="journal-notes">
+    <section class="journal-notes" id="journalNotes" aria-labelledby="journalNotesTitle" data-section-name="journal-notes" hidden inert aria-hidden="true">
       <div class="journal-notes-header">
         <h2 class="journal-notes-title" id="journalNotesTitle">From the Journal <em>· field notes</em></h2>
         <a href="/journal" class="journal-notes-link">All notes &rarr;</a>
