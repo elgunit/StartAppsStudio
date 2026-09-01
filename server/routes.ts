@@ -101,8 +101,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       process.env.REPLIT_DEV_DOMAIN,
       ...(process.env.REPLIT_DOMAINS || "").split(","),
     ]
-      .map((host) => host.trim().toLowerCase())
-      .filter(Boolean);
+      .filter((host): host is string => typeof host === "string" && Boolean(host.trim()))
+      .map((host) => host.trim().toLowerCase());
     const isReplitPreview =
       previewHosts.includes(reqHost.toLowerCase()) ||
       reqHost.toLowerCase().endsWith(".replit.dev");
