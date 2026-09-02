@@ -11168,6 +11168,7 @@
         if (!modal || !modal.classList.contains('open')) return;
         var isMobile = window.matchMedia('(max-width: 768px)').matches;
         var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var sheet = modal.querySelector('.modal-content');
         var finish = function() {
           modal.classList.remove('closing');
           modal.setAttribute('aria-hidden', 'true');
@@ -11183,10 +11184,15 @@
         if (isMobile && !reducedMotion) {
           modal.classList.remove('open', 'sheet-ready');
           modal.classList.add('closing');
-          void modal.querySelector('.modal-content').offsetHeight;
+          // If a swipe left an inline translateY, clear it only after the
+          // closing state has painted so the sheet can finish its exit from
+          // the user's finger position instead of jumping on dismissal.
+          void sheet.offsetHeight;
+          sheet.style.transform = '';
           setTimeout(finish, 240);
         } else {
           modal.classList.remove('open', 'sheet-ready', 'closing');
+          sheet.style.transform = '';
           finish();
         }
       }
@@ -11194,6 +11200,74 @@
       document.getElementById('hatDetailModal').addEventListener('click', function(e) {
         if (e.target === this) closeHatCard();
       });
+
+      // Swipe-down gesture for the hero-hat bottom sheet. This mirrors the
+      // project detail sheet below: vertical dragging starts only at the
+      // scroll top, while the sheet can still scroll normally elsewhere.
+      (function() {
+        var overlay = document.getElementById('hatDetailModal');
+        var content = overlay.querySelector('.modal-content');
+        var startY = 0, isDragging = false;
+
+        function blockPageScroll(e) {
+          var insideSheet = content.contains(e.target);
+          if (insideSheet) {
+            var atTop = content.scrollTop <= 0;
+            var atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 1;
+            var movingDown = e.touches.length && (e.touches[0].clientY > startY);
+            var movingUp = e.touches.length && (e.touches[0].clientY < startY);
+            if ((movingUp && !atBottom) || (movingDown && !atTop)) return;
+          }
+          e.preventDefault();
+        }
+
+        overlay.addEventListener('touchstart', function(e) {
+          if (e.touches.length) startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        overlay.addEventListener('touchmove', blockPageScroll, { passive: false });
+
+        // Use touchend as well as click because iOS Safari does not reliably
+        // synthesize clicks on a non-interactive backdrop after a touch.
+        overlay.addEventListener('touchend', function(e) {
+          if (!overlay.classList.contains('open')) return;
+          if (!content.contains(e.target)) {
+            e.preventDefault();
+            closeHatCard();
+          }
+        }, { passive: false });
+
+        content.addEventListener('touchstart', function(e) {
+          if (content.scrollTop <= 0) {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+          } else {
+            isDragging = false;
+          }
+        }, { passive: true });
+
+        content.addEventListener('touchmove', function(e) {
+          if (!isDragging) return;
+          var delta = e.touches[0].clientY - startY;
+          if (delta > 0) {
+            content.style.transition = 'none';
+            content.style.transform = 'translateY(' + delta + 'px)';
+          }
+        }, { passive: true });
+
+        content.addEventListener('touchend', function(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          var delta = e.changedTouches[0].clientY - startY;
+          if (delta > 80) {
+            content.style.transition = '';
+            closeHatCard();
+          } else {
+            content.style.transition = '';
+            content.style.transform = '';
+          }
+        }, { passive: true });
+      })();
 
       document.getElementById('whyModal').addEventListener('click', function(e) {
         if (e.target === this) closeWhyModal();
