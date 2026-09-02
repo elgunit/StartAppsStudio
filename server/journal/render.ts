@@ -1263,8 +1263,8 @@ const STYLE = `
   .post-card:hover *,.next-card:hover * { color:inherit; }
   .post-card-body { padding:var(--space-3); }
   .post-card h2,.next-card-title,.resource-card h3,.resource-article-card h3 {
-    color:var(--ink); font-family:var(--sans); font-size:var(--type-h3); font-weight:700;
-    line-height:1.12; letter-spacing:-.03em;
+    color:var(--ink); font-family:var(--section-display); font-size:var(--type-h3); font-weight:400;
+    line-height:1.08; letter-spacing:-.025em;
   }
   .post-card p,.next-card-excerpt,.resource-card p,.resource-article-card p {
     color:var(--muted); font-family:var(--sans); font-size:var(--type-body); line-height:1.55;
