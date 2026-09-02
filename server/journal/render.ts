@@ -991,6 +991,7 @@ const STYLE = `
   }
   .resource-section-heading p { max-width:44ch; color:var(--glass-muted); font-size:14px; line-height:1.5; }
   .resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:var(--j-space-2); }
+  .resource-route-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
   .resource-card {
     min-height:220px; padding:24px; border:1px solid var(--glass-line);
     border-radius:20px; background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 52%),var(--glass-panel);
@@ -1047,9 +1048,18 @@ const STYLE = `
     font-size:14px; line-height:1.45;
   }
   .resource-toolkit-toggle {
-    display:grid; flex:0 0 32px; place-items:center; width:32px; height:32px;
+    position:relative; display:grid; flex:0 0 32px; place-items:center; width:32px; height:32px;
     border:1px solid var(--glass-line); border-radius:50%; color:var(--glass-teal);
-    font-size:23px; font-weight:300; line-height:1; transition:transform .25s ease,background .25s ease;
+    font-size:0; line-height:1; transition:transform .25s ease,background .25s ease;
+  }
+  .resource-toolkit-toggle::before,
+  .resource-toolkit-toggle::after {
+    position:absolute; top:50%; left:50%; width:12px; height:1.5px;
+    border-radius:999px; background:currentColor; content:"";
+    transform:translate(-50%,-50%);
+  }
+  .resource-toolkit-toggle::after {
+    transform:translate(-50%,-50%) rotate(90deg);
   }
   .resource-toolkit-group[open] .resource-toolkit-toggle {
     transform:rotate(45deg); background:color-mix(in srgb,var(--glass-teal) 12%,transparent);
@@ -1102,9 +1112,13 @@ const STYLE = `
   @media (max-width:640px) {
     .resource-section-heading, .resource-cta { align-items:flex-start; flex-direction:column; }
     .resource-card { min-height:0; }
+    .resource-route-grid { grid-template-columns:1fr; }
     .resource-cta .cta-btn { width:100%; }
     .resource-toolkit-group summary { padding:18px; }
     .resource-toolkit-grid { grid-template-columns:1fr; padding:0 18px 18px; }
+  }
+  @media (min-width:641px) and (max-width:1180px) {
+    .resource-route-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   }
   /* Shared landing type and interaction system.
      The landing page uses Fraunces for the main point of view, DM Serif
@@ -1573,7 +1587,15 @@ export function renderIndexHtml(origin: string): string {
 
 export function renderResourcesHtml(origin: string): string {
   const canonical = `${origin}/resources`;
-  const posts = allPostsNewestFirst().slice(0, 6);
+  const withoutEmDashes = (value: string): string => value.replace(/—/g, ",");
+  const posts = allPostsNewestFirst()
+    .slice(0, 6)
+    .map((post) => ({
+      ...post,
+      title: withoutEmDashes(post.title),
+      excerpt: withoutEmDashes(post.excerpt),
+      category: withoutEmDashes(post.category),
+    }));
   const articleCards = posts
     .map(
       (p) => `
@@ -1634,7 +1656,7 @@ export function renderResourcesHtml(origin: string): string {
   ]
     .map(
       (group) => `
-        <details class="resource-toolkit-group" open>
+        <details class="resource-toolkit-group"${group.label === "Revenue & launch, day one" ? " open" : ""}>
           <summary>
             <span>
               <span class="resource-toolkit-label">${esc(group.label)}</span>
@@ -1699,10 +1721,10 @@ export function renderResourcesHtml(origin: string): string {
       <div class="resource-section-heading">
         <div>
           <h2 id="resource-routes-title">Choose the next route</h2>
-          <p>The right first milestone depends on what you need to prove—not on how much software you can imagine.</p>
+          <p>The right first milestone depends on what you need to prove, not on how much software you can imagine.</p>
         </div>
       </div>
-      <div class="resource-grid">
+      <div class="resource-grid resource-route-grid">
         <article class="resource-card">
           <div class="resource-card-kicker">01 · Direction</div>
           <h3>Start with the smallest useful proof</h3>
