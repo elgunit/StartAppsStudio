@@ -1730,7 +1730,7 @@
     "context": "div#testimonialDots.testimonial-dots[aria-label]"
   },
   {
-    "key": "Load more testimonials",
+    "key": "Show more",
     "kind": "unit",
     "context": "span"
   },
@@ -3043,11 +3043,6 @@
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
     "kind": "unit",
     "context": "p.footer-copyright"
-  },
-  {
-    "key": "Show fewer testimonials",
-    "kind": "js",
-    "context": "inline script"
   },
   {
     "key": "Reveal tool name",

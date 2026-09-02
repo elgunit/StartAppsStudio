@@ -7537,7 +7537,7 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
-        margin: 0 0 4px;
+         margin: 0 0 10px;
         pointer-events: none;
       }
 
@@ -7566,7 +7566,7 @@
       .testimonial-load-more-wrap {
         display: flex;
         justify-content: center;
-        margin: -26px 0 4px;
+         margin: 0 0 4px;
         position: relative;
         z-index: 4;
       }
@@ -7576,16 +7576,15 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        min-height: 44px;
-        padding: 10px 16px;
-        border: 1px solid color-mix(in srgb, var(--dominant) 34%, var(--line));
+         min-height: 34px;
+         padding: 6px 10px;
+         border: 1px solid transparent;
         border-radius: 999px;
-        background: color-mix(in srgb, var(--surface) 82%, transparent);
-        box-shadow: inset 0 1px 0 var(--specular), 0 8px 22px -14px color-mix(in srgb, var(--dominant) 40%, transparent);
-        color: var(--ink);
+         background: transparent;
+         box-shadow: none;
+         color: var(--muted);
         font: 700 11px/1 var(--kicker);
-        letter-spacing: .12em;
-        text-transform: uppercase;
+         letter-spacing: .04em;
         cursor: pointer;
         transition: transform var(--motion-fast) ease, border-color var(--motion-fast) ease, background-color var(--motion-fast) ease;
       }
@@ -7595,13 +7594,19 @@
       }
 
       .testimonial-load-more:hover {
-        transform: translateY(-2px);
-        border-color: var(--dominant);
-        background: var(--action-soft);
+         transform: none;
+         border-color: color-mix(in srgb, var(--dominant) 18%, transparent);
+         background: color-mix(in srgb, var(--dominant) 6%, transparent);
+         color: var(--ink);
       }
 
       .testimonial-load-more[aria-expanded="true"] svg {
         transform: rotate(180deg);
+      }
+
+      .testimonial-load-more:focus-visible {
+         outline: 3px solid color-mix(in srgb, var(--rose) 78%, var(--dominant));
+         outline-offset: 3px;
       }
 
       @media (min-width: 769px) {
@@ -7631,7 +7636,7 @@
 
         .testimonials-grid {
           gap: 16px;
-          padding: 12px 12px 70px;
+           padding: 12px 12px 44px;
           scroll-padding-left: 0;
           z-index: 2;
         }
@@ -7660,17 +7665,17 @@
         .testimonial-dots {
           position: static;
           z-index: 3;
-          margin: -52px 0 12px;
+           margin: 0 0 10px;
         }
 
         .testimonial-load-more-wrap {
-          margin: 0 0 12px;
+           margin: 0 0 12px;
           z-index: 4;
         }
 
         .testimonial-load-more {
-          min-height: 42px;
-          padding-inline: 14px;
+           min-height: 34px;
+           padding-inline: 10px;
           font-size: 10px;
         }
       }
@@ -8200,6 +8205,265 @@
 
         .budget-chip .budget-tier {
           font-size: 10px;
+        }
+      }
+
+      /* ── Tablet pass (iPad portrait through landscape) ─────────────
+         iPad portrait is 768px wide, so it must not fall through the
+         phone-only rules above. Keep a deliberate middle layout: enough
+         density to use the available canvas, but with touch-sized controls
+         and restrained card copy. */
+      @media (min-width: 768px) and (max-width: 1100px) {
+        .container {
+          padding-left: clamp(20px, 4vw, 40px);
+          padding-right: clamp(20px, 4vw, 40px);
+        }
+
+        .hero {
+          margin: 8px 0 42px;
+          padding: clamp(44px, 6vw, 72px) clamp(24px, 5vw, 64px);
+          min-height: clamp(560px, 68svh, 680px);
+        }
+
+        .hero-headline {
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: clamp(42px, 5.6vw, 58px) !important;
+          line-height: 1.06;
+        }
+
+        .hero-subheadline {
+          max-width: 680px;
+          margin-bottom: 28px;
+          font-size: clamp(16px, 1.75vw, 18px);
+        }
+
+        .hats-showcase {
+          max-width: 780px;
+          gap: 8px;
+          margin-bottom: 26px;
+        }
+
+        .hat-showcase-item {
+          padding: 8px 12px;
+          font-size: 12.5px;
+        }
+
+        .hero-stats {
+          margin-bottom: 24px;
+        }
+
+        .hero-cta-group {
+          gap: 14px;
+          margin-bottom: 0;
+        }
+
+        .hero-cta-group .cta-button {
+          width: auto;
+          max-width: none;
+          min-width: 190px;
+        }
+
+        .pain-strip {
+          gap: 14px;
+          padding: 18px 0 30px;
+        }
+
+        .pain-strip-item {
+          padding: 22px;
+        }
+
+        .pain-strip-resolve {
+          font-size: 14px;
+          line-height: 1.55;
+        }
+
+        /* Two-up carousels keep tablet projects and proof scannable while
+           preserving horizontal access to the remaining cards. */
+        .showcase-carousel-wrap {
+          position: relative;
+          overflow: visible;
+          margin: 0;
+        }
+
+        .showcase-grid,
+        .testimonials-grid {
+          display: flex;
+          flex-direction: row;
+          gap: 16px;
+          width: 100%;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding: 16px 0 52px;
+          scroll-padding-left: 0;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior-x: contain;
+          scrollbar-width: none;
+        }
+
+        .showcase-grid::-webkit-scrollbar,
+        .testimonials-grid::-webkit-scrollbar {
+          display: none;
+        }
+
+        .showcase-grid::before,
+        .showcase-grid::after,
+        .testimonials-grid::before,
+        .testimonials-grid::after {
+          display: none;
+        }
+
+        .showcase-card,
+        .testimonial-card {
+          flex: 0 0 calc((100% - 16px) / 2);
+          width: auto;
+          min-width: 0;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+        }
+
+        .showcase-card {
+          min-height: 0;
+          box-shadow: 0 8px 22px rgba(29,72,73,.09);
+        }
+
+        .showcase-problem,
+        .showcase-solution {
+          display: none;
+        }
+
+        .showcase-body {
+          padding: 18px;
+        }
+
+        .showcase-name {
+          font-size: 18px;
+          white-space: normal;
+        }
+
+        .showcase-footer {
+          margin-top: auto;
+        }
+
+        .carousel-ui {
+          margin-top: -8px;
+          margin-bottom: 4px;
+        }
+
+        .testimonial-card {
+          padding: 22px;
+        }
+
+        .services-grid,
+        .growth-grid,
+        .why-grid,
+        .how-bento {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .services-grid,
+        .growth-grid,
+        .why-grid,
+        .how-bento {
+          gap: 16px;
+        }
+
+        .services-grid .service-card,
+        .growth-grid .growth-card,
+        .why-grid .why-card,
+        .how-bento .how-card {
+          min-width: 0;
+        }
+
+        .pricing-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 18px;
+        }
+
+        .pricing-grid .price-card:not(.featured) {
+          margin-top: 0;
+        }
+
+        .pricing-grid .price-card.featured {
+          margin-top: 10px;
+        }
+
+        .contact {
+          padding: 68px 32px;
+        }
+
+        .form-row {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .interest-scroll {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        /* iPads have room for a conventional dialog. Avoid the phone
+           bottom-sheet treatment at the exact 768px portrait boundary. */
+        #hatDetailModal,
+        #showcaseDetailModal {
+          align-items: center;
+          padding: max(24px, env(safe-area-inset-top, 24px))
+                   max(24px, env(safe-area-inset-right, 24px))
+                   max(24px, env(safe-area-inset-bottom, 24px))
+                   max(24px, env(safe-area-inset-left, 24px));
+          background: rgba(0,0,0,.52);
+        }
+
+        #hatDetailModal .modal-content,
+        #showcaseDetailModal .modal-content {
+          width: 100%;
+          max-width: 560px;
+          height: auto;
+          max-height: calc(100svh - 48px);
+          border-radius: var(--r-lg);
+          padding: 32px;
+          transform: none;
+          opacity: 1;
+        }
+
+        #hatDetailModal.open .modal-content,
+        #showcaseDetailModal.open .modal-content,
+        #hatDetailModal.open.sheet-ready .modal-content,
+        #showcaseDetailModal.open.sheet-ready .modal-content {
+          transform: none;
+          opacity: 1;
+        }
+
+        #hatDetailModal .modal-content::before,
+        #showcaseDetailModal .modal-content::before {
+          display: none;
+        }
+      }
+
+      /* Portrait tablets benefit from a centered third pain card rather
+         than three narrow columns with tall, hard-to-scan paragraphs. */
+      @media (min-width: 768px) and (max-width: 840px) {
+        .pain-strip {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pain-strip-item:last-child {
+          grid-column: 1 / -1;
+          width: calc(50% - 7px);
+          justify-self: center;
+        }
+      }
+
+      /* Landscape tablets can support the contact story and form beside
+         each other without squeezing either column. */
+      @media (min-width: 900px) and (max-width: 1100px) {
+        .contact-inner {
+          grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
+          gap: 32px;
+        }
+
+        .contact-trust {
+          display: flex;
         }
       }
 
@@ -9482,7 +9746,7 @@
             aria-expanded="false"
             data-track-cta="load_more_testimonials"
           >
-            <span>Load more testimonials</span>
+             <span>Show more</span>
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </div>
@@ -9516,7 +9780,7 @@
              function refresh() {
                var hasMore = revealedExtras < extraCards.length;
                button.setAttribute('aria-expanded', hasMore ? 'false' : 'true');
-               if (label) label.textContent = hasMore ? __t('Load more testimonials') : __t('Show fewer testimonials');
+               if (label) label.textContent = hasMore ? __t('Show more') : __t('Show less');
              }
 
              button.addEventListener('click', function () {
