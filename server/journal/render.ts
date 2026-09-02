@@ -1141,6 +1141,7 @@ const STYLE = `
   }
   html { background:var(--canvas); color-scheme:light; }
   body {
+    display:flow-root;
     background:
       radial-gradient(circle at 12% 0%,color-mix(in srgb,var(--dominant) 13%,transparent),transparent 34rem),
       radial-gradient(circle at 88% 20%,color-mix(in srgb,var(--rose) 10%,transparent),transparent 30rem);
