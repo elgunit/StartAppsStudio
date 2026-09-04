@@ -1781,10 +1781,10 @@ export function renderResourcesHtml(origin: string): string {
             <tr><th>Route</th><th>Investment</th><th>Typical timing</th><th>Best when you need to</th></tr>
           </thead>
           <tbody>
-            <tr><td>Launch Site</td><td>$2,000</td><td>3–5 business days</td><td>Explain the offer and create a credible digital presence</td></tr>
-            <tr><td>Prototype</td><td>$5,000</td><td>5–10 days</td><td>Make an idea tangible for validation, fundraising, or early conversations</td></tr>
-            <tr><td>MVP</td><td>$9,000–$20,000</td><td>3–8 weeks</td><td>Put a real web, iOS, or Android product in users’ hands</td></tr>
-            <tr><td>Custom</td><td>$25,000+</td><td>1–6 months</td><td>Build a larger or more complex system with longer-term accountability</td></tr>
+            <tr><td>Launch Site</td><td>$2,600</td><td>3–5 business days</td><td>Explain the offer and create a credible digital presence</td></tr>
+            <tr><td>Prototype</td><td>$6,000</td><td>5–10 days</td><td>Make an idea tangible for validation, fundraising, or early conversations</td></tr>
+            <tr><td>MVP</td><td>$15,000–$30,000</td><td>3–8 weeks</td><td>Put a real web, iOS, or Android product in users’ hands</td></tr>
+            <tr><td>Custom</td><td>$25,000</td><td>1–6 months</td><td>Build a larger or more complex system with longer-term accountability</td></tr>
           </tbody>
         </table>
       </div>
@@ -1909,7 +1909,7 @@ Sitemap: ${origin}/sitemap.xml
 export function renderLlmsTxt(origin: string): string {
   return `# Start Apps Studio
 
- > A founder-led digital product studio helping new ventures, family businesses, and established teams choose the next milestone: launch a credible presence, make an idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,000.
+ > A founder-led digital product studio helping new ventures, family businesses, and established teams choose the next milestone: launch a credible presence, make an idea tangible, put a real product in users' hands, or build the larger system the next stage requires. Public packages start at $2,600.
 
 Start Apps Studio uses AI throughout most builds, with a person owning the product decisions, structure, review, and outcome. The Custom tier is the exception: its code is written by hand. Founders work directly with the person building their product.
 
@@ -1932,10 +1932,10 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 
 ## Pricing
 
-- Launch Site: $2,000, fixed price
-- Prototype: $5,000, fixed price
-- MVP: $9,000 to $20,000, fixed price
-- Custom: $25,000+ or monthly retainer
+- Launch Site: $2,600, fixed price
+- Prototype: $6,000, fixed price
+- MVP: $15,000 to $30,000, fixed price
+- Custom: $25,000 or monthly retainer
 
  Pricing is fixed up front for the public packages. Typical timing is 3 to 5 business days for a Launch Site, 5 to 10 days for a Prototype, and 3 to 8 weeks for an MVP depending on scope.
 
@@ -2008,16 +2008,16 @@ Start Apps Studio serves clients worldwide through remote delivery. The language
 
 ## Packages
 
-### Launch Site: $2,000, fixed
+### Launch Site: $2,600, fixed
  For a new venture or established business that needs a credible story before building the full product. You get a responsive launch presence that is ready to share and handed over in your account. Typical timing is 3 to 5 business days.
 
-### Prototype: $5,000, fixed
+### Prototype: $6,000, fixed
 For a founder who needs people to experience the idea, not hear another pitch. You get a clickable product experience for validation, fundraising, or early customer conversations. Typical timing is 5 to 10 days.
 
-### MVP: $9,000 to $20,000, fixed
+### MVP: $15,000 to $30,000, fixed
 For a team ready to put a real product in front of real users and learn from usage. You get a launch-ready MVP for iOS, Android, or web, with scope, design, engineering, launch support, and one post-launch iteration included. Typical timing is 3 to 8 weeks from kickoff.
 
-### Custom: $25,000+ or monthly retainer
+### Custom: $25,000 or monthly retainer
 For funded teams or complex requirements that need a bespoke, hand-built product and one accountable partner through the next stage. Structure the larger engagement as a quoted 1–6 month build or a monthly retainer.
 
 ## Measurement and privacy

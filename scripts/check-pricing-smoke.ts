@@ -19,17 +19,17 @@ if (!["127.0.0.1", "localhost"].includes(baseUrl.hostname)) {
 }
 
 const offers = [
-  { label: "Launch Site", amount: "$2,000" },
-  { label: "Prototype", amount: "$5,000" },
-  { label: "MVP", amount: "$9,000–$20,000" },
-  { label: "Custom", amount: "$25,000+" },
+  { label: "Launch Site", amount: "$2,600" },
+  { label: "Prototype", amount: "$6,000" },
+  { label: "MVP", amount: "$15,000–$30,000" },
+  { label: "Custom", amount: "$25,000" },
 ] as const;
 
 const localizedOffers = [
-  { label: "Saytı başlat", amount: "$2,000" },
-  { label: "Prototip", amount: "$5,000" },
-  { label: "MVP", amount: "$9,000–$20,000" },
-  { label: "Verilmiş müddət", amount: "$25,000+" },
+  { label: "Saytı başlat", amount: "$2,600" },
+  { label: "Prototip", amount: "$6,000" },
+  { label: "MVP", amount: "$15,000–$30,000" },
+  { label: "Verilmiş müddət", amount: "$25,000" },
 ] as const;
 
 type Viewport = { name: string; width: number; height: number };
