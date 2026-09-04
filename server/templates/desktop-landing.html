@@ -7068,10 +7068,9 @@
       }
 
       body {
-        /* Text is content on a studio landing page: visitors must be able to
-           select and copy it, especially on touch devices. */
-        user-select: auto;
-        -webkit-user-select: auto;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
       }
 
       ::selection {
@@ -13433,6 +13432,19 @@
       }, { threshold: 0.01 });
 
       heroIo.observe(hero);
+    }());
+
+    /* Keep public copy and selection disabled while leaving form controls usable. */
+    (function () {
+      function isEditableTarget(target) {
+        return !!(target && target.closest && target.closest('input, textarea, select, [contenteditable="true"]'));
+      }
+
+      ['selectstart', 'copy', 'cut'].forEach(function (eventName) {
+        document.addEventListener(eventName, function (event) {
+          if (!isEditableTarget(event.target)) event.preventDefault();
+        }, true);
+      });
     }());
 
     </script>
