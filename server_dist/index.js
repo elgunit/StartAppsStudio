@@ -11402,7 +11402,7 @@ ${jsonLd}
 <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
   <nav class="site-nav">
     <a href="${editorialPath(locale, "/")}" class="brand">${esc(AUTHOR_NAME)}</a>
-    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy5.language)}</summary>${LOCALES.map((l) => `<a href="${editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
+    <div class="nav-links">${navLinks}</div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">
@@ -14609,9 +14609,8 @@ var init_localize = __esm({
       "price-amount",
       "budget-price",
       "logo-mark",
-      "footer-brand-name",
+      "footer-brand-name"
       // Language names are always written in their own language.
-      "footer-lang-link"
     ]);
   }
 });
@@ -14818,24 +14817,6 @@ function i18nPayloadScript(locale, dictionary, jsKeys) {
   };
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
-function setActiveSwitcherLink(html, locale) {
-  if (locale.code === DEFAULT_LOCALE) return html;
-  return html.replace('class="english-escape is-hidden"', 'class="english-escape"').replace(
-    'class="footer-lang-wrap is-current-english"',
-    'class="footer-lang-wrap"'
-  ).replace(
-    /class="footer-lang-link is-active is-hidden"(\s+href="[^"]*"\s+hreflang)/,
-    'class="footer-lang-link"$1'
-  ).replace(
-    new RegExp(
-      `class="footer-lang-link is-hidden"((?:(?!>)[\\s\\S])*?data-lang="${locale.code}")`
-    ),
-    'class="footer-lang-link is-active"$1'
-  ).replace(
-    '<span class="footer-lang-current" data-i18n-skip="true">English</span>',
-    `<span class="footer-lang-current" data-i18n-skip="true">${locale.nativeName}</span>`
-  );
-}
 function patchMetadata(html, locale) {
   const url = localeUrl(locale.code);
   let out = html;
@@ -14906,7 +14887,6 @@ function renderLandingPage(code) {
     html = localizeHtml(template, dictionary);
     html = localizeMeta(html, dictionary);
     html = patchMetadata(html, locale);
-    html = setActiveSwitcherLink(html, locale);
     html = html.replace(
       "<!--SAS_I18N_PAYLOAD-->",
       i18nPayloadScript(locale, dictionary, jsKeys)

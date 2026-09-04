@@ -13239,48 +13239,6 @@
       }
     }());
 
-    /* ── FOOTER LANGUAGE PICKER ───────────────────────────────────────── */
-    (function () {
-      var wrap    = document.getElementById('footerLangWrap');
-      var trigger = document.getElementById('footerLangTrigger');
-      var list    = document.getElementById('footerLangList');
-      if (!wrap || !trigger || !list) return;
-
-      function openLang(open) {
-        wrap.classList.toggle('is-open', open);
-        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      }
-
-      trigger.addEventListener('click', function () {
-        openLang(!wrap.classList.contains('is-open'));
-      });
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLang(!wrap.classList.contains('is-open')); }
-        if (e.key === 'Escape') openLang(false);
-      });
-      // Close when clicking outside
-      document.addEventListener('click', function (e) {
-        if (!wrap.contains(e.target)) openLang(false);
-      });
-    }());
-
-    /* Keep the English escape hatch relevant to the hero only. It remains
-       mounted while hidden so it can reappear when the hero comes back into
-       view, including when the visitor scrolls back to the top. */
-    (function () {
-      var escapeLink = document.querySelector('.english-escape:not(.is-hidden)');
-      var hero = document.querySelector('.hero');
-      if (!escapeLink || !hero || !('IntersectionObserver' in window)) return;
-
-      var heroIo = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          escapeLink.classList.toggle('is-hero-hidden', !entry.isIntersecting);
-        });
-      }, { threshold: 0.01 });
-
-      heroIo.observe(hero);
-    }());
-
     /* Keep public copy and selection disabled while leaving form controls usable. */
     (function () {
       function isEditableTarget(target) {

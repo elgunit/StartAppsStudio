@@ -3030,16 +3030,6 @@
     "context": "button.footer-top-link"
   },
   {
-    "key": "Change language",
-    "kind": "attr",
-    "context": "button#footerLangTrigger.footer-lang-trigger[aria-label]"
-  },
-  {
-    "key": "Language",
-    "kind": "attr",
-    "context": "nav#footerLangList.footer-lang[aria-label]"
-  },
-  {
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
     "kind": "unit",
     "context": "p.footer-copyright"
