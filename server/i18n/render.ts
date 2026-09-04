@@ -102,19 +102,14 @@ function strippedText(s: string): string {
 }
 
 /**
- * A translation is renderable when either:
- *  1. it contains only whitelisted inline formatting markup, or
- *  2. its tag sequence is byte-identical to the source key's tag sequence
- *     (only the human text between tags differs). Template units may embed
- *     form controls (`<input>` inside `<label>`) or authored inline handlers;
- *     those are our own markup carried through verbatim, so a translator can
- *     never introduce an element, attribute, or URL that the English source
- *     does not already contain. Unbalanced `<` in the text is rejected so a
- *     value cannot smuggle a tag fragment past the skeleton check.
+ * A translation is renderable only when its complete tag sequence is
+ * byte-identical to the source key's tag sequence. Translators may change the
+ * human text between tags, but cannot introduce markup, alter a link target,
+ * remove a closing tag, or change an authored form attribute/inline handler.
+ * Unbalanced `<` in the remaining text is rejected so a value cannot smuggle a
+ * tag fragment past the skeleton check.
  */
 export function isSafeTranslationForKey(key: string, value: string): boolean {
-  if (isSafeTranslation(value)) return true;
-
   const keyTags = tagSkeleton(key);
   const valueTags = tagSkeleton(value);
   if (keyTags.length !== valueTags.length) return false;
@@ -230,6 +225,15 @@ function patchMetadata(html: string, locale: LocaleDefinition): string {
   let out = html;
 
   out = out.replace('<html lang="en">', `<html lang="${locale.htmlLang}">`);
+  if (locale.code === "zh") {
+    out = out.replace(
+      "    <style>",
+      `    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;600;700;800&amp;display=swap" />
+    <style>`,
+    );
+  }
   out = out.replace(
     '<link rel="canonical" href="https://startappsstudio.com/" />',
     `<link rel="canonical" href="${url}" />`,

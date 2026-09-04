@@ -8,6 +8,7 @@
     "db:push": "drizzle-kit push",
     "check:pricing": "tsx scripts/check-pricing-consistency.ts",
     "check:pricing:smoke": "tsx scripts/check-pricing-smoke.ts",
+    "check:i18n": "tsx scripts/check-i18n-completeness.ts",
     "check:seo": "tsx scripts/check-seo-locale-consistency.ts",
     "check:types": "tsc --noEmit",
     "check:format": "prettier --check \"**/*.{js,ts,tsx,css,json}\"",

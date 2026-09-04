@@ -29,7 +29,7 @@ const localizedOffers = [
   { label: "Saytı başlat", amount: "$2,600" },
   { label: "Prototip", amount: "$6,000" },
   { label: "MVP", amount: "$15,000–$30,000" },
-  { label: "Verilmiş müddət", amount: "$25,000" },
+  { label: "Fərdi", amount: "$25,000" },
 ] as const;
 
 type Viewport = { name: string; width: number; height: number };

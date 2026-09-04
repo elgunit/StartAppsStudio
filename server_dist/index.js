@@ -6473,17 +6473,6 @@ function mtimeOrZero(file) {
     return 0;
   }
 }
-function isSafeTranslation(value) {
-  if (/\bon[a-z]+\s*=/i.test(value)) return false;
-  if (/(?:javascript|vbscript)\s*:/i.test(value)) return false;
-  if (/data\s*:\s*text\/html/i.test(value)) return false;
-  const tagRe = /<\s*\/?\s*([a-zA-Z][a-zA-Z0-9-]*)/g;
-  let m;
-  while ((m = tagRe.exec(value)) !== null) {
-    if (!SAFE_INLINE_TAGS.has(m[1].toLowerCase())) return false;
-  }
-  return true;
-}
 function tagSkeleton(s) {
   return s.match(/<[^>]*>/g) ?? [];
 }
@@ -6491,7 +6480,6 @@ function strippedText(s) {
   return s.replace(/<[^>]*>/g, "");
 }
 function isSafeTranslationForKey(key, value) {
-  if (isSafeTranslation(value)) return true;
   const keyTags = tagSkeleton(key);
   const valueTags = tagSkeleton(value);
   if (keyTags.length !== valueTags.length) return false;
@@ -6577,6 +6565,15 @@ function patchMetadata(html, locale) {
   const url = localeUrl(locale.code);
   let out = html;
   out = out.replace('<html lang="en">', `<html lang="${locale.htmlLang}">`);
+  if (locale.code === "zh") {
+    out = out.replace(
+      "    <style>",
+      `    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;600;700;800&amp;display=swap" />
+    <style>`
+    );
+  }
   out = out.replace(
     '<link rel="canonical" href="https://startappsstudio.com/" />',
     `<link rel="canonical" href="${url}" />`
@@ -6639,7 +6636,7 @@ ${hreflangBlock()}`
   cache.set(locale.code, { html, templateMtimeMs, dictMtimeMs });
   return html;
 }
-var TEMPLATE_PATH, STRINGS_DIR, cache, SAFE_INLINE_TAGS;
+var TEMPLATE_PATH, STRINGS_DIR, cache;
 var init_render2 = __esm({
   "server/i18n/render.ts"() {
     "use strict";
@@ -6655,22 +6652,6 @@ var init_render2 = __esm({
     );
     STRINGS_DIR = path.resolve(process.cwd(), "server", "i18n", "strings");
     cache = /* @__PURE__ */ new Map();
-    SAFE_INLINE_TAGS = /* @__PURE__ */ new Set([
-      "a",
-      "abbr",
-      "b",
-      "br",
-      "code",
-      "em",
-      "i",
-      "mark",
-      "small",
-      "span",
-      "strong",
-      "sub",
-      "sup",
-      "u"
-    ]);
   }
 });
 
