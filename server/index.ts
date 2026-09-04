@@ -261,6 +261,8 @@ function serveLandingPage(req: Request, res: Response) {
 function setupLandingPage(app: express.Application) {
   app.use((req: Request, res: Response, next: NextFunction) => {
     if (req.path.startsWith("/api") || req.path.startsWith("/journal") ||
+        /^\/(?:en|az|tr|ru|zh|fr|es|de|uk|it)\/(?:journal|resources)(?:\/|$)/.test(req.path) ||
+        req.path === "/resources" ||
         req.path === "/sitemap.xml" || req.path === "/robots.txt" ||
         req.path === "/llms.txt" || req.path === "/llms-full.txt") {
       return next();

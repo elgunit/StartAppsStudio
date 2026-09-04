@@ -22,6 +22,8 @@ import {
   CANONICAL_ORIGIN,
 } from "./journal/render";
 import { getPost, allPostsNewestFirst } from "./journal/posts";
+import { isSupportedLocale, DEFAULT_LOCALE } from "./i18n/locales";
+import { TRANSLATED_MVP_SLUG } from "./journal/editorial";
 
 // Admin auth — compares the x-session-token header against SESSION_SECRET
 // using a constant-time comparison to prevent timing attacks.
@@ -130,6 +132,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.send(renderResourcesHtml(CANONICAL_ORIGIN));
   });
 
+  // Editorial locales are explicit and never depend on a landing-page cookie.
+  app.get("/:locale/resources", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    if (locale === DEFAULT_LOCALE) return res.redirect(301, "/resources");
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderResourcesHtml(CANONICAL_ORIGIN, locale));
+  });
+
+  app.get("/:locale/journal", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    if (locale === DEFAULT_LOCALE) return res.redirect(301, "/journal");
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderIndexHtml(CANONICAL_ORIGIN, locale));
+  });
+
   app.get("/journal/:slug", (req, res) => {
     const post = getPost(req.params.slug);
     if (!post) {
@@ -140,6 +159,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderArticleHtml(post, CANONICAL_ORIGIN));
+  });
+
+  app.get("/:locale/journal/:slug", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    const post = getPost(req.params.slug);
+    if (!post) return next();
+    if (locale === DEFAULT_LOCALE || post.slug !== TRANSLATED_MVP_SLUG) {
+      return res.redirect(301, `/journal/${post.slug}`);
+    }
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderArticleHtml(post, CANONICAL_ORIGIN, locale));
   });
 
   app.get("/sitemap.xml", (_req, res) => {

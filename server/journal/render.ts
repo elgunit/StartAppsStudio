@@ -1,11 +1,13 @@
 import type { Block, Post } from "./posts";
-import { AUTHOR_NAME, allPostsNewestFirst } from "./posts";
+import { AUTHOR_NAME, allPostsNewestFirst, getPost } from "./posts";
 import {
   DELIVERY_MODEL,
   PREFIXED_CODES,
   SERVICE_AREA,
   SUPPORTED_LANGUAGE_NAMES,
 } from "../i18n/locales";
+import { getLocale, LOCALES } from "../i18n/locales";
+import { editorialCopy, editorialPath, resourcesContent, TRANSLATED_MVP_SLUG, translatedPost } from "./editorial";
 
 /**
  * The single authoritative public origin for all SEO-facing URLs.
@@ -71,7 +73,7 @@ function slugify(s: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-function renderBlock(block: Block): string {
+function renderBlock(block: Block, shortAnswer = "Short answer"): string {
   switch (block.type) {
     case "p":
       return `<p>${inline(block.text)}</p>`;
@@ -84,7 +86,7 @@ function renderBlock(block: Block): string {
       return `<h3 id="${esc(id)}">${inline(block.text)}</h3>`;
     }
     case "answer":
-      return `<div class="answer-box"><span class="answer-label">Short answer</span><p>${inline(block.text)}</p></div>`;
+      return `<div class="answer-box"><span class="answer-label">${esc(shortAnswer)}</span><p>${inline(block.text)}</p></div>`;
     case "ul":
       return `<ul>${block.items.map((i) => `<li>${inline(i)}</li>`).join("")}</ul>`;
     case "ol":
@@ -123,20 +125,22 @@ function renderFaqJsonLd(post: Post): string {
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
 
-function renderBreadcrumbJsonLd(post: Post, canonical: string, origin: string): string {
+function renderBreadcrumbJsonLd(post: Post, canonical: string, origin: string, locale = "en"): string {
+  const home = `${origin}${editorialPath(locale, "/")}`;
+  const path = editorialPath(locale, "/journal");
   const data = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-      { "@type": "ListItem", position: 2, name: "Journal", item: `${origin}/journal` },
+      { "@type": "ListItem", position: 1, name: editorialUi(locale).home, item: home },
+      { "@type": "ListItem", position: 2, name: editorialCopy(locale).journalName, item: `${origin}${path}` },
       { "@type": "ListItem", position: 3, name: post.title, item: canonical },
     ],
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
 
-function renderArticleJsonLd(post: Post, canonical: string, origin: string): string {
+function renderArticleJsonLd(post: Post, canonical: string, origin: string, locale = "en"): string {
   const articleImage = `${origin}/assets/images/og-journal-default.png`;
   const data = {
     "@context": "https://schema.org",
@@ -164,6 +168,7 @@ function renderArticleJsonLd(post: Post, canonical: string, origin: string): str
       "@id": canonical,
     },
     keywords: post.tags.join(", "),
+    inLanguage: getLocale(locale).htmlLang,
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
@@ -1369,6 +1374,8 @@ function shell({
   jsonLd,
   bodyClass,
   bodyInner,
+  locale = "en",
+  alternates = [],
 }: {
   title: string;
   description: string;
@@ -1379,19 +1386,27 @@ function shell({
   jsonLd: string;
   bodyClass?: string;
   bodyInner: string;
+  locale?: string;
+  alternates?: { hreflang: string; href: string }[];
 }): string {
+  const localeInfo = getLocale(locale);
+  const copy = editorialCopy(locale);
+  const ui = editorialUi(locale);
   const currentPath = new URL(canonical).pathname;
-  const isJournalPage = currentPath === "/journal" || currentPath.startsWith("/journal/");
-  const isResourcesPage = currentPath === "/resources";
+  const unprefixedPath = currentPath.replace(/^\/(?:az|tr|ru|zh|fr|es|de|uk|it)(?=\/|$)/, "") || "/";
+  const switchPath = unprefixedPath.startsWith("/journal/") &&
+    !unprefixedPath.endsWith(`/${TRANSLATED_MVP_SLUG}`) ? unprefixedPath : undefined;
+  const isJournalPage = unprefixedPath === "/journal" || unprefixedPath.startsWith("/journal/");
+  const isResourcesPage = unprefixedPath === "/resources";
   const navLinks = [
-    !isJournalPage ? `<a href="/journal">Journal</a>` : "",
-    !isResourcesPage ? `<a href="/resources">Resources</a>` : "",
-    `<a href="/#pricing">Pricing</a>`,
-    `<a href="/#contact">Contact</a>`,
+    !isJournalPage ? `<a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a>` : "",
+    !isResourcesPage ? `<a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a>` : "",
+    `<a href="${editorialPath(locale, "/")}#pricing">${esc(ui.pricing)}</a>`,
+    `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`,
   ].filter(Boolean).join("");
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${esc(localeInfo.htmlLang)}" dir="${localeInfo.dir}">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -1400,11 +1415,13 @@ function shell({
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="theme-color" content="#0a0a0a" />
 <link rel="canonical" href="${esc(canonical)}" />
+${alternates.map((alternate) => `<link rel="alternate" hreflang="${esc(alternate.hreflang)}" href="${esc(alternate.href)}" />`).join("\n")}
 <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 <meta property="og:title" content="${esc(title)}" />
 <meta property="og:description" content="${esc(description)}" />
 <meta property="og:type" content="${ogType}" />
 <meta property="og:url" content="${esc(canonical)}" />
+<meta property="og:locale" content="${esc(localeInfo.ogLocale)}" />
 <meta property="og:image" content="${esc(`${origin}${ogImage}`)}" />
 <meta property="og:site_name" content="${esc(AUTHOR_NAME)}" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -1420,12 +1437,12 @@ ${jsonLd}
 </head>
 <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
   <nav class="site-nav">
-    <a href="/" class="brand">${esc(AUTHOR_NAME)}</a>
-    <div class="nav-links">${navLinks}</div>
+    <a href="${editorialPath(locale, "/")}" class="brand">${esc(AUTHOR_NAME)}</a>
+    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy.language)}</summary>${LOCALES.map((l) => `<a href="${switchPath || editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · <a href="/">Home</a> · <a href="/resources">Resources</a> · <a href="/journal">Journal</a> · <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · <a href="${editorialPath(locale, "/")}">${esc(ui.home)}</a> · <a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a> · <a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a> · <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
   </footer>
   <script>
     (function () {
@@ -1444,19 +1461,58 @@ ${jsonLd}
 </html>`;
 }
 
-export function renderArticleHtml(post: Post, origin: string): string {
-  const canonical = `${origin}/journal/${post.slug}`;
-  const articleJsonLd = renderArticleJsonLd(post, canonical, origin);
-  const faqJsonLd = renderFaqJsonLd(post);
-  const breadcrumbJsonLd = renderBreadcrumbJsonLd(post, canonical, origin);
+function editorialAlternates(origin: string, path: string): { hreflang: string; href: string }[] {
+  return [
+    { hreflang: "en", href: `${origin}${path}` },
+    ...PREFIXED_CODES.map((code) => ({ hreflang: getLocale(code).hreflang, href: `${origin}/${code}${path}` })),
+    { hreflang: "x-default", href: `${origin}${path}` },
+  ];
+}
+
+function englishOnlyAlternates(origin: string, path: string): { hreflang: string; href: string }[] {
+  return [
+    { hreflang: "en", href: `${origin}${path}` },
+    { hreflang: "x-default", href: `${origin}${path}` },
+  ];
+}
+
+const EDITORIAL_UI: Record<string, {
+  home: string; journal: string; resources: string; pricing: string; contact: string;
+  by: string; studio: string; needBuilt: string; studioPromise: string;
+  startProject: string; keepReading: string; fromJournal: string; englishOnly: string;
+}> = {
+  en: { home: "Home", journal: "Journal", resources: "Resources", pricing: "Pricing", contact: "Contact", by: "By", studio: "The Studio", needBuilt: "Need the version built for you?", studioPromise: "We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.", startProject: "Start a project", keepReading: "Keep reading", fromJournal: "from the journal", englishOnly: "English article" },
+  az: { home: "Ana səhifə", journal: "Jurnal", resources: "Resurslar", pricing: "Qiymətlər", contact: "Əlaqə", by: "Müəllif", studio: "Studiya", needBuilt: "Sizin üçün hazırlanmış versiya lazımdır?", studioPromise: "İlk gündən indekslənən, GEO-ya hazır və gəlirə bağlı MVP-lər hazırlayırıq.", startProject: "Layihəyə başlayın", keepReading: "Oxumağa davam edin", fromJournal: "jurnaldan", englishOnly: "İngiliscə məqalə" },
+  tr: { home: "Ana sayfa", journal: "Dergi", resources: "Kaynaklar", pricing: "Fiyatlar", contact: "İletişim", by: "Yazan", studio: "Stüdyo", needBuilt: "Size özel sürümü mü gerekiyor?", studioPromise: "İlk günden indekslenen, GEO'ya hazır ve gelire bağlı MVP'ler teslim ediyoruz.", startProject: "Proje başlatın", keepReading: "Okumaya devam edin", fromJournal: "dergiden", englishOnly: "İngilizce makale" },
+  ru: { home: "Главная", journal: "Журнал", resources: "Ресурсы", pricing: "Цены", contact: "Контакты", by: "Автор", studio: "Студия", needBuilt: "Нужна версия, созданная для вас?", studioPromise: "Мы выпускаем MVP, готовые к индексации, GEO и выручке с первого дня.", startProject: "Начать проект", keepReading: "Продолжить чтение", fromJournal: "из журнала", englishOnly: "Статья на английском" },
+  zh: { home: "首页", journal: "期刊", resources: "资源", pricing: "价格", contact: "联系", by: "作者", studio: "工作室", needBuilt: "需要为你打造的版本吗？", studioPromise: "我们交付从第一天起即可收录、支持 GEO 并与收入目标相连的 MVP。", startProject: "启动项目", keepReading: "继续阅读", fromJournal: "来自期刊", englishOnly: "英文文章" },
+  fr: { home: "Accueil", journal: "Journal", resources: "Ressources", pricing: "Tarifs", contact: "Contact", by: "Par", studio: "Le Studio", needBuilt: "Besoin d'une version conçue pour vous ?", studioPromise: "Nous livrons des MVP indexables, prêts pour le GEO et liés au chiffre d'affaires dès le premier jour.", startProject: "Démarrer un projet", keepReading: "Continuer la lecture", fromJournal: "du journal", englishOnly: "Article en anglais" },
+  es: { home: "Inicio", journal: "Journal", resources: "Recursos", pricing: "Precios", contact: "Contacto", by: "Por", studio: "El Estudio", needBuilt: "¿Necesitas una versión hecha para ti?", studioPromise: "Entregamos MVP indexables, preparados para GEO y vinculados a ingresos desde el primer día.", startProject: "Iniciar un proyecto", keepReading: "Seguir leyendo", fromJournal: "del journal", englishOnly: "Artículo en inglés" },
+  de: { home: "Start", journal: "Journal", resources: "Ressourcen", pricing: "Preise", contact: "Kontakt", by: "Von", studio: "Das Studio", needBuilt: "Brauchen Sie die für Sie entwickelte Version?", studioPromise: "Wir liefern MVPs, die vom ersten Tag an indexierbar, GEO-bereit und umsatzorientiert sind.", startProject: "Projekt starten", keepReading: "Weiterlesen", fromJournal: "aus dem Journal", englishOnly: "Englischer Artikel" },
+  uk: { home: "Головна", journal: "Журнал", resources: "Ресурси", pricing: "Ціни", contact: "Контакти", by: "Автор", studio: "Студія", needBuilt: "Потрібна версія, створена для вас?", studioPromise: "Ми випускаємо MVP, готові до індексації, GEO та доходу з першого дня.", startProject: "Почати проєкт", keepReading: "Продовжити читання", fromJournal: "із журналу", englishOnly: "Стаття англійською" },
+  it: { home: "Home", journal: "Journal", resources: "Risorse", pricing: "Prezzi", contact: "Contatti", by: "Di", studio: "Lo Studio", needBuilt: "Ti serve la versione costruita per te?", studioPromise: "Consegniamo MVP indicizzabili, pronti per la GEO e legati ai ricavi fin dal primo giorno.", startProject: "Avvia un progetto", keepReading: "Continua a leggere", fromJournal: "dal journal", englishOnly: "Articolo in inglese" },
+};
+
+function editorialUi(locale: string) {
+  return EDITORIAL_UI[locale] || EDITORIAL_UI.en;
+}
+
+export function renderArticleHtml(post: Post, origin: string, locale = "en"): string {
+  const localizedPost = translatedPost(post, locale);
+  const canonical = `${origin}${editorialPath(locale, `/journal/${post.slug}`)}`;
+  const articleJsonLd = renderArticleJsonLd(localizedPost, canonical, origin, locale);
+  const faqJsonLd = renderFaqJsonLd(localizedPost);
+  const breadcrumbJsonLd = renderBreadcrumbJsonLd(localizedPost, canonical, origin, locale);
   const jsonLd = `${articleJsonLd}${faqJsonLd}${breadcrumbJsonLd}`;
 
-  const body = post.body.map(renderBlock).join("\n");
-  const tags = post.tags
+  const copy = editorialCopy(locale);
+  const ui = editorialUi(locale);
+  const body = localizedPost.body.map((block) => renderBlock(block, copy.shortAnswer)).join("\n");
+  const tags = localizedPost.tags
     .map((t) => `<span class="tag">${esc(t)}</span>`)
     .join("");
-  const sources = post.sources?.length
-    ? `<section class="sources"><h3>Sources</h3><ul>${post.sources
+  const sources = localizedPost.sources?.length
+    ? `<section class="sources"><h3>${esc(copy.sources)}</h3><ul>${localizedPost.sources
         .map(
           (s) =>
             `<li>${s.url ? `<a href="${esc(s.url)}" rel="nofollow noopener">${esc(s.label)}</a>` : esc(s.label)}</li>`,
@@ -1464,19 +1520,19 @@ export function renderArticleHtml(post: Post, origin: string): string {
         .join("")}</ul></section>`
     : "";
 
-  const category = post.category || "Journal";
-  const deckSource = post.excerpt || post.description;
+  const category = localizedPost.category || "Journal";
+  const deckSource = localizedPost.excerpt || localizedPost.description;
 
   const others = allPostsNewestFirst().filter((p) => p.slug !== post.slug).slice(0, 2);
   const nextCards = others
     .map((p) => {
       const cat = p.category || "Journal";
       return `
-      <a href="/journal/${esc(p.slug)}" class="next-card">
+        <a href="/journal/${esc(p.slug)}" class="next-card">
         <div class="next-card-meta">${esc(cat)}</div>
         <h3 class="next-card-title">${esc(p.title)}</h3>
         <p class="next-card-excerpt">${esc(p.excerpt)}</p>
-        <span class="next-card-cta">Read note &rarr;</span>
+        <span class="next-card-cta">${esc(copy.read)} · ${esc(ui.englishOnly)} &rarr;</span>
       </a>`;
     })
     .join("");
@@ -1484,8 +1540,8 @@ export function renderArticleHtml(post: Post, origin: string): string {
     ? `
       <section class="article-footer">
         <div class="article-footer-header">
-          <h2 class="article-footer-title">Keep reading <em>· from the journal</em></h2>
-          <a href="/journal" class="article-footer-link">All notes &rarr;</a>
+          <h2 class="article-footer-title">${esc(ui.keepReading)} <em>· ${esc(ui.fromJournal)}</em></h2>
+          <a href="${editorialPath(locale, "/journal")}" class="article-footer-link">${esc(copy.allNotes)} &rarr;</a>
         </div>
         <div class="next-grid">${nextCards}</div>
       </section>`
@@ -1493,33 +1549,33 @@ export function renderArticleHtml(post: Post, origin: string): string {
 
   const bodyInner = `
   <main class="container article-page">
-    <div class="crumb"><a href="/journal">&larr; Journal</a></div>
+    <div class="crumb"><a href="${editorialPath(locale, "/journal")}">&larr; ${esc(ui.journal)}</a></div>
     <article>
       <div class="article-kicker">
         <span class="kicker-cat">${esc(category)}</span>
         <span class="kicker-sep">·</span>
-        <span class="kicker-meta">${post.readMinutes} min read</span>
+        <span class="kicker-meta">${post.readMinutes} ${esc(copy.minutes)}</span>
       </div>
-      <h1 class="article-title">${esc(post.title)}</h1>
+       <h1 class="article-title">${esc(localizedPost.title)}</h1>
       ${deckSource ? `<p class="article-deck">${esc(deckSource)}</p>` : ""}
       <div class="article-byline">
-        <span class="byline-author">By ${esc(AUTHOR_NAME)}</span>
+        <span class="byline-author">${esc(ui.by)} ${esc(AUTHOR_NAME)}</span>
       </div>
       <div class="article-body">${body}</div>
       <div class="tag-list">${tags}</div>
       ${sources}
       <section class="article-cta">
-        <span class="article-cta-label">The Studio</span>
-        <h3>Need the version built for you?</h3>
-        <p>We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.</p>
-        <a href="/#contact" class="cta-btn">Start a project &rarr;</a>
+        <span class="article-cta-label">${esc(ui.studio)}</span>
+        <h3>${esc(ui.needBuilt)}</h3>
+        <p>${esc(ui.studioPromise)}</p>
+        <a href="${editorialPath(locale, "/")}#contact" class="cta-btn">${esc(ui.startProject)} &rarr;</a>
       </section>
       ${nextBlock}
     </article>
   </main>`;
 
-  const resolvedTitle = post.seoTitle || `${post.title} | Start Apps Studio`;
-  const resolvedDescription = post.seoDescription || post.description;
+   const resolvedTitle = localizedPost.seoTitle || `${localizedPost.title} | Start Apps Studio`;
+   const resolvedDescription = localizedPost.seoDescription || localizedPost.description;
   if (resolvedTitle.length > 65) {
     console.warn(
       `[SEO] "${post.slug}" seoTitle is ${resolvedTitle.length} chars (target ≤65): "${resolvedTitle}"`
@@ -1540,38 +1596,47 @@ export function renderArticleHtml(post: Post, origin: string): string {
     ogType: "article",
     jsonLd,
     bodyInner,
+    locale,
+    alternates: post.slug === TRANSLATED_MVP_SLUG
+      ? editorialAlternates(origin, `/journal/${post.slug}`)
+      : englishOnlyAlternates(origin, `/journal/${post.slug}`),
   });
 }
 
-export function renderIndexHtml(origin: string): string {
+export function renderIndexHtml(origin: string, locale = "en"): string {
   const postsList = allPostsNewestFirst();
-  const canonical = `${origin}/journal`;
+  const copy = editorialCopy(locale);
+  const canonical = `${origin}${editorialPath(locale, "/journal")}`;
   const jsonLd = `<script type="application/ld+json">${safeJson({
     "@context": "https://schema.org",
     "@type": "Blog",
     name: `${AUTHOR_NAME} Journal`,
     url: canonical,
-    description:
-      "Field notes on shipping MVPs that rank in Google and get quoted by AI.",
-    blogPost: postsList.map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      url: `${origin}/journal/${p.slug}`,
-      datePublished: p.publishedAt,
-      description: p.description,
-    })),
+     inLanguage: getLocale(locale).htmlLang,
+     description: copy.journalDescription,
+    blogPost: postsList.map((p) => {
+      const localized = p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale) : p;
+      return {
+        "@type": "BlogPosting",
+        headline: localized.title,
+        url: `${origin}${p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`}`,
+        datePublished: p.publishedAt,
+        description: localized.description,
+        inLanguage: p.slug === TRANSLATED_MVP_SLUG ? getLocale(locale).htmlLang : "en",
+      };
+    }),
   })}</script>`;
 
   const cards = postsList
     .map(
       (p) => `
-    <a href="/journal/${esc(p.slug)}" class="post-card">
+    <a href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}" class="post-card">
       <div class="post-card-accent" style="background:${accentColor(p.slug)}"></div>
       <div class="post-card-body">
-        <h2>${esc(p.title)}</h2>
-        <p>${esc(p.excerpt)}</p>
+        <h2>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h2>
+        <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
         <div class="post-card-meta">
-          <span>${p.readMinutes} min read</span>
+          <span>${p.readMinutes} ${esc(copy.minutes)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` · ${esc(editorialUi(locale).englishOnly)}`}</span>
         </div>
       </div>
     </a>`,
@@ -1581,31 +1646,34 @@ export function renderIndexHtml(origin: string): string {
   const bodyInner = `
   <main class="container-wide">
     <header class="index-header">
-      <span class="index-eyebrow">The Journal · Vol. I</span>
-      <h1 class="index-title">Field notes from the studio.</h1>
-      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.</p>
+       <span class="index-eyebrow">${esc(copy.journalName)}</span>
+       <h1 class="index-title">${esc(copy.journalTitle)}</h1>
+       <p class="index-subtitle">${esc(copy.journalDescription)}</p>
     </header>
     <div class="post-grid">${cards}</div>
   </main>`;
 
   return shell({
-    title: `MVP SEO & GEO Journal | ${AUTHOR_NAME}`,
-    description:
-      "Field notes on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
+    title: `${copy.journalTitle} | ${AUTHOR_NAME}`,
+    description: copy.journalDescription,
     canonical,
     origin,
     ogImage: "/assets/images/og-journal-default.png",
     ogType: "website",
     jsonLd,
     bodyInner,
+    locale,
+    alternates: editorialAlternates(origin, "/journal"),
   });
 }
 
-export function renderResourcesHtml(origin: string): string {
-  const canonical = `${origin}/resources`;
+export function renderResourcesHtml(origin: string, locale = "en"): string {
+  const content = resourcesContent(locale);
+  const canonical = `${origin}${editorialPath(locale, "/resources")}`;
   const withoutEmDashes = (value: string): string => value.replace(/—/g, ",");
-  const posts = allPostsNewestFirst()
-    .slice(0, 6)
+  const posts = content.journal.postSlugs
+    .map((slug) => getPost(slug))
+    .filter((post): post is Post => Boolean(post))
     .map((post) => ({
       ...post,
       title: withoutEmDashes(post.title),
@@ -1615,64 +1683,19 @@ export function renderResourcesHtml(origin: string): string {
   const articleCards = posts
     .map(
       (p) => `
-        <a class="resource-article-card" href="/journal/${esc(p.slug)}">
-          <div class="article-meta">${esc(p.category || "Journal")} · ${p.readMinutes} min read</div>
-          <h3>${esc(p.title)}</h3>
-          <p>${esc(p.excerpt)}</p>
-          <span class="article-link">Read the note &rarr;</span>
+        <a class="resource-article-card" href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}">
+          <div class="article-meta">${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).category : p.category || content.journal.fallbackCategory)} · ${p.readMinutes} ${esc(content.journal.minutesLabel)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` · ${esc(editorialUi(locale).englishOnly)}`}</div>
+          <h3>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h3>
+          <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
+          <span class="article-link">${esc(content.journal.readAction)} &rarr;</span>
         </a>`,
     )
     .join("");
 
-  const toolkitGroups = [
-    {
-      label: "Your idea, made visible",
-      description:
-        "How a concept becomes screens you can tap, share with investors, and test with real users.",
-      tools: [
-        ["Figma", "every screen designed before code", "figma"],
-        ["Rork", "try it on a real phone in days", "rork"],
-        ["Lovable", "launch site live in days", "lovable"],
-        ["Replit", "working product you can run and edit", "replit"],
-      ],
-    },
-    {
-      label: "Your product, built to last",
-      description:
-        "The engineering that powers the app your users install, open, and pay for.",
-      tools: [
-        ["React Native", "one codebase, iOS + Android", "expo"],
-        ["Swift", "native iOS, fastest on iPhone", "swift"],
-        ["Kotlin", "native Android, full Play Store reach", "kotlin"],
-        ["Node + PostgreSQL", "your data, secure and yours to export", "node"],
-      ],
-    },
-    {
-      label: "Revenue & launch, day one",
-      description:
-        "Payments, updates, and code safety wired in from the start, not bolted on after.",
-      tools: [
-        ["Stripe", "one-time, subscriptions, upgrades", "stripe"],
-        ["RevenueCat", "App Store & Play Store billing", "revenuecat"],
-        ["GitHub", "daily backups: your code is always safe", "github"],
-        ["Automation", "n8n + Make handle the busywork", "hooks"],
-      ],
-    },
-    {
-      label: "AI in the background, not in your way",
-      description:
-        "AI can support research, implementation, and review while a person owns the direction and quality bar.",
-      tools: [
-        ["Claude", "primary builder and code reviewer", "claude"],
-        ["Gemini", "reviews the whole product at once", "gemini"],
-        ["GPT-5", "copy, flows & creative direction", "gpt"],
-        ["Llama 4", "self-hosted option for sensitive work", "llama"],
-      ],
-    },
-  ]
+  const toolkitGroups = content.toolkit.groups
     .map(
       (group) => `
-        <details class="resource-toolkit-group"${group.label === "Revenue & launch, day one" ? " open" : ""}>
+        <details class="resource-toolkit-group"${group.open ? " open" : ""}>
           <summary>
             <span>
               <span class="resource-toolkit-label">${esc(group.label)}</span>
@@ -1683,12 +1706,12 @@ export function renderResourcesHtml(origin: string): string {
           <div class="resource-toolkit-grid">
             ${group.tools
               .map(
-                ([name, note, tone]) => `
+                (tool) => `
                   <div class="resource-tool">
-                    <span class="resource-tool-avatar resource-tool-avatar--${esc(tone)}">${esc(name.slice(0, name === "React Native" ? 2 : 1))}</span>
+                    <span class="resource-tool-avatar resource-tool-avatar--${esc(tool.tone)}">${esc(tool.name.slice(0, tool.name === "React Native" ? 2 : 1))}</span>
                     <span class="resource-tool-copy">
-                      <strong>${esc(name)}</strong>
-                      <small>${esc(note)}</small>
+                      <strong>${esc(tool.name)}</strong>
+                      <small>${esc(tool.note)}</small>
                     </span>
                   </div>`,
               )
@@ -1701,10 +1724,10 @@ export function renderResourcesHtml(origin: string): string {
   const jsonLd = `<script type="application/ld+json">${safeJson({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Product Studio Resources | Start Apps Studio",
-    description:
-      "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    name: `${content.title} | ${AUTHOR_NAME}`,
+    description: content.description,
     url: canonical,
+    inLanguage: getLocale(locale).htmlLang,
     isPartOf: {
       "@type": "WebSite",
       name: AUTHOR_NAME,
@@ -1724,83 +1747,46 @@ export function renderResourcesHtml(origin: string): string {
   const bodyInner = `
   <main class="container-wide resources-page">
     <header class="resource-header">
-      <div class="resource-eyebrow">Start Apps Studio · Resources</div>
-      <h1 class="resource-title">Build the right thing, then build it well.</h1>
-      <p class="resource-lede">Practical guidance for founders and operators choosing a product route, working with AI, evaluating a build partner, and leaving with something they can own.</p>
+      <div class="resource-eyebrow">${esc(content.eyebrow)}</div>
+       <h1 class="resource-title">${esc(content.title)}</h1>
+       <p class="resource-lede">${esc(content.description)}</p>
       <div class="resource-actions">
-        <a class="cta-btn" href="/#contact">Talk through your project &rarr;</a>
-        <a class="secondary-action" href="/journal">Read the Journal</a>
+        <a class="cta-btn" href="${editorialPath(locale, "/#contact")}">${esc(content.primaryAction)} &rarr;</a>
+        <a class="secondary-action" href="${editorialPath(locale, "/journal")}">${esc(content.journalAction)}</a>
       </div>
     </header>
 
     <section class="resource-section" aria-labelledby="resource-routes-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-routes-title">Choose the next route</h2>
-          <p>The right first milestone depends on what you need to prove, not on how much software you can imagine.</p>
+          <h2 id="resource-routes-title">${esc(content.routes.title)}</h2>
+          <p>${esc(content.routes.intro)}</p>
         </div>
       </div>
       <div class="resource-grid resource-route-grid">
-        <article class="resource-card">
-          <div class="resource-card-kicker">01 · Direction</div>
-          <h3>Start with the smallest useful proof</h3>
-          <p>A launch site answers whether people understand the offer. A prototype answers whether they can react to the experience. An MVP answers what real users do.</p>
-          <ul>
-            <li>Choose one decision the next release must unlock</li>
-            <li>Keep the first version narrow enough to learn from</li>
-            <li>Use the package that matches the evidence you need</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">02 · AI-assisted delivery</div>
-          <h3>Speed is useful when the structure holds</h3>
-          <p>AI can accelerate exploration, coding, and review. It does not replace product judgment, architecture, testing, or the person accountable for the result.</p>
-          <ul>
-            <li>Use AI to explore options and reduce repetition</li>
-            <li>Review generated code against real user flows</li>
-            <li>Keep the shipped system understandable and extensible</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">03 · Ownership</div>
-          <h3>Ask what arrives at handoff</h3>
-          <p>A successful build is more than a final presentation. The source code, design files, accounts, deployment access, and context should be ready for you or your next team.</p>
-          <ul>
-            <li>Confirm who owns the accounts and working files</li>
-            <li>Review working progress before the final week</li>
-            <li>Leave with a documented, maintainable foundation</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">04 · Partner fit</div>
-          <h3>Compare the way of working</h3>
-          <p>Before choosing a product partner, compare scope clarity, feedback loops, responsibility, support after launch, and whether the route fits the stage of your business.</p>
-          <ul>
-            <li>Who makes the product decisions?</li>
-            <li>When will you see something real?</li>
-            <li>Can another team continue without starting over?</li>
-          </ul>
-        </article>
+        ${content.routes.cards.map((card) => `<article class="resource-card">
+          <div class="resource-card-kicker">${esc(card.kicker)}</div>
+          <h3>${esc(card.title)}</h3>
+          <p>${esc(card.text)}</p>
+          <ul>${card.bullets.map((bullet) => `<li>${esc(bullet)}</li>`).join("")}</ul>
+        </article>`).join("")}
       </div>
     </section>
 
     <section class="resource-section" aria-labelledby="resource-packages-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-packages-title">Package routing guide</h2>
-          <p>Use the public packages as a starting point for the conversation. Scope is agreed before work starts.</p>
+          <h2 id="resource-packages-title">${esc(content.packages.title)}</h2>
+          <p>${esc(content.packages.intro)}</p>
         </div>
       </div>
       <div class="resource-table-wrap">
         <table class="resource-table">
           <thead>
-            <tr><th>Route</th><th>Investment</th><th>Typical timing</th><th>Best when you need to</th></tr>
+            <tr>${content.packages.columns.map((column) => `<th>${esc(column)}</th>`).join("")}</tr>
           </thead>
           <tbody>
-            <tr><td>Launch Site</td><td>$2,600</td><td>3–5 business days</td><td>Explain the offer and create a credible digital presence</td></tr>
-            <tr><td>Prototype</td><td>$6,000</td><td>5–10 days</td><td>Make an idea tangible for validation, fundraising, or early conversations</td></tr>
-            <tr><td>MVP</td><td>$15,000–$30,000</td><td>3–8 weeks</td><td>Put a real web, iOS, or Android product in users’ hands</td></tr>
-            <tr><td>Custom</td><td>$25,000</td><td>1–6 months</td><td>Build a larger or more complex system with longer-term accountability</td></tr>
+            ${content.packages.rows.map((row) => `<tr><td>${esc(row.route)}</td><td>${esc(row.investment)}</td><td>${esc(row.timing)}</td><td>${esc(row.bestFor)}</td></tr>`).join("")}
           </tbody>
         </table>
       </div>
@@ -1809,51 +1795,52 @@ export function renderResourcesHtml(origin: string): string {
     <section class="resource-section" aria-labelledby="resource-toolkit-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-toolkit-title">The toolkit behind the work</h2>
-          <p>Tools are selected for the product outcome, the team taking it over, and the stage of the business.</p>
+          <h2 id="resource-toolkit-title">${esc(content.toolkit.title)}</h2>
+          <p>${esc(content.toolkit.intro)}</p>
         </div>
       </div>
       <div class="resource-toolkit-stack">${toolkitGroups}</div>
-      <p class="resource-toolkit-footnote">You keep the code, accounts, and working files. When a better tool ships, it can be swapped in without holding your product hostage.</p>
+      <p class="resource-toolkit-footnote">${esc(content.toolkit.footnote)}</p>
     </section>
 
     <section class="resource-section" aria-labelledby="resource-journal-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-journal-title">Field notes from the Journal</h2>
-          <p>Longer notes on MVP strategy, SEO, GEO, vibe-coded apps, and the decisions that make a product easier to ship.</p>
+          <h2 id="resource-journal-title">${esc(content.journal.title)}</h2>
+          <p>${esc(content.journal.text)}</p>
         </div>
-        <a class="secondary-action" href="/journal">All journal notes &rarr;</a>
+        <a class="secondary-action" href="${editorialPath(locale, "/journal")}">${esc(content.journal.allAction)} &rarr;</a>
       </div>
       <div class="resource-article-grid">${articleCards}</div>
     </section>
 
     <section class="resource-cta" aria-labelledby="resource-cta-title">
       <div>
-        <h2 id="resource-cta-title">Have a route in mind?</h2>
-        <p>Share where you are, what you need to prove, and what is currently stuck.</p>
+        <h2 id="resource-cta-title">${esc(content.cta.title)}</h2>
+        <p>${esc(content.cta.text)}</p>
       </div>
-      <a class="cta-btn" href="/#contact">Get a clear next step &rarr;</a>
+      <a class="cta-btn" href="${editorialPath(locale, "/#contact")}">${esc(content.cta.action)} &rarr;</a>
     </section>
   </main>`;
 
   return shell({
-    title: `Product Studio Resources: AI, MVPs & Handoffs | ${AUTHOR_NAME}`,
-    description:
-      "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    title: `${content.title} | ${AUTHOR_NAME}`,
+    description: content.description,
     canonical,
     origin,
     ogImage: "/assets/images/og-journal-default.png",
     ogType: "website",
     jsonLd,
     bodyInner,
+    locale,
+    alternates: editorialAlternates(origin, "/resources"),
   });
 }
 
 export function renderSitemapXml(origin: string): string {
   const urls: { loc: string; lastmod?: string; priority?: string }[] = [
     { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
-    // Localized landing pages (Journal remains English-only for now).
+    // Localized landing and editorial indexes.
     ...PREFIXED_CODES.map((code) => ({
       loc: `${origin}/${code}`,
       lastmod: HOMEPAGE_LAST_MODIFIED,
@@ -1861,6 +1848,14 @@ export function renderSitemapXml(origin: string): string {
     })),
     { loc: `${origin}/resources`, priority: "0.8" },
     { loc: `${origin}/journal`, priority: "0.8" },
+    ...PREFIXED_CODES.flatMap((code) => [
+      { loc: `${origin}/${code}/resources`, priority: "0.8" },
+      { loc: `${origin}/${code}/journal`, priority: "0.8" },
+      {
+        loc: `${origin}/${code}/journal/${TRANSLATED_MVP_SLUG}`,
+        priority: "0.7",
+      },
+    ]),
   ];
   for (const p of allPostsNewestFirst()) {
     urls.push({

@@ -2958,6 +2958,746 @@ var init_locales = __esm({
   }
 });
 
+// server/journal/locales/az.ts
+var sourcePost, AZ_EDITORIAL_CONTENT, az_default;
+var init_az = __esm({
+  "server/journal/locales/az.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost) throw new Error("Missing MVP editorial source post.");
+    AZ_EDITORIAL_CONTENT = {
+      copy: {
+        journalName: "Jurnal \xB7 Cild I",
+        journalTitle: "Studiyadan sah\u0259 qeydl\u0259ri.",
+        journalDescription: "Google-da s\u0131ralanan v\u0259 AI t\u0259r\u0259find\u0259n sitat g\u0259tiril\u0259n MVP-l\u0259rin t\u0259qdimat\u0131 haqq\u0131nda qeydl\u0259r: GEO, vibe-coding v\u0259 i\u015Fd\u0259 AI-nin v\u0259ziyy\u0259ti.",
+        resourcesTitle: "\u018Fvv\u0259l d\xFCzg\xFCn \u015Feyi qurun, sonra onu yax\u015F\u0131 qurun.",
+        resourcesDescription: "M\u0259hsul strategiyas\u0131, AI d\u0259st\u0259kli haz\u0131rlama, texnologiya se\xE7imi, sahiblik, t\u0259hvilverm\u0259 v\u0259 MVP-nin istifad\u0259y\u0259 verilm\u0259si haqq\u0131nda praktik resurslar.",
+        read: "Qeydi oxu",
+        minutes: "d\u0259q oxu",
+        allNotes: "B\xFCt\xFCn qeydl\u0259r",
+        sources: "M\u0259nb\u0259l\u0259r",
+        shortAnswer: "Q\u0131sa cavab",
+        language: "Dil",
+        translatedArticleTitle: "MVP brifi ilk m\u0259hsul q\u0259rar\u0131n\u0131zd\u0131r",
+        translatedArticleDescription: "Faydal\u0131 MVP brifi ilk istifad\u0259\xE7ini adland\u0131r\u0131r, birinci versiyan\u0131n s\u0259rh\u0259dini m\xFC\u0259yy\u0259nl\u0259\u015Fdirir v\u0259 n\xF6vb\u0259ti q\u0259rar \xFC\xE7\xFCn s\xFCbutlar\u0131 t\u0259yin edir."
+      },
+      resources: {
+        title: "\u018Fvv\u0259l d\xFCzg\xFCn \u015Feyi qurun, sonra onu yax\u015F\u0131 qurun.",
+        description: "M\u0259hsul strategiyas\u0131, AI d\u0259st\u0259kli haz\u0131rlama, texnologiya se\xE7imi, sahiblik, t\u0259hvilverm\u0259 v\u0259 MVP-nin istifad\u0259y\u0259 verilm\u0259si haqq\u0131nda praktik resurslar.",
+        eyebrow: "Start Apps Studio \xB7 Resurslar",
+        primaryAction: "Layih\u0259nizi m\xFCzakir\u0259 edin",
+        journalAction: "Jurnal\u0131 oxu",
+        routes: { title: "N\xF6vb\u0259ti mar\u015Frutu se\xE7in", intro: "Do\u011Fru ilk m\u0259rh\u0259l\u0259 n\u0259 q\u0259d\u0259r proqram t\u0259minat\u0131 t\u0259s\u0259vv\xFCr ed\u0259 bilm\u0259yinizd\u0259n deyil, n\u0259yis\u0259 s\xFCbut etm\u0259li oldu\u011Funuzdan as\u0131l\u0131d\u0131r.", cards: [
+          { kicker: "01 \xB7 \u0130stiqam\u0259t", title: "\u018Fn ki\xE7ik faydal\u0131 s\xFCbutla ba\u015Flay\u0131n", text: "\u0130stifad\u0259y\u0259verm\u0259 sayt\u0131 insanlar\u0131n t\u0259klifi anlay\u0131b-anlamad\u0131\u011F\u0131n\u0131 cavablay\u0131r. Prototip onlar\u0131n t\u0259cr\xFCb\u0259y\u0259 reaksiya ver\u0259 bilib-bilm\u0259diyini cavablay\u0131r. MVP real istifad\u0259\xE7il\u0259rin n\u0259 etdiyini cavablay\u0131r.", bullets: ["N\xF6vb\u0259ti burax\u0131l\u0131\u015F\u0131n a\xE7mal\u0131 oldu\u011Fu bir q\u0259rar\u0131 se\xE7in", "\u0130lk versiyan\u0131 ondan \xF6yr\u0259nm\u0259k \xFC\xE7\xFCn kifay\u0259t q\u0259d\u0259r dar saxlay\u0131n", "Ehtiyac duydu\u011Funuz s\xFCbuta uy\u011Fun paketi istifad\u0259 edin"] },
+          { kicker: "02 \xB7 AI d\u0259st\u0259kli haz\u0131rlama", title: "Struktur m\xF6hk\u0259m olduqda s\xFCr\u0259t faydal\u0131d\u0131r", text: "AI ara\u015Fd\u0131rman\u0131, kodla\u015Fd\u0131rman\u0131 v\u0259 yoxlaman\u0131 s\xFCr\u0259tl\u0259ndir\u0259 bil\u0259r. O, m\u0259hsul m\xFChakim\u0259sini, arxitekturan\u0131, testi v\u0259 ya n\u0259tic\u0259y\u0259 cavabdeh insan\u0131 \u0259v\u0259z etmir.", bullets: ["Se\xE7iml\u0259ri ara\u015Fd\u0131rmaq v\u0259 t\u0259krar\u0131 azaltmaq \xFC\xE7\xFCn AI-d\u0259n istifad\u0259 edin", "Yarad\u0131lm\u0131\u015F kodu h\u0259qiqi istifad\u0259\xE7i ax\u0131nlar\u0131na qar\u015F\u0131 yoxlay\u0131n", "Burax\u0131lm\u0131\u015F sistemi ba\u015Fa d\xFC\u015F\xFCl\u0259n v\u0259 geni\u015Fl\u0259ndiril\u0259 bil\u0259n saxlay\u0131n"] },
+          { kicker: "03 \xB7 Sahiblik", title: "T\u0259hvilverm\u0259d\u0259 n\u0259yin g\u0259ldiyini soru\u015Fun", text: "U\u011Furlu haz\u0131rlama yaln\u0131z yekun t\u0259qdimatdan ibar\u0259t deyil. M\u0259nb\u0259 kodu, dizayn fayllar\u0131, hesablar, yerl\u0259\u015Fdirm\u0259 giri\u015Fi v\u0259 kontekst sizin v\u0259 ya n\xF6vb\u0259ti komandan\u0131z \xFC\xE7\xFCn haz\u0131r olmal\u0131d\u0131r.", bullets: ["Hesablar\u0131n v\u0259 i\u015F\xE7i fayllar\u0131n kim\u0259 m\u0259xsus oldu\u011Funu t\u0259sdiql\u0259yin", "Son h\u0259ft\u0259d\u0259n \u0259vv\u0259l i\u015Fin gedi\u015Fini n\u0259z\u0259rd\u0259n ke\xE7irin", "S\u0259n\u0259dl\u0259\u015Fdirilmi\u015F, saxlan\u0131la bil\u0259n t\u0259m\u0259l il\u0259 ayr\u0131l\u0131n"] },
+          { kicker: "04 \xB7 T\u0259r\u0259fda\u015F uy\u011Funlu\u011Fu", title: "\u0130\u015F \xFCsulunu m\xFCqayis\u0259 edin", text: "M\u0259hsul t\u0259r\u0259fda\u015F\u0131 se\xE7m\u0259zd\u0259n \u0259vv\u0259l \u0259hat\u0259 dair\u0259sinin ayd\u0131nl\u0131\u011F\u0131n\u0131, r\u0259y d\xF6vrl\u0259rini, m\u0259suliyy\u0259ti, istifad\u0259y\u0259verm\u0259d\u0259n sonrak\u0131 d\u0259st\u0259yi v\u0259 mar\u015Frutun biznesinizin m\u0259rh\u0259l\u0259sin\u0259 uy\u011Funlu\u011Funu m\xFCqayis\u0259 edin.", bullets: ["M\u0259hsul q\u0259rarlar\u0131n\u0131 kim verir?", "N\u0259 vaxt real bir \u015Fey g\xF6r\u0259c\u0259ksiniz?", "Ba\u015Fqa komanda s\u0131f\u0131rdan ba\u015Flamadan davam ed\u0259 bil\u0259rmi?"] }
+        ] },
+        packages: { title: "Paket mar\u015Frutla\u015Fd\u0131rma b\u0259l\u0259d\xE7isi", intro: "S\xF6hb\u0259t \xFC\xE7\xFCn ba\u015Flan\u011F\u0131c n\xF6qt\u0259si kimi a\xE7\u0131q paketl\u0259rd\u0259n istifad\u0259 edin. \u0130\u015F ba\u015Flamazdan \u0259vv\u0259l \u0259hat\u0259 dair\u0259si raz\u0131la\u015Fd\u0131r\u0131l\u0131r.", columns: ["Mar\u015Frut", "\u0130nvestisiya", "Tipik m\xFCdd\u0259t", "Siz\u0259 laz\u0131m olduqda \u0259n uy\u011Fundur"], rows: [
+          { route: "\u0130stifad\u0259y\u0259verm\u0259 sayt\u0131", investment: "$2,600", timing: "3\u20135 i\u015F g\xFCn\xFC", bestFor: "T\u0259klifi izah etm\u0259k v\u0259 inand\u0131r\u0131c\u0131 r\u0259q\u0259msal varl\u0131q yaratmaq" },
+          { route: "Prototip", investment: "$6,000", timing: "5\u201310 g\xFCn", bestFor: "Yoxlama, investisiya c\u0259lbi v\u0259 ya ilkin s\xF6hb\u0259tl\u0259r \xFC\xE7\xFCn ideyan\u0131 hiss edil\u0259n etm\u0259k" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 h\u0259ft\u0259", bestFor: "H\u0259qiqi veb, iOS v\u0259 ya Android m\u0259hsulunu istifad\u0259\xE7il\u0259rin \u0259lin\u0259 verm\u0259k" },
+          { route: "F\u0259rdi", investment: "$25,000", timing: "1\u20136 ay", bestFor: "Uzunm\xFCdd\u0259tli m\u0259suliyy\u0259tl\u0259 daha b\xF6y\xFCk v\u0259 ya m\xFCr\u0259kk\u0259b sistem qurmaq" }
+        ] },
+        toolkit: { title: "\u0130\u015Fin arxas\u0131ndak\u0131 al\u0259tl\u0259r", intro: "Al\u0259tl\u0259r m\u0259hsul n\u0259tic\u0259si, onu t\u0259hvil alacaq komanda v\u0259 biznesin m\u0259rh\u0259l\u0259si \xFC\xE7\xFCn se\xE7ilir.", groups: [
+          { label: "\u0130deyan\u0131z g\xF6r\xFCn\u0259n hala g\u0259tirilir", description: "Konseptin toxuna, investorlarla payla\u015Fa v\u0259 real istifad\u0259\xE7il\u0259rl\u0259 s\u0131naqdan ke\xE7ir\u0259 bil\u0259c\u0259yiniz ekranlara \xE7evrilm\u0259si.", tools: [{ name: "Figma", note: "koddan \u0259vv\u0259l h\u0259r ekran dizayn edilir", tone: "figma" }, { name: "Rork", note: "bir ne\xE7\u0259 g\xFCn\u0259 real telefonda s\u0131nay\u0131n", tone: "rork" }, { name: "Lovable", note: "istifad\u0259y\u0259verm\u0259 sayt\u0131 bir ne\xE7\u0259 g\xFCn\u0259 canl\u0131d\u0131r", tone: "lovable" }, { name: "Replit", note: "i\u015Fl\u0259d\u0259 v\u0259 redakt\u0259 ed\u0259 bil\u0259c\u0259yiniz i\u015Fl\u0259k m\u0259hsul", tone: "replit" }] },
+          { label: "M\u0259hsulunuz uzun\xF6m\xFCrl\xFC qurulur", description: "\u0130stifad\u0259\xE7il\u0259rinizin qura\u015Fd\u0131rd\u0131\u011F\u0131, a\xE7d\u0131\u011F\u0131 v\u0259 \xF6d\u0259ni\u015F etdiyi t\u0259tbiqi i\u015Fl\u0259d\u0259n m\xFCh\u0259ndislik.", tools: [{ name: "React Native", note: "bir kod bazas\u0131, iOS + Android", tone: "expo" }, { name: "Swift", note: "yerli iOS, iPhone-da \u0259n s\xFCr\u0259tli", tone: "swift" }, { name: "Kotlin", note: "yerli Android, Play Store-a tam \xE7\u0131x\u0131\u015F", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "m\u0259lumatlar\u0131n\u0131z t\u0259hl\xFCk\u0259sizdir v\u0259 ixrac sizindir", tone: "node" }] },
+          { label: "G\u0259lir v\u0259 istifad\u0259\u0259y\u0259verm\u0259, ilk g\xFCnd\u0259n", description: "\xD6d\u0259ni\u015Fl\u0259r, yenil\u0259m\u0259l\u0259r v\u0259 kod t\u0259hl\xFCk\u0259sizliyi sonradan \u0259lav\u0259 edilm\u0259yib, ba\u015Flan\u011F\u0131cdan qo\u015Fulub.", open: true, tools: [{ name: "Stripe", note: "bird\u0259f\u0259lik \xF6d\u0259ni\u015Fl\u0259r, abun\u0259likl\u0259r, y\xFCks\u0259ltm\u0259l\u0259r", tone: "stripe" }, { name: "RevenueCat", note: "App Store v\u0259 Play Store hesabla\u015Fmas\u0131", tone: "revenuecat" }, { name: "GitHub", note: "g\xFCnd\u0259lik ehtiyat n\xFCsx\u0259l\u0259r: kodunuz h\u0259mi\u015F\u0259 t\u0259hl\xFCk\u0259sizdir", tone: "github" }, { name: "Automation", note: "n8n + Make rutin i\u015Fl\u0259ri h\u0259ll edir", tone: "hooks" }] },
+          { label: "AI arxa planda, yolunuzda deyil", description: "\u0130nsan istiqam\u0259t v\u0259 keyfiyy\u0259t meyar\u0131na sahibk\u0259n AI ara\u015Fd\u0131rman\u0131, h\u0259yata ke\xE7irm\u0259ni v\u0259 yoxlaman\u0131 d\u0259st\u0259kl\u0259y\u0259 bil\u0259r.", tools: [{ name: "Claude", note: "\u0259sas qurucu v\u0259 kod yoxlay\u0131c\u0131s\u0131", tone: "claude" }, { name: "Gemini", note: "b\xFCt\xFCn m\u0259hsulu bir anda yoxlay\u0131r", tone: "gemini" }, { name: "GPT-5", note: "m\u0259tnl\u0259r, ax\u0131nlar v\u0259 yarad\u0131c\u0131 istiqam\u0259t", tone: "gpt" }, { name: "Llama 4", note: "h\u0259ssas i\u015F \xFC\xE7\xFCn \xF6z\xFCn\xFCz\xFCn yerl\u0259\u015Fdirdiyi se\xE7im", tone: "llama" }] }
+        ], footnote: "Kod, hesablar v\u0259 i\u015F\xE7i fayllar sizd\u0259 qal\u0131r. Daha yax\u015F\u0131 al\u0259t \xE7\u0131xanda m\u0259hsulunuzu girov saxlamadan onu \u0259v\u0259z etm\u0259k olar." },
+        journal: { title: "Jurnaldan sah\u0259 qeydl\u0259ri", text: "MVP strategiyas\u0131, SEO, GEO, vibe-coded t\u0259tbiql\u0259r v\u0259 m\u0259hsulu buraxma\u011F\u0131 asanla\u015Fd\u0131ran q\u0259rarlar haqq\u0131nda daha \u0259trafl\u0131 qeydl\u0259r.", readAction: "Qeydi oxu", minutesLabel: "d\u0259q oxu", allAction: "B\xFCt\xFCn jurnal qeydl\u0259ri", fallbackCategory: "Jurnal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "A\u011Fl\u0131n\u0131zda bir mar\u015Frut var?", text: "Harada oldu\u011Funuzu, n\u0259yi s\xFCbut etm\u0259li oldu\u011Funuzu v\u0259 haz\u0131rda n\u0259yin ili\u015Fib qald\u0131\u011F\u0131n\u0131 payla\u015F\u0131n.", action: "Ayd\u0131n n\xF6vb\u0259ti add\u0131m al\u0131n" }
+      },
+      post: { ...sourcePost, title: "MVP brifi ilk m\u0259hsul q\u0259rar\u0131n\u0131zd\u0131r", seoTitle: "MVP brifl\u0259ri: ilk m\u0259hsul q\u0259rar\u0131n\u0131z | Start Apps Studio", description: "Faydal\u0131 MVP brifi sad\u0259c\u0259 ideyan\u0131 t\u0259svir etmir. O, istifad\u0259\xE7ini adland\u0131r\u0131r, birinci versiyan\u0131n \u0259traf\u0131nda d\u0259qiq x\u0259tt \xE7\u0259kir v\u0259 qurma\u011Fa davam edib-etm\u0259m\u0259yinizi bildir\u0259n s\xFCbutlar\u0131 m\xFC\u0259yy\u0259nl\u0259\u015Fdirir.", seoDescription: "MVP brifiniz s\u0259n\u0259d i\u015Fi deyil, m\u0259hsul q\u0259rar\u0131d\u0131r. Dizayn v\u0259 ya kod ba\u015Flamazdan \u0259vv\u0259l faydal\u0131 brifin m\xFC\u0259yy\u0259n etm\u0259li oldu\u011Fu \xFC\xE7 \u015Feyi \xF6yr\u0259nin.", excerpt: "\u018Fn yax\u015F\u0131 MVP brifl\u0259ri uzun olmur. Onlar m\u0259hsulun kim \xFC\xE7\xFCn oldu\u011Funu, birinci versiyan\u0131n n\u0259 etm\u0259kd\u0259n imtina etdiyini v\u0259 hans\u0131 s\xFCbutun n\xF6vb\u0259ti h\u0259ft\u0259lik i\u015Fi qazand\u0131\u011F\u0131n\u0131 h\u0259ll edir.", category: "Sah\u0259 qeydl\u0259ri", tags: ["MVP", "M\u0259hsul strategiyas\u0131", "T\u0259sis\xE7il\u0259r", "\u018Fhat\u0259 dair\u0259si"], body: [
+        { type: "answer", text: "Faydal\u0131 MVP brifi dizayn ba\u015Flamazdan \u0259vv\u0259l \xFC\xE7 q\u0259rar verir: m\u0259hsulun kim \xFC\xE7\xFCn oldu\u011Fu, birinci versiyan\u0131n q\u0259sd\u0259n n\u0259l\u0259ri k\u0259narda saxlayaca\u011F\u0131 v\u0259 hans\u0131 istifad\u0259\xE7i s\xFCbutunun n\xF6vb\u0259ti investisiyan\u0131 \u0259sasland\u0131raca\u011F\u0131. Buna g\xF6r\u0259 brif s\u0259n\u0259d i\u015Fi deyil. Bu, ilk m\u0259hsul q\u0259rar\u0131d\u0131r." },
+        { type: "p", text: "T\u0259sis\xE7il\u0259r \xE7ox vaxt \u0259slind\u0259 ideyan\u0131n t\u0259sviri olan brifl\u0259 g\u0259lirl\u0259r: bazar haqq\u0131nda bir ne\xE7\u0259 abzas, funksiya siyah\u0131s\u0131 v\u0259 m\u0259hsulun n\u0259 vaxtsa hara ged\u0259 bil\u0259c\u0259yi bar\u0259d\u0259 bir c\xFCml\u0259. S\xF6hb\u0259t\u0259 ba\u015Flamaq \xFC\xE7\xFCn kifay\u0259tdir, amma ona qar\u015F\u0131 m\u0259hsul buraxmaq \xFC\xE7\xFCn deyil. Qurucu komandaya ambisiyan\u0131 s\u0131naqdan ke\xE7iril\u0259 bil\u0259n se\xE7iml\u0259r ard\u0131c\u0131ll\u0131\u011F\u0131na \xE7evir\u0259n daha ki\xE7ik, daha k\u0259skin s\u0259n\u0259d laz\u0131md\u0131r." },
+        { type: "h2", text: "Faydal\u0131 brif \xFC\xE7 i\u015Fi g\xF6r\xFCr", id: "three-jobs" },
+        { type: "h3", text: "1. Problemi olan \u015F\u0259xsi adland\u0131r\u0131r", id: "name-the-user" },
+        { type: "p", text: "\u201CKi\xE7ik biznesl\u0259r\u201D bir bazard\u0131r. Bu, ilk istifad\u0259\xE7i deyil. Yax\u015F\u0131 brif \u015F\u0259xsi, onun i\xE7ind\u0259 oldu\u011Fu an\u0131 v\u0259 bu g\xFCn istifad\u0259 etdiyi dolay\u0131 yolu adland\u0131r\u0131r. Sabahk\u0131 l\u0259\u011Fvl\u0259ri doldurma\u011Fa \xE7al\u0131\u015Fan klinika menecerinin problemi, h\u0259r ikisi s\u0259hiyy\u0259y\u0259 aid olsa da, yeni g\xF6r\xFC\u015F axtaran pasiyentin problemind\u0259n f\u0259rqlidir. \u0130lk istifad\u0259\xE7i n\u0259 q\u0259d\u0259r konkret olsa, m\u0259hsulun sonra n\u0259 etm\u0259li oldu\u011Funa q\u0259rar verm\u0259k bir o q\u0259d\u0259r asanla\u015F\u0131r." },
+        { type: "h3", text: "2. Birinci versiyan\u0131n \u0259traf\u0131nda x\u0259tt \xE7\u0259kir", id: "draw-the-line" },
+        { type: "p", text: "Funksiya siyah\u0131s\u0131 n\u0259yin t\u0259s\u0259vv\xFCr edildiyini deyir. \u018Fhat\u0259 dair\u0259si x\u0259tti n\u0259yin qurulaca\u011F\u0131n\u0131 deyir. \u018Fsas d\xF6vr\u0259ni bir c\xFCml\u0259 il\u0259 yaz\u0131n, sonra h\u0259min d\xF6vr\u0259ni etibarl\u0131 ed\u0259n i\u015Fi sadalay\u0131n: \u0259sas ekran\u0131, bir m\u0259nal\u0131 \u0259m\u0259liyyat\u0131, arxas\u0131ndak\u0131 m\u0259lumatlar\u0131 v\u0259 istifad\u0259\xE7iy\u0259 onun i\u015Fl\u0259diyini bildir\u0259n r\u0259yi. Qalan h\u0259r \u015Fey sonrak\u0131 \xFC\xE7\xFCn namiz\u0259ddir, istifad\u0259y\u0259verm\u0259 \xFC\xE7\xFCn s\u0259ssiz t\u0259l\u0259b deyil." },
+        { type: "h3", text: "3. N\xF6vb\u0259ti s\xFCbutu m\xFC\u0259yy\u0259nl\u0259\u015Fdirir", id: "define-the-proof" },
+        { type: "p", text: "\u201CBuraxaq v\u0259 n\u0259 olaca\u011F\u0131n\u0131 g\xF6r\u0259k\u201D \xF6yr\u0259nm\u0259 plan\u0131 deyil. \u0130lk bir ne\xE7\u0259 h\u0259ft\u0259d\u0259 n\u0259yi m\xFC\u015Fahid\u0259 etm\u0259yi g\xF6zl\u0259diyiniz\u0259 q\u0259rar verin: tamamlanm\u0131\u015F i\u015F ax\u0131n\u0131, t\u0259krarlanan \u0259m\u0259liyyat, \xF6d\u0259ni\u015Fli d\xF6n\xFC\u015F\xFCm v\u0259 ya m\xFC\u0259yy\u0259n istifad\u0259\xE7i tipi il\u0259 t\u0259sis\xE7i m\xFCsahib\u0259si. \xD6l\xE7\xFC m\xFCr\u0259kk\u0259b olmal\u0131 deyil. O, n\xF6vb\u0259ti m\u0259hsul q\u0259rar\u0131n\u0131 d\u0259yi\u015F\u0259 bilm\u0259si \xFC\xE7\xFCn istifad\u0259\xE7i davran\u0131\u015F\u0131na kifay\u0259t q\u0259d\u0259r yax\u0131n olmal\u0131d\u0131r." },
+        { type: "h2", text: "Ekrandan \u0259vv\u0259l n\u0259yi yazmaq laz\u0131md\u0131r", id: "before-a-screen" },
+        { type: "ul", items: ["\u0130lk istifad\u0259\xE7i: bir rol, bir v\u0259ziyy\u0259t v\u0259 bir a\u011Fr\u0131l\u0131 dolay\u0131 yol", "\u018Fsas d\xF6vr\u0259: d\u0259y\u0259r yaradan v\u0259 t\u0259krar ba\u015F ver\u0259 bil\u0259n \u0259n ki\xE7ik \u0259m\u0259liyyat", "\u0130stifad\u0259y\u0259verm\u0259 s\u0259rh\u0259di: birinci versiya \xFC\xE7\xFCn a\xE7\u0131q \u015F\u0259kild\u0259 \u0259hat\u0259 dair\u0259sind\u0259n k\u0259nar olanlar", "Etibar t\u0259l\u0259bi: istifad\u0259\xE7i h\u0259r\u0259k\u0259t etm\u0259zd\u0259n \u0259vv\u0259l n\u0259yi g\xF6rm\u0259li, idar\u0259 etm\u0259li v\u0259 ya anlamal\u0131d\u0131r", "N\xF6vb\u0259ti s\xFCbut n\xF6qt\u0259si: daha bir qurma i\u015Fini qazand\u0131ran davran\u0131\u015F v\u0259 ya s\xF6hb\u0259t"] },
+        { type: "h2", text: "\u0130stifad\u0259 etdiyimiz \u0259hat\u0259 dair\u0259si s\u0131na\u011F\u0131", id: "scope-test" },
+        { type: "p", text: "T\u0259klif olunan h\u0259r funksiyan\u0131 g\xF6t\xFCr\xFCn v\u0259 bir sual verin: bu, ilk istifad\u0259\xE7i \xFC\xE7\xFCn \u0259sas d\xF6vr\u0259nin u\u011Furlu olma ehtimal\u0131n\u0131 art\u0131r\u0131rm\u0131? Cavab yoxdursa, onu ilk burax\u0131l\u0131\u015Fdan \xE7\u0131xar\u0131n. Cavab b\u0259lk\u0259dirs\u0259, qorudu\u011Fu f\u0259rziyy\u0259ni yaz\u0131n v\u0259 h\u0259min f\u0259rziyy\u0259ni s\u0131naqdan ke\xE7irm\u0259yin daha ucuz yolunu tap\u0131n. Bu, faydal\u0131 funksiyan\u0131n m\u0259hsulu gecikdirm\u0259k \xFC\xE7\xFCn daimi b\u0259han\u0259y\u0259 \xE7evrilm\u0259sinin qar\u015F\u0131s\u0131n\u0131 al\u0131r." },
+        { type: "quote", text: "Brifin m\u0259qs\u0259di qura bil\u0259c\u0259yiniz h\u0259r \u015Feyi qeyd etm\u0259k deyil. M\u0259qs\u0259di n\xF6vb\u0259ti qurma q\u0259rar\u0131n\u0131 ayd\u0131n etm\u0259kdir.", cite: "m\u0259hsul ba\u015Flan\u011F\u0131clar\u0131nda istifad\u0259 etdiyimiz qayda" },
+        { type: "callout", title: "Bunu Start Apps Studio-da nec\u0259 istifad\u0259 edirik", text: "Qurman\u0131 qiym\u0259tl\u0259ndirm\u0259zd\u0259n \u0259vv\u0259l t\u0259sis\xE7inin ideyas\u0131n\u0131 bir s\u0259hif\u0259lik \u0259hat\u0259 dair\u0259sin\u0259 \xE7eviririk: bir istifad\u0259\xE7i, bir \u0259sas d\xF6vr\u0259, onu d\u0259st\u0259kl\u0259y\u0259n ekranlar v\u0259 infrastruktur, habel\u0259 n\xF6vb\u0259ti q\u0259rar\u0131 d\u0259yi\u015Fm\u0259li olan s\xFCbut. S\u0259n\u0259d strategiya, dizayn, m\xFCh\u0259ndislik v\u0259 istifad\u0259y\u0259verm\u0259 aras\u0131nda t\u0259hvilverm\u0259y\u0259 \u2014 v\u0259 yeni funksiya birinci versiyaya gizlic\u0259 daxil olma\u011Fa \xE7al\u0131\u015Fanda istinad n\xF6qt\u0259sin\u0259 \xE7evrilir." },
+        { type: "h2", text: "Tez-tez veril\u0259n suallar", id: "faq" },
+        { type: "faq", items: [
+          { q: "MVP brifi n\u0259 q\u0259d\u0259r uzun olmal\u0131d\u0131r?", a: "Bir oturu\u015Fda oxunacaq q\u0259d\u0259r q\u0131sa v\u0259 se\xE7iml\u0259r etm\u0259k \xFC\xE7\xFCn kifay\u0259t q\u0259d\u0259r konkret olmal\u0131d\u0131r. \u0130lk istifad\u0259\xE7ini, \u0259sas d\xF6vr\u0259ni, istifad\u0259y\u0259verm\u0259 s\u0259rh\u0259dini, etibar t\u0259l\u0259bl\u0259rini v\u0259 n\xF6vb\u0259ti s\xFCbut n\xF6qt\u0259sini adland\u0131rd\u0131qda bir-iki s\u0259hif\u0259 ad\u0259t\u0259n yet\u0259rlidir." },
+          { q: "Brif\u0259 tam funksiya siyah\u0131s\u0131 daxil edilm\u0259lidirmi?", a: "\u018Fsas d\xF6vr\u0259ni i\u015Fl\u0259d\u0259n funksiyalar\u0131 daxil edin, qalan\u0131n\u0131 is\u0259 sonrak\u0131 ideyalar b\xF6lm\u0259sind\u0259 saxlay\u0131n. Ayr\u0131 g\xF6zl\u0259m\u0259 siyah\u0131s\u0131 yax\u015F\u0131 ideyalar\u0131 qoruyur, amma onlar\u0131n sakitc\u0259 istifad\u0259y\u0259verm\u0259 t\u0259l\u0259bin\u0259 \xE7evrilm\u0259sin\u0259 imkan vermir." },
+          { q: "H\u0259d\u0259f istifad\u0259\xE7i h\u0259l\u0259 d\u0259 qeyri-m\xFC\u0259yy\u0259ndirs\u0259 n\u0259 etm\u0259li?", a: "\u018Fn g\xFCcl\xFC iki namiz\u0259di v\u0259 onlar\u0131 bir-birind\u0259n ay\u0131racaq s\xFCbutlar\u0131 yaz\u0131n. Qeyri-m\xFC\u0259yy\u0259nlik a\xE7\u0131q olduqda faydal\u0131d\u0131r; geni\u015F m\u0259hsul \u0259hat\u0259 dair\u0259sind\u0259 gizl\u0259ndikd\u0259 bahal\u0131 olur." },
+          { q: "Dizayn ba\u015Flamazdan \u0259vv\u0259l brif bitm\u0259lidirmi?", a: "\u0130lk dizayn ke\xE7idin\u0259 istiqam\u0259t verm\u0259k \xFC\xE7\xFCn kifay\u0259t q\u0259d\u0259r ayd\u0131n olmal\u0131d\u0131r, \u0259b\u0259di olaraq donmu\u015F deyil. Dizayn daha yax\u015F\u0131 sual\u0131 \xFCz\u0259 \xE7\u0131xara bil\u0259r, lakin h\u0259r d\u0259yi\u015Fiklik \u0259hat\u0259 dair\u0259sini v\u0259 toplama\u011Fa \xE7al\u0131\u015Fd\u0131\u011F\u0131n\u0131z s\xFCbutu yenil\u0259m\u0259lidir." }
+        ] }
+      ] }
+    };
+    az_default = AZ_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/de.ts
+var sourcePost2, DE_EDITORIAL_CONTENT, de_default;
+var init_de = __esm({
+  "server/journal/locales/de.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost2 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost2) throw new Error("Quellartikel fehlt.");
+    DE_EDITORIAL_CONTENT = {
+      copy: { journalName: "Das Journal \xB7 Bd. I", journalTitle: "Feldnotizen aus dem Studio.", journalDescription: "Berichte \xFCber das Ver\xF6ffentlichen von MVPs, die bei Google ranken und von KI zitiert werden: GEO, Vibe-Coding und der Stand von KI bei der Arbeit.", resourcesTitle: "Baue das Richtige \u2013 und baue es gut.", resourcesDescription: "Praktische Ressourcen zu Produktstrategie, KI-gest\xFCtzter Umsetzung, Technologieentscheidungen, Eigentum, \xDCbergabe und dem Start eines MVP.", read: "Notiz lesen", minutes: "Min. Lesezeit", allNotes: "Alle Notizen", sources: "Quellen", shortAnswer: "Kurzantwort", language: "Sprache", translatedArticleTitle: "Das MVP-Briefing ist Ihre erste Produktentscheidung", translatedArticleDescription: "Ein hilfreiches MVP-Briefing benennt den ersten Nutzer, setzt die Grenze von Version eins und definiert die Belege f\xFCr die n\xE4chste Entscheidung." },
+      resources: {
+        title: "Baue das Richtige \u2013 und baue es gut.",
+        description: "Praktische Ressourcen zu Produktstrategie, KI-gest\xFCtzter Umsetzung, Technologieentscheidungen, Eigentum, \xDCbergabe und dem Start eines MVP.",
+        eyebrow: "Start Apps Studio \xB7 Ressourcen",
+        primaryAction: "\xDCber Ihr Projekt sprechen",
+        journalAction: "Das Journal lesen",
+        routes: { title: "W\xE4hlen Sie den n\xE4chsten Weg", intro: "Der richtige erste Meilenstein h\xE4ngt davon ab, was Sie beweisen m\xFCssen \u2013 nicht davon, wie viel Software Sie sich vorstellen k\xF6nnen.", cards: [
+          { kicker: "01 \xB7 Richtung", title: "Beginnen Sie mit dem kleinsten n\xFCtzlichen Beweis", text: "Eine Launch-Website beantwortet, ob Menschen das Angebot verstehen. Ein Prototyp beantwortet, ob sie auf das Erlebnis reagieren k\xF6nnen. Ein MVP beantwortet, was echte Nutzer tun.", bullets: ["W\xE4hlen Sie eine Entscheidung, die das n\xE4chste Release erm\xF6glichen muss", "Halten Sie die erste Version eng genug, um daraus zu lernen", "W\xE4hlen Sie das Paket, das zu den ben\xF6tigten Belegen passt"] },
+          { kicker: "02 \xB7 KI-gest\xFCtzte Umsetzung", title: "Geschwindigkeit ist n\xFCtzlich, wenn die Struktur tr\xE4gt", text: "KI kann Exploration, Programmierung und Pr\xFCfung beschleunigen. Sie ersetzt weder Produkturteil, Architektur und Tests noch die verantwortliche Person.", bullets: ["Nutzen Sie KI, um Optionen zu erkunden und Wiederholungen zu verringern", "Pr\xFCfen Sie generierten Code an echten Nutzerabl\xE4ufen", "Halten Sie das ausgelieferte System verst\xE4ndlich und erweiterbar"] },
+          { kicker: "03 \xB7 Eigentum", title: "Fragen Sie, was bei der \xDCbergabe ankommt", text: "Ein erfolgreicher Build ist mehr als eine Abschlusspr\xE4sentation. Quellcode, Designdateien, Konten, Deployment-Zugang und Kontext sollten f\xFCr Sie oder Ihr n\xE4chstes Team bereitstehen.", bullets: ["Kl\xE4ren Sie, wem Konten und Arbeitsdateien geh\xF6ren", "Pr\xFCfen Sie funktionierenden Fortschritt vor der letzten Woche", "Gehen Sie mit einer dokumentierten, wartbaren Grundlage"] },
+          { kicker: "04 \xB7 Partner-Fit", title: "Vergleichen Sie die Arbeitsweise", text: "Vergleichen Sie vor der Wahl eines Produktpartners Umfangsklarheit, Feedbackschleifen, Verantwortung, Unterst\xFCtzung nach dem Start und ob der Weg zur Phase Ihres Unternehmens passt.", bullets: ["Wer trifft die Produktentscheidungen?", "Wann sehen Sie etwas Reales?", "Kann ein anderes Team ohne Neustart weitermachen?"] }
+        ] },
+        packages: { title: "Leitfaden f\xFCr Paketwege", intro: "Nutzen Sie die \xF6ffentlichen Pakete als Ausgangspunkt f\xFCr das Gespr\xE4ch. Der Umfang wird vor Arbeitsbeginn vereinbart.", columns: ["Weg", "Investition", "Typischer Zeitraum", "Am besten, wenn Sie"], rows: [{ route: "Launch-Website", investment: "$2,600", timing: "3\u20135 Arbeitstage", bestFor: "Das Angebot erkl\xE4ren und eine glaubw\xFCrdige digitale Pr\xE4senz schaffen" }, { route: "Prototyp", investment: "$6,000", timing: "5\u201310 Tage", bestFor: "Eine Idee f\xFCr Validierung, Finanzierung oder fr\xFChe Gespr\xE4che greifbar machen" }, { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 Wochen", bestFor: "Ein echtes Web-, iOS- oder Android-Produkt in Nutzerh\xE4nde geben" }, { route: "Individuell", investment: "$25,000", timing: "1\u20136 Monate", bestFor: "Ein gr\xF6\xDFeres oder komplexeres System mit langfristiger Verantwortung bauen" }] },
+        toolkit: { title: "Das Werkzeugset hinter der Arbeit", intro: "Werkzeuge werden f\xFCr das Produktergebnis, das \xFCbernehmende Team und die Unternehmensphase ausgew\xE4hlt.", groups: [
+          { label: "Ihre Idee, sichtbar gemacht", description: "Wie ein Konzept zu Bildschirmen wird, die Sie antippen, mit Investoren teilen und mit echten Nutzern testen k\xF6nnen.", tools: [{ name: "Figma", note: "jeder Bildschirm vor dem Code entworfen", tone: "figma" }, { name: "Rork", note: "in wenigen Tagen auf einem echten Telefon testen", tone: "rork" }, { name: "Lovable", note: "Launch-Website in wenigen Tagen online", tone: "lovable" }, { name: "Replit", note: "funktionierendes Produkt, das Sie ausf\xFChren und bearbeiten k\xF6nnen", tone: "replit" }] },
+          { label: "Ihr Produkt, f\xFCr Dauer gebaut", description: "Die Technik hinter der App, die Ihre Nutzer installieren, \xF6ffnen und bezahlen.", tools: [{ name: "React Native", note: "eine Codebasis, iOS + Android", tone: "expo" }, { name: "Swift", note: "natives iOS, am schnellsten auf dem iPhone", tone: "swift" }, { name: "Kotlin", note: "natives Android, volle Play-Store-Reichweite", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "Ihre Daten, sicher und exportierbar", tone: "node" }] },
+          { label: "Umsatz und Start, vom ersten Tag an", description: "Zahlungen, Updates und Codesicherheit von Beginn an integriert statt sp\xE4ter angef\xFCgt.", open: true, tools: [{ name: "Stripe", note: "Einmalzahlungen, Abonnements, Upgrades", tone: "stripe" }, { name: "RevenueCat", note: "Abrechnung f\xFCr App Store und Play Store", tone: "revenuecat" }, { name: "GitHub", note: "t\xE4gliche Backups: Ihr Code ist immer sicher", tone: "github" }, { name: "Automation", note: "n8n + Make erledigen die Routinearbeit", tone: "hooks" }] },
+          { label: "KI im Hintergrund, nicht im Weg", description: "KI kann Recherche, Umsetzung und Pr\xFCfung unterst\xFCtzen, w\xE4hrend ein Mensch Richtung und Qualit\xE4tsma\xDFstab verantwortet.", tools: [{ name: "Claude", note: "prim\xE4rer Builder und Code-Reviewer", tone: "claude" }, { name: "Gemini", note: "pr\xFCft das ganze Produkt auf einmal", tone: "gemini" }, { name: "GPT-5", note: "Texte, Abl\xE4ufe und kreative Richtung", tone: "gpt" }, { name: "Llama 4", note: "selbstgehostete Option f\xFCr sensible Arbeit", tone: "llama" }] }
+        ], footnote: "Sie behalten Code, Konten und Arbeitsdateien. Wenn ein besseres Werkzeug erscheint, l\xE4sst es sich austauschen, ohne Ihr Produkt als Geisel zu halten." },
+        journal: { title: "Feldnotizen aus dem Journal", text: "L\xE4ngere Notizen \xFCber MVP-Strategie, SEO, GEO, Vibe-Coding-Apps und Entscheidungen, die ein Produkt leichter ver\xF6ffentlichen lassen.", readAction: "Notiz lesen", minutesLabel: "Min. Lesezeit", allAction: "Alle Journalnotizen", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "Haben Sie einen Weg im Sinn?", text: "Teilen Sie, wo Sie stehen, was Sie beweisen m\xFCssen und was derzeit feststeckt.", action: "Einen klaren n\xE4chsten Schritt erhalten" }
+      },
+      post: { ...sourcePost2, title: "Das MVP-Briefing ist Ihre erste Produktentscheidung", seoTitle: "MVP-Briefings: Ihre erste Produktentscheidung | Start Apps Studio", description: "Ein hilfreiches MVP-Briefing beschreibt nicht nur eine Idee. Es benennt den Nutzer, zieht eine klare Grenze um Version eins und definiert die Belege daf\xFCr, ob Sie weiterbauen sollten.", seoDescription: "Ihr MVP-Briefing ist eine Produktentscheidung, keine B\xFCrokratie. Erfahren Sie, welche drei Dinge ein hilfreiches Briefing vor Design oder Code definieren muss.", excerpt: "Die besten MVP-Briefings sind nicht lang. Sie entscheiden, f\xFCr wen das Produkt ist, was Version eins nicht tun wird und welche Belege die n\xE4chste Arbeitswoche verdienen.", category: "Feldnotizen", tags: ["MVP", "Produktstrategie", "Gr\xFCnder", "Umfang"], body: [
+        { type: "answer", text: "Ein hilfreiches MVP-Briefing trifft vor Beginn des Designs drei Entscheidungen: F\xFCr wen das Produkt ist, was Version eins bewusst ausl\xE4sst und welche Nutzerbelege die n\xE4chste Investition rechtfertigen. Deshalb ist das Briefing keine B\xFCrokratie. Es ist die erste Produktentscheidung." },
+        { type: "p", text: "Gr\xFCnder kommen oft mit einem Briefing, das eigentlich eine Ideenbeschreibung ist: einige Abs\xE4tze \xFCber den Markt, eine Funktionsliste und ein Satz dar\xFCber, wohin das Produkt eines Tages gehen k\xF6nnte. Das reicht f\xFCr ein Gespr\xE4ch, aber nicht f\xFCr die Umsetzung. Ein Build-Team braucht ein kleineres, sch\xE4rferes Dokument, das Ehrgeiz in eine Folge testbarer Entscheidungen verwandelt." },
+        { type: "h2", text: "Ein hilfreiches Briefing erf\xFCllt drei Aufgaben", id: "three-jobs" },
+        { type: "h3", text: "1. Es benennt die Person mit dem Problem", id: "name-the-user" },
+        { type: "p", text: "\u201EKleine Unternehmen\u201C sind ein Markt. Sie sind kein erster Nutzer. Ein gutes Briefing benennt die Person, ihren Moment und die Notl\xF6sung, die sie heute verwendet. Ein Praxismanager, der morgige Absagen f\xFCllen will, hat ein anderes Problem als ein Patient, der einen neuen Termin sucht, auch wenn beide zum Gesundheitswesen geh\xF6ren. Je konkreter der erste Nutzer ist, desto leichter l\xE4sst sich entscheiden, was das Produkt als N\xE4chstes tun soll." },
+        { type: "h3", text: "2. Es zieht eine Linie um Version eins", id: "draw-the-line" },
+        { type: "p", text: "Eine Funktionsliste zeigt, was vorgestellt wurde. Eine Umfangsgrenze zeigt, was gebaut wird. Schreiben Sie die Kernschleife in einen Satz und listen Sie dann die Arbeit auf, die sie zuverl\xE4ssig macht: den Hauptbildschirm, die eine sinnvolle Aktion, die Daten dahinter und das Feedback, das dem Nutzer zeigt, dass sie funktioniert hat. Alles andere ist ein Kandidat f\xFCr sp\xE4ter, keine stille Voraussetzung f\xFCr den Start." },
+        { type: "h3", text: "3. Es definiert den n\xE4chsten Beweis", id: "define-the-proof" },
+        { type: "p", text: "\u201EStarten und sehen, was passiert\u201C ist kein Lernplan. Entscheiden Sie, was Sie in den ersten Wochen erwarten: einen abgeschlossenen Ablauf, eine wiederholte Aktion, eine bezahlte Conversion oder ein vom Gr\xFCnder gef\xFChrtes Interview mit einem bestimmten Nutzertyp. Die Messung muss nicht ausgefeilt sein. Sie muss dem Verhalten des Nutzers nahe genug sein, um die n\xE4chste Produktentscheidung \xE4ndern zu k\xF6nnen." },
+        { type: "h2", text: "Was vor einem Bildschirm aufzuschreiben ist", id: "before-a-screen" },
+        { type: "ul", items: ["Der erste Nutzer: eine Rolle, eine Situation und eine schmerzhafte Notl\xF6sung", "Die Kernschleife: die kleinste Aktion, die Wert schafft und wiederholt stattfinden kann", "Die Startgrenze: was f\xFCr Version eins ausdr\xFCcklich au\xDFerhalb des Umfangs liegt", "Die Vertrauensanforderung: was der Nutzer sehen, kontrollieren oder verstehen muss, bevor er handelt", "Der n\xE4chste Beleg: das Verhalten oder Gespr\xE4ch, das eine weitere Umsetzungsrunde verdient"] },
+        { type: "h2", text: "Der Umfangstest, den wir verwenden", id: "scope-test" },
+        { type: "p", text: "Nehmen Sie jede vorgeschlagene Funktion und stellen Sie eine Frage: Macht sie den Erfolg der Kernschleife f\xFCr den ersten Nutzer wahrscheinlicher? Wenn die Antwort nein ist, verschieben Sie sie aus dem ersten Release. Wenn sie vielleicht lautet, notieren Sie die Annahme, die sie sch\xFCtzt, und finden Sie einen g\xFCnstigeren Weg, diese Annahme zu testen. So wird eine n\xFCtzliche Funktion nicht zur dauerhaften Ausrede, das Produkt zu verz\xF6gern." },
+        { type: "quote", text: "Das Ziel eines Briefings ist nicht, alles festzuhalten, was Sie bauen k\xF6nnten. Es soll die n\xE4chste Build-Entscheidung offensichtlich machen.", cite: "eine Regel, die wir bei Produkt-Kickoffs verwenden" },
+        { type: "callout", title: "Wie wir dies bei Start Apps Studio nutzen", text: "Bevor wir einen Build anbieten, verwandeln wir die Gr\xFCnderidee in einen einseitigen Umfang: ein Nutzer, eine Kernschleife, die Bildschirme und Infrastruktur, die sie tragen, und die Belege, die die n\xE4chste Entscheidung \xE4ndern sollten. Das Dokument wird zur \xDCbergabe zwischen Strategie, Design, Engineering und Start \u2013 und zum Bezugspunkt, wenn sich eine neue Funktion in Version eins einschleichen m\xF6chte." },
+        { type: "h2", text: "H\xE4ufig gestellte Fragen", id: "faq" },
+        { type: "faq", items: [{ q: "Wie lang sollte ein MVP-Briefing sein?", a: "Kurz genug, um es in einem Zug zu lesen, und konkret genug f\xFCr Abw\xE4gungen. Ein bis zwei Seiten reichen meist, wenn sie den ersten Nutzer, die Kernschleife, die Startgrenze, Vertrauensanforderungen und den n\xE4chsten Beleg benennen." }, { q: "Sollte das Briefing eine vollst\xE4ndige Funktionsliste enthalten?", a: "Nehmen Sie die Funktionen auf, die die Kernschleife zum Funktionieren bringen, und bewahren Sie den Rest in einem Bereich f\xFCr sp\xE4tere Ideen auf. Ein separater Parkplatz sch\xFCtzt gute Ideen, ohne dass sie still zu Startanforderungen werden." }, { q: "Was, wenn der Zielnutzer noch unsicher ist?", a: "Notieren Sie die zwei st\xE4rksten Kandidaten und die Belege, die sie unterscheiden w\xFCrden. Unsicherheit ist n\xFCtzlich, wenn sie ausdr\xFCcklich ist; sie wird teuer, wenn sie in einem breiten Produktumfang verborgen bleibt." }, { q: "Muss das Briefing fertig sein, bevor das Design beginnt?", a: "Es sollte klar genug sein, um den ersten Design-Durchgang zu f\xFChren, nicht f\xFCr immer eingefroren. Design darf eine bessere Frage aufdecken, aber jede \xC4nderung sollte Umfang und den Beleg aktualisieren, den Sie sammeln wollen." }] }
+      ] }
+    };
+    de_default = DE_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/es.ts
+var sourcePost3, ES_EDITORIAL_CONTENT, es_default;
+var init_es = __esm({
+  "server/journal/locales/es.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost3 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost3) throw new Error("No se encontr\xF3 el art\xEDculo de origen.");
+    ES_EDITORIAL_CONTENT = {
+      copy: { journalName: "El Journal \xB7 Vol. I", journalTitle: "Notas de campo del estudio.", journalDescription: "Cr\xF3nicas sobre lanzar MVP que posicionan en Google y reciben citas de IA: GEO, vibe-coding y el estado de la IA en el trabajo.", resourcesTitle: "Construye lo correcto y luego constr\xFAyelo bien.", resourcesDescription: "Recursos pr\xE1cticos sobre estrategia de producto, entrega asistida por IA, decisiones tecnol\xF3gicas, propiedad, traspaso y lanzamiento de un MVP.", read: "Leer nota", minutes: "min de lectura", allNotes: "Todas las notas", sources: "Fuentes", shortAnswer: "Respuesta corta", language: "Idioma", translatedArticleTitle: "El brief de MVP es tu primera decisi\xF3n de producto", translatedArticleDescription: "Un brief de MVP \xFAtil nombra al primer usuario, delimita la versi\xF3n uno y define la evidencia para la siguiente decisi\xF3n." },
+      resources: {
+        title: "Construye lo correcto y luego constr\xFAyelo bien.",
+        description: "Recursos pr\xE1cticos sobre estrategia de producto, entrega asistida por IA, decisiones tecnol\xF3gicas, propiedad, traspaso y lanzamiento de un MVP.",
+        eyebrow: "Start Apps Studio \xB7 Recursos",
+        primaryAction: "Habla sobre tu proyecto",
+        journalAction: "Leer el Journal",
+        routes: { title: "Elige la siguiente ruta", intro: "El hito inicial adecuado depende de lo que necesitas demostrar, no de cu\xE1nto software puedes imaginar.", cards: [
+          { kicker: "01 \xB7 Direcci\xF3n", title: "Empieza con la prueba \xFAtil m\xE1s peque\xF1a", text: "Un sitio de lanzamiento responde si la gente entiende la oferta. Un prototipo responde si puede reaccionar a la experiencia. Un MVP responde qu\xE9 hacen los usuarios reales.", bullets: ["Elige una decisi\xF3n que la pr\xF3xima versi\xF3n debe desbloquear", "Mant\xE9n la primera versi\xF3n lo bastante acotada para aprender de ella", "Usa el paquete que se ajuste a la evidencia que necesitas"] },
+          { kicker: "02 \xB7 Entrega asistida por IA", title: "La velocidad sirve cuando la estructura se sostiene", text: "La IA puede acelerar la exploraci\xF3n, la programaci\xF3n y la revisi\xF3n. No sustituye el criterio de producto, la arquitectura, las pruebas ni a la persona responsable del resultado.", bullets: ["Usa IA para explorar opciones y reducir repeticiones", "Revisa el c\xF3digo generado frente a flujos reales de usuarios", "Mant\xE9n el sistema entregado comprensible y extensible"] },
+          { kicker: "03 \xB7 Propiedad", title: "Pregunta qu\xE9 se entrega en el traspaso", text: "Un proyecto exitoso es m\xE1s que una presentaci\xF3n final. El c\xF3digo fuente, los archivos de dise\xF1o, las cuentas, el acceso al despliegue y el contexto deben quedar listos para ti o tu siguiente equipo.", bullets: ["Confirma qui\xE9n posee las cuentas y los archivos de trabajo", "Revisa el progreso real antes de la \xFAltima semana", "Termina con una base documentada y mantenible"] },
+          { kicker: "04 \xB7 Afinidad con el socio", title: "Compara la forma de trabajar", text: "Antes de elegir un socio de producto, compara la claridad del alcance, los ciclos de feedback, la responsabilidad, el apoyo tras el lanzamiento y si la ruta encaja con la etapa de tu empresa.", bullets: ["\xBFQui\xE9n toma las decisiones de producto?", "\xBFCu\xE1ndo ver\xE1s algo real?", "\xBFPuede otro equipo continuar sin empezar de cero?"] }
+        ] },
+        packages: { title: "Gu\xEDa de rutas de paquetes", intro: "Usa los paquetes p\xFAblicos como punto de partida para la conversaci\xF3n. El alcance se acuerda antes de empezar.", columns: ["Ruta", "Inversi\xF3n", "Plazo habitual", "Ideal cuando necesitas"], rows: [
+          { route: "Sitio de lanzamiento", investment: "$2,600", timing: "3\u20135 d\xEDas laborables", bestFor: "Explicar la oferta y crear una presencia digital cre\xEDble" },
+          { route: "Prototipo", investment: "$6,000", timing: "5\u201310 d\xEDas", bestFor: "Hacer tangible una idea para validaci\xF3n, financiaci\xF3n o conversaciones iniciales" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 semanas", bestFor: "Poner un producto web, iOS o Android real en manos de usuarios" },
+          { route: "Personalizado", investment: "$25,000", timing: "1\u20136 meses", bestFor: "Crear un sistema m\xE1s grande o complejo con responsabilidad a largo plazo" }
+        ] },
+        toolkit: { title: "Las herramientas detr\xE1s del trabajo", intro: "Las herramientas se eligen seg\xFAn el resultado del producto, el equipo que lo asumir\xE1 y la etapa de la empresa.", groups: [
+          { label: "Tu idea, hecha visible", description: "C\xF3mo un concepto se convierte en pantallas que puedes tocar, compartir con inversores y probar con usuarios reales.", tools: [{ name: "Figma", note: "cada pantalla dise\xF1ada antes del c\xF3digo", tone: "figma" }, { name: "Rork", note: "pru\xE9balo en un tel\xE9fono real en d\xEDas", tone: "rork" }, { name: "Lovable", note: "sitio de lanzamiento activo en d\xEDas", tone: "lovable" }, { name: "Replit", note: "producto funcional que puedes ejecutar y editar", tone: "replit" }] },
+          { label: "Tu producto, creado para durar", description: "La ingenier\xEDa que impulsa la aplicaci\xF3n que tus usuarios instalan, abren y pagan.", tools: [{ name: "React Native", note: "una base de c\xF3digo, iOS + Android", tone: "expo" }, { name: "Swift", note: "iOS nativo, m\xE1s r\xE1pido en iPhone", tone: "swift" }, { name: "Kotlin", note: "Android nativo, alcance total de Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "tus datos, seguros y exportables", tone: "node" }] },
+          { label: "Ingresos y lanzamiento, desde el primer d\xEDa", description: "Pagos, actualizaciones y seguridad del c\xF3digo integrados desde el inicio, no a\xF1adidos despu\xE9s.", open: true, tools: [{ name: "Stripe", note: "pagos \xFAnicos, suscripciones, mejoras", tone: "stripe" }, { name: "RevenueCat", note: "facturaci\xF3n de App Store y Play Store", tone: "revenuecat" }, { name: "GitHub", note: "copias diarias: tu c\xF3digo siempre est\xE1 seguro", tone: "github" }, { name: "Automation", note: "n8n + Make resuelven el trabajo repetitivo", tone: "hooks" }] },
+          { label: "IA en segundo plano, no en tu camino", description: "La IA puede apoyar la investigaci\xF3n, implementaci\xF3n y revisi\xF3n mientras una persona asume la direcci\xF3n y el est\xE1ndar de calidad.", tools: [{ name: "Claude", note: "constructor principal y revisor de c\xF3digo", tone: "claude" }, { name: "Gemini", note: "revisa todo el producto de una vez", tone: "gemini" }, { name: "GPT-5", note: "textos, flujos y direcci\xF3n creativa", tone: "gpt" }, { name: "Llama 4", note: "opci\xF3n autoalojada para trabajo sensible", tone: "llama" }] }
+        ], footnote: "Conservas el c\xF3digo, las cuentas y los archivos de trabajo. Cuando aparezca una herramienta mejor, puede sustituirse sin dejar tu producto cautivo." },
+        journal: { title: "Notas de campo del Journal", text: "Notas extensas sobre estrategia de MVP, SEO, GEO, aplicaciones creadas con vibe-coding y las decisiones que facilitan lanzar un producto.", readAction: "Leer nota", minutesLabel: "min de lectura", allAction: "Todas las notas del journal", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "\xBFTienes una ruta en mente?", text: "Cu\xE9ntanos d\xF3nde est\xE1s, qu\xE9 necesitas demostrar y qu\xE9 est\xE1 atascado ahora.", action: "Obt\xE9n un siguiente paso claro" }
+      },
+      post: { ...sourcePost3, title: "El brief de MVP es tu primera decisi\xF3n de producto", seoTitle: "Briefs de MVP: tu primera decisi\xF3n de producto | Start Apps Studio", description: "Un brief de MVP \xFAtil hace m\xE1s que describir una idea. Nombra al usuario, traza una l\xEDnea firme alrededor de la versi\xF3n uno y define la evidencia que indica si debes seguir construyendo.", seoDescription: "Tu brief de MVP es una decisi\xF3n de producto, no papeleo. Conoce las tres cosas que un brief \xFAtil debe definir antes de empezar dise\xF1o o c\xF3digo.", excerpt: "Los mejores briefs de MVP no son largos. Deciden para qui\xE9n es el producto, qu\xE9 se niega a hacer la versi\xF3n uno y qu\xE9 evidencia merece la siguiente semana de trabajo.", category: "Notas de campo", tags: ["MVP", "Estrategia de producto", "Fundadores", "Alcance"], body: [
+        { type: "answer", text: "Un brief de MVP \xFAtil toma tres decisiones antes de que empiece el dise\xF1o: para qui\xE9n es el producto, qu\xE9 dejar\xE1 fuera deliberadamente la versi\xF3n uno y qu\xE9 evidencia de usuarios justificar\xE1 la siguiente inversi\xF3n. Por eso el brief no es papeleo. Es la primera decisi\xF3n de producto." },
+        { type: "p", text: "Los fundadores suelen llegar con un brief que en realidad es una descripci\xF3n de la idea: unos p\xE1rrafos sobre el mercado, una lista de funciones y una frase sobre hacia d\xF3nde podr\xEDa ir el producto alg\xFAn d\xEDa. Basta para iniciar una conversaci\xF3n, pero no para entregar. Un equipo de desarrollo necesita un documento m\xE1s peque\xF1o y preciso que convierta la ambici\xF3n en una secuencia de decisiones comprobables." },
+        { type: "h2", text: "Un brief \xFAtil cumple tres funciones", id: "three-jobs" },
+        { type: "h3", text: "1. Nombra a la persona que tiene el problema", id: "name-the-user" },
+        { type: "p", text: "\xABPeque\xF1as empresas\xBB es un mercado. No es un primer usuario. Un buen brief nombra a la persona, el momento en que se encuentra y la soluci\xF3n provisional que usa hoy. Un gestor de cl\xEDnica que intenta cubrir las cancelaciones de ma\xF1ana tiene un problema diferente de un paciente que busca una nueva cita, aunque ambos pertenezcan a la sanidad. Cuanto m\xE1s espec\xEDfico sea el primer usuario, m\xE1s f\xE1cil ser\xE1 decidir qu\xE9 debe hacer el producto despu\xE9s." },
+        { type: "h3", text: "2. Traza una l\xEDnea alrededor de la versi\xF3n uno", id: "draw-the-line" },
+        { type: "p", text: "Una lista de funciones indica lo que se ha imaginado. Una l\xEDnea de alcance indica lo que se construir\xE1. Escribe el ciclo central en una frase y luego enumera el trabajo que lo hace fiable: la pantalla principal, la \xFAnica acci\xF3n significativa, los datos que la sustentan y la se\xF1al que indica al usuario que funcion\xF3. Todo lo dem\xE1s es candidato para m\xE1s adelante, no un requisito silencioso para el lanzamiento." },
+        { type: "h3", text: "3. Define la prueba que viene despu\xE9s", id: "define-the-proof" },
+        { type: "p", text: "\xABLanzar y ver qu\xE9 pasa\xBB no es un plan de aprendizaje. Decide qu\xE9 esperas observar en las primeras semanas: un flujo completado, una acci\xF3n repetida, una conversi\xF3n de pago o una entrevista dirigida por el fundador con un tipo espec\xEDfico de usuario. La medida no tiene que ser sofisticada. Debe estar suficientemente cerca del comportamiento del usuario como para cambiar la siguiente decisi\xF3n de producto." },
+        { type: "h2", text: "Qu\xE9 anotar antes de una pantalla", id: "before-a-screen" },
+        { type: "ul", items: ["El primer usuario: un rol, una situaci\xF3n y una soluci\xF3n provisional dolorosa", "El ciclo central: la acci\xF3n m\xE1s peque\xF1a que crea valor y puede repetirse", "El l\xEDmite de lanzamiento: lo que queda expl\xEDcitamente fuera del alcance de la versi\xF3n uno", "El requisito de confianza: lo que el usuario debe ver, controlar o entender antes de actuar", "La siguiente prueba: el comportamiento o conversaci\xF3n que merece otra ronda de trabajo"] },
+        { type: "h2", text: "La prueba de alcance que usamos", id: "scope-test" },
+        { type: "p", text: "Toma cada funci\xF3n propuesta y haz una pregunta: \xBFhace que el ciclo central tenga m\xE1s probabilidades de funcionar para el primer usuario? Si la respuesta es no, s\xE1quela de la primera versi\xF3n. Si es quiz\xE1, anota el supuesto que protege y busca una forma m\xE1s barata de probarlo. Esto evita que una funci\xF3n \xFAtil se convierta en una excusa permanente para retrasar el producto." },
+        { type: "quote", text: "El objetivo de un brief no es capturar todo lo que podr\xEDas construir. Es hacer evidente la siguiente decisi\xF3n de desarrollo.", cite: "una regla que usamos al iniciar productos" },
+        { type: "callout", title: "C\xF3mo usamos esto en Start Apps Studio", text: "Antes de presupuestar un desarrollo, convertimos la idea del fundador en un alcance de una p\xE1gina: un usuario, un ciclo central, las pantallas e infraestructura que lo respaldan y la evidencia que deber\xEDa cambiar la siguiente decisi\xF3n. El documento se convierte en el traspaso entre estrategia, dise\xF1o, ingenier\xEDa y lanzamiento, y en el punto de referencia cuando una nueva funci\xF3n intenta colarse en la versi\xF3n uno." },
+        { type: "h2", text: "Preguntas frecuentes", id: "faq" },
+        { type: "faq", items: [{ q: "\xBFCu\xE1nto debe medir un brief de MVP?", a: "Lo bastante corto para leerse de una sentada y lo bastante espec\xEDfico para tomar decisiones. Una o dos p\xE1ginas suelen bastar cuando nombran al primer usuario, el ciclo central, el l\xEDmite de lanzamiento, los requisitos de confianza y la siguiente prueba." }, { q: "\xBFDebe incluir el brief una lista completa de funciones?", a: "Incluye las funciones que hacen funcionar el ciclo central y guarda el resto en una secci\xF3n de ideas posteriores. Un aparcamiento separado protege buenas ideas sin dejar que se conviertan silenciosamente en requisitos de lanzamiento." }, { q: "\xBFQu\xE9 ocurre si el usuario objetivo a\xFAn es incierto?", a: "Anota los dos candidatos m\xE1s s\xF3lidos y la evidencia que los distinguir\xEDa. La incertidumbre sirve cuando es expl\xEDcita; se vuelve cara cuando queda oculta dentro de un alcance de producto amplio." }, { q: "\xBFDebe terminarse el brief antes de empezar el dise\xF1o?", a: "Debe ser suficientemente claro para guiar la primera pasada de dise\xF1o, no quedar congelado para siempre. El dise\xF1o puede revelar una pregunta mejor, pero cada cambio debe actualizar el alcance y la prueba que intentas reunir." }] }
+      ] }
+    };
+    es_default = ES_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/fr.ts
+var sourcePost4, FR_EDITORIAL_CONTENT, fr_default;
+var init_fr = __esm({
+  "server/journal/locales/fr.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost4 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost4) throw new Error("Article source introuvable.");
+    FR_EDITORIAL_CONTENT = {
+      copy: {
+        journalName: "Le Journal \xB7 Vol. I",
+        journalTitle: "Notes de terrain du studio.",
+        journalDescription: "R\xE9flexions sur le lancement de MVP qui se positionnent sur Google et sont cit\xE9s par l\u2019IA : GEO, vibe-coding et l\u2019\xE9tat de l\u2019IA au travail.",
+        resourcesTitle: "Construisez la bonne chose, puis construisez-la bien.",
+        resourcesDescription: "Des ressources pratiques sur la strat\xE9gie produit, la livraison assist\xE9e par IA, les choix technologiques, la propri\xE9t\xE9, la passation et le lancement d\u2019un MVP.",
+        read: "Lire la note",
+        minutes: "min de lecture",
+        allNotes: "Toutes les notes",
+        sources: "Sources",
+        shortAnswer: "R\xE9ponse courte",
+        language: "Langue",
+        translatedArticleTitle: "Le brief MVP est votre premi\xE8re d\xE9cision produit",
+        translatedArticleDescription: "Un brief MVP utile identifie le premier utilisateur, fixe la limite de la version un et d\xE9finit les preuves n\xE9cessaires \xE0 la prochaine d\xE9cision."
+      },
+      resources: {
+        title: "Construisez la bonne chose, puis construisez-la bien.",
+        description: "Des ressources pratiques sur la strat\xE9gie produit, la livraison assist\xE9e par IA, les choix technologiques, la propri\xE9t\xE9, la passation et le lancement d\u2019un MVP.",
+        eyebrow: "Start Apps Studio \xB7 Ressources",
+        primaryAction: "Parler de votre projet",
+        journalAction: "Lire le Journal",
+        routes: { title: "Choisissez la prochaine voie", intro: "La bonne premi\xE8re \xE9tape d\xE9pend de ce que vous devez prouver, pas de la quantit\xE9 de logiciel que vous pouvez imaginer.", cards: [
+          { kicker: "01 \xB7 Direction", title: "Commencez par la plus petite preuve utile", text: "Un site de lancement r\xE9pond \xE0 la question de savoir si les gens comprennent l\u2019offre. Un prototype r\xE9pond \xE0 la question de savoir s\u2019ils r\xE9agissent \xE0 l\u2019exp\xE9rience. Un MVP r\xE9pond \xE0 ce que font de vrais utilisateurs.", bullets: ["Choisissez une d\xE9cision que la prochaine version doit permettre", "Gardez la premi\xE8re version assez cibl\xE9e pour en tirer des enseignements", "Utilisez l\u2019offre qui correspond aux preuves dont vous avez besoin"] },
+          { kicker: "02 \xB7 Livraison assist\xE9e par IA", title: "La vitesse est utile quand la structure tient", text: "L\u2019IA peut acc\xE9l\xE9rer l\u2019exploration, le code et la revue. Elle ne remplace ni le jugement produit, ni l\u2019architecture, les tests ou la personne responsable du r\xE9sultat.", bullets: ["Utilisez l\u2019IA pour explorer des options et r\xE9duire les r\xE9p\xE9titions", "V\xE9rifiez le code g\xE9n\xE9r\xE9 par rapport aux vrais parcours utilisateurs", "Gardez le syst\xE8me livr\xE9 compr\xE9hensible et extensible"] },
+          { kicker: "03 \xB7 Propri\xE9t\xE9", title: "Demandez ce qui est remis lors de la passation", text: "Une r\xE9alisation r\xE9ussie ne se r\xE9sume pas \xE0 une pr\xE9sentation finale. Le code source, les fichiers de conception, les comptes, l\u2019acc\xE8s au d\xE9ploiement et le contexte doivent \xEAtre pr\xEAts pour vous ou votre prochaine \xE9quipe.", bullets: ["Confirmez \xE0 qui appartiennent les comptes et les fichiers de travail", "Examinez l\u2019avancement r\xE9el avant la derni\xE8re semaine", "Repartez avec une base document\xE9e et maintenable"] },
+          { kicker: "04 \xB7 Compatibilit\xE9 partenaire", title: "Comparez la mani\xE8re de travailler", text: "Avant de choisir un partenaire produit, comparez la clart\xE9 du p\xE9rim\xE8tre, les boucles de retour, les responsabilit\xE9s, l\u2019accompagnement apr\xE8s lancement et l\u2019ad\xE9quation de la voie au stade de votre entreprise.", bullets: ["Qui prend les d\xE9cisions produit ?", "Quand verrez-vous quelque chose de concret ?", "Une autre \xE9quipe peut-elle continuer sans repartir de z\xE9ro ?"] }
+        ] },
+        packages: { title: "Guide d\u2019orientation des offres", intro: "Utilisez les offres publiques comme point de d\xE9part de la discussion. Le p\xE9rim\xE8tre est convenu avant le d\xE9but du travail.", columns: ["Voie", "Investissement", "D\xE9lai habituel", "Id\xE9al lorsque vous devez"], rows: [
+          { route: "Site de lancement", investment: "$2,600", timing: "3\u20135 jours ouvr\xE9s", bestFor: "Expliquer l\u2019offre et cr\xE9er une pr\xE9sence num\xE9rique cr\xE9dible" },
+          { route: "Prototype", investment: "$6,000", timing: "5\u201310 jours", bestFor: "Rendre une id\xE9e tangible pour la validation, une lev\xE9e de fonds ou les premi\xE8res conversations" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 semaines", bestFor: "Mettre un v\xE9ritable produit web, iOS ou Android entre les mains des utilisateurs" },
+          { route: "Sur mesure", investment: "$25,000", timing: "1\u20136 mois", bestFor: "Cr\xE9er un syst\xE8me plus vaste ou complexe avec une responsabilit\xE9 durable" }
+        ] },
+        toolkit: { title: "La bo\xEEte \xE0 outils derri\xE8re le travail", intro: "Les outils sont choisis en fonction du r\xE9sultat produit, de l\u2019\xE9quipe qui le reprendra et du stade de l\u2019entreprise.", groups: [
+          { label: "Votre id\xE9e, rendue visible", description: "Comment un concept devient des \xE9crans que vous pouvez toucher, partager avec des investisseurs et tester avec de vrais utilisateurs.", tools: [{ name: "Figma", note: "chaque \xE9cran con\xE7u avant le code", tone: "figma" }, { name: "Rork", note: "essayez-le sur un vrai t\xE9l\xE9phone en quelques jours", tone: "rork" }, { name: "Lovable", note: "site de lancement en ligne en quelques jours", tone: "lovable" }, { name: "Replit", note: "produit fonctionnel que vous pouvez ex\xE9cuter et modifier", tone: "replit" }] },
+          { label: "Votre produit, con\xE7u pour durer", description: "L\u2019ing\xE9nierie qui fait fonctionner l\u2019application que vos utilisateurs installent, ouvrent et paient.", tools: [{ name: "React Native", note: "une base de code, iOS + Android", tone: "expo" }, { name: "Swift", note: "iOS natif, le plus rapide sur iPhone", tone: "swift" }, { name: "Kotlin", note: "Android natif, port\xE9e compl\xE8te du Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "vos donn\xE9es, s\xE9curis\xE9es et exportables", tone: "node" }] },
+          { label: "Revenus et lancement, d\xE8s le premier jour", description: "Paiements, mises \xE0 jour et s\xE9curit\xE9 du code int\xE9gr\xE9s d\xE8s le d\xE9part, et non ajout\xE9s apr\xE8s coup.", open: true, tools: [{ name: "Stripe", note: "paiements uniques, abonnements, mises \xE0 niveau", tone: "stripe" }, { name: "RevenueCat", note: "facturation App Store et Play Store", tone: "revenuecat" }, { name: "GitHub", note: "sauvegardes quotidiennes : votre code est toujours en s\xE9curit\xE9", tone: "github" }, { name: "Automation", note: "n8n + Make s\u2019occupent des t\xE2ches r\xE9p\xE9titives", tone: "hooks" }] },
+          { label: "L\u2019IA en arri\xE8re-plan, pas sur votre chemin", description: "L\u2019IA peut soutenir la recherche, l\u2019impl\xE9mentation et la revue, tandis qu\u2019une personne reste responsable de la direction et du niveau de qualit\xE9.", tools: [{ name: "Claude", note: "principal constructeur et relecteur de code", tone: "claude" }, { name: "Gemini", note: "examine le produit entier d\u2019un coup", tone: "gemini" }, { name: "GPT-5", note: "textes, parcours et direction cr\xE9ative", tone: "gpt" }, { name: "Llama 4", note: "option auto-h\xE9berg\xE9e pour les travaux sensibles", tone: "llama" }] }
+        ], footnote: "Vous conservez le code, les comptes et les fichiers de travail. Lorsqu\u2019un meilleur outil arrive, il peut \xEAtre remplac\xE9 sans prendre votre produit en otage." },
+        journal: { title: "Notes de terrain du Journal", text: "Des notes plus longues sur la strat\xE9gie MVP, le SEO, le GEO, les applications cr\xE9\xE9es en vibe-coding et les d\xE9cisions qui facilitent le lancement d\u2019un produit.", readAction: "Lire la note", minutesLabel: "min de lecture", allAction: "Toutes les notes du journal", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "Une voie en t\xEAte ?", text: "Dites-nous o\xF9 vous en \xEAtes, ce que vous devez prouver et ce qui bloque actuellement.", action: "Obtenir une prochaine \xE9tape claire" }
+      },
+      post: { ...sourcePost4, title: "Le brief MVP est votre premi\xE8re d\xE9cision produit", seoTitle: "Brief MVP : votre premi\xE8re d\xE9cision produit | Start Apps Studio", description: "Un brief MVP utile fait plus que d\xE9crire une id\xE9e. Il identifie l\u2019utilisateur, trace une limite nette autour de la version un et d\xE9finit les preuves indiquant s\u2019il faut continuer \xE0 construire.", seoDescription: "Votre brief MVP est une d\xE9cision produit, pas de la paperasse. D\xE9couvrez les trois \xE9l\xE9ments qu\u2019un brief utile doit d\xE9finir avant le d\xE9but du design ou du code.", excerpt: "Les meilleurs briefs MVP ne sont pas longs. Ils d\xE9cident \xE0 qui s\u2019adresse le produit, ce que la version un refuse de faire et quelles preuves m\xE9ritent la prochaine semaine de travail.", category: "Notes de terrain", tags: ["MVP", "Strat\xE9gie produit", "Fondateurs", "P\xE9rim\xE8tre"], body: [
+        { type: "answer", text: "Un brief MVP utile prend trois d\xE9cisions avant le d\xE9but du design : \xE0 qui s\u2019adresse le produit, ce que la version un laissera d\xE9lib\xE9r\xE9ment de c\xF4t\xE9 et quelles preuves utilisateurs justifieront le prochain investissement. C\u2019est pourquoi le brief n\u2019est pas de la paperasse. C\u2019est la premi\xE8re d\xE9cision produit." },
+        { type: "p", text: "Les fondateurs arrivent souvent avec un brief qui est en r\xE9alit\xE9 une description de l\u2019id\xE9e : quelques paragraphes sur le march\xE9, une liste de fonctionnalit\xE9s et une phrase sur l\u2019avenir possible du produit. C\u2019est suffisant pour entamer une conversation, mais pas pour livrer. Une \xE9quipe de r\xE9alisation a besoin d\u2019un document plus court et plus pr\xE9cis, qui transforme l\u2019ambition en une suite de choix testables." },
+        { type: "h2", text: "Un brief utile remplit trois fonctions", id: "three-jobs" },
+        { type: "h3", text: "1. Il identifie la personne qui a le probl\xE8me", id: "name-the-user" },
+        { type: "p", text: "\xAB Les petites entreprises \xBB d\xE9signe un march\xE9. Ce n\u2019est pas un premier utilisateur. Un bon brief nomme la personne, le moment qu\u2019elle traverse et la solution de contournement qu\u2019elle utilise aujourd\u2019hui. Un responsable de clinique qui cherche \xE0 combler les annulations de demain a un probl\xE8me diff\xE9rent de celui d\u2019un patient recherchant un nouveau rendez-vous, m\xEAme si tous deux appartiennent au secteur de la sant\xE9. Plus le premier utilisateur est pr\xE9cis, plus il devient facile de d\xE9cider de ce que le produit doit faire ensuite." },
+        { type: "h3", text: "2. Il trace une limite autour de la version un", id: "draw-the-line" },
+        { type: "p", text: "Une liste de fonctionnalit\xE9s indique ce qui a \xE9t\xE9 imagin\xE9. Une limite de p\xE9rim\xE8tre indique ce qui sera construit. \xC9crivez la boucle principale en une phrase, puis listez le travail qui la rend fiable : l\u2019\xE9cran principal, l\u2019action utile unique, les donn\xE9es qui la sous-tendent et le retour qui indique \xE0 l\u2019utilisateur qu\u2019elle a fonctionn\xE9. Tout le reste est candidat pour plus tard, et non une exigence implicite au lancement." },
+        { type: "h3", text: "3. Il d\xE9finit la prochaine preuve", id: "define-the-proof" },
+        { type: "p", text: "\xAB Lan\xE7ons et voyons ce qui se passe \xBB n\u2019est pas un plan d\u2019apprentissage. D\xE9cidez ce que vous esp\xE9rez observer dans les premi\xE8res semaines : un parcours achev\xE9, une action r\xE9p\xE9t\xE9e, une conversion payante ou un entretien men\xE9 par le fondateur avec un type pr\xE9cis d\u2019utilisateur. La mesure n\u2019a pas besoin d\u2019\xEAtre sophistiqu\xE9e. Elle doit \xEAtre suffisamment proche du comportement de l\u2019utilisateur pour pouvoir modifier la prochaine d\xE9cision produit." },
+        { type: "h2", text: "Ce qu\u2019il faut noter avant un \xE9cran", id: "before-a-screen" },
+        { type: "ul", items: ["Le premier utilisateur : un r\xF4le, une situation et une solution de contournement p\xE9nible", "La boucle principale : la plus petite action qui cr\xE9e de la valeur et peut se r\xE9p\xE9ter", "La limite de lancement : ce qui est explicitement hors p\xE9rim\xE8tre pour la version un", "L\u2019exigence de confiance : ce que l\u2019utilisateur doit voir, contr\xF4ler ou comprendre avant d\u2019agir", "La prochaine preuve : le comportement ou la conversation qui m\xE9rite un nouveau cycle de r\xE9alisation"] },
+        { type: "h2", text: "Le test de p\xE9rim\xE8tre que nous utilisons", id: "scope-test" },
+        { type: "p", text: "Prenez chaque fonctionnalit\xE9 propos\xE9e et posez une question : rend-elle la r\xE9ussite de la boucle principale plus probable pour le premier utilisateur ? Si la r\xE9ponse est non, retirez-la de la premi\xE8re version. Si la r\xE9ponse est peut-\xEAtre, notez l\u2019hypoth\xE8se qu\u2019elle prot\xE8ge et trouvez une mani\xE8re moins co\xFBteuse de la tester. Cela \xE9vite qu\u2019une fonctionnalit\xE9 utile devienne une excuse permanente pour retarder le produit." },
+        { type: "quote", text: "Le but d\u2019un brief n\u2019est pas de saisir tout ce que vous pourriez construire. Il est de rendre \xE9vidente la prochaine d\xE9cision de r\xE9alisation.", cite: "une r\xE8gle que nous appliquons au lancement des produits" },
+        { type: "callout", title: "Comment nous utilisons cela chez Start Apps Studio", text: "Avant de chiffrer une r\xE9alisation, nous transformons l\u2019id\xE9e du fondateur en un p\xE9rim\xE8tre d\u2019une page : un utilisateur, une boucle principale, les \xE9crans et l\u2019infrastructure qui la soutiennent, et les preuves qui devraient modifier la prochaine d\xE9cision. Le document devient le relais entre strat\xE9gie, design, ing\xE9nierie et lancement \u2014 ainsi que le point de r\xE9f\xE9rence lorsqu\u2019une nouvelle fonctionnalit\xE9 tente de se glisser dans la version un." },
+        { type: "h2", text: "Questions fr\xE9quentes", id: "faq" },
+        { type: "faq", items: [{ q: "Quelle devrait \xEAtre la longueur d\u2019un brief MVP ?", a: "Assez court pour \xEAtre lu d\u2019une traite et assez pr\xE9cis pour arbitrer. Une \xE0 deux pages suffisent g\xE9n\xE9ralement lorsqu\u2019elles identifient le premier utilisateur, la boucle principale, la limite de lancement, les exigences de confiance et la prochaine preuve." }, { q: "Le brief doit-il inclure une liste compl\xE8te de fonctionnalit\xE9s ?", a: "Incluez les fonctionnalit\xE9s qui font fonctionner la boucle principale, puis gardez le reste dans une section d\u2019id\xE9es ult\xE9rieures. Un espace de stationnement s\xE9par\xE9 prot\xE8ge les bonnes id\xE9es sans les laisser devenir discr\xE8tement des exigences de lancement." }, { q: "Que faire si l\u2019utilisateur cible reste incertain ?", a: "Notez les deux candidats les plus solides et les preuves qui les distingueraient. L\u2019incertitude est utile lorsqu\u2019elle est explicite ; elle devient co\xFBteuse lorsqu\u2019elle se cache dans un p\xE9rim\xE8tre produit trop large." }, { q: "Le brief doit-il \xEAtre termin\xE9 avant le d\xE9but du design ?", a: "Il doit \xEAtre assez clair pour guider la premi\xE8re \xE9tape de design, sans \xEAtre fig\xE9 pour toujours. Le design peut r\xE9v\xE9ler une meilleure question, mais chaque changement doit mettre \xE0 jour le p\xE9rim\xE8tre et la preuve que vous cherchez \xE0 recueillir." }] }
+      ] }
+    };
+    fr_default = FR_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/it.ts
+var sourcePost5, IT_EDITORIAL_CONTENT, it_default;
+var init_it = __esm({
+  "server/journal/locales/it.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost5 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost5) throw new Error("MVP source post is missing.");
+    IT_EDITORIAL_CONTENT = {
+      copy: { journalName: "The Journal \xB7 Vol. I", journalTitle: "Appunti dal campo dello studio.", journalDescription: "Resoconti sulla pubblicazione di MVP che si posizionano su Google e vengono citati dall'AI: GEO, vibe-coding e lo stato dell'AI al lavoro.", resourcesTitle: "Costruisci la cosa giusta, poi costruiscila bene.", resourcesDescription: "Risorse pratiche su strategia di prodotto, consegna assistita dall'AI, scelte tecnologiche, propriet\xE0, passaggio di consegne e lancio di un MVP.", read: "Leggi l'appunto", minutes: "min di lettura", allNotes: "Tutti gli appunti", sources: "Fonti", shortAnswer: "Risposta breve", language: "Lingua", translatedArticleTitle: "Il brief dell'MVP \xE8 la tua prima decisione di prodotto", translatedArticleDescription: "Un brief MVP utile identifica il primo utente, definisce il confine della versione uno e stabilisce l'evidenza per la decisione successiva." },
+      resources: {
+        title: "Costruisci la cosa giusta, poi costruiscila bene.",
+        description: "Risorse pratiche su strategia di prodotto, consegna assistita dall'AI, scelte tecnologiche, propriet\xE0, passaggio di consegne e lancio di un MVP.",
+        eyebrow: "Start Apps Studio \xB7 Risorse",
+        primaryAction: "Parliamo del tuo progetto",
+        journalAction: "Leggi il Journal",
+        routes: { title: "Scegli il prossimo percorso", intro: "La giusta prima tappa dipende da ci\xF2 che devi dimostrare, non da quanto software riesci a immaginare.", cards: [
+          { kicker: "01 \xB7 Direzione", title: "Inizia dalla pi\xF9 piccola prova utile", text: "Un sito di lancio risponde se le persone capiscono l'offerta. Un prototipo risponde se sanno reagire all'esperienza. Un MVP risponde a ci\xF2 che fanno gli utenti reali.", bullets: ["Scegli una decisione che la prossima release deve sbloccare", "Mantieni la prima versione abbastanza circoscritta da poter imparare", "Usa il pacchetto adatto all'evidenza di cui hai bisogno"] },
+          { kicker: "02 \xB7 Consegna assistita dall'AI", title: "La velocit\xE0 \xE8 utile quando la struttura regge", text: "L'AI pu\xF2 accelerare esplorazione, scrittura del codice e revisione. Non sostituisce giudizio di prodotto, architettura, test o la persona responsabile del risultato.", bullets: ["Usa l'AI per esplorare opzioni e ridurre le ripetizioni", "Rivedi il codice generato rispetto ai flussi reali degli utenti", "Mantieni il sistema pubblicato comprensibile ed estendibile"] },
+          { kicker: "03 \xB7 Propriet\xE0", title: "Chiedi cosa arriva al passaggio di consegne", text: "Una realizzazione riuscita \xE8 pi\xF9 di una presentazione finale. Codice sorgente, file di design, account, accesso al deployment e contesto devono essere pronti per te o per il tuo prossimo team.", bullets: ["Conferma chi possiede gli account e i file di lavoro", "Esamina i progressi funzionanti prima dell'ultima settimana", "Vai via con una base documentata e manutenibile"] },
+          { kicker: "04 \xB7 Compatibilit\xE0 del partner", title: "Confronta il modo di lavorare", text: "Prima di scegliere un partner di prodotto, confronta chiarezza dell'ambito, cicli di feedback, responsabilit\xE0, supporto dopo il lancio e l'adeguatezza del percorso allo stadio della tua impresa.", bullets: ["Chi prende le decisioni di prodotto?", "Quando vedrai qualcosa di reale?", "Un altro team pu\xF2 continuare senza ricominciare da capo?"] }
+        ] },
+        packages: { title: "Guida ai percorsi dei pacchetti", intro: "Usa i pacchetti pubblici come punto di partenza per la conversazione. L'ambito viene concordato prima dell'inizio del lavoro.", columns: ["Percorso", "Investimento", "Tempistica tipica", "Ideale quando devi"], rows: [
+          { route: "Sito di lancio", investment: "$2,600", timing: "3\u20135 giorni lavorativi", bestFor: "Spiegare l'offerta e creare una presenza digitale credibile" },
+          { route: "Prototipo", investment: "$6,000", timing: "5\u201310 giorni", bestFor: "Rendere tangibile un'idea per validazione, raccolta fondi o prime conversazioni" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 settimane", bestFor: "Mettere un vero prodotto web, iOS o Android nelle mani degli utenti" },
+          { route: "Su misura", investment: "$25,000", timing: "1\u20136 mesi", bestFor: "Costruire un sistema pi\xF9 grande o complesso con responsabilit\xE0 a lungo termine" }
+        ] },
+        toolkit: { title: "Il toolkit dietro al lavoro", intro: "Gli strumenti vengono scelti per il risultato del prodotto, il team che lo prender\xE0 in carico e la fase dell'impresa.", groups: [
+          { label: "La tua idea, resa visibile", description: "Come un concetto diventa schermate che puoi toccare, condividere con gli investitori e testare con utenti reali.", tools: [{ name: "Figma", note: "ogni schermata progettata prima del codice", tone: "figma" }, { name: "Rork", note: "provalo su un telefono vero in pochi giorni", tone: "rork" }, { name: "Lovable", note: "sito di lancio online in pochi giorni", tone: "lovable" }, { name: "Replit", note: "prodotto funzionante che puoi eseguire e modificare", tone: "replit" }] },
+          { label: "Il tuo prodotto, costruito per durare", description: "L'ingegneria che alimenta l'app che i tuoi utenti installano, aprono e pagano.", tools: [{ name: "React Native", note: "un'unica base di codice, iOS + Android", tone: "expo" }, { name: "Swift", note: "iOS nativo, velocissimo su iPhone", tone: "swift" }, { name: "Kotlin", note: "Android nativo, piena copertura Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "i tuoi dati, sicuri e tuoi da esportare", tone: "node" }] },
+          { label: "Ricavi e lancio, dal primo giorno", description: "Pagamenti, aggiornamenti e sicurezza del codice integrati dall'inizio, non aggiunti dopo.", open: true, tools: [{ name: "Stripe", note: "una tantum, abbonamenti, upgrade", tone: "stripe" }, { name: "RevenueCat", note: "fatturazione App Store e Play Store", tone: "revenuecat" }, { name: "GitHub", note: "backup giornalieri: il tuo codice \xE8 sempre al sicuro", tone: "github" }, { name: "Automation", note: "n8n + Make gestiscono il lavoro ripetitivo", tone: "hooks" }] },
+          { label: "AI sullo sfondo, non d'intralcio", description: "L'AI pu\xF2 supportare ricerca, implementazione e revisione, mentre una persona \xE8 responsabile della direzione e del livello qualitativo.", tools: [{ name: "Claude", note: "sviluppatore principale e revisore del codice", tone: "claude" }, { name: "Gemini", note: "esamina tutto il prodotto in una volta", tone: "gemini" }, { name: "GPT-5", note: "testi, flussi e direzione creativa", tone: "gpt" }, { name: "Llama 4", note: "opzione self-hosted per lavori sensibili", tone: "llama" }] }
+        ], footnote: "Conservi codice, account e file di lavoro. Quando arriva uno strumento migliore, pu\xF2 essere sostituito senza tenere in ostaggio il tuo prodotto." },
+        journal: { title: "Appunti dal campo del Journal", text: "Appunti pi\xF9 lunghi su strategia MVP, SEO, GEO, app vibe-coded e decisioni che rendono un prodotto pi\xF9 facile da pubblicare.", readAction: "Leggi l'appunto", minutesLabel: "min di lettura", allAction: "Tutti gli appunti del Journal", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "Hai in mente un percorso?", text: "Condividi dove ti trovi, cosa devi dimostrare e cosa \xE8 bloccato in questo momento.", action: "Ottieni un prossimo passo chiaro" }
+      },
+      post: { slug: sourcePost5.slug, publishedAt: sourcePost5.publishedAt, readMinutes: sourcePost5.readMinutes, title: "Il brief dell'MVP \xE8 la tua prima decisione di prodotto", seoTitle: "Brief MVP: la tua prima decisione di prodotto | Start Apps Studio", description: "Un brief MVP utile fa pi\xF9 che descrivere un'idea. Identifica l'utente, traccia un confine netto attorno alla versione uno e definisce l'evidenza che indica se continuare a costruire.", seoDescription: "Il tuo brief MVP \xE8 una decisione di prodotto, non burocrazia. Scopri le tre cose che un brief utile deve definire prima dell'inizio di design o codice.", excerpt: "I migliori brief MVP non sono lunghi. Decidono per chi \xE8 il prodotto, cosa la versione uno rifiuta di fare e quale evidenza merita la prossima settimana di lavoro.", category: "Appunti dal campo", tags: ["MVP", "Strategia di prodotto", "Fondatori", "Ambito"], body: [
+        { type: "answer", text: "Un brief MVP utile prende tre decisioni prima che inizi il design: per chi \xE8 il prodotto, cosa la versione uno lascer\xE0 deliberatamente fuori e quale evidenza degli utenti giustificher\xE0 il prossimo investimento. Ecco perch\xE9 il brief non \xE8 burocrazia: \xE8 la prima decisione di prodotto." },
+        { type: "p", text: "I fondatori arrivano spesso con un brief che in realt\xE0 \xE8 una descrizione dell'idea: qualche paragrafo sul mercato, un elenco di funzionalit\xE0 e una frase su dove il prodotto potrebbe arrivare un giorno. Basta per avviare una conversazione, ma non per pubblicare. Un team di sviluppo ha bisogno di un documento pi\xF9 piccolo e pi\xF9 nitido, che trasformi l'ambizione in una sequenza di scelte verificabili." },
+        { type: "h2", text: "Un brief utile svolge tre compiti", id: "three-jobs" },
+        { type: "h3", text: "1. Identifica la persona che ha il problema", id: "name-the-user" },
+        { type: "p", text: "\u201CPiccole imprese\u201D \xE8 un mercato, non un primo utente. Un buon brief identifica la persona, il momento in cui si trova e l'espediente che usa oggi. Un responsabile di clinica che cerca di riempire le cancellazioni di domani ha un problema diverso da un paziente che cerca un nuovo appuntamento, anche se entrambi appartengono alla sanit\xE0. Pi\xF9 \xE8 specifico il primo utente, pi\xF9 \xE8 facile decidere cosa debba fare il prodotto dopo." },
+        { type: "h3", text: "2. Traccia una linea attorno alla versione uno", id: "draw-the-line" },
+        { type: "p", text: "Un elenco di funzionalit\xE0 dice ci\xF2 che \xE8 stato immaginato. Un confine di ambito dice ci\xF2 che verr\xE0 costruito. Scrivi il ciclo fondamentale in una frase, poi elenca il lavoro che lo rende affidabile: la schermata principale, l'unica azione significativa, i dati che la sostengono e il feedback che dice all'utente che ha funzionato. Tutto il resto \xE8 un candidato per dopo, non un requisito silenzioso per il lancio." },
+        { type: "h3", text: "3. Definisce la prova successiva", id: "define-the-proof" },
+        { type: "p", text: "\u201CLanciare e vedere cosa succede\u201D non \xE8 un piano di apprendimento. Decidi cosa ti aspetti di osservare nelle prime settimane: un flusso completato, un'azione ripetuta, una conversione a pagamento o un'intervista condotta dal fondatore con uno specifico tipo di utente. La misura non deve essere sofisticata; deve essere abbastanza vicina al comportamento dell'utente da poter cambiare la prossima decisione di prodotto." },
+        { type: "h2", text: "Cosa annotare prima di una schermata", id: "before-a-screen" },
+        { type: "ul", items: ["Il primo utente: un ruolo, una situazione e un espediente doloroso", "Il ciclo fondamentale: la pi\xF9 piccola azione che crea valore e pu\xF2 ripetersi", "Il confine di lancio: ci\xF2 che \xE8 esplicitamente fuori ambito per la versione uno", "Il requisito di fiducia: ci\xF2 che l'utente deve vedere, controllare o capire prima di agire", "Il prossimo punto di prova: il comportamento o la conversazione che merita un altro ciclo di sviluppo"] },
+        { type: "h2", text: "Il test dell'ambito che usiamo", id: "scope-test" },
+        { type: "p", text: "Prendi ogni funzionalit\xE0 proposta e fai una domanda: rende pi\xF9 probabile il successo del ciclo fondamentale per il primo utente? Se la risposta \xE8 no, spostala fuori dalla prima release. Se \xE8 forse, annota l'ipotesi che sta proteggendo e trova un modo pi\xF9 economico per testarla. Questo impedisce a una funzionalit\xE0 utile di diventare una scusa permanente per ritardare il prodotto." },
+        { type: "quote", text: "Lo scopo di un brief non \xE8 raccogliere tutto ci\xF2 che potresti costruire. \xC8 rendere evidente la prossima decisione di sviluppo.", cite: "una regola che usiamo negli avvii di prodotto" },
+        { type: "callout", title: "Come lo usiamo in Start Apps Studio", text: "Prima di quotare una realizzazione, trasformiamo l'idea del fondatore in un ambito di una pagina: un utente, un ciclo fondamentale, le schermate e l'infrastruttura che lo supportano e l'evidenza che dovrebbe cambiare la decisione successiva. Il documento diventa il passaggio di consegne tra strategia, design, ingegneria e lancio, e il punto di riferimento quando una nuova funzionalit\xE0 cerca di intrufolarsi nella versione uno." },
+        { type: "h2", text: "Domande frequenti", id: "faq" },
+        { type: "faq", items: [{ q: "Quanto deve essere lungo un brief MVP?", a: "Abbastanza breve da leggerlo in una sola seduta e abbastanza specifico da prendere decisioni tra alternative. Una o due pagine sono di solito sufficienti quando identifica primo utente, ciclo fondamentale, confine di lancio, requisiti di fiducia e prossimo punto di prova." }, { q: "Il brief deve includere un elenco completo delle funzionalit\xE0?", a: "Includi le funzionalit\xE0 che fanno funzionare il ciclo fondamentale, poi tieni il resto in una sezione di idee successive. Un parcheggio separato protegge le buone idee senza lasciare che diventino silenziosamente requisiti di lancio." }, { q: "E se l'utente target \xE8 ancora incerto?", a: "Annota i due candidati pi\xF9 forti e l'evidenza che li distinguerebbe. L'incertezza \xE8 utile quando \xE8 esplicita; diventa costosa quando \xE8 nascosta dentro un ampio ambito di prodotto." }, { q: "Il brief deve essere finito prima che inizi il design?", a: "Dovrebbe essere abbastanza chiaro da guidare il primo passaggio di design, non congelato per sempre. Il design pu\xF2 far emergere una domanda migliore, ma ogni cambiamento dovrebbe aggiornare l'ambito e la prova che stai cercando di raccogliere." }] }
+      ] }
+    };
+    it_default = IT_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/ru.ts
+var sourcePost6, RU_EDITORIAL_CONTENT, ru_default;
+var init_ru = __esm({
+  "server/journal/locales/ru.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost6 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost6) throw new Error("Missing MVP editorial source post.");
+    RU_EDITORIAL_CONTENT = {
+      copy: {
+        journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
+        journalTitle: "\u041F\u043E\u043B\u0435\u0432\u044B\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0438\u0437 \u0441\u0442\u0443\u0434\u0438\u0438.",
+        journalDescription: "\u0417\u0430\u043C\u0435\u0442\u043A\u0438 \u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0440\u0430\u043D\u0436\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u0432 Google \u0438 \u0446\u0438\u0442\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u0418\u0418: GEO, vibe-coding \u0438 \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0418\u0418 \u0432 \u0440\u0430\u0431\u043E\u0442\u0435.",
+        resourcesTitle: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u043D\u0443\u0436\u043D\u043E\u0435, \u0437\u0430\u0442\u0435\u043C \u0441\u0434\u0435\u043B\u0430\u0439\u0442\u0435 \u044D\u0442\u043E \u0445\u043E\u0440\u043E\u0448\u043E.",
+        resourcesDescription: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430, \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0418\u0418, \u0432\u044B\u0431\u043E\u0440\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0439, \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u0438, \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435 \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP.",
+        read: "\u0427\u0438\u0442\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443",
+        minutes: "\u043C\u0438\u043D \u0447\u0442\u0435\u043D\u0438\u044F",
+        allNotes: "\u0412\u0441\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438",
+        sources: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438",
+        shortAnswer: "\u041A\u043E\u0440\u043E\u0442\u043A\u0438\u0439 \u043E\u0442\u0432\u0435\u0442",
+        language: "\u042F\u0437\u044B\u043A",
+        translatedArticleTitle: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435",
+        translatedArticleDescription: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u043E\u0447\u0435\u0440\u0447\u0438\u0432\u0430\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u0443 \u043F\u0435\u0440\u0432\u043E\u0439 \u0432\u0435\u0440\u0441\u0438\u0438 \u0438 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u044F\u0435\u0442 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0434\u043B\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0433\u043E \u0440\u0435\u0448\u0435\u043D\u0438\u044F."
+      },
+      resources: {
+        title: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u043D\u0443\u0436\u043D\u043E\u0435, \u0437\u0430\u0442\u0435\u043C \u0441\u0434\u0435\u043B\u0430\u0439\u0442\u0435 \u044D\u0442\u043E \u0445\u043E\u0440\u043E\u0448\u043E.",
+        description: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430, \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0418\u0418, \u0432\u044B\u0431\u043E\u0440\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0439, \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u0438, \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435 \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP.",
+        eyebrow: "Start Apps Studio \xB7 \u0420\u0435\u0441\u0443\u0440\u0441\u044B",
+        primaryAction: "\u041E\u0431\u0441\u0443\u0434\u0438\u0442\u044C \u0432\u0430\u0448 \u043F\u0440\u043E\u0435\u043A\u0442",
+        journalAction: "\u0427\u0438\u0442\u0430\u0442\u044C \u0416\u0443\u0440\u043D\u0430\u043B",
+        routes: { title: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u043C\u0430\u0440\u0448\u0440\u0443\u0442", intro: "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u0435\u0440\u0432\u044B\u0439 \u044D\u0442\u0430\u043F \u0437\u0430\u0432\u0438\u0441\u0438\u0442 \u043E\u0442 \u0442\u043E\u0433\u043E, \u0447\u0442\u043E \u0432\u0430\u043C \u043D\u0443\u0436\u043D\u043E \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u044C, \u0430 \u043D\u0435 \u043E\u0442 \u043E\u0431\u044A\u0451\u043C\u0430 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0433\u043E \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0432\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C.", cards: [
+          { kicker: "01 \xB7 \u041D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435", title: "\u041D\u0430\u0447\u043D\u0438\u0442\u0435 \u0441 \u043D\u0430\u0438\u043C\u0435\u043D\u044C\u0448\u0435\u0433\u043E \u043F\u043E\u043B\u0435\u0437\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430", text: "\u0421\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u043D\u0430 \u0432\u043E\u043F\u0440\u043E\u0441, \u043F\u043E\u043D\u0438\u043C\u0430\u044E\u0442 \u043B\u0438 \u043B\u044E\u0434\u0438 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0442\u043E\u0442\u0438\u043F \u2014 \u043C\u043E\u0433\u0443\u0442 \u043B\u0438 \u043E\u043D\u0438 \u043E\u0442\u0440\u0435\u0430\u0433\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0430 \u043E\u043F\u044B\u0442. MVP \u2014 \u0447\u0442\u043E \u0434\u0435\u043B\u0430\u044E\u0442 \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0438.", bullets: ["\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0434\u043D\u043E \u0440\u0435\u0448\u0435\u043D\u0438\u0435, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u0434\u043E\u043B\u0436\u0435\u043D \u043E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0440\u0435\u043B\u0438\u0437", "\u0421\u0434\u0435\u043B\u0430\u0439\u0442\u0435 \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0443\u0437\u043A\u043E\u0439, \u0447\u0442\u043E\u0431\u044B \u0443\u0447\u0438\u0442\u044C\u0441\u044F \u043D\u0430 \u043D\u0435\u0439", "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u043F\u0430\u043A\u0435\u0442, \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0439 \u043D\u0443\u0436\u043D\u044B\u043C \u0432\u0430\u043C \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430\u043C"] },
+          { kicker: "02 \xB7 \u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0418\u0418", title: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u043E\u043B\u0435\u0437\u043D\u0430, \u043A\u043E\u0433\u0434\u0430 \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u043F\u0440\u043E\u0447\u043D\u0430", text: "\u0418\u0418 \u043C\u043E\u0436\u0435\u0442 \u0443\u0441\u043A\u043E\u0440\u0438\u0442\u044C \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435, \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0443. \u041E\u043D \u043D\u0435 \u0437\u0430\u043C\u0435\u043D\u044F\u0435\u0442 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0441\u0443\u0436\u0434\u0435\u043D\u0438\u0435, \u0430\u0440\u0445\u0438\u0442\u0435\u043A\u0442\u0443\u0440\u0443, \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0438\u043B\u0438 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430, \u043E\u0442\u0432\u0435\u0447\u0430\u044E\u0449\u0435\u0433\u043E \u0437\u0430 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442.", bullets: ["\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0418\u0418 \u0434\u043B\u044F \u0438\u0437\u0443\u0447\u0435\u043D\u0438\u044F \u0432\u0430\u0440\u0438\u0430\u043D\u0442\u043E\u0432 \u0438 \u0441\u043E\u043A\u0440\u0430\u0449\u0435\u043D\u0438\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u0435\u043D\u0438\u0439", "\u041F\u0440\u043E\u0432\u0435\u0440\u044F\u0439\u0442\u0435 \u0441\u0433\u0435\u043D\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u043A\u043E\u0434 \u043D\u0430 \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0441\u0446\u0435\u043D\u0430\u0440\u0438\u044F\u0445", "\u0421\u043E\u0445\u0440\u0430\u043D\u044F\u0439\u0442\u0435 \u0432\u044B\u043F\u0443\u0449\u0435\u043D\u043D\u0443\u044E \u0441\u0438\u0441\u0442\u0435\u043C\u0443 \u043F\u043E\u043D\u044F\u0442\u043D\u043E\u0439 \u0438 \u0440\u0430\u0441\u0448\u0438\u0440\u044F\u0435\u043C\u043E\u0439"] },
+          { kicker: "03 \xB7 \u0412\u043B\u0430\u0434\u0435\u043D\u0438\u0435", title: "\u0421\u043F\u0440\u043E\u0441\u0438\u0442\u0435, \u0447\u0442\u043E \u0432\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435", text: "\u0423\u0441\u043F\u0435\u0448\u043D\u0430\u044F \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u2014 \u044D\u0442\u043E \u0431\u043E\u043B\u044C\u0448\u0435, \u0447\u0435\u043C \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u0430\u044F \u043F\u0440\u0435\u0437\u0435\u043D\u0442\u0430\u0446\u0438\u044F. \u0418\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u043A\u043E\u0434, \u0434\u0438\u0437\u0430\u0439\u043D-\u0444\u0430\u0439\u043B\u044B, \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u044B, \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u0440\u0430\u0437\u0432\u0451\u0440\u0442\u044B\u0432\u0430\u043D\u0438\u044E \u0438 \u043A\u043E\u043D\u0442\u0435\u043A\u0441\u0442 \u0434\u043E\u043B\u0436\u043D\u044B \u0431\u044B\u0442\u044C \u0433\u043E\u0442\u043E\u0432\u044B \u0434\u043B\u044F \u0432\u0430\u0441 \u0438\u043B\u0438 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u043A\u043E\u043C\u0430\u043D\u0434\u044B.", bullets: ["\u0423\u0442\u043E\u0447\u043D\u0438\u0442\u0435, \u043A\u043E\u043C\u0443 \u043F\u0440\u0438\u043D\u0430\u0434\u043B\u0435\u0436\u0430\u0442 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u044B \u0438 \u0440\u0430\u0431\u043E\u0447\u0438\u0435 \u0444\u0430\u0439\u043B\u044B", "\u041F\u0440\u043E\u0441\u043C\u0430\u0442\u0440\u0438\u0432\u0430\u0439\u0442\u0435 \u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0434\u043E \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u043D\u0435\u0434\u0435\u043B\u0438", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0443\u044E \u043E\u0441\u043D\u043E\u0432\u0443, \u043F\u0440\u0438\u0433\u043E\u0434\u043D\u0443\u044E \u0434\u043B\u044F \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0438"] },
+          { kicker: "04 \xB7 \u0421\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u043F\u0430\u0440\u0442\u043D\u0451\u0440\u0430", title: "\u0421\u0440\u0430\u0432\u043D\u0438\u0442\u0435 \u0441\u043F\u043E\u0441\u043E\u0431 \u0440\u0430\u0431\u043E\u0442\u044B", text: "\u041F\u0440\u0435\u0436\u0434\u0435 \u0447\u0435\u043C \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0433\u043E \u043F\u0430\u0440\u0442\u043D\u0451\u0440\u0430, \u0441\u0440\u0430\u0432\u043D\u0438\u0442\u0435 \u044F\u0441\u043D\u043E\u0441\u0442\u044C \u043E\u0431\u044A\u0451\u043C\u0430, \u0446\u0438\u043A\u043B\u044B \u043E\u0431\u0440\u0430\u0442\u043D\u043E\u0439 \u0441\u0432\u044F\u0437\u0438, \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0441\u0442\u044C, \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0443 \u043F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u0438 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u0430 \u044D\u0442\u0430\u043F\u0443 \u0432\u0430\u0448\u0435\u0433\u043E \u0431\u0438\u0437\u043D\u0435\u0441\u0430.", bullets: ["\u041A\u0442\u043E \u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0435\u0442 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u044B\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u044F?", "\u041A\u043E\u0433\u0434\u0430 \u0432\u044B \u0443\u0432\u0438\u0434\u0438\u0442\u0435 \u0447\u0442\u043E-\u0442\u043E \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u0435?", "\u0421\u043C\u043E\u0436\u0435\u0442 \u043B\u0438 \u0434\u0440\u0443\u0433\u0430\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u0430 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0431\u0435\u0437 \u043D\u0430\u0447\u0430\u043B\u0430 \u0441 \u043D\u0443\u043B\u044F?"] }
+        ] },
+        packages: { title: "\u041D\u0430\u0432\u0438\u0433\u0430\u0442\u043E\u0440 \u043F\u043E \u043F\u0430\u043A\u0435\u0442\u0430\u043C", intro: "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u043F\u0443\u0431\u043B\u0438\u0447\u043D\u044B\u0435 \u043F\u0430\u043A\u0435\u0442\u044B \u043A\u0430\u043A \u043E\u0442\u043F\u0440\u0430\u0432\u043D\u0443\u044E \u0442\u043E\u0447\u043A\u0443 \u0434\u043B\u044F \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u0430. \u041E\u0431\u044A\u0451\u043C \u0441\u043E\u0433\u043B\u0430\u0441\u043E\u0432\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u0434\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0440\u0430\u0431\u043E\u0442\u044B.", columns: ["\u041C\u0430\u0440\u0448\u0440\u0443\u0442", "\u0418\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0438", "\u041E\u0431\u044B\u0447\u043D\u044B\u0435 \u0441\u0440\u043E\u043A\u0438", "\u041B\u0443\u0447\u0448\u0435 \u0432\u0441\u0435\u0433\u043E, \u043A\u043E\u0433\u0434\u0430 \u0432\u0430\u043C \u043D\u0443\u0436\u043D\u043E"], rows: [
+          { route: "\u0421\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0430", investment: "$2,600", timing: "3\u20135 \u0440\u0430\u0431\u043E\u0447\u0438\u0445 \u0434\u043D\u0435\u0439", bestFor: "\u041E\u0431\u044A\u044F\u0441\u043D\u0438\u0442\u044C \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u0443\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0435 \u0446\u0438\u0444\u0440\u043E\u0432\u043E\u0435 \u043F\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435" },
+          { route: "\u041F\u0440\u043E\u0442\u043E\u0442\u0438\u043F", investment: "$6,000", timing: "5\u201310 \u0434\u043D\u0435\u0439", bestFor: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0438\u0434\u0435\u044E \u043E\u0441\u044F\u0437\u0430\u0435\u043C\u043E\u0439 \u0434\u043B\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438, \u043F\u0440\u0438\u0432\u043B\u0435\u0447\u0435\u043D\u0438\u044F \u0438\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0439 \u0438\u043B\u0438 \u043F\u0435\u0440\u0432\u044B\u0445 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u043E\u0432" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 \u043D\u0435\u0434\u0435\u043B\u044C", bestFor: "\u041F\u0435\u0440\u0435\u0434\u0430\u0442\u044C \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u0432\u0435\u0431-, iOS- \u0438\u043B\u0438 Android-\u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0432 \u0440\u0443\u043A\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0435\u0439" },
+          { route: "\u0418\u043D\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043B\u044C\u043D\u044B\u0439", investment: "$25,000", timing: "1\u20136 \u043C\u0435\u0441\u044F\u0446\u0435\u0432", bestFor: "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0431\u043E\u043B\u0435\u0435 \u043A\u0440\u0443\u043F\u043D\u0443\u044E \u0438\u043B\u0438 \u0441\u043B\u043E\u0436\u043D\u0443\u044E \u0441\u0438\u0441\u0442\u0435\u043C\u0443 \u0441 \u0434\u043E\u043B\u0433\u043E\u0441\u0440\u043E\u0447\u043D\u043E\u0439 \u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0441\u0442\u044C\u044E" }
+        ] },
+        toolkit: { title: "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B \u0437\u0430 \u043D\u0430\u0448\u0435\u0439 \u0440\u0430\u0431\u043E\u0442\u043E\u0439", intro: "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B \u0432\u044B\u0431\u0438\u0440\u0430\u044E\u0442\u0441\u044F \u043F\u043E\u0434 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430, \u043A\u043E\u043C\u0430\u043D\u0434\u0443, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u043F\u0440\u0438\u043C\u0435\u0442 \u0435\u0433\u043E, \u0438 \u044D\u0442\u0430\u043F \u0431\u0438\u0437\u043D\u0435\u0441\u0430.", groups: [
+          { label: "\u0412\u0430\u0448\u0430 \u0438\u0434\u0435\u044F, \u0441\u0442\u0430\u0432\u0448\u0430\u044F \u0432\u0438\u0434\u0438\u043C\u043E\u0439", description: "\u041A\u0430\u043A \u043A\u043E\u043D\u0446\u0435\u043F\u0446\u0438\u044F \u043F\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u0442\u0441\u044F \u0432 \u044D\u043A\u0440\u0430\u043D\u044B, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043C\u043E\u0436\u043D\u043E \u043D\u0430\u0436\u0438\u043C\u0430\u0442\u044C, \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0438\u043D\u0432\u0435\u0441\u0442\u043E\u0440\u0430\u043C \u0438 \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441 \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u043C\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F\u043C\u0438.", tools: [{ name: "Figma", note: "\u043A\u0430\u0436\u0434\u044B\u0439 \u044D\u043A\u0440\u0430\u043D \u0441\u043F\u0440\u043E\u0435\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D \u0434\u043E \u043A\u043E\u0434\u0430", tone: "figma" }, { name: "Rork", note: "\u043F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043D\u0430 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0435 \u0437\u0430 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0434\u043D\u0435\u0439", tone: "rork" }, { name: "Lovable", note: "\u0441\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0437\u0430 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0434\u043D\u0435\u0439", tone: "lovable" }, { name: "Replit", note: "\u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0449\u0438\u0439 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043C\u043E\u0436\u043D\u043E \u0437\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0438 \u0440\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C", tone: "replit" }] },
+          { label: "\u0412\u0430\u0448 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0439 \u043D\u0430\u0434\u043E\u043B\u0433\u043E", description: "\u0418\u043D\u0436\u0435\u043D\u0435\u0440\u0438\u044F, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0438\u0432\u0430\u0435\u0442 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435, \u0443\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u043C\u043E\u0435, \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u043C\u043E\u0435 \u0438 \u043E\u043F\u043B\u0430\u0447\u0438\u0432\u0430\u0435\u043C\u043E\u0435 \u0432\u0430\u0448\u0438\u043C\u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F\u043C\u0438.", tools: [{ name: "React Native", note: "\u043E\u0434\u043D\u0430 \u043A\u043E\u0434\u043E\u0432\u0430\u044F \u0431\u0430\u0437\u0430, iOS + Android", tone: "expo" }, { name: "Swift", note: "\u043D\u0430\u0442\u0438\u0432\u043D\u044B\u0439 iOS, \u0431\u044B\u0441\u0442\u0440\u0435\u0435 \u0432\u0441\u0435\u0433\u043E \u043D\u0430 iPhone", tone: "swift" }, { name: "Kotlin", note: "\u043D\u0430\u0442\u0438\u0432\u043D\u044B\u0439 Android, \u043F\u043E\u043B\u043D\u044B\u0439 \u043E\u0445\u0432\u0430\u0442 Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "\u0432\u0430\u0448\u0438 \u0434\u0430\u043D\u043D\u044B\u0435 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B \u0438 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0434\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430", tone: "node" }] },
+          { label: "\u0414\u043E\u0445\u043E\u0434 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A \u0441 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0434\u043D\u044F", description: "\u041F\u043B\u0430\u0442\u0435\u0436\u0438, \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0434\u0430 \u0432\u0441\u0442\u0440\u043E\u0435\u043D\u044B \u0441 \u0441\u0430\u043C\u043E\u0433\u043E \u043D\u0430\u0447\u0430\u043B\u0430, \u0430 \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u043E\u0442\u043E\u043C.", open: true, tools: [{ name: "Stripe", note: "\u0440\u0430\u0437\u043E\u0432\u044B\u0435 \u043F\u043B\u0430\u0442\u0435\u0436\u0438, \u043F\u043E\u0434\u043F\u0438\u0441\u043A\u0438, \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F", tone: "stripe" }, { name: "RevenueCat", note: "\u043E\u043F\u043B\u0430\u0442\u0430 App Store \u0438 Play Store", tone: "revenuecat" }, { name: "GitHub", note: "\u0435\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u044B\u0435 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u044B\u0435 \u043A\u043E\u043F\u0438\u0438: \u0432\u0430\u0448 \u043A\u043E\u0434 \u0432\u0441\u0435\u0433\u0434\u0430 \u0432 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u0438", tone: "github" }, { name: "Automation", note: "n8n + Make \u0431\u0435\u0440\u0443\u0442 \u043D\u0430 \u0441\u0435\u0431\u044F \u0440\u0443\u0442\u0438\u043D\u0443", tone: "hooks" }] },
+          { label: "\u0418\u0418 \u043D\u0430 \u0444\u043E\u043D\u0435, \u0430 \u043D\u0435 \u043D\u0430 \u043F\u0443\u0442\u0438", description: "\u0418\u0418 \u043C\u043E\u0436\u0435\u0442 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0442\u044C \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435, \u0440\u0435\u0430\u043B\u0438\u0437\u0430\u0446\u0438\u044E \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0443, \u043F\u043E\u043A\u0430 \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u0437\u0430 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0438 \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0430.", tools: [{ name: "Claude", note: "\u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A \u0438 \u0440\u0435\u0432\u044C\u044E\u0435\u0440 \u043A\u043E\u0434\u0430", tone: "claude" }, { name: "Gemini", note: "\u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u0442 \u0432\u0435\u0441\u044C \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0441\u0440\u0430\u0437\u0443", tone: "gemini" }, { name: "GPT-5", note: "\u0442\u0435\u043A\u0441\u0442\u044B, \u0441\u0446\u0435\u043D\u0430\u0440\u0438\u0438 \u0438 \u0442\u0432\u043E\u0440\u0447\u0435\u0441\u043A\u043E\u0435 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435", tone: "gpt" }, { name: "Llama 4", note: "\u0441\u0430\u043C\u043E\u0441\u0442\u043E\u044F\u0442\u0435\u043B\u044C\u043D\u043E \u0440\u0430\u0437\u043C\u0435\u0449\u0430\u0435\u043C\u044B\u0439 \u0432\u0430\u0440\u0438\u0430\u043D\u0442 \u0434\u043B\u044F \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0440\u0430\u0431\u043E\u0442\u044B", tone: "llama" }] }
+        ], footnote: "\u041A\u043E\u0434, \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u044B \u0438 \u0440\u0430\u0431\u043E\u0447\u0438\u0435 \u0444\u0430\u0439\u043B\u044B \u043E\u0441\u0442\u0430\u044E\u0442\u0441\u044F \u0443 \u0432\u0430\u0441. \u041A\u043E\u0433\u0434\u0430 \u043F\u043E\u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043B\u0443\u0447\u0448\u0438\u0439 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442, \u0435\u0433\u043E \u043C\u043E\u0436\u043D\u043E \u0437\u0430\u043C\u0435\u043D\u0438\u0442\u044C, \u043D\u0435 \u0434\u0435\u043B\u0430\u044F \u0432\u0430\u0448 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0437\u0430\u043B\u043E\u0436\u043D\u0438\u043A\u043E\u043C." },
+        journal: { title: "\u041F\u043E\u043B\u0435\u0432\u044B\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0438\u0437 \u0416\u0443\u0440\u043D\u0430\u043B\u0430", text: "\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u044B\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 MVP, SEO, GEO, \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u044F\u0445 \u0441 vibe-coding \u0438 \u0440\u0435\u0448\u0435\u043D\u0438\u044F\u0445, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0443\u043F\u0440\u043E\u0449\u0430\u044E\u0442 \u0432\u044B\u043F\u0443\u0441\u043A \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430.", readAction: "\u0427\u0438\u0442\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443", minutesLabel: "\u043C\u0438\u043D \u0447\u0442\u0435\u043D\u0438\u044F", allAction: "\u0412\u0441\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0436\u0443\u0440\u043D\u0430\u043B\u0430", fallbackCategory: "\u0416\u0443\u0440\u043D\u0430\u043B", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "\u0423\u0436\u0435 \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043C\u0430\u0440\u0448\u0440\u0443\u0442?", text: "\u0420\u0430\u0441\u0441\u043A\u0430\u0436\u0438\u0442\u0435, \u0433\u0434\u0435 \u0432\u044B \u0441\u0435\u0439\u0447\u0430\u0441, \u0447\u0442\u043E \u0432\u0430\u043C \u043D\u0443\u0436\u043D\u043E \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0438 \u0447\u0442\u043E \u043F\u043E\u043A\u0430 \u043D\u0435 \u0434\u0432\u0438\u0436\u0435\u0442\u0441\u044F.", action: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u044F\u0441\u043D\u044B\u0439 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0448\u0430\u0433" }
+      },
+      post: { ...sourcePost6, title: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435", seoTitle: "\u0411\u0440\u0438\u0444 MVP: \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 | Start Apps Studio", description: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0435 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u043F\u0438\u0441\u044B\u0432\u0430\u0435\u0442 \u0438\u0434\u0435\u044E. \u041E\u043D \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u0436\u0451\u0441\u0442\u043A\u043E \u043E\u0447\u0435\u0440\u0447\u0438\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E \u0438 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u044F\u0435\u0442 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443\u0442, \u0441\u0442\u043E\u0438\u0442 \u043B\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0442\u044C \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0443.", seoDescription: "\u0412\u0430\u0448 \u0431\u0440\u0438\u0444 MVP \u2014 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435, \u0430 \u043D\u0435 \u0431\u044E\u0440\u043E\u043A\u0440\u0430\u0442\u0438\u044F. \u0423\u0437\u043D\u0430\u0439\u0442\u0435 \u0442\u0440\u0438 \u0432\u0435\u0449\u0438, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 \u0434\u043E\u043B\u0436\u0435\u043D \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u0442\u044C \u0434\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0438\u0437\u0430\u0439\u043D\u0430 \u0438\u043B\u0438 \u043A\u043E\u0434\u0430.", excerpt: "\u041B\u0443\u0447\u0448\u0438\u0435 \u0431\u0440\u0438\u0444\u044B MVP \u043D\u0435 \u0431\u044B\u0432\u0430\u044E\u0442 \u0434\u043B\u0438\u043D\u043D\u044B\u043C\u0438. \u041E\u043D\u0438 \u0440\u0435\u0448\u0430\u044E\u0442, \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u043E\u0442 \u0447\u0435\u0433\u043E \u043E\u0442\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u0435\u0440\u0432\u0430\u044F \u0432\u0435\u0440\u0441\u0438\u044F \u0438 \u043A\u0430\u043A\u0438\u0435 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0437\u0430\u0441\u043B\u0443\u0436\u0438\u0432\u0430\u044E\u0442 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u043D\u0435\u0434\u0435\u043B\u0438 \u0440\u0430\u0431\u043E\u0442\u044B.", category: "\u041F\u043E\u043B\u0435\u0432\u044B\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438", tags: ["MVP", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430", "\u041E\u0441\u043D\u043E\u0432\u0430\u0442\u0435\u043B\u0438", "\u041E\u0431\u044A\u0451\u043C"], body: [
+        { type: "answer", text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 MVP \u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0435\u0442 \u0442\u0440\u0438 \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u0434\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0438\u0437\u0430\u0439\u043D\u0430: \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u0435\u0434\u043D\u0430\u0437\u043D\u0430\u0447\u0435\u043D \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0447\u0442\u043E \u043F\u0435\u0440\u0432\u0430\u044F \u0432\u0435\u0440\u0441\u0438\u044F \u043D\u0430\u043C\u0435\u0440\u0435\u043D\u043D\u043E \u043E\u0441\u0442\u0430\u0432\u0438\u0442 \u0437\u0430 \u0440\u0430\u043C\u043A\u0430\u043C\u0438 \u0438 \u043A\u0430\u043A\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u043E\u043F\u0440\u0430\u0432\u0434\u0430\u044E\u0442 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u0438\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0438. \u041F\u043E\u044D\u0442\u043E\u043C\u0443 \u0431\u0440\u0438\u0444 \u2014 \u043D\u0435 \u0431\u044E\u0440\u043E\u043A\u0440\u0430\u0442\u0438\u044F. \u042D\u0442\u043E \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435." },
+        { type: "p", text: "\u041E\u0441\u043D\u043E\u0432\u0430\u0442\u0435\u043B\u0438 \u0447\u0430\u0441\u0442\u043E \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442 \u0441 \u0431\u0440\u0438\u0444\u043E\u043C, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043D\u0430 \u0434\u0435\u043B\u0435 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\u043C \u0438\u0434\u0435\u0438: \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0430\u0431\u0437\u0430\u0446\u0435\u0432 \u043E \u0440\u044B\u043D\u043A\u0435, \u0441\u043F\u0438\u0441\u043E\u043A \u0444\u0443\u043D\u043A\u0446\u0438\u0439 \u0438 \u0444\u0440\u0430\u0437\u0430 \u043E \u0442\u043E\u043C, \u043A\u0443\u0434\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043A\u043E\u0433\u0434\u0430-\u043D\u0438\u0431\u0443\u0434\u044C \u043C\u043E\u0436\u0435\u0442 \u043F\u0440\u0438\u0439\u0442\u0438. \u042D\u0442\u043E\u0433\u043E \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E, \u0447\u0442\u043E\u0431\u044B \u043D\u0430\u0447\u0430\u0442\u044C \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440, \u043D\u043E \u043D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0434\u043B\u044F \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438. \u041A\u043E\u043C\u0430\u043D\u0434\u0435 \u043D\u0443\u0436\u0435\u043D \u043C\u0435\u043D\u044C\u0448\u0438\u0439 \u0438 \u0431\u043E\u043B\u0435\u0435 \u0442\u043E\u0447\u043D\u044B\u0439 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u0442 \u0430\u043C\u0431\u0438\u0446\u0438\u044E \u0432 \u043F\u043E\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u043C\u044B\u0445 \u0432\u044B\u0431\u043E\u0440\u043E\u0432." },
+        { type: "h2", text: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0435\u0442 \u0442\u0440\u0438 \u0437\u0430\u0434\u0430\u0447\u0438", id: "three-jobs" },
+        { type: "h3", text: "1. \u041E\u043D \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430, \u0443 \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0435\u0441\u0442\u044C \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0430", id: "name-the-user" },
+        { type: "p", text: "\xAB\u041C\u0430\u043B\u044B\u0439 \u0431\u0438\u0437\u043D\u0435\u0441\xBB \u2014 \u044D\u0442\u043E \u0440\u044B\u043D\u043E\u043A, \u0430 \u043D\u0435 \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C. \u0425\u043E\u0440\u043E\u0448\u0438\u0439 \u0431\u0440\u0438\u0444 \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430, \u043C\u043E\u043C\u0435\u043D\u0442, \u0432 \u043A\u043E\u0442\u043E\u0440\u043E\u043C \u043E\u043D \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F, \u0438 \u043E\u0431\u0445\u043E\u0434\u043D\u043E\u0439 \u043F\u0443\u0442\u044C, \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u043E\u043D \u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F \u0441\u0435\u0433\u043E\u0434\u043D\u044F. \u0423 \u043C\u0435\u043D\u0435\u0434\u0436\u0435\u0440\u0430 \u043A\u043B\u0438\u043D\u0438\u043A\u0438, \u043F\u044B\u0442\u0430\u044E\u0449\u0435\u0433\u043E\u0441\u044F \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u043E\u0442\u043C\u0435\u043D\u044B \u043D\u0430 \u0437\u0430\u0432\u0442\u0440\u0430, \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0430 \u043E\u0442\u043B\u0438\u0447\u0430\u0435\u0442\u0441\u044F \u043E\u0442 \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u044B \u043F\u0430\u0446\u0438\u0435\u043D\u0442\u0430, \u0438\u0449\u0443\u0449\u0435\u0433\u043E \u043D\u043E\u0432\u0443\u044E \u0437\u0430\u043F\u0438\u0441\u044C, \u0434\u0430\u0436\u0435 \u0435\u0441\u043B\u0438 \u043E\u0431\u0430 \u043E\u0442\u043D\u043E\u0441\u044F\u0442\u0441\u044F \u043A \u0437\u0434\u0440\u0430\u0432\u043E\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044E. \u0427\u0435\u043C \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u0435\u0435 \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C, \u0442\u0435\u043C \u043B\u0435\u0433\u0447\u0435 \u0440\u0435\u0448\u0438\u0442\u044C, \u0447\u0442\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0434\u043E\u043B\u0436\u0435\u043D \u0434\u0435\u043B\u0430\u0442\u044C \u0434\u0430\u043B\u044C\u0448\u0435." },
+        { type: "h3", text: "2. \u041E\u043D \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u0443 \u0432\u043E\u043A\u0440\u0443\u0433 \u043F\u0435\u0440\u0432\u043E\u0439 \u0432\u0435\u0440\u0441\u0438\u0438", id: "draw-the-line" },
+        { type: "p", text: "\u0421\u043F\u0438\u0441\u043E\u043A \u0444\u0443\u043D\u043A\u0446\u0438\u0439 \u0433\u043E\u0432\u043E\u0440\u0438\u0442, \u0447\u0442\u043E \u0431\u044B\u043B\u043E \u043F\u0440\u0438\u0434\u0443\u043C\u0430\u043D\u043E. \u0413\u0440\u0430\u043D\u0438\u0446\u0430 \u043E\u0431\u044A\u0451\u043C\u0430 \u0433\u043E\u0432\u043E\u0440\u0438\u0442, \u0447\u0442\u043E \u0431\u0443\u0434\u0435\u0442 \u0441\u043E\u0437\u0434\u0430\u043D\u043E. \u041E\u043F\u0438\u0448\u0438\u0442\u0435 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0438\u043A\u043B \u043E\u0434\u043D\u0438\u043C \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0435\u043C, \u0437\u0430\u0442\u0435\u043C \u043F\u0435\u0440\u0435\u0447\u0438\u0441\u043B\u0438\u0442\u0435 \u0440\u0430\u0431\u043E\u0442\u0443, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u0434\u0435\u043B\u0430\u0435\u0442 \u044D\u0442\u043E\u0442 \u0446\u0438\u043A\u043B \u043D\u0430\u0434\u0451\u0436\u043D\u044B\u043C: \u0433\u043B\u0430\u0432\u043D\u044B\u0439 \u044D\u043A\u0440\u0430\u043D, \u043E\u0434\u043D\u043E \u0437\u043D\u0430\u0447\u0438\u043C\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435, \u0434\u0430\u043D\u043D\u044B\u0435 \u0437\u0430 \u043D\u0438\u043C \u0438 \u043E\u0431\u0440\u0430\u0442\u043D\u0443\u044E \u0441\u0432\u044F\u0437\u044C, \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0430\u044E\u0449\u0443\u044E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044E \u0443\u0441\u043F\u0435\u0445. \u0412\u0441\u0451 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u2014 \u043A\u0430\u043D\u0434\u0438\u0434\u0430\u0442 \u043D\u0430 \u043F\u043E\u0442\u043E\u043C, \u0430 \u043D\u0435 \u043C\u043E\u043B\u0447\u0430\u043B\u0438\u0432\u043E\u0435 \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u0435 \u043A \u0437\u0430\u043F\u0443\u0441\u043A\u0443." },
+        { type: "h3", text: "3. \u041E\u043D \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u044F\u0435\u0442 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E", id: "define-the-proof" },
+        { type: "p", text: "\xAB\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u043C \u0438 \u043F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u043C, \u0447\u0442\u043E \u0431\u0443\u0434\u0435\u0442\xBB \u2014 \u043D\u0435 \u043F\u043B\u0430\u043D \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u044F. \u0420\u0435\u0448\u0438\u0442\u0435, \u0447\u0442\u043E \u0432\u044B \u043E\u0436\u0438\u0434\u0430\u0435\u0442\u0435 \u0443\u0432\u0438\u0434\u0435\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u044B\u0435 \u043D\u0435\u0434\u0435\u043B\u0438: \u0437\u0430\u0432\u0435\u0440\u0448\u0451\u043D\u043D\u044B\u0439 \u0441\u0446\u0435\u043D\u0430\u0440\u0438\u0439, \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435, \u043F\u043B\u0430\u0442\u043D\u0443\u044E \u043A\u043E\u043D\u0432\u0435\u0440\u0441\u0438\u044E \u0438\u043B\u0438 \u0438\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u043E\u0441\u043D\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0441 \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u044B\u043C \u0442\u0438\u043F\u043E\u043C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F. \u041C\u0435\u0442\u0440\u0438\u043A\u0430 \u043D\u0435 \u043E\u0431\u044F\u0437\u0430\u043D\u0430 \u0431\u044B\u0442\u044C \u0441\u043B\u043E\u0436\u043D\u043E\u0439. \u041E\u043D\u0430 \u0434\u043E\u043B\u0436\u043D\u0430 \u0431\u044B\u0442\u044C \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0431\u043B\u0438\u0437\u043A\u0430 \u043A \u043F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u044E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u0447\u0442\u043E\u0431\u044B \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435." },
+        { type: "h2", text: "\u0427\u0442\u043E \u0437\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0434\u043E \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u044D\u043A\u0440\u0430\u043D\u0430", id: "before-a-screen" },
+        { type: "ul", items: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C: \u043E\u0434\u043D\u0430 \u0440\u043E\u043B\u044C, \u043E\u0434\u043D\u0430 \u0441\u0438\u0442\u0443\u0430\u0446\u0438\u044F \u0438 \u043E\u0434\u0438\u043D \u0431\u043E\u043B\u0435\u0437\u043D\u0435\u043D\u043D\u044B\u0439 \u043E\u0431\u0445\u043E\u0434\u043D\u043E\u0439 \u043F\u0443\u0442\u044C", "\u041E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0438\u043A\u043B: \u043D\u0430\u0438\u043C\u0435\u043D\u044C\u0448\u0435\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435, \u0441\u043E\u0437\u0434\u0430\u044E\u0449\u0435\u0435 \u0446\u0435\u043D\u043D\u043E\u0441\u0442\u044C \u0438 \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0435 \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0442\u044C\u0441\u044F", "\u0413\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0430: \u0447\u0442\u043E \u044F\u0432\u043D\u043E \u043D\u0435 \u0432\u0445\u043E\u0434\u0438\u0442 \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E", "\u0422\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u0435 \u0434\u043E\u0432\u0435\u0440\u0438\u044F: \u0447\u0442\u043E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\u0435\u043D \u0443\u0432\u0438\u0434\u0435\u0442\u044C, \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0438\u043B\u0438 \u043F\u043E\u043D\u044F\u0442\u044C \u043F\u0435\u0440\u0435\u0434 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435\u043C", "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0442\u043E\u0447\u043A\u0430 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430: \u043F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u0435 \u0438\u043B\u0438 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440, \u043E\u043F\u0440\u0430\u0432\u0434\u044B\u0432\u0430\u044E\u0449\u0438\u0435 \u0435\u0449\u0451 \u043E\u0434\u0438\u043D \u044D\u0442\u0430\u043F \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438"] },
+        { type: "h2", text: "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043E\u0431\u044A\u0451\u043C\u0430, \u043A\u043E\u0442\u043E\u0440\u043E\u0439 \u043C\u044B \u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u0441\u044F", id: "scope-test" },
+        { type: "p", text: "\u0412\u043E\u0437\u044C\u043C\u0438\u0442\u0435 \u043A\u0430\u0436\u0434\u0443\u044E \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u043D\u0443\u044E \u0444\u0443\u043D\u043A\u0446\u0438\u044E \u0438 \u0437\u0430\u0434\u0430\u0439\u0442\u0435 \u043E\u0434\u0438\u043D \u0432\u043E\u043F\u0440\u043E\u0441: \u043F\u043E\u0432\u044B\u0448\u0430\u0435\u0442 \u043B\u0438 \u043E\u043D\u0430 \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C \u0443\u0441\u043F\u0435\u0445\u0430 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E \u0446\u0438\u043A\u043B\u0430 \u0434\u043B\u044F \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F? \u0415\u0441\u043B\u0438 \u043D\u0435\u0442 \u2014 \u0432\u044B\u043D\u0435\u0441\u0438\u0442\u0435 \u0435\u0451 \u0438\u0437 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0440\u0435\u043B\u0438\u0437\u0430. \u0415\u0441\u043B\u0438 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E \u2014 \u0437\u0430\u043F\u0438\u0448\u0438\u0442\u0435 \u043F\u0440\u0435\u0434\u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0435, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043E\u043D\u0430 \u0437\u0430\u0449\u0438\u0449\u0430\u0435\u0442, \u0438 \u043D\u0430\u0439\u0434\u0438\u0442\u0435 \u0431\u043E\u043B\u0435\u0435 \u0434\u0435\u0448\u0451\u0432\u044B\u0439 \u0441\u043F\u043E\u0441\u043E\u0431 \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0435\u0433\u043E. \u0422\u0430\u043A \u043F\u043E\u043B\u0435\u0437\u043D\u0430\u044F \u0444\u0443\u043D\u043A\u0446\u0438\u044F \u043D\u0435 \u0441\u0442\u0430\u043D\u0435\u0442 \u043F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u044B\u043C \u043E\u043F\u0440\u0430\u0432\u0434\u0430\u043D\u0438\u0435\u043C \u0437\u0430\u0434\u0435\u0440\u0436\u043A\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430." },
+        { type: "quote", text: "\u0426\u0435\u043B\u044C \u0431\u0440\u0438\u0444\u0430 \u2014 \u043D\u0435 \u0437\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u0441\u0451, \u0447\u0442\u043E \u0432\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0441\u043E\u0437\u0434\u0430\u0442\u044C. \u0415\u0433\u043E \u0446\u0435\u043B\u044C \u2014 \u0441\u0434\u0435\u043B\u0430\u0442\u044C \u043E\u0447\u0435\u0432\u0438\u0434\u043D\u044B\u043C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u043E \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435.", cite: "\u043F\u0440\u0430\u0432\u0438\u043B\u043E, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043C\u044B \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C \u043D\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u044B\u0445 \u0441\u0442\u0430\u0440\u0442\u0430\u0445" },
+        { type: "callout", title: "\u041A\u0430\u043A \u043C\u044B \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C \u044D\u0442\u043E \u0432 Start Apps Studio", text: "\u0414\u043E \u043E\u0446\u0435\u043D\u043A\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u043C\u044B \u043F\u0440\u0435\u0432\u0440\u0430\u0449\u0430\u0435\u043C \u0438\u0434\u0435\u044E \u043E\u0441\u043D\u043E\u0432\u0430\u0442\u0435\u043B\u044F \u0432 \u043E\u0434\u043D\u043E\u0441\u0442\u0440\u0430\u043D\u0438\u0447\u043D\u044B\u0439 \u043E\u0431\u044A\u0451\u043C: \u043E\u0434\u0438\u043D \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C, \u043E\u0434\u0438\u043D \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0438\u043A\u043B, \u044D\u043A\u0440\u0430\u043D\u044B \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0435\u0433\u043E \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u044E\u0442, \u0438 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0434\u043E\u043B\u0436\u043D\u044B \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435. \u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435\u0439 \u043C\u0435\u0436\u0434\u0443 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0435\u0439, \u0434\u0438\u0437\u0430\u0439\u043D\u043E\u043C, \u0438\u043D\u0436\u0435\u043D\u0435\u0440\u0438\u0435\u0439 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u043E\u043C \u2014 \u0438 \u0442\u043E\u0447\u043A\u043E\u0439 \u043E\u0442\u0441\u0447\u0451\u0442\u0430, \u043A\u043E\u0433\u0434\u0430 \u043D\u043E\u0432\u0430\u044F \u0444\u0443\u043D\u043A\u0446\u0438\u044F \u043F\u044B\u0442\u0430\u0435\u0442\u0441\u044F \u043D\u0435\u0437\u0430\u043C\u0435\u0442\u043D\u043E \u043F\u043E\u043F\u0430\u0441\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E." },
+        { type: "h2", text: "\u0427\u0430\u0441\u0442\u043E \u0437\u0430\u0434\u0430\u0432\u0430\u0435\u043C\u044B\u0435 \u0432\u043E\u043F\u0440\u043E\u0441\u044B", id: "faq" },
+        { type: "faq", items: [
+          { q: "\u041A\u0430\u043A\u043E\u0439 \u0434\u043B\u0438\u043D\u044B \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u0431\u0440\u0438\u0444 MVP?", a: "\u0414\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043A\u043E\u0440\u043E\u0442\u043A\u0438\u043C, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0437\u0430 \u043E\u0434\u0438\u043D \u0440\u0430\u0437, \u0438 \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u044B\u043C, \u0447\u0442\u043E\u0431\u044B \u0434\u0435\u043B\u0430\u0442\u044C \u043A\u043E\u043C\u043F\u0440\u043E\u043C\u0438\u0441\u0441\u044B. \u041E\u0434\u043D\u043E\u0439-\u0434\u0432\u0443\u0445 \u0441\u0442\u0440\u0430\u043D\u0438\u0446 \u043E\u0431\u044B\u0447\u043D\u043E \u0445\u0432\u0430\u0442\u0430\u0435\u0442, \u0435\u0441\u043B\u0438 \u0432 \u043D\u0438\u0445 \u043D\u0430\u0437\u0432\u0430\u043D\u044B \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C, \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0438\u043A\u043B, \u0433\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0430, \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u0434\u043E\u0432\u0435\u0440\u0438\u044F \u0438 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0442\u043E\u0447\u043A\u0430 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430." },
+          { q: "\u0414\u043E\u043B\u0436\u0435\u043D \u043B\u0438 \u0431\u0440\u0438\u0444 \u0432\u043A\u043B\u044E\u0447\u0430\u0442\u044C \u043F\u043E\u043B\u043D\u044B\u0439 \u0441\u043F\u0438\u0441\u043E\u043A \u0444\u0443\u043D\u043A\u0446\u0438\u0439?", a: "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u0435 \u0444\u0443\u043D\u043A\u0446\u0438\u0438, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0438\u0432\u0430\u044E\u0442 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0446\u0438\u043A\u043B, \u0430 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0432 \u0440\u0430\u0437\u0434\u0435\u043B\u0435 \u0438\u0434\u0435\u0439 \u043D\u0430 \u043F\u043E\u0442\u043E\u043C. \u041E\u0442\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0441\u043F\u0438\u0441\u043E\u043A \u043E\u0436\u0438\u0434\u0430\u043D\u0438\u044F \u0437\u0430\u0449\u0438\u0449\u0430\u0435\u0442 \u0445\u043E\u0440\u043E\u0448\u0438\u0435 \u0438\u0434\u0435\u0438, \u043D\u0435 \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u044F \u0438\u043C \u043D\u0435\u0437\u0430\u043C\u0435\u0442\u043D\u043E \u0441\u0442\u0430\u0442\u044C \u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F\u043C\u0438 \u043A \u0437\u0430\u043F\u0443\u0441\u043A\u0443." },
+          { q: "\u0427\u0442\u043E, \u0435\u0441\u043B\u0438 \u0446\u0435\u043B\u0435\u0432\u043E\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0432\u0441\u0451 \u0435\u0449\u0451 \u043D\u0435 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0451\u043D?", a: "\u0417\u0430\u043F\u0438\u0448\u0438\u0442\u0435 \u0434\u0432\u0443\u0445 \u043D\u0430\u0438\u0431\u043E\u043B\u0435\u0435 \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u044B\u0445 \u043A\u0430\u043D\u0434\u0438\u0434\u0430\u0442\u043E\u0432 \u0438 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0442 \u0440\u0430\u0437\u043B\u0438\u0447\u0438\u0442\u044C \u0438\u0445. \u041D\u0435\u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0451\u043D\u043D\u043E\u0441\u0442\u044C \u043F\u043E\u043B\u0435\u0437\u043D\u0430, \u043A\u043E\u0433\u0434\u0430 \u043E\u043D\u0430 \u044F\u0432\u043D\u0430; \u043E\u043D\u0430 \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F \u0434\u043E\u0440\u043E\u0433\u043E\u0439, \u043A\u043E\u0433\u0434\u0430 \u0441\u043A\u0440\u044B\u0442\u0430 \u0432\u043D\u0443\u0442\u0440\u0438 \u0448\u0438\u0440\u043E\u043A\u043E\u0433\u043E \u043E\u0431\u044A\u0451\u043C\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430." },
+          { q: "\u041D\u0443\u0436\u043D\u043E \u043B\u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0431\u0440\u0438\u0444 \u0434\u043E \u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0438\u0437\u0430\u0439\u043D\u0430?", a: "\u041E\u043D \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u044F\u0441\u043D\u044B\u043C, \u0447\u0442\u043E\u0431\u044B \u043D\u0430\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0438\u0442\u0435\u0440\u0430\u0446\u0438\u044E \u0434\u0438\u0437\u0430\u0439\u043D\u0430, \u043D\u043E \u043D\u0435 \u043E\u0431\u044F\u0437\u0430\u043D \u043D\u0430\u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0441\u0442\u0430\u0432\u0430\u0442\u044C\u0441\u044F \u043D\u0435\u0438\u0437\u043C\u0435\u043D\u043D\u044B\u043C. \u0414\u0438\u0437\u0430\u0439\u043D \u043C\u043E\u0436\u0435\u0442 \u0432\u044B\u044F\u0432\u0438\u0442\u044C \u043B\u0443\u0447\u0448\u0438\u0439 \u0432\u043E\u043F\u0440\u043E\u0441, \u043E\u0434\u043D\u0430\u043A\u043E \u043A\u0430\u0436\u0434\u043E\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0442\u044C \u043E\u0431\u044A\u0451\u043C \u0438 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u0432\u044B \u043F\u044B\u0442\u0430\u0435\u0442\u0435\u0441\u044C \u0441\u043E\u0431\u0440\u0430\u0442\u044C." }
+        ] }
+      ] }
+    };
+    ru_default = RU_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/tr.ts
+var sourcePost7, TR_EDITORIAL_CONTENT, tr_default;
+var init_tr = __esm({
+  "server/journal/locales/tr.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost7 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost7) throw new Error("MVP source post is missing.");
+    TR_EDITORIAL_CONTENT = {
+      copy: { journalName: "The Journal \xB7 Cilt I", journalTitle: "St\xFCdyodan saha notlar\u0131.", journalDescription: "Google'da s\u0131ralanan ve yapay zek\xE2 taraf\u0131ndan al\u0131nt\u0131lanan MVP'leri yay\u0131na alma notlar\u0131: GEO, vibe-coding ve i\u015Fte yapay zek\xE2n\u0131n durumu.", resourcesTitle: "\xD6nce do\u011Fru \u015Feyi, sonra da iyi olan\u0131 in\u015Fa edin.", resourcesDescription: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.", read: "Notu oku", minutes: "dk. okuma", allNotes: "T\xFCm notlar", sources: "Kaynaklar", shortAnswer: "K\u0131sa yan\u0131t", language: "Dil", translatedArticleTitle: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", translatedArticleDescription: "\u0130\u015Fe yarayan bir MVP \xF6zeti ilk kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn s\u0131n\u0131r\u0131n\u0131 \xE7izer ve sonraki karar\u0131n kan\u0131t\u0131n\u0131 belirler." },
+      resources: {
+        title: "\xD6nce do\u011Fru \u015Feyi, sonra da iyi olan\u0131 in\u015Fa edin.",
+        description: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.",
+        eyebrow: "Start Apps Studio \xB7 Kaynaklar",
+        primaryAction: "Projenizi konu\u015Fal\u0131m",
+        journalAction: "Journal'\u0131 oku",
+        routes: { title: "Sonraki rotay\u0131 se\xE7in", intro: "Do\u011Fru ilk kilometre ta\u015F\u0131, ne kadar yaz\u0131l\u0131m hayal edebildi\u011Finize de\u011Fil, neyi kan\u0131tlaman\u0131z gerekti\u011Fine ba\u011Fl\u0131d\u0131r.", cards: [
+          { kicker: "01 \xB7 Y\xF6n", title: "En k\xFC\xE7\xFCk faydal\u0131 kan\u0131tla ba\u015Flay\u0131n", text: "Bir lansman sitesi insanlar\u0131n teklifi anlay\u0131p anlamad\u0131\u011F\u0131n\u0131 yan\u0131tlar. Bir prototip deneyime tepki verip veremeyeceklerini yan\u0131tlar. Bir MVP ise ger\xE7ek kullan\u0131c\u0131lar\u0131n ne yapt\u0131\u011F\u0131n\u0131 yan\u0131tlar.", bullets: ["Sonraki s\xFCr\xFCm\xFCn a\xE7mas\u0131 gereken tek karar\u0131 se\xE7in", "\u0130lk s\xFCr\xFCm\xFC ondan \xF6\u011Frenebilece\u011Finiz kadar dar tutun", "\u0130htiyac\u0131n\u0131z olan kan\u0131ta uyan paketi kullan\u0131n"] },
+          { kicker: "02 \xB7 Yapay zek\xE2 destekli teslimat", title: "Yap\u0131 sa\u011Flam oldu\u011Funda h\u0131z faydal\u0131d\u0131r", text: "Yapay zek\xE2 ke\u015Ffi, kodlamay\u0131 ve incelemeyi h\u0131zland\u0131rabilir. \xDCr\xFCn muhakemesinin, mimarinin, testin veya sonu\xE7tan sorumlu ki\u015Finin yerini almaz.", bullets: ["Se\xE7enekleri ke\u015Ffetmek ve tekrar\u0131 azaltmak i\xE7in yapay zek\xE2y\u0131 kullan\u0131n", "\xDCretilen kodu ger\xE7ek kullan\u0131c\u0131 ak\u0131\u015Flar\u0131na g\xF6re inceleyin", "Yay\u0131na al\u0131nan sistemi anla\u015F\u0131l\u0131r ve geni\u015Fletilebilir tutun"] },
+          { kicker: "03 \xB7 Sahiplik", title: "Devirde ne teslim edildi\u011Fini sorun", text: "Ba\u015Far\u0131l\u0131 bir geli\u015Ftirme, son sunumdan daha fazlas\u0131d\u0131r. Kaynak kodu, tasar\u0131m dosyalar\u0131, hesaplar, da\u011F\u0131t\u0131m eri\u015Fimi ve ba\u011Flam sizin veya sonraki ekibiniz i\xE7in haz\u0131r olmal\u0131d\u0131r.", bullets: ["Hesaplar\u0131n ve \xE7al\u0131\u015Fma dosyalar\u0131n\u0131n sahibini teyit edin", "Son haftadan \xF6nce \xE7al\u0131\u015Fan ilerlemeyi g\xF6zden ge\xE7irin", "Belgelenmi\u015F, s\xFCrd\xFCr\xFClebilir bir temel ile ayr\u0131l\u0131n"] },
+          { kicker: "04 \xB7 \u0130\u015F orta\u011F\u0131 uyumu", title: "\xC7al\u0131\u015Fma bi\xE7imini kar\u015F\u0131la\u015Ft\u0131r\u0131n", text: "Bir \xFCr\xFCn orta\u011F\u0131 se\xE7meden \xF6nce kapsam netli\u011Fini, geri bildirim d\xF6ng\xFClerini, sorumlulu\u011Fu, lansman sonras\u0131 deste\u011Fi ve rotan\u0131n i\u015Finizin a\u015Famas\u0131na uyup uymad\u0131\u011F\u0131n\u0131 kar\u015F\u0131la\u015Ft\u0131r\u0131n.", bullets: ["\xDCr\xFCn kararlar\u0131n\u0131 kim veriyor?", "Ne zaman ger\xE7ek bir \u015Fey g\xF6receksiniz?", "Ba\u015Fka bir ekip ba\u015Ftan ba\u015Flamadan devam edebilir mi?"] }
+        ] },
+        packages: { title: "Paket rota rehberi", intro: "Herkese a\xE7\u0131k paketleri konu\u015Fma i\xE7in ba\u015Flang\u0131\xE7 noktas\u0131 olarak kullan\u0131n. Kapsam, \xE7al\u0131\u015Fma ba\u015Flamadan \xF6nce kararla\u015Ft\u0131r\u0131l\u0131r.", columns: ["Rota", "Yat\u0131r\u0131m", "Tipik s\xFCre", "\u015Euna ihtiyac\u0131n\u0131z oldu\u011Funda en iyisi"], rows: [
+          { route: "Lansman Sitesi", investment: "$2,600", timing: "3\u20135 i\u015F g\xFCn\xFC", bestFor: "Teklifi a\xE7\u0131klamak ve g\xFCvenilir bir dijital varl\u0131k olu\u015Fturmak" },
+          { route: "Prototip", investment: "$6,000", timing: "5\u201310 g\xFCn", bestFor: "Bir fikri do\u011Frulama, fon toplama veya ilk g\xF6r\xFC\u015Fmeler i\xE7in somutla\u015Ft\u0131rmak" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 hafta", bestFor: "Ger\xE7ek bir web, iOS veya Android \xFCr\xFCn\xFCn\xFC kullan\u0131c\u0131lar\u0131n eline vermek" },
+          { route: "\xD6zel", investment: "$25,000", timing: "1\u20136 ay", bestFor: "Uzun vadeli sorumlulukla daha b\xFCy\xFCk veya karma\u015F\u0131k bir sistem in\u015Fa etmek" }
+        ] },
+        toolkit: { title: "\u0130\u015Fin arkas\u0131ndaki ara\xE7 seti", intro: "Ara\xE7lar; \xFCr\xFCn sonucu, devralacak ekip ve i\u015Fin a\u015Famas\u0131 i\xE7in se\xE7ilir.", groups: [
+          { label: "Fikriniz g\xF6r\xFCn\xFCr h\xE2lde", description: "Bir kavram\u0131n dokunabilece\u011Finiz, yat\u0131r\u0131mc\u0131larla payla\u015Fabilece\u011Finiz ve ger\xE7ek kullan\u0131c\u0131larla test edebilece\u011Finiz ekranlara nas\u0131l d\xF6n\xFC\u015Ft\xFC\u011F\xFC.", tools: [{ name: "Figma", note: "koddan \xF6nce tasarlanan her ekran", tone: "figma" }, { name: "Rork", note: "g\xFCnler i\xE7inde ger\xE7ek telefonda deneyin", tone: "rork" }, { name: "Lovable", note: "g\xFCnler i\xE7inde yay\u0131nda lansman sitesi", tone: "lovable" }, { name: "Replit", note: "\xE7al\u0131\u015Ft\u0131r\u0131p d\xFCzenleyebilece\u011Finiz \xE7al\u0131\u015Fan \xFCr\xFCn", tone: "replit" }] },
+          { label: "\xDCr\xFCn\xFCn\xFCz kal\u0131c\u0131 olacak \u015Fekilde in\u015Fa edildi", description: "Kullan\u0131c\u0131lar\u0131n\u0131z\u0131n y\xFCkledi\u011Fi, a\xE7t\u0131\u011F\u0131 ve \xF6deme yapt\u0131\u011F\u0131 uygulamay\u0131 \xE7al\u0131\u015Ft\u0131ran m\xFChendislik.", tools: [{ name: "React Native", note: "tek kod taban\u0131, iOS + Android", tone: "expo" }, { name: "Swift", note: "yerel iOS, iPhone'da en h\u0131zl\u0131", tone: "swift" }, { name: "Kotlin", note: "yerel Android, Play Store'a tam eri\u015Fim", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "verileriniz g\xFCvenli, d\u0131\u015Fa aktarmas\u0131 size ait", tone: "node" }] },
+          { label: "Gelir ve lansman, ilk g\xFCnden", description: "\xD6demeler, g\xFCncellemeler ve kod g\xFCvenli\u011Fi sonradan eklenmez; ba\u015Ftan kurulur.", open: true, tools: [{ name: "Stripe", note: "tek seferlik, abonelikler, y\xFCkseltmeler", tone: "stripe" }, { name: "RevenueCat", note: "App Store ve Play Store faturalamas\u0131", tone: "revenuecat" }, { name: "GitHub", note: "g\xFCnl\xFCk yedekler: kodunuz hep g\xFCvende", tone: "github" }, { name: "Automation", note: "n8n + Make angaryay\u0131 halleder", tone: "hooks" }] },
+          { label: "Arka planda yapay zek\xE2, yolunuzda de\u011Fil", description: "Bir ki\u015Fi y\xF6n\xFCn ve kalite \xE7\u0131tas\u0131n\u0131n sahibi olurken yapay zek\xE2 ara\u015Ft\u0131rmay\u0131, uygulamay\u0131 ve incelemeyi destekleyebilir.", tools: [{ name: "Claude", note: "ana geli\u015Ftirici ve kod inceleyicisi", tone: "claude" }, { name: "Gemini", note: "t\xFCm \xFCr\xFCn\xFC tek seferde inceler", tone: "gemini" }, { name: "GPT-5", note: "metinler, ak\u0131\u015Flar ve yarat\u0131c\u0131 y\xF6n", tone: "gpt" }, { name: "Llama 4", note: "hassas i\u015Fler i\xE7in kendi sunucunuzda se\xE7enek", tone: "llama" }] }
+        ], footnote: "Kodu, hesaplar\u0131 ve \xE7al\u0131\u015Fma dosyalar\u0131n\u0131 siz tutars\u0131n\u0131z. Daha iyi bir ara\xE7 \xE7\u0131kt\u0131\u011F\u0131nda, \xFCr\xFCn\xFCn\xFCz\xFC rehin tutmadan de\u011Fi\u015Ftirilebilir." },
+        journal: { title: "Journal'dan saha notlar\u0131", text: "MVP stratejisi, SEO, GEO, vibe-coded uygulamalar ve \xFCr\xFCn\xFC yay\u0131na almay\u0131 kolayla\u015Ft\u0131ran kararlar \xFCzerine daha uzun notlar.", readAction: "Notu oku", minutesLabel: "dk. okuma", allAction: "T\xFCm Journal notlar\u0131", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "Akl\u0131n\u0131zda bir rota var m\u0131?", text: "Nerede oldu\u011Funuzu, neyi kan\u0131tlaman\u0131z gerekti\u011Fini ve \u015Fu anda neyin tak\u0131ld\u0131\u011F\u0131n\u0131 payla\u015F\u0131n.", action: "Net bir sonraki ad\u0131m\u0131 al\u0131n" }
+      },
+      post: { slug: sourcePost7.slug, publishedAt: sourcePost7.publishedAt, readMinutes: sourcePost7.readMinutes, title: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", seoTitle: "MVP \xD6zetleri: \u0130lk \xDCr\xFCn Karar\u0131n\u0131z | Start Apps Studio", description: "\u0130\u015Fe yarayan bir MVP \xF6zeti bir fikri tan\u0131mlamaktan fazlas\u0131n\u0131 yapar. Kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn etraf\u0131na kesin bir s\u0131n\u0131r \xE7izer ve geli\u015Ftirmeye devam edip etmeyece\u011Finizi s\xF6yleyen kan\u0131t\u0131 belirler.", seoDescription: "MVP \xF6zetiniz evrak i\u015Fi de\u011Fil, bir \xFCr\xFCn karar\u0131d\u0131r. Tasar\u0131m veya kod ba\u015Flamadan \xF6nce faydal\u0131 bir \xF6zetin tan\u0131mlamas\u0131 gereken \xFC\xE7 \u015Feyi \xF6\u011Frenin.", excerpt: "En iyi MVP \xF6zetleri uzun de\u011Fildir. \xDCr\xFCn\xFCn kimin i\xE7in oldu\u011Funa, birinci s\xFCr\xFCm\xFCn neyi yapmay\u0131 reddetti\u011Fine ve hangi kan\u0131t\u0131n sonraki \xE7al\u0131\u015Fma haftas\u0131n\u0131 hak etti\u011Fine karar verir.", category: "Saha Notlar\u0131", tags: ["MVP", "\xDCr\xFCn stratejisi", "Kurucular", "Kapsam"], body: [
+        { type: "answer", text: "\u0130\u015Fe yarayan bir MVP \xF6zeti tasar\u0131m ba\u015Flamadan \xF6nce \xFC\xE7 karar verir: \xFCr\xFCn\xFCn kimin i\xE7in oldu\u011Fu, birinci s\xFCr\xFCm\xFCn bilin\xE7li olarak neleri d\u0131\u015Far\u0131da b\u0131rakaca\u011F\u0131 ve hangi kullan\u0131c\u0131 kan\u0131t\u0131n\u0131n sonraki yat\u0131r\u0131m\u0131 hakl\u0131 \xE7\u0131karaca\u011F\u0131. Bu y\xFCzden \xF6zet evrak i\u015Fi de\u011Fildir. \u0130lk \xFCr\xFCn karar\u0131d\u0131r." },
+        { type: "p", text: "Kurucular \xE7o\u011Fu zaman asl\u0131nda fikrin a\xE7\u0131klamas\u0131 olan bir \xF6zetle gelir: pazar hakk\u0131nda birka\xE7 paragraf, bir \xF6zellik listesi ve \xFCr\xFCn\xFCn bir g\xFCn nereye gidebilece\u011Fine dair bir c\xFCmle. Sohbet ba\u015Flatmaya yeter, ancak \xFCzerine \xFCr\xFCn \xE7\u0131karmaya yetmez. Bir geli\u015Ftirme ekibinin, hedefi test edilebilir se\xE7imler dizisine d\xF6n\xFC\u015Ft\xFCren daha k\xFC\xE7\xFCk ve daha keskin bir belgeye ihtiyac\u0131 vard\u0131r." },
+        { type: "h2", text: "\u0130\u015Fe yarayan bir \xF6zet \xFC\xE7 i\u015F g\xF6r\xFCr", id: "three-jobs" },
+        { type: "h3", text: "1. Sorunu olan ki\u015Fiyi tan\u0131mlar", id: "name-the-user" },
+        { type: "p", text: "\u201CK\xFC\xE7\xFCk i\u015Fletmeler\u201D bir pazard\u0131r; ilk kullan\u0131c\u0131 de\u011Fildir. \u0130yi bir \xF6zet ki\u015Fiyi, i\xE7inde bulundu\u011Fu an\u0131 ve bug\xFCn kulland\u0131\u011F\u0131 ge\xE7ici \xE7\xF6z\xFCm\xFC tan\u0131mlar. Yar\u0131nki iptalleri doldurmaya \xE7al\u0131\u015Fan bir klinik y\xF6neticisinin sorunu, ikisi de sa\u011Fl\u0131k sekt\xF6r\xFCnde olsa bile yeni randevu arayan bir hastan\u0131n sorunundan farkl\u0131d\u0131r. \u0130lk kullan\u0131c\u0131 ne kadar \xF6zg\xFClse, \xFCr\xFCn\xFCn sonra ne yapmas\u0131 gerekti\u011Fine karar vermek o kadar kolayla\u015F\u0131r." },
+        { type: "h3", text: "2. Birinci s\xFCr\xFCm\xFCn \xE7evresine bir \xE7izgi \xE7eker", id: "draw-the-line" },
+        { type: "p", text: "\xD6zellik listesi size hayal edileni s\xF6yler. Kapsam \xE7izgisi ise neyin in\u015Fa edilece\u011Fini s\xF6yler. Temel d\xF6ng\xFCy\xFC tek c\xFCmleyle yaz\u0131n; ard\u0131ndan o d\xF6ng\xFCy\xFC g\xFCvenilir k\u0131lan i\u015Fleri s\u0131ralay\u0131n: ana ekran, tek anlaml\u0131 eylem, arkas\u0131ndaki veriler ve kullan\u0131c\u0131ya \xE7al\u0131\u015Ft\u0131\u011F\u0131n\u0131 s\xF6yleyen geri bildirim. Geri kalan her \u015Fey daha sonras\u0131 i\xE7in adayd\u0131r; lansman i\xE7in sessiz bir gereklilik de\u011Fildir." },
+        { type: "h3", text: "3. Sonraki kan\u0131t\u0131 tan\u0131mlar", id: "define-the-proof" },
+        { type: "p", text: "\u201CYay\u0131na al\u0131p ne oldu\u011Funa bakmak\u201D bir \xF6\u011Frenme plan\u0131 de\u011Fildir. \u0130lk birka\xE7 haftada ne g\xF6zlemlemeyi bekledi\u011Finize karar verin: tamamlanm\u0131\u015F bir i\u015F ak\u0131\u015F\u0131, tekrar eden bir eylem, \xFCcretli d\xF6n\xFC\u015F\xFCm veya belirli bir kullan\u0131c\u0131 t\xFCr\xFCyle kurucunun yapt\u0131\u011F\u0131 g\xF6r\xFC\u015Fme. \xD6l\xE7\xFCt\xFCn karma\u015F\u0131k olmas\u0131 gerekmez. Bir sonraki \xFCr\xFCn karar\u0131n\u0131 de\u011Fi\u015Ftirebilmesi i\xE7in kullan\u0131c\u0131n\u0131n davran\u0131\u015F\u0131na yeterince yak\u0131n olmas\u0131 gerekir." },
+        { type: "h2", text: "Bir ekran \xF6ncesinde ne yaz\u0131lmal\u0131", id: "before-a-screen" },
+        { type: "ul", items: ["\u0130lk kullan\u0131c\u0131: tek rol, tek durum ve can yakan tek ge\xE7ici \xE7\xF6z\xFCm", "Temel d\xF6ng\xFC: de\u011Fer yaratan ve tekrar tekrar ger\xE7ekle\u015Febilen en k\xFC\xE7\xFCk eylem", "Lansman s\u0131n\u0131r\u0131: birinci s\xFCr\xFCm i\xE7in a\xE7\u0131k\xE7a kapsam d\u0131\u015F\u0131 olanlar", "G\xFCven gereksinimi: kullan\u0131c\u0131n\u0131n harekete ge\xE7meden \xF6nce g\xF6rmesi, kontrol etmesi veya anlamas\u0131 gerekenler", "Sonraki kan\u0131t noktas\u0131: ba\u015Fka bir geli\u015Ftirme turunu hak eden davran\u0131\u015F veya konu\u015Fma"] },
+        { type: "h2", text: "Kulland\u0131\u011F\u0131m\u0131z kapsam testi", id: "scope-test" },
+        { type: "p", text: "\xD6nerilen her \xF6zelli\u011Fi ele al\u0131n ve tek soru sorun: Bu, temel d\xF6ng\xFCn\xFCn ilk kullan\u0131c\u0131 i\xE7in ba\u015Far\u0131l\u0131 olma olas\u0131l\u0131\u011F\u0131n\u0131 art\u0131r\u0131yor mu? Yan\u0131t hay\u0131rsa onu ilk s\xFCr\xFCmden \xE7\u0131kar\u0131n. Yan\u0131t belkiyse, korudu\u011Fu varsay\u0131m\u0131 yaz\u0131n ve o varsay\u0131m\u0131 test etmenin daha ucuz yolunu bulun. Bu, faydal\u0131 bir \xF6zelli\u011Fin \xFCr\xFCn\xFC geciktirmek i\xE7in kal\u0131c\u0131 bir mazerete d\xF6n\xFC\u015Fmesini engeller." },
+        { type: "quote", text: "Bir \xF6zetin amac\u0131, in\u015Fa edebilece\u011Finiz her \u015Feyi kaydetmek de\u011Fildir. Sonraki geli\u015Ftirme karar\u0131n\u0131 a\xE7\u0131k k\u0131lmakt\u0131r.", cite: "\xFCr\xFCn ba\u015Flang\u0131\xE7lar\u0131nda kulland\u0131\u011F\u0131m\u0131z bir kural" },
+        { type: "callout", title: "Bunu Start Apps Studio'da nas\u0131l kullan\u0131yoruz", text: "Bir geli\u015Ftirme i\xE7in fiyat vermeden \xF6nce kurucunun fikrini tek sayfal\u0131k kapsama d\xF6n\xFC\u015Ft\xFCr\xFCr\xFCz: bir kullan\u0131c\u0131, bir temel d\xF6ng\xFC, onu destekleyen ekranlar ve altyap\u0131 ve sonraki karar\u0131 de\u011Fi\u015Ftirmesi gereken kan\u0131t. Belge; strateji, tasar\u0131m, m\xFChendislik ve lansman aras\u0131ndaki devir olur ve yeni bir \xF6zellik birinci s\xFCr\xFCme s\u0131zmak istedi\u011Finde ba\u015Fvuru noktas\u0131d\u0131r." },
+        { type: "h2", text: "S\u0131k sorulan sorular", id: "faq" },
+        { type: "faq", items: [{ q: "MVP \xF6zeti ne kadar uzun olmal\u0131?", a: "Tek oturu\u015Fta okunacak kadar k\u0131sa, \xF6d\xFCnle\u015Fimleri belirleyecek kadar \xF6zg\xFCl olmal\u0131d\u0131r. \u0130lk kullan\u0131c\u0131y\u0131, temel d\xF6ng\xFCy\xFC, lansman s\u0131n\u0131r\u0131n\u0131, g\xFCven gereksinimlerini ve sonraki kan\u0131t noktas\u0131n\u0131 tan\u0131mlad\u0131\u011F\u0131nda bir ila iki sayfa genellikle yeterlidir." }, { q: "\xD6zette tam bir \xF6zellik listesi olmal\u0131 m\u0131?", a: "Temel d\xF6ng\xFCn\xFCn i\u015Flemesini sa\u011Flayan \xF6zellikleri ekleyin; kalan\u0131n\u0131 sonraki fikirler b\xF6l\xFCm\xFCnde tutun. Ayr\u0131 bir bekleme listesi, iyi fikirleri sessizce lansman gereksinimine d\xF6n\xFC\u015Fmelerine izin vermeden korur." }, { q: "Hedef kullan\u0131c\u0131 h\xE2l\xE2 belirsizse ne olur?", a: "En g\xFC\xE7l\xFC iki aday\u0131 ve onlar\u0131 ay\u0131racak kan\u0131t\u0131 yaz\u0131n. Belirsizlik a\xE7\u0131k oldu\u011Funda faydal\u0131d\u0131r; geni\u015F bir \xFCr\xFCn kapsam\u0131n\u0131n i\xE7inde sakland\u0131\u011F\u0131nda pahal\u0131la\u015F\u0131r." }, { q: "Tasar\u0131m ba\u015Flamadan \xF6nce \xF6zet bitmi\u015F olmal\u0131 m\u0131?", a: "\u0130lk tasar\u0131m turuna y\xF6n verecek kadar net olmal\u0131, sonsuza dek donmu\u015F olmamal\u0131d\u0131r. Tasar\u0131m daha iyi bir soruyu ortaya \xE7\u0131karabilir; ancak her de\u011Fi\u015Fiklik kapsam\u0131 ve toplamaya \xE7al\u0131\u015Ft\u0131\u011F\u0131n\u0131z kan\u0131t\u0131 g\xFCncellemelidir." }] }
+      ] }
+    };
+    tr_default = TR_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/uk.ts
+var sourcePost8, UK_EDITORIAL_CONTENT, uk_default;
+var init_uk = __esm({
+  "server/journal/locales/uk.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost8 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost8) throw new Error("Missing MVP editorial source post.");
+    UK_EDITORIAL_CONTENT = {
+      copy: {
+        journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
+        journalTitle: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0437\u0456 \u0441\u0442\u0443\u0434\u0456\u0457.",
+        journalDescription: "\u041C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0437\u0430\u043F\u0443\u0441\u043A MVP, \u0449\u043E \u0440\u0430\u043D\u0436\u0443\u044E\u0442\u044C\u0441\u044F \u0432 Google \u0456 \u0446\u0438\u0442\u0443\u044E\u0442\u044C\u0441\u044F \u0428\u0406: GEO, vibe-coding \u0442\u0430 \u0441\u0442\u0430\u043D \u0428\u0406 \u0432 \u0440\u043E\u0431\u043E\u0442\u0456.",
+        resourcesTitle: "\u0421\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0435, \u0430 \u043F\u043E\u0442\u0456\u043C \u0441\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u0446\u0435 \u0434\u043E\u0431\u0440\u0435.",
+        resourcesDescription: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443 \u0437\u0430 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438 \u0428\u0406, \u0432\u0438\u0431\u0456\u0440 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0456\u0439, \u0432\u043B\u0430\u0441\u043D\u0456\u0441\u0442\u044C, \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F \u043F\u0440\u043E\u0454\u043A\u0442\u0443 \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A MVP.",
+        read: "\u0427\u0438\u0442\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443",
+        minutes: "\u0445\u0432 \u0447\u0438\u0442\u0430\u043D\u043D\u044F",
+        allNotes: "\u0423\u0441\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438",
+        sources: "\u0414\u0436\u0435\u0440\u0435\u043B\u0430",
+        shortAnswer: "\u041A\u043E\u0440\u043E\u0442\u043A\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044C",
+        language: "\u041C\u043E\u0432\u0430",
+        translatedArticleTitle: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F",
+        translatedArticleDescription: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u043C\u0435\u0436\u0443 \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457 \u0442\u0430 \u0434\u043E\u043A\u0430\u0437\u0438 \u0434\u043B\u044F \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0440\u0456\u0448\u0435\u043D\u043D\u044F."
+      },
+      resources: {
+        title: "\u0421\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0435, \u0430 \u043F\u043E\u0442\u0456\u043C \u0441\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u0446\u0435 \u0434\u043E\u0431\u0440\u0435.",
+        description: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443 \u0437\u0430 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438 \u0428\u0406, \u0432\u0438\u0431\u0456\u0440 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0456\u0439, \u0432\u043B\u0430\u0441\u043D\u0456\u0441\u0442\u044C, \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F \u043F\u0440\u043E\u0454\u043A\u0442\u0443 \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A MVP.",
+        eyebrow: "Start Apps Studio \xB7 \u0420\u0435\u0441\u0443\u0440\u0441\u0438",
+        primaryAction: "\u041E\u0431\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u0438 \u0432\u0430\u0448 \u043F\u0440\u043E\u0454\u043A\u0442",
+        journalAction: "\u0427\u0438\u0442\u0430\u0442\u0438 \u0416\u0443\u0440\u043D\u0430\u043B",
+        routes: { title: "\u041E\u0431\u0435\u0440\u0456\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0438\u0439 \u043C\u0430\u0440\u0448\u0440\u0443\u0442", intro: "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u0430 \u043F\u0435\u0440\u0448\u0430 \u0432\u0456\u0445\u0430 \u0437\u0430\u043B\u0435\u0436\u0438\u0442\u044C \u0432\u0456\u0434 \u0442\u043E\u0433\u043E, \u0449\u043E \u0432\u0430\u043C \u0442\u0440\u0435\u0431\u0430 \u0434\u043E\u0432\u0435\u0441\u0442\u0438, \u0430 \u043D\u0435 \u0432\u0456\u0434 \u043E\u0431\u0441\u044F\u0433\u0443 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043D\u043E\u0433\u043E \u0437\u0430\u0431\u0435\u0437\u043F\u0435\u0447\u0435\u043D\u043D\u044F, \u044F\u043A\u0438\u0439 \u0432\u0438 \u043C\u043E\u0436\u0435\u0442\u0435 \u0443\u044F\u0432\u0438\u0442\u0438.", cards: [
+          { kicker: "01 \xB7 \u041D\u0430\u043F\u0440\u044F\u043C", title: "\u041F\u043E\u0447\u043D\u0456\u0442\u044C \u0456\u0437 \u043D\u0430\u0439\u043C\u0435\u043D\u0448\u043E\u0433\u043E \u043A\u043E\u0440\u0438\u0441\u043D\u043E\u0433\u043E \u0434\u043E\u043A\u0430\u0437\u0443", text: "\u0421\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u0454, \u0447\u0438 \u0440\u043E\u0437\u0443\u043C\u0456\u044E\u0442\u044C \u043B\u044E\u0434\u0438 \u043F\u0440\u043E\u043F\u043E\u0437\u0438\u0446\u0456\u044E. \u041F\u0440\u043E\u0442\u043E\u0442\u0438\u043F \u2014 \u0447\u0438 \u043C\u043E\u0436\u0443\u0442\u044C \u0432\u043E\u043D\u0438 \u0432\u0456\u0434\u0440\u0435\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u043D\u0430 \u0434\u043E\u0441\u0432\u0456\u0434. MVP \u2014 \u0449\u043E \u0440\u043E\u0431\u043B\u044F\u0442\u044C \u0440\u0435\u0430\u043B\u044C\u043D\u0456 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0456.", bullets: ["\u041E\u0431\u0435\u0440\u0456\u0442\u044C \u043E\u0434\u043D\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u044F\u043A\u0435 \u043C\u0430\u0454 \u0432\u0456\u0434\u043A\u0440\u0438\u0442\u0438 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0438\u0439 \u0440\u0435\u043B\u0456\u0437", "\u0417\u0440\u043E\u0431\u0456\u0442\u044C \u043F\u0435\u0440\u0448\u0443 \u0432\u0435\u0440\u0441\u0456\u044E \u0434\u043E\u0441\u0438\u0442\u044C \u0432\u0443\u0437\u044C\u043A\u043E\u044E, \u0449\u043E\u0431 \u043D\u0430 \u043D\u0456\u0439 \u0432\u0447\u0438\u0442\u0438\u0441\u044F", "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u0439\u0442\u0435 \u043F\u0430\u043A\u0435\u0442, \u0449\u043E \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u0454 \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0438\u043C \u0432\u0430\u043C \u0434\u043E\u043A\u0430\u0437\u0430\u043C"] },
+          { kicker: "02 \xB7 \u0420\u043E\u0437\u0440\u043E\u0431\u043A\u0430 \u0437\u0430 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438 \u0428\u0406", title: "\u0428\u0432\u0438\u0434\u043A\u0456\u0441\u0442\u044C \u043A\u043E\u0440\u0438\u0441\u043D\u0430, \u043A\u043E\u043B\u0438 \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u0442\u0440\u0438\u043C\u0430\u0454\u0442\u044C\u0441\u044F", text: "\u0428\u0406 \u043C\u043E\u0436\u0435 \u043F\u0440\u0438\u0441\u043A\u043E\u0440\u0438\u0442\u0438 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0435\u043D\u043D\u044F, \u043A\u043E\u0434\u0443\u0432\u0430\u043D\u043D\u044F \u0442\u0430 \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043A\u0443. \u0412\u0456\u043D \u043D\u0435 \u0437\u0430\u043C\u0456\u043D\u044E\u0454 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0441\u0443\u0434\u0436\u0435\u043D\u043D\u044F, \u0430\u0440\u0445\u0456\u0442\u0435\u043A\u0442\u0443\u0440\u0443, \u0442\u0435\u0441\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0447\u0438 \u043B\u044E\u0434\u0438\u043D\u0443, \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u043B\u044C\u043D\u0443 \u0437\u0430 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442.", bullets: ["\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0428\u0406 \u0434\u043B\u044F \u0432\u0438\u0432\u0447\u0435\u043D\u043D\u044F \u0432\u0430\u0440\u0456\u0430\u043D\u0442\u0456\u0432 \u0456 \u0437\u043C\u0435\u043D\u0448\u0435\u043D\u043D\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u0456\u0432", "\u041F\u0435\u0440\u0435\u0432\u0456\u0440\u044F\u0439\u0442\u0435 \u0437\u0433\u0435\u043D\u0435\u0440\u043E\u0432\u0430\u043D\u0438\u0439 \u043A\u043E\u0434 \u043D\u0430 \u0440\u0435\u0430\u043B\u044C\u043D\u0438\u0445 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0438\u0445 \u0441\u0446\u0435\u043D\u0430\u0440\u0456\u044F\u0445", "\u0417\u0431\u0435\u0440\u0456\u0433\u0430\u0439\u0442\u0435 \u0432\u0438\u043F\u0443\u0449\u0435\u043D\u0443 \u0441\u0438\u0441\u0442\u0435\u043C\u0443 \u0437\u0440\u043E\u0437\u0443\u043C\u0456\u043B\u043E\u044E \u0442\u0430 \u0440\u043E\u0437\u0448\u0438\u0440\u044E\u0432\u0430\u043D\u043E\u044E"] },
+          { kicker: "03 \xB7 \u0412\u043B\u0430\u0441\u043D\u0456\u0441\u0442\u044C", title: "\u0417\u0430\u043F\u0438\u0442\u0430\u0439\u0442\u0435, \u0449\u043E \u043D\u0430\u0434\u0456\u0439\u0434\u0435 \u043F\u0456\u0434 \u0447\u0430\u0441 \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F", text: "\u0423\u0441\u043F\u0456\u0448\u043D\u0430 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0430 \u2014 \u0446\u0435 \u0431\u0456\u043B\u044C\u0448\u0435, \u043D\u0456\u0436 \u0444\u0456\u043D\u0430\u043B\u044C\u043D\u0430 \u043F\u0440\u0435\u0437\u0435\u043D\u0442\u0430\u0446\u0456\u044F. \u0412\u0438\u0445\u0456\u0434\u043D\u0438\u0439 \u043A\u043E\u0434, \u0434\u0438\u0437\u0430\u0439\u043D-\u0444\u0430\u0439\u043B\u0438, \u043E\u0431\u043B\u0456\u043A\u043E\u0432\u0456 \u0437\u0430\u043F\u0438\u0441\u0438, \u0434\u043E\u0441\u0442\u0443\u043F \u0434\u043E \u0440\u043E\u0437\u0433\u043E\u0440\u0442\u0430\u043D\u043D\u044F \u0442\u0430 \u043A\u043E\u043D\u0442\u0435\u043A\u0441\u0442 \u043C\u0430\u044E\u0442\u044C \u0431\u0443\u0442\u0438 \u0433\u043E\u0442\u043E\u0432\u0456 \u0434\u043B\u044F \u0432\u0430\u0441 \u0447\u0438 \u0432\u0430\u0448\u043E\u0457 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0457 \u043A\u043E\u043C\u0430\u043D\u0434\u0438.", bullets: ["\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0456\u0442\u044C, \u043A\u043E\u043C\u0443 \u043D\u0430\u043B\u0435\u0436\u0430\u0442\u044C \u043E\u0431\u043B\u0456\u043A\u043E\u0432\u0456 \u0437\u0430\u043F\u0438\u0441\u0438 \u0442\u0430 \u0440\u043E\u0431\u043E\u0447\u0456 \u0444\u0430\u0439\u043B\u0438", "\u041F\u0435\u0440\u0435\u0433\u043B\u044F\u0434\u0430\u0439\u0442\u0435 \u0440\u043E\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441 \u0434\u043E \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0433\u043E \u0442\u0438\u0436\u043D\u044F", "\u041E\u0442\u0440\u0438\u043C\u0430\u0439\u0442\u0435 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u043E\u0432\u0430\u043D\u0443 \u043E\u0441\u043D\u043E\u0432\u0443, \u043F\u0440\u0438\u0434\u0430\u0442\u043D\u0443 \u0434\u043E \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438"] },
+          { kicker: "04 \xB7 \u0412\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u043D\u0456\u0441\u0442\u044C \u043F\u0430\u0440\u0442\u043D\u0435\u0440\u0430", title: "\u041F\u043E\u0440\u0456\u0432\u043D\u044F\u0439\u0442\u0435 \u0441\u043F\u043E\u0441\u0456\u0431 \u0440\u043E\u0431\u043E\u0442\u0438", text: "\u041F\u0435\u0440\u0448 \u043D\u0456\u0436 \u043E\u0431\u0440\u0430\u0442\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0433\u043E \u043F\u0430\u0440\u0442\u043D\u0435\u0440\u0430, \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u0439\u0442\u0435 \u044F\u0441\u043D\u0456\u0441\u0442\u044C \u043E\u0431\u0441\u044F\u0433\u0443, \u0446\u0438\u043A\u043B\u0438 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u043E\u0433\u043E \u0437\u0432\u2019\u044F\u0437\u043A\u0443, \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u043B\u044C\u043D\u0456\u0441\u0442\u044C, \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0443 \u043F\u0456\u0441\u043B\u044F \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0442\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u043D\u0456\u0441\u0442\u044C \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u0443 \u0435\u0442\u0430\u043F\u0443 \u0432\u0430\u0448\u043E\u0433\u043E \u0431\u0456\u0437\u043D\u0435\u0441\u0443.", bullets: ["\u0425\u0442\u043E \u0443\u0445\u0432\u0430\u043B\u044E\u0454 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0456 \u0440\u0456\u0448\u0435\u043D\u043D\u044F?", "\u041A\u043E\u043B\u0438 \u0432\u0438 \u043F\u043E\u0431\u0430\u0447\u0438\u0442\u0435 \u0449\u043E\u0441\u044C \u0440\u0435\u0430\u043B\u044C\u043D\u0435?", "\u0427\u0438 \u0437\u043C\u043E\u0436\u0435 \u0456\u043D\u0448\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0430 \u043F\u0440\u043E\u0434\u043E\u0432\u0436\u0438\u0442\u0438 \u0431\u0435\u0437 \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0437 \u043D\u0443\u043B\u044F?"] }
+        ] },
+        packages: { title: "\u041F\u0443\u0442\u0456\u0432\u043D\u0438\u043A \u043F\u0430\u043A\u0435\u0442\u0430\u043C\u0438", intro: "\u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u043F\u0443\u0431\u043B\u0456\u0447\u043D\u0456 \u043F\u0430\u043A\u0435\u0442\u0438 \u044F\u043A \u0432\u0456\u0434\u043F\u0440\u0430\u0432\u043D\u0443 \u0442\u043E\u0447\u043A\u0443 \u0434\u043B\u044F \u0440\u043E\u0437\u043C\u043E\u0432\u0438. \u041E\u0431\u0441\u044F\u0433 \u043F\u043E\u0433\u043E\u0434\u0436\u0443\u0454\u0442\u044C\u0441\u044F \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0440\u043E\u0431\u043E\u0442\u0438.", columns: ["\u041C\u0430\u0440\u0448\u0440\u0443\u0442", "\u0406\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0456\u0457", "\u0422\u0438\u043F\u043E\u0432\u0456 \u0441\u0442\u0440\u043E\u043A\u0438", "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0435, \u043A\u043E\u043B\u0438 \u0432\u0430\u043C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E"], rows: [
+          { route: "\u0421\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0443", investment: "$2,600", timing: "3\u20135 \u0440\u043E\u0431\u043E\u0447\u0438\u0445 \u0434\u043D\u0456\u0432", bestFor: "\u041F\u043E\u044F\u0441\u043D\u0438\u0442\u0438 \u043F\u0440\u043E\u043F\u043E\u0437\u0438\u0446\u0456\u044E \u0442\u0430 \u0441\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u043F\u0435\u0440\u0435\u043A\u043E\u043D\u043B\u0438\u0432\u0443 \u0446\u0438\u0444\u0440\u043E\u0432\u0443 \u043F\u0440\u0438\u0441\u0443\u0442\u043D\u0456\u0441\u0442\u044C" },
+          { route: "\u041F\u0440\u043E\u0442\u043E\u0442\u0438\u043F", investment: "$6,000", timing: "5\u201310 \u0434\u043D\u0456\u0432", bestFor: "\u0417\u0440\u043E\u0431\u0438\u0442\u0438 \u0456\u0434\u0435\u044E \u0432\u0456\u0434\u0447\u0443\u0442\u043D\u043E\u044E \u0434\u043B\u044F \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043A\u0438, \u0437\u0430\u043B\u0443\u0447\u0435\u043D\u043D\u044F \u0456\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0456\u0439 \u0447\u0438 \u043F\u0435\u0440\u0448\u0438\u0445 \u0440\u043E\u0437\u043C\u043E\u0432" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 \u0442\u0438\u0436\u043D\u0456\u0432", bestFor: "\u041F\u0435\u0440\u0435\u0434\u0430\u0442\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u0438\u0439 \u0432\u0435\u0431-, iOS- \u0430\u0431\u043E Android-\u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0443 \u0440\u0443\u043A\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0456\u0432" },
+          { route: "\u0406\u043D\u0434\u0438\u0432\u0456\u0434\u0443\u0430\u043B\u044C\u043D\u0438\u0439", investment: "$25,000", timing: "1\u20136 \u043C\u0456\u0441\u044F\u0446\u0456\u0432", bestFor: "\u0421\u0442\u0432\u043E\u0440\u0438\u0442\u0438 \u0431\u0456\u043B\u044C\u0448\u0443 \u0430\u0431\u043E \u0441\u043A\u043B\u0430\u0434\u043D\u0456\u0448\u0443 \u0441\u0438\u0441\u0442\u0435\u043C\u0443 \u0437 \u0434\u043E\u0432\u0433\u043E\u0441\u0442\u0440\u043E\u043A\u043E\u0432\u043E\u044E \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u043B\u044C\u043D\u0456\u0441\u0442\u044E" }
+        ] },
+        toolkit: { title: "\u0406\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u0438 \u0437\u0430 \u043D\u0430\u0448\u043E\u044E \u0440\u043E\u0431\u043E\u0442\u043E\u044E", intro: "\u0406\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u0438 \u043E\u0431\u0438\u0440\u0430\u044E\u0442\u044C \u0434\u043B\u044F \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0443 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u043A\u043E\u043C\u0430\u043D\u0434\u0438, \u0449\u043E \u0439\u043E\u0433\u043E \u043F\u0440\u0438\u0439\u043C\u0430\u0442\u0438\u043C\u0435, \u0442\u0430 \u0435\u0442\u0430\u043F\u0443 \u0431\u0456\u0437\u043D\u0435\u0441\u0443.", groups: [
+          { label: "\u0412\u0430\u0448\u0430 \u0456\u0434\u0435\u044F, \u0437\u0440\u043E\u0431\u043B\u0435\u043D\u0430 \u0432\u0438\u0434\u0438\u043C\u043E\u044E", description: "\u042F\u043A \u043A\u043E\u043D\u0446\u0435\u043F\u0446\u0456\u044F \u0441\u0442\u0430\u0454 \u0435\u043A\u0440\u0430\u043D\u0430\u043C\u0438, \u044F\u043A\u0456 \u043C\u043E\u0436\u043D\u0430 \u0442\u043E\u0440\u043A\u0430\u0442\u0438\u0441\u044F, \u043F\u043E\u043A\u0430\u0437\u0443\u0432\u0430\u0442\u0438 \u0456\u043D\u0432\u0435\u0441\u0442\u043E\u0440\u0430\u043C \u0456 \u0442\u0435\u0441\u0442\u0443\u0432\u0430\u0442\u0438 \u0437 \u0440\u0435\u0430\u043B\u044C\u043D\u0438\u043C\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430\u043C\u0438.", tools: [{ name: "Figma", note: "\u043A\u043E\u0436\u0435\u043D \u0435\u043A\u0440\u0430\u043D \u0441\u043F\u0440\u043E\u0454\u043A\u0442\u043E\u0432\u0430\u043D\u043E \u0434\u043E \u043A\u043E\u0434\u0443", tone: "figma" }, { name: "Rork", note: "\u0441\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043D\u0430 \u0441\u043F\u0440\u0430\u0432\u0436\u043D\u044C\u043E\u043C\u0443 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0456 \u0437\u0430 \u043A\u0456\u043B\u044C\u043A\u0430 \u0434\u043D\u0456\u0432", tone: "rork" }, { name: "Lovable", note: "\u0441\u0430\u0439\u0442 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u043F\u0440\u0430\u0446\u044E\u0454 \u0437\u0430 \u043A\u0456\u043B\u044C\u043A\u0430 \u0434\u043D\u0456\u0432", tone: "lovable" }, { name: "Replit", note: "\u0440\u043E\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u044F\u043A\u0438\u0439 \u043C\u043E\u0436\u043D\u0430 \u0437\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u0438 \u0439 \u0440\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438", tone: "replit" }] },
+          { label: "\u0412\u0430\u0448 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0438\u0439 \u043D\u0430\u0434\u043E\u0432\u0433\u043E", description: "\u0406\u043D\u0436\u0435\u043D\u0435\u0440\u0456\u044F, \u0449\u043E \u0437\u0430\u0431\u0435\u0437\u043F\u0435\u0447\u0443\u0454 \u0437\u0430\u0441\u0442\u043E\u0441\u0443\u043D\u043E\u043A, \u044F\u043A\u0438\u0439 \u0432\u0430\u0448\u0456 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0456 \u0432\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u044E\u044E\u0442\u044C, \u0432\u0456\u0434\u043A\u0440\u0438\u0432\u0430\u044E\u0442\u044C \u0456 \u043E\u043F\u043B\u0430\u0447\u0443\u044E\u0442\u044C.", tools: [{ name: "React Native", note: "\u043E\u0434\u043D\u0430 \u043A\u043E\u0434\u043E\u0432\u0430 \u0431\u0430\u0437\u0430, iOS + Android", tone: "expo" }, { name: "Swift", note: "\u043D\u0430\u0442\u0438\u0432\u043D\u0438\u0439 iOS, \u043D\u0430\u0439\u0448\u0432\u0438\u0434\u0448\u0435 \u043D\u0430 iPhone", tone: "swift" }, { name: "Kotlin", note: "\u043D\u0430\u0442\u0438\u0432\u043D\u0438\u0439 Android, \u043F\u043E\u0432\u043D\u0435 \u043E\u0445\u043E\u043F\u043B\u0435\u043D\u043D\u044F Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "\u0432\u0430\u0448\u0456 \u0434\u0430\u043D\u0456 \u0437\u0430\u0445\u0438\u0449\u0435\u043D\u0456 \u0442\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0456 \u0434\u043B\u044F \u0435\u043A\u0441\u043F\u043E\u0440\u0442\u0443", tone: "node" }] },
+          { label: "\u0414\u043E\u0445\u0456\u0434 \u0456 \u0437\u0430\u043F\u0443\u0441\u043A \u0456\u0437 \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u0434\u043D\u044F", description: "\u041F\u043B\u0430\u0442\u0435\u0436\u0456, \u043E\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F \u0439 \u0431\u0435\u0437\u043F\u0435\u043A\u0430 \u043A\u043E\u0434\u0443 \u0432\u0431\u0443\u0434\u043E\u0432\u0430\u043D\u0456 \u0432\u0456\u0434 \u043F\u043E\u0447\u0430\u0442\u043A\u0443, \u0430 \u043D\u0435 \u0434\u043E\u0434\u0430\u043D\u0456 \u0437\u0433\u043E\u0434\u043E\u043C.", open: true, tools: [{ name: "Stripe", note: "\u0440\u0430\u0437\u043E\u0432\u0456 \u043F\u043B\u0430\u0442\u0435\u0436\u0456, \u043F\u0456\u0434\u043F\u0438\u0441\u043A\u0438, \u043E\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F", tone: "stripe" }, { name: "RevenueCat", note: "\u043E\u043F\u043B\u0430\u0442\u0430 App Store \u0442\u0430 Play Store", tone: "revenuecat" }, { name: "GitHub", note: "\u0449\u043E\u0434\u0435\u043D\u043D\u0456 \u0440\u0435\u0437\u0435\u0440\u0432\u043D\u0456 \u043A\u043E\u043F\u0456\u0457: \u0432\u0430\u0448 \u043A\u043E\u0434 \u0437\u0430\u0432\u0436\u0434\u0438 \u0432 \u0431\u0435\u0437\u043F\u0435\u0446\u0456", tone: "github" }, { name: "Automation", note: "n8n + Make \u0432\u0438\u043A\u043E\u043D\u0443\u044E\u0442\u044C \u0440\u0443\u0442\u0438\u043D\u043D\u0443 \u0440\u043E\u0431\u043E\u0442\u0443", tone: "hooks" }] },
+          { label: "\u0428\u0406 \u043D\u0430 \u0442\u043B\u0456, \u0430 \u043D\u0435 \u043D\u0430 \u0437\u0430\u0432\u0430\u0434\u0456", description: "\u0428\u0406 \u043C\u043E\u0436\u0435 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u0432\u0430\u0442\u0438 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0435\u043D\u043D\u044F, \u0440\u0435\u0430\u043B\u0456\u0437\u0430\u0446\u0456\u044E \u0442\u0430 \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043A\u0443, \u043F\u043E\u043A\u0438 \u043B\u044E\u0434\u0438\u043D\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0430\u0454 \u0437\u0430 \u043D\u0430\u043F\u0440\u044F\u043C \u0456 \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442 \u044F\u043A\u043E\u0441\u0442\u0456.", tools: [{ name: "Claude", note: "\u043E\u0441\u043D\u043E\u0432\u043D\u0438\u0439 \u0440\u043E\u0437\u0440\u043E\u0431\u043D\u0438\u043A \u0456 \u0440\u0435\u0446\u0435\u043D\u0437\u0435\u043D\u0442 \u043A\u043E\u0434\u0443", tone: "claude" }, { name: "Gemini", note: "\u043F\u0435\u0440\u0435\u0432\u0456\u0440\u044F\u0454 \u0432\u0435\u0441\u044C \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043E\u0434\u0440\u0430\u0437\u0443", tone: "gemini" }, { name: "GPT-5", note: "\u0442\u0435\u043A\u0441\u0442\u0438, \u0441\u0446\u0435\u043D\u0430\u0440\u0456\u0457 \u0442\u0430 \u0442\u0432\u043E\u0440\u0447\u0438\u0439 \u043D\u0430\u043F\u0440\u044F\u043C", tone: "gpt" }, { name: "Llama 4", note: "\u0441\u0430\u043C\u043E\u0441\u0442\u0456\u0439\u043D\u043E \u0440\u043E\u0437\u043C\u0456\u0449\u0443\u0432\u0430\u043D\u0438\u0439 \u0432\u0430\u0440\u0456\u0430\u043D\u0442 \u0434\u043B\u044F \u0447\u0443\u0442\u043B\u0438\u0432\u043E\u0457 \u0440\u043E\u0431\u043E\u0442\u0438", tone: "llama" }] }
+        ], footnote: "\u041A\u043E\u0434, \u043E\u0431\u043B\u0456\u043A\u043E\u0432\u0456 \u0437\u0430\u043F\u0438\u0441\u0438 \u0442\u0430 \u0440\u043E\u0431\u043E\u0447\u0456 \u0444\u0430\u0439\u043B\u0438 \u0437\u0430\u043B\u0438\u0448\u0430\u044E\u0442\u044C\u0441\u044F \u0443 \u0432\u0430\u0441. \u041A\u043E\u043B\u0438 \u0437\u2019\u044F\u0432\u043B\u044F\u0454\u0442\u044C\u0441\u044F \u043A\u0440\u0430\u0449\u0438\u0439 \u0456\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442, \u0439\u043E\u0433\u043E \u043C\u043E\u0436\u043D\u0430 \u0437\u0430\u043C\u0456\u043D\u0438\u0442\u0438, \u043D\u0435 \u0440\u043E\u0431\u043B\u044F\u0447\u0438 \u0432\u0430\u0448 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u0437\u0430\u0440\u0443\u0447\u043D\u0438\u043A\u043E\u043C." },
+        journal: { title: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0437 \u0416\u0443\u0440\u043D\u0430\u043B\u0443", text: "\u0414\u043E\u043A\u043B\u0430\u0434\u043D\u0456\u0448\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E MVP, SEO, GEO, \u0437\u0430\u0441\u0442\u043E\u0441\u0443\u043D\u043A\u0438 \u0437 vibe-coding \u0442\u0430 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u0449\u043E \u043F\u043E\u043B\u0435\u0433\u0448\u0443\u044E\u0442\u044C \u0432\u0438\u043F\u0443\u0441\u043A \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443.", readAction: "\u0427\u0438\u0442\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443", minutesLabel: "\u0445\u0432 \u0447\u0438\u0442\u0430\u043D\u043D\u044F", allAction: "\u0423\u0441\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0436\u0443\u0440\u043D\u0430\u043B\u0443", fallbackCategory: "\u0416\u0443\u0440\u043D\u0430\u043B", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "\u041C\u0430\u0454\u0442\u0435 \u043C\u0430\u0440\u0448\u0440\u0443\u0442 \u043D\u0430 \u0434\u0443\u043C\u0446\u0456?", text: "\u0420\u043E\u0437\u043A\u0430\u0436\u0456\u0442\u044C, \u0434\u0435 \u0432\u0438 \u0437\u0430\u0440\u0430\u0437, \u0449\u043E \u0432\u0430\u043C \u0442\u0440\u0435\u0431\u0430 \u0434\u043E\u0432\u0435\u0441\u0442\u0438 \u0456 \u0449\u043E \u043D\u0438\u043D\u0456 \u0437\u0430\u0441\u0442\u0440\u044F\u0433\u043B\u043E.", action: "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 \u044F\u0441\u043D\u0438\u0439 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0438\u0439 \u043A\u0440\u043E\u043A" }
+      },
+      post: { ...sourcePost8, title: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F", seoTitle: "\u0411\u0440\u0438\u0444\u0438 MVP: \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F | Start Apps Studio", description: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0435 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u043F\u0438\u0441\u0443\u0454 \u0456\u0434\u0435\u044E. \u0412\u0456\u043D \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442\u044C \u0447\u0456\u0442\u043A\u0443 \u043C\u0435\u0436\u0443 \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457 \u0442\u0430 \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u0434\u043E\u043A\u0430\u0437\u0438, \u0449\u043E \u043F\u0456\u0434\u043A\u0430\u0436\u0443\u0442\u044C, \u0447\u0438 \u043F\u0440\u043E\u0434\u043E\u0432\u0436\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443.", seoDescription: "\u0412\u0430\u0448 \u0431\u0440\u0438\u0444 MVP \u2014 \u0446\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u0430 \u043D\u0435 \u043F\u0430\u043F\u0435\u0440\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430. \u0414\u0456\u0437\u043D\u0430\u0439\u0442\u0435\u0441\u044F \u0442\u0440\u0438 \u0440\u0435\u0447\u0456, \u044F\u043A\u0456 \u043A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 \u043C\u0430\u0454 \u0432\u0438\u0437\u043D\u0430\u0447\u0438\u0442\u0438 \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443 \u0447\u0438 \u043A\u043E\u0434\u0443.", excerpt: "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0456 \u0431\u0440\u0438\u0444\u0438 MVP \u043D\u0435 \u0434\u043E\u0432\u0433\u0456. \u0412\u043E\u043D\u0438 \u0432\u0438\u0440\u0456\u0448\u0443\u044E\u0442\u044C, \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0447\u043E\u0433\u043E \u043F\u0435\u0440\u0448\u0430 \u0432\u0435\u0440\u0441\u0456\u044F \u0432\u0456\u0434\u043C\u043E\u0432\u043B\u044F\u0454\u0442\u044C\u0441\u044F \u0440\u043E\u0431\u0438\u0442\u0438 \u0456 \u044F\u043A\u0456 \u0434\u043E\u043A\u0430\u0437\u0438 \u0437\u0430\u0441\u043B\u0443\u0433\u043E\u0432\u0443\u044E\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0442\u0438\u0436\u043D\u044F \u0440\u043E\u0431\u043E\u0442\u0438.", category: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438", tags: ["MVP", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443", "\u0417\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0438", "\u041E\u0431\u0441\u044F\u0433"], body: [
+        { type: "answer", text: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u0443\u0445\u0432\u0430\u043B\u044E\u0454 \u0442\u0440\u0438 \u0440\u0456\u0448\u0435\u043D\u043D\u044F \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443: \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u0438\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0449\u043E \u043F\u0435\u0440\u0448\u0430 \u0432\u0435\u0440\u0441\u0456\u044F \u043D\u0430\u0432\u043C\u0438\u0441\u043D\u043E \u0437\u0430\u043B\u0438\u0448\u0438\u0442\u044C \u043F\u043E\u0437\u0430 \u043C\u0435\u0436\u0430\u043C\u0438 \u0442\u0430 \u044F\u043A\u0456 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0456 \u0434\u043E\u043A\u0430\u0437\u0438 \u0432\u0438\u043F\u0440\u0430\u0432\u0434\u0430\u044E\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0456 \u0456\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0456\u0457. \u0422\u043E\u043C\u0443 \u0431\u0440\u0438\u0444 \u2014 \u043D\u0435 \u043F\u0430\u043F\u0435\u0440\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430. \u0426\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F." },
+        { type: "p", text: "\u0417\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0438 \u0447\u0430\u0441\u0442\u043E \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442\u044C \u0456\u0437 \u0431\u0440\u0438\u0444\u043E\u043C, \u044F\u043A\u0438\u0439 \u043D\u0430\u0441\u043F\u0440\u0430\u0432\u0434\u0456 \u0454 \u043E\u043F\u0438\u0441\u043E\u043C \u0456\u0434\u0435\u0457: \u043A\u0456\u043B\u044C\u043A\u0430 \u0430\u0431\u0437\u0430\u0446\u0456\u0432 \u043F\u0440\u043E \u0440\u0438\u043D\u043E\u043A, \u043F\u0435\u0440\u0435\u043B\u0456\u043A \u0444\u0443\u043D\u043A\u0446\u0456\u0439 \u0456 \u0440\u0435\u0447\u0435\u043D\u043D\u044F \u043F\u0440\u043E \u0442\u0435, \u043A\u0443\u0434\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043C\u043E\u0436\u0435 \u043A\u043E\u043B\u0438\u0441\u044C \u0434\u0456\u0439\u0442\u0438. \u0426\u044C\u043E\u0433\u043E \u0434\u043E\u0441\u0438\u0442\u044C, \u0449\u043E\u0431 \u043F\u043E\u0447\u0430\u0442\u0438 \u0440\u043E\u0437\u043C\u043E\u0432\u0443, \u0430\u043B\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043D\u044C\u043E \u0434\u043B\u044F \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438. \u041A\u043E\u043C\u0430\u043D\u0434\u0456 \u043F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u043C\u0435\u043D\u0448\u0438\u0439, \u0447\u0456\u0442\u043A\u0456\u0448\u0438\u0439 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442, \u0449\u043E \u043F\u0435\u0440\u0435\u0442\u0432\u043E\u0440\u044E\u0454 \u0430\u043C\u0431\u0456\u0446\u0456\u044E \u043D\u0430 \u043F\u043E\u0441\u043B\u0456\u0434\u043E\u0432\u043D\u0456\u0441\u0442\u044C \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043D\u0438\u0445 \u0432\u0438\u0431\u043E\u0440\u0456\u0432." },
+        { type: "h2", text: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 \u0432\u0438\u043A\u043E\u043D\u0443\u0454 \u0442\u0440\u0438 \u0437\u0430\u0432\u0434\u0430\u043D\u043D\u044F", id: "three-jobs" },
+        { type: "h3", text: "1. \u0412\u0456\u043D \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043B\u044E\u0434\u0438\u043D\u0443, \u044F\u043A\u0430 \u043C\u0430\u0454 \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0443", id: "name-the-user" },
+        { type: "p", text: "\xAB\u041C\u0430\u043B\u0438\u0439 \u0431\u0456\u0437\u043D\u0435\u0441\xBB \u2014 \u0446\u0435 \u0440\u0438\u043D\u043E\u043A. \u0426\u0435 \u043D\u0435 \u043F\u0435\u0440\u0448\u0438\u0439 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447. \u0425\u043E\u0440\u043E\u0448\u0438\u0439 \u0431\u0440\u0438\u0444 \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043B\u044E\u0434\u0438\u043D\u0443, \u043C\u043E\u043C\u0435\u043D\u0442, \u0443 \u044F\u043A\u043E\u043C\u0443 \u0432\u043E\u043D\u0430 \u043F\u0435\u0440\u0435\u0431\u0443\u0432\u0430\u0454, \u0456 \u043E\u0431\u0445\u0456\u0434\u043D\u0438\u0439 \u0448\u043B\u044F\u0445, \u044F\u043A\u0438\u043C \u0432\u043E\u043D\u0430 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0454\u0442\u044C\u0441\u044F \u0441\u044C\u043E\u0433\u043E\u0434\u043D\u0456. \u041C\u0435\u043D\u0435\u0434\u0436\u0435\u0440 \u043A\u043B\u0456\u043D\u0456\u043A\u0438, \u0449\u043E \u043D\u0430\u043C\u0430\u0433\u0430\u0454\u0442\u044C\u0441\u044F \u0437\u0430\u043F\u043E\u0432\u043D\u0438\u0442\u0438 \u0437\u0430\u0432\u0442\u0440\u0430\u0448\u043D\u0456 \u0441\u043A\u0430\u0441\u0443\u0432\u0430\u043D\u043D\u044F, \u043C\u0430\u0454 \u0456\u043D\u0448\u0443 \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0443, \u043D\u0456\u0436 \u043F\u0430\u0446\u0456\u0454\u043D\u0442, \u044F\u043A\u0438\u0439 \u0448\u0443\u043A\u0430\u0454 \u043D\u043E\u0432\u0438\u0439 \u0437\u0430\u043F\u0438\u0441, \u043D\u0430\u0432\u0456\u0442\u044C \u044F\u043A\u0449\u043E \u043E\u0431\u0438\u0434\u0432\u0430 \u043D\u0430\u043B\u0435\u0436\u0430\u0442\u044C \u0434\u043E \u0441\u0444\u0435\u0440\u0438 \u043E\u0445\u043E\u0440\u043E\u043D\u0438 \u0437\u0434\u043E\u0440\u043E\u0432\u2019\u044F. \u0429\u043E \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u0456\u0448\u0438\u0439 \u043F\u0435\u0440\u0448\u0438\u0439 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447, \u0442\u043E \u043B\u0435\u0433\u0448\u0435 \u0432\u0438\u0440\u0456\u0448\u0438\u0442\u0438, \u0449\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043C\u0430\u0454 \u0440\u043E\u0431\u0438\u0442\u0438 \u0434\u0430\u043B\u0456." },
+        { type: "h3", text: "2. \u0412\u0456\u043D \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442\u044C \u043C\u0435\u0436\u0443 \u043D\u0430\u0432\u043A\u043E\u043B\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457", id: "draw-the-line" },
+        { type: "p", text: "\u0421\u043F\u0438\u0441\u043E\u043A \u0444\u0443\u043D\u043A\u0446\u0456\u0439 \u043A\u0430\u0436\u0435, \u0449\u043E \u0431\u0443\u043B\u043E \u0443\u044F\u0432\u043B\u0435\u043D\u043E. \u041C\u0435\u0436\u0430 \u043E\u0431\u0441\u044F\u0433\u0443 \u043A\u0430\u0436\u0435, \u0449\u043E \u0431\u0443\u0434\u0435 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E. \u041E\u043F\u0438\u0448\u0456\u0442\u044C \u043E\u0441\u043D\u043E\u0432\u043D\u0438\u0439 \u0446\u0438\u043A\u043B \u043E\u0434\u043D\u0438\u043C \u0440\u0435\u0447\u0435\u043D\u043D\u044F\u043C, \u0430 \u0442\u043E\u0434\u0456 \u043F\u0435\u0440\u0435\u043B\u0456\u0447\u0456\u0442\u044C \u0440\u043E\u0431\u043E\u0442\u0443, \u044F\u043A\u0430 \u0440\u043E\u0431\u0438\u0442\u044C \u0439\u043E\u0433\u043E \u043D\u0430\u0434\u0456\u0439\u043D\u0438\u043C: \u0433\u043E\u043B\u043E\u0432\u043D\u0438\u0439 \u0435\u043A\u0440\u0430\u043D, \u043E\u0434\u043D\u0443 \u0437\u043D\u0430\u0447\u0443\u0449\u0443 \u0434\u0456\u044E, \u0434\u0430\u043D\u0456 \u0437\u0430 \u043D\u0435\u044E \u0442\u0430 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0439 \u0437\u0432\u2019\u044F\u0437\u043E\u043A, \u0449\u043E \u043F\u043E\u0432\u0456\u0434\u043E\u043C\u043B\u044F\u0454 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0435\u0432\u0456 \u043F\u0440\u043E \u0443\u0441\u043F\u0456\u0445. \u0423\u0441\u0435 \u0456\u043D\u0448\u0435 \u2014 \u043A\u0430\u043D\u0434\u0438\u0434\u0430\u0442 \u043D\u0430 \u043F\u0456\u0437\u043D\u0456\u0448\u0435, \u0430 \u043D\u0435 \u043C\u043E\u0432\u0447\u0430\u0437\u043D\u0430 \u0432\u0438\u043C\u043E\u0433\u0430 \u0434\u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0443." },
+        { type: "h3", text: "3. \u0412\u0456\u043D \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0438\u0439 \u0434\u043E\u043A\u0430\u0437", id: "define-the-proof" },
+        { type: "p", text: "\xAB\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u043C\u043E \u0439 \u043F\u043E\u0434\u0438\u0432\u0438\u043C\u043E\u0441\u044F, \u0449\u043E \u0441\u0442\u0430\u043D\u0435\u0442\u044C\u0441\u044F\xBB \u2014 \u0446\u0435 \u043D\u0435 \u043F\u043B\u0430\u043D \u043D\u0430\u0432\u0447\u0430\u043D\u043D\u044F. \u0412\u0438\u0440\u0456\u0448\u0456\u0442\u044C, \u0449\u043E \u043E\u0447\u0456\u043A\u0443\u0454\u0442\u0435 \u043F\u043E\u0431\u0430\u0447\u0438\u0442\u0438 \u0432 \u043F\u0435\u0440\u0448\u0456 \u043A\u0456\u043B\u044C\u043A\u0430 \u0442\u0438\u0436\u043D\u0456\u0432: \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u0439 \u0441\u0446\u0435\u043D\u0430\u0440\u0456\u0439, \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u0443 \u0434\u0456\u044E, \u043F\u043B\u0430\u0442\u043D\u0443 \u043A\u043E\u043D\u0432\u0435\u0440\u0441\u0456\u044E \u0430\u0431\u043E \u0456\u043D\u0442\u0435\u0440\u0432\u2019\u044E \u0437\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0430 \u0437 \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u0438\u043C \u0442\u0438\u043F\u043E\u043C \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430. \u041C\u0435\u0442\u0440\u0438\u043A\u0430 \u043D\u0435 \u043C\u0443\u0441\u0438\u0442\u044C \u0431\u0443\u0442\u0438 \u0441\u043A\u043B\u0430\u0434\u043D\u043E\u044E. \u0412\u043E\u043D\u0430 \u043C\u0430\u0454 \u0431\u0443\u0442\u0438 \u0434\u043E\u0441\u0438\u0442\u044C \u0431\u043B\u0438\u0437\u044C\u043A\u043E\u044E \u0434\u043E \u043F\u043E\u0432\u0435\u0434\u0456\u043D\u043A\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u0449\u043E\u0431 \u0437\u043C\u0456\u043D\u0438\u0442\u0438 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F." },
+        { type: "h2", text: "\u0429\u043E \u0437\u0430\u043F\u0438\u0441\u0430\u0442\u0438 \u0434\u043E \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u0435\u043A\u0440\u0430\u043D\u0430", id: "before-a-screen" },
+        { type: "ul", items: ["\u041F\u0435\u0440\u0448\u0438\u0439 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447: \u043E\u0434\u043D\u0430 \u0440\u043E\u043B\u044C, \u043E\u0434\u043D\u0430 \u0441\u0438\u0442\u0443\u0430\u0446\u0456\u044F \u0442\u0430 \u043E\u0434\u0438\u043D \u0431\u043E\u043B\u0456\u0441\u043D\u0438\u0439 \u043E\u0431\u0445\u0456\u0434\u043D\u0438\u0439 \u0448\u043B\u044F\u0445", "\u041E\u0441\u043D\u043E\u0432\u043D\u0438\u0439 \u0446\u0438\u043A\u043B: \u043D\u0430\u0439\u043C\u0435\u043D\u0448\u0430 \u0434\u0456\u044F, \u0449\u043E \u0441\u0442\u0432\u043E\u0440\u044E\u0454 \u0446\u0456\u043D\u043D\u0456\u0441\u0442\u044C \u0456 \u043C\u043E\u0436\u0435 \u043F\u043E\u0432\u0442\u043E\u0440\u044E\u0432\u0430\u0442\u0438\u0441\u044F", "\u041C\u0435\u0436\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0443: \u0449\u043E \u044F\u0432\u043D\u043E \u043F\u043E\u0437\u0430 \u043E\u0431\u0441\u044F\u0433\u043E\u043C \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457", "\u0412\u0438\u043C\u043E\u0433\u0430 \u0434\u043E\u0432\u0456\u0440\u0438: \u0449\u043E \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447 \u043C\u0430\u0454 \u043F\u043E\u0431\u0430\u0447\u0438\u0442\u0438, \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u044E\u0432\u0430\u0442\u0438 \u0447\u0438 \u0437\u0440\u043E\u0437\u0443\u043C\u0456\u0442\u0438 \u043F\u0435\u0440\u0435\u0434 \u0434\u0456\u0454\u044E", "\u041D\u0430\u0441\u0442\u0443\u043F\u043D\u0430 \u0442\u043E\u0447\u043A\u0430 \u0434\u043E\u043A\u0430\u0437\u0443: \u043F\u043E\u0432\u0435\u0434\u0456\u043D\u043A\u0430 \u0447\u0438 \u0440\u043E\u0437\u043C\u043E\u0432\u0430, \u0449\u043E \u0437\u0430\u0441\u043B\u0443\u0433\u043E\u0432\u0443\u0454 \u0449\u0435 \u043E\u0434\u043D\u043E\u0433\u043E \u0440\u0430\u0443\u043D\u0434\u0443 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438"] },
+        { type: "h2", text: "\u041F\u0435\u0440\u0435\u0432\u0456\u0440\u043A\u0430 \u043E\u0431\u0441\u044F\u0433\u0443, \u044F\u043A\u043E\u044E \u043C\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0454\u043C\u043E\u0441\u044F", id: "scope-test" },
+        { type: "p", text: "\u0412\u0456\u0437\u044C\u043C\u0456\u0442\u044C \u043A\u043E\u0436\u043D\u0443 \u0437\u0430\u043F\u0440\u043E\u043F\u043E\u043D\u043E\u0432\u0430\u043D\u0443 \u0444\u0443\u043D\u043A\u0446\u0456\u044E \u0439 \u043F\u043E\u0441\u0442\u0430\u0432\u0442\u0435 \u043E\u0434\u043D\u0435 \u0437\u0430\u043F\u0438\u0442\u0430\u043D\u043D\u044F: \u0447\u0438 \u0440\u043E\u0431\u0438\u0442\u044C \u0432\u043E\u043D\u0430 \u0443\u0441\u043F\u0456\u0445 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E \u0446\u0438\u043A\u043B\u0443 \u0434\u043B\u044F \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430 \u0456\u043C\u043E\u0432\u0456\u0440\u043D\u0456\u0448\u0438\u043C? \u042F\u043A\u0449\u043E \u043D\u0456 \u2014 \u0432\u0438\u043D\u0435\u0441\u0456\u0442\u044C \u0457\u0457 \u0437 \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u0440\u0435\u043B\u0456\u0437\u0443. \u042F\u043A\u0449\u043E \u043C\u043E\u0436\u043B\u0438\u0432\u043E \u2014 \u0437\u0430\u043F\u0438\u0448\u0456\u0442\u044C \u043F\u0440\u0438\u043F\u0443\u0449\u0435\u043D\u043D\u044F, \u044F\u043A\u0435 \u0432\u043E\u043D\u0430 \u0437\u0430\u0445\u0438\u0449\u0430\u0454, \u0456 \u0437\u043D\u0430\u0439\u0434\u0456\u0442\u044C \u0434\u0435\u0448\u0435\u0432\u0448\u0438\u0439 \u0441\u043F\u043E\u0441\u0456\u0431 \u0439\u043E\u0433\u043E \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u0438\u0442\u0438. \u0422\u0430\u043A \u043A\u043E\u0440\u0438\u0441\u043D\u0430 \u0444\u0443\u043D\u043A\u0446\u0456\u044F \u043D\u0435 \u0441\u0442\u0430\u0454 \u043F\u043E\u0441\u0442\u0456\u0439\u043D\u0438\u043C \u0432\u0438\u043F\u0440\u0430\u0432\u0434\u0430\u043D\u043D\u044F\u043C \u0437\u0430\u0442\u0440\u0438\u043C\u043A\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443." },
+        { type: "quote", text: "\u041C\u0435\u0442\u0430 \u0431\u0440\u0438\u0444\u0443 \u2014 \u043D\u0435 \u0437\u0430\u0444\u0456\u043A\u0441\u0443\u0432\u0430\u0442\u0438 \u0432\u0441\u0435, \u0449\u043E \u0432\u0438 \u043C\u043E\u0433\u043B\u0438 \u0431 \u0441\u0442\u0432\u043E\u0440\u0438\u0442\u0438. \u0407\u0457 \u043C\u0435\u0442\u0430 \u2014 \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u043E\u0447\u0435\u0432\u0438\u0434\u043D\u0438\u043C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F \u043F\u0440\u043E \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443.", cite: "\u043F\u0440\u0430\u0432\u0438\u043B\u043E, \u044F\u043A\u0438\u043C \u043C\u0438 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0454\u043C\u043E\u0441\u044F \u043D\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0438\u0445 \u0441\u0442\u0430\u0440\u0442\u0430\u0445" },
+        { type: "callout", title: "\u042F\u043A \u043C\u0438 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0454\u043C\u043E \u0446\u0435 \u0432 Start Apps Studio", text: "\u041F\u0435\u0440\u0448 \u043D\u0456\u0436 \u043E\u0446\u0456\u043D\u0438\u0442\u0438 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443, \u043C\u0438 \u043F\u0435\u0440\u0435\u0442\u0432\u043E\u0440\u044E\u0454\u043C\u043E \u0456\u0434\u0435\u044E \u0437\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0430 \u043D\u0430 \u043E\u0434\u043D\u043E\u0441\u0442\u043E\u0440\u0456\u043D\u043A\u043E\u0432\u0438\u0439 \u043E\u0431\u0441\u044F\u0433: \u043E\u0434\u0438\u043D \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447, \u043E\u0434\u0438\u043D \u043E\u0441\u043D\u043E\u0432\u043D\u0438\u0439 \u0446\u0438\u043A\u043B, \u0435\u043A\u0440\u0430\u043D\u0438 \u0442\u0430 \u0456\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430, \u0449\u043E \u0439\u043E\u0433\u043E \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u0443\u044E\u0442\u044C, \u0456 \u0434\u043E\u043A\u0430\u0437\u0438, \u044F\u043A\u0456 \u043C\u0430\u044E\u0442\u044C \u0437\u043C\u0456\u043D\u0438\u0442\u0438 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F. \u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442 \u0441\u0442\u0430\u0454 \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F\u043C \u043C\u0456\u0436 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u0454\u044E, \u0434\u0438\u0437\u0430\u0439\u043D\u043E\u043C, \u0456\u043D\u0436\u0435\u043D\u0435\u0440\u0456\u0454\u044E \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u043E\u043C \u2014 \u0456 \u0442\u043E\u0447\u043A\u043E\u044E \u0432\u0456\u0434\u043B\u0456\u043A\u0443, \u043A\u043E\u043B\u0438 \u043D\u043E\u0432\u0430 \u0444\u0443\u043D\u043A\u0446\u0456\u044F \u043D\u0430\u043C\u0430\u0433\u0430\u0454\u0442\u044C\u0441\u044F \u043D\u0435\u043F\u043E\u043C\u0456\u0442\u043D\u043E \u043F\u043E\u0442\u0440\u0430\u043F\u0438\u0442\u0438 \u0434\u043E \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457." },
+        { type: "h2", text: "\u041F\u043E\u0448\u0438\u0440\u0435\u043D\u0456 \u0437\u0430\u043F\u0438\u0442\u0430\u043D\u043D\u044F", id: "faq" },
+        { type: "faq", items: [
+          { q: "\u042F\u043A\u043E\u0457 \u0434\u043E\u0432\u0436\u0438\u043D\u0438 \u043C\u0430\u0454 \u0431\u0443\u0442\u0438 \u0431\u0440\u0438\u0444 MVP?", a: "\u0414\u043E\u0441\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u0442\u043A\u0438\u043C, \u0449\u043E\u0431 \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u0438 \u0437\u0430 \u043E\u0434\u0438\u043D \u0440\u0430\u0437, \u0456 \u0434\u043E\u0441\u0438\u0442\u044C \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u0438\u043C, \u0449\u043E\u0431 \u0440\u043E\u0431\u0438\u0442\u0438 \u043A\u043E\u043C\u043F\u0440\u043E\u043C\u0456\u0441\u0438. \u041E\u0434\u043D\u0456\u0454\u0457-\u0434\u0432\u043E\u0445 \u0441\u0442\u043E\u0440\u0456\u043D\u043E\u043A \u0437\u0430\u0437\u0432\u0438\u0447\u0430\u0439 \u0434\u043E\u0441\u0438\u0442\u044C, \u044F\u043A\u0449\u043E \u0432 \u043D\u0438\u0445 \u043D\u0430\u0437\u0432\u0430\u043D\u0456 \u043F\u0435\u0440\u0448\u0438\u0439 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447, \u043E\u0441\u043D\u043E\u0432\u043D\u0438\u0439 \u0446\u0438\u043A\u043B, \u043C\u0435\u0436\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0443, \u0432\u0438\u043C\u043E\u0433\u0438 \u0434\u043E\u0432\u0456\u0440\u0438 \u0442\u0430 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0430 \u0442\u043E\u0447\u043A\u0430 \u0434\u043E\u043A\u0430\u0437\u0443." },
+          { q: "\u0427\u0438 \u043C\u0430\u0454 \u0431\u0440\u0438\u0444 \u043C\u0456\u0441\u0442\u0438\u0442\u0438 \u043F\u043E\u0432\u043D\u0438\u0439 \u043F\u0435\u0440\u0435\u043B\u0456\u043A \u0444\u0443\u043D\u043A\u0446\u0456\u0439?", a: "\u0414\u043E\u0434\u0430\u0439\u0442\u0435 \u0444\u0443\u043D\u043A\u0446\u0456\u0457, \u0449\u043E \u0437\u0430\u0431\u0435\u0437\u043F\u0435\u0447\u0443\u044E\u0442\u044C \u0440\u043E\u0431\u043E\u0442\u0443 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E \u0446\u0438\u043A\u043B\u0443, \u0430 \u0440\u0435\u0448\u0442\u0443 \u0442\u0440\u0438\u043C\u0430\u0439\u0442\u0435 \u0432 \u0440\u043E\u0437\u0434\u0456\u043B\u0456 \u0456\u0434\u0435\u0439 \u043D\u0430 \u043F\u043E\u0442\u0456\u043C. \u041E\u043A\u0440\u0435\u043C\u0438\u0439 \u0441\u043F\u0438\u0441\u043E\u043A \u043E\u0447\u0456\u043A\u0443\u0432\u0430\u043D\u043D\u044F \u0437\u0430\u0445\u0438\u0449\u0430\u0454 \u0445\u043E\u0440\u043E\u0448\u0456 \u0456\u0434\u0435\u0457, \u043D\u0435 \u0434\u043E\u0437\u0432\u043E\u043B\u044F\u044E\u0447\u0438 \u0457\u043C \u043D\u0435\u043F\u043E\u043C\u0456\u0442\u043D\u043E \u0441\u0442\u0430\u0442\u0438 \u0432\u0438\u043C\u043E\u0433\u0430\u043C\u0438 \u0434\u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0443." },
+          { q: "\u0429\u043E, \u044F\u043A\u0449\u043E \u0446\u0456\u043B\u044C\u043E\u0432\u0438\u0439 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447 \u0456\u0449\u0435 \u043D\u0435\u0432\u0438\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439?", a: "\u0417\u0430\u043F\u0438\u0448\u0456\u0442\u044C \u0434\u0432\u043E\u0445 \u043D\u0430\u0439\u0441\u0438\u043B\u044C\u043D\u0456\u0448\u0438\u0445 \u043A\u0430\u043D\u0434\u0438\u0434\u0430\u0442\u0456\u0432 \u0456 \u0434\u043E\u043A\u0430\u0437\u0438, \u0449\u043E \u0434\u0430\u043B\u0438 \u0431 \u0437\u043C\u043E\u0433\u0443 \u0440\u043E\u0437\u0440\u0456\u0437\u043D\u0438\u0442\u0438 \u0457\u0445. \u041D\u0435\u0432\u0438\u0437\u043D\u0430\u0447\u0435\u043D\u0456\u0441\u0442\u044C \u043A\u043E\u0440\u0438\u0441\u043D\u0430, \u043A\u043E\u043B\u0438 \u0432\u043E\u043D\u0430 \u044F\u0432\u043D\u0430; \u0432\u043E\u043D\u0430 \u0441\u0442\u0430\u0454 \u0434\u043E\u0440\u043E\u0433\u043E\u044E, \u043A\u043E\u043B\u0438 \u043F\u0440\u0438\u0445\u043E\u0432\u0430\u043D\u0430 \u0432 \u0448\u0438\u0440\u043E\u043A\u043E\u043C\u0443 \u043E\u0431\u0441\u044F\u0437\u0456 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443." },
+          { q: "\u0427\u0438 \u0442\u0440\u0435\u0431\u0430 \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u0438 \u0431\u0440\u0438\u0444 \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443?", a: "\u0412\u0456\u043D \u043C\u0430\u0454 \u0431\u0443\u0442\u0438 \u0434\u043E\u0441\u0438\u0442\u044C \u044F\u0441\u043D\u0438\u043C, \u0449\u043E\u0431 \u0441\u043F\u0440\u044F\u043C\u0443\u0432\u0430\u0442\u0438 \u043F\u0435\u0440\u0448\u0438\u0439 \u0435\u0442\u0430\u043F \u0434\u0438\u0437\u0430\u0439\u043D\u0443, \u0430\u043B\u0435 \u043D\u0435 \u0437\u0430\u0441\u0442\u0438\u0433\u043B\u0438\u043C \u043D\u0430\u0437\u0430\u0432\u0436\u0434\u0438. \u0414\u0438\u0437\u0430\u0439\u043D \u043C\u043E\u0436\u0435 \u0432\u0438\u044F\u0432\u0438\u0442\u0438 \u043A\u0440\u0430\u0449\u0435 \u0437\u0430\u043F\u0438\u0442\u0430\u043D\u043D\u044F, \u043F\u0440\u043E\u0442\u0435 \u043A\u043E\u0436\u043D\u0430 \u0437\u043C\u0456\u043D\u0430 \u043C\u0430\u0454 \u043E\u043D\u043E\u0432\u043B\u044E\u0432\u0430\u0442\u0438 \u043E\u0431\u0441\u044F\u0433 \u0456 \u0434\u043E\u043A\u0430\u0437, \u044F\u043A\u0438\u0439 \u0432\u0438 \u043D\u0430\u043C\u0430\u0433\u0430\u0454\u0442\u0435\u0441\u044F \u0437\u0456\u0431\u0440\u0430\u0442\u0438." }
+        ] }
+      ] }
+    };
+    uk_default = UK_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/locales/zh.ts
+var sourcePost9, ZH_EDITORIAL_CONTENT, zh_default;
+var init_zh = __esm({
+  "server/journal/locales/zh.ts"() {
+    "use strict";
+    init_posts();
+    sourcePost9 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost9) throw new Error("MVP source post is missing.");
+    ZH_EDITORIAL_CONTENT = {
+      copy: { journalName: "The Journal \xB7 \u7B2C\u4E00\u5377", journalTitle: "\u6765\u81EA\u5DE5\u4F5C\u5BA4\u7684\u5B9E\u5730\u7B14\u8BB0\u3002", journalDescription: "\u5173\u4E8E\u53D1\u5E03\u80FD\u5728 Google \u83B7\u5F97\u6392\u540D\u3001\u88AB AI \u5F15\u8FF0\u7684 MVP \u7684\u89C2\u5BDF\uFF1AGEO\u3001vibe-coding\uFF0C\u4EE5\u53CA AI \u5728\u5DE5\u4F5C\u4E2D\u7684\u73B0\u72B6\u3002", resourcesTitle: "\u5148\u505A\u5BF9\u7684\u4E8B\uFF0C\u518D\u628A\u5B83\u505A\u597D\u3002", resourcesDescription: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002", read: "\u9605\u8BFB\u7B14\u8BB0", minutes: "\u5206\u949F\u9605\u8BFB", allNotes: "\u5168\u90E8\u7B14\u8BB0", sources: "\u6765\u6E90", shortAnswer: "\u7B80\u77ED\u56DE\u7B54", language: "\u8BED\u8A00", translatedArticleTitle: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", translatedArticleDescription: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u660E\u786E\u9996\u4F4D\u7528\u6237\u3001\u5212\u5B9A\u7B2C\u4E00\u7248\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u4E0B\u4E00\u6B21\u51B3\u7B56\u6240\u9700\u7684\u8BC1\u636E\u3002" },
+      resources: {
+        title: "\u5148\u505A\u5BF9\u7684\u4E8B\uFF0C\u518D\u628A\u5B83\u505A\u597D\u3002",
+        description: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002",
+        eyebrow: "Start Apps Studio \xB7 \u8D44\u6E90",
+        primaryAction: "\u804A\u804A\u4F60\u7684\u9879\u76EE",
+        journalAction: "\u9605\u8BFB Journal",
+        routes: { title: "\u9009\u62E9\u4E0B\u4E00\u6761\u8DEF\u5F84", intro: "\u6B63\u786E\u7684\u7B2C\u4E00\u4E2A\u91CC\u7A0B\u7891\u53D6\u51B3\u4E8E\u4F60\u9700\u8981\u8BC1\u660E\u4EC0\u4E48\uFF0C\u800C\u4E0D\u662F\u4F60\u80FD\u60F3\u8C61\u51FA\u591A\u5C11\u8F6F\u4EF6\u3002", cards: [
+          { kicker: "01 \xB7 \u65B9\u5411", title: "\u4ECE\u6700\u5C0F\u7684\u6709\u6548\u8BC1\u636E\u5F00\u59CB", text: "\u53D1\u5E03\u7F51\u7AD9\u80FD\u56DE\u7B54\u4EBA\u4EEC\u662F\u5426\u7406\u89E3\u4F60\u7684\u4EA7\u54C1\u3002\u539F\u578B\u80FD\u56DE\u7B54\u4ED6\u4EEC\u80FD\u5426\u5BF9\u4F53\u9A8C\u4F5C\u51FA\u53CD\u5E94\u3002MVP \u80FD\u56DE\u7B54\u771F\u5B9E\u7528\u6237\u4F1A\u505A\u4EC0\u4E48\u3002", bullets: ["\u9009\u62E9\u4E0B\u4E00\u6B21\u53D1\u5E03\u5FC5\u987B\u89E3\u9501\u7684\u4E00\u4E2A\u51B3\u7B56", "\u8BA9\u7B2C\u4E00\u7248\u8DB3\u591F\u805A\u7126\uFF0C\u4EE5\u4FBF\u4ECE\u4E2D\u5B66\u4E60", "\u4F7F\u7528\u4E0E\u4F60\u6240\u9700\u8BC1\u636E\u76F8\u5339\u914D\u7684\u65B9\u6848"] },
+          { kicker: "02 \xB7 AI \u8F85\u52A9\u4EA4\u4ED8", title: "\u7ED3\u6784\u7A33\u56FA\u65F6\uFF0C\u901F\u5EA6\u624D\u6709\u4EF7\u503C", text: "AI \u53EF\u4EE5\u52A0\u5FEB\u63A2\u7D22\u3001\u7F16\u7801\u548C\u5BA1\u67E5\u3002\u5B83\u4E0D\u80FD\u66FF\u4EE3\u4EA7\u54C1\u5224\u65AD\u3001\u67B6\u6784\u3001\u6D4B\u8BD5\uFF0C\u6216\u5BF9\u7ED3\u679C\u8D1F\u8D23\u7684\u4EBA\u3002", bullets: ["\u7528 AI \u63A2\u7D22\u9009\u62E9\u5E76\u51CF\u5C11\u91CD\u590D\u5DE5\u4F5C", "\u4F9D\u636E\u771F\u5B9E\u7528\u6237\u6D41\u7A0B\u5BA1\u67E5\u751F\u6210\u7684\u4EE3\u7801", "\u8BA9\u5DF2\u53D1\u5E03\u7684\u7CFB\u7EDF\u6613\u4E8E\u7406\u89E3\u548C\u6269\u5C55"] },
+          { kicker: "03 \xB7 \u6240\u6709\u6743", title: "\u95EE\u6E05\u4EA4\u63A5\u65F6\u4F1A\u4EA4\u4ED8\u4EC0\u4E48", text: "\u6210\u529F\u7684\u6784\u5EFA\u4E0D\u53EA\u662F\u6700\u7EC8\u5C55\u793A\u3002\u6E90\u4EE3\u7801\u3001\u8BBE\u8BA1\u6587\u4EF6\u3001\u8D26\u6237\u3001\u90E8\u7F72\u8BBF\u95EE\u6743\u9650\u548C\u80CC\u666F\u4FE1\u606F\u90FD\u5E94\u4E3A\u4F60\u6216\u4E0B\u4E00\u652F\u56E2\u961F\u51C6\u5907\u59A5\u5F53\u3002", bullets: ["\u786E\u8BA4\u8C01\u62E5\u6709\u8D26\u6237\u548C\u5DE5\u4F5C\u6587\u4EF6", "\u5728\u6700\u540E\u4E00\u5468\u4E4B\u524D\u5BA1\u67E5\u53EF\u8FD0\u884C\u7684\u8FDB\u5C55", "\u5E26\u7740\u6709\u6587\u6863\u3001\u53EF\u7EF4\u62A4\u7684\u57FA\u7840\u79BB\u5F00"] },
+          { kicker: "04 \xB7 \u5408\u4F5C\u4F19\u4F34\u5339\u914D\u5EA6", title: "\u6BD4\u8F83\u5DE5\u4F5C\u65B9\u5F0F", text: "\u9009\u62E9\u4EA7\u54C1\u5408\u4F5C\u4F19\u4F34\u524D\uFF0C\u8BF7\u6BD4\u8F83\u8303\u56F4\u6E05\u6670\u5EA6\u3001\u53CD\u9988\u5FAA\u73AF\u3001\u8D23\u4EFB\u3001\u53D1\u5E03\u540E\u7684\u652F\u6301\uFF0C\u4EE5\u53CA\u8BE5\u8DEF\u5F84\u662F\u5426\u9002\u5408\u4F60\u7684\u4E1A\u52A1\u9636\u6BB5\u3002", bullets: ["\u8C01\u505A\u4EA7\u54C1\u51B3\u7B56\uFF1F", "\u4F60\u4F55\u65F6\u80FD\u770B\u5230\u771F\u5B9E\u6210\u679C\uFF1F", "\u53E6\u4E00\u652F\u56E2\u961F\u80FD\u5426\u4E0D\u4ECE\u5934\u5F00\u59CB\u5C31\u7EE7\u7EED\u5DE5\u4F5C\uFF1F"] }
+        ] },
+        packages: { title: "\u65B9\u6848\u8DEF\u5F84\u6307\u5357", intro: "\u5C06\u516C\u5F00\u65B9\u6848\u4F5C\u4E3A\u5BF9\u8BDD\u7684\u8D77\u70B9\u3002\u5DE5\u4F5C\u5F00\u59CB\u524D\u4F1A\u5148\u5546\u5B9A\u8303\u56F4\u3002", columns: ["\u8DEF\u5F84", "\u6295\u5165", "\u5178\u578B\u5468\u671F", "\u6700\u9002\u5408\u4F60\u9700\u8981"], rows: [
+          { route: "\u53D1\u5E03\u7F51\u7AD9", investment: "$2,600", timing: "3\u20135 \u4E2A\u5DE5\u4F5C\u65E5", bestFor: "\u89E3\u91CA\u4EA7\u54C1\u5E76\u5EFA\u7ACB\u53EF\u4FE1\u7684\u6570\u5B57\u5F62\u8C61" },
+          { route: "\u539F\u578B", investment: "$6,000", timing: "5\u201310 \u5929", bestFor: "\u8BA9\u60F3\u6CD5\u53D8\u5F97\u53EF\u611F\u77E5\uFF0C\u7528\u4E8E\u9A8C\u8BC1\u3001\u878D\u8D44\u6216\u65E9\u671F\u6C9F\u901A" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 \u5468", bestFor: "\u5C06\u771F\u5B9E\u7684 Web\u3001iOS \u6216 Android \u4EA7\u54C1\u4EA4\u5230\u7528\u6237\u624B\u4E2D" },
+          { route: "\u5B9A\u5236", investment: "$25,000", timing: "1\u20136 \u4E2A\u6708", bestFor: "\u6784\u5EFA\u66F4\u5927\u6216\u66F4\u590D\u6742\u3001\u5177\u6709\u957F\u671F\u8D23\u4EFB\u7684\u7CFB\u7EDF" }
+        ] },
+        toolkit: { title: "\u5DE5\u4F5C\u80CC\u540E\u7684\u5DE5\u5177\u96C6", intro: "\u5DE5\u5177\u4F1A\u6839\u636E\u4EA7\u54C1\u6210\u679C\u3001\u63A5\u624B\u5B83\u7684\u56E2\u961F\u548C\u4E1A\u52A1\u6240\u5904\u9636\u6BB5\u6765\u9009\u62E9\u3002", groups: [
+          { label: "\u8BA9\u4F60\u7684\u60F3\u6CD5\u770B\u5F97\u89C1", description: "\u6982\u5FF5\u5982\u4F55\u53D8\u6210\u53EF\u70B9\u51FB\u3001\u53EF\u4E0E\u6295\u8D44\u4EBA\u5206\u4EAB\u3001\u53EF\u7531\u771F\u5B9E\u7528\u6237\u6D4B\u8BD5\u7684\u5C4F\u5E55\u3002", tools: [{ name: "Figma", note: "\u6BCF\u4E2A\u5C4F\u5E55\u90FD\u5728\u7F16\u7801\u524D\u5B8C\u6210\u8BBE\u8BA1", tone: "figma" }, { name: "Rork", note: "\u51E0\u5929\u5185\u5C31\u5728\u771F\u5B9E\u624B\u673A\u4E0A\u8BD5\u7528", tone: "rork" }, { name: "Lovable", note: "\u51E0\u5929\u5185\u8BA9\u53D1\u5E03\u7F51\u7AD9\u4E0A\u7EBF", tone: "lovable" }, { name: "Replit", note: "\u53EF\u8FD0\u884C\u3001\u53EF\u7F16\u8F91\u7684\u5DE5\u4F5C\u4EA7\u54C1", tone: "replit" }] },
+          { label: "\u4E3A\u6301\u4E45\u4F7F\u7528\u800C\u6784\u5EFA\u7684\u4EA7\u54C1", description: "\u652F\u6491\u7528\u6237\u5B89\u88C5\u3001\u6253\u5F00\u5E76\u4ED8\u8D39\u4F7F\u7528\u7684\u5E94\u7528\u7684\u5DE5\u7A0B\u80FD\u529B\u3002", tools: [{ name: "React Native", note: "\u4E00\u5957\u4EE3\u7801\u5E93\uFF0CiOS + Android", tone: "expo" }, { name: "Swift", note: "\u539F\u751F iOS\uFF0C\u5728 iPhone \u4E0A\u6700\u5FEB", tone: "swift" }, { name: "Kotlin", note: "\u539F\u751F Android\uFF0C\u5B8C\u6574\u8986\u76D6 Play Store", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "\u4F60\u7684\u6570\u636E\uFF0C\u5B89\u5168\u4E14\u53EF\u7531\u4F60\u5BFC\u51FA", tone: "node" }] },
+          { label: "\u4ECE\u7B2C\u4E00\u5929\u8D77\u5C31\u8003\u8651\u6536\u5165\u4E0E\u53D1\u5E03", description: "\u652F\u4ED8\u3001\u66F4\u65B0\u548C\u4EE3\u7801\u5B89\u5168\u4ECE\u4E00\u5F00\u59CB\u5C31\u63A5\u5165\uFF0C\u800C\u4E0D\u662F\u4E8B\u540E\u518D\u8865\u3002", open: true, tools: [{ name: "Stripe", note: "\u4E00\u6B21\u6027\u4ED8\u6B3E\u3001\u8BA2\u9605\u3001\u5347\u7EA7", tone: "stripe" }, { name: "RevenueCat", note: "App Store \u548C Play Store \u8BA1\u8D39", tone: "revenuecat" }, { name: "GitHub", note: "\u6BCF\u65E5\u5907\u4EFD\uFF1A\u4F60\u7684\u4EE3\u7801\u59CB\u7EC8\u5B89\u5168", tone: "github" }, { name: "Automation", note: "n8n + Make \u5904\u7406\u7E41\u7410\u5DE5\u4F5C", tone: "hooks" }] },
+          { label: "AI \u5728\u5E55\u540E\uFF0C\u800C\u4E0D\u59A8\u788D\u4F60", description: "AI \u53EF\u4EE5\u652F\u6301\u7814\u7A76\u3001\u5B9E\u65BD\u548C\u5BA1\u67E5\uFF0C\u540C\u65F6\u7531\u4EBA\u8D1F\u8D23\u65B9\u5411\u548C\u8D28\u91CF\u6807\u51C6\u3002", tools: [{ name: "Claude", note: "\u4E3B\u8981\u6784\u5EFA\u8005\u548C\u4EE3\u7801\u5BA1\u67E5\u8005", tone: "claude" }, { name: "Gemini", note: "\u4E00\u6B21\u5BA1\u67E5\u6574\u4E2A\u4EA7\u54C1", tone: "gemini" }, { name: "GPT-5", note: "\u6587\u6848\u3001\u6D41\u7A0B\u548C\u521B\u610F\u65B9\u5411", tone: "gpt" }, { name: "Llama 4", note: "\u9002\u5408\u654F\u611F\u5DE5\u4F5C\u7684\u81EA\u6258\u7BA1\u9009\u9879", tone: "llama" }] }
+        ], footnote: "\u4EE3\u7801\u3001\u8D26\u6237\u548C\u5DE5\u4F5C\u6587\u4EF6\u7531\u4F60\u4FDD\u7559\u3002\u51FA\u73B0\u66F4\u597D\u7684\u5DE5\u5177\u65F6\uFF0C\u53EF\u4EE5\u66FF\u6362\u5B83\uFF0C\u800C\u4E0D\u4F1A\u8BA9\u4F60\u7684\u4EA7\u54C1\u88AB\u7ED1\u4F4F\u3002" },
+        journal: { title: "Journal \u7684\u5B9E\u5730\u7B14\u8BB0", text: "\u5173\u4E8E MVP \u7B56\u7565\u3001SEO\u3001GEO\u3001vibe-coded \u5E94\u7528\uFF0C\u4EE5\u53CA\u8BA9\u4EA7\u54C1\u66F4\u5BB9\u6613\u53D1\u5E03\u7684\u51B3\u7B56\u7684\u957F\u7BC7\u7B14\u8BB0\u3002", readAction: "\u9605\u8BFB\u7B14\u8BB0", minutesLabel: "\u5206\u949F\u9605\u8BFB", allAction: "\u5168\u90E8 Journal \u7B14\u8BB0", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "\u5FC3\u91CC\u5DF2\u6709\u8DEF\u5F84\u4E86\u5417\uFF1F", text: "\u544A\u8BC9\u6211\u4EEC\u4F60\u76EE\u524D\u6240\u5904\u7684\u4F4D\u7F6E\u3001\u9700\u8981\u8BC1\u660E\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u773C\u4E0B\u5361\u5728\u54EA\u91CC\u3002", action: "\u83B7\u5F97\u660E\u786E\u7684\u4E0B\u4E00\u6B65" }
+      },
+      post: { slug: sourcePost9.slug, publishedAt: sourcePost9.publishedAt, readMinutes: sourcePost9.readMinutes, title: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", seoTitle: "MVP \u7B80\u62A5\uFF1A\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56 | Start Apps Studio", description: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4E0D\u53EA\u662F\u63CF\u8FF0\u4E00\u4E2A\u60F3\u6CD5\u3002\u5B83\u4F1A\u660E\u786E\u7528\u6237\u3001\u4E3A\u7B2C\u4E00\u7248\u5212\u51FA\u6E05\u6670\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u544A\u8BC9\u4F60\u662F\u5426\u7EE7\u7EED\u6784\u5EFA\u7684\u8BC1\u636E\u3002", seoDescription: "\u4F60\u7684 MVP \u7B80\u62A5\u662F\u4EA7\u54C1\u51B3\u7B56\uFF0C\u4E0D\u662F\u6587\u4E66\u5DE5\u4F5C\u3002\u4E86\u89E3\u5728\u8BBE\u8BA1\u6216\u7F16\u7801\u5F00\u59CB\u524D\uFF0C\u6709\u7528\u7684\u7B80\u62A5\u5FC5\u987B\u5B9A\u4E49\u7684\u4E09\u4EF6\u4E8B\u3002", excerpt: "\u6700\u597D\u7684 MVP \u7B80\u62A5\u5E76\u4E0D\u957F\u3002\u5B83\u51B3\u5B9A\u4EA7\u54C1\u670D\u52A1\u8C01\u3001\u7B2C\u4E00\u7248\u660E\u786E\u4E0D\u505A\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u4EC0\u4E48\u8BC1\u636E\u503C\u5F97\u6295\u5165\u4E0B\u4E00\u5468\u7684\u5DE5\u4F5C\u3002", category: "\u5B9E\u5730\u7B14\u8BB0", tags: ["MVP", "\u4EA7\u54C1\u7B56\u7565", "\u521B\u59CB\u4EBA", "\u8303\u56F4"], body: [
+        { type: "answer", text: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u5728\u8BBE\u8BA1\u5F00\u59CB\u524D\u505A\u51FA\u4E09\u4E2A\u51B3\u5B9A\uFF1A\u4EA7\u54C1\u670D\u52A1\u8C01\u3001\u7B2C\u4E00\u7248\u5C06\u523B\u610F\u7701\u7565\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u4EC0\u4E48\u7528\u6237\u8BC1\u636E\u80FD\u8BC1\u660E\u4E0B\u4E00\u7B14\u6295\u5165\u5408\u7406\u3002\u8FD9\u5C31\u662F\u7B80\u62A5\u4E0D\u662F\u6587\u4E66\u5DE5\u4F5C\u7684\u539F\u56E0\uFF1B\u5B83\u662F\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56\u3002" },
+        { type: "p", text: "\u521B\u59CB\u4EBA\u5E38\u5E26\u7740\u4E00\u4EFD\u5B9E\u9645\u4E0A\u53EA\u662F\u60F3\u6CD5\u8BF4\u660E\u7684\u7B80\u62A5\u800C\u6765\uFF1A\u51E0\u6BB5\u5E02\u573A\u4ECB\u7ECD\u3001\u4E00\u4E2A\u529F\u80FD\u6E05\u5355\uFF0C\u4EE5\u53CA\u4E00\u53E5\u5173\u4E8E\u4EA7\u54C1\u672A\u6765\u53EF\u80FD\u8D70\u5411\u4F55\u5904\u7684\u8BDD\u3002\u5B83\u8DB3\u4EE5\u5F00\u542F\u5BF9\u8BDD\uFF0C\u5374\u4E0D\u8DB3\u4EE5\u636E\u6B64\u53D1\u5E03\u4EA7\u54C1\u3002\u6784\u5EFA\u56E2\u961F\u9700\u8981\u4E00\u4EFD\u66F4\u5C0F\u3001\u66F4\u805A\u7126\u7684\u6587\u4EF6\uFF0C\u628A\u96C4\u5FC3\u8F6C\u5316\u4E3A\u4E00\u7CFB\u5217\u53EF\u9A8C\u8BC1\u7684\u9009\u62E9\u3002" },
+        { type: "h2", text: "\u6709\u7528\u7684\u7B80\u62A5\u5B8C\u6210\u4E09\u9879\u5DE5\u4F5C", id: "three-jobs" },
+        { type: "h3", text: "1. \u660E\u786E\u9047\u5230\u95EE\u9898\u7684\u4EBA", id: "name-the-user" },
+        { type: "p", text: "\u201C\u5C0F\u4F01\u4E1A\u201D\u662F\u4E00\u4E2A\u5E02\u573A\uFF0C\u4E0D\u662F\u9996\u4F4D\u7528\u6237\u3002\u4E00\u4EFD\u597D\u7684\u7B80\u62A5\u4F1A\u660E\u786E\u8FD9\u4E2A\u4EBA\u3001\u4ED6\u4EEC\u6240\u5904\u7684\u65F6\u523B\uFF0C\u4EE5\u53CA\u4ED6\u4EEC\u4ECA\u5929\u4F7F\u7528\u7684\u4E34\u65F6\u529E\u6CD5\u3002\u8BD5\u56FE\u586B\u8865\u660E\u5929\u53D6\u6D88\u9884\u7EA6\u7684\u8BCA\u6240\u7ECF\u7406\uFF0C\u4E0E\u6B63\u5728\u5BFB\u627E\u65B0\u9884\u7EA6\u7684\u60A3\u8005\u9762\u5BF9\u7684\u662F\u4E0D\u540C\u95EE\u9898\uFF0C\u5373\u4F7F\u4E24\u8005\u90FD\u5C5E\u4E8E\u533B\u7597\u9886\u57DF\u3002\u9996\u4F4D\u7528\u6237\u8D8A\u5177\u4F53\uFF0C\u8D8A\u5BB9\u6613\u51B3\u5B9A\u4EA7\u54C1\u4E0B\u4E00\u6B65\u8BE5\u505A\u4EC0\u4E48\u3002" },
+        { type: "h3", text: "2. \u4E3A\u7B2C\u4E00\u7248\u5212\u51FA\u8FB9\u754C", id: "draw-the-line" },
+        { type: "p", text: "\u529F\u80FD\u6E05\u5355\u544A\u8BC9\u4F60\u4EBA\u4EEC\u8BBE\u60F3\u4E86\u4EC0\u4E48\uFF1B\u8303\u56F4\u8FB9\u754C\u544A\u8BC9\u4F60\u5C06\u6784\u5EFA\u4EC0\u4E48\u3002\u7528\u4E00\u53E5\u8BDD\u5199\u4E0B\u6838\u5FC3\u5FAA\u73AF\uFF0C\u7136\u540E\u5217\u51FA\u8BA9\u5B83\u53EF\u9760\u8FD0\u884C\u7684\u5DE5\u4F5C\uFF1A\u4E3B\u5C4F\u5E55\u3001\u4E00\u4E2A\u6709\u610F\u4E49\u7684\u64CD\u4F5C\u3001\u80CC\u540E\u7684\u6570\u636E\uFF0C\u4EE5\u53CA\u544A\u8BC9\u7528\u6237\u5B83\u6210\u529F\u4E86\u7684\u53CD\u9988\u3002\u5176\u4ED6\u4E00\u5207\u90FD\u662F\u4EE5\u540E\u518D\u8003\u8651\u7684\u5019\u9009\u9879\uFF0C\u4E0D\u662F\u53D1\u5E03\u65F6\u9ED8\u8BA4\u7684\u8981\u6C42\u3002" },
+        { type: "h3", text: "3. \u5B9A\u4E49\u63A5\u4E0B\u6765\u7684\u8BC1\u660E", id: "define-the-proof" },
+        { type: "p", text: "\u201C\u53D1\u5E03\u540E\u770B\u770B\u4F1A\u53D1\u751F\u4EC0\u4E48\u201D\u4E0D\u662F\u5B66\u4E60\u8BA1\u5212\u3002\u51B3\u5B9A\u4F60\u671F\u5F85\u5728\u6700\u521D\u51E0\u5468\u89C2\u5BDF\u5230\u4EC0\u4E48\uFF1A\u5B8C\u6210\u7684\u5DE5\u4F5C\u6D41\u7A0B\u3001\u91CD\u590D\u64CD\u4F5C\u3001\u4ED8\u8D39\u8F6C\u5316\uFF0C\u6216\u521B\u59CB\u4EBA\u4E0E\u7279\u5B9A\u7C7B\u578B\u7528\u6237\u8FDB\u884C\u7684\u8BBF\u8C08\u3002\u8FD9\u4E2A\u8861\u91CF\u4E0D\u5FC5\u590D\u6742\uFF1B\u5B83\u9700\u8981\u8DB3\u591F\u63A5\u8FD1\u7528\u6237\u884C\u4E3A\uFF0C\u624D\u80FD\u6539\u53D8\u4E0B\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56\u3002" },
+        { type: "h2", text: "\u5728\u8BBE\u8BA1\u5C4F\u5E55\u524D\u5199\u4E0B\u4EC0\u4E48", id: "before-a-screen" },
+        { type: "ul", items: ["\u9996\u4F4D\u7528\u6237\uFF1A\u4E00\u4E2A\u89D2\u8272\u3001\u4E00\u79CD\u60C5\u5883\u548C\u4E00\u4E2A\u75DB\u82E6\u7684\u6743\u5B9C\u529E\u6CD5", "\u6838\u5FC3\u5FAA\u73AF\uFF1A\u521B\u9020\u4EF7\u503C\u4E14\u53EF\u4EE5\u91CD\u590D\u53D1\u751F\u7684\u6700\u5C0F\u64CD\u4F5C", "\u53D1\u5E03\u8FB9\u754C\uFF1A\u7B2C\u4E00\u7248\u660E\u786E\u4E0D\u5728\u8303\u56F4\u5185\u7684\u5185\u5BB9", "\u4FE1\u4EFB\u8981\u6C42\uFF1A\u7528\u6237\u884C\u52A8\u524D\u5FC5\u987B\u770B\u5230\u3001\u63A7\u5236\u6216\u7406\u89E3\u7684\u5185\u5BB9", "\u4E0B\u4E00\u4E2A\u9A8C\u8BC1\u70B9\uFF1A\u503C\u5F97\u518D\u8FDB\u884C\u4E00\u8F6E\u6784\u5EFA\u5DE5\u4F5C\u7684\u884C\u4E3A\u6216\u5BF9\u8BDD"] },
+        { type: "h2", text: "\u6211\u4EEC\u4F7F\u7528\u7684\u8303\u56F4\u6D4B\u8BD5", id: "scope-test" },
+        { type: "p", text: "\u9010\u4E00\u5BA1\u89C6\u6BCF\u9879\u62DF\u8BAE\u529F\u80FD\uFF0C\u5E76\u95EE\u4E00\u4E2A\u95EE\u9898\uFF1A\u5B83\u4F1A\u4E0D\u4F1A\u8BA9\u6838\u5FC3\u5FAA\u73AF\u66F4\u53EF\u80FD\u4E3A\u9996\u4F4D\u7528\u6237\u6210\u529F\uFF1F\u5982\u679C\u7B54\u6848\u662F\u5426\u5B9A\u7684\uFF0C\u5C31\u628A\u5B83\u79FB\u51FA\u7B2C\u4E00\u4E2A\u7248\u672C\u3002\u5982\u679C\u7B54\u6848\u662F\u53EF\u80FD\uFF0C\u5199\u4E0B\u5B83\u5728\u4FDD\u62A4\u7684\u5047\u8BBE\uFF0C\u5E76\u627E\u4E00\u79CD\u66F4\u4FBF\u5B9C\u7684\u65B9\u5F0F\u6D4B\u8BD5\u8BE5\u5047\u8BBE\u3002\u8FD9\u6837\u53EF\u4EE5\u9632\u6B62\u4E00\u9879\u6709\u7528\u529F\u80FD\u6210\u4E3A\u6C38\u4E45\u62D6\u5EF6\u4EA7\u54C1\u7684\u501F\u53E3\u3002" },
+        { type: "quote", text: "\u7B80\u62A5\u7684\u76EE\u6807\u4E0D\u662F\u8BB0\u5F55\u4F60\u53EF\u80FD\u6784\u5EFA\u7684\u4E00\u5207\uFF0C\u800C\u662F\u8BA9\u4E0B\u4E00\u9879\u6784\u5EFA\u51B3\u7B56\u4E00\u76EE\u4E86\u7136\u3002", cite: "\u6211\u4EEC\u5728\u4EA7\u54C1\u542F\u52A8\u65F6\u4F7F\u7528\u7684\u4E00\u6761\u89C4\u5219" },
+        { type: "callout", title: "\u6211\u4EEC\u5728 Start Apps Studio \u5982\u4F55\u4F7F\u7528\u5B83", text: "\u5728\u4E3A\u6784\u5EFA\u62A5\u4EF7\u524D\uFF0C\u6211\u4EEC\u4F1A\u628A\u521B\u59CB\u4EBA\u7684\u60F3\u6CD5\u53D8\u6210\u4E00\u9875\u8303\u56F4\u8BF4\u660E\uFF1A\u4E00\u4E2A\u7528\u6237\u3001\u4E00\u4E2A\u6838\u5FC3\u5FAA\u73AF\u3001\u652F\u6301\u5B83\u7684\u5C4F\u5E55\u548C\u57FA\u7840\u8BBE\u65BD\uFF0C\u4EE5\u53CA\u5E94\u5F53\u6539\u53D8\u4E0B\u4E00\u6B21\u51B3\u7B56\u7684\u8BC1\u636E\u3002\u8FD9\u4EFD\u6587\u4EF6\u6210\u4E3A\u7B56\u7565\u3001\u8BBE\u8BA1\u3001\u5DE5\u7A0B\u548C\u53D1\u5E03\u4E4B\u95F4\u7684\u4EA4\u63A5\uFF0C\u4E5F\u662F\u5728\u65B0\u529F\u80FD\u8BD5\u56FE\u6DF7\u8FDB\u7B2C\u4E00\u7248\u65F6\u7684\u53C2\u8003\u70B9\u3002" },
+        { type: "h2", text: "\u5E38\u89C1\u95EE\u9898", id: "faq" },
+        { type: "faq", items: [{ q: "MVP \u7B80\u62A5\u5E94\u8BE5\u591A\u957F\uFF1F", a: "\u5E94\u5F53\u77ED\u5230\u80FD\u4E00\u53E3\u6C14\u8BFB\u5B8C\uFF0C\u53C8\u5177\u4F53\u5230\u8DB3\u4EE5\u505A\u53D6\u820D\u3002\u5F53\u5B83\u660E\u786E\u4E86\u9996\u4F4D\u7528\u6237\u3001\u6838\u5FC3\u5FAA\u73AF\u3001\u53D1\u5E03\u8FB9\u754C\u3001\u4FE1\u4EFB\u8981\u6C42\u548C\u4E0B\u4E00\u4E2A\u9A8C\u8BC1\u70B9\u65F6\uFF0C\u4E00\u5230\u4E24\u9875\u901A\u5E38\u5DF2\u8DB3\u591F\u3002" }, { q: "\u7B80\u62A5\u5E94\u8BE5\u5305\u542B\u5B8C\u6574\u7684\u529F\u80FD\u6E05\u5355\u5417\uFF1F", a: "\u5305\u542B\u8BA9\u6838\u5FC3\u5FAA\u73AF\u8FD0\u884C\u6240\u9700\u7684\u529F\u80FD\uFF0C\u7136\u540E\u628A\u5176\u4ED6\u5185\u5BB9\u653E\u5728\u540E\u7EED\u60F3\u6CD5\u90E8\u5206\u3002\u5355\u72EC\u7684\u6401\u7F6E\u533A\u80FD\u4FDD\u62A4\u597D\u60F3\u6CD5\uFF0C\u53C8\u4E0D\u8BA9\u5B83\u4EEC\u6084\u6084\u53D8\u6210\u53D1\u5E03\u8981\u6C42\u3002" }, { q: "\u5982\u679C\u76EE\u6807\u7528\u6237\u4ECD\u4E0D\u786E\u5B9A\u600E\u4E48\u529E\uFF1F", a: "\u5199\u4E0B\u6700\u6709\u529B\u7684\u4E24\u4E2A\u5019\u9009\u4EBA\uFF0C\u4EE5\u53CA\u80FD\u533A\u5206\u4ED6\u4EEC\u7684\u8BC1\u636E\u3002\u4E0D\u786E\u5B9A\u6027\u5728\u660E\u786E\u65F6\u662F\u6709\u7528\u7684\uFF1B\u9690\u85CF\u5728\u5BBD\u6CDB\u4EA7\u54C1\u8303\u56F4\u4E2D\u65F6\u5C31\u4F1A\u53D8\u5F97\u6602\u8D35\u3002" }, { q: "\u8BBE\u8BA1\u5F00\u59CB\u524D\u5FC5\u987B\u5B8C\u6210\u7B80\u62A5\u5417\uFF1F", a: "\u5B83\u5E94\u8BE5\u6E05\u6670\u5230\u8DB3\u4EE5\u6307\u5BFC\u7B2C\u4E00\u8F6E\u8BBE\u8BA1\uFF0C\u800C\u4E0D\u5FC5\u6C38\u8FDC\u51BB\u7ED3\u3002\u8BBE\u8BA1\u53EF\u4EE5\u63ED\u793A\u66F4\u597D\u7684\u95EE\u9898\uFF0C\u4F46\u6BCF\u9879\u6539\u53D8\u90FD\u5E94\u66F4\u65B0\u8303\u56F4\u4EE5\u53CA\u4F60\u6B63\u8BD5\u56FE\u6536\u96C6\u7684\u8BC1\u636E\u3002" }] }
+      ] }
+    };
+    zh_default = ZH_EDITORIAL_CONTENT;
+  }
+});
+
+// server/journal/editorial.ts
+function resolvedContent(locale) {
+  const candidate = localeEditorialContent[locale];
+  return candidate?.copy && candidate.resources && candidate.post ? candidate : ENGLISH_CONTENT;
+}
+function editorialCopy(locale) {
+  return resolvedContent(locale).copy;
+}
+function resourcesContent(locale) {
+  return resolvedContent(locale).resources;
+}
+function editorialPath(locale, path3) {
+  return locale === "en" ? path3 : `/${locale}${path3}`;
+}
+function translatedPost(post, locale) {
+  if (post.slug !== TRANSLATED_MVP_SLUG) return post;
+  return resolvedContent(locale).post;
+}
+var TRANSLATED_MVP_SLUG, sourcePost10, ENGLISH_CONTENT, localeEditorialContent;
+var init_editorial = __esm({
+  "server/journal/editorial.ts"() {
+    "use strict";
+    init_locales();
+    init_posts();
+    init_az();
+    init_de();
+    init_es();
+    init_fr();
+    init_it();
+    init_ru();
+    init_tr();
+    init_uk();
+    init_zh();
+    TRANSLATED_MVP_SLUG = "the-mvp-brief-is-your-first-product-decision";
+    sourcePost10 = getPost(TRANSLATED_MVP_SLUG);
+    if (!sourcePost10) throw new Error(`Missing editorial source post "${TRANSLATED_MVP_SLUG}".`);
+    ENGLISH_CONTENT = {
+      copy: {
+        journalName: "The Journal \xB7 Vol. I",
+        journalTitle: "Field notes from the studio.",
+        journalDescription: "Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
+        resourcesTitle: "Build the right thing, then build it well.",
+        resourcesDescription: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+        read: "Read note",
+        minutes: "min read",
+        allNotes: "All notes",
+        sources: "Sources",
+        shortAnswer: "Short answer",
+        language: "Language",
+        translatedArticleTitle: "The MVP brief is your first product decision",
+        translatedArticleDescription: "A useful MVP brief names the first user, sets the boundary of version one, and defines the evidence for the next decision."
+      },
+      resources: {
+        title: "Build the right thing, then build it well.",
+        description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+        eyebrow: "Start Apps Studio \xB7 Resources",
+        primaryAction: "Talk through your project",
+        journalAction: "Read the Journal",
+        routes: {
+          title: "Choose the next route",
+          intro: "The right first milestone depends on what you need to prove, not on how much software you can imagine.",
+          cards: [
+            { kicker: "01 \xB7 Direction", title: "Start with the smallest useful proof", text: "A launch site answers whether people understand the offer. A prototype answers whether they can react to the experience. An MVP answers what real users do.", bullets: ["Choose one decision the next release must unlock", "Keep the first version narrow enough to learn from", "Use the package that matches the evidence you need"] },
+            { kicker: "02 \xB7 AI-assisted delivery", title: "Speed is useful when the structure holds", text: "AI can accelerate exploration, coding, and review. It does not replace product judgment, architecture, testing, or the person accountable for the result.", bullets: ["Use AI to explore options and reduce repetition", "Review generated code against real user flows", "Keep the shipped system understandable and extensible"] },
+            { kicker: "03 \xB7 Ownership", title: "Ask what arrives at handoff", text: "A successful build is more than a final presentation. The source code, design files, accounts, deployment access, and context should be ready for you or your next team.", bullets: ["Confirm who owns the accounts and working files", "Review working progress before the final week", "Leave with a documented, maintainable foundation"] },
+            { kicker: "04 \xB7 Partner fit", title: "Compare the way of working", text: "Before choosing a product partner, compare scope clarity, feedback loops, responsibility, support after launch, and whether the route fits the stage of your business.", bullets: ["Who makes the product decisions?", "When will you see something real?", "Can another team continue without starting over?"] }
+          ]
+        },
+        packages: {
+          title: "Package routing guide",
+          intro: "Use the public packages as a starting point for the conversation. Scope is agreed before work starts.",
+          columns: ["Route", "Investment", "Typical timing", "Best when you need to"],
+          rows: [
+            { route: "Launch Site", investment: "$2,600", timing: "3\u20135 business days", bestFor: "Explain the offer and create a credible digital presence" },
+            { route: "Prototype", investment: "$6,000", timing: "5\u201310 days", bestFor: "Make an idea tangible for validation, fundraising, or early conversations" },
+            { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138 weeks", bestFor: "Put a real web, iOS, or Android product in users\u2019 hands" },
+            { route: "Custom", investment: "$25,000", timing: "1\u20136 months", bestFor: "Build a larger or more complex system with longer-term accountability" }
+          ]
+        },
+        toolkit: {
+          title: "The toolkit behind the work",
+          intro: "Tools are selected for the product outcome, the team taking it over, and the stage of the business.",
+          groups: [
+            { label: "Your idea, made visible", description: "How a concept becomes screens you can tap, share with investors, and test with real users.", tools: [{ name: "Figma", note: "every screen designed before code", tone: "figma" }, { name: "Rork", note: "try it on a real phone in days", tone: "rork" }, { name: "Lovable", note: "launch site live in days", tone: "lovable" }, { name: "Replit", note: "working product you can run and edit", tone: "replit" }] },
+            { label: "Your product, built to last", description: "The engineering that powers the app your users install, open, and pay for.", tools: [{ name: "React Native", note: "one codebase, iOS + Android", tone: "expo" }, { name: "Swift", note: "native iOS, fastest on iPhone", tone: "swift" }, { name: "Kotlin", note: "native Android, full Play Store reach", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "your data, secure and yours to export", tone: "node" }] },
+            { label: "Revenue & launch, day one", description: "Payments, updates, and code safety wired in from the start, not bolted on after.", open: true, tools: [{ name: "Stripe", note: "one-time, subscriptions, upgrades", tone: "stripe" }, { name: "RevenueCat", note: "App Store & Play Store billing", tone: "revenuecat" }, { name: "GitHub", note: "daily backups: your code is always safe", tone: "github" }, { name: "Automation", note: "n8n + Make handle the busywork", tone: "hooks" }] },
+            { label: "AI in the background, not in your way", description: "AI can support research, implementation, and review while a person owns the direction and quality bar.", tools: [{ name: "Claude", note: "primary builder and code reviewer", tone: "claude" }, { name: "Gemini", note: "reviews the whole product at once", tone: "gemini" }, { name: "GPT-5", note: "copy, flows & creative direction", tone: "gpt" }, { name: "Llama 4", note: "self-hosted option for sensitive work", tone: "llama" }] }
+          ],
+          footnote: "You keep the code, accounts, and working files. When a better tool ships, it can be swapped in without holding your product hostage."
+        },
+        journal: {
+          title: "Field notes from the Journal",
+          text: "Longer notes on MVP strategy, SEO, GEO, vibe-coded apps, and the decisions that make a product easier to ship.",
+          readAction: "Read note",
+          minutesLabel: "min read",
+          allAction: "All journal notes",
+          fallbackCategory: "Journal",
+          postSlugs: [
+            "base44-vs-lovable-which-one-for-your-next-app",
+            "the-mvp-brief-is-your-first-product-decision",
+            "make-your-brand-visible-in-chatgpt",
+            "vibe-coded-apps-have-an-seo-problem",
+            "backlinks-still-decide-who-gets-recommended",
+            "ai-overviews-citation-playbook-for-mvps"
+          ]
+        },
+        cta: { title: "Have a route in mind?", text: "Share where you are, what you need to prove, and what is currently stuck.", action: "Get a clear next step" }
+      },
+      post: sourcePost10
+    };
+    localeEditorialContent = {
+      en: ENGLISH_CONTENT,
+      az: az_default,
+      tr: tr_default,
+      ru: ru_default,
+      zh: zh_default,
+      fr: fr_default,
+      es: es_default,
+      de: de_default,
+      uk: uk_default,
+      it: it_default
+    };
+  }
+});
+
 // server/journal/render.ts
 function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -2986,7 +3726,7 @@ function accentColor(key) {
 function slugify(s) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
-function renderBlock(block) {
+function renderBlock(block, shortAnswer = "Short answer") {
   switch (block.type) {
     case "p":
       return `<p>${inline(block.text)}</p>`;
@@ -2999,7 +3739,7 @@ function renderBlock(block) {
       return `<h3 id="${esc(id)}">${inline(block.text)}</h3>`;
     }
     case "answer":
-      return `<div class="answer-box"><span class="answer-label">Short answer</span><p>${inline(block.text)}</p></div>`;
+      return `<div class="answer-box"><span class="answer-label">${esc(shortAnswer)}</span><p>${inline(block.text)}</p></div>`;
     case "ul":
       return `<ul>${block.items.map((i) => `<li>${inline(i)}</li>`).join("")}</ul>`;
     case "ol":
@@ -3033,19 +3773,21 @@ function renderFaqJsonLd(post) {
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
-function renderBreadcrumbJsonLd(post, canonical, origin) {
+function renderBreadcrumbJsonLd(post, canonical, origin, locale = "en") {
+  const home = `${origin}${editorialPath(locale, "/")}`;
+  const path3 = editorialPath(locale, "/journal");
   const data = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
-      { "@type": "ListItem", position: 2, name: "Journal", item: `${origin}/journal` },
+      { "@type": "ListItem", position: 1, name: editorialUi(locale).home, item: home },
+      { "@type": "ListItem", position: 2, name: editorialCopy(locale).journalName, item: `${origin}${path3}` },
       { "@type": "ListItem", position: 3, name: post.title, item: canonical }
     ]
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
-function renderArticleJsonLd(post, canonical, origin) {
+function renderArticleJsonLd(post, canonical, origin, locale = "en") {
   const articleImage = `${origin}/assets/images/og-journal-default.png`;
   const data = {
     "@context": "https://schema.org",
@@ -3072,7 +3814,8 @@ function renderArticleJsonLd(post, canonical, origin) {
       "@type": "WebPage",
       "@id": canonical
     },
-    keywords: post.tags.join(", ")
+    keywords: post.tags.join(", "),
+    inLanguage: getLocale(locale).htmlLang
   };
   return `<script type="application/ld+json">${safeJson(data)}</script>`;
 }
@@ -3085,19 +3828,26 @@ function shell({
   ogType,
   jsonLd,
   bodyClass,
-  bodyInner
+  bodyInner,
+  locale = "en",
+  alternates = []
 }) {
+  const localeInfo = getLocale(locale);
+  const copy = editorialCopy(locale);
+  const ui = editorialUi(locale);
   const currentPath = new URL(canonical).pathname;
-  const isJournalPage = currentPath === "/journal" || currentPath.startsWith("/journal/");
-  const isResourcesPage = currentPath === "/resources";
+  const unprefixedPath = currentPath.replace(/^\/(?:az|tr|ru|zh|fr|es|de|uk|it)(?=\/|$)/, "") || "/";
+  const switchPath = unprefixedPath.startsWith("/journal/") && !unprefixedPath.endsWith(`/${TRANSLATED_MVP_SLUG}`) ? unprefixedPath : void 0;
+  const isJournalPage = unprefixedPath === "/journal" || unprefixedPath.startsWith("/journal/");
+  const isResourcesPage = unprefixedPath === "/resources";
   const navLinks = [
-    !isJournalPage ? `<a href="/journal">Journal</a>` : "",
-    !isResourcesPage ? `<a href="/resources">Resources</a>` : "",
-    `<a href="/#pricing">Pricing</a>`,
-    `<a href="/#contact">Contact</a>`
+    !isJournalPage ? `<a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a>` : "",
+    !isResourcesPage ? `<a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a>` : "",
+    `<a href="${editorialPath(locale, "/")}#pricing">${esc(ui.pricing)}</a>`,
+    `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`
   ].filter(Boolean).join("");
   return `<!doctype html>
-<html lang="en">
+<html lang="${esc(localeInfo.htmlLang)}" dir="${localeInfo.dir}">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -3106,11 +3856,13 @@ function shell({
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="theme-color" content="#0a0a0a" />
 <link rel="canonical" href="${esc(canonical)}" />
+${alternates.map((alternate) => `<link rel="alternate" hreflang="${esc(alternate.hreflang)}" href="${esc(alternate.href)}" />`).join("\n")}
 <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 <meta property="og:title" content="${esc(title)}" />
 <meta property="og:description" content="${esc(description)}" />
 <meta property="og:type" content="${ogType}" />
 <meta property="og:url" content="${esc(canonical)}" />
+<meta property="og:locale" content="${esc(localeInfo.ogLocale)}" />
 <meta property="og:image" content="${esc(`${origin}${ogImage}`)}" />
 <meta property="og:site_name" content="${esc(AUTHOR_NAME)}" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -3126,12 +3878,12 @@ ${jsonLd}
 </head>
 <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
   <nav class="site-nav">
-    <a href="/" class="brand">${esc(AUTHOR_NAME)}</a>
-    <div class="nav-links">${navLinks}</div>
+    <a href="${editorialPath(locale, "/")}" class="brand">${esc(AUTHOR_NAME)}</a>
+    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy.language)}</summary>${LOCALES.map((l) => `<a href="${switchPath || editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/resources">Resources</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="${editorialPath(locale, "/")}">${esc(ui.home)}</a> \xB7 <a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a> \xB7 <a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
   </footer>
   <script>
     (function () {
@@ -3149,66 +3901,85 @@ ${jsonLd}
 </body>
 </html>`;
 }
-function renderArticleHtml(post, origin) {
-  const canonical = `${origin}/journal/${post.slug}`;
-  const articleJsonLd = renderArticleJsonLd(post, canonical, origin);
-  const faqJsonLd = renderFaqJsonLd(post);
-  const breadcrumbJsonLd = renderBreadcrumbJsonLd(post, canonical, origin);
+function editorialAlternates(origin, path3) {
+  return [
+    { hreflang: "en", href: `${origin}${path3}` },
+    ...PREFIXED_CODES.map((code) => ({ hreflang: getLocale(code).hreflang, href: `${origin}/${code}${path3}` })),
+    { hreflang: "x-default", href: `${origin}${path3}` }
+  ];
+}
+function englishOnlyAlternates(origin, path3) {
+  return [
+    { hreflang: "en", href: `${origin}${path3}` },
+    { hreflang: "x-default", href: `${origin}${path3}` }
+  ];
+}
+function editorialUi(locale) {
+  return EDITORIAL_UI[locale] || EDITORIAL_UI.en;
+}
+function renderArticleHtml(post, origin, locale = "en") {
+  const localizedPost = translatedPost(post, locale);
+  const canonical = `${origin}${editorialPath(locale, `/journal/${post.slug}`)}`;
+  const articleJsonLd = renderArticleJsonLd(localizedPost, canonical, origin, locale);
+  const faqJsonLd = renderFaqJsonLd(localizedPost);
+  const breadcrumbJsonLd = renderBreadcrumbJsonLd(localizedPost, canonical, origin, locale);
   const jsonLd = `${articleJsonLd}${faqJsonLd}${breadcrumbJsonLd}`;
-  const body = post.body.map(renderBlock).join("\n");
-  const tags = post.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("");
-  const sources = post.sources?.length ? `<section class="sources"><h3>Sources</h3><ul>${post.sources.map(
+  const copy = editorialCopy(locale);
+  const ui = editorialUi(locale);
+  const body = localizedPost.body.map((block) => renderBlock(block, copy.shortAnswer)).join("\n");
+  const tags = localizedPost.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+  const sources = localizedPost.sources?.length ? `<section class="sources"><h3>${esc(copy.sources)}</h3><ul>${localizedPost.sources.map(
     (s) => `<li>${s.url ? `<a href="${esc(s.url)}" rel="nofollow noopener">${esc(s.label)}</a>` : esc(s.label)}</li>`
   ).join("")}</ul></section>` : "";
-  const category = post.category || "Journal";
-  const deckSource = post.excerpt || post.description;
+  const category = localizedPost.category || "Journal";
+  const deckSource = localizedPost.excerpt || localizedPost.description;
   const others = allPostsNewestFirst().filter((p) => p.slug !== post.slug).slice(0, 2);
   const nextCards = others.map((p) => {
     const cat = p.category || "Journal";
     return `
-      <a href="/journal/${esc(p.slug)}" class="next-card">
+        <a href="/journal/${esc(p.slug)}" class="next-card">
         <div class="next-card-meta">${esc(cat)}</div>
         <h3 class="next-card-title">${esc(p.title)}</h3>
         <p class="next-card-excerpt">${esc(p.excerpt)}</p>
-        <span class="next-card-cta">Read note &rarr;</span>
+        <span class="next-card-cta">${esc(copy.read)} \xB7 ${esc(ui.englishOnly)} &rarr;</span>
       </a>`;
   }).join("");
   const nextBlock = others.length ? `
       <section class="article-footer">
         <div class="article-footer-header">
-          <h2 class="article-footer-title">Keep reading <em>\xB7 from the journal</em></h2>
-          <a href="/journal" class="article-footer-link">All notes &rarr;</a>
+          <h2 class="article-footer-title">${esc(ui.keepReading)} <em>\xB7 ${esc(ui.fromJournal)}</em></h2>
+          <a href="${editorialPath(locale, "/journal")}" class="article-footer-link">${esc(copy.allNotes)} &rarr;</a>
         </div>
         <div class="next-grid">${nextCards}</div>
       </section>` : "";
   const bodyInner = `
   <main class="container article-page">
-    <div class="crumb"><a href="/journal">&larr; Journal</a></div>
+    <div class="crumb"><a href="${editorialPath(locale, "/journal")}">&larr; ${esc(ui.journal)}</a></div>
     <article>
       <div class="article-kicker">
         <span class="kicker-cat">${esc(category)}</span>
         <span class="kicker-sep">\xB7</span>
-        <span class="kicker-meta">${post.readMinutes} min read</span>
+        <span class="kicker-meta">${post.readMinutes} ${esc(copy.minutes)}</span>
       </div>
-      <h1 class="article-title">${esc(post.title)}</h1>
+       <h1 class="article-title">${esc(localizedPost.title)}</h1>
       ${deckSource ? `<p class="article-deck">${esc(deckSource)}</p>` : ""}
       <div class="article-byline">
-        <span class="byline-author">By ${esc(AUTHOR_NAME)}</span>
+        <span class="byline-author">${esc(ui.by)} ${esc(AUTHOR_NAME)}</span>
       </div>
       <div class="article-body">${body}</div>
       <div class="tag-list">${tags}</div>
       ${sources}
       <section class="article-cta">
-        <span class="article-cta-label">The Studio</span>
-        <h3>Need the version built for you?</h3>
-        <p>We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.</p>
-        <a href="/#contact" class="cta-btn">Start a project &rarr;</a>
+        <span class="article-cta-label">${esc(ui.studio)}</span>
+        <h3>${esc(ui.needBuilt)}</h3>
+        <p>${esc(ui.studioPromise)}</p>
+        <a href="${editorialPath(locale, "/")}#contact" class="cta-btn">${esc(ui.startProject)} &rarr;</a>
       </section>
       ${nextBlock}
     </article>
   </main>`;
-  const resolvedTitle = post.seoTitle || `${post.title} | Start Apps Studio`;
-  const resolvedDescription = post.seoDescription || post.description;
+  const resolvedTitle = localizedPost.seoTitle || `${localizedPost.title} | Start Apps Studio`;
+  const resolvedDescription = localizedPost.seoDescription || localizedPost.description;
   if (resolvedTitle.length > 65) {
     console.warn(
       `[SEO] "${post.slug}" seoTitle is ${resolvedTitle.length} chars (target \u226465): "${resolvedTitle}"`
@@ -3227,35 +3998,43 @@ function renderArticleHtml(post, origin) {
     ogImage: "/assets/images/og-journal-default.png",
     ogType: "article",
     jsonLd,
-    bodyInner
+    bodyInner,
+    locale,
+    alternates: post.slug === TRANSLATED_MVP_SLUG ? editorialAlternates(origin, `/journal/${post.slug}`) : englishOnlyAlternates(origin, `/journal/${post.slug}`)
   });
 }
-function renderIndexHtml(origin) {
+function renderIndexHtml(origin, locale = "en") {
   const postsList = allPostsNewestFirst();
-  const canonical = `${origin}/journal`;
+  const copy = editorialCopy(locale);
+  const canonical = `${origin}${editorialPath(locale, "/journal")}`;
   const jsonLd = `<script type="application/ld+json">${safeJson({
     "@context": "https://schema.org",
     "@type": "Blog",
     name: `${AUTHOR_NAME} Journal`,
     url: canonical,
-    description: "Field notes on shipping MVPs that rank in Google and get quoted by AI.",
-    blogPost: postsList.map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      url: `${origin}/journal/${p.slug}`,
-      datePublished: p.publishedAt,
-      description: p.description
-    }))
+    inLanguage: getLocale(locale).htmlLang,
+    description: copy.journalDescription,
+    blogPost: postsList.map((p) => {
+      const localized = p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale) : p;
+      return {
+        "@type": "BlogPosting",
+        headline: localized.title,
+        url: `${origin}${p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`}`,
+        datePublished: p.publishedAt,
+        description: localized.description,
+        inLanguage: p.slug === TRANSLATED_MVP_SLUG ? getLocale(locale).htmlLang : "en"
+      };
+    })
   })}</script>`;
   const cards = postsList.map(
     (p) => `
-    <a href="/journal/${esc(p.slug)}" class="post-card">
+    <a href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}" class="post-card">
       <div class="post-card-accent" style="background:${accentColor(p.slug)}"></div>
       <div class="post-card-body">
-        <h2>${esc(p.title)}</h2>
-        <p>${esc(p.excerpt)}</p>
+        <h2>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h2>
+        <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
         <div class="post-card-meta">
-          <span>${p.readMinutes} min read</span>
+          <span>${p.readMinutes} ${esc(copy.minutes)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` \xB7 ${esc(editorialUi(locale).englishOnly)}`}</span>
         </div>
       </div>
     </a>`
@@ -3263,27 +4042,30 @@ function renderIndexHtml(origin) {
   const bodyInner = `
   <main class="container-wide">
     <header class="index-header">
-      <span class="index-eyebrow">The Journal \xB7 Vol. I</span>
-      <h1 class="index-title">Field notes from the studio.</h1>
-      <p class="index-subtitle">Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.</p>
+       <span class="index-eyebrow">${esc(copy.journalName)}</span>
+       <h1 class="index-title">${esc(copy.journalTitle)}</h1>
+       <p class="index-subtitle">${esc(copy.journalDescription)}</p>
     </header>
     <div class="post-grid">${cards}</div>
   </main>`;
   return shell({
-    title: `MVP SEO & GEO Journal | ${AUTHOR_NAME}`,
-    description: "Field notes on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
+    title: `${copy.journalTitle} | ${AUTHOR_NAME}`,
+    description: copy.journalDescription,
     canonical,
     origin,
     ogImage: "/assets/images/og-journal-default.png",
     ogType: "website",
     jsonLd,
-    bodyInner
+    bodyInner,
+    locale,
+    alternates: editorialAlternates(origin, "/journal")
   });
 }
-function renderResourcesHtml(origin) {
-  const canonical = `${origin}/resources`;
+function renderResourcesHtml(origin, locale = "en") {
+  const content = resourcesContent(locale);
+  const canonical = `${origin}${editorialPath(locale, "/resources")}`;
   const withoutEmDashes = (value) => value.replace(/—/g, ",");
-  const posts2 = allPostsNewestFirst().slice(0, 6).map((post) => ({
+  const posts2 = content.journal.postSlugs.map((slug) => getPost(slug)).filter((post) => Boolean(post)).map((post) => ({
     ...post,
     title: withoutEmDashes(post.title),
     excerpt: withoutEmDashes(post.excerpt),
@@ -3291,57 +4073,16 @@ function renderResourcesHtml(origin) {
   }));
   const articleCards = posts2.map(
     (p) => `
-        <a class="resource-article-card" href="/journal/${esc(p.slug)}">
-          <div class="article-meta">${esc(p.category || "Journal")} \xB7 ${p.readMinutes} min read</div>
-          <h3>${esc(p.title)}</h3>
-          <p>${esc(p.excerpt)}</p>
-          <span class="article-link">Read the note &rarr;</span>
+        <a class="resource-article-card" href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}">
+          <div class="article-meta">${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).category : p.category || content.journal.fallbackCategory)} \xB7 ${p.readMinutes} ${esc(content.journal.minutesLabel)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` \xB7 ${esc(editorialUi(locale).englishOnly)}`}</div>
+          <h3>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h3>
+          <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
+          <span class="article-link">${esc(content.journal.readAction)} &rarr;</span>
         </a>`
   ).join("");
-  const toolkitGroups = [
-    {
-      label: "Your idea, made visible",
-      description: "How a concept becomes screens you can tap, share with investors, and test with real users.",
-      tools: [
-        ["Figma", "every screen designed before code", "figma"],
-        ["Rork", "try it on a real phone in days", "rork"],
-        ["Lovable", "launch site live in days", "lovable"],
-        ["Replit", "working product you can run and edit", "replit"]
-      ]
-    },
-    {
-      label: "Your product, built to last",
-      description: "The engineering that powers the app your users install, open, and pay for.",
-      tools: [
-        ["React Native", "one codebase, iOS + Android", "expo"],
-        ["Swift", "native iOS, fastest on iPhone", "swift"],
-        ["Kotlin", "native Android, full Play Store reach", "kotlin"],
-        ["Node + PostgreSQL", "your data, secure and yours to export", "node"]
-      ]
-    },
-    {
-      label: "Revenue & launch, day one",
-      description: "Payments, updates, and code safety wired in from the start, not bolted on after.",
-      tools: [
-        ["Stripe", "one-time, subscriptions, upgrades", "stripe"],
-        ["RevenueCat", "App Store & Play Store billing", "revenuecat"],
-        ["GitHub", "daily backups: your code is always safe", "github"],
-        ["Automation", "n8n + Make handle the busywork", "hooks"]
-      ]
-    },
-    {
-      label: "AI in the background, not in your way",
-      description: "AI can support research, implementation, and review while a person owns the direction and quality bar.",
-      tools: [
-        ["Claude", "primary builder and code reviewer", "claude"],
-        ["Gemini", "reviews the whole product at once", "gemini"],
-        ["GPT-5", "copy, flows & creative direction", "gpt"],
-        ["Llama 4", "self-hosted option for sensitive work", "llama"]
-      ]
-    }
-  ].map(
+  const toolkitGroups = content.toolkit.groups.map(
     (group) => `
-        <details class="resource-toolkit-group"${group.label === "Revenue & launch, day one" ? " open" : ""}>
+        <details class="resource-toolkit-group"${group.open ? " open" : ""}>
           <summary>
             <span>
               <span class="resource-toolkit-label">${esc(group.label)}</span>
@@ -3351,12 +4092,12 @@ function renderResourcesHtml(origin) {
           </summary>
           <div class="resource-toolkit-grid">
             ${group.tools.map(
-      ([name, note, tone]) => `
+      (tool) => `
                   <div class="resource-tool">
-                    <span class="resource-tool-avatar resource-tool-avatar--${esc(tone)}">${esc(name.slice(0, name === "React Native" ? 2 : 1))}</span>
+                    <span class="resource-tool-avatar resource-tool-avatar--${esc(tool.tone)}">${esc(tool.name.slice(0, tool.name === "React Native" ? 2 : 1))}</span>
                     <span class="resource-tool-copy">
-                      <strong>${esc(name)}</strong>
-                      <small>${esc(note)}</small>
+                      <strong>${esc(tool.name)}</strong>
+                      <small>${esc(tool.note)}</small>
                     </span>
                   </div>`
     ).join("")}
@@ -3366,9 +4107,10 @@ function renderResourcesHtml(origin) {
   const jsonLd = `<script type="application/ld+json">${safeJson({
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Product Studio Resources | Start Apps Studio",
-    description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    name: `${content.title} | ${AUTHOR_NAME}`,
+    description: content.description,
     url: canonical,
+    inLanguage: getLocale(locale).htmlLang,
     isPartOf: {
       "@type": "WebSite",
       name: AUTHOR_NAME,
@@ -3387,83 +4129,46 @@ function renderResourcesHtml(origin) {
   const bodyInner = `
   <main class="container-wide resources-page">
     <header class="resource-header">
-      <div class="resource-eyebrow">Start Apps Studio \xB7 Resources</div>
-      <h1 class="resource-title">Build the right thing, then build it well.</h1>
-      <p class="resource-lede">Practical guidance for founders and operators choosing a product route, working with AI, evaluating a build partner, and leaving with something they can own.</p>
+      <div class="resource-eyebrow">${esc(content.eyebrow)}</div>
+       <h1 class="resource-title">${esc(content.title)}</h1>
+       <p class="resource-lede">${esc(content.description)}</p>
       <div class="resource-actions">
-        <a class="cta-btn" href="/#contact">Talk through your project &rarr;</a>
-        <a class="secondary-action" href="/journal">Read the Journal</a>
+        <a class="cta-btn" href="${editorialPath(locale, "/#contact")}">${esc(content.primaryAction)} &rarr;</a>
+        <a class="secondary-action" href="${editorialPath(locale, "/journal")}">${esc(content.journalAction)}</a>
       </div>
     </header>
 
     <section class="resource-section" aria-labelledby="resource-routes-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-routes-title">Choose the next route</h2>
-          <p>The right first milestone depends on what you need to prove, not on how much software you can imagine.</p>
+          <h2 id="resource-routes-title">${esc(content.routes.title)}</h2>
+          <p>${esc(content.routes.intro)}</p>
         </div>
       </div>
       <div class="resource-grid resource-route-grid">
-        <article class="resource-card">
-          <div class="resource-card-kicker">01 \xB7 Direction</div>
-          <h3>Start with the smallest useful proof</h3>
-          <p>A launch site answers whether people understand the offer. A prototype answers whether they can react to the experience. An MVP answers what real users do.</p>
-          <ul>
-            <li>Choose one decision the next release must unlock</li>
-            <li>Keep the first version narrow enough to learn from</li>
-            <li>Use the package that matches the evidence you need</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">02 \xB7 AI-assisted delivery</div>
-          <h3>Speed is useful when the structure holds</h3>
-          <p>AI can accelerate exploration, coding, and review. It does not replace product judgment, architecture, testing, or the person accountable for the result.</p>
-          <ul>
-            <li>Use AI to explore options and reduce repetition</li>
-            <li>Review generated code against real user flows</li>
-            <li>Keep the shipped system understandable and extensible</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">03 \xB7 Ownership</div>
-          <h3>Ask what arrives at handoff</h3>
-          <p>A successful build is more than a final presentation. The source code, design files, accounts, deployment access, and context should be ready for you or your next team.</p>
-          <ul>
-            <li>Confirm who owns the accounts and working files</li>
-            <li>Review working progress before the final week</li>
-            <li>Leave with a documented, maintainable foundation</li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <div class="resource-card-kicker">04 \xB7 Partner fit</div>
-          <h3>Compare the way of working</h3>
-          <p>Before choosing a product partner, compare scope clarity, feedback loops, responsibility, support after launch, and whether the route fits the stage of your business.</p>
-          <ul>
-            <li>Who makes the product decisions?</li>
-            <li>When will you see something real?</li>
-            <li>Can another team continue without starting over?</li>
-          </ul>
-        </article>
+        ${content.routes.cards.map((card) => `<article class="resource-card">
+          <div class="resource-card-kicker">${esc(card.kicker)}</div>
+          <h3>${esc(card.title)}</h3>
+          <p>${esc(card.text)}</p>
+          <ul>${card.bullets.map((bullet) => `<li>${esc(bullet)}</li>`).join("")}</ul>
+        </article>`).join("")}
       </div>
     </section>
 
     <section class="resource-section" aria-labelledby="resource-packages-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-packages-title">Package routing guide</h2>
-          <p>Use the public packages as a starting point for the conversation. Scope is agreed before work starts.</p>
+          <h2 id="resource-packages-title">${esc(content.packages.title)}</h2>
+          <p>${esc(content.packages.intro)}</p>
         </div>
       </div>
       <div class="resource-table-wrap">
         <table class="resource-table">
           <thead>
-            <tr><th>Route</th><th>Investment</th><th>Typical timing</th><th>Best when you need to</th></tr>
+            <tr>${content.packages.columns.map((column) => `<th>${esc(column)}</th>`).join("")}</tr>
           </thead>
           <tbody>
-            <tr><td>Launch Site</td><td>$2,600</td><td>3\u20135 business days</td><td>Explain the offer and create a credible digital presence</td></tr>
-            <tr><td>Prototype</td><td>$6,000</td><td>5\u201310 days</td><td>Make an idea tangible for validation, fundraising, or early conversations</td></tr>
-            <tr><td>MVP</td><td>$15,000\u2013$30,000</td><td>3\u20138 weeks</td><td>Put a real web, iOS, or Android product in users\u2019 hands</td></tr>
-            <tr><td>Custom</td><td>$25,000</td><td>1\u20136 months</td><td>Build a larger or more complex system with longer-term accountability</td></tr>
+            ${content.packages.rows.map((row2) => `<tr><td>${esc(row2.route)}</td><td>${esc(row2.investment)}</td><td>${esc(row2.timing)}</td><td>${esc(row2.bestFor)}</td></tr>`).join("")}
           </tbody>
         </table>
       </div>
@@ -3472,55 +4177,65 @@ function renderResourcesHtml(origin) {
     <section class="resource-section" aria-labelledby="resource-toolkit-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-toolkit-title">The toolkit behind the work</h2>
-          <p>Tools are selected for the product outcome, the team taking it over, and the stage of the business.</p>
+          <h2 id="resource-toolkit-title">${esc(content.toolkit.title)}</h2>
+          <p>${esc(content.toolkit.intro)}</p>
         </div>
       </div>
       <div class="resource-toolkit-stack">${toolkitGroups}</div>
-      <p class="resource-toolkit-footnote">You keep the code, accounts, and working files. When a better tool ships, it can be swapped in without holding your product hostage.</p>
+      <p class="resource-toolkit-footnote">${esc(content.toolkit.footnote)}</p>
     </section>
 
     <section class="resource-section" aria-labelledby="resource-journal-title">
       <div class="resource-section-heading">
         <div>
-          <h2 id="resource-journal-title">Field notes from the Journal</h2>
-          <p>Longer notes on MVP strategy, SEO, GEO, vibe-coded apps, and the decisions that make a product easier to ship.</p>
+          <h2 id="resource-journal-title">${esc(content.journal.title)}</h2>
+          <p>${esc(content.journal.text)}</p>
         </div>
-        <a class="secondary-action" href="/journal">All journal notes &rarr;</a>
+        <a class="secondary-action" href="${editorialPath(locale, "/journal")}">${esc(content.journal.allAction)} &rarr;</a>
       </div>
       <div class="resource-article-grid">${articleCards}</div>
     </section>
 
     <section class="resource-cta" aria-labelledby="resource-cta-title">
       <div>
-        <h2 id="resource-cta-title">Have a route in mind?</h2>
-        <p>Share where you are, what you need to prove, and what is currently stuck.</p>
+        <h2 id="resource-cta-title">${esc(content.cta.title)}</h2>
+        <p>${esc(content.cta.text)}</p>
       </div>
-      <a class="cta-btn" href="/#contact">Get a clear next step &rarr;</a>
+      <a class="cta-btn" href="${editorialPath(locale, "/#contact")}">${esc(content.cta.action)} &rarr;</a>
     </section>
   </main>`;
   return shell({
-    title: `Product Studio Resources: AI, MVPs & Handoffs | ${AUTHOR_NAME}`,
-    description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
+    title: `${content.title} | ${AUTHOR_NAME}`,
+    description: content.description,
     canonical,
     origin,
     ogImage: "/assets/images/og-journal-default.png",
     ogType: "website",
     jsonLd,
-    bodyInner
+    bodyInner,
+    locale,
+    alternates: editorialAlternates(origin, "/resources")
   });
 }
 function renderSitemapXml(origin) {
   const urls = [
     { loc: `${origin}/`, lastmod: HOMEPAGE_LAST_MODIFIED, priority: "1.0" },
-    // Localized landing pages (Journal remains English-only for now).
+    // Localized landing and editorial indexes.
     ...PREFIXED_CODES.map((code) => ({
       loc: `${origin}/${code}`,
       lastmod: HOMEPAGE_LAST_MODIFIED,
       priority: "0.9"
     })),
     { loc: `${origin}/resources`, priority: "0.8" },
-    { loc: `${origin}/journal`, priority: "0.8" }
+    { loc: `${origin}/journal`, priority: "0.8" },
+    ...PREFIXED_CODES.flatMap((code) => [
+      { loc: `${origin}/${code}/resources`, priority: "0.8" },
+      { loc: `${origin}/${code}/journal`, priority: "0.8" },
+      {
+        loc: `${origin}/${code}/journal/${TRANSLATED_MVP_SLUG}`,
+        priority: "0.7"
+      }
+    ])
   ];
   for (const p of allPostsNewestFirst()) {
     urls.push({
@@ -3742,12 +4457,14 @@ The site uses consent-aware, aggregate-only measurement to understand which sect
 - LLM short overview: ${origin}/llms.txt
 `;
 }
-var CANONICAL_ORIGIN, HOMEPAGE_LAST_MODIFIED, ACCENT_PALETTE, STYLE;
+var CANONICAL_ORIGIN, HOMEPAGE_LAST_MODIFIED, ACCENT_PALETTE, STYLE, EDITORIAL_UI;
 var init_render = __esm({
   "server/journal/render.ts"() {
     "use strict";
     init_posts();
     init_locales();
+    init_locales();
+    init_editorial();
     CANONICAL_ORIGIN = (process.env.PUBLIC_SITE_URL || "https://startappsstudio.com").replace(/\/$/, "");
     HOMEPAGE_LAST_MODIFIED = "2026-08-27";
     ACCENT_PALETTE = [
@@ -4954,6 +5671,18 @@ var init_render = __esm({
     .site-nav .nav-links { flex:0 0 100%; justify-content:space-between; gap:6px; font-size:9.5px; }
   }
 `;
+    EDITORIAL_UI = {
+      en: { home: "Home", journal: "Journal", resources: "Resources", pricing: "Pricing", contact: "Contact", by: "By", studio: "The Studio", needBuilt: "Need the version built for you?", studioPromise: "We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.", startProject: "Start a project", keepReading: "Keep reading", fromJournal: "from the journal", englishOnly: "English article" },
+      az: { home: "Ana s\u0259hif\u0259", journal: "Jurnal", resources: "Resurslar", pricing: "Qiym\u0259tl\u0259r", contact: "\u018Flaq\u0259", by: "M\xFC\u0259llif", studio: "Studiya", needBuilt: "Sizin \xFC\xE7\xFCn haz\u0131rlanm\u0131\u015F versiya laz\u0131md\u0131r?", studioPromise: "\u0130lk g\xFCnd\u0259n indeksl\u0259n\u0259n, GEO-ya haz\u0131r v\u0259 g\u0259lir\u0259 ba\u011Fl\u0131 MVP-l\u0259r haz\u0131rlay\u0131r\u0131q.", startProject: "Layih\u0259y\u0259 ba\u015Flay\u0131n", keepReading: "Oxuma\u011Fa davam edin", fromJournal: "jurnaldan", englishOnly: "\u0130ngilisc\u0259 m\u0259qal\u0259" },
+      tr: { home: "Ana sayfa", journal: "Dergi", resources: "Kaynaklar", pricing: "Fiyatlar", contact: "\u0130leti\u015Fim", by: "Yazan", studio: "St\xFCdyo", needBuilt: "Size \xF6zel s\xFCr\xFCm\xFC m\xFC gerekiyor?", studioPromise: "\u0130lk g\xFCnden indekslenen, GEO'ya haz\u0131r ve gelire ba\u011Fl\u0131 MVP'ler teslim ediyoruz.", startProject: "Proje ba\u015Flat\u0131n", keepReading: "Okumaya devam edin", fromJournal: "dergiden", englishOnly: "\u0130ngilizce makale" },
+      ru: { home: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F", journal: "\u0416\u0443\u0440\u043D\u0430\u043B", resources: "\u0420\u0435\u0441\u0443\u0440\u0441\u044B", pricing: "\u0426\u0435\u043D\u044B", contact: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B", by: "\u0410\u0432\u0442\u043E\u0440", studio: "\u0421\u0442\u0443\u0434\u0438\u044F", needBuilt: "\u041D\u0443\u0436\u043D\u0430 \u0432\u0435\u0440\u0441\u0438\u044F, \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u0430\u044F \u0434\u043B\u044F \u0432\u0430\u0441?", studioPromise: "\u041C\u044B \u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u043C MVP, \u0433\u043E\u0442\u043E\u0432\u044B\u0435 \u043A \u0438\u043D\u0434\u0435\u043A\u0441\u0430\u0446\u0438\u0438, GEO \u0438 \u0432\u044B\u0440\u0443\u0447\u043A\u0435 \u0441 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0434\u043D\u044F.", startProject: "\u041D\u0430\u0447\u0430\u0442\u044C \u043F\u0440\u043E\u0435\u043A\u0442", keepReading: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0447\u0442\u0435\u043D\u0438\u0435", fromJournal: "\u0438\u0437 \u0436\u0443\u0440\u043D\u0430\u043B\u0430", englishOnly: "\u0421\u0442\u0430\u0442\u044C\u044F \u043D\u0430 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u043E\u043C" },
+      zh: { home: "\u9996\u9875", journal: "\u671F\u520A", resources: "\u8D44\u6E90", pricing: "\u4EF7\u683C", contact: "\u8054\u7CFB", by: "\u4F5C\u8005", studio: "\u5DE5\u4F5C\u5BA4", needBuilt: "\u9700\u8981\u4E3A\u4F60\u6253\u9020\u7684\u7248\u672C\u5417\uFF1F", studioPromise: "\u6211\u4EEC\u4EA4\u4ED8\u4ECE\u7B2C\u4E00\u5929\u8D77\u5373\u53EF\u6536\u5F55\u3001\u652F\u6301 GEO \u5E76\u4E0E\u6536\u5165\u76EE\u6807\u76F8\u8FDE\u7684 MVP\u3002", startProject: "\u542F\u52A8\u9879\u76EE", keepReading: "\u7EE7\u7EED\u9605\u8BFB", fromJournal: "\u6765\u81EA\u671F\u520A", englishOnly: "\u82F1\u6587\u6587\u7AE0" },
+      fr: { home: "Accueil", journal: "Journal", resources: "Ressources", pricing: "Tarifs", contact: "Contact", by: "Par", studio: "Le Studio", needBuilt: "Besoin d'une version con\xE7ue pour vous ?", studioPromise: "Nous livrons des MVP indexables, pr\xEAts pour le GEO et li\xE9s au chiffre d'affaires d\xE8s le premier jour.", startProject: "D\xE9marrer un projet", keepReading: "Continuer la lecture", fromJournal: "du journal", englishOnly: "Article en anglais" },
+      es: { home: "Inicio", journal: "Journal", resources: "Recursos", pricing: "Precios", contact: "Contacto", by: "Por", studio: "El Estudio", needBuilt: "\xBFNecesitas una versi\xF3n hecha para ti?", studioPromise: "Entregamos MVP indexables, preparados para GEO y vinculados a ingresos desde el primer d\xEDa.", startProject: "Iniciar un proyecto", keepReading: "Seguir leyendo", fromJournal: "del journal", englishOnly: "Art\xEDculo en ingl\xE9s" },
+      de: { home: "Start", journal: "Journal", resources: "Ressourcen", pricing: "Preise", contact: "Kontakt", by: "Von", studio: "Das Studio", needBuilt: "Brauchen Sie die f\xFCr Sie entwickelte Version?", studioPromise: "Wir liefern MVPs, die vom ersten Tag an indexierbar, GEO-bereit und umsatzorientiert sind.", startProject: "Projekt starten", keepReading: "Weiterlesen", fromJournal: "aus dem Journal", englishOnly: "Englischer Artikel" },
+      uk: { home: "\u0413\u043E\u043B\u043E\u0432\u043D\u0430", journal: "\u0416\u0443\u0440\u043D\u0430\u043B", resources: "\u0420\u0435\u0441\u0443\u0440\u0441\u0438", pricing: "\u0426\u0456\u043D\u0438", contact: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u0438", by: "\u0410\u0432\u0442\u043E\u0440", studio: "\u0421\u0442\u0443\u0434\u0456\u044F", needBuilt: "\u041F\u043E\u0442\u0440\u0456\u0431\u043D\u0430 \u0432\u0435\u0440\u0441\u0456\u044F, \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u0430 \u0434\u043B\u044F \u0432\u0430\u0441?", studioPromise: "\u041C\u0438 \u0432\u0438\u043F\u0443\u0441\u043A\u0430\u0454\u043C\u043E MVP, \u0433\u043E\u0442\u043E\u0432\u0456 \u0434\u043E \u0456\u043D\u0434\u0435\u043A\u0441\u0430\u0446\u0456\u0457, GEO \u0442\u0430 \u0434\u043E\u0445\u043E\u0434\u0443 \u0437 \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u0434\u043D\u044F.", startProject: "\u041F\u043E\u0447\u0430\u0442\u0438 \u043F\u0440\u043E\u0454\u043A\u0442", keepReading: "\u041F\u0440\u043E\u0434\u043E\u0432\u0436\u0438\u0442\u0438 \u0447\u0438\u0442\u0430\u043D\u043D\u044F", fromJournal: "\u0456\u0437 \u0436\u0443\u0440\u043D\u0430\u043B\u0443", englishOnly: "\u0421\u0442\u0430\u0442\u0442\u044F \u0430\u043D\u0433\u043B\u0456\u0439\u0441\u044C\u043A\u043E\u044E" },
+      it: { home: "Home", journal: "Journal", resources: "Risorse", pricing: "Prezzi", contact: "Contatti", by: "Di", studio: "Lo Studio", needBuilt: "Ti serve la versione costruita per te?", studioPromise: "Consegniamo MVP indicizzabili, pronti per la GEO e legati ai ricavi fin dal primo giorno.", startProject: "Avvia un progetto", keepReading: "Continua a leggere", fromJournal: "dal journal", englishOnly: "Articolo in inglese" }
+    };
   }
 });
 
@@ -5021,6 +5750,20 @@ async function registerRoutes(app2) {
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderResourcesHtml(CANONICAL_ORIGIN));
   });
+  app2.get("/:locale/resources", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    if (locale === DEFAULT_LOCALE) return res.redirect(301, "/resources");
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderResourcesHtml(CANONICAL_ORIGIN, locale));
+  });
+  app2.get("/:locale/journal", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    if (locale === DEFAULT_LOCALE) return res.redirect(301, "/journal");
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderIndexHtml(CANONICAL_ORIGIN, locale));
+  });
   app2.get("/journal/:slug", (req, res) => {
     const post = getPost(req.params.slug);
     if (!post) {
@@ -5031,6 +5774,17 @@ async function registerRoutes(app2) {
     }
     res.setHeader("content-type", "text/html; charset=utf-8");
     res.send(renderArticleHtml(post, CANONICAL_ORIGIN));
+  });
+  app2.get("/:locale/journal/:slug", (req, res, next) => {
+    const locale = req.params.locale;
+    if (!isSupportedLocale(locale)) return next();
+    const post = getPost(req.params.slug);
+    if (!post) return next();
+    if (locale === DEFAULT_LOCALE || post.slug !== TRANSLATED_MVP_SLUG) {
+      return res.redirect(301, `/journal/${post.slug}`);
+    }
+    res.setHeader("content-type", "text/html; charset=utf-8");
+    return res.send(renderArticleHtml(post, CANONICAL_ORIGIN, locale));
   });
   app2.get("/sitemap.xml", (_req, res) => {
     res.setHeader("content-type", "application/xml; charset=utf-8");
@@ -5747,6 +6501,8 @@ var init_routes = __esm({
     init_ai_bot_verifier();
     init_render();
     init_posts();
+    init_locales();
+    init_editorial();
     activeVisitorNotificationKeys = /* @__PURE__ */ new Map();
     activeVisitorIpHits = /* @__PURE__ */ new Map();
     ACTIVE_VISITOR_KEY_TTL_MS = 10 * 60 * 1e3;
@@ -6828,7 +7584,7 @@ function serveLandingPage(req, res) {
 }
 function setupLandingPage(app2) {
   app2.use((req, res, next) => {
-    if (req.path.startsWith("/api") || req.path.startsWith("/journal") || req.path === "/sitemap.xml" || req.path === "/robots.txt" || req.path === "/llms.txt" || req.path === "/llms-full.txt") {
+    if (req.path.startsWith("/api") || req.path.startsWith("/journal") || /^\/(?:en|az|tr|ru|zh|fr|es|de|uk|it)\/(?:journal|resources)(?:\/|$)/.test(req.path) || req.path === "/resources" || req.path === "/sitemap.xml" || req.path === "/robots.txt" || req.path === "/llms.txt" || req.path === "/llms-full.txt") {
       return next();
     }
     if (req.path === "/" || localeFromPath(req.path)) {
