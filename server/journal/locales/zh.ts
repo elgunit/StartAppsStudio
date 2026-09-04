@@ -1,5 +1,6 @@
 import { getPost } from "../posts";
 import type { LocaleEditorialContent } from "../editorial";
+import { ZH_TRANSLATED_POSTS } from "./zh-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("MVP source post is missing.");
@@ -38,6 +39,7 @@ export const ZH_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "我们在 Start Apps Studio 如何使用它", text: "在为构建报价前，我们会把创始人的想法变成一页范围说明：一个用户、一个核心循环、支持它的屏幕和基础设施，以及应当改变下一次决策的证据。这份文件成为策略、设计、工程和发布之间的交接，也是在新功能试图混进第一版时的参考点。" },
     { type: "h2", text: "常见问题", id: "faq" }, { type: "faq", items: [{ q: "MVP 简报应该多长？", a: "应当短到能一口气读完，又具体到足以做取舍。当它明确了首位用户、核心循环、发布边界、信任要求和下一个验证点时，一到两页通常已足够。" }, { q: "简报应该包含完整的功能清单吗？", a: "包含让核心循环运行所需的功能，然后把其他内容放在后续想法部分。单独的搁置区能保护好想法，又不让它们悄悄变成发布要求。" }, { q: "如果目标用户仍不确定怎么办？", a: "写下最有力的两个候选人，以及能区分他们的证据。不确定性在明确时是有用的；隐藏在宽泛产品范围中时就会变得昂贵。" }, { q: "设计开始前必须完成简报吗？", a: "它应该清晰到足以指导第一轮设计，而不必永远冻结。设计可以揭示更好的问题，但每项改变都应更新范围以及你正试图收集的证据。" }] },
   ] },
+  translatedPosts: ZH_TRANSLATED_POSTS,
 };
 
 export default ZH_EDITORIAL_CONTENT;

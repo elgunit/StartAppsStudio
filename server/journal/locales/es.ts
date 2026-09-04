@@ -1,5 +1,6 @@
 import { type LocaleEditorialContent } from "../editorial";
 import { getPost } from "../posts";
+import { ES_TRANSLATED_POSTS } from "./es-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("No se encontró el artículo de origen.");
@@ -36,5 +37,6 @@ export const ES_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "Cómo usamos esto en Start Apps Studio", text: "Antes de presupuestar un desarrollo, convertimos la idea del fundador en un alcance de una página: un usuario, un ciclo central, las pantallas e infraestructura que lo respaldan y la evidencia que debería cambiar la siguiente decisión. El documento se convierte en el traspaso entre estrategia, diseño, ingeniería y lanzamiento, y en el punto de referencia cuando una nueva función intenta colarse en la versión uno." },
     { type: "h2", text: "Preguntas frecuentes", id: "faq" }, { type: "faq", items: [{ q: "¿Cuánto debe medir un brief de MVP?", a: "Lo bastante corto para leerse de una sentada y lo bastante específico para tomar decisiones. Una o dos páginas suelen bastar cuando nombran al primer usuario, el ciclo central, el límite de lanzamiento, los requisitos de confianza y la siguiente prueba." }, { q: "¿Debe incluir el brief una lista completa de funciones?", a: "Incluye las funciones que hacen funcionar el ciclo central y guarda el resto en una sección de ideas posteriores. Un aparcamiento separado protege buenas ideas sin dejar que se conviertan silenciosamente en requisitos de lanzamiento." }, { q: "¿Qué ocurre si el usuario objetivo aún es incierto?", a: "Anota los dos candidatos más sólidos y la evidencia que los distinguiría. La incertidumbre sirve cuando es explícita; se vuelve cara cuando queda oculta dentro de un alcance de producto amplio." }, { q: "¿Debe terminarse el brief antes de empezar el diseño?", a: "Debe ser suficientemente claro para guiar la primera pasada de diseño, no quedar congelado para siempre. El diseño puede revelar una pregunta mejor, pero cada cambio debe actualizar el alcance y la prueba que intentas reunir." }] },
   ] },
+  translatedPosts: ES_TRANSLATED_POSTS,
 };
 export default ES_EDITORIAL_CONTENT;

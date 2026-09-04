@@ -1,5 +1,5 @@
 import { getLocale, type LocaleDefinition } from "../i18n/locales";
-import { getPost, type Post } from "./posts";
+import { getPost, posts as sourcePosts, type Post } from "./posts";
 import AZ_EDITORIAL_CONTENT from "./locales/az";
 import DE_EDITORIAL_CONTENT from "./locales/de";
 import ES_EDITORIAL_CONTENT from "./locales/es";
@@ -95,6 +95,7 @@ export interface LocaleEditorialContent {
   copy: EditorialCopy;
   resources: ResourcesContent;
   post: Post;
+  translatedPosts: Readonly<Record<string, Post>>;
 }
 
 export type PendingLocaleEditorialContent = Partial<LocaleEditorialContent>;
@@ -175,6 +176,9 @@ const ENGLISH_CONTENT: LocaleEditorialContent = {
     cta: { title: "Have a route in mind?", text: "Share where you are, what you need to prove, and what is currently stuck.", action: "Get a clear next step" },
   },
   post: sourcePost,
+  translatedPosts: Object.fromEntries(
+    sourcePosts.map((post) => [post.slug, post]),
+  ),
 };
 
 export const localeEditorialContent: Record<string, PendingLocaleEditorialContent> = {
@@ -191,8 +195,17 @@ export const localeEditorialContent: Record<string, PendingLocaleEditorialConten
 };
 
 function resolvedContent(locale: string): LocaleEditorialContent {
+  if (locale === "en") return ENGLISH_CONTENT;
   const candidate = localeEditorialContent[locale];
-  return candidate?.copy && candidate.resources && candidate.post ? candidate as LocaleEditorialContent : ENGLISH_CONTENT;
+  if (
+    candidate?.copy &&
+    candidate.resources &&
+    candidate.post &&
+    candidate.translatedPosts
+  ) {
+    return candidate as LocaleEditorialContent;
+  }
+  throw new Error(`Incomplete editorial content for locale "${locale}".`);
 }
 
 export function editorialCopy(locale: string): EditorialCopy {
@@ -208,8 +221,16 @@ export function editorialPath(locale: string, path: string): string {
 }
 
 export function translatedPost(post: Post, locale: string): Post {
-  if (post.slug !== TRANSLATED_MVP_SLUG) return post;
-  return resolvedContent(locale).post;
+  if (locale === "en") return post;
+  const content = resolvedContent(locale);
+  if (post.slug === TRANSLATED_MVP_SLUG) return content.post;
+  const localized = content.translatedPosts[post.slug];
+  if (!localized) {
+    throw new Error(
+      `Missing ${locale} Journal translation for "${post.slug}".`,
+    );
+  }
+  return localized;
 }
 
 export function validateLocaleEditorialContent(content: LocaleEditorialContent): string[] {
@@ -221,6 +242,25 @@ export function validateLocaleEditorialContent(content: LocaleEditorialContent):
   if (content.resources?.toolkit.groups.length !== 4) errors.push("Resources must include four toolkit groups");
   if (content.post && sourcePost && JSON.stringify(postStructure(content.post.body)) !== JSON.stringify(postStructure(sourcePost.body))) {
     errors.push("post body must retain the source block structure");
+  }
+  for (const source of sourcePosts) {
+    const translated =
+      source.slug === TRANSLATED_MVP_SLUG
+        ? content.post
+        : content.translatedPosts[source.slug];
+    if (!translated) {
+      errors.push(`translated post "${source.slug}" is missing`);
+      continue;
+    }
+    if (translated.slug !== source.slug) {
+      errors.push(`translated post "${source.slug}" changed its slug`);
+    }
+    if (
+      JSON.stringify(postStructure(translated.body)) !==
+      JSON.stringify(postStructure(source.body))
+    ) {
+      errors.push(`translated post "${source.slug}" must retain the source block structure`);
+    }
   }
   return errors;
 }

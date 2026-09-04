@@ -1,5 +1,6 @@
 import { type LocaleEditorialContent } from "../editorial";
 import { getPost } from "../posts";
+import { DE_TRANSLATED_POSTS } from "./de-posts";
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("Quellartikel fehlt.");
 export const DE_EDITORIAL_CONTENT: LocaleEditorialContent = {
@@ -29,5 +30,6 @@ export const DE_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "Wie wir dies bei Start Apps Studio nutzen", text: "Bevor wir einen Build anbieten, verwandeln wir die Gründeridee in einen einseitigen Umfang: ein Nutzer, eine Kernschleife, die Bildschirme und Infrastruktur, die sie tragen, und die Belege, die die nächste Entscheidung ändern sollten. Das Dokument wird zur Übergabe zwischen Strategie, Design, Engineering und Start – und zum Bezugspunkt, wenn sich eine neue Funktion in Version eins einschleichen möchte." },
     { type: "h2", text: "Häufig gestellte Fragen", id: "faq" }, { type: "faq", items: [{ q: "Wie lang sollte ein MVP-Briefing sein?", a: "Kurz genug, um es in einem Zug zu lesen, und konkret genug für Abwägungen. Ein bis zwei Seiten reichen meist, wenn sie den ersten Nutzer, die Kernschleife, die Startgrenze, Vertrauensanforderungen und den nächsten Beleg benennen." }, { q: "Sollte das Briefing eine vollständige Funktionsliste enthalten?", a: "Nehmen Sie die Funktionen auf, die die Kernschleife zum Funktionieren bringen, und bewahren Sie den Rest in einem Bereich für spätere Ideen auf. Ein separater Parkplatz schützt gute Ideen, ohne dass sie still zu Startanforderungen werden." }, { q: "Was, wenn der Zielnutzer noch unsicher ist?", a: "Notieren Sie die zwei stärksten Kandidaten und die Belege, die sie unterscheiden würden. Unsicherheit ist nützlich, wenn sie ausdrücklich ist; sie wird teuer, wenn sie in einem breiten Produktumfang verborgen bleibt." }, { q: "Muss das Briefing fertig sein, bevor das Design beginnt?", a: "Es sollte klar genug sein, um den ersten Design-Durchgang zu führen, nicht für immer eingefroren. Design darf eine bessere Frage aufdecken, aber jede Änderung sollte Umfang und den Beleg aktualisieren, den Sie sammeln wollen." }] },
   ] },
+  translatedPosts: DE_TRANSLATED_POSTS,
 };
 export default DE_EDITORIAL_CONTENT;

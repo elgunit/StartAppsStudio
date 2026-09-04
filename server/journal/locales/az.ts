@@ -1,5 +1,6 @@
 import { type LocaleEditorialContent } from "../editorial";
 import { getPost } from "../posts";
+import { AZ_TRANSLATED_POSTS } from "./az-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("Missing MVP editorial source post.");
@@ -47,6 +48,7 @@ export const AZ_EDITORIAL_CONTENT: LocaleEditorialContent = {
       { q: "MVP brifi nə qədər uzun olmalıdır?", a: "Bir oturuşda oxunacaq qədər qısa və seçimlər etmək üçün kifayət qədər konkret olmalıdır. İlk istifadəçini, əsas dövrəni, istifadəyəvermə sərhədini, etibar tələblərini və növbəti sübut nöqtəsini adlandırdıqda bir-iki səhifə adətən yetərlidir." }, { q: "Brifə tam funksiya siyahısı daxil edilməlidirmi?", a: "Əsas dövrəni işlədən funksiyaları daxil edin, qalanını isə sonrakı ideyalar bölməsində saxlayın. Ayrı gözləmə siyahısı yaxşı ideyaları qoruyur, amma onların sakitcə istifadəyəvermə tələbinə çevrilməsinə imkan vermir." }, { q: "Hədəf istifadəçi hələ də qeyri-müəyyəndirsə nə etməli?", a: "Ən güclü iki namizədi və onları bir-birindən ayıracaq sübutları yazın. Qeyri-müəyyənlik açıq olduqda faydalıdır; geniş məhsul əhatə dairəsində gizləndikdə bahalı olur." }, { q: "Dizayn başlamazdan əvvəl brif bitməlidirmi?", a: "İlk dizayn keçidinə istiqamət vermək üçün kifayət qədər aydın olmalıdır, əbədi olaraq donmuş deyil. Dizayn daha yaxşı sualı üzə çıxara bilər, lakin hər dəyişiklik əhatə dairəsini və toplamağa çalışdığınız sübutu yeniləməlidir." },
     ] },
   ] },
+  translatedPosts: AZ_TRANSLATED_POSTS,
 };
 
 export default AZ_EDITORIAL_CONTENT;

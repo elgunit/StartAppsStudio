@@ -1,5 +1,6 @@
 import { type LocaleEditorialContent } from "../editorial";
 import { getPost } from "../posts";
+import { FR_TRANSLATED_POSTS } from "./fr-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("Article source introuvable.");
@@ -52,6 +53,7 @@ export const FR_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "Comment nous utilisons cela chez Start Apps Studio", text: "Avant de chiffrer une réalisation, nous transformons l’idée du fondateur en un périmètre d’une page : un utilisateur, une boucle principale, les écrans et l’infrastructure qui la soutiennent, et les preuves qui devraient modifier la prochaine décision. Le document devient le relais entre stratégie, design, ingénierie et lancement — ainsi que le point de référence lorsqu’une nouvelle fonctionnalité tente de se glisser dans la version un." },
     { type: "h2", text: "Questions fréquentes", id: "faq" }, { type: "faq", items: [{ q: "Quelle devrait être la longueur d’un brief MVP ?", a: "Assez court pour être lu d’une traite et assez précis pour arbitrer. Une à deux pages suffisent généralement lorsqu’elles identifient le premier utilisateur, la boucle principale, la limite de lancement, les exigences de confiance et la prochaine preuve." }, { q: "Le brief doit-il inclure une liste complète de fonctionnalités ?", a: "Incluez les fonctionnalités qui font fonctionner la boucle principale, puis gardez le reste dans une section d’idées ultérieures. Un espace de stationnement séparé protège les bonnes idées sans les laisser devenir discrètement des exigences de lancement." }, { q: "Que faire si l’utilisateur cible reste incertain ?", a: "Notez les deux candidats les plus solides et les preuves qui les distingueraient. L’incertitude est utile lorsqu’elle est explicite ; elle devient coûteuse lorsqu’elle se cache dans un périmètre produit trop large." }, { q: "Le brief doit-il être terminé avant le début du design ?", a: "Il doit être assez clair pour guider la première étape de design, sans être figé pour toujours. Le design peut révéler une meilleure question, mais chaque changement doit mettre à jour le périmètre et la preuve que vous cherchez à recueillir." }] },
   ] },
+  translatedPosts: FR_TRANSLATED_POSTS,
 };
 
 export default FR_EDITORIAL_CONTENT;

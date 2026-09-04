@@ -1,5 +1,6 @@
 import { getPost } from "../posts";
 import type { LocaleEditorialContent } from "../editorial";
+import { IT_TRANSLATED_POSTS } from "./it-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("MVP source post is missing.");
@@ -38,6 +39,7 @@ export const IT_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "Come lo usiamo in Start Apps Studio", text: "Prima di quotare una realizzazione, trasformiamo l'idea del fondatore in un ambito di una pagina: un utente, un ciclo fondamentale, le schermate e l'infrastruttura che lo supportano e l'evidenza che dovrebbe cambiare la decisione successiva. Il documento diventa il passaggio di consegne tra strategia, design, ingegneria e lancio, e il punto di riferimento quando una nuova funzionalità cerca di intrufolarsi nella versione uno." },
     { type: "h2", text: "Domande frequenti", id: "faq" }, { type: "faq", items: [{ q: "Quanto deve essere lungo un brief MVP?", a: "Abbastanza breve da leggerlo in una sola seduta e abbastanza specifico da prendere decisioni tra alternative. Una o due pagine sono di solito sufficienti quando identifica primo utente, ciclo fondamentale, confine di lancio, requisiti di fiducia e prossimo punto di prova." }, { q: "Il brief deve includere un elenco completo delle funzionalità?", a: "Includi le funzionalità che fanno funzionare il ciclo fondamentale, poi tieni il resto in una sezione di idee successive. Un parcheggio separato protegge le buone idee senza lasciare che diventino silenziosamente requisiti di lancio." }, { q: "E se l'utente target è ancora incerto?", a: "Annota i due candidati più forti e l'evidenza che li distinguerebbe. L'incertezza è utile quando è esplicita; diventa costosa quando è nascosta dentro un ampio ambito di prodotto." }, { q: "Il brief deve essere finito prima che inizi il design?", a: "Dovrebbe essere abbastanza chiaro da guidare il primo passaggio di design, non congelato per sempre. Il design può far emergere una domanda migliore, ma ogni cambiamento dovrebbe aggiornare l'ambito e la prova che stai cercando di raccogliere." }] },
   ] },
+  translatedPosts: IT_TRANSLATED_POSTS,
 };
 
 export default IT_EDITORIAL_CONTENT;

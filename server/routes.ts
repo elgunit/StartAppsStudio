@@ -23,7 +23,6 @@ import {
 } from "./journal/render";
 import { getPost, allPostsNewestFirst } from "./journal/posts";
 import { isSupportedLocale, DEFAULT_LOCALE } from "./i18n/locales";
-import { TRANSLATED_MVP_SLUG } from "./journal/editorial";
 
 // Admin auth — compares the x-session-token header against SESSION_SECRET
 // using a constant-time comparison to prevent timing attacks.
@@ -166,7 +165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!isSupportedLocale(locale)) return next();
     const post = getPost(req.params.slug);
     if (!post) return next();
-    if (locale === DEFAULT_LOCALE || post.slug !== TRANSLATED_MVP_SLUG) {
+    if (locale === DEFAULT_LOCALE) {
       return res.redirect(301, `/journal/${post.slug}`);
     }
     res.setHeader("content-type", "text/html; charset=utf-8");

@@ -1,5 +1,6 @@
 import { getPost } from "../posts";
 import type { LocaleEditorialContent } from "../editorial";
+import { TR_TRANSLATED_POSTS } from "./tr-posts";
 
 const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("MVP source post is missing.");
@@ -39,6 +40,7 @@ export const TR_EDITORIAL_CONTENT: LocaleEditorialContent = {
     { type: "callout", title: "Bunu Start Apps Studio'da nasıl kullanıyoruz", text: "Bir geliştirme için fiyat vermeden önce kurucunun fikrini tek sayfalık kapsama dönüştürürüz: bir kullanıcı, bir temel döngü, onu destekleyen ekranlar ve altyapı ve sonraki kararı değiştirmesi gereken kanıt. Belge; strateji, tasarım, mühendislik ve lansman arasındaki devir olur ve yeni bir özellik birinci sürüme sızmak istediğinde başvuru noktasıdır." },
     { type: "h2", text: "Sık sorulan sorular", id: "faq" }, { type: "faq", items: [{ q: "MVP özeti ne kadar uzun olmalı?", a: "Tek oturuşta okunacak kadar kısa, ödünleşimleri belirleyecek kadar özgül olmalıdır. İlk kullanıcıyı, temel döngüyü, lansman sınırını, güven gereksinimlerini ve sonraki kanıt noktasını tanımladığında bir ila iki sayfa genellikle yeterlidir." }, { q: "Özette tam bir özellik listesi olmalı mı?", a: "Temel döngünün işlemesini sağlayan özellikleri ekleyin; kalanını sonraki fikirler bölümünde tutun. Ayrı bir bekleme listesi, iyi fikirleri sessizce lansman gereksinimine dönüşmelerine izin vermeden korur." }, { q: "Hedef kullanıcı hâlâ belirsizse ne olur?", a: "En güçlü iki adayı ve onları ayıracak kanıtı yazın. Belirsizlik açık olduğunda faydalıdır; geniş bir ürün kapsamının içinde saklandığında pahalılaşır." }, { q: "Tasarım başlamadan önce özet bitmiş olmalı mı?", a: "İlk tasarım turuna yön verecek kadar net olmalı, sonsuza dek donmuş olmamalıdır. Tasarım daha iyi bir soruyu ortaya çıkarabilir; ancak her değişiklik kapsamı ve toplamaya çalıştığınız kanıtı güncellemelidir." }] },
   ] },
+  translatedPosts: TR_TRANSLATED_POSTS,
 };
 
 export default TR_EDITORIAL_CONTENT;

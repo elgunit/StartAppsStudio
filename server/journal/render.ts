@@ -7,7 +7,7 @@ import {
   SUPPORTED_LANGUAGE_NAMES,
 } from "../i18n/locales";
 import { getLocale, LOCALES } from "../i18n/locales";
-import { editorialCopy, editorialPath, resourcesContent, TRANSLATED_MVP_SLUG, translatedPost } from "./editorial";
+import { editorialCopy, editorialPath, resourcesContent, translatedPost } from "./editorial";
 
 /**
  * The single authoritative public origin for all SEO-facing URLs.
@@ -1394,8 +1394,6 @@ function shell({
   const ui = editorialUi(locale);
   const currentPath = new URL(canonical).pathname;
   const unprefixedPath = currentPath.replace(/^\/(?:az|tr|ru|zh|fr|es|de|uk|it)(?=\/|$)/, "") || "/";
-  const switchPath = unprefixedPath.startsWith("/journal/") &&
-    !unprefixedPath.endsWith(`/${TRANSLATED_MVP_SLUG}`) ? unprefixedPath : undefined;
   const isJournalPage = unprefixedPath === "/journal" || unprefixedPath.startsWith("/journal/");
   const isResourcesPage = unprefixedPath === "/resources";
   const navLinks = [
@@ -1438,7 +1436,7 @@ ${jsonLd}
 <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
   <nav class="site-nav">
     <a href="${editorialPath(locale, "/")}" class="brand">${esc(AUTHOR_NAME)}</a>
-    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy.language)}</summary>${LOCALES.map((l) => `<a href="${switchPath || editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
+    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy.language)}</summary>${LOCALES.map((l) => `<a href="${editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">
@@ -1469,28 +1467,21 @@ function editorialAlternates(origin: string, path: string): { hreflang: string; 
   ];
 }
 
-function englishOnlyAlternates(origin: string, path: string): { hreflang: string; href: string }[] {
-  return [
-    { hreflang: "en", href: `${origin}${path}` },
-    { hreflang: "x-default", href: `${origin}${path}` },
-  ];
-}
-
 const EDITORIAL_UI: Record<string, {
   home: string; journal: string; resources: string; pricing: string; contact: string;
   by: string; studio: string; needBuilt: string; studioPromise: string;
-  startProject: string; keepReading: string; fromJournal: string; englishOnly: string;
+  startProject: string; keepReading: string; fromJournal: string;
 }> = {
-  en: { home: "Home", journal: "Journal", resources: "Resources", pricing: "Pricing", contact: "Contact", by: "By", studio: "The Studio", needBuilt: "Need the version built for you?", studioPromise: "We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.", startProject: "Start a project", keepReading: "Keep reading", fromJournal: "from the journal", englishOnly: "English article" },
-  az: { home: "Ana səhifə", journal: "Jurnal", resources: "Resurslar", pricing: "Qiymətlər", contact: "Əlaqə", by: "Müəllif", studio: "Studiya", needBuilt: "Sizin üçün hazırlanmış versiya lazımdır?", studioPromise: "İlk gündən indekslənən, GEO-ya hazır və gəlirə bağlı MVP-lər hazırlayırıq.", startProject: "Layihəyə başlayın", keepReading: "Oxumağa davam edin", fromJournal: "jurnaldan", englishOnly: "İngiliscə məqalə" },
-  tr: { home: "Ana sayfa", journal: "Dergi", resources: "Kaynaklar", pricing: "Fiyatlar", contact: "İletişim", by: "Yazan", studio: "Stüdyo", needBuilt: "Size özel sürümü mü gerekiyor?", studioPromise: "İlk günden indekslenen, GEO'ya hazır ve gelire bağlı MVP'ler teslim ediyoruz.", startProject: "Proje başlatın", keepReading: "Okumaya devam edin", fromJournal: "dergiden", englishOnly: "İngilizce makale" },
-  ru: { home: "Главная", journal: "Журнал", resources: "Ресурсы", pricing: "Цены", contact: "Контакты", by: "Автор", studio: "Студия", needBuilt: "Нужна версия, созданная для вас?", studioPromise: "Мы выпускаем MVP, готовые к индексации, GEO и выручке с первого дня.", startProject: "Начать проект", keepReading: "Продолжить чтение", fromJournal: "из журнала", englishOnly: "Статья на английском" },
-  zh: { home: "首页", journal: "期刊", resources: "资源", pricing: "价格", contact: "联系", by: "作者", studio: "工作室", needBuilt: "需要为你打造的版本吗？", studioPromise: "我们交付从第一天起即可收录、支持 GEO 并与收入目标相连的 MVP。", startProject: "启动项目", keepReading: "继续阅读", fromJournal: "来自期刊", englishOnly: "英文文章" },
-  fr: { home: "Accueil", journal: "Journal", resources: "Ressources", pricing: "Tarifs", contact: "Contact", by: "Par", studio: "Le Studio", needBuilt: "Besoin d'une version conçue pour vous ?", studioPromise: "Nous livrons des MVP indexables, prêts pour le GEO et liés au chiffre d'affaires dès le premier jour.", startProject: "Démarrer un projet", keepReading: "Continuer la lecture", fromJournal: "du journal", englishOnly: "Article en anglais" },
-  es: { home: "Inicio", journal: "Journal", resources: "Recursos", pricing: "Precios", contact: "Contacto", by: "Por", studio: "El Estudio", needBuilt: "¿Necesitas una versión hecha para ti?", studioPromise: "Entregamos MVP indexables, preparados para GEO y vinculados a ingresos desde el primer día.", startProject: "Iniciar un proyecto", keepReading: "Seguir leyendo", fromJournal: "del journal", englishOnly: "Artículo en inglés" },
-  de: { home: "Start", journal: "Journal", resources: "Ressourcen", pricing: "Preise", contact: "Kontakt", by: "Von", studio: "Das Studio", needBuilt: "Brauchen Sie die für Sie entwickelte Version?", studioPromise: "Wir liefern MVPs, die vom ersten Tag an indexierbar, GEO-bereit und umsatzorientiert sind.", startProject: "Projekt starten", keepReading: "Weiterlesen", fromJournal: "aus dem Journal", englishOnly: "Englischer Artikel" },
-  uk: { home: "Головна", journal: "Журнал", resources: "Ресурси", pricing: "Ціни", contact: "Контакти", by: "Автор", studio: "Студія", needBuilt: "Потрібна версія, створена для вас?", studioPromise: "Ми випускаємо MVP, готові до індексації, GEO та доходу з першого дня.", startProject: "Почати проєкт", keepReading: "Продовжити читання", fromJournal: "із журналу", englishOnly: "Стаття англійською" },
-  it: { home: "Home", journal: "Journal", resources: "Risorse", pricing: "Prezzi", contact: "Contatti", by: "Di", studio: "Lo Studio", needBuilt: "Ti serve la versione costruita per te?", studioPromise: "Consegniamo MVP indicizzabili, pronti per la GEO e legati ai ricavi fin dal primo giorno.", startProject: "Avvia un progetto", keepReading: "Continua a leggere", fromJournal: "dal journal", englishOnly: "Articolo in inglese" },
+  en: { home: "Home", journal: "Journal", resources: "Resources", pricing: "Pricing", contact: "Contact", by: "By", studio: "The Studio", needBuilt: "Need the version built for you?", studioPromise: "We ship MVPs that are indexed, GEO-ready, and revenue-tied from day one.", startProject: "Start a project", keepReading: "Keep reading", fromJournal: "from the journal" },
+  az: { home: "Ana səhifə", journal: "Jurnal", resources: "Resurslar", pricing: "Qiymətlər", contact: "Əlaqə", by: "Müəllif", studio: "Studiya", needBuilt: "Sizin üçün hazırlanmış versiya lazımdır?", studioPromise: "İlk gündən indekslənən, GEO-ya hazır və gəlirə bağlı MVP-lər hazırlayırıq.", startProject: "Layihəyə başlayın", keepReading: "Oxumağa davam edin", fromJournal: "jurnaldan" },
+  tr: { home: "Ana sayfa", journal: "Dergi", resources: "Kaynaklar", pricing: "Fiyatlar", contact: "İletişim", by: "Yazan", studio: "Stüdyo", needBuilt: "Size özel sürümü mü gerekiyor?", studioPromise: "İlk günden indekslenen, GEO'ya hazır ve gelire bağlı MVP'ler teslim ediyoruz.", startProject: "Proje başlatın", keepReading: "Okumaya devam edin", fromJournal: "dergiden" },
+  ru: { home: "Главная", journal: "Журнал", resources: "Ресурсы", pricing: "Цены", contact: "Контакты", by: "Автор", studio: "Студия", needBuilt: "Нужна версия, созданная для вас?", studioPromise: "Мы выпускаем MVP, готовые к индексации, GEO и выручке с первого дня.", startProject: "Начать проект", keepReading: "Продолжить чтение", fromJournal: "из журнала" },
+  zh: { home: "首页", journal: "期刊", resources: "资源", pricing: "价格", contact: "联系", by: "作者", studio: "工作室", needBuilt: "需要为你打造的版本吗？", studioPromise: "我们交付从第一天起即可收录、支持 GEO 并与收入目标相连的 MVP。", startProject: "启动项目", keepReading: "继续阅读", fromJournal: "来自期刊" },
+  fr: { home: "Accueil", journal: "Journal", resources: "Ressources", pricing: "Tarifs", contact: "Contact", by: "Par", studio: "Le Studio", needBuilt: "Besoin d'une version conçue pour vous ?", studioPromise: "Nous livrons des MVP indexables, prêts pour le GEO et liés au chiffre d'affaires dès le premier jour.", startProject: "Démarrer un projet", keepReading: "Continuer la lecture", fromJournal: "du journal" },
+  es: { home: "Inicio", journal: "Journal", resources: "Recursos", pricing: "Precios", contact: "Contacto", by: "Por", studio: "El Estudio", needBuilt: "¿Necesitas una versión hecha para ti?", studioPromise: "Entregamos MVP indexables, preparados para GEO y vinculados a ingresos desde el primer día.", startProject: "Iniciar un proyecto", keepReading: "Seguir leyendo", fromJournal: "del journal" },
+  de: { home: "Start", journal: "Journal", resources: "Ressourcen", pricing: "Preise", contact: "Kontakt", by: "Von", studio: "Das Studio", needBuilt: "Brauchen Sie die für Sie entwickelte Version?", studioPromise: "Wir liefern MVPs, die vom ersten Tag an indexierbar, GEO-bereit und umsatzorientiert sind.", startProject: "Projekt starten", keepReading: "Weiterlesen", fromJournal: "aus dem Journal" },
+  uk: { home: "Головна", journal: "Журнал", resources: "Ресурси", pricing: "Ціни", contact: "Контакти", by: "Автор", studio: "Студія", needBuilt: "Потрібна версія, створена для вас?", studioPromise: "Ми випускаємо MVP, готові до індексації, GEO та доходу з першого дня.", startProject: "Почати проєкт", keepReading: "Продовжити читання", fromJournal: "із журналу" },
+  it: { home: "Home", journal: "Journal", resources: "Risorse", pricing: "Prezzi", contact: "Contatti", by: "Di", studio: "Lo Studio", needBuilt: "Ti serve la versione costruita per te?", studioPromise: "Consegniamo MVP indicizzabili, pronti per la GEO e legati ai ricavi fin dal primo giorno.", startProject: "Avvia un progetto", keepReading: "Continua a leggere", fromJournal: "dal journal" },
 };
 
 function editorialUi(locale: string) {
@@ -1526,13 +1517,14 @@ export function renderArticleHtml(post: Post, origin: string, locale = "en"): st
   const others = allPostsNewestFirst().filter((p) => p.slug !== post.slug).slice(0, 2);
   const nextCards = others
     .map((p) => {
-      const cat = p.category || "Journal";
+      const localized = translatedPost(p, locale);
+      const cat = localized.category || "Journal";
       return `
-        <a href="/journal/${esc(p.slug)}" class="next-card">
+        <a href="${esc(editorialPath(locale, `/journal/${p.slug}`))}" class="next-card">
         <div class="next-card-meta">${esc(cat)}</div>
-        <h3 class="next-card-title">${esc(p.title)}</h3>
-        <p class="next-card-excerpt">${esc(p.excerpt)}</p>
-        <span class="next-card-cta">${esc(copy.read)} · ${esc(ui.englishOnly)} &rarr;</span>
+        <h3 class="next-card-title">${esc(localized.title)}</h3>
+        <p class="next-card-excerpt">${esc(localized.excerpt)}</p>
+        <span class="next-card-cta">${esc(copy.read)} &rarr;</span>
       </a>`;
     })
     .join("");
@@ -1597,9 +1589,7 @@ export function renderArticleHtml(post: Post, origin: string, locale = "en"): st
     jsonLd,
     bodyInner,
     locale,
-    alternates: post.slug === TRANSLATED_MVP_SLUG
-      ? editorialAlternates(origin, `/journal/${post.slug}`)
-      : englishOnlyAlternates(origin, `/journal/${post.slug}`),
+    alternates: editorialAlternates(origin, `/journal/${post.slug}`),
   });
 }
 
@@ -1615,32 +1605,33 @@ export function renderIndexHtml(origin: string, locale = "en"): string {
      inLanguage: getLocale(locale).htmlLang,
      description: copy.journalDescription,
     blogPost: postsList.map((p) => {
-      const localized = p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale) : p;
+      const localized = translatedPost(p, locale);
       return {
         "@type": "BlogPosting",
         headline: localized.title,
-        url: `${origin}${p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`}`,
+        url: `${origin}${editorialPath(locale, `/journal/${p.slug}`)}`,
         datePublished: p.publishedAt,
         description: localized.description,
-        inLanguage: p.slug === TRANSLATED_MVP_SLUG ? getLocale(locale).htmlLang : "en",
+        inLanguage: getLocale(locale).htmlLang,
       };
     }),
   })}</script>`;
 
   const cards = postsList
-    .map(
-      (p) => `
-    <a href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}" class="post-card">
+    .map((p) => {
+      const localized = translatedPost(p, locale);
+      return `
+    <a href="${esc(editorialPath(locale, `/journal/${p.slug}`))}" class="post-card">
       <div class="post-card-accent" style="background:${accentColor(p.slug)}"></div>
       <div class="post-card-body">
-        <h2>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h2>
-        <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
+        <h2>${esc(localized.title)}</h2>
+        <p>${esc(localized.excerpt)}</p>
         <div class="post-card-meta">
-          <span>${p.readMinutes} ${esc(copy.minutes)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` · ${esc(editorialUi(locale).englishOnly)}`}</span>
+          <span>${p.readMinutes} ${esc(copy.minutes)}</span>
         </div>
       </div>
-    </a>`,
-    )
+    </a>`;
+    })
     .join("");
 
   const bodyInner = `
@@ -1674,19 +1665,20 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
   const posts = content.journal.postSlugs
     .map((slug) => getPost(slug))
     .filter((post): post is Post => Boolean(post))
+    .map((post) => translatedPost(post, locale))
     .map((post) => ({
-      ...post,
-      title: withoutEmDashes(post.title),
-      excerpt: withoutEmDashes(post.excerpt),
-      category: withoutEmDashes(post.category),
-    }));
+        ...post,
+        title: withoutEmDashes(post.title),
+        excerpt: withoutEmDashes(post.excerpt),
+        category: withoutEmDashes(post.category),
+      }));
   const articleCards = posts
     .map(
       (p) => `
-        <a class="resource-article-card" href="${esc(p.slug === TRANSLATED_MVP_SLUG ? editorialPath(locale, `/journal/${p.slug}`) : `/journal/${p.slug}`)}">
-          <div class="article-meta">${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).category : p.category || content.journal.fallbackCategory)} · ${p.readMinutes} ${esc(content.journal.minutesLabel)}${p.slug === TRANSLATED_MVP_SLUG ? "" : ` · ${esc(editorialUi(locale).englishOnly)}`}</div>
-          <h3>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).title : p.title)}</h3>
-          <p>${esc(p.slug === TRANSLATED_MVP_SLUG ? translatedPost(p, locale).excerpt : p.excerpt)}</p>
+        <a class="resource-article-card" href="${esc(editorialPath(locale, `/journal/${p.slug}`))}">
+          <div class="article-meta">${esc(p.category || content.journal.fallbackCategory)} · ${p.readMinutes} ${esc(content.journal.minutesLabel)}</div>
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(p.excerpt)}</p>
           <span class="article-link">${esc(content.journal.readAction)} &rarr;</span>
         </a>`,
     )
@@ -1739,7 +1731,7 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
         "@type": "ListItem",
         position: index + 1,
         name: p.title,
-        url: `${origin}/journal/${p.slug}`,
+        url: `${origin}${editorialPath(locale, `/journal/${p.slug}`)}`,
       })),
     },
   })}</script>`;
@@ -1851,10 +1843,11 @@ export function renderSitemapXml(origin: string): string {
     ...PREFIXED_CODES.flatMap((code) => [
       { loc: `${origin}/${code}/resources`, priority: "0.8" },
       { loc: `${origin}/${code}/journal`, priority: "0.8" },
-      {
-        loc: `${origin}/${code}/journal/${TRANSLATED_MVP_SLUG}`,
+      ...allPostsNewestFirst().map((post) => ({
+        loc: `${origin}/${code}/journal/${post.slug}`,
+        lastmod: post.updatedAt || post.publishedAt,
         priority: "0.7",
-      },
+      })),
     ]),
   ];
   for (const p of allPostsNewestFirst()) {
