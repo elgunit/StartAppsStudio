@@ -3133,6 +3133,19 @@ ${jsonLd}
   <footer class="site-footer">
     <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="/">Home</a> \xB7 <a href="/resources">Resources</a> \xB7 <a href="/journal">Journal</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
   </footer>
+  <script>
+    (function () {
+      function isEditableTarget(target) {
+        return !!(target && target.closest && target.closest('input, textarea, select, [contenteditable="true"]'));
+      }
+
+      ['selectstart', 'copy', 'cut'].forEach(function (eventName) {
+        document.addEventListener(eventName, function (event) {
+          if (!isEditableTarget(event.target)) event.preventDefault();
+        }, true);
+      });
+    }());
+  </script>
 </body>
 </html>`;
 }
@@ -4743,7 +4756,10 @@ var init_render = __esm({
       radial-gradient(circle at 12% 0%,color-mix(in srgb,var(--dominant) 13%,transparent),transparent 34rem),
       radial-gradient(circle at 88% 20%,color-mix(in srgb,var(--rose) 10%,transparent),transparent 30rem);
     color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6;
-    letter-spacing:-.005em; user-select:auto; -webkit-user-select:auto;
+    letter-spacing:-.005em; user-select:none; -webkit-user-select:none; -moz-user-select:none;
+  }
+  input, textarea, select, [contenteditable="true"] {
+    -webkit-user-select:text; -moz-user-select:text; user-select:text;
   }
   @media (prefers-color-scheme:dark) { html { color-scheme:dark; } }
   body::before {
