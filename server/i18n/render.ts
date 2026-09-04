@@ -190,31 +190,6 @@ function i18nPayloadScript(
   return `<script>window.__SAS_I18N__ = ${escapeForJsonScript(JSON.stringify(payload))};</script>`;
 }
 
-/** Shows only the matched locale and English in the footer switcher. */
-function setActiveSwitcherLink(html: string, locale: LocaleDefinition): string {
-  if (locale.code === DEFAULT_LOCALE) return html; // template default is English-active
-  return html
-    .replace('class="english-escape is-hidden"', 'class="english-escape"')
-    .replace(
-      'class="footer-lang-wrap is-current-english"',
-      'class="footer-lang-wrap"',
-    )
-    .replace(
-      /class="footer-lang-link is-active is-hidden"(\s+href="[^"]*"\s+hreflang)/,
-      'class="footer-lang-link"$1',
-    )
-    .replace(
-      new RegExp(
-        `class="footer-lang-link is-hidden"((?:(?!>)[\\s\\S])*?data-lang="${locale.code}")`,
-      ),
-      'class="footer-lang-link is-active"$1',
-    )
-    .replace(
-      '<span class="footer-lang-current" data-i18n-skip="true">English</span>',
-      `<span class="footer-lang-current" data-i18n-skip="true">${locale.nativeName}</span>`,
-    );
-}
-
 /**
  * Rewrites head metadata and JSON-LD for a non-default locale.
  * Each replacement is anchored to exact, known template bytes; if the
@@ -310,7 +285,6 @@ export function renderLandingPage(code: string): string {
     html = localizeHtml(template, dictionary);
     html = localizeMeta(html, dictionary);
     html = patchMetadata(html, locale);
-    html = setActiveSwitcherLink(html, locale);
     html = html.replace(
       "<!--SAS_I18N_PAYLOAD-->",
       i18nPayloadScript(locale, dictionary, jsKeys),

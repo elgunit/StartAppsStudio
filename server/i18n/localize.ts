@@ -33,7 +33,6 @@ const SKIP_CLASSES = new Set([
   "logo-mark",
   "footer-brand-name",
   // Language names are always written in their own language.
-  "footer-lang-link",
 ]);
 
 function classList(node: ElementNode): string[] {

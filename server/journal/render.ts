@@ -1436,7 +1436,7 @@ ${jsonLd}
 <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
   <nav class="site-nav">
     <a href="${editorialPath(locale, "/")}" class="brand">${esc(AUTHOR_NAME)}</a>
-    <div class="nav-links">${navLinks}<details class="language-switcher"><summary>${esc(copy.language)}</summary>${LOCALES.map((l) => `<a href="${editorialPath(l.code, unprefixedPath)}">${esc(l.nativeName)}</a>`).join("")}</details></div>
+    <div class="nav-links">${navLinks}</div>
   </nav>
   ${bodyInner}
   <footer class="site-footer">

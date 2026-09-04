@@ -3458,143 +3458,6 @@
       }
       .footer-top-link svg { flex-shrink: 0; }
 
-      /* Language picker: collapsed current-language trigger, expands alternatives below */
-      .footer-lang-wrap {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 4px;
-      }
-      .footer-lang-trigger {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 13px 6px 11px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: color-mix(in srgb, var(--bg-elevated) 70%, transparent);
-        color: var(--text-secondary);
-        font-size: 12px;
-        font-weight: 600;
-        font-family: inherit;
-        cursor: pointer;
-        user-select: none;
-        -webkit-user-select: none;
-        transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-      }
-      .footer-lang-trigger:hover {
-        border-color: color-mix(in srgb, var(--dominant) 35%, var(--border));
-        color: var(--text);
-        background: color-mix(in srgb, var(--dominant) 7%, transparent);
-      }
-      .footer-lang-trigger svg { flex-shrink: 0; transition: transform 0.2s ease; }
-      .footer-lang-wrap.is-open .footer-lang-trigger svg { transform: rotate(180deg); }
-      /* Dropdown list — collapsed by default */
-      .footer-lang {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 4px 2px;
-        max-width: 320px;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        margin-top: 0;
-        transition: max-height 0.32s ease, opacity 0.22s ease, margin-top 0.22s ease;
-      }
-      .footer-lang-wrap.is-open .footer-lang {
-        max-height: 200px;
-        opacity: 1;
-        margin-top: 8px;
-      }
-      .footer-lang-link {
-        padding: 5px 10px;
-        border-radius: 999px;
-        color: var(--text-secondary);
-        font-size: 12.5px;
-        font-weight: 500;
-        text-decoration: none;
-        opacity: 0.75;
-        transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
-      }
-      .footer-lang-link:hover {
-        color: var(--text);
-        opacity: 1;
-        background: color-mix(in srgb, var(--dominant) 8%, transparent);
-      }
-      .footer-lang-link.is-active {
-        color: var(--text);
-        opacity: 1;
-        background: color-mix(in srgb, var(--dominant) 12%, transparent);
-        cursor: default;
-      }
-      .footer-lang-link.is-hidden { display: none; }
-      .footer-lang-wrap.is-current-english { display: none; }
-      @media (max-width: 600px) {
-        .footer-lang { gap: 2px 0; max-width: 280px; }
-        .footer-lang-link { font-size: 12px; padding: 5px 8px; }
-      }
-
-      /* Quiet English escape hatch for visitors whose language was
-         auto-selected from their browser, VPN, or access country. */
-      .english-escape {
-        position: fixed;
-        top: max(14px, env(safe-area-inset-top));
-        right: max(18px, env(safe-area-inset-right));
-        z-index: 1000;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 34px;
-        min-height: 30px;
-        padding: 5px 9px;
-        border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
-        border-radius: 999px;
-        background: color-mix(in srgb, var(--bg-elevated) 76%, transparent);
-        color: var(--text-secondary);
-        box-shadow: 0 4px 18px color-mix(in srgb, var(--text) 8%, transparent);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        line-height: 1;
-        text-decoration: none;
-        -webkit-backdrop-filter: blur(12px);
-        backdrop-filter: blur(12px);
-        transition: color 0.18s ease, border-color 0.18s ease,
-          background 0.18s ease, transform 0.18s ease;
-      }
-      .english-escape:hover,
-      .english-escape:focus-visible {
-        border-color: color-mix(in srgb, var(--dominant) 42%, var(--border));
-        background: color-mix(in srgb, var(--dominant) 10%, var(--bg-elevated));
-        color: var(--text);
-        transform: translateY(-1px);
-      }
-      .english-escape:focus-visible {
-        outline: 2px solid color-mix(in srgb, var(--dominant) 60%, transparent);
-        outline-offset: 3px;
-      }
-      .english-escape.is-hero-hidden {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-4px);
-      }
-      .english-escape.is-hidden { display: none; }
-      @media (max-width: 600px) {
-        .english-escape {
-          top: max(10px, env(safe-area-inset-top));
-          right: max(12px, env(safe-area-inset-right));
-          min-width: 32px;
-          min-height: 28px;
-          padding: 5px 8px;
-        }
-      }
-
-      
-
-
       .app-preregister {
         font-size: 13px;
         color: var(--text-secondary);
@@ -8487,8 +8350,6 @@
         <button type="button" onclick="window.__setSasAnalyticsConsent('denied')">Continue without</button>
       </div>
     </aside>
-    <a class="english-escape is-hidden" href="/en" hreflang="en" lang="en"
-      data-i18n-skip="true" aria-label="Switch to English">EN</a>
     <!--SAS_I18N_PAYLOAD-->
     <script>
       /* Translations for strings that only exist inside JavaScript. The server
@@ -10838,27 +10699,6 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
           Back to top
         </button>
-        <div class="footer-lang-wrap is-current-english" id="footerLangWrap">
-          <button class="footer-lang-trigger" type="button" id="footerLangTrigger"
-            aria-expanded="false" aria-controls="footerLangList"
-            aria-label="Change language">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <span class="footer-lang-current" data-i18n-skip="true">English</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <nav class="footer-lang" id="footerLangList" aria-label="Language">
-            <a class="footer-lang-link is-active is-hidden" href="/en" hreflang="en"      lang="en"      data-lang="en">English</a>
-            <a class="footer-lang-link is-hidden" href="/az" hreflang="az"      lang="az"      data-lang="az">Azərbaycanca</a>
-            <a class="footer-lang-link is-hidden" href="/tr" hreflang="tr"      lang="tr"      data-lang="tr">Türkçe</a>
-            <a class="footer-lang-link is-hidden" href="/ru" hreflang="ru"      lang="ru"      data-lang="ru">Русский</a>
-            <a class="footer-lang-link is-hidden" href="/zh" hreflang="zh-Hans" lang="zh-Hans" data-lang="zh">简体中文</a>
-            <a class="footer-lang-link is-hidden" href="/fr" hreflang="fr"      lang="fr"      data-lang="fr">Français</a>
-            <a class="footer-lang-link is-hidden" href="/es" hreflang="es"      lang="es"      data-lang="es">Español</a>
-            <a class="footer-lang-link is-hidden" href="/de" hreflang="de"      lang="de"      data-lang="de">Deutsch</a>
-            <a class="footer-lang-link is-hidden" href="/uk" hreflang="uk"      lang="uk"      data-lang="uk">Українська</a>
-            <a class="footer-lang-link is-hidden" href="/it" hreflang="it"      lang="it"      data-lang="it">Italiano</a>
-          </nav>
-        </div>
         <p class="footer-copyright">&copy; 2026 Start Apps Studio. All rights reserved.</p>
       </div>
     </footer>
