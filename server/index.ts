@@ -275,6 +275,13 @@ function setupLandingPage(app: express.Application) {
     next();
   });
 
+  app.use(
+    "/assets/fonts",
+    express.static(path.resolve(process.cwd(), "assets", "fonts"), {
+      immutable: true,
+      maxAge: "1y",
+    }),
+  );
   app.use("/assets", express.static(path.resolve(process.cwd(), "assets")));
 }
 

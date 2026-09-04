@@ -14843,9 +14843,18 @@ function patchMetadata(html, locale) {
   if (locale.code === "zh") {
     out = out.replace(
       "    <style>",
-      `    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;600;700;800&amp;display=swap" />
+      `    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-sans-sc-400-zh-subset-9e53413d47.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-serif-sc-800-zh-subset-130d3774bb.woff2" crossorigin />
+    <style>
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-sans-sc-400-zh-subset-9e53413d47.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/noto-sans-sc-500-zh-subset-72c784d915.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-sans-sc-600-zh-subset-1218bc72c7.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-sans-sc-700-zh-subset-0d14db3e48.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-serif-sc-400-zh-subset-e71b81c4fc.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-serif-sc-600-zh-subset-e7093ffcff.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-serif-sc-700-zh-subset-38ccfff472.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/noto-serif-sc-800-zh-subset-130d3774bb.woff2) format('woff2');}
+    </style>
     <style>`
     );
   }
@@ -15111,6 +15120,13 @@ function setupLandingPage(app2) {
     }
     next();
   });
+  app2.use(
+    "/assets/fonts",
+    express.static(path2.resolve(process.cwd(), "assets", "fonts"), {
+      immutable: true,
+      maxAge: "1y"
+    })
+  );
   app2.use("/assets", express.static(path2.resolve(process.cwd(), "assets")));
 }
 function setupErrorHandler(app2) {
