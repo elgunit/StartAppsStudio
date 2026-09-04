@@ -108,7 +108,7 @@ const ENGLISH_CONTENT: LocaleEditorialContent = {
     journalName: "The Journal · Vol. I",
     journalTitle: "Field notes from the studio.",
     journalDescription: "Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
-    resourcesTitle: "Build the right thing, then build it well.",
+    resourcesTitle: "Practical guides for building and launching digital products.",
     resourcesDescription: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
     read: "Read note",
     minutes: "min read",
@@ -120,7 +120,7 @@ const ENGLISH_CONTENT: LocaleEditorialContent = {
     translatedArticleDescription: "A useful MVP brief names the first user, sets the boundary of version one, and defines the evidence for the next decision.",
   },
   resources: {
-    title: "Build the right thing, then build it well.",
+    title: "Practical guides for building and launching digital products.",
     description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
     eyebrow: "Start Apps Studio · Resources",
     primaryAction: "Talk through your project",

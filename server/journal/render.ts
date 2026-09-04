@@ -1402,6 +1402,12 @@ function shell({
     `<a href="${editorialPath(locale, "/")}#pricing">${esc(ui.pricing)}</a>`,
     `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`,
   ].filter(Boolean).join("");
+  const footerLinks = [
+    isResourcesPage
+      ? `<a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a>`
+      : `<a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a>`,
+    `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`,
+  ].join(" · ");
 
   return `<!doctype html>
 <html lang="${esc(localeInfo.htmlLang)}" dir="${localeInfo.dir}">
@@ -1440,7 +1446,7 @@ ${jsonLd}
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · <a href="${editorialPath(locale, "/")}">${esc(ui.home)}</a> · <a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a> · <a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a> · <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} · ${footerLinks}</div>
   </footer>
   <script>
     (function () {

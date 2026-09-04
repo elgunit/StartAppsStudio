@@ -6,9 +6,9 @@ const sourcePost = getPost("the-mvp-brief-is-your-first-product-decision");
 if (!sourcePost) throw new Error("MVP source post is missing.");
 
 export const ZH_EDITORIAL_CONTENT: LocaleEditorialContent = {
-  copy: { journalName: "The Journal · 第一卷", journalTitle: "来自工作室的实地笔记。", journalDescription: "关于发布能在 Google 获得排名、被 AI 引述的 MVP 的观察：GEO、vibe-coding，以及 AI 在工作中的现状。", resourcesTitle: "先做对的事，再把它做好。", resourcesDescription: "关于产品策略、AI 辅助交付、技术选择、所有权、交接以及 MVP 发布的实用资源。", read: "阅读笔记", minutes: "分钟阅读", allNotes: "全部笔记", sources: "来源", shortAnswer: "简短回答", language: "语言", translatedArticleTitle: "MVP 简报是你的第一个产品决策", translatedArticleDescription: "一份有用的 MVP 简报会明确首位用户、划定第一版边界，并定义下一次决策所需的证据。" },
+  copy: { journalName: "The Journal · 第一卷", journalTitle: "来自工作室的实地笔记。", journalDescription: "关于发布能在 Google 获得排名、被 AI 引述的 MVP 的观察：GEO、vibe-coding，以及 AI 在工作中的现状。", resourcesTitle: "构建和发布数字产品的实用指南。", resourcesDescription: "关于产品策略、AI 辅助交付、技术选择、所有权、交接以及 MVP 发布的实用资源。", read: "阅读笔记", minutes: "分钟阅读", allNotes: "全部笔记", sources: "来源", shortAnswer: "简短回答", language: "语言", translatedArticleTitle: "MVP 简报是你的第一个产品决策", translatedArticleDescription: "一份有用的 MVP 简报会明确首位用户、划定第一版边界，并定义下一次决策所需的证据。" },
   resources: {
-    title: "先做对的事，再把它做好。", description: "关于产品策略、AI 辅助交付、技术选择、所有权、交接以及 MVP 发布的实用资源。", eyebrow: "Start Apps Studio · 资源", primaryAction: "聊聊你的项目", journalAction: "阅读 Journal",
+    title: "构建和发布数字产品的实用指南。", description: "关于产品策略、AI 辅助交付、技术选择、所有权、交接以及 MVP 发布的实用资源。", eyebrow: "Start Apps Studio · 资源", primaryAction: "聊聊你的项目", journalAction: "阅读 Journal",
     routes: { title: "选择下一条路径", intro: "正确的第一个里程碑取决于你需要证明什么，而不是你能想象出多少软件。", cards: [
       { kicker: "01 · 方向", title: "从最小的有效证据开始", text: "发布网站能回答人们是否理解你的产品。原型能回答他们能否对体验作出反应。MVP 能回答真实用户会做什么。", bullets: ["选择下一次发布必须解锁的一个决策", "让第一版足够聚焦，以便从中学习", "使用与你所需证据相匹配的方案"] },
       { kicker: "02 · AI 辅助交付", title: "结构稳固时，速度才有价值", text: "AI 可以加快探索、编码和审查。它不能替代产品判断、架构、测试，或对结果负责的人。", bullets: ["用 AI 探索选择并减少重复工作", "依据真实用户流程审查生成的代码", "让已发布的系统易于理解和扩展"] },

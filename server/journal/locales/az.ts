@@ -8,12 +8,12 @@ if (!sourcePost) throw new Error("Missing MVP editorial source post.");
 export const AZ_EDITORIAL_CONTENT: LocaleEditorialContent = {
   copy: {
     journalName: "Jurnal · Cild I", journalTitle: "Studiyadan sahə qeydləri.", journalDescription: "Google-da sıralanan və AI tərəfindən sitat gətirilən MVP-lərin təqdimatı haqqında qeydlər: GEO, vibe-coding və işdə AI-nin vəziyyəti.",
-    resourcesTitle: "Əvvəl düzgün şeyi qurun, sonra onu yaxşı qurun.", resourcesDescription: "Məhsul strategiyası, AI dəstəkli hazırlama, texnologiya seçimi, sahiblik, təhvilvermə və MVP-nin istifadəyə verilməsi haqqında praktik resurslar.",
+    resourcesTitle: "Rəqəmsal məhsulların hazırlanması və istifadəyə verilməsi üçün praktik bələdçilər.", resourcesDescription: "Məhsul strategiyası, AI dəstəkli hazırlama, texnologiya seçimi, sahiblik, təhvilvermə və MVP-nin istifadəyə verilməsi haqqında praktik resurslar.",
     read: "Qeydi oxu", minutes: "dəq oxu", allNotes: "Bütün qeydlər", sources: "Mənbələr", shortAnswer: "Qısa cavab", language: "Dil",
     translatedArticleTitle: "MVP brifi ilk məhsul qərarınızdır", translatedArticleDescription: "Faydalı MVP brifi ilk istifadəçini adlandırır, birinci versiyanın sərhədini müəyyənləşdirir və növbəti qərar üçün sübutları təyin edir.",
   },
   resources: {
-    title: "Əvvəl düzgün şeyi qurun, sonra onu yaxşı qurun.", description: "Məhsul strategiyası, AI dəstəkli hazırlama, texnologiya seçimi, sahiblik, təhvilvermə və MVP-nin istifadəyə verilməsi haqqında praktik resurslar.",
+    title: "Rəqəmsal məhsulların hazırlanması və istifadəyə verilməsi üçün praktik bələdçilər.", description: "Məhsul strategiyası, AI dəstəkli hazırlama, texnologiya seçimi, sahiblik, təhvilvermə və MVP-nin istifadəyə verilməsi haqqında praktik resurslar.",
     eyebrow: "Start Apps Studio · Resurslar", primaryAction: "Layihənizi müzakirə edin", journalAction: "Jurnalı oxu",
     routes: { title: "Növbəti marşrutu seçin", intro: "Doğru ilk mərhələ nə qədər proqram təminatı təsəvvür edə bilməyinizdən deyil, nəyisə sübut etməli olduğunuzdan asılıdır.", cards: [
       { kicker: "01 · İstiqamət", title: "Ən kiçik faydalı sübutla başlayın", text: "İstifadəyəvermə saytı insanların təklifi anlayıb-anlamadığını cavablayır. Prototip onların təcrübəyə reaksiya verə bilib-bilmədiyini cavablayır. MVP real istifadəçilərin nə etdiyini cavablayır.", bullets: ["Növbəti buraxılışın açmalı olduğu bir qərarı seçin", "İlk versiyanı ondan öyrənmək üçün kifayət qədər dar saxlayın", "Ehtiyac duyduğunuz sübuta uyğun paketi istifadə edin"] },

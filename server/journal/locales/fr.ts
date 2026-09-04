@@ -9,14 +9,14 @@ export const FR_EDITORIAL_CONTENT: LocaleEditorialContent = {
   copy: {
     journalName: "Le Journal · Vol. I", journalTitle: "Notes de terrain du studio.",
     journalDescription: "Réflexions sur le lancement de MVP qui se positionnent sur Google et sont cités par l’IA : GEO, vibe-coding et l’état de l’IA au travail.",
-    resourcesTitle: "Construisez la bonne chose, puis construisez-la bien.",
+    resourcesTitle: "Des guides pratiques pour concevoir et lancer des produits numériques.",
     resourcesDescription: "Des ressources pratiques sur la stratégie produit, la livraison assistée par IA, les choix technologiques, la propriété, la passation et le lancement d’un MVP.",
     read: "Lire la note", minutes: "min de lecture", allNotes: "Toutes les notes", sources: "Sources", shortAnswer: "Réponse courte", language: "Langue",
     translatedArticleTitle: "Le brief MVP est votre première décision produit",
     translatedArticleDescription: "Un brief MVP utile identifie le premier utilisateur, fixe la limite de la version un et définit les preuves nécessaires à la prochaine décision.",
   },
   resources: {
-    title: "Construisez la bonne chose, puis construisez-la bien.",
+    title: "Des guides pratiques pour concevoir et lancer des produits numériques.",
     description: "Des ressources pratiques sur la stratégie produit, la livraison assistée par IA, les choix technologiques, la propriété, la passation et le lancement d’un MVP.",
     eyebrow: "Start Apps Studio · Ressources", primaryAction: "Parler de votre projet", journalAction: "Lire le Journal",
     routes: { title: "Choisissez la prochaine voie", intro: "La bonne première étape dépend de ce que vous devez prouver, pas de la quantité de logiciel que vous pouvez imaginer.", cards: [

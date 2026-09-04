@@ -4295,7 +4295,7 @@ var init_az = __esm({
         journalName: "Jurnal \xB7 Cild I",
         journalTitle: "Studiyadan sah\u0259 qeydl\u0259ri.",
         journalDescription: "Google-da s\u0131ralanan v\u0259 AI t\u0259r\u0259find\u0259n sitat g\u0259tiril\u0259n MVP-l\u0259rin t\u0259qdimat\u0131 haqq\u0131nda qeydl\u0259r: GEO, vibe-coding v\u0259 i\u015Fd\u0259 AI-nin v\u0259ziyy\u0259ti.",
-        resourcesTitle: "\u018Fvv\u0259l d\xFCzg\xFCn \u015Feyi qurun, sonra onu yax\u015F\u0131 qurun.",
+        resourcesTitle: "R\u0259q\u0259msal m\u0259hsullar\u0131n haz\u0131rlanmas\u0131 v\u0259 istifad\u0259y\u0259 verilm\u0259si \xFC\xE7\xFCn praktik b\u0259l\u0259d\xE7il\u0259r.",
         resourcesDescription: "M\u0259hsul strategiyas\u0131, AI d\u0259st\u0259kli haz\u0131rlama, texnologiya se\xE7imi, sahiblik, t\u0259hvilverm\u0259 v\u0259 MVP-nin istifad\u0259y\u0259 verilm\u0259si haqq\u0131nda praktik resurslar.",
         read: "Qeydi oxu",
         minutes: "d\u0259q oxu",
@@ -4307,7 +4307,7 @@ var init_az = __esm({
         translatedArticleDescription: "Faydal\u0131 MVP brifi ilk istifad\u0259\xE7ini adland\u0131r\u0131r, birinci versiyan\u0131n s\u0259rh\u0259dini m\xFC\u0259yy\u0259nl\u0259\u015Fdirir v\u0259 n\xF6vb\u0259ti q\u0259rar \xFC\xE7\xFCn s\xFCbutlar\u0131 t\u0259yin edir."
       },
       resources: {
-        title: "\u018Fvv\u0259l d\xFCzg\xFCn \u015Feyi qurun, sonra onu yax\u015F\u0131 qurun.",
+        title: "R\u0259q\u0259msal m\u0259hsullar\u0131n haz\u0131rlanmas\u0131 v\u0259 istifad\u0259y\u0259 verilm\u0259si \xFC\xE7\xFCn praktik b\u0259l\u0259d\xE7il\u0259r.",
         description: "M\u0259hsul strategiyas\u0131, AI d\u0259st\u0259kli haz\u0131rlama, texnologiya se\xE7imi, sahiblik, t\u0259hvilverm\u0259 v\u0259 MVP-nin istifad\u0259y\u0259 verilm\u0259si haqq\u0131nda praktik resurslar.",
         eyebrow: "Start Apps Studio \xB7 Resurslar",
         primaryAction: "Layih\u0259nizi m\xFCzakir\u0259 edin",
@@ -4605,9 +4605,9 @@ var init_de = __esm({
     sourcePost2 = getPost("the-mvp-brief-is-your-first-product-decision");
     if (!sourcePost2) throw new Error("Quellartikel fehlt.");
     DE_EDITORIAL_CONTENT = {
-      copy: { journalName: "Das Journal \xB7 Bd. I", journalTitle: "Feldnotizen aus dem Studio.", journalDescription: "Berichte \xFCber das Ver\xF6ffentlichen von MVPs, die bei Google ranken und von KI zitiert werden: GEO, Vibe-Coding und der Stand von KI bei der Arbeit.", resourcesTitle: "Baue das Richtige \u2013 und baue es gut.", resourcesDescription: "Praktische Ressourcen zu Produktstrategie, KI-gest\xFCtzter Umsetzung, Technologieentscheidungen, Eigentum, \xDCbergabe und dem Start eines MVP.", read: "Notiz lesen", minutes: "Min. Lesezeit", allNotes: "Alle Notizen", sources: "Quellen", shortAnswer: "Kurzantwort", language: "Sprache", translatedArticleTitle: "Das MVP-Briefing ist Ihre erste Produktentscheidung", translatedArticleDescription: "Ein hilfreiches MVP-Briefing benennt den ersten Nutzer, setzt die Grenze von Version eins und definiert die Belege f\xFCr die n\xE4chste Entscheidung." },
+      copy: { journalName: "Das Journal \xB7 Bd. I", journalTitle: "Feldnotizen aus dem Studio.", journalDescription: "Berichte \xFCber das Ver\xF6ffentlichen von MVPs, die bei Google ranken und von KI zitiert werden: GEO, Vibe-Coding und der Stand von KI bei der Arbeit.", resourcesTitle: "Praktische Leitf\xE4den f\xFCr Entwicklung und Launch digitaler Produkte.", resourcesDescription: "Praktische Ressourcen zu Produktstrategie, KI-gest\xFCtzter Umsetzung, Technologieentscheidungen, Eigentum, \xDCbergabe und dem Start eines MVP.", read: "Notiz lesen", minutes: "Min. Lesezeit", allNotes: "Alle Notizen", sources: "Quellen", shortAnswer: "Kurzantwort", language: "Sprache", translatedArticleTitle: "Das MVP-Briefing ist Ihre erste Produktentscheidung", translatedArticleDescription: "Ein hilfreiches MVP-Briefing benennt den ersten Nutzer, setzt die Grenze von Version eins und definiert die Belege f\xFCr die n\xE4chste Entscheidung." },
       resources: {
-        title: "Baue das Richtige \u2013 und baue es gut.",
+        title: "Praktische Leitf\xE4den f\xFCr Entwicklung und Launch digitaler Produkte.",
         description: "Praktische Ressourcen zu Produktstrategie, KI-gest\xFCtzter Umsetzung, Technologieentscheidungen, Eigentum, \xDCbergabe und dem Start eines MVP.",
         eyebrow: "Start Apps Studio \xB7 Ressourcen",
         primaryAction: "\xDCber Ihr Projekt sprechen",
@@ -5984,9 +5984,9 @@ var init_es = __esm({
     sourcePost3 = getPost("the-mvp-brief-is-your-first-product-decision");
     if (!sourcePost3) throw new Error("No se encontr\xF3 el art\xEDculo de origen.");
     ES_EDITORIAL_CONTENT = {
-      copy: { journalName: "El Journal \xB7 Vol. I", journalTitle: "Notas de campo del estudio.", journalDescription: "Cr\xF3nicas sobre lanzar MVP que posicionan en Google y reciben citas de IA: GEO, vibe-coding y el estado de la IA en el trabajo.", resourcesTitle: "Construye lo correcto y luego constr\xFAyelo bien.", resourcesDescription: "Recursos pr\xE1cticos sobre estrategia de producto, entrega asistida por IA, decisiones tecnol\xF3gicas, propiedad, traspaso y lanzamiento de un MVP.", read: "Leer nota", minutes: "min de lectura", allNotes: "Todas las notas", sources: "Fuentes", shortAnswer: "Respuesta corta", language: "Idioma", translatedArticleTitle: "El brief de MVP es tu primera decisi\xF3n de producto", translatedArticleDescription: "Un brief de MVP \xFAtil nombra al primer usuario, delimita la versi\xF3n uno y define la evidencia para la siguiente decisi\xF3n." },
+      copy: { journalName: "El Journal \xB7 Vol. I", journalTitle: "Notas de campo del estudio.", journalDescription: "Cr\xF3nicas sobre lanzar MVP que posicionan en Google y reciben citas de IA: GEO, vibe-coding y el estado de la IA en el trabajo.", resourcesTitle: "Gu\xEDas pr\xE1cticas para crear y lanzar productos digitales.", resourcesDescription: "Recursos pr\xE1cticos sobre estrategia de producto, entrega asistida por IA, decisiones tecnol\xF3gicas, propiedad, traspaso y lanzamiento de un MVP.", read: "Leer nota", minutes: "min de lectura", allNotes: "Todas las notas", sources: "Fuentes", shortAnswer: "Respuesta corta", language: "Idioma", translatedArticleTitle: "El brief de MVP es tu primera decisi\xF3n de producto", translatedArticleDescription: "Un brief de MVP \xFAtil nombra al primer usuario, delimita la versi\xF3n uno y define la evidencia para la siguiente decisi\xF3n." },
       resources: {
-        title: "Construye lo correcto y luego constr\xFAyelo bien.",
+        title: "Gu\xEDas pr\xE1cticas para crear y lanzar productos digitales.",
         description: "Recursos pr\xE1cticos sobre estrategia de producto, entrega asistida por IA, decisiones tecnol\xF3gicas, propiedad, traspaso y lanzamiento de un MVP.",
         eyebrow: "Start Apps Studio \xB7 Recursos",
         primaryAction: "Habla sobre tu proyecto",
@@ -7129,7 +7129,7 @@ var init_fr = __esm({
         journalName: "Le Journal \xB7 Vol. I",
         journalTitle: "Notes de terrain du studio.",
         journalDescription: "R\xE9flexions sur le lancement de MVP qui se positionnent sur Google et sont cit\xE9s par l\u2019IA : GEO, vibe-coding et l\u2019\xE9tat de l\u2019IA au travail.",
-        resourcesTitle: "Construisez la bonne chose, puis construisez-la bien.",
+        resourcesTitle: "Des guides pratiques pour concevoir et lancer des produits num\xE9riques.",
         resourcesDescription: "Des ressources pratiques sur la strat\xE9gie produit, la livraison assist\xE9e par IA, les choix technologiques, la propri\xE9t\xE9, la passation et le lancement d\u2019un MVP.",
         read: "Lire la note",
         minutes: "min de lecture",
@@ -7141,7 +7141,7 @@ var init_fr = __esm({
         translatedArticleDescription: "Un brief MVP utile identifie le premier utilisateur, fixe la limite de la version un et d\xE9finit les preuves n\xE9cessaires \xE0 la prochaine d\xE9cision."
       },
       resources: {
-        title: "Construisez la bonne chose, puis construisez-la bien.",
+        title: "Des guides pratiques pour concevoir et lancer des produits num\xE9riques.",
         description: "Des ressources pratiques sur la strat\xE9gie produit, la livraison assist\xE9e par IA, les choix technologiques, la propri\xE9t\xE9, la passation et le lancement d\u2019un MVP.",
         eyebrow: "Start Apps Studio \xB7 Ressources",
         primaryAction: "Parler de votre projet",
@@ -7325,9 +7325,9 @@ var init_it = __esm({
     sourcePost9 = getPost("the-mvp-brief-is-your-first-product-decision");
     if (!sourcePost9) throw new Error("MVP source post is missing.");
     IT_EDITORIAL_CONTENT = {
-      copy: { journalName: "The Journal \xB7 Vol. I", journalTitle: "Appunti dal campo dello studio.", journalDescription: "Resoconti sulla pubblicazione di MVP che si posizionano su Google e vengono citati dall'AI: GEO, vibe-coding e lo stato dell'AI al lavoro.", resourcesTitle: "Costruisci la cosa giusta, poi costruiscila bene.", resourcesDescription: "Risorse pratiche su strategia di prodotto, consegna assistita dall'AI, scelte tecnologiche, propriet\xE0, passaggio di consegne e lancio di un MVP.", read: "Leggi l'appunto", minutes: "min di lettura", allNotes: "Tutti gli appunti", sources: "Fonti", shortAnswer: "Risposta breve", language: "Lingua", translatedArticleTitle: "Il brief dell'MVP \xE8 la tua prima decisione di prodotto", translatedArticleDescription: "Un brief MVP utile identifica il primo utente, definisce il confine della versione uno e stabilisce l'evidenza per la decisione successiva." },
+      copy: { journalName: "The Journal \xB7 Vol. I", journalTitle: "Appunti dal campo dello studio.", journalDescription: "Resoconti sulla pubblicazione di MVP che si posizionano su Google e vengono citati dall'AI: GEO, vibe-coding e lo stato dell'AI al lavoro.", resourcesTitle: "Guide pratiche per creare e lanciare prodotti digitali.", resourcesDescription: "Risorse pratiche su strategia di prodotto, consegna assistita dall'AI, scelte tecnologiche, propriet\xE0, passaggio di consegne e lancio di un MVP.", read: "Leggi l'appunto", minutes: "min di lettura", allNotes: "Tutti gli appunti", sources: "Fonti", shortAnswer: "Risposta breve", language: "Lingua", translatedArticleTitle: "Il brief dell'MVP \xE8 la tua prima decisione di prodotto", translatedArticleDescription: "Un brief MVP utile identifica il primo utente, definisce il confine della versione uno e stabilisce l'evidenza per la decisione successiva." },
       resources: {
-        title: "Costruisci la cosa giusta, poi costruiscila bene.",
+        title: "Guide pratiche per creare e lanciare prodotti digitali.",
         description: "Risorse pratiche su strategia di prodotto, consegna assistita dall'AI, scelte tecnologiche, propriet\xE0, passaggio di consegne e lancio di un MVP.",
         eyebrow: "Start Apps Studio \xB7 Risorse",
         primaryAction: "Parliamo del tuo progetto",
@@ -7878,7 +7878,7 @@ var init_ru = __esm({
         journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
         journalTitle: "\u041F\u043E\u043B\u0435\u0432\u044B\u0435 \u0437\u0430\u043C\u0435\u0442\u043A\u0438 \u0438\u0437 \u0441\u0442\u0443\u0434\u0438\u0438.",
         journalDescription: "\u0417\u0430\u043C\u0435\u0442\u043A\u0438 \u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0440\u0430\u043D\u0436\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u0432 Google \u0438 \u0446\u0438\u0442\u0438\u0440\u0443\u044E\u0442\u0441\u044F \u0418\u0418: GEO, vibe-coding \u0438 \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0418\u0418 \u0432 \u0440\u0430\u0431\u043E\u0442\u0435.",
-        resourcesTitle: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u043D\u0443\u0436\u043D\u043E\u0435, \u0437\u0430\u0442\u0435\u043C \u0441\u0434\u0435\u043B\u0430\u0439\u0442\u0435 \u044D\u0442\u043E \u0445\u043E\u0440\u043E\u0448\u043E.",
+        resourcesTitle: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u0430 \u043F\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044E \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0446\u0438\u0444\u0440\u043E\u0432\u044B\u0445 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432.",
         resourcesDescription: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430, \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0418\u0418, \u0432\u044B\u0431\u043E\u0440\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0439, \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u0438, \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435 \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP.",
         read: "\u0427\u0438\u0442\u0430\u0442\u044C \u0437\u0430\u043C\u0435\u0442\u043A\u0443",
         minutes: "\u043C\u0438\u043D \u0447\u0442\u0435\u043D\u0438\u044F",
@@ -7890,7 +7890,7 @@ var init_ru = __esm({
         translatedArticleDescription: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u043E\u0447\u0435\u0440\u0447\u0438\u0432\u0430\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u0443 \u043F\u0435\u0440\u0432\u043E\u0439 \u0432\u0435\u0440\u0441\u0438\u0438 \u0438 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u044F\u0435\u0442 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0434\u043B\u044F \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0433\u043E \u0440\u0435\u0448\u0435\u043D\u0438\u044F."
       },
       resources: {
-        title: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u043D\u0443\u0436\u043D\u043E\u0435, \u0437\u0430\u0442\u0435\u043C \u0441\u0434\u0435\u043B\u0430\u0439\u0442\u0435 \u044D\u0442\u043E \u0445\u043E\u0440\u043E\u0448\u043E.",
+        title: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u0430 \u043F\u043E \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044E \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0446\u0438\u0444\u0440\u043E\u0432\u044B\u0445 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432.",
         description: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430, \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0418\u0418, \u0432\u044B\u0431\u043E\u0440\u0435 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0438\u0439, \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u0438, \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435 \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0435 MVP.",
         eyebrow: "Start Apps Studio \xB7 \u0420\u0435\u0441\u0443\u0440\u0441\u044B",
         primaryAction: "\u041E\u0431\u0441\u0443\u0434\u0438\u0442\u044C \u0432\u0430\u0448 \u043F\u0440\u043E\u0435\u043A\u0442",
@@ -8673,9 +8673,9 @@ var init_tr = __esm({
     sourcePost11 = getPost("the-mvp-brief-is-your-first-product-decision");
     if (!sourcePost11) throw new Error("MVP source post is missing.");
     TR_EDITORIAL_CONTENT = {
-      copy: { journalName: "The Journal \xB7 Cilt I", journalTitle: "St\xFCdyodan saha notlar\u0131.", journalDescription: "Google'da s\u0131ralanan ve yapay zek\xE2 taraf\u0131ndan al\u0131nt\u0131lanan MVP'leri yay\u0131na alma notlar\u0131: GEO, vibe-coding ve i\u015Fte yapay zek\xE2n\u0131n durumu.", resourcesTitle: "\xD6nce do\u011Fru \u015Feyi, sonra da iyi olan\u0131 in\u015Fa edin.", resourcesDescription: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.", read: "Notu oku", minutes: "dk. okuma", allNotes: "T\xFCm notlar", sources: "Kaynaklar", shortAnswer: "K\u0131sa yan\u0131t", language: "Dil", translatedArticleTitle: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", translatedArticleDescription: "\u0130\u015Fe yarayan bir MVP \xF6zeti ilk kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn s\u0131n\u0131r\u0131n\u0131 \xE7izer ve sonraki karar\u0131n kan\u0131t\u0131n\u0131 belirler." },
+      copy: { journalName: "The Journal \xB7 Cilt I", journalTitle: "St\xFCdyodan saha notlar\u0131.", journalDescription: "Google'da s\u0131ralanan ve yapay zek\xE2 taraf\u0131ndan al\u0131nt\u0131lanan MVP'leri yay\u0131na alma notlar\u0131: GEO, vibe-coding ve i\u015Fte yapay zek\xE2n\u0131n durumu.", resourcesTitle: "Dijital \xFCr\xFCnler geli\u015Ftirmek ve piyasaya s\xFCrmek i\xE7in pratik rehberler.", resourcesDescription: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.", read: "Notu oku", minutes: "dk. okuma", allNotes: "T\xFCm notlar", sources: "Kaynaklar", shortAnswer: "K\u0131sa yan\u0131t", language: "Dil", translatedArticleTitle: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", translatedArticleDescription: "\u0130\u015Fe yarayan bir MVP \xF6zeti ilk kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn s\u0131n\u0131r\u0131n\u0131 \xE7izer ve sonraki karar\u0131n kan\u0131t\u0131n\u0131 belirler." },
       resources: {
-        title: "\xD6nce do\u011Fru \u015Feyi, sonra da iyi olan\u0131 in\u015Fa edin.",
+        title: "Dijital \xFCr\xFCnler geli\u015Ftirmek ve piyasaya s\xFCrmek i\xE7in pratik rehberler.",
         description: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.",
         eyebrow: "Start Apps Studio \xB7 Kaynaklar",
         primaryAction: "Projenizi konu\u015Fal\u0131m",
@@ -10001,7 +10001,7 @@ var init_uk = __esm({
         journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
         journalTitle: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0437\u0456 \u0441\u0442\u0443\u0434\u0456\u0457.",
         journalDescription: "\u041C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0437\u0430\u043F\u0443\u0441\u043A MVP, \u0449\u043E \u0440\u0430\u043D\u0436\u0443\u044E\u0442\u044C\u0441\u044F \u0432 Google \u0456 \u0446\u0438\u0442\u0443\u044E\u0442\u044C\u0441\u044F \u0428\u0406: GEO, vibe-coding \u0442\u0430 \u0441\u0442\u0430\u043D \u0428\u0406 \u0432 \u0440\u043E\u0431\u043E\u0442\u0456.",
-        resourcesTitle: "\u0421\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0435, \u0430 \u043F\u043E\u0442\u0456\u043C \u0441\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u0446\u0435 \u0434\u043E\u0431\u0440\u0435.",
+        resourcesTitle: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043F\u043E\u0441\u0456\u0431\u043D\u0438\u043A\u0438 \u0437\u0456 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0446\u0438\u0444\u0440\u043E\u0432\u0438\u0445 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0456\u0432.",
         resourcesDescription: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443 \u0437\u0430 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438 \u0428\u0406, \u0432\u0438\u0431\u0456\u0440 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0456\u0439, \u0432\u043B\u0430\u0441\u043D\u0456\u0441\u0442\u044C, \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F \u043F\u0440\u043E\u0454\u043A\u0442\u0443 \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A MVP.",
         read: "\u0427\u0438\u0442\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443",
         minutes: "\u0445\u0432 \u0447\u0438\u0442\u0430\u043D\u043D\u044F",
@@ -10013,7 +10013,7 @@ var init_uk = __esm({
         translatedArticleDescription: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043F\u0435\u0440\u0448\u043E\u0433\u043E \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u043C\u0435\u0436\u0443 \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457 \u0442\u0430 \u0434\u043E\u043A\u0430\u0437\u0438 \u0434\u043B\u044F \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0440\u0456\u0448\u0435\u043D\u043D\u044F."
       },
       resources: {
-        title: "\u0421\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u0435, \u0430 \u043F\u043E\u0442\u0456\u043C \u0441\u0442\u0432\u043E\u0440\u0456\u0442\u044C \u0446\u0435 \u0434\u043E\u0431\u0440\u0435.",
+        title: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043F\u043E\u0441\u0456\u0431\u043D\u0438\u043A\u0438 \u0437\u0456 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A\u0443 \u0446\u0438\u0444\u0440\u043E\u0432\u0438\u0445 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0456\u0432.",
         description: "\u041F\u0440\u0430\u043A\u0442\u0438\u0447\u043D\u0456 \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443 \u0437\u0430 \u043F\u0456\u0434\u0442\u0440\u0438\u043C\u043A\u0438 \u0428\u0406, \u0432\u0438\u0431\u0456\u0440 \u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433\u0456\u0439, \u0432\u043B\u0430\u0441\u043D\u0456\u0441\u0442\u044C, \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u043D\u044F \u043F\u0440\u043E\u0454\u043A\u0442\u0443 \u0442\u0430 \u0437\u0430\u043F\u0443\u0441\u043A MVP.",
         eyebrow: "Start Apps Studio \xB7 \u0420\u0435\u0441\u0443\u0440\u0441\u0438",
         primaryAction: "\u041E\u0431\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u0438 \u0432\u0430\u0448 \u043F\u0440\u043E\u0454\u043A\u0442",
@@ -11029,9 +11029,9 @@ var init_zh = __esm({
     sourcePost16 = getPost("the-mvp-brief-is-your-first-product-decision");
     if (!sourcePost16) throw new Error("MVP source post is missing.");
     ZH_EDITORIAL_CONTENT = {
-      copy: { journalName: "The Journal \xB7 \u7B2C\u4E00\u5377", journalTitle: "\u6765\u81EA\u5DE5\u4F5C\u5BA4\u7684\u5B9E\u5730\u7B14\u8BB0\u3002", journalDescription: "\u5173\u4E8E\u53D1\u5E03\u80FD\u5728 Google \u83B7\u5F97\u6392\u540D\u3001\u88AB AI \u5F15\u8FF0\u7684 MVP \u7684\u89C2\u5BDF\uFF1AGEO\u3001vibe-coding\uFF0C\u4EE5\u53CA AI \u5728\u5DE5\u4F5C\u4E2D\u7684\u73B0\u72B6\u3002", resourcesTitle: "\u5148\u505A\u5BF9\u7684\u4E8B\uFF0C\u518D\u628A\u5B83\u505A\u597D\u3002", resourcesDescription: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002", read: "\u9605\u8BFB\u7B14\u8BB0", minutes: "\u5206\u949F\u9605\u8BFB", allNotes: "\u5168\u90E8\u7B14\u8BB0", sources: "\u6765\u6E90", shortAnswer: "\u7B80\u77ED\u56DE\u7B54", language: "\u8BED\u8A00", translatedArticleTitle: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", translatedArticleDescription: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u660E\u786E\u9996\u4F4D\u7528\u6237\u3001\u5212\u5B9A\u7B2C\u4E00\u7248\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u4E0B\u4E00\u6B21\u51B3\u7B56\u6240\u9700\u7684\u8BC1\u636E\u3002" },
+      copy: { journalName: "The Journal \xB7 \u7B2C\u4E00\u5377", journalTitle: "\u6765\u81EA\u5DE5\u4F5C\u5BA4\u7684\u5B9E\u5730\u7B14\u8BB0\u3002", journalDescription: "\u5173\u4E8E\u53D1\u5E03\u80FD\u5728 Google \u83B7\u5F97\u6392\u540D\u3001\u88AB AI \u5F15\u8FF0\u7684 MVP \u7684\u89C2\u5BDF\uFF1AGEO\u3001vibe-coding\uFF0C\u4EE5\u53CA AI \u5728\u5DE5\u4F5C\u4E2D\u7684\u73B0\u72B6\u3002", resourcesTitle: "\u6784\u5EFA\u548C\u53D1\u5E03\u6570\u5B57\u4EA7\u54C1\u7684\u5B9E\u7528\u6307\u5357\u3002", resourcesDescription: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002", read: "\u9605\u8BFB\u7B14\u8BB0", minutes: "\u5206\u949F\u9605\u8BFB", allNotes: "\u5168\u90E8\u7B14\u8BB0", sources: "\u6765\u6E90", shortAnswer: "\u7B80\u77ED\u56DE\u7B54", language: "\u8BED\u8A00", translatedArticleTitle: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", translatedArticleDescription: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u660E\u786E\u9996\u4F4D\u7528\u6237\u3001\u5212\u5B9A\u7B2C\u4E00\u7248\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u4E0B\u4E00\u6B21\u51B3\u7B56\u6240\u9700\u7684\u8BC1\u636E\u3002" },
       resources: {
-        title: "\u5148\u505A\u5BF9\u7684\u4E8B\uFF0C\u518D\u628A\u5B83\u505A\u597D\u3002",
+        title: "\u6784\u5EFA\u548C\u53D1\u5E03\u6570\u5B57\u4EA7\u54C1\u7684\u5B9E\u7528\u6307\u5357\u3002",
         description: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002",
         eyebrow: "Start Apps Studio \xB7 \u8D44\u6E90",
         primaryAction: "\u804A\u804A\u4F60\u7684\u9879\u76EE",
@@ -11135,7 +11135,7 @@ var init_editorial = __esm({
         journalName: "The Journal \xB7 Vol. I",
         journalTitle: "Field notes from the studio.",
         journalDescription: "Dispatches on shipping MVPs that rank on Google and get quoted by AI: GEO, vibe-coding, and the state of AI at work.",
-        resourcesTitle: "Build the right thing, then build it well.",
+        resourcesTitle: "Practical guides for building and launching digital products.",
         resourcesDescription: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
         read: "Read note",
         minutes: "min read",
@@ -11147,7 +11147,7 @@ var init_editorial = __esm({
         translatedArticleDescription: "A useful MVP brief names the first user, sets the boundary of version one, and defines the evidence for the next decision."
       },
       resources: {
-        title: "Build the right thing, then build it well.",
+        title: "Practical guides for building and launching digital products.",
         description: "Practical resources on product strategy, AI-assisted delivery, technology choices, ownership, handoff, and launching an MVP.",
         eyebrow: "Start Apps Studio \xB7 Resources",
         primaryAction: "Talk through your project",
@@ -11369,6 +11369,10 @@ function shell({
     `<a href="${editorialPath(locale, "/")}#pricing">${esc(ui.pricing)}</a>`,
     `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`
   ].filter(Boolean).join("");
+  const footerLinks = [
+    isResourcesPage ? `<a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a>` : `<a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a>`,
+    `<a href="${editorialPath(locale, "/")}#contact">${esc(ui.contact)}</a>`
+  ].join(" \xB7 ");
   return `<!doctype html>
 <html lang="${esc(localeInfo.htmlLang)}" dir="${localeInfo.dir}">
 <head>
@@ -11406,7 +11410,7 @@ ${jsonLd}
   </nav>
   ${bodyInner}
   <footer class="site-footer">
-    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 <a href="${editorialPath(locale, "/")}">${esc(ui.home)}</a> \xB7 <a href="${editorialPath(locale, "/resources")}">${esc(ui.resources)}</a> \xB7 <a href="${editorialPath(locale, "/journal")}">${esc(ui.journal)}</a> \xB7 <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a></div>
+    <div>&copy; 2026 ${esc(AUTHOR_NAME)} \xB7 ${footerLinks}</div>
   </footer>
   <script>
     (function () {
