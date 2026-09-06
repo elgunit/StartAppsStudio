@@ -205,6 +205,11 @@ const STYLE = `
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   }
+  html[lang="ko"] {
+    --sans: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --display: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
+    --kicker: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0a0a0a;
@@ -1926,7 +1931,7 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 ## Language and delivery coverage
 
 - Supported landing-page languages: ${SUPPORTED_LANGUAGE_NAMES.join(", ")}.
-- Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), and Italian (${origin}/it).
+  - Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), Italian (${origin}/it), and Korean (${origin}/ko).
 - Service area: ${SERVICE_AREA}.
 - Delivery model: ${DELIVERY_MODEL}. Localized pages describe language access, not local offices or in-person availability.
 

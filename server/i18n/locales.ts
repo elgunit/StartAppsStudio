@@ -4,7 +4,7 @@
  * URL strategy:
  *   /            → auto-detected (cookie, then Accept-Language), x-default
  *   /az /tr /ru /zh
- *   /fr /es /de  → explicit, shareable, self-canonical
+ *   /fr /es /de /uk /it /ko → explicit, shareable, self-canonical
  *
  * English is always the fallback: any string missing from a dictionary is
  * rendered in English rather than left blank.
@@ -129,6 +129,16 @@ export const LOCALES: LocaleDefinition[] = [
     ogLocale: "it_IT",
     hreflang: "it",
     nativeName: "Italiano",
+    dir: "ltr",
+  },
+  {
+    code: "ko",
+    englishName: "Korean",
+    htmlLang: "ko",
+    dateLocale: "ko-KR",
+    ogLocale: "ko_KR",
+    hreflang: "ko",
+    nativeName: "한국어",
     dir: "ltr",
   },
 ];

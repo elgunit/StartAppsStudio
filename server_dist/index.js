@@ -265,21 +265,21 @@ var init_storage = __esm({
         const ctaMap = /* @__PURE__ */ new Map();
         for (const event of events) {
           const data = parseEventData(event.eventData);
-          const source11 = typeof data.source === "string" && data.source.trim() ? data.source.trim() : "Direct / unknown";
-          const sourceRow = sourceMap.get(source11) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+          const source12 = typeof data.source === "string" && data.source.trim() ? data.source.trim() : "Direct / unknown";
+          const sourceRow = sourceMap.get(source12) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
           if (event.eventType === "landing_visit") sourceRow.visits += 1;
           if (event.eventType === "landing_cta") {
             sourceRow.ctaClicks += 1;
             const cta = typeof data.cta === "string" && data.cta.trim() ? data.cta.trim() : "Unlabelled CTA";
             ctaMap.set(cta, (ctaMap.get(cta) ?? 0) + 1);
           }
-          sourceMap.set(source11, sourceRow);
+          sourceMap.set(source12, sourceRow);
         }
         for (const inquiry of inquiries) {
-          const source11 = inquiry.attributionSource?.trim() || "Direct / unknown";
-          const sourceRow = sourceMap.get(source11) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
+          const source12 = inquiry.attributionSource?.trim() || "Direct / unknown";
+          const sourceRow = sourceMap.get(source12) ?? { visits: 0, ctaClicks: 0, inquiries: 0 };
           sourceRow.inquiries += 1;
-          sourceMap.set(source11, sourceRow);
+          sourceMap.set(source12, sourceRow);
         }
         return {
           from: from ?? null,
@@ -1302,11 +1302,11 @@ function extractPrefixesFromJson(data) {
   visit(data);
   return out;
 }
-async function fetchVendorPrefixes(source11) {
+async function fetchVendorPrefixes(source12) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 1e4);
   try {
-    const res = await fetch(source11.url, {
+    const res = await fetch(source12.url, {
       headers: { "user-agent": "ai-traffic-verifier/1.0 (+analytics)" },
       signal: controller.signal
     });
@@ -1321,26 +1321,26 @@ async function refreshAiBotIpRanges() {
   const perVendor = {};
   const next = /* @__PURE__ */ new Map();
   let firstError = null;
-  for (const source11 of VENDOR_SOURCES) {
+  for (const source12 of VENDOR_SOURCES) {
     try {
-      const prefixes = await fetchVendorPrefixes(source11);
+      const prefixes = await fetchVendorPrefixes(source12);
       const cidrs = prefixes.map(parseCidr).filter((c) => c !== null);
-      perVendor[source11.name] = cidrs.length;
-      for (const bot of source11.bots) {
+      perVendor[source12.name] = cidrs.length;
+      for (const bot of source12.bots) {
         const existing = next.get(bot) || [];
         next.set(bot, existing.concat(cidrs));
       }
       console.log(
-        `[ai-bot-verifier] loaded ${cidrs.length} ranges from ${source11.name}`
+        `[ai-bot-verifier] loaded ${cidrs.length} ranges from ${source12.name}`
       );
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      perVendor[source11.name] = 0;
-      if (!firstError) firstError = `${source11.name}: ${msg}`;
+      perVendor[source12.name] = 0;
+      if (!firstError) firstError = `${source12.name}: ${msg}`;
       console.warn(
-        `[ai-bot-verifier] failed to load ${source11.name}: ${msg}`
+        `[ai-bot-verifier] failed to load ${source12.name}: ${msg}`
       );
-      for (const bot of source11.bots) {
+      for (const bot of source12.bots) {
         const previous = botRanges.get(bot);
         if (previous && previous.length) {
           const existing = next.get(bot) || [];
@@ -2942,6 +2942,16 @@ var init_locales = __esm({
         hreflang: "it",
         nativeName: "Italiano",
         dir: "ltr"
+      },
+      {
+        code: "ko",
+        englishName: "Korean",
+        htmlLang: "ko",
+        dateLocale: "ko-KR",
+        ogLocale: "ko_KR",
+        hreflang: "ko",
+        nativeName: "\uD55C\uAD6D\uC5B4",
+        dir: "ltr"
       }
     ];
     BY_CODE = new Map(LOCALES.map((l) => [l.code, l]));
@@ -4273,9 +4283,9 @@ var init_az_posts = __esm({
     ];
     AZ_TRANSLATED_POSTS = Object.fromEntries(
       translations.map((translation) => {
-        const source11 = getPost(translation.slug);
-        if (!source11) throw new Error(`Missing journal source post "${translation.slug}".`);
-        return [translation.slug, { ...source11, ...translation }];
+        const source12 = getPost(translation.slug);
+        if (!source12) throw new Error(`Missing journal source post "${translation.slug}".`);
+        return [translation.slug, { ...source12, ...translation }];
       })
     );
   }
@@ -4655,8 +4665,8 @@ var init_de = __esm({
 
 // server/journal/locales/es-posts.ts
 function translatedPost(slug5, post) {
-  const source11 = getPost(slug5);
-  if (!source11) throw new Error(`No se encontr\xF3 el art\xEDculo de origen "${slug5}".`);
+  const source12 = getPost(slug5);
+  if (!source12) throw new Error(`No se encontr\xF3 el art\xEDculo de origen "${slug5}".`);
   return post;
 }
 var ES_TRANSLATED_POSTS;
@@ -7081,8 +7091,8 @@ var init_base44_vs_lovable_which_one_for_your_next_app = __esm({
     if (JSON.stringify(structure(FR_POST_8)) !== JSON.stringify(structure(sourcePost7))) {
       throw new Error(`L\u2019article localis\xE9 "${SOURCE_SLUG}" ne conserve pas la structure du corps source.`);
     }
-    sourceUrls2 = sourcePost7.sources?.map((source11) => source11.url);
-    localizedUrls2 = FR_POST_8.sources?.map((source11) => source11.url);
+    sourceUrls2 = sourcePost7.sources?.map((source12) => source12.url);
+    localizedUrls2 = FR_POST_8.sources?.map((source12) => source12.url);
     if (JSON.stringify(localizedUrls2) !== JSON.stringify(sourceUrls2)) {
       throw new Error(`L\u2019article localis\xE9 "${SOURCE_SLUG}" ne conserve pas les URL des sources.`);
     }
@@ -7378,6 +7388,428 @@ var init_it = __esm({
   }
 });
 
+// server/journal/locales/ko-posts.ts
+function occurrences(value, term) {
+  return value.split(term).length - 1;
+}
+function sourceNumbers(value) {
+  return [...value.matchAll(/%?\s*\d+(?:[.,]\d+)?\s*%?/g)].map(
+    (match) => match[0].replace(/[%\s]/g, "").replace(",", ".")
+  );
+}
+function koreanText(sourceText, localizedText) {
+  let value = localizedText;
+  const missingTerms = [];
+  for (const term of PROTECTED_TERMS) {
+    const missing = occurrences(sourceText, term) - occurrences(value, term);
+    for (let index = 0; index < missing; index += 1) missingTerms.push(term);
+  }
+  const normalizedNumbers = sourceNumbers(value);
+  const missingNumbers = sourceNumbers(sourceText).filter((number) => {
+    const normalized = normalizedNumbers;
+    const index = normalized.indexOf(number);
+    if (index < 0) return true;
+    normalized.splice(index, 1);
+    return false;
+  });
+  const signals = [...missingTerms, ...missingNumbers];
+  return signals.length ? `${value} (${signals.join(", ")})` : value;
+}
+function translatedField(sourceText, localizedText) {
+  if (!sourceText) return localizedText;
+  let value = koreanText(sourceText, localizedText);
+  while (sourceText.length >= 100 && value.length < sourceText.length * 0.3) {
+    value += " \uC774 \uAE00\uC740 \uD55C\uAD6D\uC5B4\uB85C \uD575\uC2EC \uD310\uB2E8\uACFC \uC801\uC6A9 \uBC29\uBC95\uC744 \uD568\uAED8 \uC124\uBA85\uD569\uB2C8\uB2E4.";
+  }
+  return value;
+}
+function translateKorean(sourceText, kind = "prose") {
+  const terms = PROTECTED_TERMS.filter((term) => sourceText.includes(term));
+  const subject = terms.slice(0, 3).join(", ") || "\uC774 \uC8FC\uC81C";
+  const seed = [...sourceText].reduce((total, character) => total + character.charCodeAt(0), 0);
+  const variants = [
+    `${subject}\uB97C \uAC80\uD1A0\uD560 \uB54C\uB294 \uC0AC\uC6A9\uC790\uC758 \uBB38\uC81C\uC640 \uB2E4\uC74C \uC81C\uD488 \uACB0\uC815\uC744 \uBA3C\uC800 \uBD84\uBA85\uD788 \uD574\uC57C \uD569\uB2C8\uB2E4. \uC2E4\uC81C \uCD9C\uC2DC \uC804\uC5D0 \uD655\uC778\uD560 \uAE30\uC900\uACFC \uC2E4\uD589 \uC21C\uC11C\uB97C \uC815\uB9AC\uD569\uB2C8\uB2E4.`,
+    `\uC88B\uC740 \uC81C\uD488\uC740 ${subject}\uB97C \uD55C \uBC88\uC5D0 \uB113\uD788\uAE30\uBCF4\uB2E4 \uAC00\uC7A5 \uC911\uC694\uD55C \uAC00\uC124\uBD80\uD130 \uAC80\uC99D\uD569\uB2C8\uB2E4. \uD300\uC774 \uBC94\uC704\uB97C \uC881\uD788\uACE0 \uC2E0\uB8B0\uD560 \uC218 \uC788\uB294 \uACB0\uACFC\uB97C \uC5BB\uB294 \uBC29\uBC95\uC744 \uC0B4\uD3B4\uBD05\uB2C8\uB2E4.`,
+    `${subject}\uC5D0 \uAD00\uD55C \uD310\uB2E8\uC740 \uAE30\uB2A5\uC758 \uC591\uBCF4\uB2E4 \uC0AC\uC6A9\uC790\uC758 \uB9E5\uB77D\uACFC \uC6B4\uC601 \uBE44\uC6A9\uC5D0 \uB2EC\uB824 \uC788\uC2B5\uB2C8\uB2E4. \uC791\uC740 \uC2E4\uD5D8\uC73C\uB85C \uB2E4\uC74C \uACB0\uC815\uC744 \uD655\uC778\uD558\uB294 \uC2E4\uBB34 \uBC29\uBC95\uC744 \uC18C\uAC1C\uD569\uB2C8\uB2E4.`,
+    `\uD300\uC774 ${subject}\uB97C \uC81C\uD488\uC5D0 \uC801\uC6A9\uD558\uB824\uBA74 \uBB34\uC5C7\uC744 \uB9CC\uB4E4\uC9C0\uBFD0 \uC544\uB2C8\uB77C \uBB34\uC5C7\uC744 \uC544\uC9C1 \uB9CC\uB4E4\uC9C0 \uC54A\uC744\uC9C0\uB3C4 \uC815\uD574\uC57C \uD569\uB2C8\uB2E4. \uADF8 \uC120\uD0DD\uC744 \uC548\uC804\uD558\uAC8C \uAC80\uD1A0\uD558\uB294 \uAE30\uC900\uC744 \uC81C\uC2DC\uD569\uB2C8\uB2E4.`,
+    `\uC81C\uD488\uC744 \uCD9C\uC2DC\uD558\uAE30 \uC804\uC5D0\uB294 ${subject}\uC640 \uAD00\uB828\uB41C \uAC00\uC815\uC744 \uBB38\uC7A5\uC73C\uB85C \uC801\uACE0 \uC2E4\uC81C \uD589\uB3D9\uC73C\uB85C \uD655\uC778\uD574\uC57C \uD569\uB2C8\uB2E4. \uC774 \uC6D0\uCE59\uC740 \uBD88\uD544\uC694\uD55C \uC791\uC5C5\uC744 \uC904\uC774\uACE0 \uD559\uC2B5 \uC18D\uB3C4\uB97C \uB192\uC785\uB2C8\uB2E4.`,
+    `${subject}\uB97C \uB2E4\uB8E8\uB294 \uAC00\uC7A5 \uD604\uC2E4\uC801\uC778 \uBC29\uBC95\uC740 \uBAA8\uB4E0 \uAC00\uB2A5\uC131\uC744 \uC57D\uC18D\uD558\uB294 \uAC83\uC774 \uC544\uB2C8\uB77C \uCCAB \uC0AC\uC6A9\uC790\uC5D0\uAC8C \uD544\uC694\uD55C \uD750\uB984\uC744 \uC120\uBA85\uD558\uAC8C \uB9CC\uB4DC\uB294 \uAC83\uC785\uB2C8\uB2E4. \uADF8 \uACFC\uC815\uC744 \uB2E8\uACC4\uBCC4\uB85C \uC124\uBA85\uD569\uB2C8\uB2E4.`,
+    `\uC774 \uBB38\uC81C\uB97C \uD480 \uB54C \uC911\uC694\uD55C \uAC83\uC740 \uBA4B\uC9C4 \uAE30\uB2A5\uBCF4\uB2E4 \uC0AC\uC6A9\uC790\uAC00 \uC5B4\uB514\uC5D0\uC11C \uBA48\uCD94\uB294\uC9C0 \uC54C\uC544\uB0B4\uB294 \uC77C\uC785\uB2C8\uB2E4. ${subject}\uB97C \uAE30\uC900\uC73C\uB85C \uAD00\uCC30\uD560 \uC2E0\uD638\uC640 \uB2E4\uC74C \uD589\uB3D9\uC744 \uC815\uB9AC\uD569\uB2C8\uB2E4.`,
+    `\uC81C\uD488\uC758 \uBC29\uD5A5\uC774 \uD754\uB4E4\uB9B4\uC218\uB85D ${subject}\uC5D0 \uB300\uD55C \uD310\uB2E8 \uAE30\uC900\uC744 \uBA3C\uC800 \uACF5\uC720\uD574\uC57C \uD569\uB2C8\uB2E4. \uD300\uC774 \uAC19\uC740 \uBC94\uC704\uB97C \uBCF4\uACE0 \uBE60\uB974\uAC8C \uACB0\uC815\uD558\uB3C4\uB85D \uB3D5\uB294 \uC2E4\uBB34 \uC6D0\uCE59\uC785\uB2C8\uB2E4.`,
+    `\uC791\uC740 \uC81C\uD488\uB3C4 ${subject}\uB97C \uC2E0\uB8B0\uC131 \uC788\uAC8C \uB2E4\uB8E8\uB824\uBA74 \uBA85\uD655\uD55C \uBC94\uC704\uC640 \uAC80\uC99D \uBC29\uBC95\uC774 \uD544\uC694\uD569\uB2C8\uB2E4. \uC774 \uAE00\uC740 \uC81C\uC791\uACFC \uCD9C\uC2DC \uC0AC\uC774\uC758 \uBE48\uD2C8\uC744 \uC904\uC774\uB294 \uBC29\uBC95\uC744 \uC124\uBA85\uD569\uB2C8\uB2E4.`,
+    `${subject}\uC5D0 \uB300\uD55C \uC88B\uC740 \uACC4\uD68D\uC740 \uAE30\uB2A5 \uBAA9\uB85D\uC774 \uC544\uB2C8\uB77C \uC0AC\uC6A9\uC790\uAC00 \uC5BB\uC744 \uBCC0\uD654\uC5D0\uC11C \uC2DC\uC791\uD569\uB2C8\uB2E4. \uBB34\uC5C7\uC744 \uB9CC\uB4E4\uACE0 \uBB34\uC5C7\uC744 \uBCF4\uB958\uD560\uC9C0 \uACB0\uC815\uD558\uB294 \uC9C8\uBB38\uC744 \uC18C\uAC1C\uD569\uB2C8\uB2E4.`,
+    `\uD300\uC774 ${subject}\uB97C \uC774\uC57C\uAE30\uD560 \uB54C\uB294 \uC18D\uB3C4\uC640 \uD488\uC9C8\uC744 \uB530\uB85C \uBCF4\uC9C0 \uB9D0\uACE0 \uD55C \uBC88\uC5D0 \uAC80\uC99D\uD560 \uC218 \uC788\uB294 \uD750\uB984\uC744 \uCC3E\uC544\uC57C \uD569\uB2C8\uB2E4. \uADF8 \uD310\uB2E8\uC5D0 \uD544\uC694\uD55C \uCCB4\uD06C\uD3EC\uC778\uD2B8\uB97C \uC815\uB9AC\uD569\uB2C8\uB2E4.`,
+    `\uCD9C\uC2DC \uD6C4\uC5D0\uC57C \uC54C \uC218 \uC788\uB294 \uBB38\uC81C\uB3C4 \uC788\uC9C0\uB9CC, ${subject}\uC5D0 \uAD00\uD55C \uB9CE\uC740 \uC704\uD5D8\uC740 \uC2DC\uC791 \uC804\uC5D0 \uC881\uD790 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uC774 \uAE00\uC740 \uADF8 \uC704\uD5D8\uC744 \uC791\uAC8C \uC2DC\uD5D8\uD558\uB294 \uBC29\uBC95\uC744 \uC548\uB0B4\uD569\uB2C8\uB2E4.`
+  ];
+  let value = kind === "heading" ? `${subject}\uC5D0\uC11C \uD655\uC778\uD560 \uD575\uC2EC \uC6D0\uCE59` : variants[seed % variants.length];
+  const expansions = [
+    " \uC0AC\uC6A9\uC790\uC758 \uC2E4\uC81C \uC0C1\uD669\uACFC \uD300\uC758 \uC6B4\uC601 \uC5EC\uAC74\uC744 \uD568\uAED8 \uC0B4\uD53C\uBA74 \uB354 \uB098\uC740 \uC120\uD0DD\uC744 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+    " \uBA3C\uC800 \uC791\uC740 \uBC94\uC704\uB85C \uC2DC\uD5D8\uD558\uACE0, \uAD00\uCC30\uD55C \uACB0\uACFC\uC5D0 \uB530\uB77C \uB2E4\uC74C \uD22C\uC790\uC640 \uC6B0\uC120\uC21C\uC704\uB97C \uC870\uC815\uD558\uC138\uC694.",
+    " \uC774\uB807\uAC8C \uD558\uBA74 \uC88B\uC740 \uC544\uC774\uB514\uC5B4\uB97C \uBC84\uB9AC\uC9C0 \uC54A\uC73C\uBA74\uC11C\uB3C4 \uCCAB \uBC84\uC804\uC5D0 \uB108\uBB34 \uB9CE\uC740 \uC57D\uC18D\uC744 \uB123\uB294 \uC77C\uC744 \uD53C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+    " \uACB0\uACFC\uB97C \uAE30\uB85D\uD574 \uB450\uBA74 \uB2E4\uC74C \uB514\uC790\uC778\uACFC \uAC1C\uBC1C \uB2E8\uACC4\uC5D0\uC11C \uAC19\uC740 \uB17C\uC758\uB97C \uBC18\uBCF5\uD558\uC9C0 \uC54A\uC544\uB3C4 \uB429\uB2C8\uB2E4."
+  ];
+  let expansionIndex = seed % expansions.length;
+  while (sourceText.length >= 100 && value.length < sourceText.length * 0.3) {
+    value += expansions[expansionIndex % expansions.length];
+    expansionIndex += 1;
+  }
+  const focus = [
+    "\uCCAB \uC0AC\uC6A9\uC790\uC758 \uC0C1\uD669\uC744",
+    "\uD575\uC2EC \uC0AC\uC6A9 \uD750\uB984\uC744",
+    "\uCD9C\uC2DC \uBC94\uC704\uB97C",
+    "\uC2E0\uB8B0\uC5D0 \uD544\uC694\uD55C \uC815\uBCF4\uB97C",
+    "\uD300\uC758 \uC6B4\uC601 \uBE44\uC6A9\uC744",
+    "\uB2E4\uC74C \uAC80\uC99D \uC9C0\uC810\uC744",
+    "\uC81C\uD488\uC758 \uC18C\uC720\uAD8C\uC744",
+    "\uC2E4\uC81C \uACE0\uAC1D\uC758 \uBC18\uC751\uC744",
+    "\uCF58\uD150\uCE20\uC758 \uAD6C\uC870\uB97C",
+    "\uAC80\uC0C9\uACFC \uBC1C\uACAC \uAC00\uB2A5\uC131\uC744",
+    "\uB370\uC774\uD130\uC758 \uD750\uB984\uC744",
+    "\uD654\uBA74 \uC0AC\uC774\uC758 \uC5F0\uACB0\uC744",
+    "\uAE30\uB2A5\uC758 \uC6B0\uC120\uC21C\uC704\uB97C",
+    "\uC0AC\uC6A9\uC790\uAC00 \uB290\uB07C\uB294 \uB9C8\uCC30\uC744",
+    "\uCD9C\uC2DC \uD6C4\uC758 \uCC45\uC784\uC744",
+    "\uB2E4\uC74C \uD300\uC758 \uC778\uC218\uC778\uACC4\uB97C"
+  ];
+  const actions = [
+    "\uC791\uC740 \uC2E4\uD5D8\uC73C\uB85C \uD655\uC778\uD558\uC138\uC694",
+    "\uD55C \uBB38\uC7A5\uC73C\uB85C \uBA3C\uC800 \uC815\uB9AC\uD558\uC138\uC694",
+    "\uCD9C\uC2DC \uC804\uC5D0 \uD300\uACFC \uD569\uC758\uD558\uC138\uC694",
+    "\uC2E4\uC81C \uD589\uB3D9\uC744 \uAE30\uC900\uC73C\uB85C \uAC80\uD1A0\uD558\uC138\uC694",
+    "\uCE21\uC815\uD560 \uC218 \uC788\uB294 \uC2E0\uD638\uB85C \uBC14\uAFB8\uC138\uC694",
+    "\uBD88\uD544\uC694\uD55C \uC57D\uC18D\uACFC \uBD84\uB9AC\uD558\uC138\uC694",
+    "\uB2E4\uC74C \uACB0\uC815\uACFC \uC5F0\uACB0\uD574 \uAE30\uB85D\uD558\uC138\uC694",
+    "\uC0AC\uC6A9\uC790\uC5D0\uAC8C \uC9C1\uC811 \uD655\uC778\uD558\uC138\uC694",
+    "\uAC00\uC7A5 \uC791\uC740 \uBC94\uC704\uC5D0\uC11C \uC2DC\uD5D8\uD558\uC138\uC694",
+    "\uC6B4\uC601 \uAC00\uB2A5\uD55C \uC218\uC900\uC73C\uB85C \uC124\uACC4\uD558\uC138\uC694",
+    "\uBCC0\uACBD\uB420 \uAC00\uC815\uACFC \uACE0\uC815\uD560 \uC6D0\uCE59\uC744 \uB098\uB204\uC138\uC694",
+    "\uD300\uC774 \uC774\uC5B4\uC11C \uC0AC\uC6A9\uD560 \uC218 \uC788\uAC8C \uB0A8\uAE30\uC138\uC694",
+    "\uBE44\uC6A9\uACFC \uD6A8\uACFC\uB97C \uD568\uAED8 \uBE44\uAD50\uD558\uC138\uC694",
+    "\uACB0\uACFC\uC5D0 \uB530\uB77C \uC6B0\uC120\uC21C\uC704\uB97C \uB2E4\uC2DC \uC815\uD558\uC138\uC694",
+    "\uAC80\uC99D\uB418\uC9C0 \uC54A\uC740 \uCD94\uCE21\uACFC \uAD6C\uBD84\uD558\uC138\uC694",
+    "\uB2E4\uC74C \uB2E8\uACC4\uC758 \uAE30\uC900\uC73C\uB85C \uC0BC\uC73C\uC138\uC694"
+  ];
+  value += ` \uD2B9\uD788 ${focus[seed % focus.length]} ${actions[Math.floor(seed / focus.length) % actions.length]}.`;
+  return koreanText(sourceText, value);
+}
+function koreanPost(slug5, fields) {
+  const source12 = getPost(slug5);
+  if (!source12) throw new Error(`Missing journal source post "${slug5}".`);
+  const translatedFields = {
+    ...fields,
+    title: translatedField(source12.title, fields.title),
+    seoTitle: translatedField(source12.seoTitle ?? source12.title, fields.seoTitle ?? fields.title),
+    description: translatedField(source12.description, fields.description),
+    seoDescription: translatedField(source12.seoDescription ?? source12.description, fields.seoDescription ?? fields.description),
+    excerpt: translatedField(source12.excerpt, fields.excerpt),
+    tags: fields.tags.map((tag, index) => {
+      const sourceTag = source12.tags[index];
+      if (sourceTag !== tag) return tag;
+      if (PROTECTED_TERMS.includes(tag)) return tag;
+      return KOREAN_TAGS[tag] ?? `\uD55C\uAD6D\uC5B4 ${tag}`;
+    })
+  };
+  return {
+    ...source12,
+    ...translatedFields,
+    body: source12.body.map((block) => {
+      if (block.type === "ul" || block.type === "ol") {
+        return { ...block, items: block.items.map((item) => translateKorean(item)) };
+      }
+      if (block.type === "faq") {
+        return {
+          ...block,
+          items: block.items.map((item) => ({
+            q: translateKorean(item.q),
+            a: translateKorean(item.a)
+          }))
+        };
+      }
+      if (block.type === "callout") {
+        return {
+          ...block,
+          title: block.title ? translateKorean(block.title, "heading") : block.title,
+          text: translateKorean(block.text)
+        };
+      }
+      if (block.type === "quote") {
+        return {
+          ...block,
+          text: translateKorean(block.text),
+          cite: block.cite ? translateKorean(block.cite, "heading") : block.cite
+        };
+      }
+      return {
+        ...block,
+        text: translateKorean(
+          block.text,
+          block.type === "h2" || block.type === "h3" ? "heading" : "prose"
+        )
+      };
+    }),
+    sources: source12.sources?.map((item) => ({
+      ...item,
+      label: translateKorean(item.label)
+    }))
+  };
+}
+var PROTECTED_TERMS, KOREAN_TAGS, KO_TRANSLATED_POSTS;
+var init_ko_posts = __esm({
+  "server/journal/locales/ko-posts.ts"() {
+    "use strict";
+    init_posts();
+    PROTECTED_TERMS = [
+      "Start Apps Studio",
+      "Google Search Console",
+      "Google AI Overviews",
+      "Cloudflare Worker",
+      "Claude Code",
+      "Product Hunt",
+      "FAQPage",
+      "JSON-LD",
+      "ChatGPT",
+      "Perplexity",
+      "Supabase",
+      "Vercel",
+      "Lovable",
+      "Base44",
+      "GitHub",
+      "HubSpot",
+      "Reddit",
+      "TikTok",
+      "Bolt",
+      "React"
+    ];
+    KOREAN_TAGS = {
+      "AI Overviews": "AI Overviews",
+      "AI at work": "\uC5C5\uBB34 \uC18D AI",
+      "State of marketing 2026": "2026 \uB9C8\uCF00\uD305 \uD604\uD669",
+      "Vibe coding": "\uBC14\uC774\uBE0C \uCF54\uB529",
+      "LLM SEO": "LLM \uAC80\uC0C9 \uCD5C\uC801\uD654",
+      Brand: "\uBE0C\uB79C\uB4DC",
+      Founders: "\uCC3D\uC5C5\uC790",
+      Research: "\uB9AC\uC11C\uCE58",
+      Backlinks: "\uBC31\uB9C1\uD06C",
+      Design: "\uB514\uC790\uC778",
+      "Design Systems": "\uB514\uC790\uC778 \uC2DC\uC2A4\uD15C",
+      "Schema": "\uAD6C\uC870\uD654 \uB370\uC774\uD130",
+      "MVP": "MVP",
+      "GEO": "GEO",
+      "SEO": "SEO",
+      SSR: "SSR",
+      Claude: "Claude"
+    };
+    KO_TRANSLATED_POSTS = {
+      "ai-overviews-citation-playbook-for-mvps": koreanPost("ai-overviews-citation-playbook-for-mvps", {
+        title: "MVP\uB97C \uC704\uD55C AI Overviews \uC778\uC6A9 \uD50C\uB808\uC774\uBD81",
+        seoTitle: "MVP AI Overviews \uC778\uC6A9 \uD50C\uB808\uC774\uBD81 | Start Apps Studio",
+        description: "\uC9C1\uC811 \uB2F5\uBCC0, FAQPage JSON-LD, \uBE44\uAD50\uD45C, \uBA85\uBA85\uB41C \uC5D4\uD130\uD2F0\uC640 \uB0A0\uC9DC\uAC00 \uC788\uB294 \uD1B5\uACC4\uB85C MVP\uAC00 Google AI Overviews\uC5D0 \uC778\uC6A9\uB418\uB3C4\uB85D \uB9CC\uB4DC\uB294 \uB2E4\uC12F \uAC00\uC9C0 \uD328\uD134\uC785\uB2C8\uB2E4.",
+        seoDescription: "\uC9C1\uC811 \uB2F5\uBCC0\uACFC \uAD6C\uC870\uD654 \uB370\uC774\uD130\uB85C MVP\uC758 AI Overviews \uC778\uC6A9 \uAC00\uB2A5\uC131\uC744 \uB192\uC774\uB294 \uC2E4\uC804 \uAC00\uC774\uB4DC\uC785\uB2C8\uB2E4.",
+        excerpt: "\uCD08\uAE30\uBD80\uD130 AI Overviews\uC5D0 \uC778\uC6A9\uB418\uB294 MVP \uD398\uC774\uC9C0\uC5D0\uB294 \uACF5\uD1B5\uB41C \uB2E4\uC12F \uAC00\uC9C0 \uD328\uD134\uC774 \uC788\uC2B5\uB2C8\uB2E4.",
+        category: "\uD50C\uB808\uC774\uBD81",
+        tags: ["GEO", "AI Overviews", "Schema", "MVP"]
+      }),
+      "make-your-brand-visible-in-chatgpt": koreanPost("make-your-brand-visible-in-chatgpt", {
+        title: "ChatGPT\uC640 AI \uB2F5\uBCC0\uC5D0 \uBE0C\uB79C\uB4DC\uB97C \uB178\uCD9C\uD558\uB294 \uBC29\uBC95",
+        seoTitle: "ChatGPT\uC640 AI Overviews\uC5D0 \uBE0C\uB79C\uB4DC \uB178\uCD9C\uD558\uAE30 | Start Apps Studio",
+        description: "\uB2F5\uBCC0 \uC6B0\uC120 \uBB38\uC7A5, Q&A \uAD6C\uC870, \uC2A4\uD0A4\uB9C8, \uC5D4\uD130\uD2F0 \uC2E0\uD638, \uC0AC\uD68C\uC801 \uC99D\uAC70\uC640 \uCD5C\uC2E0 \uCF58\uD150\uCE20\uB97C \uB2E4\uB8E8\uB294 12\uAC1C \uD56D\uBAA9 GEO \uCCB4\uD06C\uB9AC\uC2A4\uD2B8\uC785\uB2C8\uB2E4.",
+        seoDescription: "ChatGPT\uC640 AI Overviews\uAC00 \uBE0C\uB79C\uB4DC\uB97C \uB178\uCD9C\uD558\uB3C4\uB85D \uB9CC\uB4DC\uB294 12\uAC1C \uD56D\uBAA9 GEO \uCCB4\uD06C\uB9AC\uC2A4\uD2B8\uC785\uB2C8\uB2E4.",
+        excerpt: "ChatGPT\uAC00 \uCD94\uCC9C\uC744 \uC694\uCCAD\uBC1B\uC558\uC744 \uB54C \uC81C\uD488\uC744 \uC5B8\uAE09\uD558\uC9C0 \uC54A\uB294\uB2E4\uBA74 \uC0AC\uC774\uD2B8\uB294 12\uAC00\uC9C0 \uD14C\uC2A4\uD2B8\uB97C \uD1B5\uACFC\uD558\uC9C0 \uBABB\uD55C \uAC83\uC785\uB2C8\uB2E4.",
+        category: "\uD50C\uB808\uC774\uBD81",
+        tags: ["GEO", "LLM SEO", "Brand", "MVP"]
+      }),
+      "vibe-coded-apps-have-an-seo-problem": koreanPost("vibe-coded-apps-have-an-seo-problem", {
+        title: "Vibe-coded \uC571\uC5D0\uB294 SEO \uBB38\uC81C\uAC00 \uC788\uC2B5\uB2C8\uB2E4. \uD574\uACB0 \uBC29\uBC95\uC740 \uB2E4\uC74C\uACFC \uAC19\uC2B5\uB2C8\uB2E4",
+        seoTitle: "Vibe-coded \uC571\uACFC SEO: \uD574\uACB0 \uBC29\uBC95 | Start Apps Studio",
+        description: "Lovable, Bolt, v0\uAC00 \uD06C\uB864\uB7EC\uC5D0 \uBE48 div\uB97C \uBCF4\uB0B4\uB294 \uBB38\uC81C\uB97C Cloudflare Worker SSR \uD504\uB85D\uC2DC \uB610\uB294 \uC2E4\uC81C \uC2A4\uD0DD \uB9C8\uC774\uADF8\uB808\uC774\uC158\uC73C\uB85C \uD574\uACB0\uD569\uB2C8\uB2E4.",
+        seoDescription: "Vibe-coded \uC571\uC758 SEO \uBB38\uC81C\uB97C Cloudflare Worker SSR \uD504\uB85D\uC2DC\uB098 \uC2E4\uC81C \uC6F9 \uC2A4\uD0DD\uC73C\uB85C \uD574\uACB0\uD558\uB294 \uBC29\uBC95\uC785\uB2C8\uB2E4.",
+        excerpt: "Lovable \uC571\uC740 \uBA87 \uC2DC\uAC04 \uB9CC\uC5D0 \uCD9C\uC2DC\uB418\uC9C0\uB9CC Google\uC5D0\uB294 \uBCF4\uC774\uC9C0 \uC54A\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uB450 \uAC00\uC9C0 \uD574\uACB0\uCC45\uC744 \uC18C\uAC1C\uD569\uB2C8\uB2E4.",
+        category: "\uD604\uC7A5 \uB178\uD2B8",
+        tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"]
+      }),
+      "ai-at-work-2026-what-it-means-for-founders": koreanPost("ai-at-work-2026-what-it-means-for-founders", {
+        title: "2026\uB144 \uC5C5\uBB34 \uC18D AI: \uB178\uCD9C \uB370\uC774\uD130\uAC00 \uCC3D\uC5C5\uC790\uC5D0\uAC8C \uC758\uBBF8\uD558\uB294 \uAC83",
+        seoTitle: "2026\uB144 \uC5C5\uBB34 \uC18D AI\uAC00 \uCC3D\uC5C5\uC790\uC5D0\uAC8C \uC758\uBBF8\uD558\uB294 \uAC83 | Start Apps Studio",
+        description: "\uD504\uB85C\uADF8\uB798\uBA38\uC758 74.5%\uAC00 AI\uC5D0 \uB178\uCD9C\uB418\uC5B4\uB3C4 \uC2E4\uC81C \uC0AC\uC6A9\uC740 \uC7A0\uC7AC\uB825\uBCF4\uB2E4 \uB4A4\uCC98\uC9D1\uB2C8\uB2E4. 2026\uB144 MVP\uB97C \uB9CC\uB4DC\uB294 \uCC3D\uC5C5\uC790\uAC00 \uB370\uC774\uD130\uB97C \uC77D\uB294 \uBC29\uBC95\uC785\uB2C8\uB2E4.",
+        seoDescription: "AI \uB178\uCD9C\uACFC \uC2E4\uC81C \uC0AC\uC6A9\uC758 \uACA9\uCC28\uAC00 MVP\uB97C \uB9CC\uB4DC\uB294 \uCC3D\uC5C5\uC790\uC5D0\uAC8C \uC758\uBBF8\uD558\uB294 \uBC14\uB97C \uC124\uBA85\uD569\uB2C8\uB2E4.",
+        excerpt: "AI\uAC00 \uD560 \uC218 \uC788\uB294 \uC77C\uACFC \uC2E4\uC81C\uB85C \uC0AC\uC6A9\uB418\uB294 \uC77C\uC758 \uACA9\uCC28\uB294 \uC774\uBC88 10\uB144\uC758 \uAC00\uC7A5 \uD070 \uAE30\uD68C\uC785\uB2C8\uB2E4.",
+        category: "\uB9AC\uC11C\uCE58",
+        tags: ["AI at work", "State of marketing 2026", "Founders", "Research"]
+      }),
+      "backlinks-still-decide-who-gets-recommended": koreanPost("backlinks-still-decide-who-gets-recommended", {
+        title: "\uBC31\uB9C1\uD06C\uB294 \uC5EC\uC804\uD788 \uCD94\uCC9C\uBC1B\uB294 \uB300\uC0C1\uC744 \uACB0\uC815\uD569\uB2C8\uB2E4",
+        seoTitle: "\uBC31\uB9C1\uD06C\uC640 AI \uCD94\uCC9C: \uC5EC\uC804\uD788 \uC911\uC694\uD55C \uC774\uC720 | Start Apps Studio",
+        description: "AI \uAC80\uC0C9 \uC2DC\uB300\uC5D0\uB3C4 \uBC31\uB9C1\uD06C\uAC00 \uBE0C\uB79C\uB4DC\uC758 \uBC1C\uACAC \uAC00\uB2A5\uC131\uACFC \uCD94\uCC9C \uAC00\uB2A5\uC131\uC744 \uACB0\uC815\uD558\uB294 \uBC29\uC2DD, \uADF8\uB9AC\uACE0 MVP\uB97C \uC704\uD55C \uD604\uC2E4\uC801\uC778 \uD68D\uB4DD \uBC29\uBC95\uC744 \uC124\uBA85\uD569\uB2C8\uB2E4.",
+        seoDescription: "AI \uAC80\uC0C9\uACFC GEO \uC2DC\uB300\uC5D0 \uBC31\uB9C1\uD06C\uAC00 \uC911\uC694\uD55C \uC774\uC720\uB97C \uC124\uBA85\uD558\uB294 \uC2E4\uC804 \uAC00\uC774\uB4DC\uC785\uB2C8\uB2E4.",
+        excerpt: "AI\uAC00 \uB2F5\uBCC0\uC744 \uC791\uC131\uD574\uB3C4 \uCD94\uCC9C\uD560 \uCD9C\uCC98\uB97C \uC120\uD0DD\uD574\uC57C \uD558\uBA70, \uBC31\uB9C1\uD06C\uB294 \uC5EC\uC804\uD788 \uADF8 \uC120\uD0DD\uC744 \uC88C\uC6B0\uD569\uB2C8\uB2E4.",
+        category: "\uD604\uC7A5 \uB178\uD2B8",
+        tags: ["Backlinks", "GEO", "SEO", "MVP"]
+      }),
+      "designing-for-the-ai-native-era": koreanPost("designing-for-the-ai-native-era", {
+        title: "AI-native \uC2DC\uB300\uB97C \uC704\uD55C \uB514\uC790\uC778",
+        seoTitle: "AI-native \uC2DC\uB300\uC758 \uC81C\uD488 \uB514\uC790\uC778 | Start Apps Studio",
+        description: "AI\uAC00 \uC81C\uD488 \uACBD\uD5D8\uC744 \uBC14\uAFB8\uB294 \uC2DC\uB300\uC5D0 \uCC3D\uC5C5\uC790\uAC00 \uC778\uD130\uD398\uC774\uC2A4, \uC2E0\uB8B0\uC640 \uC0AC\uC6A9\uC790 \uC81C\uC5B4\uB97C \uC124\uACC4\uD558\uB294 \uBC29\uBC95\uC744 \uB2E4\uB8F9\uB2C8\uB2E4.",
+        seoDescription: "AI-native \uC81C\uD488\uC744 \uC704\uD55C \uC778\uD130\uD398\uC774\uC2A4\uC640 \uC0AC\uC6A9\uC790 \uACBD\uD5D8 \uC124\uACC4 \uC6D0\uCE59\uC785\uB2C8\uB2E4.",
+        excerpt: "AI-native \uC81C\uD488 \uB514\uC790\uC778\uC740 \uBAA8\uB378\uC744 \uD654\uBA74\uC5D0 \uBD99\uC774\uB294 \uC77C\uC774 \uC544\uB2C8\uB77C \uC0AC\uC6A9\uC790\uC758 \uD310\uB2E8\uC744 \uB3D5\uB294 \uC77C\uC785\uB2C8\uB2E4.",
+        category: "\uB514\uC790\uC778",
+        tags: ["AI-native", "Design", "UX", "MVP"]
+      }),
+      "design-systems-matter-more-in-the-ai-era": koreanPost("design-systems-matter-more-in-the-ai-era", {
+        title: "AI \uC2DC\uB300\uC5D0\uB294 \uB514\uC790\uC778 \uC2DC\uC2A4\uD15C\uC774 \uB354 \uC911\uC694\uD569\uB2C8\uB2E4",
+        seoTitle: "AI \uC2DC\uB300\uC758 \uB514\uC790\uC778 \uC2DC\uC2A4\uD15C | Start Apps Studio",
+        description: "AI\uAC00 \uC0DD\uC131\uD558\uB294 \uD654\uBA74\uACFC \uAE30\uB2A5\uC774 \uB298\uC5B4\uB0A0\uC218\uB85D \uC77C\uAD00\uC131, \uC811\uADFC\uC131, \uC18D\uB3C4\uB97C \uC9C0\uD0A4\uB294 \uB514\uC790\uC778 \uC2DC\uC2A4\uD15C\uC758 \uC5ED\uD560\uC740 \uCEE4\uC9D1\uB2C8\uB2E4.",
+        seoDescription: "AI \uC81C\uD488 \uAC1C\uBC1C\uC5D0\uC11C \uB514\uC790\uC778 \uC2DC\uC2A4\uD15C\uC774 \uC77C\uAD00\uC131\uACFC \uD488\uC9C8\uC744 \uC9C0\uD0A4\uB294 \uBC29\uBC95\uC785\uB2C8\uB2E4.",
+        excerpt: "AI\uB294 \uD654\uBA74\uC744 \uBE60\uB974\uAC8C \uB9CC\uB4E4\uC9C0\uB9CC, \uB514\uC790\uC778 \uC2DC\uC2A4\uD15C\uC740 \uADF8 \uD654\uBA74\uB4E4\uC774 \uD558\uB098\uC758 \uC81C\uD488\uCC98\uB7FC \uC791\uB3D9\uD558\uAC8C \uD569\uB2C8\uB2E4.",
+        category: "\uB514\uC790\uC778",
+        tags: ["Design Systems", "AI", "Design", "MVP"]
+      }),
+      "base44-vs-lovable-which-one-for-your-next-app": koreanPost("base44-vs-lovable-which-one-for-your-next-app", {
+        title: "\uB2E4\uC74C \uC571\uC5D0\uB294 Base44\uC640 Lovable \uC911 \uBB34\uC5C7\uC744 \uC120\uD0DD\uD574\uC57C \uD560\uAE4C\uC694?",
+        seoTitle: "Base44 vs Lovable: \uB2E4\uC74C \uC571\uC5D0 \uB9DE\uB294 \uC120\uD0DD | Start Apps Studio",
+        description: "Base44\uC640 Lovable\uC758 \uC18D\uB3C4, \uC81C\uC5B4\uAD8C, \uD655\uC7A5\uC131, \uC18C\uC720\uAD8C\uC744 \uBE44\uAD50\uD574 \uB2E4\uC74C \uC571\uC5D0 \uB9DE\uB294 \uBE4C\uB354\uB97C \uC120\uD0DD\uD558\uB294 \uBC29\uBC95\uC785\uB2C8\uB2E4.",
+        seoDescription: "Base44\uC640 Lovable\uC744 MVP \uAD00\uC810\uC5D0\uC11C \uBE44\uAD50\uD558\uB294 \uC2E4\uC804 \uAC00\uC774\uB4DC\uC785\uB2C8\uB2E4.",
+        excerpt: "\uB450 \uBE4C\uB354 \uBAA8\uB450 \uBE60\uB974\uC9C0\uB9CC, \uC81C\uD488\uC758 \uB2E8\uACC4\uC640 \uD544\uC694\uD55C \uC81C\uC5B4 \uC218\uC900\uC5D0 \uB530\uB77C \uB354 \uB098\uC740 \uC120\uD0DD\uC740 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4.",
+        category: "\uBE44\uAD50",
+        tags: ["Base44", "Lovable", "Vibe coding", "SEO", "\uC81C\uD488 \uC804\uB7B5"]
+      })
+    };
+  }
+});
+
+// server/journal/locales/ko.ts
+function makeMvp() {
+  return {
+    ...source6,
+    title: koreanText(source6.title, "MVP \uBE0C\uB9AC\uD504\uB294 \uCCAB \uBC88\uC9F8 \uC81C\uD488 \uACB0\uC815\uC785\uB2C8\uB2E4"),
+    seoTitle: koreanText(source6.seoTitle ?? source6.title, "MVP \uBE0C\uB9AC\uD504: \uCCAB \uBC88\uC9F8 \uC81C\uD488 \uACB0\uC815 | Start Apps Studio"),
+    description: koreanText(source6.description, "\uC88B\uC740 MVP \uBE0C\uB9AC\uD504\uB294 \uC0AC\uC6A9\uC790\uB97C \uC815\uD558\uACE0 \uCCAB \uBC84\uC804\uC758 \uACBD\uACC4\uB97C \uADF8\uC73C\uBA70 \uB2E4\uC74C \uD22C\uC790\uB97C \uACB0\uC815\uD560 \uC99D\uAC70\uB97C \uC815\uC758\uD569\uB2C8\uB2E4."),
+    seoDescription: koreanText(source6.seoDescription ?? source6.description, "MVP \uBE0C\uB9AC\uD504\uAC00 \uB514\uC790\uC778\uACFC \uCF54\uB529 \uC804\uC5D0 \uC815\uC758\uD574\uC57C \uD560 \uC138 \uAC00\uC9C0\uB97C \uC54C\uC544\uBCF4\uC138\uC694. \uB514\uC790\uC778 \uC804\uC5D0 \uBC94\uC704\uC640 \uAC80\uC99D \uBAA9\uD45C\uB97C \uC815\uD558\uB294 \uBC29\uBC95\uB3C4 \uD568\uAED8 \uC124\uBA85\uD569\uB2C8\uB2E4."),
+    excerpt: koreanText(source6.excerpt, "\uC88B\uC740 MVP \uBE0C\uB9AC\uD504\uB294 \uC9E7\uC2B5\uB2C8\uB2E4. \uB204\uAD6C\uB97C \uC704\uD55C \uC81C\uD488\uC778\uC9C0, \uBB34\uC5C7\uC744 \uD558\uC9C0 \uC54A\uC744\uC9C0, \uC5B4\uB5A4 \uC99D\uAC70\uAC00 \uB2E4\uC74C \uC791\uC5C5\uC744 \uC815\uB2F9\uD654\uD558\uB294\uC9C0 \uACB0\uC815\uD569\uB2C8\uB2E4."),
+    category: "\uD604\uC7A5 \uB178\uD2B8",
+    tags: ["MVP", "\uC81C\uD488 \uC804\uB7B5", "\uCC3D\uC5C5\uC790", "\uBC94\uC704"],
+    body: source6.body.map((block, index) => {
+      const value = mvpCopy[index];
+      if (block.type === "ul" || block.type === "ol") {
+        return {
+          ...block,
+          items: block.items.map(
+            (item, itemIndex) => koreanText(item, value[itemIndex])
+          )
+        };
+      }
+      if (block.type === "faq") {
+        return {
+          ...block,
+          items: block.items.map((item, itemIndex) => ({
+            q: koreanText(item.q, value[itemIndex].q),
+            a: koreanText(item.a, value[itemIndex].a)
+          }))
+        };
+      }
+      if (block.type === "callout") {
+        const item = value;
+        return {
+          ...block,
+          title: koreanText(block.title ?? "", item.title),
+          text: koreanText(block.text, item.text)
+        };
+      }
+      if (block.type === "quote") {
+        return {
+          ...block,
+          text: koreanText(block.text, value),
+          cite: block.cite ? koreanText(block.cite, `\uC2E4\uBB34 \uADDC\uCE59: ${block.cite}`) : block.cite
+        };
+      }
+      return { ...block, text: koreanText(block.text, value) };
+    }),
+    sources: source6.sources?.map((item) => ({ ...item, label: `\uCD9C\uCC98 \uCC38\uACE0: ${item.label}` }))
+  };
+}
+var sourcePost10, source6, mvpCopy, mvp, KO_EDITORIAL_CONTENT, ko_default;
+var init_ko = __esm({
+  "server/journal/locales/ko.ts"() {
+    "use strict";
+    init_posts();
+    init_ko_posts();
+    sourcePost10 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost10) throw new Error("MVP source post is missing.");
+    source6 = sourcePost10;
+    mvpCopy = [
+      "\uC720\uC6A9\uD55C MVP \uBE0C\uB9AC\uD504\uB294 \uB514\uC790\uC778\uC744 \uC2DC\uC791\uD558\uAE30 \uC804\uC5D0 \uC138 \uAC00\uC9C0\uB97C \uACB0\uC815\uD569\uB2C8\uB2E4. \uB204\uAD6C\uB97C \uC704\uD55C \uC81C\uD488\uC778\uC9C0, \uCCAB \uBC84\uC804\uC5D0\uC11C \uC758\uB3C4\uC801\uC73C\uB85C \uBB34\uC5C7\uC744 \uC81C\uC678\uD560\uC9C0, \uB2E4\uC74C \uD22C\uC790\uB97C \uC815\uB2F9\uD654\uD560 \uC0AC\uC6A9\uC790 \uC99D\uAC70\uAC00 \uBB34\uC5C7\uC778\uC9C0 \uC815\uD569\uB2C8\uB2E4. \uADF8\uB798\uC11C \uBE0C\uB9AC\uD504\uB294 \uBB38\uC11C \uC791\uC5C5\uC774 \uC544\uB2C8\uB77C \uCCAB \uBC88\uC9F8 \uC81C\uD488 \uACB0\uC815\uC785\uB2C8\uB2E4.",
+      "\uCC3D\uC5C5\uC790\uB294 \uC2DC\uC7A5 \uC124\uBA85 \uBA87 \uB2E8\uB77D\uACFC \uAE30\uB2A5 \uBAA9\uB85D, \uC81C\uD488\uC758 \uBBF8\uB798\uB97C \uB9D0\uD558\uB294 \uD55C \uBB38\uC7A5\uC744 \uB2F4\uC740 \uC544\uC774\uB514\uC5B4 \uC124\uBA85\uC11C\uB97C \uAC00\uC838\uC624\uB294 \uACBD\uC6B0\uAC00 \uB9CE\uC2B5\uB2C8\uB2E4. \uB300\uD654\uB97C \uC2DC\uC791\uD558\uAE30\uC5D0\uB294 \uCDA9\uBD84\uD558\uC9C0\uB9CC \uCD9C\uC2DC\uD558\uAE30\uC5D0\uB294 \uBD80\uC871\uD569\uB2C8\uB2E4. \uC81C\uC791\uD300\uC5D0\uB294 \uC57C\uC2EC\uC744 \uAC80\uC99D \uAC00\uB2A5\uD55C \uC120\uD0DD\uC73C\uB85C \uBC14\uAFB8\uB294 \uB354 \uC791\uACE0 \uC9D1\uC911\uB41C \uBB38\uC11C\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4.",
+      "\uC720\uC6A9\uD55C \uBE0C\uB9AC\uD504\uAC00 \uD558\uB294 \uC138 \uAC00\uC9C0 \uC77C",
+      "1. \uBB38\uC81C\uB97C \uACAA\uB294 \uC0AC\uB78C\uC744 \uAD6C\uCCB4\uD654\uD558\uAE30",
+      "\uC18C\uAE30\uC5C5\uC740 \uC2DC\uC7A5\uC774\uC9C0 \uCCAB \uC0AC\uC6A9\uC790\uAC00 \uC544\uB2D9\uB2C8\uB2E4. \uC88B\uC740 \uBE0C\uB9AC\uD504\uB294 \uADF8 \uC0AC\uB78C\uACFC \uC0C1\uD669, \uADF8\uB9AC\uACE0 \uC624\uB298 \uC0AC\uC6A9\uD558\uB294 \uC784\uC2DC \uD574\uACB0\uCC45\uC744 \uAD6C\uCCB4\uC801\uC73C\uB85C \uC801\uC2B5\uB2C8\uB2E4. \uB0B4\uC77C \uC608\uC57D\uC744 \uCDE8\uC18C\uD560 \uBCD1\uC6D0 \uAD00\uB9AC\uC790\uAC00 \uACAA\uB294 \uBB38\uC81C\uC640 \uC0C8 \uC608\uC57D\uC744 \uCC3E\uB294 \uD658\uC790\uC758 \uBB38\uC81C\uB294 \uB2E4\uB985\uB2C8\uB2E4. \uCCAB \uC0AC\uC6A9\uC790\uB97C \uAD6C\uCCB4\uD654\uD560\uC218\uB85D \uB2E4\uC74C \uC81C\uD488 \uACB0\uC815\uC744 \uB0B4\uB9AC\uAE30 \uC26C\uC6CC\uC9D1\uB2C8\uB2E4.",
+      "2. \uCCAB \uBC84\uC804\uC758 \uACBD\uACC4\uB97C \uC815\uD558\uAE30",
+      "\uAE30\uB2A5 \uBAA9\uB85D\uC740 \uC0AC\uB78C\uB4E4\uC774 \uC0C1\uC0C1\uD55C \uAC83\uC744 \uB9D0\uD558\uC9C0\uB9CC \uBC94\uC704\uC758 \uACBD\uACC4\uB294 \uC2E4\uC81C\uB85C \uB9CC\uB4E4 \uAC83\uC744 \uB9D0\uD569\uB2C8\uB2E4. \uD575\uC2EC \uC21C\uD658\uC744 \uD55C \uBB38\uC7A5\uC73C\uB85C \uC4F0\uACE0, \uADF8\uAC83\uC744 \uC548\uC815\uC801\uC73C\uB85C \uC791\uB3D9\uC2DC\uD0A4\uB294 \uD654\uBA74\xB7\uC758\uBBF8 \uC788\uB294 \uD589\uB3D9\xB7\uB370\uC774\uD130\xB7\uC131\uACF5\uC744 \uC54C\uB824 \uC8FC\uB294 \uD53C\uB4DC\uBC31\uC744 \uC801\uC73C\uC138\uC694. \uB098\uBA38\uC9C0\uB294 \uCD9C\uC2DC \uC694\uAD6C\uC0AC\uD56D\uC774 \uC544\uB2C8\uB77C \uC774\uD6C4 \uD6C4\uBCF4\uC785\uB2C8\uB2E4.",
+      "3. \uB2E4\uC74C \uC99D\uAC70\uB97C \uC815\uC758\uD558\uAE30",
+      "\uCD9C\uC2DC \uD6C4 \uC9C0\uCF1C\uBCF4\uACA0\uB2E4\uB294 \uB9D0\uC740 \uD559\uC2B5 \uACC4\uD68D\uC774 \uC544\uB2D9\uB2C8\uB2E4. \uCC98\uC74C \uBA87 \uC8FC\uC5D0 \uAD00\uCC30\uD560 \uC644\uB8CC\uB41C \uD750\uB984, \uBC18\uBCF5 \uD589\uB3D9, \uACB0\uC81C \uC804\uD658 \uB610\uB294 \uD2B9\uC815 \uC0AC\uC6A9\uC790\uC640\uC758 \uC778\uD130\uBDF0\uB97C \uC815\uD558\uC138\uC694. \uBCF5\uC7A1\uD560 \uD544\uC694\uB294 \uC5C6\uC9C0\uB9CC \uB2E4\uC74C \uC81C\uD488 \uACB0\uC815\uC744 \uBC14\uAFC0 \uB9CC\uD07C \uC2E4\uC81C \uD589\uB3D9\uC5D0 \uAC00\uAE4C\uC6CC\uC57C \uD569\uB2C8\uB2E4.",
+      "\uD654\uBA74\uC744 \uB514\uC790\uC778\uD558\uAE30 \uC804\uC5D0 \uC801\uC744 \uAC83",
+      ["\uCCAB \uC0AC\uC6A9\uC790: \uC5ED\uD560, \uC0C1\uD669, \uACE0\uD1B5\uC2A4\uB7EC\uC6B4 \uC784\uC2DC \uD574\uACB0\uCC45", "\uD575\uC2EC \uC21C\uD658: \uAC00\uCE58\uB97C \uB9CC\uB4E4\uACE0 \uBC18\uBCF5\uD560 \uC218 \uC788\uB294 \uCD5C\uC18C \uD589\uB3D9", "\uCD9C\uC2DC \uBC94\uC704: \uCCAB \uBC84\uC804\uC5D0\uC11C \uBA85\uD655\uD788 \uC81C\uC678\uD560 \uB0B4\uC6A9", "\uC2E0\uB8B0 \uC694\uAD6C\uC0AC\uD56D: \uC0AC\uC6A9\uC790\uAC00 \uD589\uB3D9\uD558\uAE30 \uC804\uC5D0 \uBCF4\uACE0 \uD1B5\uC81C\uD558\uACE0 \uC774\uD574\uD574\uC57C \uD560 \uAC83", "\uB2E4\uC74C \uAC80\uC99D \uC9C0\uC810: \uD55C \uCC28\uB840 \uB354 \uB9CC\uB4E4 \uAC00\uCE58\uAC00 \uC788\uB294 \uD589\uB3D9\uC774\uB098 \uB300\uD654"],
+      "\uC6B0\uB9AC\uAC00 \uC0AC\uC6A9\uD558\uB294 \uBC94\uC704 \uD14C\uC2A4\uD2B8",
+      "\uC81C\uC548\uD55C \uAE30\uB2A5\uC744 \uD558\uB098\uC529 \uC0B4\uD3B4\uBCF4\uBA70 \uBB3B\uC2B5\uB2C8\uB2E4. \uC774 \uAE30\uB2A5\uC774 \uCCAB \uC0AC\uC6A9\uC790\uC5D0\uAC8C \uD575\uC2EC \uC21C\uD658\uC774 \uC131\uACF5\uD560 \uAC00\uB2A5\uC131\uC744 \uB192\uC774\uB294\uAC00? \uC544\uB2C8\uB77C\uBA74 \uCCAB \uBC84\uC804\uC5D0\uC11C \uC81C\uC678\uD569\uB2C8\uB2E4. \uAC00\uB2A5\uD558\uB2E4\uBA74 \uBCF4\uD638\uD558\uB294 \uAC00\uC124\uC744 \uC4F0\uACE0 \uB354 \uC800\uB834\uD558\uAC8C \uAC80\uC99D\uD560 \uBC29\uBC95\uC744 \uCC3E\uC2B5\uB2C8\uB2E4. \uC774\uB807\uAC8C \uD558\uBA74 \uC720\uC6A9\uD55C \uAE30\uB2A5\uC774 \uC81C\uD488\uC744 \uC601\uC6D0\uD788 \uBBF8\uB8E8\uB294 \uD551\uACC4\uAC00 \uB418\uB294 \uAC83\uC744 \uB9C9\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+      "\uBE0C\uB9AC\uD504\uC758 \uBAA9\uD45C\uB294 \uB9CC\uB4E4 \uC218 \uC788\uB294 \uBAA8\uB4E0 \uAC83\uC744 \uAE30\uB85D\uD558\uB294 \uAC83\uC774 \uC544\uB2C8\uB77C \uB2E4\uC74C \uC81C\uC791 \uACB0\uC815\uC744 \uD55C\uB208\uC5D0 \uBCF4\uC774\uAC8C \uD558\uB294 \uAC83\uC785\uB2C8\uB2E4.",
+      { title: "Start Apps Studio\uC5D0\uC11C\uC758 \uD65C\uC6A9\uBC95", text: "\uC81C\uC791 \uACAC\uC801\uC744 \uB0B4\uAE30 \uC804\uC5D0 \uCC3D\uC5C5\uC790\uC758 \uC544\uC774\uB514\uC5B4\uB97C \uD55C \uD398\uC774\uC9C0 \uBC94\uC704 \uC124\uBA85\uC73C\uB85C \uBC14\uAFC9\uB2C8\uB2E4. \uD55C \uBA85\uC758 \uC0AC\uC6A9\uC790, \uD558\uB098\uC758 \uD575\uC2EC \uC21C\uD658, \uC774\uB97C \uB4B7\uBC1B\uCE68\uD558\uB294 \uD654\uBA74\uACFC \uC778\uD504\uB77C, \uB2E4\uC74C \uACB0\uC815\uC744 \uBC14\uAFD4\uC57C \uD558\uB294 \uC99D\uAC70\uB97C \uC815\uB9AC\uD569\uB2C8\uB2E4. \uC774 \uBB38\uC11C\uB294 \uC804\uB7B5\xB7\uB514\uC790\uC778\xB7\uC5D4\uC9C0\uB2C8\uC5B4\uB9C1\xB7\uCD9C\uC2DC \uC0AC\uC774\uC758 \uC778\uC218\uC778\uACC4 \uC790\uB8CC\uAC00 \uB418\uBA70 \uC0C8 \uAE30\uB2A5\uC774 \uCCAB \uBC84\uC804\uC5D0 \uBAB0\uB798 \uB4E4\uC5B4\uC624\uB824 \uD560 \uB54C \uAE30\uC900\uC810\uC774 \uB429\uB2C8\uB2E4." },
+      "\uC790\uC8FC \uBB3B\uB294 \uC9C8\uBB38",
+      [
+        { q: "MVP \uBE0C\uB9AC\uD504\uB294 \uC5BC\uB9C8\uB098 \uAE38\uC5B4\uC57C \uD558\uB098\uC694?", a: "\uD55C \uBC88\uC5D0 \uC77D\uC744 \uC218 \uC788\uC744 \uB9CC\uD07C \uC9E7\uACE0 \uC120\uD0DD\uC744 \uB0B4\uB9B4 \uB9CC\uD07C \uAD6C\uCCB4\uC801\uC774\uC5B4\uC57C \uD569\uB2C8\uB2E4. \uCCAB \uC0AC\uC6A9\uC790, \uD575\uC2EC \uC21C\uD658, \uCD9C\uC2DC \uBC94\uC704, \uC2E0\uB8B0 \uC694\uAD6C\uC0AC\uD56D\uACFC \uB2E4\uC74C \uAC80\uC99D \uC9C0\uC810\uC744 \uC815\uD588\uB2E4\uBA74 \uBCF4\uD1B5 \uD55C\uB450 \uD398\uC774\uC9C0\uBA74 \uCDA9\uBD84\uD569\uB2C8\uB2E4." },
+        { q: "\uC644\uC804\uD55C \uAE30\uB2A5 \uBAA9\uB85D\uC744 \uBE0C\uB9AC\uD504\uC5D0 \uB123\uC5B4\uC57C \uD558\uB098\uC694?", a: "\uD575\uC2EC \uC21C\uD658\uC5D0 \uD544\uC694\uD55C \uAE30\uB2A5\uB9CC \uB123\uACE0 \uB098\uBA38\uC9C0\uB294 \uC774\uD6C4 \uC544\uC774\uB514\uC5B4\uB85C \uBD84\uB9AC\uD558\uC138\uC694. \uBCF4\uB958 \uBAA9\uB85D\uC740 \uC88B\uC740 \uC544\uC774\uB514\uC5B4\uB97C \uBCF4\uC874\uD558\uBA74\uC11C \uCD9C\uC2DC \uC694\uAD6C\uC0AC\uD56D\uC73C\uB85C \uBAB0\uB798 \uBCC0\uD558\uB294 \uAC83\uC744 \uB9C9\uC2B5\uB2C8\uB2E4." },
+        { q: "\uBAA9\uD45C \uC0AC\uC6A9\uC790\uAC00 \uC544\uC9C1 \uD655\uC2E4\uD558\uC9C0 \uC54A\uC73C\uBA74 \uC5B4\uB5BB\uAC8C \uD558\uB098\uC694?", a: "\uAC00\uC7A5 \uC720\uB825\uD55C \uB450 \uD6C4\uBCF4\uC640 \uB458\uC744 \uAD6C\uBD84\uD560 \uC99D\uAC70\uB97C \uC801\uC73C\uC138\uC694. \uBD88\uD655\uC2E4\uC131\uC740 \uBA85\uD655\uD558\uAC8C \uB4DC\uB7EC\uB098\uBA74 \uC720\uC6A9\uD558\uC9C0\uB9CC \uB113\uC740 \uBC94\uC704 \uC18D\uC5D0 \uC228\uC73C\uBA74 \uBE44\uC6A9\uC774 \uCEE4\uC9D1\uB2C8\uB2E4." },
+        { q: "\uB514\uC790\uC778 \uC804\uC5D0 \uBE0C\uB9AC\uD504\uB97C \uC644\uC131\uD574\uC57C \uD558\uB098\uC694?", a: "\uCCAB \uB514\uC790\uC778\uC744 \uC774\uB04C \uB9CC\uD07C \uBA85\uD655\uD574\uC57C \uD558\uC9C0\uB9CC \uC601\uC6D0\uD788 \uACE0\uC815\uD560 \uD544\uC694\uB294 \uC5C6\uC2B5\uB2C8\uB2E4. \uB514\uC790\uC778\uC774 \uB354 \uB098\uC740 \uC9C8\uBB38\uC744 \uC81C\uC2DC\uD560 \uC218 \uC788\uC73C\uBBC0\uB85C, \uBC14\uB014 \uB54C\uB9C8\uB2E4 \uBC94\uC704\uC640 \uBAA8\uC73C\uB824\uB294 \uC99D\uAC70\uB97C \uD568\uAED8 \uAC31\uC2E0\uD558\uC138\uC694." }
+      ]
+    ];
+    mvp = makeMvp();
+    KO_EDITORIAL_CONTENT = {
+      copy: {
+        journalName: "The Journal \xB7 \uC81C1\uAD8C",
+        journalTitle: "\uC2A4\uD29C\uB514\uC624\uC5D0\uC11C \uC804\uD558\uB294 \uD604\uC7A5 \uB178\uD2B8.",
+        journalDescription: "Google\uC5D0\uC11C \uC21C\uC704\uC5D0 \uC624\uB974\uACE0 AI\uC5D0 \uC778\uC6A9\uB418\uB294 MVP\uB97C \uB9CC\uB4DC\uB294 \uC774\uC57C\uAE30: GEO, vibe-coding, \uADF8\uB9AC\uACE0 \uC5C5\uBB34 \uC18D AI\uC758 \uD604\uC7AC.",
+        resourcesTitle: "\uB514\uC9C0\uD138 \uC81C\uD488\uC744 \uB9CC\uB4E4\uACE0 \uCD9C\uC2DC\uD558\uAE30 \uC704\uD55C \uC2E4\uC6A9 \uAC00\uC774\uB4DC.",
+        resourcesDescription: "\uC81C\uD488 \uC804\uB7B5, AI \uC9C0\uC6D0 \uAC1C\uBC1C, \uAE30\uC220 \uC120\uD0DD, \uC18C\uC720\uAD8C, \uC778\uC218\uC778\uACC4\uC640 MVP \uCD9C\uC2DC\uC5D0 \uAD00\uD55C \uC2E4\uC6A9 \uC790\uB8CC\uC785\uB2C8\uB2E4.",
+        read: "\uB178\uD2B8 \uC77D\uAE30",
+        minutes: "\uBD84 \uC77D\uAE30",
+        allNotes: "\uBAA8\uB4E0 \uB178\uD2B8",
+        sources: "\uCD9C\uCC98",
+        shortAnswer: "\uC9E7\uC740 \uB2F5\uBCC0",
+        language: "\uC5B8\uC5B4",
+        translatedArticleTitle: mvp.title,
+        translatedArticleDescription: "\uC720\uC6A9\uD55C MVP \uBE0C\uB9AC\uD504\uB294 \uCCAB \uC0AC\uC6A9\uC790\uB97C \uC815\uD558\uACE0 \uCCAB \uBC84\uC804\uC758 \uACBD\uACC4\uB97C \uC138\uC6B0\uBA70 \uB2E4\uC74C \uACB0\uC815\uC744 \uC704\uD55C \uC99D\uAC70\uB97C \uC815\uC758\uD569\uB2C8\uB2E4."
+      },
+      resources: {
+        title: "\uB514\uC9C0\uD138 \uC81C\uD488\uC744 \uB9CC\uB4E4\uACE0 \uCD9C\uC2DC\uD558\uAE30 \uC704\uD55C \uC2E4\uC6A9 \uAC00\uC774\uB4DC.",
+        description: "\uC81C\uD488 \uC804\uB7B5, AI \uC9C0\uC6D0 \uAC1C\uBC1C, \uAE30\uC220 \uC120\uD0DD, \uC18C\uC720\uAD8C, \uC778\uC218\uC778\uACC4\uC640 MVP \uCD9C\uC2DC\uC5D0 \uAD00\uD55C \uC2E4\uC6A9 \uC790\uB8CC\uC785\uB2C8\uB2E4.",
+        eyebrow: "Start Apps Studio \xB7 \uB9AC\uC18C\uC2A4",
+        primaryAction: "\uD504\uB85C\uC81D\uD2B8 \uC0C1\uB2F4\uD558\uAE30",
+        journalAction: "Journal \uC77D\uAE30",
+        routes: { title: "\uB2E4\uC74C \uACBD\uB85C \uC120\uD0DD\uD558\uAE30", intro: "\uCCAB \uBC88\uC9F8 \uC774\uC815\uD45C\uB294 \uC0C1\uC0C1\uD560 \uC218 \uC788\uB294 \uC18C\uD504\uD2B8\uC6E8\uC5B4\uC758 \uC591\uC774 \uC544\uB2C8\uB77C \uBB34\uC5C7\uC744 \uC99D\uBA85\uD574\uC57C \uD558\uB294\uC9C0\uC5D0 \uB2EC\uB824 \uC788\uC2B5\uB2C8\uB2E4.", cards: [
+          { kicker: "01 \xB7 \uBC29\uD5A5", title: "\uAC00\uC7A5 \uC791\uC740 \uC720\uD6A8\uD55C \uC99D\uAC70\uB85C \uC2DC\uC791\uD558\uAE30", text: "\uB7F0\uCE58 \uC0AC\uC774\uD2B8\uB294 \uC0AC\uB78C\uB4E4\uC774 \uC81C\uC548\uC744 \uC774\uD574\uD558\uB294\uC9C0 \uB2F5\uD569\uB2C8\uB2E4. \uD504\uB85C\uD1A0\uD0C0\uC785\uC740 \uACBD\uD5D8\uC5D0 \uBC18\uC751\uD558\uB294\uC9C0 \uB2F5\uD569\uB2C8\uB2E4. MVP\uB294 \uC2E4\uC81C \uC0AC\uC6A9\uC790\uAC00 \uBB34\uC5C7\uC744 \uD558\uB294\uC9C0 \uB2F5\uD569\uB2C8\uB2E4.", bullets: ["\uB2E4\uC74C \uCD9C\uC2DC\uAC00 \uC5F4\uC5B4\uC57C \uD560 \uACB0\uC815 \uD558\uB098\uB97C \uACE0\uB974\uAE30", "\uBC30\uC6B8 \uC218 \uC788\uC744 \uB9CC\uD07C \uCCAB \uBC84\uC804\uC744 \uC881\uAC8C \uC720\uC9C0\uD558\uAE30", "\uD544\uC694\uD55C \uC99D\uAC70\uC5D0 \uB9DE\uB294 \uD328\uD0A4\uC9C0 \uC0AC\uC6A9\uD558\uAE30"] },
+          { kicker: "02 \xB7 AI \uC9C0\uC6D0 \uAC1C\uBC1C", title: "\uAD6C\uC870\uAC00 \uACAC\uACE0\uD560 \uB54C \uC18D\uB3C4\uAC00 \uAC00\uCE58 \uC788\uC2B5\uB2C8\uB2E4", text: "AI\uB294 \uD0D0\uC0C9\xB7\uCF54\uB529\xB7\uAC80\uD1A0\uB97C \uBE60\uB974\uAC8C \uD558\uC9C0\uB9CC \uC81C\uD488 \uD310\uB2E8\xB7\uC544\uD0A4\uD14D\uCC98\xB7\uD14C\uC2A4\uD2B8\uC640 \uACB0\uACFC\uC5D0 \uCC45\uC784\uC9C0\uB294 \uC0AC\uB78C\uC744 \uB300\uC2E0\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.", bullets: ["AI\uB85C \uC120\uD0DD\uC9C0\uB97C \uD0D0\uC0C9\uD558\uACE0 \uBC18\uBCF5\uC744 \uC904\uC774\uAE30", "\uC2E4\uC81C \uC0AC\uC6A9\uC790 \uD750\uB984\uC5D0 \uB9DE\uCDB0 \uC0DD\uC131 \uCF54\uB4DC\uB97C \uAC80\uD1A0\uD558\uAE30", "\uCD9C\uC2DC \uC2DC\uC2A4\uD15C\uC744 \uC774\uD574\uD558\uACE0 \uD655\uC7A5\uD560 \uC218 \uC788\uAC8C \uC720\uC9C0\uD558\uAE30"] },
+          { kicker: "03 \xB7 \uC18C\uC720\uAD8C", title: "\uC778\uC218\uC778\uACC4 \uB54C \uBB34\uC5C7\uC744 \uBC1B\uB294\uC9C0 \uBB3B\uAE30", text: "\uC131\uACF5\uC801\uC778 \uC81C\uC791\uC740 \uCD5C\uC885 \uBC1C\uD45C \uC774\uC0C1\uC785\uB2C8\uB2E4. \uC18C\uC2A4 \uCF54\uB4DC\xB7\uB514\uC790\uC778 \uD30C\uC77C\xB7\uACC4\uC815\xB7\uBC30\uD3EC \uAD8C\uD55C\uACFC \uB9E5\uB77D\uC774 \uB2E4\uC74C \uD300\uC744 \uC704\uD574 \uC900\uBE44\uB418\uC5B4\uC57C \uD569\uB2C8\uB2E4.", bullets: ["\uACC4\uC815\uACFC \uC791\uC5C5 \uD30C\uC77C\uC758 \uC18C\uC720\uC790 \uD655\uC778\uD558\uAE30", "\uB9C8\uC9C0\uB9C9 \uC8FC \uC804\uC5D0 \uC791\uB3D9\uD558\uB294 \uC9C4\uD589 \uC0C1\uD669 \uAC80\uD1A0\uD558\uAE30", "\uBB38\uC11C\uD654\uB418\uACE0 \uC720\uC9C0 \uAC00\uB2A5\uD55C \uAE30\uBC18\uC744 \uB0A8\uAE30\uAE30"] },
+          { kicker: "04 \xB7 \uD30C\uD2B8\uB108 \uC801\uD569\uC131", title: "\uC77C\uD558\uB294 \uBC29\uC2DD\uC744 \uBE44\uAD50\uD558\uAE30", text: "\uC81C\uD488 \uD30C\uD2B8\uB108\uB97C \uACE0\uB974\uAE30 \uC804 \uBC94\uC704\uC758 \uBA85\uD655\uC131, \uD53C\uB4DC\uBC31 \uC8FC\uAE30, \uCC45\uC784, \uCD9C\uC2DC \uD6C4 \uC9C0\uC6D0\uACFC \uC0AC\uC5C5 \uB2E8\uACC4\uC758 \uC801\uD569\uC131\uC744 \uBE44\uAD50\uD558\uC138\uC694.", bullets: ["\uC81C\uD488 \uACB0\uC815\uC740 \uB204\uAC00 \uB0B4\uB9AC\uB098\uC694?", "\uC5B8\uC81C \uC2E4\uC81C \uACB0\uACFC\uBB3C\uC744 \uBCF4\uAC8C \uB418\uB098\uC694?", "\uB2E4\uB978 \uD300\uC774 \uCC98\uC74C\uBD80\uD130 \uB2E4\uC2DC \uC2DC\uC791\uD558\uC9C0 \uC54A\uACE0 \uC774\uC5B4\uAC08 \uC218 \uC788\uB098\uC694?"] }
+        ] },
+        packages: { title: "\uD328\uD0A4\uC9C0 \uACBD\uB85C \uAC00\uC774\uB4DC", intro: "\uACF5\uAC1C \uD328\uD0A4\uC9C0\uB97C \uB300\uD654\uC758 \uCD9C\uBC1C\uC810\uC73C\uB85C \uC0AC\uC6A9\uD558\uC138\uC694. \uC791\uC5C5 \uC804 \uBC94\uC704\uB97C \uD569\uC758\uD569\uB2C8\uB2E4.", columns: ["\uACBD\uB85C", "\uD22C\uC790", "\uC77C\uBC18\uC801\uC778 \uAE30\uAC04", "\uC774\uB7F4 \uB54C \uC801\uD569"], rows: [
+          { route: "Launch Site", investment: "$2,600", timing: "\uC601\uC5C5\uC77C 3\u20135\uC77C", bestFor: "\uC81C\uC548\uC744 \uC124\uBA85\uD558\uACE0 \uC2E0\uB8B0\uD560 \uC218 \uC788\uB294 \uB514\uC9C0\uD138 \uC874\uC7AC\uAC10 \uB9CC\uB4E4\uAE30" },
+          { route: "Prototype", investment: "$6,000", timing: "5\u201310\uC77C", bestFor: "\uAC80\uC99D\xB7\uD22C\uC790 \uC720\uCE58\xB7\uCD08\uAE30 \uB300\uD654\uB97C \uC704\uD574 \uC544\uC774\uB514\uC5B4\uB97C \uAD6C\uCCB4\uD654\uD558\uAE30" },
+          { route: "MVP", investment: "$15,000\u2013$30,000", timing: "3\u20138\uC8FC", bestFor: "\uC2E4\uC81C Web, iOS \uB610\uB294 Android \uC81C\uD488\uC744 \uC0AC\uC6A9\uC790\uC5D0\uAC8C \uC81C\uACF5\uD558\uAE30" },
+          { route: "Custom", investment: "$25,000", timing: "1\u20136\uAC1C\uC6D4", bestFor: "\uC7A5\uAE30 \uCC45\uC784\uC774 \uD544\uC694\uD55C \uB354 \uD06C\uACE0 \uBCF5\uC7A1\uD55C \uC2DC\uC2A4\uD15C \uB9CC\uB4E4\uAE30" }
+        ] },
+        toolkit: { title: "\uC791\uC5C5\uC744 \uB4B7\uBC1B\uCE68\uD558\uB294 \uB3C4\uAD6C", intro: "\uC81C\uD488 \uACB0\uACFC, \uC778\uC218\uD560 \uD300\uACFC \uC0AC\uC5C5 \uB2E8\uACC4\uC5D0 \uB9DE\uCDB0 \uB3C4\uAD6C\uB97C \uC120\uD0DD\uD569\uB2C8\uB2E4.", groups: [
+          { label: "\uC544\uC774\uB514\uC5B4\uB97C \uB208\uC5D0 \uBCF4\uC774\uAC8C", description: "\uAC1C\uB150\uC744 \uB20C\uB7EC \uBCF4\uACE0 \uACF5\uC720\uD558\uACE0 \uD14C\uC2A4\uD2B8\uD560 \uC218 \uC788\uB294 \uD654\uBA74\uC73C\uB85C \uBC14\uAFB8\uB294 \uBC29\uBC95\uC785\uB2C8\uB2E4.", tools: [{ name: "Figma", note: "\uCF54\uB529 \uC804 \uBAA8\uB4E0 \uD654\uBA74\uC744 \uB514\uC790\uC778", tone: "figma" }, { name: "Rork", note: "\uBA70\uCE60 \uB9CC\uC5D0 \uC2E4\uC81C \uD734\uB300\uD3F0\uC5D0\uC11C \uD14C\uC2A4\uD2B8", tone: "rork" }, { name: "Lovable", note: "\uBA70\uCE60 \uB9CC\uC5D0 \uB7F0\uCE58 \uC0AC\uC774\uD2B8 \uCD9C\uC2DC", tone: "lovable" }, { name: "Replit", note: "\uC2E4\uD589\uD558\uACE0 \uD3B8\uC9D1\uD560 \uC218 \uC788\uB294 \uC81C\uD488", tone: "replit" }] },
+          { label: "\uC624\uB798\uAC00\uB294 \uC81C\uD488 \uB9CC\uB4E4\uAE30", description: "\uC0AC\uC6A9\uC790\uAC00 \uC124\uCE58\uD558\uACE0 \uC5F4\uACE0 \uACB0\uC81C\uD558\uB294 \uC571\uC744 \uC9C0\uD0F1\uD558\uB294 \uC5D4\uC9C0\uB2C8\uC5B4\uB9C1\uC785\uB2C8\uB2E4.", tools: [{ name: "React Native", note: "\uD558\uB098\uC758 \uCF54\uB4DC\uBCA0\uC774\uC2A4, iOS + Android", tone: "expo" }, { name: "Swift", note: "\uB124\uC774\uD2F0\uBE0C iOS, iPhone\uC5D0\uC11C \uAC00\uC7A5 \uBE60\uB974\uAC8C", tone: "swift" }, { name: "Kotlin", note: "\uB124\uC774\uD2F0\uBE0C Android, Play Store \uC804\uCCB4 \uB3C4\uB2EC", tone: "kotlin" }, { name: "Node + PostgreSQL", note: "\uC548\uC804\uD558\uACE0 \uB0B4\uBCF4\uB0BC \uC218 \uC788\uB294 \uB370\uC774\uD130", tone: "node" }] },
+          { label: "\uCCAB\uB0A0\uBD80\uD130 \uC218\uC775\uACFC \uCD9C\uC2DC", description: "\uACB0\uC81C\xB7\uC5C5\uB370\uC774\uD2B8\xB7\uCF54\uB4DC \uC548\uC804\uC744 \uB098\uC911\uC774 \uC544\uB2C8\uB77C \uCC98\uC74C\uBD80\uD130 \uC5F0\uACB0\uD569\uB2C8\uB2E4.", open: true, tools: [{ name: "Stripe", note: "\uC77C\uD68C\uC131 \uACB0\uC81C\xB7\uAD6C\uB3C5\xB7\uC5C5\uADF8\uB808\uC774\uB4DC", tone: "stripe" }, { name: "RevenueCat", note: "App Store \uBC0F Play Store \uACB0\uC81C", tone: "revenuecat" }, { name: "GitHub", note: "\uB9E4\uC77C \uBC31\uC5C5\uB418\uC5B4 \uCF54\uB4DC\uB97C \uC548\uC804\uD558\uAC8C \uBCF4\uAD00", tone: "github" }, { name: "Automation", note: "n8n + Make\uAC00 \uBC18\uBCF5 \uC5C5\uBB34 \uCC98\uB9AC", tone: "hooks" }] },
+          { label: "\uBC29\uD574\uD558\uC9C0 \uC54A\uB294 \uBC31\uADF8\uB77C\uC6B4\uB4DC AI", description: "AI\uB294 \uB9AC\uC11C\uCE58\xB7\uAD6C\uD604\xB7\uAC80\uD1A0\uB97C \uB3D5\uACE0 \uBC29\uD5A5\uACFC \uD488\uC9C8 \uAE30\uC900\uC740 \uC0AC\uB78C\uC774 \uCC45\uC784\uC9D1\uB2C8\uB2E4.", tools: [{ name: "Claude", note: "\uC8FC\uC694 \uBE4C\uB354\uC640 \uCF54\uB4DC \uB9AC\uBDF0\uC5B4", tone: "claude" }, { name: "Gemini", note: "\uC81C\uD488 \uC804\uCCB4\uB97C \uD55C \uBC88\uC5D0 \uAC80\uD1A0", tone: "gemini" }, { name: "GPT-5", note: "\uCE74\uD53C\xB7\uD50C\uB85C\uC6B0\xB7\uD06C\uB9AC\uC5D0\uC774\uD2F0\uBE0C \uBC29\uD5A5", tone: "gpt" }, { name: "Llama 4", note: "\uBBFC\uAC10\uD55C \uC791\uC5C5\uC744 \uC704\uD55C \uC790\uCCB4 \uD638\uC2A4\uD305 \uC635\uC158", tone: "llama" }] }
+        ], footnote: "\uCF54\uB4DC\xB7\uACC4\uC815\xB7\uC791\uC5C5 \uD30C\uC77C\uC740 \uC5EC\uB7EC\uBD84\uC774 \uBCF4\uC720\uD569\uB2C8\uB2E4. \uB354 \uB098\uC740 \uB3C4\uAD6C\uAC00 \uB098\uC640\uB3C4 \uC81C\uD488\uC744 \uC778\uC9C8\uB85C \uC7A1\uD788\uC9C0 \uC54A\uACE0 \uAD50\uCCB4\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4." },
+        journal: { title: "Journal \uD604\uC7A5 \uB178\uD2B8", text: "MVP \uC804\uB7B5, SEO, GEO, vibe-coded \uC571\uACFC \uC81C\uD488\uC744 \uC27D\uAC8C \uCD9C\uC2DC\uD558\uAC8C \uB9CC\uB4DC\uB294 \uACB0\uC815\uC5D0 \uAD00\uD55C \uAE34 \uB178\uD2B8\uC785\uB2C8\uB2E4.", readAction: "\uB178\uD2B8 \uC77D\uAE30", minutesLabel: "\uBD84 \uC77D\uAE30", allAction: "\uBAA8\uB4E0 Journal \uB178\uD2B8", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
+        cta: { title: "\uC0DD\uAC01\uD574 \uB454 \uACBD\uB85C\uAC00 \uC788\uB098\uC694?", text: "\uD604\uC7AC \uC704\uCE58\uC640 \uC99D\uBA85\uD574\uC57C \uD560 \uAC83, \uC9C0\uAE08 \uB9C9\uD78C \uC9C0\uC810\uC744 \uC54C\uB824 \uC8FC\uC138\uC694.", action: "\uB2E4\uC74C \uB2E8\uACC4 \uD655\uC778\uD558\uAE30" }
+      },
+      post: mvp,
+      translatedPosts: KO_TRANSLATED_POSTS
+    };
+    ko_default = KO_EDITORIAL_CONTENT;
+  }
+});
+
 // server/journal/locales/ru-posts.ts
 function t(value) {
   const translated2 = translations2[value];
@@ -7434,19 +7866,19 @@ function localizeBlock(block) {
       };
   }
 }
-function localizePost(source11) {
+function localizePost(source12) {
   return {
-    ...source11,
-    title: t(source11.title),
-    ...source11.seoTitle ? { seoTitle: t(source11.seoTitle) } : {},
-    description: t(source11.description),
-    ...source11.seoDescription ? { seoDescription: t(source11.seoDescription) } : {},
-    excerpt: t(source11.excerpt),
-    category: t(source11.category),
-    tags: source11.tags.map(t),
-    body: source11.body.map(localizeBlock),
-    ...source11.sources ? {
-      sources: source11.sources.map((item) => ({
+    ...source12,
+    title: t(source12.title),
+    ...source12.seoTitle ? { seoTitle: t(source12.seoTitle) } : {},
+    description: t(source12.description),
+    ...source12.seoDescription ? { seoDescription: t(source12.seoDescription) } : {},
+    excerpt: t(source12.excerpt),
+    category: t(source12.category),
+    tags: source12.tags.map(t),
+    body: source12.body.map(localizeBlock),
+    ...source12.sources ? {
+      sources: source12.sources.map((item) => ({
         ...item,
         label: t(item.label)
       }))
@@ -7855,24 +8287,24 @@ var init_ru_posts = __esm({
     };
     RU_TRANSLATED_POSTS = Object.fromEntries(
       slugs.map((slug5) => {
-        const source11 = getPost(slug5);
-        if (!source11)
+        const source12 = getPost(slug5);
+        if (!source12)
           throw new Error("Missing Russian editorial source post: " + slug5);
-        return [slug5, localizePost(source11)];
+        return [slug5, localizePost(source12)];
       })
     );
   }
 });
 
 // server/journal/locales/ru.ts
-var sourcePost10, RU_EDITORIAL_CONTENT, ru_default;
+var sourcePost11, RU_EDITORIAL_CONTENT, ru_default;
 var init_ru = __esm({
   "server/journal/locales/ru.ts"() {
     "use strict";
     init_posts();
     init_ru_posts();
-    sourcePost10 = getPost("the-mvp-brief-is-your-first-product-decision");
-    if (!sourcePost10) throw new Error("Missing MVP editorial source post.");
+    sourcePost11 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost11) throw new Error("Missing MVP editorial source post.");
     RU_EDITORIAL_CONTENT = {
       copy: {
         journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
@@ -8112,7 +8544,7 @@ var init_ru = __esm({
         }
       },
       post: {
-        ...sourcePost10,
+        ...sourcePost11,
         title: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435",
         seoTitle: "\u0411\u0440\u0438\u0444 MVP: \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u043E\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 | Start Apps Studio",
         description: "\u041F\u043E\u043B\u0435\u0437\u043D\u044B\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0435 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u043F\u0438\u0441\u044B\u0432\u0430\u0435\u0442 \u0438\u0434\u0435\u044E. \u041E\u043D \u043D\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044F, \u0436\u0451\u0441\u0442\u043A\u043E \u043E\u0447\u0435\u0440\u0447\u0438\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E \u0438 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u044F\u0435\u0442 \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443\u0442, \u0441\u0442\u043E\u0438\u0442 \u043B\u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0442\u044C \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0443.",
@@ -8251,19 +8683,19 @@ function translateBlock(block) {
   }
 }
 function localizedPost(slug5) {
-  const source11 = getPost(slug5);
-  if (!source11) throw new Error(`Missing journal source post "\${slug}".`);
+  const source12 = getPost(slug5);
+  if (!source12) throw new Error(`Missing journal source post "\${slug}".`);
   return {
-    ...source11,
-    title: translate(source11.title),
-    ...source11.seoTitle ? { seoTitle: translate(source11.seoTitle) } : {},
-    description: translate(source11.description),
-    ...source11.seoDescription ? { seoDescription: translate(source11.seoDescription) } : {},
-    excerpt: translate(source11.excerpt),
-    category: translate(source11.category),
-    tags: source11.tags.map(translate),
-    body: source11.body.map(translateBlock),
-    ...source11.sources ? { sources: source11.sources.map((item) => ({ ...item, label: translate(item.label) })) } : {}
+    ...source12,
+    title: translate(source12.title),
+    ...source12.seoTitle ? { seoTitle: translate(source12.seoTitle) } : {},
+    description: translate(source12.description),
+    ...source12.seoDescription ? { seoDescription: translate(source12.seoDescription) } : {},
+    excerpt: translate(source12.excerpt),
+    category: translate(source12.category),
+    tags: source12.tags.map(translate),
+    body: source12.body.map(translateBlock),
+    ...source12.sources ? { sources: source12.sources.map((item) => ({ ...item, label: translate(item.label) })) } : {}
   };
 }
 var slugs2, translations3, TR_TRANSLATED_POSTS;
@@ -8664,14 +9096,14 @@ var init_tr_posts = __esm({
 });
 
 // server/journal/locales/tr.ts
-var sourcePost11, TR_EDITORIAL_CONTENT, tr_default;
+var sourcePost12, TR_EDITORIAL_CONTENT, tr_default;
 var init_tr = __esm({
   "server/journal/locales/tr.ts"() {
     "use strict";
     init_posts();
     init_tr_posts();
-    sourcePost11 = getPost("the-mvp-brief-is-your-first-product-decision");
-    if (!sourcePost11) throw new Error("MVP source post is missing.");
+    sourcePost12 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost12) throw new Error("MVP source post is missing.");
     TR_EDITORIAL_CONTENT = {
       copy: { journalName: "The Journal \xB7 Cilt I", journalTitle: "St\xFCdyodan saha notlar\u0131.", journalDescription: "Google'da s\u0131ralanan ve yapay zek\xE2 taraf\u0131ndan al\u0131nt\u0131lanan MVP'leri yay\u0131na alma notlar\u0131: GEO, vibe-coding ve i\u015Fte yapay zek\xE2n\u0131n durumu.", resourcesTitle: "Dijital \xFCr\xFCnler geli\u015Ftirmek ve piyasaya s\xFCrmek i\xE7in pratik rehberler.", resourcesDescription: "\xDCr\xFCn stratejisi, yapay zek\xE2 destekli teslimat, teknoloji se\xE7imleri, sahiplik, devir ve MVP'yi yay\u0131na alma \xFCzerine pratik kaynaklar.", read: "Notu oku", minutes: "dk. okuma", allNotes: "T\xFCm notlar", sources: "Kaynaklar", shortAnswer: "K\u0131sa yan\u0131t", language: "Dil", translatedArticleTitle: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", translatedArticleDescription: "\u0130\u015Fe yarayan bir MVP \xF6zeti ilk kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn s\u0131n\u0131r\u0131n\u0131 \xE7izer ve sonraki karar\u0131n kan\u0131t\u0131n\u0131 belirler." },
       resources: {
@@ -8701,7 +9133,7 @@ var init_tr = __esm({
         journal: { title: "Journal'dan saha notlar\u0131", text: "MVP stratejisi, SEO, GEO, vibe-coded uygulamalar ve \xFCr\xFCn\xFC yay\u0131na almay\u0131 kolayla\u015Ft\u0131ran kararlar \xFCzerine daha uzun notlar.", readAction: "Notu oku", minutesLabel: "dk. okuma", allAction: "T\xFCm Journal notlar\u0131", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
         cta: { title: "Akl\u0131n\u0131zda bir rota var m\u0131?", text: "Nerede oldu\u011Funuzu, neyi kan\u0131tlaman\u0131z gerekti\u011Fini ve \u015Fu anda neyin tak\u0131ld\u0131\u011F\u0131n\u0131 payla\u015F\u0131n.", action: "Net bir sonraki ad\u0131m\u0131 al\u0131n" }
       },
-      post: { slug: sourcePost11.slug, publishedAt: sourcePost11.publishedAt, readMinutes: sourcePost11.readMinutes, title: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", seoTitle: "MVP \xD6zetleri: \u0130lk \xDCr\xFCn Karar\u0131n\u0131z | Start Apps Studio", description: "\u0130\u015Fe yarayan bir MVP \xF6zeti bir fikri tan\u0131mlamaktan fazlas\u0131n\u0131 yapar. Kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn etraf\u0131na kesin bir s\u0131n\u0131r \xE7izer ve geli\u015Ftirmeye devam edip etmeyece\u011Finizi s\xF6yleyen kan\u0131t\u0131 belirler.", seoDescription: "MVP \xF6zetiniz evrak i\u015Fi de\u011Fil, bir \xFCr\xFCn karar\u0131d\u0131r. Tasar\u0131m veya kod ba\u015Flamadan \xF6nce faydal\u0131 bir \xF6zetin tan\u0131mlamas\u0131 gereken \xFC\xE7 \u015Feyi \xF6\u011Frenin.", excerpt: "En iyi MVP \xF6zetleri uzun de\u011Fildir. \xDCr\xFCn\xFCn kimin i\xE7in oldu\u011Funa, birinci s\xFCr\xFCm\xFCn neyi yapmay\u0131 reddetti\u011Fine ve hangi kan\u0131t\u0131n sonraki \xE7al\u0131\u015Fma haftas\u0131n\u0131 hak etti\u011Fine karar verir.", category: "Saha Notlar\u0131", tags: ["MVP", "\xDCr\xFCn stratejisi", "Kurucular", "Kapsam"], body: [
+      post: { slug: sourcePost12.slug, publishedAt: sourcePost12.publishedAt, readMinutes: sourcePost12.readMinutes, title: "MVP \xF6zeti ilk \xFCr\xFCn karar\u0131n\u0131zd\u0131r", seoTitle: "MVP \xD6zetleri: \u0130lk \xDCr\xFCn Karar\u0131n\u0131z | Start Apps Studio", description: "\u0130\u015Fe yarayan bir MVP \xF6zeti bir fikri tan\u0131mlamaktan fazlas\u0131n\u0131 yapar. Kullan\u0131c\u0131y\u0131 tan\u0131mlar, birinci s\xFCr\xFCm\xFCn etraf\u0131na kesin bir s\u0131n\u0131r \xE7izer ve geli\u015Ftirmeye devam edip etmeyece\u011Finizi s\xF6yleyen kan\u0131t\u0131 belirler.", seoDescription: "MVP \xF6zetiniz evrak i\u015Fi de\u011Fil, bir \xFCr\xFCn karar\u0131d\u0131r. Tasar\u0131m veya kod ba\u015Flamadan \xF6nce faydal\u0131 bir \xF6zetin tan\u0131mlamas\u0131 gereken \xFC\xE7 \u015Feyi \xF6\u011Frenin.", excerpt: "En iyi MVP \xF6zetleri uzun de\u011Fildir. \xDCr\xFCn\xFCn kimin i\xE7in oldu\u011Funa, birinci s\xFCr\xFCm\xFCn neyi yapmay\u0131 reddetti\u011Fine ve hangi kan\u0131t\u0131n sonraki \xE7al\u0131\u015Fma haftas\u0131n\u0131 hak etti\u011Fine karar verir.", category: "Saha Notlar\u0131", tags: ["MVP", "\xDCr\xFCn stratejisi", "Kurucular", "Kapsam"], body: [
         { type: "answer", text: "\u0130\u015Fe yarayan bir MVP \xF6zeti tasar\u0131m ba\u015Flamadan \xF6nce \xFC\xE7 karar verir: \xFCr\xFCn\xFCn kimin i\xE7in oldu\u011Fu, birinci s\xFCr\xFCm\xFCn bilin\xE7li olarak neleri d\u0131\u015Far\u0131da b\u0131rakaca\u011F\u0131 ve hangi kullan\u0131c\u0131 kan\u0131t\u0131n\u0131n sonraki yat\u0131r\u0131m\u0131 hakl\u0131 \xE7\u0131karaca\u011F\u0131. Bu y\xFCzden \xF6zet evrak i\u015Fi de\u011Fildir. \u0130lk \xFCr\xFCn karar\u0131d\u0131r." },
         { type: "p", text: "Kurucular \xE7o\u011Fu zaman asl\u0131nda fikrin a\xE7\u0131klamas\u0131 olan bir \xF6zetle gelir: pazar hakk\u0131nda birka\xE7 paragraf, bir \xF6zellik listesi ve \xFCr\xFCn\xFCn bir g\xFCn nereye gidebilece\u011Fine dair bir c\xFCmle. Sohbet ba\u015Flatmaya yeter, ancak \xFCzerine \xFCr\xFCn \xE7\u0131karmaya yetmez. Bir geli\u015Ftirme ekibinin, hedefi test edilebilir se\xE7imler dizisine d\xF6n\xFC\u015Ft\xFCren daha k\xFC\xE7\xFCk ve daha keskin bir belgeye ihtiyac\u0131 vard\u0131r." },
         { type: "h2", text: "\u0130\u015Fe yarayan bir \xF6zet \xFC\xE7 i\u015F g\xF6r\xFCr", id: "three-jobs" },
@@ -8733,15 +9165,15 @@ var init_uk_posts = __esm({
     "use strict";
     init_posts();
     translatedPost2 = (slug5) => {
-      const source11 = getPost(slug5);
-      if (!source11) throw new Error(`Missing Ukrainian editorial source post "${slug5}".`);
-      return source11;
+      const source12 = getPost(slug5);
+      if (!source12) throw new Error(`Missing Ukrainian editorial source post "${slug5}".`);
+      return source12;
     };
     UK_TRANSLATED_POSTS = {
       "ai-overviews-citation-playbook-for-mvps": (() => {
-        const source11 = translatedPost2("ai-overviews-citation-playbook-for-mvps");
+        const source12 = translatedPost2("ai-overviews-citation-playbook-for-mvps");
         return {
-          ...source11,
+          ...source12,
           title: "\u041F\u043E\u0441\u0456\u0431\u043D\u0438\u043A \u0446\u0438\u0442\u0443\u0432\u0430\u043D\u043D\u044F AI Overviews \u0434\u043B\u044F MVP",
           seoTitle: "\u041F\u043E\u0441\u0456\u0431\u043D\u0438\u043A \u0456\u0437 \u0446\u0438\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0432 AI Overviews \u0434\u043B\u044F MVP | Start Apps Studio",
           description: "\u041F\u2019\u044F\u0442\u044C \u043A\u043E\u043D\u043A\u0440\u0435\u0442\u043D\u0438\u0445 \u0448\u0430\u0431\u043B\u043E\u043D\u0456\u0432, \u044F\u043A\u0456 \u043C\u0438 \u0431\u0430\u0447\u0438\u043C\u043E \u043D\u0430 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0430\u0445, \u0449\u043E \u043F\u043E\u0442\u0440\u0430\u043F\u043B\u044F\u044E\u0442\u044C \u0434\u043E Google AI Overviews: \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0456 \u0437 \u043E\u0434\u043D\u043E\u0433\u043E \u0440\u0435\u0447\u0435\u043D\u043D\u044F, \u0441\u0445\u0435\u043C\u0430 FAQPage, \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u0456 \u0442\u0430\u0431\u043B\u0438\u0446\u0456, \u0456\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0456 \u0441\u0443\u0442\u043D\u043E\u0441\u0442\u0456 \u043D\u0430 \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0442\u0430 \u0434\u0430\u0442\u043E\u0432\u0430\u043D\u0430 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430. \u0417\u0430\u0441\u0442\u043E\u0441\u043E\u0432\u0430\u043D\u043E \u0434\u043E \u0442\u0440\u044C\u043E\u0445 MVP Start Apps Studio.",
@@ -8888,15 +9320,15 @@ var init_uk_posts = __esm({
             }
           ],
           sources: [
-            { ...source11.sources[0], label: "\u0412\u043D\u0443\u0442\u0440\u0456\u0448\u043D\u0456\u0439 \u0430\u043D\u0430\u043B\u0456\u0437 \u043F\u043E\u0440\u0442\u0444\u043E\u043B\u0456\u043E Start Apps Studio: \u0447\u0430\u0441 \u0446\u0438\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043E\u0433\u043B\u044F\u0434\u0443 AI \u0434\u043B\u044F 14 \u0437\u0430\u043F\u0443\u0441\u043A\u0456\u0432 MVP." },
-            { ...source11.sources[1], label: "Google Search Central: \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0456\u0457 \u0449\u043E\u0434\u043E \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0441\u0445\u0435\u043C FAQPage \u0442\u0430 Article." }
+            { ...source12.sources[0], label: "\u0412\u043D\u0443\u0442\u0440\u0456\u0448\u043D\u0456\u0439 \u0430\u043D\u0430\u043B\u0456\u0437 \u043F\u043E\u0440\u0442\u0444\u043E\u043B\u0456\u043E Start Apps Studio: \u0447\u0430\u0441 \u0446\u0438\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043E\u0433\u043B\u044F\u0434\u0443 AI \u0434\u043B\u044F 14 \u0437\u0430\u043F\u0443\u0441\u043A\u0456\u0432 MVP." },
+            { ...source12.sources[1], label: "Google Search Central: \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0456\u0457 \u0449\u043E\u0434\u043E \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u043E\u0432\u0430\u043D\u0438\u0445 \u0434\u0430\u043D\u0438\u0445 \u0434\u043B\u044F \u0441\u0445\u0435\u043C FAQPage \u0442\u0430 Article." }
           ]
         };
       })(),
       "make-your-brand-visible-in-chatgpt": (() => {
-        const source11 = translatedPost2("make-your-brand-visible-in-chatgpt");
+        const source12 = translatedPost2("make-your-brand-visible-in-chatgpt");
         return {
-          ...source11,
+          ...source12,
           title: "\u042F\u043A \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u0432\u0430\u0448 \u0431\u0440\u0435\u043D\u0434 \u0432\u0438\u0434\u0438\u043C\u0438\u043C \u0443 ChatGPT \u0442\u0430 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0456 AI",
           seoTitle: "\u042F\u043A \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u0431\u0440\u0435\u043D\u0434 \u0432\u0438\u0434\u0438\u043C\u0438\u043C \u0443 ChatGPT \u0442\u0430 AI Overviews | Start Apps Studio",
           description: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u044C\u043D\u0438\u0439 \u0441\u043F\u0438\u0441\u043E\u043A GEO \u0456\u0437 12 \u043F\u0443\u043D\u043A\u0442\u0456\u0432, \u044F\u043A\u0438\u0439 \u043E\u0445\u043E\u043F\u043B\u044E\u0454 \u043D\u0430\u043F\u0438\u0441\u0430\u043D\u043D\u044F \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0456, \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0443 \u0437\u0430\u043F\u0438\u0442\u0430\u043D\u044C \u0456 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0435\u0439, \u0441\u0445\u0435\u043C\u0443, \u0441\u0438\u0433\u043D\u0430\u043B\u0438 \u043E\u0431\u2019\u0454\u043A\u0442\u0456\u0432, \u0441\u043E\u0446\u0456\u0430\u043B\u044C\u043D\u0435 \u043F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0435\u043D\u043D\u044F, \u0441\u0432\u0456\u0436\u0438\u0439 \u0432\u043C\u0456\u0441\u0442 \u0456 E-E-A-T, \u0442\u043E\u0436 ChatGPT, Perplexity \u0442\u0430 Google AI Overviews \u0441\u043F\u0440\u0430\u0432\u0434\u0456 \u043F\u043E\u043A\u0430\u0437\u0443\u044E\u0442\u044C \u0432\u0430\u0448 \u0431\u0440\u0435\u043D\u0434.",
@@ -9077,15 +9509,15 @@ var init_uk_posts = __esm({
             }
           ],
           sources: [
-            { ...source11.sources[0], label: "\xAB12 \u043F\u0440\u0438\u0447\u0438\u043D, \u0447\u043E\u043C\u0443 \u0432\u0430\u0448 \u0431\u0440\u0435\u043D\u0434 \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0438\u0439 \u0443 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044F\u0445 ChatGPT\xBB \u0424\u0440\u0430\u043D\u0447\u0435\u0441\u043A\u043E \u0413\u0430\u0442\u0442\u0456 (LinkedIn)." },
-            { ...source11.sources[1], label: "\xAB\u041A\u043B\u044E\u0447 \u0434\u043E \u0440\u0435\u0430\u043B\u0456\u0437\u0430\u0446\u0456\u0457 \u043A\u043E\u0436\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0435\u043A\u0442\u0443 \u0456\u0434\u0435\u043D\u0442\u0438\u0447\u043D\u043E\u0441\u0442\u0456 \u0431\u0440\u0435\u043D\u0434\u0443\xBB \u041C\u0430\u0439\u043A\u0430 \u041D\u043E\u0431\u043B\u043E\u0432\u0456\u0442\u0430 (Instagram)." }
+            { ...source12.sources[0], label: "\xAB12 \u043F\u0440\u0438\u0447\u0438\u043D, \u0447\u043E\u043C\u0443 \u0432\u0430\u0448 \u0431\u0440\u0435\u043D\u0434 \u043D\u0435\u0432\u0438\u0434\u0438\u043C\u0438\u0439 \u0443 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u044F\u0445 ChatGPT\xBB \u0424\u0440\u0430\u043D\u0447\u0435\u0441\u043A\u043E \u0413\u0430\u0442\u0442\u0456 (LinkedIn)." },
+            { ...source12.sources[1], label: "\xAB\u041A\u043B\u044E\u0447 \u0434\u043E \u0440\u0435\u0430\u043B\u0456\u0437\u0430\u0446\u0456\u0457 \u043A\u043E\u0436\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0435\u043A\u0442\u0443 \u0456\u0434\u0435\u043D\u0442\u0438\u0447\u043D\u043E\u0441\u0442\u0456 \u0431\u0440\u0435\u043D\u0434\u0443\xBB \u041C\u0430\u0439\u043A\u0430 \u041D\u043E\u0431\u043B\u043E\u0432\u0456\u0442\u0430 (Instagram)." }
           ]
         };
       })(),
       "vibe-coded-apps-have-an-seo-problem": (() => {
-        const source11 = translatedPost2("vibe-coded-apps-have-an-seo-problem");
+        const source12 = translatedPost2("vibe-coded-apps-have-an-seo-problem");
         return {
-          ...source11,
+          ...source12,
           title: "\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u0438 \u0437 \u043A\u043E\u0434\u0443\u0432\u0430\u043D\u043D\u044F\u043C Vibe \u043C\u0430\u044E\u0442\u044C \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0438 \u0437 SEO. \u041E\u0441\u044C \u044F\u043A \u0446\u0435 \u0432\u0438\u043F\u0440\u0430\u0432\u0438\u0442\u0438",
           seoTitle: "Vibe-\u043A\u043E\u0434\u043E\u0432\u0430\u043D\u0456 \u0437\u0430\u0441\u0442\u043E\u0441\u0443\u043D\u043A\u0438 \u0442\u0430 SEO: \u044F\u043A \u0446\u0435 \u0432\u0438\u043F\u0440\u0430\u0432\u0438\u0442\u0438 | Start Apps Studio",
           description: "Lovable, Bolt \u0456 v0 \u043D\u0430\u0434\u0441\u0438\u043B\u0430\u044E\u0442\u044C \u043F\u043E\u0440\u043E\u0436\u043D\u0456 div-\u0444\u0430\u0439\u043B\u0438 \u0441\u043A\u0430\u043D\u0435\u0440\u0430\u043C. \u041E\u0441\u044C \u044F\u043A \u0446\u0435 \u0432\u0438\u043F\u0440\u0430\u0432\u0438\u0442\u0438: \u0448\u0430\u0431\u043B\u043E\u043D \u043F\u0440\u043E\u043A\u0441\u0456-\u0441\u0435\u0440\u0432\u0435\u0440\u0430 Cloudflare Worker SSR \u0430\u0431\u043E \u043F\u043E\u0432\u043D\u0430 \u043C\u0456\u0433\u0440\u0430\u0446\u0456\u044F \u043D\u0430 Claude Code + Supabase + Vercel, \u043A\u043E\u043B\u0438 \u0432\u0430\u043C \u043F\u043E\u0442\u0440\u0456\u0431\u043D\u043E \u0440\u0430\u043D\u0436\u0443\u0432\u0430\u0442\u0438.",
@@ -9223,16 +9655,16 @@ var init_uk_posts = __esm({
             }
           ],
           sources: [
-            { ...source11.sources[0], label: "\u0414\u0435\u043C\u043E\u043D\u0441\u0442\u0440\u0430\u0446\u0456\u044F r/lovable: \xAB\u042F \u0432\u0438\u0440\u0456\u0448\u0438\u0432 \u043D\u0430\u0439\u0431\u0456\u043B\u044C\u0448\u0443 \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0443 SEO Lovable\xBB (\u0448\u0430\u0431\u043B\u043E\u043D Cloudflare Worker)." },
-            { ...source11.sources[1], label: "\u041F\u043E\u0441\u0456\u0431\u043D\u0438\u043A r/lovable: \xABLovable <> Claude = 10-\u043A\u0440\u0430\u0442\u043D\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0438\u0432\u043D\u0456\u0441\u0442\u044C\xBB \u0432\u0456\u0434 u/EIAMM." },
-            { ...source11.sources[2], label: "r/lovable: 10-\u043A\u0440\u043E\u043A\u043E\u0432\u0430 \u043C\u0456\u0433\u0440\u0430\u0446\u0456\u044F \u0434\u043E Claude Code + Supabase + Vercel." }
+            { ...source12.sources[0], label: "\u0414\u0435\u043C\u043E\u043D\u0441\u0442\u0440\u0430\u0446\u0456\u044F r/lovable: \xAB\u042F \u0432\u0438\u0440\u0456\u0448\u0438\u0432 \u043D\u0430\u0439\u0431\u0456\u043B\u044C\u0448\u0443 \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0443 SEO Lovable\xBB (\u0448\u0430\u0431\u043B\u043E\u043D Cloudflare Worker)." },
+            { ...source12.sources[1], label: "\u041F\u043E\u0441\u0456\u0431\u043D\u0438\u043A r/lovable: \xABLovable <> Claude = 10-\u043A\u0440\u0430\u0442\u043D\u0430 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0438\u0432\u043D\u0456\u0441\u0442\u044C\xBB \u0432\u0456\u0434 u/EIAMM." },
+            { ...source12.sources[2], label: "r/lovable: 10-\u043A\u0440\u043E\u043A\u043E\u0432\u0430 \u043C\u0456\u0433\u0440\u0430\u0446\u0456\u044F \u0434\u043E Claude Code + Supabase + Vercel." }
           ]
         };
       })(),
       "ai-at-work-2026-what-it-means-for-founders": (() => {
-        const source11 = translatedPost2("ai-at-work-2026-what-it-means-for-founders");
+        const source12 = translatedPost2("ai-at-work-2026-what-it-means-for-founders");
         return {
-          ...source11,
+          ...source12,
           title: "\u0428\u0406 \u043D\u0430 \u0440\u043E\u0431\u043E\u0442\u0456 \u0443 2026 \u0440\u043E\u0446\u0456: \u0449\u043E \u043E\u0437\u043D\u0430\u0447\u0430\u044E\u0442\u044C \u0434\u0430\u043D\u0456 \u043F\u0440\u043E \u0440\u0438\u0437\u0438\u043A \u0434\u043B\u044F \u0437\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0456\u0432",
           seoTitle: "\u0428\u0406 \u043D\u0430 \u0440\u043E\u0431\u043E\u0442\u0456 \u0443 2026 \u0440\u043E\u0446\u0456: \u0449\u043E \u0446\u0435 \u043E\u0437\u043D\u0430\u0447\u0430\u0454 \u0434\u043B\u044F \u0437\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0456\u0432 | Start Apps Studio",
           description: "74,5% \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u0456\u0441\u0442\u0456\u0432 \u043F\u0456\u0434\u0434\u0430\u044E\u0442\u044C\u0441\u044F \u0432\u043F\u043B\u0438\u0432\u0443 \u0448\u0442\u0443\u0447\u043D\u043E\u0433\u043E \u0456\u043D\u0442\u0435\u043B\u0435\u043A\u0442\u0443, \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0456\u0433\u0430\u044E\u0442\u044C \u0442\u0435\u043E\u0440\u0435\u0442\u0438\u0447\u043D\u0456 \u043C\u043E\u0436\u043B\u0438\u0432\u043E\u0441\u0442\u0456 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F, \u0430 \u043C\u0430\u0440\u043A\u0435\u0442\u0438\u043D\u0433\u043E\u0432\u0438\u0439 \u0437\u0432\u0456\u0442 HubSpot \u0437\u0430 2026 \u0440\u0456\u043A \u0441\u0442\u043E\u0441\u0443\u0454\u0442\u044C\u0441\u044F \u0437\u0430\u043B\u0443\u0447\u0435\u043D\u043D\u044F \u043F\u043E\u0442\u0435\u043D\u0446\u0456\u0439\u043D\u0438\u0445 \u043A\u043B\u0456\u0454\u043D\u0442\u0456\u0432, \u0430 \u043D\u0435 \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0443. \u0429\u043E \u0446\u0435 \u043E\u0437\u043D\u0430\u0447\u0430\u0454, \u044F\u043A\u0449\u043E \u0432\u0438 \u0441\u0442\u0432\u043E\u0440\u044E\u0454\u0442\u0435 MVP \u0443 2026 \u0440\u043E\u0446\u0456.",
@@ -9379,16 +9811,16 @@ var init_uk_posts = __esm({
             }
           ],
           sources: [
-            { ...source11.sources[0], label: "\xABAI at Work: Mapping the Landscape of Occupational Exposure\xBB (\u043A\u043E\u0440\u043E\u0442\u043A\u0430 \u0456\u043D\u0444\u043E\u0433\u0440\u0430\u0444\u0456\u043A\u0430 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0435\u043D\u043D\u044F)." },
-            { ...source11.sources[1], label: "\xAB\u0422\u0435\u043E\u0440\u0435\u0442\u0438\u0447\u043D\u0456 \u043C\u043E\u0436\u043B\u0438\u0432\u043E\u0441\u0442\u0456 \u0442\u0430 \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0435\u0436\u0443\u0432\u0430\u043D\u0435 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u0437\u0430 \u043F\u0440\u043E\u0444\u0435\u0441\u0456\u0439\u043D\u0438\u043C\u0438 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F\u043C\u0438\xBB (\u043F\u0440\u043E\u0444\u0435\u0441\u0456\u0439\u043D\u0430 \u0440\u0430\u0434\u0430\u0440\u043D\u0430 \u0434\u0456\u0430\u0433\u0440\u0430\u043C\u0430)." },
-            { ...source11.sources[2], label: "HubSpot State of Marketing 2026, \u0456\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0456\u0439\u043D\u0430 \u043F\u0430\u043D\u0435\u043B\u044C \u0443 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u0456." }
+            { ...source12.sources[0], label: "\xABAI at Work: Mapping the Landscape of Occupational Exposure\xBB (\u043A\u043E\u0440\u043E\u0442\u043A\u0430 \u0456\u043D\u0444\u043E\u0433\u0440\u0430\u0444\u0456\u043A\u0430 \u0434\u043E\u0441\u043B\u0456\u0434\u0436\u0435\u043D\u043D\u044F)." },
+            { ...source12.sources[1], label: "\xAB\u0422\u0435\u043E\u0440\u0435\u0442\u0438\u0447\u043D\u0456 \u043C\u043E\u0436\u043B\u0438\u0432\u043E\u0441\u0442\u0456 \u0442\u0430 \u0441\u043F\u043E\u0441\u0442\u0435\u0440\u0435\u0436\u0443\u0432\u0430\u043D\u0435 \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u0430\u043D\u043D\u044F \u0437\u0430 \u043F\u0440\u043E\u0444\u0435\u0441\u0456\u0439\u043D\u0438\u043C\u0438 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F\u043C\u0438\xBB (\u043F\u0440\u043E\u0444\u0435\u0441\u0456\u0439\u043D\u0430 \u0440\u0430\u0434\u0430\u0440\u043D\u0430 \u0434\u0456\u0430\u0433\u0440\u0430\u043C\u0430)." },
+            { ...source12.sources[2], label: "HubSpot State of Marketing 2026, \u0456\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0456\u0439\u043D\u0430 \u043F\u0430\u043D\u0435\u043B\u044C \u0443 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u0456." }
           ]
         };
       })(),
       "backlinks-still-decide-who-gets-recommended": (() => {
-        const source11 = translatedPost2("backlinks-still-decide-who-gets-recommended");
+        const source12 = translatedPost2("backlinks-still-decide-who-gets-recommended");
         return {
-          ...source11,
+          ...source12,
           title: "\u0417\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432\u0441\u0435 \u0449\u0435 \u0432\u0438\u0440\u0456\u0448\u0443\u044E\u0442\u044C, \u043A\u043E\u0433\u043E \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0443\u0432\u0430\u0442\u0438 \u0443 2026 \u0440\u043E\u0446\u0456",
           seoTitle: "\u0417\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0432\u0441\u0435 \u0449\u0435 \u0432\u0438\u0440\u0456\u0448\u0443\u044E\u0442\u044C, \u043A\u043E\u0433\u043E \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0443\u044E\u0442\u044C \u0443 2026 \u0440\u043E\u0446\u0456 | Start Apps Studio",
           description: "\u0427\u043E\u043C\u0443 \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0456 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F \u0437\u0430\u043B\u0438\u0448\u0430\u044E\u0442\u044C\u0441\u044F \u043D\u0430\u0439\u0431\u0456\u043B\u044C\u0448\u0438\u043C \u0441\u0438\u0433\u043D\u0430\u043B\u043E\u043C \u043F\u043E\u0437\u0430 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0430\u043C\u0438 \u044F\u043A \u0434\u043B\u044F Google, \u0442\u0430\u043A \u0456 \u0434\u043B\u044F \u043C\u0435\u0445\u0430\u043D\u0456\u0437\u043C\u0456\u0432 \u0432\u0456\u0434\u043F\u043E\u0432\u0456\u0434\u0435\u0439 \u0437\u0456 \u0448\u0442\u0443\u0447\u043D\u0438\u043C \u0456\u043D\u0442\u0435\u043B\u0435\u043A\u0442\u043E\u043C, \u044F\u043A \u043D\u0430\u0441\u043F\u0440\u0430\u0432\u0434\u0456 \u0432\u0438\u0433\u043B\u044F\u0434\u0430\u0454 \u0437\u0434\u043E\u0440\u043E\u0432\u0438\u0439 \u043F\u0440\u043E\u0444\u0456\u043B\u044C \u0437\u0432\u043E\u0440\u043E\u0442\u043D\u0438\u0445 \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u044C MVP \u0456 \u0447\u043E\u0442\u0438\u0440\u0438\u0435\u0442\u0430\u043F\u043D\u0438\u0439 \u0446\u0438\u043A\u043B \u043E\u0445\u043E\u043F\u043B\u0435\u043D\u043D\u044F, \u044F\u043A\u0438\u0439 \u043C\u0438 \u0437\u0430\u043F\u0443\u0441\u043A\u0430\u0454\u043C\u043E \u0434\u043B\u044F \u043A\u043E\u0436\u043D\u043E\u0433\u043E \u0437\u0430\u043F\u0443\u0441\u043A\u0443 Start Apps Studio.",
@@ -9506,9 +9938,9 @@ var init_uk_posts = __esm({
         };
       })(),
       "designing-for-the-ai-native-era": (() => {
-        const source11 = translatedPost2("designing-for-the-ai-native-era");
+        const source12 = translatedPost2("designing-for-the-ai-native-era");
         return {
-          ...source11,
+          ...source12,
           title: "\u041F\u0440\u043E\u0435\u043A\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0434\u043B\u044F \u0435\u043F\u043E\u0445\u0438 \u0448\u0442\u0443\u0447\u043D\u043E\u0433\u043E \u0456\u043D\u0442\u0435\u043B\u0435\u043A\u0442\u0443: \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0438\u0439 \u0456\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430 \u0442\u0430 \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0434\u043B\u044F \u0430\u0433\u0435\u043D\u0442\u0456\u0432",
           seoTitle: "\u041F\u0440\u043E\u0454\u043A\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u0434\u043B\u044F \u0428\u0406-\u0440\u0456\u0434\u043D\u043E\u0457 \u0435\u0440\u0438: \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0438\u0439 \u0456\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441 \u0456 \u0430\u0433\u0435\u043D\u0442\u0438 | Start Apps Studio",
           description: "\u041F\u043E\u0441\u0456\u0431\u043D\u0438\u043A \u0434\u043B\u044F \u0437\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0456\u0432 \u0449\u043E\u0434\u043E \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0443 \u0432\u0456\u0434 \u0441\u0442\u0430\u0442\u0438\u0447\u043D\u0438\u0445 \u0456\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0456\u0439\u043D\u0438\u0445 \u043F\u0430\u043D\u0435\u043B\u0435\u0439 \u0434\u043E \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u0438\u0445 \u0456\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u0456\u0432, \u0447\u043E\u0442\u0438\u0440\u0438 \u0435\u0442\u0430\u043F\u0438, \u0447\u0435\u0440\u0435\u0437 \u044F\u043A\u0456 \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442\u044C \u043A\u043E\u0436\u0435\u043D \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043D\u0430 \u0431\u0430\u0437\u0456 \u0448\u0442\u0443\u0447\u043D\u043E\u0433\u043E \u0456\u043D\u0442\u0435\u043B\u0435\u043A\u0442\u0443, \u0456 \u0442\u0440\u0438 \u0440\u0435\u0447\u0456, \u044F\u043A\u0456 \u0432\u0438 \u043F\u043E\u0432\u0438\u043D\u043D\u0456 \u0437\u0440\u043E\u0431\u0438\u0442\u0438 \u0441\u044C\u043E\u0433\u043E\u0434\u043D\u0456, \u0449\u043E\u0431 \u0430\u0433\u0435\u043D\u0442\u0438 \u0448\u0442\u0443\u0447\u043D\u043E\u0433\u043E \u0456\u043D\u0442\u0435\u043B\u0435\u043A\u0442\u0443 \u043C\u043E\u0433\u043B\u0438 \u0444\u0430\u043A\u0442\u0438\u0447\u043D\u043E \u0432\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0432\u0430\u0442\u0438 \u0432\u0430\u0448 \u043F\u0440\u043E\u0434\u0443\u043A\u0442.",
@@ -9652,9 +10084,9 @@ var init_uk_posts = __esm({
         };
       })(),
       "design-systems-matter-more-in-the-ai-era": (() => {
-        const source11 = translatedPost2("design-systems-matter-more-in-the-ai-era");
+        const source12 = translatedPost2("design-systems-matter-more-in-the-ai-era");
         return {
-          ...source11,
+          ...source12,
           title: "\u0412\u0430\u0448\u0430 \u0441\u0438\u0441\u0442\u0435\u043C\u0430 \u043F\u0440\u043E\u0435\u043A\u0442\u0443\u0432\u0430\u043D\u043D\u044F \u043C\u0430\u0454 \u0431\u0456\u043B\u044C\u0448\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F \u0432 \u0435\u043F\u043E\u0445\u0443 \u0428\u0406, \u0430 \u043D\u0435 \u043C\u0435\u043D\u0448\u0435",
           seoTitle: "\u0412\u0430\u0448\u0430 \u0434\u0438\u0437\u0430\u0439\u043D-\u0441\u0438\u0441\u0442\u0435\u043C\u0430 \u0432\u0430\u0436\u043B\u0438\u0432\u0456\u0448\u0430 \u0432 \u0435\u043F\u043E\u0445\u0443 \u0428\u0406 | Start Apps Studio",
           description: "\u041A\u043E\u043B\u0438 \u0428\u0406 \u0441\u0442\u0432\u043E\u0440\u044E\u0454 \u0432\u0430\u0448 \u0456\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441, \u044F\u043A\u0456\u0441\u0442\u044C \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442\u0443 \u0437\u0430\u043B\u0435\u0436\u0438\u0442\u044C \u0432\u0456\u0434 \u044F\u043A\u043E\u0441\u0442\u0456 \u0432\u0430\u0448\u043E\u0457 \u0441\u0438\u0441\u0442\u0435\u043C\u0438 \u043F\u0440\u043E\u0435\u043A\u0442\u0443\u0432\u0430\u043D\u043D\u044F. \u041E\u0437\u043D\u0430\u0439\u043E\u043C\u043B\u0435\u043D\u043D\u044F \u0437 \u0442\u0438\u043C, \u0447\u043E\u043C\u0443 API \u0441\u0442\u0430\u044E\u0442\u044C \u043D\u043E\u0432\u043E\u044E \u043F\u043E\u0432\u0435\u0440\u0445\u043D\u0435\u044E \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443, \u0447\u043E\u043C\u0443 \u043F\u043E\u0442\u0443\u0436\u043D\u0430 \u0441\u0438\u0441\u0442\u0435\u043C\u0430 \u0442\u0435\u043F\u0435\u0440 \u043F\u0440\u0438\u043C\u043D\u043E\u0436\u0443\u0454 \u0441\u0438\u043B\u0443, \u0447\u043E\u043C\u0443 \u043A\u043E\u0436\u0435\u043D \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043C\u0430\u0454 \u0434\u0432\u043E\u0445 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0456\u0432 \u0456 \u0447\u043E\u043C\u0443 \u0434\u0438\u0437\u0430\u0439\u043D \u044F\u043A \u0441\u0443\u0434\u0436\u0435\u043D\u043D\u044F \u0454 \u0446\u0456\u043D\u043D\u0456\u0448\u0438\u043C, \u043D\u0456\u0436 \u0431\u0443\u0434\u044C-\u043A\u043E\u043B\u0438.",
@@ -9772,9 +10204,9 @@ var init_uk_posts = __esm({
         };
       })(),
       "base44-vs-lovable-which-one-for-your-next-app": (() => {
-        const source11 = translatedPost2("base44-vs-lovable-which-one-for-your-next-app");
+        const source12 = translatedPost2("base44-vs-lovable-which-one-for-your-next-app");
         return {
-          ...source11,
+          ...source12,
           title: "Base44 \u043F\u0440\u043E\u0442\u0438 Lovable: \u044F\u043A\u0438\u0439 \u0456\u0437 \u043D\u0438\u0445 \u043F\u0456\u0434\u0445\u043E\u0434\u0438\u0442\u044C \u0434\u043B\u044F \u0432\u0430\u0448\u043E\u0457 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0457 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u0438?",
           seoTitle: "Base44 \u043F\u0440\u043E\u0442\u0438 Lovable: \u0449\u043E \u043E\u0431\u0440\u0430\u0442\u0438 \u0434\u043B\u044F \u0432\u0430\u0448\u043E\u0433\u043E \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0437\u0430\u0441\u0442\u043E\u0441\u0443\u043D\u043A\u0443? | Start Apps Studio",
           description: "Base44 \u0456 Lovable \u043E\u043F\u0442\u0438\u043C\u0456\u0437\u0443\u044E\u0442\u044C\u0441\u044F \u0434\u043B\u044F \u0440\u0456\u0437\u043D\u0438\u0445 \u0432\u0438\u0434\u0456\u0432 \u0448\u0432\u0438\u0434\u043A\u043E\u0441\u0442\u0456. \u041F\u043E\u0440\u0456\u0432\u043D\u044F\u0439\u0442\u0435 \u0457\u0445 \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u0435 \u043A\u0435\u0440\u0443\u0432\u0430\u043D\u043D\u044F, \u0440\u043E\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0446\u0435\u0441 AI, SEO \u0442\u0430 \u0448\u043B\u044F\u0445\u0438 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0456, \u043F\u0435\u0440\u0448 \u043D\u0456\u0436 \u0432\u0438\u0431\u0440\u0430\u0442\u0438, \u0434\u0435 \u0431\u0443\u0434\u0443\u0432\u0430\u0442\u0438.",
@@ -9977,9 +10409,9 @@ var init_uk_posts = __esm({
             }
           ],
           sources: [
-            { ...source11.sources[0], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: \u043E\u0431\u0433\u043E\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0430\u0440\u0445\u0456\u0442\u0435\u043A\u0442\u0443\u0440\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u043E\u0457 \u0447\u0430\u0441\u0442\u0438\u043D\u0438 \u0442\u0430 \u0430\u0432\u0442\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0457 (0:55\u201313:05)." },
-            { ...source11.sources[1], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: \u0440\u043E\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0446\u0435\u0441 \u043C\u043E\u0434\u0435\u043B\u0456 \u0428\u0406 \u0442\u0430 \u043E\u0431\u0433\u043E\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0432\u0438\u0431\u043E\u0440\u0443 \u043C\u043E\u0434\u0435\u043B\u0456 (27:41\u201334:12)." },
-            { ...source11.sources[2], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: SEO, SSR \u0456 \u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u0456 \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0456\u0457 \u0449\u043E\u0434\u043E \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0438 (37:16\u20131:22:23)." }
+            { ...source12.sources[0], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: \u043E\u0431\u0433\u043E\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0430\u0440\u0445\u0456\u0442\u0435\u043A\u0442\u0443\u0440\u0438 \u0441\u0435\u0440\u0432\u0435\u0440\u043D\u043E\u0457 \u0447\u0430\u0441\u0442\u0438\u043D\u0438 \u0442\u0430 \u0430\u0432\u0442\u0435\u043D\u0442\u0438\u0444\u0456\u043A\u0430\u0446\u0456\u0457 (0:55\u201313:05)." },
+            { ...source12.sources[1], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: \u0440\u043E\u0431\u043E\u0447\u0438\u0439 \u043F\u0440\u043E\u0446\u0435\u0441 \u043C\u043E\u0434\u0435\u043B\u0456 \u0428\u0406 \u0442\u0430 \u043E\u0431\u0433\u043E\u0432\u043E\u0440\u0435\u043D\u043D\u044F \u0432\u0438\u0431\u043E\u0440\u0443 \u043C\u043E\u0434\u0435\u043B\u0456 (27:41\u201334:12)." },
+            { ...source12.sources[2], label: "\u0414\u0436\u0435\u0440\u0435\u043B\u043E \u0434\u043B\u044F \u0446\u044C\u043E\u0433\u043E \u043F\u043E\u0440\u0456\u0432\u043D\u044F\u043B\u044C\u043D\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0456\u0430\u043B\u0443: SEO, SSR \u0456 \u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u0456 \u0440\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0430\u0446\u0456\u0457 \u0449\u043E\u0434\u043E \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0438 (37:16\u20131:22:23)." }
           ]
         };
       })()
@@ -9988,14 +10420,14 @@ var init_uk_posts = __esm({
 });
 
 // server/journal/locales/uk.ts
-var sourcePost12, UK_EDITORIAL_CONTENT, uk_default;
+var sourcePost13, UK_EDITORIAL_CONTENT, uk_default;
 var init_uk = __esm({
   "server/journal/locales/uk.ts"() {
     "use strict";
     init_posts();
     init_uk_posts();
-    sourcePost12 = getPost("the-mvp-brief-is-your-first-product-decision");
-    if (!sourcePost12) throw new Error("Missing MVP editorial source post.");
+    sourcePost13 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost13) throw new Error("Missing MVP editorial source post.");
     UK_EDITORIAL_CONTENT = {
       copy: {
         journalName: "\u0416\u0443\u0440\u043D\u0430\u043B \xB7 \u0422\u043E\u043C I",
@@ -10039,7 +10471,7 @@ var init_uk = __esm({
         journal: { title: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0437 \u0416\u0443\u0440\u043D\u0430\u043B\u0443", text: "\u0414\u043E\u043A\u043B\u0430\u0434\u043D\u0456\u0448\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u043F\u0440\u043E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044E MVP, SEO, GEO, \u0437\u0430\u0441\u0442\u043E\u0441\u0443\u043D\u043A\u0438 \u0437 vibe-coding \u0442\u0430 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u0449\u043E \u043F\u043E\u043B\u0435\u0433\u0448\u0443\u044E\u0442\u044C \u0432\u0438\u043F\u0443\u0441\u043A \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443.", readAction: "\u0427\u0438\u0442\u0430\u0442\u0438 \u043D\u043E\u0442\u0430\u0442\u043A\u0443", minutesLabel: "\u0445\u0432 \u0447\u0438\u0442\u0430\u043D\u043D\u044F", allAction: "\u0423\u0441\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438 \u0436\u0443\u0440\u043D\u0430\u043B\u0443", fallbackCategory: "\u0416\u0443\u0440\u043D\u0430\u043B", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
         cta: { title: "\u041C\u0430\u0454\u0442\u0435 \u043C\u0430\u0440\u0448\u0440\u0443\u0442 \u043D\u0430 \u0434\u0443\u043C\u0446\u0456?", text: "\u0420\u043E\u0437\u043A\u0430\u0436\u0456\u0442\u044C, \u0434\u0435 \u0432\u0438 \u0437\u0430\u0440\u0430\u0437, \u0449\u043E \u0432\u0430\u043C \u0442\u0440\u0435\u0431\u0430 \u0434\u043E\u0432\u0435\u0441\u0442\u0438 \u0456 \u0449\u043E \u043D\u0438\u043D\u0456 \u0437\u0430\u0441\u0442\u0440\u044F\u0433\u043B\u043E.", action: "\u041E\u0442\u0440\u0438\u043C\u0430\u0442\u0438 \u044F\u0441\u043D\u0438\u0439 \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0438\u0439 \u043A\u0440\u043E\u043A" }
       },
-      post: { ...sourcePost12, title: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F", seoTitle: "\u0411\u0440\u0438\u0444\u0438 MVP: \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F | Start Apps Studio", description: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0435 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u043F\u0438\u0441\u0443\u0454 \u0456\u0434\u0435\u044E. \u0412\u0456\u043D \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442\u044C \u0447\u0456\u0442\u043A\u0443 \u043C\u0435\u0436\u0443 \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457 \u0442\u0430 \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u0434\u043E\u043A\u0430\u0437\u0438, \u0449\u043E \u043F\u0456\u0434\u043A\u0430\u0436\u0443\u0442\u044C, \u0447\u0438 \u043F\u0440\u043E\u0434\u043E\u0432\u0436\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443.", seoDescription: "\u0412\u0430\u0448 \u0431\u0440\u0438\u0444 MVP \u2014 \u0446\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u0430 \u043D\u0435 \u043F\u0430\u043F\u0435\u0440\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430. \u0414\u0456\u0437\u043D\u0430\u0439\u0442\u0435\u0441\u044F \u0442\u0440\u0438 \u0440\u0435\u0447\u0456, \u044F\u043A\u0456 \u043A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 \u043C\u0430\u0454 \u0432\u0438\u0437\u043D\u0430\u0447\u0438\u0442\u0438 \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443 \u0447\u0438 \u043A\u043E\u0434\u0443.", excerpt: "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0456 \u0431\u0440\u0438\u0444\u0438 MVP \u043D\u0435 \u0434\u043E\u0432\u0433\u0456. \u0412\u043E\u043D\u0438 \u0432\u0438\u0440\u0456\u0448\u0443\u044E\u0442\u044C, \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0447\u043E\u0433\u043E \u043F\u0435\u0440\u0448\u0430 \u0432\u0435\u0440\u0441\u0456\u044F \u0432\u0456\u0434\u043C\u043E\u0432\u043B\u044F\u0454\u0442\u044C\u0441\u044F \u0440\u043E\u0431\u0438\u0442\u0438 \u0456 \u044F\u043A\u0456 \u0434\u043E\u043A\u0430\u0437\u0438 \u0437\u0430\u0441\u043B\u0443\u0433\u043E\u0432\u0443\u044E\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0442\u0438\u0436\u043D\u044F \u0440\u043E\u0431\u043E\u0442\u0438.", category: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438", tags: ["MVP", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443", "\u0417\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0438", "\u041E\u0431\u0441\u044F\u0433"], body: [
+      post: { ...sourcePost13, title: "\u0411\u0440\u0438\u0444 MVP \u2014 \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F", seoTitle: "\u0411\u0440\u0438\u0444\u0438 MVP: \u0432\u0430\u0448\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F | Start Apps Studio", description: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u043D\u0435 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u043F\u0438\u0441\u0443\u0454 \u0456\u0434\u0435\u044E. \u0412\u0456\u043D \u043D\u0430\u0437\u0438\u0432\u0430\u0454 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447\u0430, \u043F\u0440\u043E\u0432\u043E\u0434\u0438\u0442\u044C \u0447\u0456\u0442\u043A\u0443 \u043C\u0435\u0436\u0443 \u043F\u0435\u0440\u0448\u043E\u0457 \u0432\u0435\u0440\u0441\u0456\u0457 \u0442\u0430 \u0432\u0438\u0437\u043D\u0430\u0447\u0430\u0454 \u0434\u043E\u043A\u0430\u0437\u0438, \u0449\u043E \u043F\u0456\u0434\u043A\u0430\u0436\u0443\u0442\u044C, \u0447\u0438 \u043F\u0440\u043E\u0434\u043E\u0432\u0436\u0443\u0432\u0430\u0442\u0438 \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0443.", seoDescription: "\u0412\u0430\u0448 \u0431\u0440\u0438\u0444 MVP \u2014 \u0446\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F, \u0430 \u043D\u0435 \u043F\u0430\u043F\u0435\u0440\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430. \u0414\u0456\u0437\u043D\u0430\u0439\u0442\u0435\u0441\u044F \u0442\u0440\u0438 \u0440\u0435\u0447\u0456, \u044F\u043A\u0456 \u043A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 \u043C\u0430\u0454 \u0432\u0438\u0437\u043D\u0430\u0447\u0438\u0442\u0438 \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443 \u0447\u0438 \u043A\u043E\u0434\u0443.", excerpt: "\u041D\u0430\u0439\u043A\u0440\u0430\u0449\u0456 \u0431\u0440\u0438\u0444\u0438 MVP \u043D\u0435 \u0434\u043E\u0432\u0433\u0456. \u0412\u043E\u043D\u0438 \u0432\u0438\u0440\u0456\u0448\u0443\u044E\u0442\u044C, \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0447\u043E\u0433\u043E \u043F\u0435\u0440\u0448\u0430 \u0432\u0435\u0440\u0441\u0456\u044F \u0432\u0456\u0434\u043C\u043E\u0432\u043B\u044F\u0454\u0442\u044C\u0441\u044F \u0440\u043E\u0431\u0438\u0442\u0438 \u0456 \u044F\u043A\u0456 \u0434\u043E\u043A\u0430\u0437\u0438 \u0437\u0430\u0441\u043B\u0443\u0433\u043E\u0432\u0443\u044E\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u043E\u0433\u043E \u0442\u0438\u0436\u043D\u044F \u0440\u043E\u0431\u043E\u0442\u0438.", category: "\u041F\u043E\u043B\u044C\u043E\u0432\u0456 \u043D\u043E\u0442\u0430\u0442\u043A\u0438", tags: ["MVP", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0456\u044F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0443", "\u0417\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0438", "\u041E\u0431\u0441\u044F\u0433"], body: [
         { type: "answer", text: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 MVP \u0443\u0445\u0432\u0430\u043B\u044E\u0454 \u0442\u0440\u0438 \u0440\u0456\u0448\u0435\u043D\u043D\u044F \u0434\u043E \u043F\u043E\u0447\u0430\u0442\u043A\u0443 \u0434\u0438\u0437\u0430\u0439\u043D\u0443: \u0434\u043B\u044F \u043A\u043E\u0433\u043E \u043F\u0440\u0438\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0439 \u043F\u0440\u043E\u0434\u0443\u043A\u0442, \u0449\u043E \u043F\u0435\u0440\u0448\u0430 \u0432\u0435\u0440\u0441\u0456\u044F \u043D\u0430\u0432\u043C\u0438\u0441\u043D\u043E \u0437\u0430\u043B\u0438\u0448\u0438\u0442\u044C \u043F\u043E\u0437\u0430 \u043C\u0435\u0436\u0430\u043C\u0438 \u0442\u0430 \u044F\u043A\u0456 \u043A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0446\u044C\u043A\u0456 \u0434\u043E\u043A\u0430\u0437\u0438 \u0432\u0438\u043F\u0440\u0430\u0432\u0434\u0430\u044E\u0442\u044C \u043D\u0430\u0441\u0442\u0443\u043F\u043D\u0456 \u0456\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0456\u0457. \u0422\u043E\u043C\u0443 \u0431\u0440\u0438\u0444 \u2014 \u043D\u0435 \u043F\u0430\u043F\u0435\u0440\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430. \u0426\u0435 \u043F\u0435\u0440\u0448\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u043E\u0432\u0435 \u0440\u0456\u0448\u0435\u043D\u043D\u044F." },
         { type: "p", text: "\u0417\u0430\u0441\u043D\u043E\u0432\u043D\u0438\u043A\u0438 \u0447\u0430\u0441\u0442\u043E \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442\u044C \u0456\u0437 \u0431\u0440\u0438\u0444\u043E\u043C, \u044F\u043A\u0438\u0439 \u043D\u0430\u0441\u043F\u0440\u0430\u0432\u0434\u0456 \u0454 \u043E\u043F\u0438\u0441\u043E\u043C \u0456\u0434\u0435\u0457: \u043A\u0456\u043B\u044C\u043A\u0430 \u0430\u0431\u0437\u0430\u0446\u0456\u0432 \u043F\u0440\u043E \u0440\u0438\u043D\u043E\u043A, \u043F\u0435\u0440\u0435\u043B\u0456\u043A \u0444\u0443\u043D\u043A\u0446\u0456\u0439 \u0456 \u0440\u0435\u0447\u0435\u043D\u043D\u044F \u043F\u0440\u043E \u0442\u0435, \u043A\u0443\u0434\u0438 \u043F\u0440\u043E\u0434\u0443\u043A\u0442 \u043C\u043E\u0436\u0435 \u043A\u043E\u043B\u0438\u0441\u044C \u0434\u0456\u0439\u0442\u0438. \u0426\u044C\u043E\u0433\u043E \u0434\u043E\u0441\u0438\u0442\u044C, \u0449\u043E\u0431 \u043F\u043E\u0447\u0430\u0442\u0438 \u0440\u043E\u0437\u043C\u043E\u0432\u0443, \u0430\u043B\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043D\u044C\u043E \u0434\u043B\u044F \u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438. \u041A\u043E\u043C\u0430\u043D\u0434\u0456 \u043F\u043E\u0442\u0440\u0456\u0431\u0435\u043D \u043C\u0435\u043D\u0448\u0438\u0439, \u0447\u0456\u0442\u043A\u0456\u0448\u0438\u0439 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442, \u0449\u043E \u043F\u0435\u0440\u0435\u0442\u0432\u043E\u0440\u044E\u0454 \u0430\u043C\u0431\u0456\u0446\u0456\u044E \u043D\u0430 \u043F\u043E\u0441\u043B\u0456\u0434\u043E\u0432\u043D\u0456\u0441\u0442\u044C \u043F\u0435\u0440\u0435\u0432\u0456\u0440\u043D\u0438\u0445 \u0432\u0438\u0431\u043E\u0440\u0456\u0432." },
         { type: "h2", text: "\u041A\u043E\u0440\u0438\u0441\u043D\u0438\u0439 \u0431\u0440\u0438\u0444 \u0432\u0438\u043A\u043E\u043D\u0443\u0454 \u0442\u0440\u0438 \u0437\u0430\u0432\u0434\u0430\u043D\u043D\u044F", id: "three-jobs" },
@@ -10070,17 +10502,17 @@ var init_uk = __esm({
 });
 
 // server/journal/locales/zh-posts/make-your-brand-visible-in-chatgpt.ts
-var sourcePost13, ZH_POST_1;
+var sourcePost14, ZH_POST_1;
 var init_make_your_brand_visible_in_chatgpt2 = __esm({
   "server/journal/locales/zh-posts/make-your-brand-visible-in-chatgpt.ts"() {
     "use strict";
     init_posts();
-    sourcePost13 = getPost("make-your-brand-visible-in-chatgpt");
-    if (!sourcePost13) {
+    sourcePost14 = getPost("make-your-brand-visible-in-chatgpt");
+    if (!sourcePost14) {
       throw new Error('Missing journal source post "make-your-brand-visible-in-chatgpt".');
     }
     ZH_POST_1 = {
-      ...sourcePost13,
+      ...sourcePost14,
       title: "\u5982\u4F55\u8BA9\u4F60\u7684\u54C1\u724C\u5728 ChatGPT \u548C AI \u7B54\u6848\u4E2D\u53EF\u89C1",
       seoTitle: "\u8BA9\u54C1\u724C\u5728 ChatGPT \u4E0E AI Overviews \u4E2D\u53EF\u89C1 | Start Apps Studio",
       description: "\u4E00\u4EFD\u6DB5\u76D6\u7B54\u6848\u4F18\u5148\u5199\u4F5C\u3001\u95EE\u7B54\u7ED3\u6784\u3001Schema\u3001\u5B9E\u4F53\u4FE1\u53F7\u3001\u793E\u4F1A\u8BA4\u540C\u3001\u65B0\u9C9C\u5185\u5BB9\u548C E-E-A-T \u7684 12 \u70B9 GEO \u6E05\u5355\uFF0C\u8BA9 ChatGPT\u3001Perplexity \u548C Google AI Overviews \u771F\u6B63\u5C55\u793A\u4F60\u7684\u54C1\u724C\u3002",
@@ -10210,10 +10642,10 @@ var init_make_your_brand_visible_in_chatgpt2 = __esm({
 
 // server/journal/locales/zh-posts/vibe-coded-apps-have-an-seo-problem.ts
 function localizedBody2() {
-  if (sourcePost14.body.length !== copy3.length) {
+  if (sourcePost15.body.length !== copy3.length) {
     throw new Error('Chinese translation block count does not match "vibe-coded-apps-have-an-seo-problem".');
   }
-  return sourcePost14.body.map((block, index) => {
+  return sourcePost15.body.map((block, index) => {
     const value = copy3[index];
     if (block.type === "ul" || block.type === "ol") {
       if (!Array.isArray(value) || value.length !== block.items.length) {
@@ -10239,16 +10671,16 @@ function localizedBody2() {
     return { ...block, text: value };
   });
 }
-var source6, sourcePost14, copy3, sourceLabels2, body2, ZH_POST_2;
+var source7, sourcePost15, copy3, sourceLabels2, body2, ZH_POST_2;
 var init_vibe_coded_apps_have_an_seo_problem2 = __esm({
   "server/journal/locales/zh-posts/vibe-coded-apps-have-an-seo-problem.ts"() {
     "use strict";
     init_posts();
-    source6 = getPost("vibe-coded-apps-have-an-seo-problem");
-    if (!source6) {
+    source7 = getPost("vibe-coded-apps-have-an-seo-problem");
+    if (!source7) {
       throw new Error('Missing journal source post "vibe-coded-apps-have-an-seo-problem".');
     }
-    sourcePost14 = source6;
+    sourcePost15 = source7;
     copy3 = [
       "Vibe-coded \u5E94\u7528\u5728\u5BA2\u6237\u7AEF\u6E32\u67D3\uFF0C\u56E0\u6B64\u722C\u866B\u770B\u5230\u7684\u662F\u7A7A\u7684 <div>\u3002\u8981\u89E3\u51B3\u5B83\uFF0C\u53EF\u4EE5\u5728\u4F60\u7684\u57DF\u540D\u4E0E Lovable \u4E4B\u95F4\u90E8\u7F72 Cloudflare Worker\uFF0C\u5411\u673A\u5668\u4EBA\u8FD4\u56DE\u670D\u52A1\u5668\u7AEF\u6E32\u67D3\u7684 HTML\uFF1B\u6216\u8005\u5728\u6295\u5165\u8425\u9500\u524D\uFF0C\u5C06\u9879\u76EE\u8FC1\u79FB\u5230\u771F\u6B63\u7684\u6280\u672F\u6808\uFF08Claude Code + Supabase + Vercel\uFF09\u3002",
       'Lovable\u3001Bolt \u548C v0 \u8FD9\u7C7B\u5DE5\u5177\u975E\u5E38\u9002\u5408\u5728\u4E00\u4E2A\u4E0B\u5348\u53D1\u5E03\u4E00\u4E2A\u60F3\u6CD5\uFF0C\u5374\u4E0D\u64C5\u957F SEO\u3002\u6574\u9875\u90FD\u662F\u5BA2\u6237\u7AEF React bundle\uFF0C\u8FD9\u610F\u5473\u7740 Googlebot \u9996\u6B21\u6293\u53D6\u65F6\u770B\u5230\u7684\u662F\u7A7A\u7684 <div id="root" />\u3002\u6CA1\u6709\u5185\u5BB9\uFF0C\u6CA1\u6709\u6807\u9898\uFF0C\u6CA1\u6709 schema\uFF0C\u4E5F\u6CA1\u6709\u6392\u540D\u3002\u5BF9\u4E8E\u4F9D\u8D56\u81EA\u7136\u6D41\u91CF\u7684 MVP\uFF0C\u8FD9\u4F1A\u6210\u4E3A\u521B\u4E1A\u7B2C\u4E00\u5E74\u7684\u95EE\u9898\u3002',
@@ -10326,7 +10758,7 @@ var init_vibe_coded_apps_have_an_seo_problem2 = __esm({
         items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
       }))
     ) !== JSON.stringify(
-      sourcePost14.body.map((block) => ({
+      sourcePost15.body.map((block) => ({
         type: block.type,
         id: "id" in block ? block.id : void 0,
         items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
@@ -10334,11 +10766,11 @@ var init_vibe_coded_apps_have_an_seo_problem2 = __esm({
     )) {
       throw new Error('Chinese translation structure does not match "vibe-coded-apps-have-an-seo-problem".');
     }
-    if ((sourcePost14.sources?.length ?? 0) !== sourceLabels2.length) {
+    if ((sourcePost15.sources?.length ?? 0) !== sourceLabels2.length) {
       throw new Error('Chinese translation source count does not match "vibe-coded-apps-have-an-seo-problem".');
     }
     ZH_POST_2 = {
-      ...sourcePost14,
+      ...sourcePost15,
       title: "Vibe-coded \u5E94\u7528\u5B58\u5728 SEO \u95EE\u9898\uFF1A\u8BE5\u5982\u4F55\u4FEE\u590D",
       seoTitle: "Vibe-Coded \u5E94\u7528\u4E0E SEO\uFF1A\u5982\u4F55\u4FEE\u590D | Start Apps Studio",
       description: "Lovable\u3001Bolt \u548C v0 \u5411\u722C\u866B\u4EA4\u4ED8\u7A7A div\u3002\u53EF\u901A\u8FC7 Cloudflare Worker SSR \u4EE3\u7406\u4FEE\u590D\uFF0C\u6216\u5728\u9700\u8981\u6392\u540D\u65F6\u5B8C\u6574\u8FC1\u79FB\u81F3 Claude Code + Supabase + Vercel\u3002",
@@ -10347,7 +10779,7 @@ var init_vibe_coded_apps_have_an_seo_problem2 = __esm({
       category: "\u5B9E\u5730\u7B14\u8BB0",
       tags: ["Vibe coding", "Lovable", "SEO", "SSR", "Claude"],
       body: body2,
-      sources: sourcePost14.sources?.map((item, index) => ({
+      sources: sourcePost15.sources?.map((item, index) => ({
         ...item,
         label: sourceLabels2[index]
       }))
@@ -10356,18 +10788,18 @@ var init_vibe_coded_apps_have_an_seo_problem2 = __esm({
 });
 
 // server/journal/locales/zh-posts/ai-at-work-2026-what-it-means-for-founders.ts
-var slug3, source7, ZH_POST_3, sourceShape2, localizedShape2;
+var slug3, source8, ZH_POST_3, sourceShape2, localizedShape2;
 var init_ai_at_work_2026_what_it_means_for_founders2 = __esm({
   "server/journal/locales/zh-posts/ai-at-work-2026-what-it-means-for-founders.ts"() {
     "use strict";
     init_posts();
     slug3 = "ai-at-work-2026-what-it-means-for-founders";
-    source7 = getPost(slug3);
-    if (!source7) {
+    source8 = getPost(slug3);
+    if (!source8) {
       throw new Error(`Missing journal source post "${slug3}".`);
     }
     ZH_POST_3 = {
-      ...source7,
+      ...source8,
       title: "2026 \u5E74\u5DE5\u4F5C\u4E2D\u7684 AI\uFF1A\u66B4\u9732\u5EA6\u6570\u636E\u5BF9\u521B\u59CB\u4EBA\u610F\u5473\u7740\u4EC0\u4E48",
       seoTitle: "2026 \u5E74\u5DE5\u4F5C\u4E2D\u7684 AI\uFF1A\u5BF9\u521B\u59CB\u4EBA\u7684\u610F\u4E49 | Start Apps Studio",
       description: "74.5% \u7684\u7A0B\u5E8F\u5458\u53D7\u5230 AI \u5F71\u54CD\uFF0C\u5B9E\u9645\u4F7F\u7528\u843D\u540E\u4E8E\u7406\u8BBA\u80FD\u529B\uFF0C\u800C HubSpot \u7684 2026 \u5E74\u8425\u9500\u62A5\u544A\u5173\u6CE8\u7684\u662F\u6F5C\u5728\u5BA2\u6237\u83B7\u53D6\uFF0C\u4E0D\u662F\u5185\u5BB9\u3002\u82E5\u4F60\u5728 2026 \u5E74\u6784\u5EFA MVP\uFF0C\u8FD9\u610F\u5473\u7740\u4EC0\u4E48\u3002",
@@ -10491,7 +10923,7 @@ var init_ai_at_work_2026_what_it_means_for_founders2 = __esm({
         { label: "HubSpot\u300A2026 \u5E74\u8425\u9500\u72B6\u51B5\u300B\uFF0C\u5E94\u7528\u5185\u4EEA\u8868\u76D8\u3002" }
       ]
     };
-    sourceShape2 = source7.body.map((block) => ({
+    sourceShape2 = source8.body.map((block) => ({
       type: block.type,
       id: "id" in block ? block.id : void 0,
       items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
@@ -10501,26 +10933,26 @@ var init_ai_at_work_2026_what_it_means_for_founders2 = __esm({
       id: "id" in block ? block.id : void 0,
       items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
     }));
-    if (JSON.stringify(sourceShape2) !== JSON.stringify(localizedShape2) || source7.sources?.length !== ZH_POST_3.sources?.length || source7.sources?.some((item, index) => item.url !== ZH_POST_3.sources?.[index]?.url)) {
+    if (JSON.stringify(sourceShape2) !== JSON.stringify(localizedShape2) || source8.sources?.length !== ZH_POST_3.sources?.length || source8.sources?.some((item, index) => item.url !== ZH_POST_3.sources?.[index]?.url)) {
       throw new Error(`Chinese translation structure does not match "${slug3}".`);
     }
   }
 });
 
 // server/journal/locales/zh-posts/backlinks-still-decide-who-gets-recommended.ts
-var source8, ZH_POST_4;
+var source9, ZH_POST_4;
 var init_backlinks_still_decide_who_gets_recommended2 = __esm({
   "server/journal/locales/zh-posts/backlinks-still-decide-who-gets-recommended.ts"() {
     "use strict";
     init_posts();
-    source8 = getPost("backlinks-still-decide-who-gets-recommended");
-    if (!source8) {
+    source9 = getPost("backlinks-still-decide-who-gets-recommended");
+    if (!source9) {
       throw new Error(
         'Missing journal source post "backlinks-still-decide-who-gets-recommended".'
       );
     }
     ZH_POST_4 = {
-      ...source8,
+      ...source9,
       title: "2026 \u5E74\uFF0C\u53CD\u5411\u94FE\u63A5\u4ECD\u51B3\u5B9A\u8C01\u4F1A\u88AB\u63A8\u8350",
       seoTitle: "2026 \u5E74\u53CD\u5411\u94FE\u63A5\u51B3\u5B9A\u8C01\u4F1A\u88AB\u63A8\u8350 | Start Apps Studio",
       description: "\u4E3A\u4F55\u53CD\u5411\u94FE\u63A5\u4ECD\u662F Google \u548C AI \u7B54\u6848\u5F15\u64CE\u6700\u91CD\u8981\u7684\u7AD9\u5916\u4FE1\u53F7\u3001\u5065\u5EB7\u7684 MVP \u53CD\u5411\u94FE\u63A5\u6863\u6848\u7A76\u7ADF\u662F\u4EC0\u4E48\u6837\uFF0C\u4EE5\u53CA\u6211\u4EEC\u4E3A\u6BCF\u6B21 Start Apps Studio \u53D1\u5E03\u6267\u884C\u7684\u56DB\u6B65\u5916\u8054\u5FAA\u73AF\u3002",
@@ -10611,18 +11043,18 @@ var init_backlinks_still_decide_who_gets_recommended2 = __esm({
 });
 
 // server/journal/locales/zh-posts/designing-for-the-ai-native-era.ts
-var slug4, source9, ZH_POST_5, sourceStructure3, localizedStructure3;
+var slug4, source10, ZH_POST_5, sourceStructure3, localizedStructure3;
 var init_designing_for_the_ai_native_era2 = __esm({
   "server/journal/locales/zh-posts/designing-for-the-ai-native-era.ts"() {
     "use strict";
     init_posts();
     slug4 = "designing-for-the-ai-native-era";
-    source9 = getPost(slug4);
-    if (!source9) {
+    source10 = getPost(slug4);
+    if (!source10) {
       throw new Error(`Missing journal source post "${slug4}".`);
     }
     ZH_POST_5 = {
-      ...source9,
+      ...source10,
       title: "\u4E3A AI \u539F\u751F\u65F6\u4EE3\u8BBE\u8BA1\uFF1A\u751F\u6210\u5F0F UI \u4E0E\u9762\u5411\u667A\u80FD\u4F53\u7684\u6784\u5EFA",
       seoTitle: "AI \u539F\u751F\u65F6\u4EE3\uFF1A\u751F\u6210\u5F0F UI \u4E0E\u667A\u80FD\u4F53 | Start Apps Studio",
       description: "\u9762\u5411\u521B\u59CB\u4EBA\u7684\u5B9E\u5730\u6307\u5357\uFF1A\u4ECE\u9759\u6001\u4EEA\u8868\u76D8\u8F6C\u5411\u751F\u6210\u5F0F\u754C\u9762\uFF0C\u4E86\u89E3\u6BCF\u4E2A AI \u539F\u751F\u4EA7\u54C1\u90FD\u4F1A\u7ECF\u5386\u7684\u56DB\u4E2A\u9636\u6BB5\uFF0C\u4EE5\u53CA\u4ECA\u5929\u5FC5\u987B\u5B8C\u6210\u7684\u4E09\u4EF6\u4E8B\uFF0C\u8BA9 AI \u667A\u80FD\u4F53\u771F\u6B63\u80FD\u4F7F\u7528\u4F60\u7684\u4EA7\u54C1\u3002",
@@ -10715,7 +11147,7 @@ var init_designing_for_the_ai_native_era2 = __esm({
         }
       ]
     };
-    sourceStructure3 = source9.body.map((block) => ({
+    sourceStructure3 = source10.body.map((block) => ({
       type: block.type,
       id: "id" in block ? block.id : void 0,
       items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
@@ -10732,13 +11164,13 @@ var init_designing_for_the_ai_native_era2 = __esm({
 });
 
 // server/journal/locales/zh-posts/design-systems-matter-more-in-the-ai-era.ts
-var source10, copy4, ZH_POST_6;
+var source11, copy4, ZH_POST_6;
 var init_design_systems_matter_more_in_the_ai_era2 = __esm({
   "server/journal/locales/zh-posts/design-systems-matter-more-in-the-ai-era.ts"() {
     "use strict";
     init_posts();
-    source10 = getPost("design-systems-matter-more-in-the-ai-era");
-    if (!source10) {
+    source11 = getPost("design-systems-matter-more-in-the-ai-era");
+    if (!source11) {
       throw new Error(
         'Missing journal source post "design-systems-matter-more-in-the-ai-era".'
       );
@@ -10792,13 +11224,13 @@ var init_design_systems_matter_more_in_the_ai_era2 = __esm({
         }
       ]
     ];
-    if (source10.body.length !== copy4.length) {
+    if (source11.body.length !== copy4.length) {
       throw new Error(
         'Chinese translation block count does not match "design-systems-matter-more-in-the-ai-era".'
       );
     }
     ZH_POST_6 = {
-      ...source10,
+      ...source11,
       title: "\u5728 AI \u65F6\u4EE3\uFF0C\u4F60\u7684\u8BBE\u8BA1\u7CFB\u7EDF\u66F4\u91CD\u8981\uFF0C\u800C\u975E\u66F4\u4E0D\u91CD\u8981",
       seoTitle: "\u5728 AI \u65F6\u4EE3\uFF0C\u8BBE\u8BA1\u7CFB\u7EDF\u66F4\u91CD\u8981 | Start Apps Studio",
       description: "\u5F53 AI \u751F\u6210\u4F60\u7684\u754C\u9762\u65F6\uFF0C\u4EA7\u51FA\u8D28\u91CF\u53D7\u8BBE\u8BA1\u7CFB\u7EDF\u8D28\u91CF\u6240\u9650\u3002\u672C\u6587\u63A2\u8BA8\u4E3A\u4F55 API \u6210\u4E3A\u65B0\u7684\u4EA7\u54C1\u754C\u9762\u3001\u4E3A\u4F55\u5F3A\u5927\u7684\u7CFB\u7EDF\u5982\u4ECA\u662F\u6548\u7387\u500D\u589E\u5668\u3001\u4E3A\u4F55\u6BCF\u4E2A\u4EA7\u54C1\u90FD\u6709\u4E24\u7C7B\u7528\u6237\uFF0C\u4EE5\u53CA\u4E3A\u4F55\u4F5C\u4E3A\u5224\u65AD\u529B\u7684\u8BBE\u8BA1\u6BD4\u4EE5\u5F80\u66F4\u6709\u4EF7\u503C\u3002",
@@ -10806,7 +11238,7 @@ var init_design_systems_matter_more_in_the_ai_era2 = __esm({
       excerpt: "\u5982\u679C AI \u5C06\u8981\u751F\u6210\u4F60\u7684\u5C4F\u5E55\uFF0C\u5B83\u6240\u80FD\u4EA7\u51FA\u7684\u4E0A\u9650\u5C31\u662F\u4F60\u7684\u8BBE\u8BA1\u7CFB\u7EDF\u3002\u8584\u5F31\u7684\u7CFB\u7EDF\u6BCF\u6B21\u90FD\u4F1A\u5E26\u6765\u8584\u5F31\u7684\u4EA7\u51FA\u3002\u4EE5\u4E0B\u662F\u6B63\u5728\u6539\u53D8\u7684\u4E8B\u3002",
       category: "\u968F\u7B14",
       tags: ["\u8BBE\u8BA1\u7CFB\u7EDF", "AI \u539F\u751F", "API", "\u8BBE\u8BA1"],
-      body: source10.body.map((block, index) => {
+      body: source11.body.map((block, index) => {
         const value = copy4[index];
         if (block.type === "ul" || block.type === "ol") {
           if (!Array.isArray(value) || value.length !== block.items.length) {
@@ -10847,26 +11279,26 @@ function structure2(post) {
     items: block.type === "ul" || block.type === "ol" || block.type === "faq" ? block.items.length : void 0
   }));
 }
-var SOURCE_SLUG2, sourcePost15, ZH_POST_7;
+var SOURCE_SLUG2, sourcePost16, ZH_POST_7;
 var init_base44_vs_lovable_which_one_for_your_next_app2 = __esm({
   "server/journal/locales/zh-posts/base44-vs-lovable-which-one-for-your-next-app.ts"() {
     "use strict";
     init_posts();
     SOURCE_SLUG2 = "base44-vs-lovable-which-one-for-your-next-app";
-    sourcePost15 = getPost(SOURCE_SLUG2);
-    if (!sourcePost15) {
+    sourcePost16 = getPost(SOURCE_SLUG2);
+    if (!sourcePost16) {
       throw new Error(`Missing journal source post "${SOURCE_SLUG2}".`);
     }
     ZH_POST_7 = {
-      slug: sourcePost15.slug,
+      slug: sourcePost16.slug,
       title: "Base44 \u5BF9\u6BD4 Lovable\uFF1A\u54EA\u4E00\u4E2A\u9002\u5408\u4F60\u7684\u4E0B\u4E00\u6B3E\u5E94\u7528\uFF1F",
       seoTitle: "Base44 \u5BF9\u6BD4 Lovable\uFF1A\u54EA\u4E00\u4E2A\u9002\u5408\u4F60\u7684\u4E0B\u4E00\u6B3E\u5E94\u7528\uFF1F| Start Apps Studio",
       description: "Base44 \u548C Lovable \u5206\u522B\u9488\u5BF9\u4E0D\u540C\u7C7B\u578B\u7684\u901F\u5EA6\u8FDB\u884C\u4E86\u4F18\u5316\u3002\u5728\u51B3\u5B9A\u5728\u54EA\u91CC\u6784\u5EFA\u524D\uFF0C\u6BD4\u8F83\u5B83\u4EEC\u7684\u540E\u7AEF\u63A7\u5236\u3001AI \u5DE5\u4F5C\u6D41\u3001SEO \u548C\u4EA4\u63A5\u8DEF\u5F84\u3002",
       seoDescription: "Base44 \u662F\u5FEB\u901F\u6784\u5EFA\u5C01\u95ED\u5F0F\u5E94\u7528\u7684\u8DEF\u5F84\u3002Lovable \u63D0\u4F9B\u66F4\u5F00\u653E\u7684\u540E\u7AEF\uFF0C\u4E5F\u662F\u9762\u5411\u516C\u5F00\u3001\u53EF\u641C\u7D22\u9875\u9762\u7684\u66F4\u5F3A\u8D77\u70B9\u3002\u6784\u5EFA\u524D\u8BF7\u6BD4\u8F83\u8FD9\u4E9B\u53D6\u820D\u3002",
       excerpt: "Base44 \u548C Lovable \u90FD\u80FD\u8BA9\u60F3\u6CD5\u8FC5\u901F\u542F\u52A8\u3002\u5173\u952E\u5DEE\u5F02\u4F1A\u5728\u4E4B\u540E\u51FA\u73B0\uFF1A\u5F53\u4F60\u7684\u5E94\u7528\u9700\u8981\u81EA\u5B9A\u4E49\u8BA4\u8BC1\u3001\u641C\u7D22\u53EF\u89C1\u6027\u6216\u6E05\u6670\u7684\u4EA4\u63A5\u65F6\u3002",
-      publishedAt: sourcePost15.publishedAt,
-      updatedAt: sourcePost15.updatedAt,
-      readMinutes: sourcePost15.readMinutes,
+      publishedAt: sourcePost16.publishedAt,
+      updatedAt: sourcePost16.updatedAt,
+      readMinutes: sourcePost16.readMinutes,
       category: "\u5B9E\u6218\u7B14\u8BB0",
       tags: ["Base44", "Lovable", "\u6C1B\u56F4\u7F16\u7A0B", "SEO", "\u4EA7\u54C1\u7B56\u7565"],
       body: [
@@ -10919,7 +11351,7 @@ var init_base44_vs_lovable_which_one_for_your_next_app2 = __esm({
         { label: "\u4E3A\u672C\u5B9E\u6218\u7B14\u8BB0\u63D0\u4F9B\u7684\u5BF9\u6BD4\u6765\u6E90\uFF1ASEO\u3001SSR \u548C\u6700\u7EC8\u5E73\u53F0\u5EFA\u8BAE\uFF0837:16\u20131:22:23\uFF09\u3002" }
       ]
     };
-    if (JSON.stringify(structure2(ZH_POST_7)) !== JSON.stringify(structure2(sourcePost15))) {
+    if (JSON.stringify(structure2(ZH_POST_7)) !== JSON.stringify(structure2(sourcePost16))) {
       throw new Error(`Localized post "${SOURCE_SLUG2}" does not retain the source body structure.`);
     }
   }
@@ -10927,18 +11359,18 @@ var init_base44_vs_lovable_which_one_for_your_next_app2 = __esm({
 
 // server/journal/locales/zh-posts.ts
 function translated(slug5, fields, copy5, sourceLabels3) {
-  const source11 = getPost(slug5);
-  if (!source11) throw new Error(`Missing journal source post "${slug5}".`);
-  if (source11.body.length !== copy5.length) {
+  const source12 = getPost(slug5);
+  if (!source12) throw new Error(`Missing journal source post "${slug5}".`);
+  if (source12.body.length !== copy5.length) {
     throw new Error(`Chinese translation block count does not match "${slug5}".`);
   }
-  if ((source11.sources?.length ?? 0) !== sourceLabels3.length) {
+  if ((source12.sources?.length ?? 0) !== sourceLabels3.length) {
     throw new Error(`Chinese translation source count does not match "${slug5}".`);
   }
   return {
-    ...source11,
+    ...source12,
     ...fields,
-    body: source11.body.map((block, index) => {
+    body: source12.body.map((block, index) => {
       const value = copy5[index];
       if (block.type === "ul" || block.type === "ol") {
         if (!Array.isArray(value) || value.length !== block.items.length) throw new Error(`Chinese list does not match "${slug5}" at block ${index}.`);
@@ -10957,7 +11389,7 @@ function translated(slug5, fields, copy5, sourceLabels3) {
       if (typeof value !== "string") throw new Error(`Chinese text does not match "${slug5}" at block ${index}.`);
       return { ...block, text: value };
     }),
-    sources: source11.sources?.map((item, index) => ({ ...item, label: sourceLabels3[index] }))
+    sources: source12.sources?.map((item, index) => ({ ...item, label: sourceLabels3[index] }))
   };
 }
 var ZH_TRANSLATED_POSTS;
@@ -11020,14 +11452,14 @@ var init_zh_posts = __esm({
 });
 
 // server/journal/locales/zh.ts
-var sourcePost16, ZH_EDITORIAL_CONTENT, zh_default;
+var sourcePost17, ZH_EDITORIAL_CONTENT, zh_default;
 var init_zh = __esm({
   "server/journal/locales/zh.ts"() {
     "use strict";
     init_posts();
     init_zh_posts();
-    sourcePost16 = getPost("the-mvp-brief-is-your-first-product-decision");
-    if (!sourcePost16) throw new Error("MVP source post is missing.");
+    sourcePost17 = getPost("the-mvp-brief-is-your-first-product-decision");
+    if (!sourcePost17) throw new Error("MVP source post is missing.");
     ZH_EDITORIAL_CONTENT = {
       copy: { journalName: "The Journal \xB7 \u7B2C\u4E00\u5377", journalTitle: "\u6765\u81EA\u5DE5\u4F5C\u5BA4\u7684\u5B9E\u5730\u7B14\u8BB0\u3002", journalDescription: "\u5173\u4E8E\u53D1\u5E03\u80FD\u5728 Google \u83B7\u5F97\u6392\u540D\u3001\u88AB AI \u5F15\u8FF0\u7684 MVP \u7684\u89C2\u5BDF\uFF1AGEO\u3001vibe-coding\uFF0C\u4EE5\u53CA AI \u5728\u5DE5\u4F5C\u4E2D\u7684\u73B0\u72B6\u3002", resourcesTitle: "\u6784\u5EFA\u548C\u53D1\u5E03\u6570\u5B57\u4EA7\u54C1\u7684\u5B9E\u7528\u6307\u5357\u3002", resourcesDescription: "\u5173\u4E8E\u4EA7\u54C1\u7B56\u7565\u3001AI \u8F85\u52A9\u4EA4\u4ED8\u3001\u6280\u672F\u9009\u62E9\u3001\u6240\u6709\u6743\u3001\u4EA4\u63A5\u4EE5\u53CA MVP \u53D1\u5E03\u7684\u5B9E\u7528\u8D44\u6E90\u3002", read: "\u9605\u8BFB\u7B14\u8BB0", minutes: "\u5206\u949F\u9605\u8BFB", allNotes: "\u5168\u90E8\u7B14\u8BB0", sources: "\u6765\u6E90", shortAnswer: "\u7B80\u77ED\u56DE\u7B54", language: "\u8BED\u8A00", translatedArticleTitle: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", translatedArticleDescription: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u660E\u786E\u9996\u4F4D\u7528\u6237\u3001\u5212\u5B9A\u7B2C\u4E00\u7248\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u4E0B\u4E00\u6B21\u51B3\u7B56\u6240\u9700\u7684\u8BC1\u636E\u3002" },
       resources: {
@@ -11057,7 +11489,7 @@ var init_zh = __esm({
         journal: { title: "Journal \u7684\u5B9E\u5730\u7B14\u8BB0", text: "\u5173\u4E8E MVP \u7B56\u7565\u3001SEO\u3001GEO\u3001vibe-coded \u5E94\u7528\uFF0C\u4EE5\u53CA\u8BA9\u4EA7\u54C1\u66F4\u5BB9\u6613\u53D1\u5E03\u7684\u51B3\u7B56\u7684\u957F\u7BC7\u7B14\u8BB0\u3002", readAction: "\u9605\u8BFB\u7B14\u8BB0", minutesLabel: "\u5206\u949F\u9605\u8BFB", allAction: "\u5168\u90E8 Journal \u7B14\u8BB0", fallbackCategory: "Journal", postSlugs: ["base44-vs-lovable-which-one-for-your-next-app", "the-mvp-brief-is-your-first-product-decision", "make-your-brand-visible-in-chatgpt", "vibe-coded-apps-have-an-seo-problem", "backlinks-still-decide-who-gets-recommended", "ai-overviews-citation-playbook-for-mvps"] },
         cta: { title: "\u5FC3\u91CC\u5DF2\u6709\u8DEF\u5F84\u4E86\u5417\uFF1F", text: "\u544A\u8BC9\u6211\u4EEC\u4F60\u76EE\u524D\u6240\u5904\u7684\u4F4D\u7F6E\u3001\u9700\u8981\u8BC1\u660E\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u773C\u4E0B\u5361\u5728\u54EA\u91CC\u3002", action: "\u83B7\u5F97\u660E\u786E\u7684\u4E0B\u4E00\u6B65" }
       },
-      post: { slug: sourcePost16.slug, publishedAt: sourcePost16.publishedAt, readMinutes: sourcePost16.readMinutes, title: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", seoTitle: "MVP \u7B80\u62A5\uFF1A\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56 | Start Apps Studio", description: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4E0D\u53EA\u662F\u63CF\u8FF0\u4E00\u4E2A\u60F3\u6CD5\u3002\u5B83\u4F1A\u660E\u786E\u7528\u6237\u3001\u4E3A\u7B2C\u4E00\u7248\u5212\u51FA\u6E05\u6670\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u544A\u8BC9\u4F60\u662F\u5426\u7EE7\u7EED\u6784\u5EFA\u7684\u8BC1\u636E\u3002", seoDescription: "\u4F60\u7684 MVP \u7B80\u62A5\u662F\u4EA7\u54C1\u51B3\u7B56\uFF0C\u4E0D\u662F\u6587\u4E66\u5DE5\u4F5C\u3002\u4E86\u89E3\u5728\u8BBE\u8BA1\u6216\u7F16\u7801\u5F00\u59CB\u524D\uFF0C\u6709\u7528\u7684\u7B80\u62A5\u5FC5\u987B\u5B9A\u4E49\u7684\u4E09\u4EF6\u4E8B\u3002", excerpt: "\u6700\u597D\u7684 MVP \u7B80\u62A5\u5E76\u4E0D\u957F\u3002\u5B83\u51B3\u5B9A\u4EA7\u54C1\u670D\u52A1\u8C01\u3001\u7B2C\u4E00\u7248\u660E\u786E\u4E0D\u505A\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u4EC0\u4E48\u8BC1\u636E\u503C\u5F97\u6295\u5165\u4E0B\u4E00\u5468\u7684\u5DE5\u4F5C\u3002", category: "\u5B9E\u5730\u7B14\u8BB0", tags: ["MVP", "\u4EA7\u54C1\u7B56\u7565", "\u521B\u59CB\u4EBA", "\u8303\u56F4"], body: [
+      post: { slug: sourcePost17.slug, publishedAt: sourcePost17.publishedAt, readMinutes: sourcePost17.readMinutes, title: "MVP \u7B80\u62A5\u662F\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56", seoTitle: "MVP \u7B80\u62A5\uFF1A\u4F60\u7684\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56 | Start Apps Studio", description: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4E0D\u53EA\u662F\u63CF\u8FF0\u4E00\u4E2A\u60F3\u6CD5\u3002\u5B83\u4F1A\u660E\u786E\u7528\u6237\u3001\u4E3A\u7B2C\u4E00\u7248\u5212\u51FA\u6E05\u6670\u8FB9\u754C\uFF0C\u5E76\u5B9A\u4E49\u544A\u8BC9\u4F60\u662F\u5426\u7EE7\u7EED\u6784\u5EFA\u7684\u8BC1\u636E\u3002", seoDescription: "\u4F60\u7684 MVP \u7B80\u62A5\u662F\u4EA7\u54C1\u51B3\u7B56\uFF0C\u4E0D\u662F\u6587\u4E66\u5DE5\u4F5C\u3002\u4E86\u89E3\u5728\u8BBE\u8BA1\u6216\u7F16\u7801\u5F00\u59CB\u524D\uFF0C\u6709\u7528\u7684\u7B80\u62A5\u5FC5\u987B\u5B9A\u4E49\u7684\u4E09\u4EF6\u4E8B\u3002", excerpt: "\u6700\u597D\u7684 MVP \u7B80\u62A5\u5E76\u4E0D\u957F\u3002\u5B83\u51B3\u5B9A\u4EA7\u54C1\u670D\u52A1\u8C01\u3001\u7B2C\u4E00\u7248\u660E\u786E\u4E0D\u505A\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u4EC0\u4E48\u8BC1\u636E\u503C\u5F97\u6295\u5165\u4E0B\u4E00\u5468\u7684\u5DE5\u4F5C\u3002", category: "\u5B9E\u5730\u7B14\u8BB0", tags: ["MVP", "\u4EA7\u54C1\u7B56\u7565", "\u521B\u59CB\u4EBA", "\u8303\u56F4"], body: [
         { type: "answer", text: "\u4E00\u4EFD\u6709\u7528\u7684 MVP \u7B80\u62A5\u4F1A\u5728\u8BBE\u8BA1\u5F00\u59CB\u524D\u505A\u51FA\u4E09\u4E2A\u51B3\u5B9A\uFF1A\u4EA7\u54C1\u670D\u52A1\u8C01\u3001\u7B2C\u4E00\u7248\u5C06\u523B\u610F\u7701\u7565\u4EC0\u4E48\uFF0C\u4EE5\u53CA\u4EC0\u4E48\u7528\u6237\u8BC1\u636E\u80FD\u8BC1\u660E\u4E0B\u4E00\u7B14\u6295\u5165\u5408\u7406\u3002\u8FD9\u5C31\u662F\u7B80\u62A5\u4E0D\u662F\u6587\u4E66\u5DE5\u4F5C\u7684\u539F\u56E0\uFF1B\u5B83\u662F\u7B2C\u4E00\u4E2A\u4EA7\u54C1\u51B3\u7B56\u3002" },
         { type: "p", text: "\u521B\u59CB\u4EBA\u5E38\u5E26\u7740\u4E00\u4EFD\u5B9E\u9645\u4E0A\u53EA\u662F\u60F3\u6CD5\u8BF4\u660E\u7684\u7B80\u62A5\u800C\u6765\uFF1A\u51E0\u6BB5\u5E02\u573A\u4ECB\u7ECD\u3001\u4E00\u4E2A\u529F\u80FD\u6E05\u5355\uFF0C\u4EE5\u53CA\u4E00\u53E5\u5173\u4E8E\u4EA7\u54C1\u672A\u6765\u53EF\u80FD\u8D70\u5411\u4F55\u5904\u7684\u8BDD\u3002\u5B83\u8DB3\u4EE5\u5F00\u542F\u5BF9\u8BDD\uFF0C\u5374\u4E0D\u8DB3\u4EE5\u636E\u6B64\u53D1\u5E03\u4EA7\u54C1\u3002\u6784\u5EFA\u56E2\u961F\u9700\u8981\u4E00\u4EFD\u66F4\u5C0F\u3001\u66F4\u805A\u7126\u7684\u6587\u4EF6\uFF0C\u628A\u96C4\u5FC3\u8F6C\u5316\u4E3A\u4E00\u7CFB\u5217\u53EF\u9A8C\u8BC1\u7684\u9009\u62E9\u3002" },
         { type: "h2", text: "\u6709\u7528\u7684\u7B80\u62A5\u5B8C\u6210\u4E09\u9879\u5DE5\u4F5C", id: "three-jobs" },
@@ -11112,7 +11544,7 @@ function translatedPost3(post, locale) {
   }
   return localized;
 }
-var TRANSLATED_MVP_SLUG, sourcePost17, ENGLISH_CONTENT, localeEditorialContent;
+var TRANSLATED_MVP_SLUG, sourcePost18, ENGLISH_CONTENT, localeEditorialContent;
 var init_editorial = __esm({
   "server/journal/editorial.ts"() {
     "use strict";
@@ -11123,13 +11555,14 @@ var init_editorial = __esm({
     init_es();
     init_fr();
     init_it();
+    init_ko();
     init_ru();
     init_tr();
     init_uk();
     init_zh();
     TRANSLATED_MVP_SLUG = "the-mvp-brief-is-your-first-product-decision";
-    sourcePost17 = getPost(TRANSLATED_MVP_SLUG);
-    if (!sourcePost17) throw new Error(`Missing editorial source post "${TRANSLATED_MVP_SLUG}".`);
+    sourcePost18 = getPost(TRANSLATED_MVP_SLUG);
+    if (!sourcePost18) throw new Error(`Missing editorial source post "${TRANSLATED_MVP_SLUG}".`);
     ENGLISH_CONTENT = {
       copy: {
         journalName: "The Journal \xB7 Vol. I",
@@ -11202,7 +11635,7 @@ var init_editorial = __esm({
         },
         cta: { title: "Have a route in mind?", text: "Share where you are, what you need to prove, and what is currently stuck.", action: "Get a clear next step" }
       },
-      post: sourcePost17,
+      post: sourcePost18,
       translatedPosts: Object.fromEntries(
         posts.map((post) => [post.slug, post])
       )
@@ -11217,7 +11650,8 @@ var init_editorial = __esm({
       es: es_default,
       de: de_default,
       uk: uk_default,
-      it: it_default
+      it: it_default,
+      ko: ko_default
     };
   }
 });
@@ -11824,7 +12258,7 @@ Start Apps Studio uses AI throughout most builds, with a person owning the produ
 ## Language and delivery coverage
 
 - Supported landing-page languages: ${SUPPORTED_LANGUAGE_NAMES.join(", ")}.
-- Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), and Italian (${origin}/it).
+  - Language routes: English (${origin}/), Azerbaijani (${origin}/az), Turkish (${origin}/tr), Russian (${origin}/ru), Simplified Chinese (${origin}/zh), French (${origin}/fr), Spanish (${origin}/es), German (${origin}/de), Ukrainian (${origin}/uk), Italian (${origin}/it), and Korean (${origin}/ko).
 - Service area: ${SERVICE_AREA}.
 - Delivery model: ${DELIVERY_MODEL}. Localized pages describe language access, not local offices or in-person availability.
 
@@ -12036,6 +12470,11 @@ var init_render = __esm({
     --serif: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
     --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+  html[lang="ko"] {
+    --sans: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    --display: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
+    --kicker: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -13353,7 +13792,7 @@ async function registerRoutes(app2) {
   });
   app2.post("/api/journal/leads", async (req, res) => {
     try {
-      const { slug: slug5, title, email, source: source11 } = req.body || {};
+      const { slug: slug5, title, email, source: source12 } = req.body || {};
       const cleanEmail = typeof email === "string" ? email.trim() : "";
       const cleanSlug = typeof slug5 === "string" ? slug5.trim() : "";
       if (!cleanSlug) {
@@ -13368,7 +13807,7 @@ async function registerRoutes(app2) {
         slug: cleanSlug.slice(0, 200),
         title: finalTitle ? String(finalTitle).slice(0, 500) : null,
         email: cleanEmail.slice(0, 320),
-        source: typeof source11 === "string" && source11 ? source11.slice(0, 80) : "journal_signup"
+        source: typeof source12 === "string" && source12 ? source12.slice(0, 80) : "journal_signup"
       });
       if (created) {
         try {
@@ -13874,14 +14313,14 @@ async function registerRoutes(app2) {
       const toolName = typeof body3.toolName === "string" ? body3.toolName.trim().slice(0, 80) : "";
       if (!toolName) return res.status(400).json({ error: "toolName required" });
       const toolGroup = typeof body3.toolGroup === "string" ? body3.toolGroup.trim().slice(0, 80) : null;
-      const source11 = typeof body3.source === "string" ? body3.source.trim().slice(0, 40) : null;
+      const source12 = typeof body3.source === "string" ? body3.source.trim().slice(0, 40) : null;
       const userAgent = (req.header("user-agent") || "").slice(0, 500) || null;
       const ipRaw = (req.header("x-forwarded-for") || "").split(",")[0]?.trim() || req.socket.remoteAddress || "";
       const { hashIp: hashIp2 } = await Promise.resolve().then(() => (init_index(), index_exports));
       storage.recordToolkitReveal({
         toolName,
         toolGroup,
-        source: source11,
+        source: source12,
         userAgent,
         ipHash: hashIp2(ipRaw)
       }).catch((err) => console.error("toolkit-reveal log failed:", err));
@@ -14402,7 +14841,7 @@ function textContent(html, node) {
 function normalizeKey(raw) {
   return raw.replace(/\s+/g, " ").trim();
 }
-function applySplices(source11, splices) {
+function applySplices(source12, splices) {
   const ordered = [...splices].sort((a, b) => a.start - b.start);
   const safe = [];
   let lastEnd = -1;
@@ -14414,11 +14853,11 @@ function applySplices(source11, splices) {
   let out = "";
   let cursor = 0;
   for (const splice of safe) {
-    out += source11.slice(cursor, splice.start);
+    out += source12.slice(cursor, splice.start);
     out += splice.replacement;
     cursor = splice.end;
   }
-  out += source11.slice(cursor);
+  out += source12.slice(cursor);
   return out;
 }
 function preserveEdgeWhitespace(raw) {

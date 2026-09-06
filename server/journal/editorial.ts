@@ -5,6 +5,7 @@ import DE_EDITORIAL_CONTENT from "./locales/de";
 import ES_EDITORIAL_CONTENT from "./locales/es";
 import FR_EDITORIAL_CONTENT from "./locales/fr";
 import IT_EDITORIAL_CONTENT from "./locales/it";
+import KO_EDITORIAL_CONTENT from "./locales/ko";
 import RU_EDITORIAL_CONTENT from "./locales/ru";
 import TR_EDITORIAL_CONTENT from "./locales/tr";
 import UK_EDITORIAL_CONTENT from "./locales/uk";
@@ -192,6 +193,7 @@ export const localeEditorialContent: Record<string, PendingLocaleEditorialConten
   de: DE_EDITORIAL_CONTENT,
   uk: UK_EDITORIAL_CONTENT,
   it: IT_EDITORIAL_CONTENT,
+  ko: KO_EDITORIAL_CONTENT,
 };
 
 function resolvedContent(locale: string): LocaleEditorialContent {
