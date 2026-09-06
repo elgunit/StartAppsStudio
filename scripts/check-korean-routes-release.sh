@@ -33,3 +33,4 @@ else
 fi
 
 npm run check:i18n:ko
+npm run check:i18n:layout
