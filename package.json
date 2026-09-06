@@ -11,6 +11,7 @@
     "check:i18n": "tsx scripts/check-i18n-completeness.ts",
     "check:i18n:layout": "tsx scripts/check-i18n-layout-smoke.ts",
     "check:i18n:ko": "tsx scripts/check-korean-routes-smoke.ts",
+    "check:i18n:ko:release": "bash scripts/check-korean-routes-release.sh",
     "check:editorial": "tsx scripts/check-editorial-completeness.ts",
     "check:seo": "tsx scripts/check-seo-locale-consistency.ts",
     "check:types": "tsc --noEmit",
