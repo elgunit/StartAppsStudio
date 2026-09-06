@@ -22,3 +22,4 @@
 - [Replit database schema flow](replit-db-schema-flow.md) — managed Postgres changes belong in schema source plus dev/Publish flow, not new startup-time DDL.
 - [Editorial route validation](editorial-route-validation.md) — localized render checks can pass while Express redirects articles to English; smoke real HTTP routes for every locale.
 - [Chinese font subset lifecycle](chinese-font-subset-lifecycle.md) — regenerate content-hashed local subsets whenever Chinese copy changes; remote text-subset endpoints may return full CJK fonts.
+- [Korean Journal editorial maps](korean-journal-editorial-maps.md) — localized article blocks need explicit per-path Korean copy; shared prose can preserve facts while erasing the article’s argument.
