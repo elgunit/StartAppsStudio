@@ -9,6 +9,12 @@ description: Shell `git push` over HTTPS fails here; use scripts/github-push.mjs
 
 **Oversized blobs:** the GitHub API rejects blobs over ~40 MB; the script skips them (logged as "Skipping oversized blob"), so any large media in git history is permanently absent from the GitHub mirror.
 
+**Deletion after an oversized blob was skipped:** before sending a tree deletion, confirm the path exists in the mapped remote parent tree. If it is already absent, omit that deletion entry.
+
+**Why:** GitHub returns `422 GitRPC::BadObjectState` when a later commit tries to delete a large file that the connector replay previously skipped, even though the local history is valid.
+
+**How to apply:** query the mapped remote parent tree recursively, filter only remote-absent deletions, then replay the same commits through the connector and verify the final ref against the SHA map.
+
 Shell `git push origin main` hangs in this Repl because `replit-git-askpass` cannot supply credentials.
 
 **Durable decision:** always use `bash scripts/push-to-github.sh` for GitHub backups. The script (`scripts/github-push.mjs`) uses the Replit GitHub connector (slug `github`) via the REST Git Data API — no HTTPS credentials needed.
