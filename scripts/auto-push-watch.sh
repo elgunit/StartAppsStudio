@@ -14,6 +14,24 @@ INTERVAL="${AUTO_PUSH_INTERVAL:-300}"   # default: check every 5 minutes
 
 echo "[auto-push] Watcher started (interval: ${INTERVAL}s)."
 
+is_permanent_tree_error() {
+  local output="$1"
+
+  # Timeouts, conflicts, and throttling can resolve without changing the commit.
+  if grep -Eq 'GitHub API (POST|PATCH|PUT) /repos/[^ ]+/git/trees([^ ]*)? → (408|409|425|429):' <<< "$output"; then
+    return 1
+  fi
+
+  # GitHub reports both permission failures and rate limits as 403. Retry only
+  # the latter; a rejected credential/WAF request needs operator intervention.
+  if grep -Eq 'GitHub API (POST|PATCH|PUT) /repos/[^ ]+/git/trees([^ ]*)? → 403:' <<< "$output"; then
+    ! grep -Eiq 'rate.?limit|secondary rate|abuse detection|retry.after' <<< "$output"
+    return
+  fi
+
+  grep -Eq 'GitHub API (POST|PATCH|PUT) /repos/[^ ]+/git/trees([^ ]*)? → (400|401|404|405|410|422):' <<< "$output"
+}
+
 while true; do
   sleep "$INTERVAL"
 
@@ -28,10 +46,19 @@ while true; do
   BEHIND=$(git -C "$REPO_ROOT" rev-list --count "$LAST_SHA".."$CURRENT_SHA" 2>/dev/null || echo "?")
   echo "[auto-push] ${BEHIND} new commit(s) detected — pushing to GitHub…"
 
-  if bash "$SCRIPT_DIR/push-to-github.sh"; then
+  PUSH_OUTPUT=$(bash "$SCRIPT_DIR/push-to-github.sh" 2>&1)
+  PUSH_STATUS=$?
+  printf '%s\n' "$PUSH_OUTPUT"
+
+  if [ "$PUSH_STATUS" -eq 0 ]; then
     echo "$CURRENT_SHA" > "$LAST_SHA_FILE"
     echo "[auto-push] Push successful at $(date -u '+%Y-%m-%dT%H:%M:%SZ')."
+  elif is_permanent_tree_error "$PUSH_OUTPUT"; then
+    echo "[auto-push] Permanent GitHub tree error detected. Automatic retries are paused."
+    echo "[auto-push] The GitHub 4xx response above indicates that GitHub rejected the tree request; retrying unchanged commits will not fix it."
+    echo "[auto-push] Inspect the rejected path/payload in the response, fix the offending commit or push script, then restart the Auto Push to GitHub workflow."
+    exit "$PUSH_STATUS"
   else
-    echo "[auto-push] Push failed — will retry in ${INTERVAL}s."
+    echo "[auto-push] Transient connector/GitHub failure — will retry in ${INTERVAL}s."
   fi
 done
