@@ -1749,7 +1749,8 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
 
   const bodyInner = `
   <main class="container-wide resources-page">
-    <header class="resource-header">
+    <header class="resource-header resource-hero">
+      <div class="resource-hero-copy">
       <div class="resource-eyebrow">${esc(content.eyebrow)}</div>
        <h1 class="resource-title">${esc(content.title)}</h1>
        <p class="resource-lede">${esc(content.description)}</p>
@@ -1757,17 +1758,43 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
         <a class="cta-btn" href="${editorialPath(locale, "/#contact")}">${esc(content.primaryAction)} &rarr;</a>
         <a class="secondary-action" href="${editorialPath(locale, "/journal")}">${esc(content.journalAction)}</a>
       </div>
+      </div>
+      <aside class="resource-route-map" aria-hidden="true">
+        <div class="resource-route-map-top">
+          <span>${esc(content.routes.title)}</span>
+          <span>01—04</span>
+        </div>
+        <div class="resource-route-map-list">
+          ${content.routes.cards.map((card, index) => `
+            <div class="resource-route-map-item">
+              <span class="resource-route-map-number">${String(index + 1).padStart(2, "0")}</span>
+              <span class="resource-route-map-copy">
+                <strong>${esc(card.title)}</strong>
+                <small>${esc(card.kicker)}</small>
+              </span>
+              <span class="resource-route-map-arrow">↗</span>
+            </div>`).join("")}
+        </div>
+        <div class="resource-route-map-foot">${esc(content.routes.intro)}</div>
+      </aside>
     </header>
+    <nav class="resource-jump" aria-label="${esc(content.title)}">
+      <a href="#resource-routes-title">${esc(content.routes.title)}</a>
+      <a href="#resource-packages-title">${esc(content.packages.title)}</a>
+      <a href="#resource-toolkit-title">${esc(content.toolkit.title)}</a>
+      <a href="#resource-journal-title">${esc(content.journal.title)}</a>
+    </nav>
 
     <section class="resource-section" aria-labelledby="resource-routes-title">
       <div class="resource-section-heading">
         <div>
+          <span class="resource-section-number">01</span>
           <h2 id="resource-routes-title">${esc(content.routes.title)}</h2>
           <p>${esc(content.routes.intro)}</p>
         </div>
       </div>
       <div class="resource-grid resource-route-grid">
-        ${content.routes.cards.map((card) => `<article class="resource-card">
+        ${content.routes.cards.map((card, index) => `<article class="resource-card${index === 0 ? " resource-card--featured" : ""}">
           <div class="resource-card-kicker">${esc(card.kicker)}</div>
           <h3>${esc(card.title)}</h3>
           <p>${esc(card.text)}</p>
@@ -1779,6 +1806,7 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
     <section class="resource-section" aria-labelledby="resource-packages-title">
       <div class="resource-section-heading">
         <div>
+          <span class="resource-section-number">02</span>
           <h2 id="resource-packages-title">${esc(content.packages.title)}</h2>
           <p>${esc(content.packages.intro)}</p>
         </div>
@@ -1798,6 +1826,7 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
     <section class="resource-section" aria-labelledby="resource-toolkit-title">
       <div class="resource-section-heading">
         <div>
+          <span class="resource-section-number">03</span>
           <h2 id="resource-toolkit-title">${esc(content.toolkit.title)}</h2>
           <p>${esc(content.toolkit.intro)}</p>
         </div>
@@ -1809,6 +1838,7 @@ export function renderResourcesHtml(origin: string, locale = "en"): string {
     <section class="resource-section" aria-labelledby="resource-journal-title">
       <div class="resource-section-heading">
         <div>
+          <span class="resource-section-number">04</span>
           <h2 id="resource-journal-title">${esc(content.journal.title)}</h2>
           <p>${esc(content.journal.text)}</p>
         </div>
