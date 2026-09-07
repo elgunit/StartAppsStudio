@@ -23,3 +23,4 @@
 - [Editorial route validation](editorial-route-validation.md) — localized render checks can pass while Express redirects articles to English; smoke real HTTP routes for every locale.
 - [Chinese font subset lifecycle](chinese-font-subset-lifecycle.md) — regenerate content-hashed local subsets whenever Chinese copy changes; remote text-subset endpoints may return full CJK fonts.
 - [Korean Journal editorial maps](korean-journal-editorial-maps.md) — localized article blocks need explicit per-path Korean copy; shared prose can preserve facts while erasing the article’s argument.
+- [Resources hub direction](resources-hub-direction.md) — present Resources as a scannable product-decision hub, not a news feed or long-form article index.
