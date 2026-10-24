@@ -34,6 +34,7 @@ try {
     });
     if (await consent.isVisible()) await consent.click();
     assert.equal(await page.locator(".sas-nav").count(), 1);
+    assert.equal(await page.locator(".sas-mobile-cta").count(), 0, "Floating free-plan bar must stay removed");
     assert.equal(await page.locator("#pricing .price-card").count(), 4);
     assert.equal(await page.locator("#pricing .price-card.featured").count(), 1);
     assert(await page.locator("#pricing .mvp-card.featured").count());

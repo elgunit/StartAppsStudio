@@ -98,7 +98,7 @@ body::before { opacity: .12; background-size: 52px 52px; }
 .section p, .section li { font-size:17px; line-height:1.6; max-width:68ch; font-weight:400; }
 .section :is(h3,h4,strong,b,.price-amount,.popular-badge,.method-badge,.hat-badge) { font-weight:600; }
 body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,30px)!important; line-height:1.5!important; max-width:62ch; }
-.cta-button:not(.secondary):not(.cta-secondary), .submit-btn, .sas-form-step-actions .sas-next, .sas-nav .sas-nav-cta, .sas-mobile-cta a {
+.cta-button:not(.secondary):not(.cta-secondary), .submit-btn, .sas-form-step-actions .sas-next, .sas-nav .sas-nav-cta {
   background:var(--action); color:var(--on-accent); border-radius:999px; font-weight:600;
 }
 .pain-strip-resolve, .service-card p, .how-card p, .showcase-problem, .showcase-solution, .faq-answer { font-size:17px; line-height:1.6; max-width:68ch; }
@@ -148,7 +148,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
 .custom-price-card .special-details { margin-top:16px; }
 .sas-price-cta:focus-visible,.sas-included-toggle:focus-visible,.sas-nav a:focus-visible,.sas-nav button:focus-visible,
 .sas-form-step-actions button:focus-visible,.sas-testimonial-controls button:focus-visible,.sas-description-toggle:focus-visible,
-.sas-mobile-cta a:focus-visible,.sas-back-top:focus-visible,.cta-button:focus-visible,.submit-btn:focus-visible { outline:3px solid var(--sas-accent); outline-offset:3px; }
+.sas-back-top:focus-visible,.cta-button:focus-visible,.submit-btn:focus-visible { outline:3px solid var(--sas-accent); outline-offset:3px; }
 .sas-pricing-trust,.sas-form-trust { text-align:center; color:var(--sas-muted); font-size:14px; margin:30px auto 0; }
 .testimonials-grid { display:flex!important; overflow:hidden!important; gap:0!important; scroll-snap-type:x mandatory; }
 .testimonial-card { flex:0 0 100%!important; scroll-snap-align:center; padding:clamp(28px,5vw,64px)!important; }
@@ -176,7 +176,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
 .faq-item > summary { padding:20px 24px; }
 .faq-answer { padding:0 24px 22px; }
 .faq-item[open] { background:#fbfaf6!important; }
-.sas-mobile-cta,.sas-back-top { display:none; }
+.sas-back-top { display:none; }
 .modal-overlay.open { z-index:1500; }
 .showcase-detail-note { color:var(--sas-muted); font-size:13px; margin:14px 0 0; }
 .service-card .service-icon { width:40px!important; height:40px!important; }
@@ -197,7 +197,6 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
   .faq-item[open] { background:#203334!important; }
   .contact { background:#0e3336!important; }
   .contact-form { background:#1b2c2d!important; color:#e9e8df; }
-  .sas-mobile-cta { background:rgba(20,35,36,.97); }
   .sas-back-top { background:#1b2c2d; color:#e9e8df; }
   .contact-form input,.contact-form select,.contact-form textarea { color:#f1eee5!important; background:#142324!important; border-color:rgba(231,238,230,.24)!important; }
   .contact-form .floating-label,.contact-form .form-section-title { color:#c7d2cd!important; }
@@ -248,13 +247,8 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
   .contact { margin:0 -16px; padding:64px 20px calc(88px + env(safe-area-inset-bottom))!important; }
   .contact-inner { grid-template-columns:1fr!important; }
   .contact-form { padding:22px!important; }
-  .sas-mobile-cta { display:block; position:fixed; z-index:1100; bottom:0; left:0; right:0; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:rgba(245,243,237,.96); border-top:1px solid var(--sas-line); transition:transform .2s ease; }
-  .sas-mobile-cta a { display:grid; place-items:center; min-height:48px; text-align:center; text-decoration:none; padding:10px 20px; border-radius:999px; background:var(--sas-deep); color:#f5f3ed; font-weight:700; }
-  .sas-mobile-cta.is-hidden { transform:translateY(120%); }
-  .sas-back-top { display:grid; place-items:center; position:fixed; z-index:1090; right:16px; bottom:calc(82px + env(safe-area-inset-bottom)); width:42px;height:42px;border-radius:50%; border:1px solid var(--sas-line); background:#f5f3ed; color:var(--sas-ink); opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .sas-back-top { display:grid; place-items:center; position:fixed; z-index:1090; right:16px; bottom:calc(20px + env(safe-area-inset-bottom)); width:42px;height:42px;border-radius:50%; border:1px solid var(--sas-line); background:#f5f3ed; color:var(--sas-ink); opacity:0; pointer-events:none; transition:opacity .2s ease; }
   .sas-back-top.is-visible { opacity:1; pointer-events:auto; }
-  body:has(.analytics-consent:not([hidden])) .sas-mobile-cta { display:none; }
-  body:has(.modal-overlay.open) .sas-mobile-cta { display:none; }
   body:has(.analytics-consent:not([hidden])) .sas-back-top,
   body:has(.modal-overlay.open) .sas-back-top { display:none!important; }
   .pain-strip-resolve,.service-card p { max-height:3.25em; overflow:hidden; transition:max-height .22s ease; }
@@ -292,6 +286,10 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
   --sas-accent: #f2c66d;
   --sas-action: #f2c66d;
   --sas-coral: #ff9d7b;
+  --sas-card: #fbfaf5;
+  --sas-card-copy: #405956;
+  --sas-card-line: rgba(25, 51, 51, .18);
+  --sas-card-shadow: 0 10px 28px rgba(20, 48, 47, .075);
 }
 
 body {
@@ -374,7 +372,6 @@ body {
 .submit-btn,
 .sas-form-step-actions .sas-next,
 .sas-nav .sas-nav-cta,
-.sas-mobile-cta a,
 .sas-price-cta {
   background: var(--sas-action) !important;
   color: #193333 !important;
@@ -439,6 +436,14 @@ body {
 .contact-left h2 { color: #f7f3e9 !important; }
 .section#studio-human .section-subtitle,
 .contact-left > p { color: #d0ddd6 !important; }
+.contact .contact-trust-item h3 { color: #f7f3e9; }
+.contact .contact-trust-item p,
+.contact .sas-form-trust { color: #d0ddd6 !important; }
+.contact .contact-trust-icon {
+  color: #b6e0d3;
+  background: rgba(182,224,211,.08);
+  border-color: rgba(182,224,211,.24);
+}
 
 .pain-strip-item,
 .section .service-card,
@@ -447,10 +452,10 @@ body {
 .custom-price-card.special-package,
 .testimonial-card,
 .faq-section .faq-item {
-  background: #fbfaf5 !important;
+  background: var(--sas-card) !important;
   color: var(--sas-ink) !important;
-  border-color: rgba(25,51,51,.18) !important;
-  box-shadow: 0 10px 28px rgba(20,48,47,.075) !important;
+  border-color: var(--sas-card-line) !important;
+  box-shadow: var(--sas-card-shadow) !important;
 }
 .pain-strip-pain,
 .service-card h3,
@@ -467,8 +472,16 @@ body {
 .custom-price-card :is(.special-summary,.special-details,.special-feature),
 .faq-answer,
 .testimonial-text {
-  color: #405956 !important;
+  color: var(--sas-card-copy) !important;
 }
+.how-bento .how-card {
+  padding: 24px clamp(16px, 2vw, 24px) !important;
+  border: 1px solid var(--sas-card-line) !important;
+  border-radius: 18px !important;
+  background: var(--sas-card) !important;
+  box-shadow: 0 8px 24px rgba(20,48,47,.045) !important;
+}
+.how-bento .how-card h3 { color: var(--sas-ink); }
 .price-card.mvp-card,
 .price-card.featured {
   background: #f3edd9 !important;
@@ -517,16 +530,107 @@ body {
 .contact-form textarea {
   color: #193333 !important;
   background: #fffef9 !important;
+  border-color: rgba(25,51,51,.2) !important;
 }
-.sas-mobile-cta {
-  background: rgba(245,242,233,.98) !important;
+.contact-form input:hover,
+.contact-form select:hover,
+.contact-form textarea:hover {
+  border-color: rgba(25,51,51,.38) !important;
 }
-.sas-mobile-cta a {
-  box-shadow: 0 4px 14px rgba(9,35,35,.17);
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: #397873 !important;
+  box-shadow: 0 0 0 3px rgba(57,120,115,.13) !important;
+}
+.contact-form :is(input,select,textarea):user-invalid {
+  border-color: #b45b43 !important;
+}
+.contact-form .floating-label,
+.contact-form .form-section-title {
+  color: #536965 !important;
+}
+.contact-form .form-section-title {
+  letter-spacing: .08em;
+}
+.budget-chip,
+.interest-option,
+.timeline-chip {
+  border-color: rgba(25,51,51,.2) !important;
+  background-color: #f4f3ec !important;
+  color: var(--sas-ink) !important;
+}
+.budget-chip.selected,
+.interest-option.selected,
+.timeline-chip.selected,
+.budget-chip:has(input:checked),
+.interest-option:has(input:checked),
+.timeline-chip:has(input:checked) {
+  border-color: #397873 !important;
+  background-color: #e2ede6 !important;
+  color: #193c3b !important;
+}
+.budget-chip:hover,
+.interest-option:hover,
+.timeline-chip:hover {
+  border-color: #668a80 !important;
+}
+
+.industries-scroll .industry-chip,
+.hat-badge {
+  border: 1px solid rgba(25,51,51,.17) !important;
+  background: #e5ebe2 !important;
+  color: #36534f !important;
+}
+.showcase-category,
+.sdm-category {
+  color: #53706b !important;
+}
+.result-badge {
+  border-color: rgba(184,141,55,.42) !important;
+  background: #f3edd9 !important;
+  color: #58451f !important;
 }
 .sas-back-top {
   background: #fbfaf5;
   color: var(--sas-ink);
+}
+
+.modal-overlay.open {
+  background: rgba(13, 31, 31, .62) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal-overlay .modal-content {
+  background: var(--sas-card) !important;
+  color: var(--sas-ink) !important;
+  border: 1px solid var(--sas-card-line) !important;
+  box-shadow: 0 24px 70px rgba(16,38,37,.22) !important;
+}
+.modal-overlay .modal-content :is(h1,h2,h3,h4,strong,b) {
+  color: var(--sas-ink);
+}
+.modal-overlay .modal-content :is(p,li,.showcase-detail-note) {
+  color: var(--sas-card-copy);
+}
+.modal-overlay .modal-content button:not(.modal-close) {
+  color: var(--sas-ink);
+}
+
+footer {
+  color: #e6ede5 !important;
+  background: var(--sas-deep-2) !important;
+  border-top: 1px solid rgba(245,242,233,.14);
+}
+footer :is(.footer-brand,.footer-copyright) { color: #d0ddd6 !important; }
+footer :is(a,.footer-top-link) {
+  color: #f2f0e7 !important;
+  text-underline-offset: 3px;
+}
+footer :is(a,.footer-top-link):hover { color: var(--sas-action) !important; }
+footer .footer-top-link {
+  border-color: rgba(245,242,233,.28);
+  background: rgba(245,242,233,.06);
 }
 
 :is(a, button, summary, [tabindex="0"], input, select, textarea):focus-visible {
@@ -550,6 +654,10 @@ body {
     --sas-line: rgba(231,238,230,.2);
     --sas-action: #f2c66d;
     --sas-coral: #ffab8d;
+    --sas-card: #203233;
+    --sas-card-copy: #c7d3cc;
+    --sas-card-line: rgba(231,238,230,.2);
+    --sas-card-shadow: 0 12px 30px rgba(0,0,0,.2);
   }
   body { background: #101b1c !important; color: #f0eee4 !important; }
   .sas-nav { background: rgba(12,40,42,.98); }
@@ -584,11 +692,17 @@ body {
   .custom-price-card.special-package,
   .testimonial-card,
   .faq-section .faq-item {
-    background: #203233 !important;
+    background: var(--sas-card) !important;
     color: #f0eee4 !important;
-    border-color: rgba(231,238,230,.2) !important;
-    box-shadow: 0 12px 30px rgba(0,0,0,.2) !important;
+    border-color: var(--sas-card-line) !important;
+    box-shadow: var(--sas-card-shadow) !important;
   }
+  .how-bento .how-card {
+    background: #1b2c2d !important;
+    border-color: rgba(231,238,230,.17) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.16) !important;
+  }
+  .how-bento .how-card h3 { color: #f0eee4 !important; }
   .pain-strip-pain,
   .service-card h3,
   .price-card h3,
@@ -601,7 +715,7 @@ body {
   .price-card :is(.price-feature,.price-subtitle,.price-tagline,.price-desc,.price-description,.special-feature),
   .custom-price-card :is(.special-summary,.special-details,.special-feature),
   .faq-answer,
-  .testimonial-text { color: #c7d3cc !important; }
+  .testimonial-text { color: var(--sas-card-copy) !important; }
   .price-card.mvp-card,
   .price-card.featured {
     background: #293633 !important;
@@ -629,9 +743,85 @@ body {
     background: #142324 !important;
     border-color: rgba(231,238,230,.3) !important;
   }
+  .contact-form input:hover,
+  .contact-form select:hover,
+  .contact-form textarea:hover {
+    border-color: rgba(231,238,230,.52) !important;
+  }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: #78c6b8 !important;
+    box-shadow: 0 0 0 3px rgba(120,198,184,.17) !important;
+  }
+  .contact-form :is(input,select,textarea):user-invalid {
+    border-color: #e0927b !important;
+  }
   .contact-form .floating-label,
   .contact-form .form-section-title { color: #c7d3cc !important; }
-  .sas-mobile-cta { background: rgba(20,35,36,.98) !important; }
+  .sas-form-progress-track span { background: #78c6b8; }
+  .budget-chip,
+  .interest-option,
+  .timeline-chip {
+    border-color: rgba(231,238,230,.22) !important;
+    background-color: #172829 !important;
+    color: #e8eee6 !important;
+  }
+  .budget-chip.selected,
+  .interest-option.selected,
+  .timeline-chip.selected,
+  .budget-chip:has(input:checked),
+  .interest-option:has(input:checked),
+  .timeline-chip:has(input:checked) {
+    border-color: #72b8aa !important;
+    background-color: #284341 !important;
+    color: #f0eee4 !important;
+  }
+  .budget-chip:hover,
+  .interest-option:hover,
+  .timeline-chip:hover { border-color: #78c6b8 !important; }
+  .industries-scroll .industry-chip,
+  .hat-badge {
+    border-color: rgba(231,238,230,.18) !important;
+    background: #29403e !important;
+    color: #d9e8df !important;
+  }
+  .showcase-category,
+  .sdm-category { color: #b7cdc3 !important; }
+  .result-badge {
+    border-color: rgba(226,190,105,.38) !important;
+    background: #423a28 !important;
+    color: #f1d995 !important;
+  }
+  .faq-section .faq-item[open] {
+    background: #263a3a !important;
+    border-color: rgba(231,238,230,.3) !important;
+  }
+  .faq-item > summary::marker { color: #e2bf70; }
+  .modal-overlay.open {
+    background: rgba(3,12,13,.76) !important;
+  }
+  .modal-overlay .modal-content {
+    background: #1b2c2d !important;
+    color: #f0eee4 !important;
+    border-color: rgba(231,238,230,.2) !important;
+    box-shadow: 0 28px 80px rgba(0,0,0,.48) !important;
+  }
+  .modal-overlay .modal-content :is(h1,h2,h3,h4,strong,b) { color: #f0eee4 !important; }
+  .modal-overlay .modal-content :is(p,li,.showcase-detail-note) { color: #c7d3cc !important; }
+  .modal-overlay .modal-content button:not(.modal-close) { color: #f0eee4; }
+  footer {
+    color: #e6ede5 !important;
+    background: #0c282a !important;
+    border-top-color: rgba(231,238,230,.14);
+  }
+  footer :is(.footer-brand,.footer-copyright) { color: #bacbc3 !important; }
+  footer :is(a,.footer-top-link) { color: #f0eee4 !important; }
+  footer :is(a,.footer-top-link):hover { color: #f2c66d !important; }
+  footer .footer-top-link {
+    border-color: rgba(231,238,230,.28);
+    background: rgba(231,238,230,.07);
+  }
   .sas-back-top { background: #203233; color: #f0eee4; }
   .sas-testimonial-controls button {
     color: #f0eee4;

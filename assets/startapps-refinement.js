@@ -168,12 +168,10 @@
       });
     });
 
-    var mobileCta = document.querySelector('.sas-mobile-cta');
     var topButton = document.querySelector('.sas-back-top');
     var contact = document.getElementById('contactForm');
     var contactVisible = false;
     function syncScrollActions() {
-      if (mobileCta) mobileCta.classList.toggle('is-hidden', window.scrollY < 180 || contactVisible);
       if (topButton) topButton.classList.toggle('is-visible', window.scrollY > 520 && !contactVisible);
     }
     if (contact && 'IntersectionObserver' in window) {
