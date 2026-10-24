@@ -11828,17 +11828,6 @@
            attributionSection: 'contact',
           message: formData.get('message')
         };
-         if (typeof window.__sasTrack === 'function') {
-           window.__sasTrack('landing_inquiry', {
-             interests: interests,
-             businessStage: data.businessStage,
-             digitalPresence: data.digitalPresence,
-             desiredOutcome: data.desiredOutcome,
-             source: data.attributionSource,
-             campaign: data.attributionCampaign
-           });
-         }
-        
         try {
           const response = await fetch('/api/contact', {
             method: 'POST',
@@ -11847,6 +11836,18 @@
           });
           
           if (response.ok) {
+             // Count an inquiry only after the server confirms it was saved.
+             // Keep contact details and message text out of analytics events.
+             if (typeof window.__sasTrack === 'function') {
+               window.__sasTrack('landing_inquiry_saved', {
+                 interests: interests,
+                 businessStage: data.businessStage,
+                 digitalPresence: data.digitalPresence,
+                 desiredOutcome: data.desiredOutcome,
+                 source: data.attributionSource,
+                 campaign: data.attributionCampaign
+               });
+             }
             const contactInner = document.querySelector('#contact .contact-inner');
             const successPanel = document.getElementById('formSuccess');
             document.getElementById('formHeader').style.display = 'none';
