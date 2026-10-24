@@ -14649,7 +14649,7 @@ async function registerRoutes(app2) {
         const interestsList = allowedInterests.length > 0 ? allowedInterests.map(esc2).join(", ") : "Not specified";
         const emailResult = await client.emails.send({
           from: fromEmail,
-          to: "elgunit@gmail.com",
+          to: "create@startappsstudio.com",
           subject: `New Project Inquiry from ${esc2(fullName)}`,
           html: `
             <h2>New Contact Form Submission</h2>
@@ -14667,7 +14667,10 @@ async function registerRoutes(app2) {
             <p>${esc2(message)}</p>
           `
         });
-        console.log("Email notification sent successfully:", JSON.stringify(emailResult));
+        if (emailResult.error || !emailResult.data?.id) {
+          throw new Error(emailResult.error?.message || "Resend returned no message ID");
+        }
+        console.log("Email notification accepted by Resend. id=", emailResult.data.id);
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError?.message || emailError);
       }
@@ -14783,7 +14786,7 @@ async function registerRoutes(app2) {
         const claimedEmail = await storage.claimEmailSend(
           deliveryKey,
           "active_visitor",
-          "elgunit@gmail.com"
+          "create@startappsstudio.com"
         );
         if (!claimedEmail) {
           activeVisitorNotificationKeys.delete(deliveryKey);
@@ -14843,7 +14846,7 @@ async function registerRoutes(app2) {
         });
         const sendResult = await client.emails.send({
           from: fromEmail,
-          to: "elgunit@gmail.com",
+          to: "create@startappsstudio.com",
           subject,
           html
         });

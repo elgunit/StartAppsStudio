@@ -408,7 +408,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         const emailResult = await client.emails.send({
           from: fromEmail,
-          to: 'elgunit@gmail.com',
+          to: 'create@startappsstudio.com',
           subject: `New Project Inquiry from ${esc(fullName)}`,
           html: `
             <h2>New Contact Form Submission</h2>
@@ -426,7 +426,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             <p>${esc(message)}</p>
           `,
         });
-        console.log("Email notification sent successfully:", JSON.stringify(emailResult));
+        if (emailResult.error || !emailResult.data?.id) {
+          throw new Error(emailResult.error?.message || "Resend returned no message ID");
+        }
+        console.log("Email notification accepted by Resend. id=", emailResult.data.id);
       } catch (emailError: any) {
         console.error("Failed to send email notification:", emailError?.message || emailError);
       }
@@ -556,7 +559,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const claimedEmail = await storage.claimEmailSend(
           deliveryKey,
           "active_visitor",
-          "elgunit@gmail.com",
+          "create@startappsstudio.com",
         );
         if (!claimedEmail) {
           activeVisitorNotificationKeys.delete(deliveryKey);
@@ -624,7 +627,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
         const sendResult: any = await client.emails.send({
           from: fromEmail,
-          to: "elgunit@gmail.com",
+          to: "create@startappsstudio.com",
           subject,
           html,
         });
