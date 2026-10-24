@@ -14,6 +14,7 @@
 - [Carousel ambient glow layering](carousel-ambient-glow-layering.md) — horizontal scrollports clip child shadows; paint broad edge-fading glow on a non-scrolling parent layer instead.
 - [Journal date policy](journal-date-policy.md) — publish one field note per month on varied days; hide dates in reader UI but retain them for SEO and sorting.
 - [Project mockup content policy](project-mockup-content-policy.md) — showcase SVGs should depict believable product interfaces without embedded brand names or logos.
+- [Filtered showcase copy](filtered-showcase-copy.md) — keep Selected Projects intro industry-neutral so it always matches the live filter tabs.
 - [Comparison copy framing](comparison-copy-framing.md) — frame comparisons around what clients can review, own, operate, and hand off—not adversarial vendor-versus-vendor claims.
 - [Localized pricing drift](pricing-consistency.md) — current English translation keys can hide stale numeric amounts in localized values; compare normalized currency amounts with locale-aware formatting.
 - [CodeExecution file access](codeexecution-file-io.md) — use the registered readFile/writeFile callbacks; node:fs/promises is unavailable in the durable sandbox.
