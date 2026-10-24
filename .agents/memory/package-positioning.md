@@ -3,12 +3,12 @@ name: Package positioning
 description: The entry package is a directly built Launch Site; the Prototype owns the full Figma design phase.
 ---
 
-The $1,399 entry offer should be presented as a polished, responsive site built from the founder's direction in Lovable or Replit, then deployed with editable access and ownership transferred. Figma is optional as an add-on rather than a base deliverable.
+Present the Launch Site as an owned, editable website. Keep tool and platform names out of pricing copy, while retaining the requested iOS, Android, and Web delivery labels.
 
-The $4,799 Prototype is the dedicated Figma-led design phase, paired with a clickable live React prototype and source handoff.
+The Prototype owns the full design phase rather than adding that work to the entry package.
 
-The MVP package is positioned for products serving 100K–500K users. Custom / Scale is positioned for products serving 1M+ users.
+Position the MVP as built for first real users and ready to scale. Do not promise a numerical user capacity.
 
-**Why:** The entry package is valuable because it gets a real site live quickly and lets the founder make changes immediately. Keeping Figma in the Prototype prevents the two offers from overlapping.
+**Why:** The user requested outcome-focused pricing and removed numerical scale promises. Keeping the full design phase in the Prototype prevents the two offers from overlapping.
 
 **How to apply:** Keep pricing cards, FAQs, metadata, contact selectors, and supporting marketing copy consistent with this distinction.

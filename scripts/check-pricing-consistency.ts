@@ -25,7 +25,7 @@ const currentPrices = {
     journal: "$6,000",
   },
   MVP: {
-    template: "$15,000–$30,000",
+    template: "$15,000 to $30,000",
     journal: "$15,000 to $30,000",
   },
   Custom: {
@@ -45,7 +45,7 @@ const pricingTranslationKeys = [
   "Prototype",
   "MVP",
   "Custom",
-  '<span class="special-price-amount">$25,000</span> <span class="special-price-note">or monthly retainer</span> <span class="special-duration">1–6 months</span>',
+  '<span class="special-price-amount">$25,000</span> <span class="special-price-note">or monthly retainer</span> <span class="special-duration">1 to 6 months</span>',
   "Fixed pricing",
   "Investment range",
   "How much does it cost to work with Start Apps Studio?",
@@ -217,25 +217,25 @@ function checkTemplate(template: string): void {
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">Launch Site<\/div>[\s\S]{0,300}<div class="price-amount">\$2,600<\/div>/,
+    /<h3 class="price-title">Launch Site<\/h3>[\s\S]{0,300}<div class="price-amount">\$2,600<\/div>/,
     `Launch Site anchor ${currentPrices["Launch Site"].template}`,
   );
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">Prototype<\/div>[\s\S]{0,300}<div class="price-amount">\$6,000<\/div>/,
+    /<h3 class="price-title">Prototype<\/h3>[\s\S]{0,300}<div class="price-amount">\$6,000<\/div>/,
     `Prototype anchor ${currentPrices.Prototype.template}`,
   );
   requireMatch(
     templateFile,
     templatePricing,
-    /<div class="price-title">MVP<\/div>[\s\S]{0,300}<div class="price-amount">\$15,000–\$30,000<\/div>/,
+    /<h3 class="price-title">MVP<\/h3>[\s\S]{0,300}<div class="price-amount">\$15,000 to \$30,000<\/div>/,
     `MVP anchor ${currentPrices.MVP.template}`,
   );
   requireMatch(
     templateFile,
     templatePricing,
-    /<h4>Custom<\/h4>[\s\S]{0,300}<span class="special-price-amount">\$25,000<\/span>/,
+    /<h3>Custom<\/h3>[\s\S]{0,300}<span class="special-price-amount">\$25,000<\/span>/,
     `Custom anchor ${currentPrices.Custom.template}`,
   );
 

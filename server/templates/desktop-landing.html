@@ -194,6 +194,14 @@
         },
         {
           "@type": "Question",
+          "name": "Do you help with marketing and getting found, or only the build?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both. We research your market, competitors, rankings, and reviews, then shape the content and campaigns so the product reaches real customers."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Can you take over an existing project or vibe-coded prototype?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -1050,7 +1058,7 @@
         margin-bottom: 16px;
       }
       
-      .service-card h4 { font-weight: 600; margin-bottom: 4px; }
+      .service-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
       .service-card > p { font-size: 14px; color: var(--text-secondary); margin: 0; }
       
       .service-details {
@@ -1096,7 +1104,7 @@
         margin-bottom: 16px;
       }
 
-      .growth-card h4 { font-weight: 600; margin-bottom: 4px; }
+      .growth-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
       .growth-card p { font-size: 14px; color: var(--text-secondary); margin: 0 0 12px 0; }
 
       .growth-time-badge {
@@ -2082,7 +2090,7 @@
         gap: 10px;
         min-width: 0;
       }
-      .special-identity-row h4 {
+      .special-identity-row h3 {
         min-width: 0;
         font-weight: 600;
         margin: 0;
@@ -2343,7 +2351,7 @@
         color: var(--accent);
       }
 
-      .how-card h4 {
+      .how-card h3 {
         font-size: 20px;
         font-weight: 700;
         margin: 0 0 10px 0;
@@ -2701,7 +2709,7 @@
         border: 1px solid rgba(13,148,136,0.18);
       }
 
-      .contact-trust-item h5 {
+      .contact-trust-item h3 {
         font-size: 15px;
         font-weight: 700;
         margin: 0 0 4px 0;
@@ -3632,7 +3640,7 @@
       }
       .why-card:hover .why-card-icon svg { stroke: #fff; }
 
-      .why-card h4 {
+      .why-card h3 {
         font-size: 15px;
         font-weight: 700;
         margin-bottom: 6px;
@@ -4316,7 +4324,7 @@
           padding: 28px 24px;
         }
         .how-card-ghost { font-size: 96px; }
-        .how-card h4 { font-size: 18px; }
+        .how-card h3 { font-size: 18px; }
         .how-card p { font-size: 13px; }
         .interest-scroll { grid-template-columns: 1fr; }
         .industry-chip {
@@ -5148,7 +5156,7 @@
       /* --- Pain cards (formerly pain-strip) */
       .pain-strip {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--space-3);
         padding: var(--space-4) 0;
       }
@@ -5179,7 +5187,7 @@
       .pain-strip-pain {
         font-size: 13px;
         font-weight: 700;
-        color: var(--rose);
+        color: light-dark(#a34b36, #ef967f);
         text-transform: uppercase;
         letter-spacing: 0.07em;
         margin-bottom: 10px;
@@ -8291,18 +8299,12 @@
         }
       }
 
-      /* Portrait tablets benefit from a centered third pain card rather
-         than three narrow columns with tall, hard-to-scan paragraphs. */
+      /* Keep all four problem cards balanced on portrait tablets. */
       @media (min-width: 768px) and (max-width: 840px) {
         .pain-strip {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        .pain-strip-item:last-child {
-          grid-column: 1 / -1;
-          width: calc(50% - 7px);
-          justify-self: center;
-        }
       }
 
       /* Landscape tablets can support the contact story and form beside
@@ -8385,46 +8387,13 @@
         <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
         <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
+        <p class="hero-subheadline">Real products for real customers. Not a mockup from a one-line prompt.</p>
         <p class="hero-subheadline">Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
-
-        <!-- 5 Hats Showcase -->
-        <div class="hats-showcase" aria-label="One partner across the product lifecycle">
-          <a href="#hat-designer" class="hat-showcase-item hat-designer" aria-controls="hat-designer" aria-expanded="false" onclick="openHatCard('hat-designer',event)">
-            <div class="hat-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-            </div>
-            Designer
-          </a>
-          <a href="#hat-developer" class="hat-showcase-item hat-developer" aria-controls="hat-developer" aria-expanded="false" onclick="openHatCard('hat-developer',event)">
-            <div class="hat-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            Developer
-          </a>
-          <a href="#hat-strategist" class="hat-showcase-item hat-strategist" aria-controls="hat-strategist" aria-expanded="false" onclick="openHatCard('hat-strategist',event)">
-            <div class="hat-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-            </div>
-            Strategist
-          </a>
-          <a href="#hat-manager" class="hat-showcase-item hat-manager" aria-controls="hat-manager" aria-expanded="false" onclick="openHatCard('hat-manager',event)">
-            <div class="hat-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
-            </div>
-            Manager
-          </a>
-          <a href="#hat-analyst" class="hat-showcase-item hat-analyst" aria-controls="hat-analyst" aria-expanded="false" onclick="openHatCard('hat-analyst',event)">
-            <div class="hat-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            </div>
-            Analyst
-          </a>
-        </div>
 
         <div class="hero-stats">
           <div class="hero-stat"><span class="hero-stat-number">Ready?</span> Let’s build it</div>
           <div class="hero-stats-dot"></div>
-          <div class="hero-stat"><span class="hero-stat-number">3-8 weeks</span> to launch</div>
+          <div class="hero-stat"><span class="hero-stat-number">3 to 8 weeks</span> to launch</div>
         </div>
         <div class="hero-cta-group">
           <a href="#contact" class="cta-button" data-track-cta="hero_free_plan">Get a free plan</a>
@@ -8432,7 +8401,7 @@
         </div>
       </section>
 
-      <!-- Problem cards - 3 core founder problems surfaced before any benefits claim -->
+      <!-- Four common problems, before the project examples -->
       <div class="pain-strip container" aria-label="Common problems we solve">
         <div class="pain-strip-item">
           <div class="pain-strip-icon">
@@ -8455,12 +8424,19 @@
           <div class="pain-strip-pain">I don't own the code</div>
           <div class="pain-strip-resolve">You own every account, design file, and line of code. We build it with you, then hand it off cleanly.</div>
         </div>
+        <div class="pain-strip-item">
+          <div class="pain-strip-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg>
+          </div>
+          <div class="pain-strip-pain">MY SITE ISN'T BRINGING IN CUSTOMERS</div>
+          <div class="pain-strip-resolve">We look at your rankings, reviews, and competitors, then fix the message and content so the right people find you.</div>
+        </div>
       </div>
 
       <!-- Recent Work -->
       <section class="section mb-[128px] pt-[80px] pb-[80px] pl-[0px] pr-[0px] ml-[0px] mt-[0px]" id="case-studies" data-section-name="case-studies">
         <h2 class="section-title">Selected projects</h2>
-        <p class="section-subtitle">Real products in users' hands, across healthcare, fintech, retail, and more.</p>
+        <p class="section-subtitle">Selected work across SaaS, e-commerce, logistics, and more.</p>
         <!-- Industry credibility strip -->
         <div class="industry-strip-inline" aria-label="Industries served">
           <div class="industries-scroll" id="industriesBelt">
@@ -8513,7 +8489,7 @@
               onclick="openShowcaseModal(this)"
             >
               <div class="showcase-visual">
-                <img src="/assets/images/project-wellness-cover.jpg" alt="Coaching and tracking app hero design" width="1200" height="844" decoding="async" fetchpriority="high">
+                <img src="/assets/images/project-wellness-cover.jpg" alt="Coaching and tracking app hero design" width="1200" height="844" loading="lazy" decoding="async">
               </div>
               <div class="showcase-body">
                 <!-- REPLACE: update category, name, problem, solution, tags, and result below -->
@@ -8787,13 +8763,13 @@
           <button class="service-tab active" id="serviceTabBuild" role="tab" aria-selected="true" aria-controls="tab-build" onclick="switchTab('build', this)">Build</button>
           <button class="service-tab" id="serviceTabGrow" role="tab" aria-selected="false" aria-controls="tab-grow" onclick="switchTab('grow', this)">Grow</button>
         </div>
-        <div id="tab-build" class="tab-content active">
+        <div id="tab-build" class="tab-content active" role="tabpanel" aria-labelledby="serviceTabBuild">
         <div class="services-grid">
           <div class="service-card" onclick="toggleCard(this)">
             <div class="service-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            <h4>Landing Pages</h4>
+            <h3>Landing Pages</h3>
             <p>Validate demand before you build. A conversion-focused page with email capture, analytics, and SEO.</p>
             <div class="service-details">
               <div class="skill-list">
@@ -8808,14 +8784,14 @@
             <div class="service-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
             </div>
-            <h4>Native iOS & Android</h4>
-            <p>Ship to the App Store and Play Store. Your product lives on users' home screens, not just in a browser tab.</p>
+            <h3>Native iOS & Android</h3>
+            <p>Your product lives on users' home screens, not just in a browser tab. Full native source code handed over.</p>
             <div class="service-details">
               <div class="skill-list">
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> iOS and Android from a single build</div>
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Push notifications and deep links</div>
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> App Store and Play Store submission</div>
-                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Stripe and RevenueCat for payments</div>
+                <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> In-app payments and subscriptions</div>
               </div>
             </div>
           </div>
@@ -8823,7 +8799,7 @@
             <div class="service-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
             </div>
-            <h4>Web Applications</h4>
+            <h3>Web Applications</h3>
             <p>A production-grade web app with accounts, payments, and a real database, ready for your first paying customers.</p>
             <div class="service-details">
               <div class="skill-list">
@@ -8838,8 +8814,8 @@
             <div class="service-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
-            <h4>Full MVP</h4>
-            <p>A real, launch-ready product for your first 100K–500K users. We scope, design, build, and launch the core experience in 1–2 months.</p>
+            <h3>Full MVP</h3>
+            <p>A real, launch-ready product built for your first real users and ready to scale. We scope, design, build, and launch the core experience in 3 to 8 weeks.</p>
             <div class="service-details">
               <div class="skill-list">
                 <div class="skill-item"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Scope the smallest product worth launching</div>
@@ -8851,71 +8827,61 @@
           </div>
         </div>
         </div>
-        <div id="tab-grow" class="tab-content" aria-hidden="true">
+        <div id="tab-grow" class="tab-content" role="tabpanel" aria-labelledby="serviceTabGrow" aria-hidden="true">
         <div class="growth-grid">
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
               <svg width="20" height="20" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <h4>SEO Audit</h4>
-            <p>A full check of your site's health, with a plain-English fix list ranked by impact.</p>
-            <span class="growth-time-badge">Focused sprint · 1–2 weeks</span>
+            <h3>Market and competitor research</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
               <svg width="20" height="20" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
             </div>
-            <h4>Keyword Strategy</h4>
-            <p>The exact searches your customers are typing, plus a plan to rank for them.</p>
-            <span class="growth-time-badge">Search strategy · 1–2 weeks</span>
+            <h3>Google ranking and SEO audit</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(16,185,129,0.12);">
               <svg width="20" height="20" fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
             </div>
-            <h4>Backlink Strategy &amp; Outreach</h4>
-            <p>The links that decide who Google and AI engines recommend, earned through real outreach to real editors.</p>
-            <span class="growth-time-badge">Sustained outreach · 4–8 weeks</span>
+            <h3>Review and reputation analysis</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(59,130,246,0.12);">
               <svg width="20" height="20" fill="none" stroke="#3B82F6" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <h4>Content Plan</h4>
-            <p>A 90-day editorial calendar with topics, outlines, and briefs your writer (or AI) can run with.</p>
-            <span class="growth-time-badge">90-day editorial runway</span>
+            <h3>Keyword strategy and backlinks</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(245,158,11,0.12);">
               <svg width="20" height="20" fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
             </div>
-            <h4>Paid Ads Setup</h4>
-            <p>Google and Meta campaigns set up properly the first time, with the creative and targeting to match.</p>
-            <span class="growth-time-badge">Launch sprint · 2–3 weeks</span>
+            <h3>Content and messaging</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(13,148,136,0.12);">
               <svg width="20" height="20" fill="none" stroke="#0d9488" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             </div>
-            <h4>Social Media Kit</h4>
-            <p>Branded post templates, a content calendar, and a clear voice across every channel.</p>
-            <span class="growth-time-badge">30-day content system</span>
+            <h3>Paid ads</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(239,68,68,0.12);">
               <svg width="20" height="20" fill="none" stroke="#EF4444" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
-            <h4>Email Sequences</h4>
-            <p>Welcome flows, onboarding, and win-back campaigns that actually get opened.</p>
-            <span class="growth-time-badge">Ongoing lifecycle support</span>
+            <h3>Social</h3>
           </div>
           <div class="growth-card">
             <div class="growth-icon" style="background: rgba(236,72,153,0.12);">
               <svg width="20" height="20" fill="none" stroke="#EC4899" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
-            <h4>Brand Identity</h4>
-            <p>A complete visual system: logo, colors, type, and voice that investors take seriously.</p>
-            <span class="growth-time-badge">Brand deep dive · 3–5 weeks</span>
+            <h3>Email</h3>
+          </div>
+          <div class="growth-card">
+            <div class="growth-icon" style="background: rgba(236,72,153,0.12);">
+              <svg width="20" height="20" fill="none" stroke="#EC4899" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="7"/><path d="m8 14-1 9 5-3 5 3-1-9"/></svg>
+            </div>
+            <h3>Brand identity</h3>
           </div>
         </div>
         </div>
@@ -8933,8 +8899,8 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.17-2.1 5.87-5 6.72V18a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2.28C7.1 14.87 5 12.17 5 9a7 7 0 017-7z"/><path d="M9 21h6"/></svg>
             </div>
-            <h4>Define the first useful version</h4>
-            <p>We turn the idea, half-built app, or business brief into a sharp first release: the core user journey, the must-have features, and the work that can wait.</p>
+            <h3>Understand the problem and the market</h3>
+            <p>We look at where your business stands today, study your competitors, rankings, and reviews, then define a sharp first release: the core journey, the must-have features, and what can wait.</p>
           </div>
           <!-- Card 2 -->
           <div class="how-card">
@@ -8943,7 +8909,7 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
             </div>
-            <h4>Choose the right route</h4>
+            <h3>Choose the right route</h3>
             <p>Launch site, clickable prototype, web app, or native iOS and Android? We compare the options, platform trade-offs, and existing tools before recommending the route.</p>
           </div>
           <!-- Card 3 -->
@@ -8953,7 +8919,7 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             </div>
-            <h4>Make the solution tangible</h4>
+            <h3>Make the solution tangible</h3>
             <p>We map the flows, design the key screens, and build against real scenarios. You see the product working on your phone or browser while decisions are still easy to change.</p>
           </div>
           <!-- Card 4 -->
@@ -8963,7 +8929,7 @@
             <div class="how-card-icon">
               <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
-            <h4>Launch with room to grow</h4>
+            <h3>Launch with room to grow</h3>
             <p>We ship the working version, connect the accounts, and hand over the code and keys. You leave with a live product, plus a clear next move based on what users do.</p>
           </div>
         </div>
@@ -8978,9 +8944,9 @@
           <div class="price-card">
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Lovable &middot; Replit
+              Website
             </div>
-            <div class="price-title">Launch Site</div>
+            <h3 class="price-title">Launch Site</h3>
               <div class="price-subtitle">A credible story before the full product</div>
             <div class="price-amount">$2,600</div>
             <div class="price-features">
@@ -8996,13 +8962,13 @@
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               Responsive Web App
             </div>
-            <div class="price-title">Prototype</div>
+            <h3 class="price-title">Prototype</h3>
             <div class="price-subtitle">Make the idea real enough to react to</div>
             <div class="price-amount">$6,000</div>
             <div class="price-features">
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Interactive proof for validation</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Realistic flow for key conversations</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Figma system + source code</div>
+              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Design system + source code</div>
             </div>
           </div>
 
@@ -9011,9 +8977,9 @@
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               iOS &middot; Android &middot; Web
             </div>
-            <div class="price-title">MVP</div>
+            <h3 class="price-title">MVP</h3>
             <div class="price-subtitle">Put the first real product in users' hands</div>
-            <div class="price-amount">$15,000–$30,000</div>
+            <div class="price-amount">$15,000 to $30,000</div>
             <div class="price-features">
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Learn from the core user flows</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Accounts, payments, and data</div>
@@ -9028,17 +8994,17 @@
             <div class="special-header-main">
               <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Handcrafted</div>
               <div class="special-identity-row">
-                <h4>Custom</h4>
+                <h3>Custom</h3>
               </div>
               <div class="special-pricing">
                 <span class="special-price-amount">$25,000</span>
                 <span class="special-price-note">or monthly retainer</span>
-                <span class="special-duration">1–6 months</span>
+                <span class="special-duration">1 to 6 months</span>
               </div>
             </div>
           </div>
           <svg class="special-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          <p class="special-summary">Need more than an AI-generated draft? Choose a thoughtful custom build with ongoing support when you need it.</p>
+          <p class="special-summary">Need more than a quick draft? A thoughtful custom build with ongoing support.</p>
           <div class="special-features">
              <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Strategy for the stage ahead</div>
              <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Hand-built web or mobile product</div>
@@ -9200,12 +9166,12 @@
 <!-- Who you're working with -->
       <section class="section" id="studio-human" data-section-name="studio-human">
         <h2 class="section-title">One person.<br>Full accountability.</h2>
-        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. Scoping your project is the same person designing, building, and shipping.</p>
+        <p class="section-subtitle">Not an agency handoff. Not a marketplace match. The person who scopes your project is the same person who designs, builds, and ships it.</p>
 
         <!-- Identity block -->
         <div class="studio-identity mt-[64px]">
           <div class="founder-avatar">
-            <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio">
+            <img src="/assets/images/founder.jpg" alt="Elgar Sirajov, Founder of Start Apps Studio" width="1080" height="1080" loading="lazy" decoding="async">
           </div>
           <div class="founder-info">
             <div class="founder-name">Elgar Sirajov</div>
@@ -9220,7 +9186,7 @@
                View LinkedIn profile
                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
              </a>
-            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One owns the design, the code, the QA, and the deadline. You know who to call, and that person has the full context, so every decision moves your product forward.</p>
+            <p class="founder-bio">Most founders end up coordinating across agencies, independent specialists, and distributed teams before a product is ready. I built this studio to bring those moving parts into one accountable partnership. One person owns the design, the code, the QA, and the deadline. You know who to call, and that person has the full context, so every decision moves your product forward.</p>
           </div>
         </div>
 
@@ -9281,7 +9247,7 @@
             <p class="testimonial-text">Before this we were reshooting the same thing four times over and still not matching. Now every reel and every cover looks like it came from the same place. I don't have to explain the look to anyone anymore, it is just built into how we work. The journal covers were the part I was most nervous about and they have ended up being my favourite thing we have made.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
-              <div class="testimonial-client">Founder, boutique event studio<br><span class="testimonial-location">Istanbul / Toronto</span></div>
+              <div class="testimonial-client">Founder, boutique event studio</div>
               <span class="method-badge">Content system</span>
             </div>
           </div>
@@ -9304,7 +9270,7 @@
             <p class="testimonial-text">We sell cheese, which is not a category people show up excited about online. The four-zone layout meant we stopped rebuilding every product page from scratch, and Manny gave the whole catalogue a personality it did not have before. Getting a new SKU live takes a fraction of the time it used to.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
-              <div class="testimonial-client">Owner, specialty food importer<br><span class="testimonial-location">Etobicoke, ON</span></div>
+              <div class="testimonial-client">Owner, specialty food importer</div>
               <span class="method-badge">Catalogue system</span>
             </div>
           </div>
@@ -9327,7 +9293,7 @@
             <p class="testimonial-text">I'd been scrolling doors for weeks and they all looked identical in those white studio shots. Seeing the Onex actually slide open in a real office was the thing that made me stop. Ordered it the same week.</p>
             <div class="testimonial-sep"></div>
             <div class="testimonial-footer">
-              <div class="testimonial-client">Homeowner<br><span class="testimonial-location">Toronto · Onex install</span></div>
+              <div class="testimonial-client">Homeowner, custom door installation</div>
               <span class="method-badge">Product creative</span>
             </div>
           </div>
@@ -9667,42 +9633,42 @@
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
             </div>
-            <h4>Ship your product in weeks</h4>
-            <p>From launch site to native iOS and Android, we scope the smallest path that gets a real product in front of users—then hand over the code, accounts, and assets.</p>
+            <h3>Ship your product in weeks</h3>
+            <p>From launch site to native iOS and Android, we scope the smallest path that gets a real product in front of users, then hand over the code, accounts, and assets.</p>
           </div>
           <div class="why-card">
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
-            <h4>Instant Updates</h4>
+            <h3>Instant Updates</h3>
             <p>App store reviews can delay even urgent fixes. We push updates the moment you approve them, so you stay responsive to users.</p>
           </div>
           <div class="why-card">
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
             </div>
-            <h4>Reach Users on Their Lock Screen</h4>
+            <h3>Reach Users on Their Lock Screen</h3>
             <p>Email gets ignored. Push notifications show up like a text message. We wire them in from day one so you can re-engage users at the right moment.</p>
           </div>
           <div class="why-card">
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
             </div>
-            <h4>Start Earning From Day One</h4>
+            <h3>Start Earning From Day One</h3>
             <p>Payment integrations should not delay launch. We ship subscriptions, upgrades, and one-time purchases as part of the build, ready to earn on launch day.</p>
           </div>
           <div class="why-card">
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
             </div>
-            <h4>Grow Without Surprise Bills</h4>
+            <h3>Grow Without Surprise Bills</h3>
             <p>Most hosting bills spike right when you can least afford a distraction. Our infrastructure scales with your growth. The invoice doesn't.</p>
           </div>
           <div class="why-card">
             <div class="why-card-icon">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
             </div>
-            <h4>You Own It, Forever</h4>
+            <h3>You Own It, Forever</h3>
             <p>Too many founders discover they can't leave because the agency holds the accounts. Every line of code, every design file, and every API key is yours from day one.</p>
           </div>
         </div>
@@ -9852,7 +9818,7 @@
           <div class="card-header">
             <div class="card-icon">&#9998;</div>
             <div class="card-info">
-              <h4>Product design</h4>
+              <h3>Product design</h3>
               <p>Make the product clear before making it polished</p>
             </div>
             <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -9870,7 +9836,7 @@
           <div class="card-header">
             <div class="card-icon">&lt;/&gt;</div>
             <div class="card-info">
-              <h4>Product engineering</h4>
+              <h3>Product engineering</h3>
               <p>Turn the validated idea into dependable software</p>
             </div>
             <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -9888,7 +9854,7 @@
           <div class="card-header">
             <div class="card-icon">&#9733;</div>
             <div class="card-info">
-              <h4>Product strategy</h4>
+              <h3>Product strategy</h3>
               <p>Reduce ambiguity before it becomes expensive</p>
             </div>
             <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -9906,7 +9872,7 @@
           <div class="card-header">
             <div class="card-icon">&#9776;</div>
             <div class="card-info">
-              <h4>Delivery leadership</h4>
+              <h3>Delivery leadership</h3>
               <p>Keep decisions, scope, and momentum aligned</p>
             </div>
             <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -9924,7 +9890,7 @@
           <div class="card-header">
             <div class="card-icon">&#931;</div>
             <div class="card-info">
-              <h4>Product insight</h4>
+              <h3>Product insight</h3>
               <p>Replace confident guesses with useful signals</p>
             </div>
             <svg class="card-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
@@ -10361,7 +10327,7 @@
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
                 <div>
-                  <h5>24-hour reply</h5>
+                  <h3>24-hour reply</h3>
                   <p>A real founder reads every message. No bots, no SDR follow-ups.</p>
                 </div>
               </div>
@@ -10370,7 +10336,7 @@
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div>
-                  <h5>You own everything</h5>
+                  <h3>You own everything</h3>
                   <p>Source code, accounts, designs, domains. Yours from day one.</p>
                 </div>
               </div>
@@ -10379,8 +10345,8 @@
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                 </div>
                 <div>
-                  <h5>Ship in 3-8 weeks</h5>
-                  <p>Most builds go live within a month of kickoff.</p>
+                  <h3>Ship in 3 to 8 weeks</h3>
+                  <p>Most builds go live in 3 to 8 weeks from kickoff.</p>
                 </div>
               </div>
               <div class="contact-trust-item">
@@ -10388,7 +10354,7 @@
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <div>
-                  <h5>Fixed pricing</h5>
+                  <h3>Fixed pricing</h3>
                   <p>What we quote is what you pay. No surprises, ever.</p>
                 </div>
               </div>
@@ -10468,7 +10434,7 @@
               </label>
               <label class="budget-chip" data-budget="mvp">
                 <input type="radio" name="budget" value="mvp">
-                <span class="budget-price">$15,000–$30,000</span><span class="budget-tier">MVP · real user learning</span>
+                <span class="budget-price">$15,000 to $30,000</span><span class="budget-tier">MVP · real user learning</span>
               </label>
               <label class="budget-chip" data-budget="custom">
                 <input type="radio" name="budget" value="custom">
@@ -10534,11 +10500,11 @@
               </label>
               <label class="timeline-chip">
                 <input type="radio" name="timeline" value="1-3months">
-                1–3 months
+                1 to 3 months
               </label>
               <label class="timeline-chip">
                 <input type="radio" name="timeline" value="3-6months">
-                3–6 months
+                3 to 6 months
               </label>
               <label class="timeline-chip">
                 <input type="radio" name="timeline" value="exploring">
@@ -10616,7 +10582,7 @@
         </details>
         <details class="faq-item">
           <summary>What happens after launch? Do you offer ongoing support?</summary>
-          <p class="faq-answer">Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, you can run with the codebase, bring in an in-house engineer, or keep us accountable for the next stage through a monthly retainer. For larger or more complex products, Custom engagements can be structured around the 1–6 month build you need.</p>
+          <p class="faq-answer">Every build includes a 2-week post-launch window where we fix anything broken on us, free of charge. After that, you can run with the codebase, bring in an in-house engineer, or keep us accountable for the next stage through a monthly retainer. For larger or more complex products, Custom engagements can be structured around the 1 to 6 month build you need.</p>
         </details>
         <details class="faq-item" hidden aria-hidden="true">
           <summary>Can you help if I already run a business?</summary>
@@ -10629,6 +10595,10 @@
         <details class="faq-item" hidden aria-hidden="true">
           <summary>Can I get just a landing page without a full app build?</summary>
           <p class="faq-answer">Yes. If your next milestone is a credible launch or marketing presence, our $2,600 Launch Site gives you a polished, responsive website without committing to the full product build. We shape the message around your audience, build it in your Lovable or Replit account, then deploy and hand over an editable site in 3 to 5 business days.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you help with marketing and getting found, or only the build?</summary>
+          <p class="faq-answer">Both. We research your market, competitors, rankings, and reviews, then shape the content and campaigns so the product reaches real customers.</p>
         </details>
         <details class="faq-item">
           <summary>Can you take over an existing project or vibe-coded prototype?</summary>
@@ -10675,6 +10645,7 @@
            <a href="mailto:create@startappsstudio.com">create@startappsstudio.com</a>
         </div>
         <a class="footer-resource-link" href="/resources" data-i18n-skip="true">Resources</a>
+        <a class="footer-resource-link" href="/journal">Journal</a>
         <button class="footer-top-link" type="button" aria-label="Scroll back to the top of the page"
           onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
@@ -13113,7 +13084,7 @@
           c: __t('Monitored automations for onboarding, billing and support that keep running while you sleep.')
         },
         writing: {
-          f: __t('Copy that reads like AI wrote it — because it did.'),
+          f: __t('Copy that reads like AI wrote it, because it did.'),
           c: __t('Landing pages, emails and app copy drafted by AI, sharpened by humans, tested against real users.')
         },
         websites: {
@@ -13122,7 +13093,7 @@
         },
         business: {
           f: __t('Six subscriptions, six logins, and no idea which tool should do what.'),
-          c: __t('The whole stack orchestrated for you — one person accountable for research, code, content and ops.')
+          c: __t('The whole stack orchestrated for you, one person accountable for research, code, content and ops.')
         }
       };
 
