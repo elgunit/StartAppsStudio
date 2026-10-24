@@ -38,6 +38,9 @@ yarn-error.*
 
 app-example
 
+# Private production database backups
+/generated-artifacts/
+
 # generated native folders
 /ios
 /android
