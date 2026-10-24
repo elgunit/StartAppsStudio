@@ -11,6 +11,7 @@ export const TRANSLATABLE_ATTRS = new Set([
   "data-problem",
   "data-result",
   "data-solution",
+  "data-timeline",
   "placeholder",
   "title",
 ]);

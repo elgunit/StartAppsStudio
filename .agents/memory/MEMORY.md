@@ -1,5 +1,5 @@
 - [Workflow port detection fix](workflow-port-detection.md) — `[[ports]]` needs explicit `externalPort` or restarts time out despite a healthy server; .replit edits need an in-workspace temp file.
-- [Testing agent must be given the local dev URL](testing-agent-url.md) — the tester may silently verify against the production domain; pin http://127.0.0.1:5000 in every plan.
+- [Testing development URLs](testing-agent-url.md) — pin development explicitly; remote browsers need the workspace dev domain, not their own loopback or production.
 - [Tester interferes with scroll animations](tester-scroll-interference.md) — Playwright auto-scroll/click-retries corrupt scroll-animation tests; use one click + in-page instrumentation only.
 - [Package positioning](package-positioning.md) — the entry offer is a Lovable/Replit Launch Site; the Prototype owns the full Figma design phase.
 - [Mobile carousel edge treatment](carousel-edge-treatment.md) — no fade overlays from translucent tokens, no overflow:hidden wrappers, size cards to container not vw.

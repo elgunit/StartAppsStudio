@@ -8321,8 +8321,21 @@
       }
 
     </style>
+    <link rel="stylesheet" href="/assets/startapps-refinement.css">
   </head>
   <body>
+    <nav class="sas-nav" aria-label="Main navigation">
+      <a class="sas-brand" href="#top">Start Apps Studio</a>
+      <button class="sas-menu-button" type="button" aria-expanded="false" aria-controls="sasNavLinks" aria-label="Open navigation">Menu</button>
+      <div class="sas-nav-links" id="sasNavLinks">
+        <a href="#case-studies">Work</a>
+        <a href="#what-we-ship">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#studio-human">About</a>
+        <a href="#faq">FAQ</a>
+        <a class="sas-nav-cta" href="#contact" data-track-cta="nav_free_plan">Get a free plan</a>
+      </div>
+    </nav>
     <aside class="analytics-consent" id="analyticsConsent" hidden role="dialog" aria-labelledby="analyticsConsentTitle">
       <div>
         <strong id="analyticsConsentTitle">Help us improve the site</strong>
@@ -8382,24 +8395,41 @@
     </script>
     <div class="container">
       <!-- Hero -->
-      <section class="hero" data-section-name="hero">
+      <section class="hero" id="top" data-section-name="hero">
         <!-- Liquid physics blobs - pointer-events:none, JS drives position -->
         <div class="hero-blob hero-blob-teal" id="hero-blob-teal" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-rose" id="hero-blob-rose" aria-hidden="true"></div>
-        <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
-        <p class="hero-subheadline">Real products for real customers. Not a mockup from a one-line prompt.</p>
-        <p class="hero-subheadline">Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
+        <div class="hero-copy">
+          <h1 class="hero-headline"><span class="hero-line hero-line-nowrap">Ship your <span class="accent-word">product</span> in weeks.</span></h1>
+          <p class="hero-subheadline">Real products for real customers. Not a mockup from a one-line prompt.</p>
+          <p class="hero-subheadline">Start Apps Studio is the founder-led digital product partner for new ventures, family businesses, and established teams. One person owns strategy, design, engineering, QA, and launch, so nothing is lost in handoffs.</p>
 
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-number">Ready?</span> Let’s build it</div>
-          <div class="hero-stats-dot"></div>
-          <div class="hero-stat"><span class="hero-stat-number">3 to 8 weeks</span> to launch</div>
+          <div class="hero-stats">
+            <div class="hero-stat"><span class="hero-stat-number">Ready?</span> Let’s build it</div>
+            <div class="hero-stats-dot"></div>
+            <div class="hero-stat"><span class="hero-stat-number">3 to 8 weeks</span> to launch</div>
+          </div>
+          <div class="hero-cta-group">
+            <a href="#contact" class="cta-button" data-track-cta="hero_free_plan">Get a free plan</a>
+            <a href="#pricing" class="cta-button secondary" data-track-cta="hero_pricing">See pricing</a>
+          </div>
         </div>
-        <div class="hero-cta-group">
-          <a href="#contact" class="cta-button" data-track-cta="hero_free_plan">Get a free plan</a>
-          <a href="#pricing" class="cta-button secondary" data-track-cta="hero_pricing">See pricing</a>
+        <div class="hero-preview" aria-label="Product previews">
+          <div class="hero-browser">
+            <div class="hero-browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/assets/images/project-operations-cover.jpg" width="1200" height="800" fetchpriority="high" decoding="async" alt="Project preview">
+          </div>
+          <div class="hero-phone">
+            <div class="hero-phone-speaker" aria-hidden="true"></div>
+            <img src="/assets/images/project-wellness-cover.jpg" width="1200" height="844" fetchpriority="high" decoding="async" alt="Project preview">
+          </div>
+          <span class="hero-preview-label">Project preview</span>
         </div>
       </section>
+      <div class="sas-founder-strip">
+        <img src="/assets/images/founder.jpg" width="1080" height="1080" loading="eager" decoding="async" alt="Elgar Sirajov">
+        <div><strong>Elgar Sirajov</strong><span>One person owns your product from plan to launch.</span></div>
+      </div>
 
       <!-- Four common problems, before the project examples -->
       <div class="pain-strip container" aria-label="Common problems we solve">
@@ -8484,6 +8514,7 @@
               data-solution="Built a React Native app with push notifications, a coach-facing admin dashboard, and subscription billing via RevenueCat. Shipped to both stores on week six, one week before the pitch."
               data-tags="React Native,Expo,RevenueCat,PostgreSQL"
               data-result="Shipped in 6 weeks · Pre-seed raised"
+              data-timeline="6 weeks"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 55%, var(--rose)) 100%);"
               data-image="/assets/images/project-wellness-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8520,6 +8551,7 @@
               data-solution="Audited the codebase, rebuilt the data model and API layer, redesigned the core UI, and delivered a stable, demo-ready product in 11 days. The client signed the day after the demo."
               data-tags="React,TypeScript,Node.js,PostgreSQL"
               data-result="Demo-ready in 11 days · Contract signed"
+              data-timeline="11 days"
               data-visual-style="background: linear-gradient(145deg, #234348 0%, var(--dominant) 60%, color-mix(in srgb, var(--dominant) 70%, var(--canvas)) 100%);"
               data-image="/assets/images/project-operations-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8556,6 +8588,7 @@
               data-solution="Built a full-stack platform with Stripe Connect for multi-party payouts, real-time transaction feeds, and an admin console. Shipped in seven weeks with a clean codebase and full source handoff."
               data-tags="React,Stripe Connect,Node.js,PostgreSQL"
               data-result="Shipped in 7 weeks · Series A closed"
+              data-timeline="7 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 60%, var(--dominant)) 0%, var(--dominant) 100%);"
               data-image="/assets/images/project-fintech-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8592,6 +8625,7 @@
               data-solution="Built a video course platform with progress tracking, a quiz engine, and Stripe-gated enrollment in five weeks. The first cohort sold out within a week of launch."
               data-tags="React,Node.js,Stripe,PostgreSQL"
               data-result="First cohort sold out at launch"
+              data-timeline="5 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--dominant) 70%, black) 0%, color-mix(in srgb, var(--dominant) 50%, var(--rose)) 100%);"
               data-image="/assets/images/project-learning-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8628,6 +8662,7 @@
               data-solution="Took over the project, wrote the missing search and listing API, rebuilt the map integration from scratch, and delivered a clean codebase with full source handoff in four weeks."
               data-tags="React Native,Mapbox,Node.js,PostgreSQL"
               data-result="Rescued &amp; shipped in 4 weeks"
+              data-timeline="4 weeks"
               data-visual-style="background: linear-gradient(145deg, color-mix(in srgb, var(--rose) 45%, var(--dominant)) 0%, var(--dominant) 100%);"
               data-image="/assets/images/project-property-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8663,6 +8698,7 @@
               data-solution="Built an interactive web prototype on real infrastructure, with working data flows, auth, and a demo mode investors could tap through on their phone. Live in nine days."
               data-tags="React,Vite,Node.js,Vercel"
               data-result="Demo live in 9 days · Meeting secured"
+              data-timeline="9 days"
               data-visual-style="background: linear-gradient(145deg, var(--dominant) 0%, color-mix(in srgb, var(--dominant) 40%, black) 50%, color-mix(in srgb, var(--rose) 30%, var(--dominant)) 100%);"
               data-image="/assets/images/project-pitch-cover.jpg"
               onclick="openShowcaseModal(this)"
@@ -8952,12 +8988,13 @@
             <div class="price-features">
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Credible launch story</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Clear message and focused page</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Editable site you own</div>
+              <div class="sas-extra-features"><div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Editable site you own</div></div>
             </div>
+            <button class="sas-included-toggle" type="button" aria-expanded="false">What's included</button>
+            <a class="cta-button sas-price-cta" href="#contact" data-budget-choice="launch-site" data-track-cta="pricing_launch_site">Get a free plan</a>
           </div>
 
-          <div class="price-card featured">
-            <div class="popular-badge"><span class="popular-badge-dot"></span>Best for proof</div>
+          <div class="price-card">
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               Responsive Web App
@@ -8968,11 +9005,14 @@
             <div class="price-features">
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Interactive proof for validation</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Realistic flow for key conversations</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Design system + source code</div>
+              <div class="sas-extra-features"><div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Design system + source code</div></div>
             </div>
+            <button class="sas-included-toggle" type="button" aria-expanded="false">What's included</button>
+            <a class="cta-button sas-price-cta" href="#contact" data-budget-choice="prototype" data-track-cta="pricing_prototype">Get a free plan</a>
           </div>
 
-          <div class="price-card mvp-card">
+          <div class="price-card mvp-card featured">
+            <div class="popular-badge"><span class="popular-badge-dot"></span>Recommended</div>
             <div class="method-badge">
               <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               iOS &middot; Android &middot; Web
@@ -8983,13 +9023,14 @@
             <div class="price-features">
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Learn from the core user flows</div>
               <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Accounts, payments, and data</div>
-              <div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Launch-ready product you own</div>
+              <div class="sas-extra-features"><div class="price-feature"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Launch-ready product you own</div></div>
             </div>
+            <button class="sas-included-toggle" type="button" aria-expanded="false">What's included</button>
+            <a class="cta-button sas-price-cta" href="#contact" data-budget-choice="mvp" data-track-cta="pricing_mvp">Get a free plan</a>
           </div>
-        </div>
         
         <!-- Custom / Scale -->
-        <div class="special-package" id="custom-scale" onclick="toggleCard(this)">
+        <div class="price-card custom-price-card special-package" id="custom-scale" onclick="toggleCard(this)">
           <div class="special-header">
             <div class="special-header-main">
               <div class="special-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Handcrafted</div>
@@ -9009,14 +9050,17 @@
              <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Strategy for the stage ahead</div>
              <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Hand-built web or mobile product</div>
              <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg> One partner through launch</div>
-             <div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Ownership-ready foundation</div>
+             <div class="sas-special-extras"><div class="special-feature"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Ownership-ready foundation</div></div>
           </div>
+          <button class="sas-included-toggle" type="button" aria-expanded="false">What's included</button>
           <div class="special-details">
             <span class="special-details-label">Who this is for</span>
               For teams with a bigger product, complex requirements, or a need for one accountable partner.
           </div>
+          <a class="cta-button sas-price-cta" href="#contact" data-budget-choice="custom" data-track-cta="pricing_custom">Talk through a custom build</a>
         </div>
-
+        </div>
+        <p class="sas-pricing-trust">Fixed price. You own everything. Reply within 24 hours.</p>
       </section>
 
       <!-- Native delivery -->
@@ -9229,7 +9273,7 @@
         <!-- Client voices - specific outcomes from real engagements -->
         <div class="testimonial-carousel-wrap">
         <div class="testimonials-grid">
-          <div class="testimonial-card">
+          <div class="testimonial-card is-current" aria-hidden="false">
             <div class="testimonial-project">
               <strong>Content system</strong>
               <span>Brand content engagement</span>
@@ -9552,8 +9596,13 @@
           </div>
         </div>
         <!-- Pagination dots are rebuilt to match the available snap positions. -->
-        <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination"></div>
-        <div class="testimonial-load-more-wrap">
+        <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial carousel pagination" hidden></div>
+        <div class="sas-testimonial-controls" aria-label="Testimonial navigation">
+          <button type="button" id="sasQuotePrevious" aria-label="Previous testimonial">←</button>
+          <span class="sas-testimonial-count" id="sasQuoteCount">1</span>
+          <button type="button" id="sasQuoteNext" aria-label="Next testimonial">→</button>
+        </div>
+        <div class="testimonial-load-more-wrap" hidden>
           <button
             class="testimonial-load-more"
             id="testimonialLoadMore"
@@ -9570,6 +9619,7 @@
            /* Keep the proof layer focused on four package-relevant voices at
               first, while letting interested visitors browse the full set. */
            (function () {
+             return;
              var cards = document.querySelectorAll('.testimonials-grid .testimonial-card');
              var button = document.getElementById('testimonialLoadMore');
              if (!cards.length || !button) return;
@@ -9690,6 +9740,7 @@
             <div class="sdm-name" id="sdmName"></div>
             <p class="sdm-problem" id="sdmProblem"></p>
             <p class="sdm-solution" id="sdmSolution"></p>
+            <p class="showcase-detail-note"><strong>Timeline</strong> <span id="sdmTimelineValue">Not stated in this project summary.</span></p>
             <div class="sdm-tags" id="sdmTags"></div>
             <div class="sdm-footer">
               <span class="result-badge" id="sdmResult">
@@ -10364,7 +10415,11 @@
           <div class="contact-right">
 
         <form class="contact-form" id="contactForm">
-          <!-- Basic Info Section -->
+          <div class="sas-form-progress" aria-live="polite" aria-label="Form progress">
+            <span class="sas-progress-label">Step 1 of 2 · About you</span>
+            <span class="sas-form-progress-track"><span id="sasProgressFill"></span></span>
+          </div>
+          <div class="sas-step" id="formStep1" data-step="1">
           <div class="form-section">
             <span class="form-section-title">About you</span>
             <div class="form-row">
@@ -10377,9 +10432,9 @@
                 <label for="email" class="floating-label">Email address</label>
               </div>
             </div>
-            <div class="form-row context-grid">
+            <div class="form-row">
               <div class="form-group">
-                <select id="businessStage" name="businessStage" data-empty="true">
+                <select id="businessStage" name="businessStage" required data-empty="true">
                   <option value="">Choose a stage</option>
                   <option value="new-venture">New venture or idea</option>
                   <option value="growing-business">Growing business</option>
@@ -10389,6 +10444,15 @@
                 </select>
                 <label for="businessStage" class="floating-label">Where are you in the journey?</label>
               </div>
+            </div>
+          </div>
+            <div class="sas-form-step-actions"><span></span><button class="sas-next" type="button" id="formContinue">Continue</button></div>
+          </div>
+
+          <div class="sas-step" id="formStep2" data-step="2" hidden>
+          <div class="form-section">
+            <span class="form-section-title">Your project context</span>
+            <div class="form-row context-grid">
               <div class="form-group">
                 <select id="digitalPresence" name="digitalPresence" data-empty="true">
                   <option value="">Choose one</option>
@@ -10400,8 +10464,6 @@
                 </select>
                 <label for="digitalPresence" class="floating-label">What exists today?</label>
               </div>
-            </div>
-            <div class="form-row">
               <div class="form-group">
                 <input type="text" id="company" name="company" placeholder=" " autocomplete="organization">
                 <label for="company" class="floating-label">Business or project name (optional)</label>
@@ -10419,13 +10481,12 @@
               </div>
             </div>
           </div>
-
           <!-- Budget Section -->
           <div class="form-section">
             <span class="form-section-title">Investment range</span>
             <div class="budget-grid" id="budgetGrid">
               <label class="budget-chip" data-budget="launch-site">
-                <input type="radio" name="budget" value="launch-site">
+                <input type="radio" name="budget" value="launch-site" required>
                 <span class="budget-price">$2,600</span><span class="budget-tier">Launch Site · clear story</span>
               </label>
               <label class="budget-chip" data-budget="prototype">
@@ -10522,11 +10583,16 @@
             </div>
           </div>
 
+          <div class="sas-form-step-actions">
+            <button class="sas-back" type="button" id="formBack">Back</button>
           <button type="submit" class="submit-btn" id="submitBtn" data-track-cta="contact_submit">
             <span>Get my free plan</span>
             <svg class="submit-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
+          </div>
+          </div>
         </form>
+        <p class="sas-form-trust">Fixed price. You own everything. Reply within 24 hours.</p>
         
         <div class="form-success" id="formSuccess" style="display: none;" role="status" aria-live="polite" tabindex="-1">
           <div class="form-success-icon">
@@ -10536,7 +10602,7 @@
           </div>
           <span class="form-success-kicker">Project brief received</span>
           <h3>Your project brief is in.</h3>
-           <p class="form-success-sub">I’ll review the scope, priorities, and timeline myself, then send you a clear next step within one business day.</p>
+           <p class="form-success-sub">I’ll review the scope, priorities, and timeline myself, then send you a clear next step within 24 hours.</p>
           <div class="form-success-next">
             <span class="form-success-next-label">What happens next</span>
             <p>You’ll receive a considered reply, not a generic sales sequence.</p>
@@ -10560,7 +10626,7 @@
         <p class="faq-subtitle">Pricing, timelines, and what each route lets you do next.</p>
       </header>
       <div class="faq-list">
-        <details class="faq-item">
+        <details class="faq-item" open>
           <summary>How much does it cost to work with Start Apps Studio?</summary>
           <p class="faq-answer">The public path has four routes: a $2,600 Launch Site for a credible story before the full product, a $6,000 Prototype to make the idea tangible for validation or fundraising, an MVP from $15,000 to $30,000 to put a real product in users' hands, and Custom from $25,000 or monthly retainer for a bespoke system. We agree on scope and price before work starts, so you know the investment behind the next milestone.</p>
         </details>
@@ -10699,6 +10765,7 @@
 
       // Progressive form reveal: About you → Budget → Building → Message → CTA.
       (function() {
+        return; // Replaced by the accessible, explicit two-step flow above.
         var form = document.getElementById('contactForm');
         if (!form) return;
         var sections = form.querySelectorAll('.form-section');
@@ -11286,10 +11353,6 @@
 
       /* ── Showcase card detail modal ──────────────────────────────── */
       function openShowcaseModal(card) {
-        // Desktop cards already show the full project story inline. Keep the
-        // detail sheet for tablet/mobile, where the compact carousel hides it.
-        if (window.matchMedia('(min-width: 769px)').matches) return;
-
         var overlay = document.getElementById('showcaseDetailModal');
         if (!overlay || overlay.classList.contains('open') || anotherSiteModalIsOpen('showcaseDetailModal')) return;
 
@@ -11307,6 +11370,7 @@
         overlay.querySelector('#sdmName').innerHTML        = name;
         overlay.querySelector('#sdmProblem').textContent   = problem;
         overlay.querySelector('#sdmSolution').textContent  = solution;
+        overlay.querySelector('#sdmTimelineValue').textContent = card.dataset.timeline || window.__SAS_REFINEMENT_LABELS__.notStated;
         overlay.querySelector('#sdmResultText').innerHTML  = result;
         overlay.querySelector('#sdmVisualBg').style.cssText = vis;
         var sdmImg = overlay.querySelector('#sdmVisualImg');
@@ -11338,14 +11402,9 @@
         overlay.classList.remove('closing', 'sheet-ready');
         overlay.classList.add('open');
         sdmLockScrollLight();
-        // Two rAFs guarantee the browser has painted the off-screen starting
-        // state (translateY(100%), opacity:0) before .sheet-ready triggers the
-        // transition - avoids painting directly at the final position.
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            overlay.classList.add('sheet-ready');
-          });
-        });
+        // Start the transition deterministically, even in background tabs.
+        void overlay.offsetHeight;
+        overlay.classList.add('sheet-ready');
       }
 
       function closeShowcaseModal() {
@@ -12522,6 +12581,7 @@
 
       /* ── Testimonial carousel dots ────────────────────────────────── */
       (function () {
+        return;
         var grid = document.querySelector('.testimonials-grid');
         var dotsEl = document.getElementById('testimonialDots');
         if (!grid || !dotsEl || !window.__initCarouselPagination) return;
@@ -12577,6 +12637,8 @@
          single teal mass splits into teal + rose with a brightness burst.
          Guards: desktop only (>768px), no reduced-motion, no touch.      */
       (function () {
+        /* The studio's editorial presentation intentionally has no physics. */
+        return;
         var hero   = document.querySelector('.hero');
         var blobT  = document.getElementById('hero-blob-teal');
         var blobR  = document.getElementById('hero-blob-rose');
@@ -13206,5 +13268,17 @@
     }());
 
     </script>
+    <div class="sas-mobile-cta"><a href="#contact" data-track-cta="mobile_sticky_free_plan">Get a free plan</a></div>
+    <button class="sas-back-top" type="button" aria-label="Back to top">↑</button>
+    <script>
+      window.__SAS_REFINEMENT_LABELS__ = {
+        stepOne: __t('Step 1 of 2 · About you'),
+        stepTwo: __t('Step 2 of 2 · Your project'),
+        readMore: __t('Read more'),
+        showLess: __t('Show less'),
+        notStated: __t('Not stated in this project summary.')
+      };
+    </script>
+    <script src="/assets/startapps-refinement.js" defer></script>
   </body>
 </html>

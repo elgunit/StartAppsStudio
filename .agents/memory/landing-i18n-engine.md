@@ -26,3 +26,9 @@ description: Durable decisions for the multi-locale landing-page localization la
 **Why:** Coverage validates source-key parity and markup safety, but it cannot detect a dictionary that reads as a mixture of closely related languages.
 
 **How to apply:** For every newly added locale, test its explicit URL and `Accept-Language` resolution, review the visible hero and long sales/FAQ copy, and scan for known language-specific leakage before declaring it complete.
+
+**Rule:** Keep new initial-page UI and its text in the server-rendered template. External interaction scripts must consume server-localized labels and attributes, not introduce unextracted English strings or infer structured facts by parsing English prose.
+
+**Why:** Runtime-only labels can bypass source-key coverage, and an English-only duration parser makes translated case-study timelines appear missing even when the facts are present.
+
+**How to apply:** Author factual modal metadata explicitly, register visitor-facing attributes for extraction, and use literal template translation calls for labels needed by external scripts.

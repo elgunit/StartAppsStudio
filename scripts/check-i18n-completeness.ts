@@ -49,6 +49,8 @@ const INTENTIONAL_INVARIANTS = new Set([
   "iOS &middot; Android &middot; Web",
   "&times;",
   "→",
+  "←",
+  "↑",
   "✓",
   "&#9998;",
   "&lt;/&gt;",

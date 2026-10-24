@@ -5,6 +5,31 @@
     "context": "title"
   },
   {
+    "key": "Main navigation",
+    "kind": "attr",
+    "context": "nav.sas-nav[aria-label]"
+  },
+  {
+    "key": "Start Apps Studio",
+    "kind": "unit",
+    "context": "a.sas-brand"
+  },
+  {
+    "key": "Open navigation",
+    "kind": "attr",
+    "context": "button.sas-menu-button[aria-label]"
+  },
+  {
+    "key": "Menu",
+    "kind": "unit",
+    "context": "button.sas-menu-button"
+  },
+  {
+    "key": "<a href=\"#case-studies\">Work</a> <a href=\"#what-we-ship\">Services</a> <a href=\"#pricing\">Pricing</a> <a href=\"#studio-human\">About</a> <a href=\"#faq\">FAQ</a> <a class=\"sas-nav-cta\" href=\"#contact\" data-track-cta=\"nav_free_plan\">Get a free plan</a>",
+    "kind": "unit",
+    "context": "div#sasNavLinks.sas-nav-links"
+  },
+  {
     "key": "Help us improve the site",
     "kind": "unit",
     "context": "strong#analyticsConsentTitle"
@@ -53,6 +78,26 @@
     "key": "<a href=\"#contact\" class=\"cta-button\" data-track-cta=\"hero_free_plan\">Get a free plan</a> <a href=\"#pricing\" class=\"cta-button secondary\" data-track-cta=\"hero_pricing\">See pricing</a>",
     "kind": "unit",
     "context": "div.hero-cta-group"
+  },
+  {
+    "key": "Product previews",
+    "kind": "attr",
+    "context": "div.hero-preview[aria-label]"
+  },
+  {
+    "key": "Project preview",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
+    "key": "Elgar Sirajov",
+    "kind": "attr",
+    "context": "img[alt]"
+  },
+  {
+    "key": "<strong>Elgar Sirajov</strong><span>One person owns your product from plan to launch.</span>",
+    "kind": "unit",
+    "context": "div"
   },
   {
     "key": "Common problems we solve",
@@ -200,6 +245,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "6 weeks",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
+  },
+  {
     "key": "Coaching and tracking app hero design",
     "kind": "attr",
     "context": "img[alt]"
@@ -228,6 +278,11 @@
     "key": "Demo-ready in 11 days · Contract signed",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "11 days",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
   },
   {
     "key": "Operations dashboard hero design",
@@ -260,6 +315,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "7 weeks",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
+  },
+  {
     "key": "Payments and ledger MVP hero design",
     "kind": "attr",
     "context": "img[alt]"
@@ -288,6 +348,11 @@
     "key": "First cohort sold out at launch",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "5 weeks",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
   },
   {
     "key": "Course platform hero design",
@@ -320,6 +385,11 @@
     "context": "div.showcase-card[data-result]"
   },
   {
+    "key": "4 weeks",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
+  },
+  {
     "key": "Property discovery app hero design",
     "kind": "attr",
     "context": "img[alt]"
@@ -348,6 +418,11 @@
     "key": "Demo live in 9 days · Meeting secured",
     "kind": "attr",
     "context": "div.showcase-card[data-result]"
+  },
+  {
+    "key": "9 days",
+    "kind": "attr",
+    "context": "div.showcase-card[data-timeline]"
   },
   {
     "key": "Investor-ready demo hero design",
@@ -710,9 +785,14 @@
     "context": "div.price-feature"
   },
   {
-    "key": "<span class=\"popular-badge-dot\"></span>Best for proof",
+    "key": "What's included",
     "kind": "unit",
-    "context": "div.popular-badge"
+    "context": "button.sas-included-toggle"
+  },
+  {
+    "key": "Get a free plan",
+    "kind": "unit",
+    "context": "a.cta-button"
   },
   {
     "key": "Responsive Web App",
@@ -743,6 +823,11 @@
     "key": "Design system + source code",
     "kind": "text",
     "context": "div.price-feature"
+  },
+  {
+    "key": "<span class=\"popular-badge-dot\"></span>Recommended",
+    "kind": "unit",
+    "context": "div.popular-badge"
   },
   {
     "key": "iOS &middot; Android &middot; Web",
@@ -818,6 +903,16 @@
     "key": "<span class=\"special-details-label\">Who this is for</span> For teams with a bigger product, complex requirements, or a need for one accountable partner.",
     "kind": "unit",
     "context": "div.special-details"
+  },
+  {
+    "key": "Talk through a custom build",
+    "kind": "unit",
+    "context": "a.cta-button"
+  },
+  {
+    "key": "Fixed price. You own everything. Reply within 24 hours.",
+    "kind": "unit",
+    "context": "p.sas-pricing-trust"
   },
   {
     "key": "Shared core. Web, iOS, and Android.",
@@ -1110,11 +1205,6 @@
     "context": "div.mid-cta-text"
   },
   {
-    "key": "Get a free plan",
-    "kind": "unit",
-    "context": "a.cta-button"
-  },
-  {
     "key": "One person.<br>Full accountability.",
     "kind": "unit",
     "context": "h2.section-title"
@@ -1128,11 +1218,6 @@
     "key": "Elgar Sirajov, Founder of Start Apps Studio",
     "kind": "attr",
     "context": "img[alt]"
-  },
-  {
-    "key": "Elgar Sirajov",
-    "kind": "unit",
-    "context": "div.founder-name"
   },
   {
     "key": "Founder · Designer · Developer · Strategist",
@@ -1640,6 +1725,26 @@
     "context": "div#testimonialDots.testimonial-dots[aria-label]"
   },
   {
+    "key": "Testimonial navigation",
+    "kind": "attr",
+    "context": "div.sas-testimonial-controls[aria-label]"
+  },
+  {
+    "key": "Previous testimonial",
+    "kind": "attr",
+    "context": "button#sasQuotePrevious[aria-label]"
+  },
+  {
+    "key": "←",
+    "kind": "unit",
+    "context": "button#sasQuotePrevious"
+  },
+  {
+    "key": "Next testimonial",
+    "kind": "attr",
+    "context": "button#sasQuoteNext[aria-label]"
+  },
+  {
     "key": "Show more",
     "kind": "unit",
     "context": "span"
@@ -1718,6 +1823,11 @@
     "key": "See the full comparison",
     "kind": "text",
     "context": "button.why-compare-btn"
+  },
+  {
+    "key": "<strong>Timeline</strong> <span id=\"sdmTimelineValue\">Not stated in this project summary.</span>",
+    "kind": "unit",
+    "context": "p.showcase-detail-note"
   },
   {
     "key": "Close",
@@ -2480,6 +2590,16 @@
     "context": "p"
   },
   {
+    "key": "Form progress",
+    "kind": "attr",
+    "context": "div.sas-form-progress[aria-label]"
+  },
+  {
+    "key": "<span class=\"sas-progress-label\">Step 1 of 2 · About you</span> <span class=\"sas-form-progress-track\"><span id=\"sasProgressFill\"></span></span>",
+    "kind": "unit",
+    "context": "div.sas-form-progress"
+  },
+  {
     "key": "About you",
     "kind": "unit",
     "context": "span.form-section-title"
@@ -2528,6 +2648,16 @@
     "key": "Where are you in the journey?",
     "kind": "unit",
     "context": "label.floating-label"
+  },
+  {
+    "key": "Continue",
+    "kind": "unit",
+    "context": "button#formContinue.sas-next"
+  },
+  {
+    "key": "Your project context",
+    "kind": "unit",
+    "context": "span.form-section-title"
   },
   {
     "key": "Choose one",
@@ -2720,6 +2850,11 @@
     "context": "label.floating-label"
   },
   {
+    "key": "Back",
+    "kind": "unit",
+    "context": "button#formBack.sas-back"
+  },
+  {
     "key": "Get my free plan",
     "kind": "unit",
     "context": "span"
@@ -2735,7 +2870,7 @@
     "context": "h3"
   },
   {
-    "key": "I’ll review the scope, priorities, and timeline myself, then send you a clear next step within one business day.",
+    "key": "I’ll review the scope, priorities, and timeline myself, then send you a clear next step within 24 hours.",
     "kind": "unit",
     "context": "p.form-success-sub"
   },
@@ -2935,11 +3070,6 @@
     "context": "p.journal-note-excerpt"
   },
   {
-    "key": "Start Apps Studio",
-    "kind": "unit",
-    "context": "div.footer-brand"
-  },
-  {
     "key": "create@startappsstudio.com",
     "kind": "unit",
     "context": "a"
@@ -2963,6 +3093,16 @@
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
     "kind": "unit",
     "context": "p.footer-copyright"
+  },
+  {
+    "key": "<a href=\"#contact\" data-track-cta=\"mobile_sticky_free_plan\">Get a free plan</a>",
+    "kind": "unit",
+    "context": "div.sas-mobile-cta"
+  },
+  {
+    "key": "↑",
+    "kind": "unit",
+    "context": "button.sas-back-top"
   },
   {
     "key": "Show less",
@@ -3116,6 +3256,26 @@
   },
   {
     "key": "Start here",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Step 1 of 2 · About you",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Step 2 of 2 · Your project",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Read more",
+    "kind": "js",
+    "context": "inline script"
+  },
+  {
+    "key": "Not stated in this project summary.",
     "kind": "js",
     "context": "inline script"
   },
