@@ -610,49 +610,124 @@
     "context": "div.skill-item"
   },
   {
-    "key": "Market and competitor research",
+    "key": "SEO Audit",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Google ranking and SEO audit",
+    "key": "A full check of your site's health, with a plain-English fix list ranked by impact.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Focused sprint · 1–2 weeks",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Keyword Strategy",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Review and reputation analysis",
+    "key": "The exact searches your customers are typing, plus a plan to rank for them.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Search strategy · 1–2 weeks",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Backlink Strategy &amp; Outreach",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Keyword strategy and backlinks",
+    "key": "The links that decide who Google and AI engines recommend, earned through real outreach to real editors.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Sustained outreach · 4–8 weeks",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Content Plan",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Content and messaging",
+    "key": "A 90-day editorial calendar with topics, outlines, and briefs your writer (or AI) can run with.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "90-day editorial runway",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Paid Ads Setup",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Paid ads",
+    "key": "Google and Meta campaigns set up properly the first time, with the creative and targeting to match.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Launch sprint · 2–3 weeks",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Social Media Kit",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Social",
+    "key": "Branded post templates, a content calendar, and a clear voice across every channel.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "30-day content system",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Email Sequences",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Email",
+    "key": "Welcome flows, onboarding, and win-back campaigns that actually get opened.",
+    "kind": "unit",
+    "context": "p"
+  },
+  {
+    "key": "Ongoing lifecycle support",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
+  },
+  {
+    "key": "Brand Identity",
     "kind": "unit",
     "context": "h3"
   },
   {
-    "key": "Brand identity",
+    "key": "A complete visual system: logo, colors, type, and voice that investors take seriously.",
     "kind": "unit",
-    "context": "h3"
+    "context": "p"
+  },
+  {
+    "key": "Brand deep dive · 3–5 weeks",
+    "kind": "unit",
+    "context": "span.growth-time-badge"
   },
   {
     "key": "From idea to launch",
@@ -3093,11 +3168,6 @@
     "key": "&copy; 2026 Start Apps Studio. All rights reserved.",
     "kind": "unit",
     "context": "p.footer-copyright"
-  },
-  {
-    "key": "<a href=\"#contact\" data-track-cta=\"mobile_sticky_free_plan\">Get a free plan</a>",
-    "kind": "unit",
-    "context": "div.sas-mobile-cta"
   },
   {
     "key": "↑",

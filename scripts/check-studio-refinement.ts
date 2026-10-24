@@ -35,6 +35,13 @@ try {
     if (await consent.isVisible()) await consent.click();
     assert.equal(await page.locator(".sas-nav").count(), 1);
     assert.equal(await page.locator(".sas-mobile-cta").count(), 0, "Floating free-plan bar must stay removed");
+    await page.locator("#serviceTabGrow").click();
+    assert.equal(await page.locator("#tab-grow .growth-card").count(), 8);
+    assert.equal(await page.locator("#tab-grow .growth-card p").count(), 8, "Grow descriptions must not disappear");
+    assert.equal(await page.locator("#tab-grow .growth-time-badge").count(), 8);
+    assert(await page.locator("#tab-grow").isVisible());
+    await page.locator("#serviceTabBuild").click();
+    assert(await page.locator("#tab-build").isVisible());
     assert.equal(await page.locator("#pricing .price-card").count(), 4);
     assert.equal(await page.locator("#pricing .price-card.featured").count(), 1);
     assert(await page.locator("#pricing .mvp-card.featured").count());

@@ -466,6 +466,7 @@ body {
 }
 .pain-strip-resolve,
 .service-card p,
+.growth-card p,
 .how-card p,
 .price-card p,
 .price-card :is(.price-feature,.price-subtitle,.price-tagline,.price-desc,.price-description,.special-feature),
@@ -473,6 +474,12 @@ body {
 .faq-answer,
 .testimonial-text {
   color: var(--sas-card-copy) !important;
+}
+.growth-grid .growth-card h3 { color: var(--sas-ink); }
+.growth-grid .growth-card p { font-size: 17px; line-height: 1.6; }
+.growth-grid .growth-time-badge {
+  color: var(--sas-ink);
+  background: var(--sas-paper-2);
 }
 .how-bento .how-card {
   padding: 24px clamp(16px, 2vw, 24px) !important;
@@ -710,6 +717,7 @@ footer .footer-top-link {
   .faq-item > summary { color: #f0eee4 !important; }
   .pain-strip-resolve,
   .service-card p,
+  .growth-card p,
   .how-card p,
   .price-card p,
   .price-card :is(.price-feature,.price-subtitle,.price-tagline,.price-desc,.price-description,.special-feature),

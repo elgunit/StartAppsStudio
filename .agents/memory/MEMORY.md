@@ -26,5 +26,6 @@
 - [Korean Journal editorial maps](korean-journal-editorial-maps.md) — localized article blocks need explicit per-path Korean copy; shared prose can preserve facts while erasing the article’s argument.
 - [Resources hub direction](resources-hub-direction.md) — present Resources as a scannable product-decision hub, not a news feed or long-form article index.
 - [Studio CTA placement](site-cta-preference.md) — do not reintroduce the floating bottom “Get a free plan” bar.
+- [Service content preservation](service-content-preservation.md) — visual refinements must retain full Build/Grow descriptions; check the inactive tab too.
 - [Inquiry measurement integrity](inquiry-measurement-integrity.md) — count contact inquiries only after server confirmation; keep CTA clicks and failed submissions distinct.
 - [Cross-manager dependency audits](cross-manager-dependency-audits.md) — pnpm import can retain vulnerable transitive versions; audit each tracked lockfile independently.

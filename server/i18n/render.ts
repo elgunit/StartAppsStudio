@@ -203,17 +203,17 @@ function patchMetadata(html: string, locale: LocaleDefinition): string {
   if (locale.code === "zh") {
     out = out.replace(
       "    <style>",
-      `    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-sans-sc-400-zh-subset-61d02c6e07.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-serif-sc-800-zh-subset-296a2691ef.woff2" crossorigin />
+      `    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-sans-sc-400-zh-subset-619a91c309.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/noto-serif-sc-800-zh-subset-03cfa879c3.woff2" crossorigin />
     <style>
-      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-sans-sc-400-zh-subset-61d02c6e07.woff2) format('woff2');}
-      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/noto-sans-sc-500-zh-subset-07bb77a8ff.woff2) format('woff2');}
-      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-sans-sc-600-zh-subset-7433262aad.woff2) format('woff2');}
-      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-sans-sc-700-zh-subset-dd431bdc8a.woff2) format('woff2');}
-      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-serif-sc-400-zh-subset-b6202d3336.woff2) format('woff2');}
-      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-serif-sc-600-zh-subset-22929e6748.woff2) format('woff2');}
-      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-serif-sc-700-zh-subset-6931aec6ae.woff2) format('woff2');}
-      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/noto-serif-sc-800-zh-subset-296a2691ef.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-sans-sc-400-zh-subset-619a91c309.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/noto-sans-sc-500-zh-subset-84b0348de4.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-sans-sc-600-zh-subset-4d8ba1cf49.woff2) format('woff2');}
+      @font-face{font-family:'Noto Sans SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-sans-sc-700-zh-subset-9d9660e250.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/noto-serif-sc-400-zh-subset-bb6d8c7b04.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/noto-serif-sc-600-zh-subset-5937f4a30e.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/noto-serif-sc-700-zh-subset-5715601a9b.woff2) format('woff2');}
+      @font-face{font-family:'Noto Serif SC';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/noto-serif-sc-800-zh-subset-03cfa879c3.woff2) format('woff2');}
     </style>
     <style>`,
     );
