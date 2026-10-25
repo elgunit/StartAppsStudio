@@ -118,7 +118,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
 .how-card-step { width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--sas-deep);color:#f5f3ed;font:22px var(--sas-serif);position:relative;z-index:1; }
 .how-card-ghost { display:none; }
 .how-card h3 { margin-top:24px; font-size:19px; line-height:1.3; }
-.pricing-grid { grid-template-columns:repeat(4,minmax(0,1fr)); align-items:stretch; gap:18px; }
+.pricing-grid { grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-rows:1fr; align-items:stretch; gap:18px; }
 .price-card { display:flex; flex-direction:column; padding:var(--sas-card-pad)!important; }
 .pricing-grid .price-card { margin-top:0!important; }
 .price-card .price-amount { color:var(--sas-ink); font-size:clamp(27px,2.8vw,36px); }
@@ -129,7 +129,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
 .price-card .sas-extra-features,.special-package .sas-special-extras { display:none; padding-top:8px; }
 .price-card.is-expanded .sas-extra-features,.special-package.is-expanded .sas-special-extras { display:block; }
 .price-card .sas-included-toggle { margin-top:auto; padding:18px 0 0; border:0; background:none; color:var(--sas-deep); font:600 13px var(--sans); text-align:left; }
-.sas-price-cta { display:grid; place-items:center; width:100%; min-height:48px; margin-top:18px; padding:12px 16px; text-align:center; text-decoration:none; border-radius:999px; background:var(--action); color:var(--on-accent); font-weight:700; line-height:1.25; }
+.sas-price-cta { display:grid; place-items:center; width:100%; min-height:48px; margin-top:18px; padding:12px 16px; text-align:center; text-decoration:none; white-space:nowrap; font-size:clamp(12px,1.05vw,15px); border-radius:999px; background:var(--action); color:var(--on-accent); font-weight:700; line-height:1.25; }
 .sas-price-cta:hover { background:var(--action-hover); }
 .custom-price-card { min-height:100%; padding:var(--sas-card-pad)!important; cursor:default!important; }
 .custom-price-card.special-package { margin:0!important; }
@@ -138,7 +138,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
 .custom-price-card .special-identity-row h3 { font-size:24px; }
 .custom-price-card .special-pricing { justify-content:flex-start; flex-wrap:wrap; gap:8px; }
 .custom-price-card .special-pricing > * { max-width:100%; white-space:normal; }
-.custom-price-card .special-feature { max-width:100%; min-width:0; white-space:normal; align-items:flex-start; }
+.custom-price-card .special-feature { max-width:100%; min-width:0; white-space:normal; align-items:center; }
 .custom-price-card .special-feature svg { flex-shrink:0; }
 .custom-price-card .special-features { display:flex!important; flex-direction:column; gap:10px; }
 .custom-price-card .special-features > .special-feature:nth-of-type(n+4) { display:none; }
@@ -243,7 +243,7 @@ body .section .testimonial-card .testimonial-text { font-size:clamp(22px,2.3vw,3
   .how-bento { grid-template-columns:1fr; margin-top:30px; gap:8px; }
   .how-card { padding:16px 8px!important; }
   .price-card.mvp-card { transform:none; }
-  .pricing-grid { grid-template-columns:1fr!important; }
+  .pricing-grid { grid-template-columns:1fr!important; grid-auto-rows:auto; }
   .contact { margin:0 -16px; padding:64px 20px calc(88px + env(safe-area-inset-bottom))!important; }
   .contact-inner { grid-template-columns:1fr!important; }
   .contact-form { padding:22px!important; }

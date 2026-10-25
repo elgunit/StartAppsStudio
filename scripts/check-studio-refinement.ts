@@ -45,6 +45,11 @@ try {
     assert.equal(await page.locator("#pricing .price-card").count(), 4);
     assert.equal(await page.locator("#pricing .price-card.featured").count(), 1);
     assert(await page.locator("#pricing .mvp-card.featured").count());
+    assert.equal(
+      await page.locator("#custom-scale .special-feature").first().evaluate((feature) => getComputedStyle(feature).alignItems),
+      "center",
+      "Custom feature icons should align with their text",
+    );
     const heights = await page.locator("#pricing .price-card").evaluateAll(
       (cards) => cards.map((card) => card.getBoundingClientRect().height),
     );
@@ -95,9 +100,19 @@ try {
         width: document.documentElement.clientWidth,
         contentWidth: document.documentElement.scrollWidth,
         phoneHeight: document.querySelector(".hero-phone")?.getBoundingClientRect().height || 0,
+        pricingAutoRows: getComputedStyle(document.querySelector("#pricing .pricing-grid")!).gridAutoRows,
+        customCtaLines: (() => {
+          const cta = document.querySelector("#custom-scale .sas-price-cta");
+          if (!cta) return 0;
+          const range = document.createRange();
+          range.selectNodeContents(cta);
+          return range.getClientRects().length;
+        })(),
       }));
       assert(layout.contentWidth <= layout.width + 1, `${width}px horizontal overflow`);
       assert(layout.phoneHeight < 350, "Phone preview stretched vertically");
+      assert.equal(layout.customCtaLines, 1, `${width}px custom CTA should stay on one line`);
+      if (width <= 700) assert.equal(layout.pricingAutoRows, "auto", "Mobile pricing cards should use natural heights");
     }
     assert.deepEqual(errors, [], `${colorScheme} browser errors`);
     console.log(`PASS ${colorScheme}: pricing, FAQ, all quotes, case study, mobile controls, 4 widths`);
