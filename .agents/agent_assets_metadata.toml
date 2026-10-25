@@ -14,3 +14,31 @@ mtime_ms = 1792893823774
 storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/1e10ef72-cb99-48c1-ad85-8d7cbbc65539/d206085f-0934-4e05-bfad-083a447388b5"
 storage_version_token = "1792894515992895"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "4YW6ZQCOJjrr85Aoe_tmf"
+uri = "file://docs/Website_Rebuild_Brief.pdf"
+type = "pdf"
+title = "Website Rebuild Brief (PDF)"
+description = "Downloadable PDF version of the website rebuild handoff."
+logical_id = "14c675bc-f2e6-4ff7-9798-787239ac1a3e"
+content_hash = "sha256:15ec5aa026485a00c68a1001fb6ae640243da41835f5f25911e25daff612ce94"
+size = 105790
+mtime_ms = 1792894698111
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/14c675bc-f2e6-4ff7-9798-787239ac1a3e/796873ca-a178-47ed-9765-6a0fa9f093ca"
+storage_version_token = "1792894701581164"
+content_type = "application/pdf"
+
+[[outputs]]
+id = "aB32TPbjahl6BaFRyFcKR"
+uri = "file://docs/Website_Rebuild_Brief.zip"
+type = "unspecified"
+title = "Website Rebuild Brief — Download ZIP"
+description = "ZIP download containing the brief in both PDF and Markdown formats."
+logical_id = "c91860e0-e149-4ac6-b830-bc5c6a7b033b"
+content_hash = "sha256:f45626760664136a863922a6c7ca14e2f2af7ec1eaba090209741045a1e61152"
+size = 107359
+mtime_ms = 1792894713788
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/c91860e0-e149-4ac6-b830-bc5c6a7b033b/19fd4dcd-ba2c-421c-8a81-a8c679936b2e"
+storage_version_token = "1792894716368788"
+content_type = "application/octet-stream"
