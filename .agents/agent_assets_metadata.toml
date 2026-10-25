@@ -1,3 +1,16 @@
 uploads = []
 generated = []
-outputs = []
+
+[[outputs]]
+id = "hxuQVHXw-YUJk2sK8GAxj"
+uri = "file://docs/WEBSITE_REBUILD_BRIEF.md"
+type = "text"
+title = "Website Rebuild Brief"
+description = "A handoff summary of the site's pages, sections, content, pricing, languages, design constraints, and claims that still need confirmation."
+logical_id = "1e10ef72-cb99-48c1-ad85-8d7cbbc65539"
+content_hash = "sha256:6cd9801b29584264e8cd727c34b89be9d2e69cdc4aecf3966caa2490f957d40f"
+size = 17495
+mtime_ms = 1792893823774
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/1e10ef72-cb99-48c1-ad85-8d7cbbc65539/d206085f-0934-4e05-bfad-083a447388b5"
+storage_version_token = "1792894515992895"
+content_type = "text/markdown"
