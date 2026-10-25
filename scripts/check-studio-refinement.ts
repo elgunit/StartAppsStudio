@@ -94,13 +94,14 @@ try {
     assert.equal(await descriptionToggle.getAttribute("aria-expanded"), "true");
     await descriptionToggle.click();
     assert.equal(await descriptionToggle.getAttribute("aria-expanded"), "false");
-    for (const width of [360, 390, 768, 1440]) {
+    for (const width of [320, 360, 390, 768, 1024, 1200, 1280, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       const layout = await page.evaluate(() => ({
         width: document.documentElement.clientWidth,
         contentWidth: document.documentElement.scrollWidth,
         phoneHeight: document.querySelector(".hero-phone")?.getBoundingClientRect().height || 0,
         pricingAutoRows: getComputedStyle(document.querySelector("#pricing .pricing-grid")!).gridAutoRows,
+        pricingColumns: getComputedStyle(document.querySelector("#pricing .pricing-grid")!).gridTemplateColumns.split(" ").length,
         customCtaLines: (() => {
           const cta = document.querySelector("#custom-scale .sas-price-cta");
           if (!cta) return 0;
@@ -108,14 +109,26 @@ try {
           range.selectNodeContents(cta);
           return range.getClientRects().length;
         })(),
+        customCtaFits: (() => {
+          const cta = document.querySelector("#custom-scale .sas-price-cta");
+          if (!cta) return false;
+          const range = document.createRange();
+          range.selectNodeContents(cta);
+          const style = getComputedStyle(cta);
+          const available = cta.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+          return range.getBoundingClientRect().width <= available + 1;
+        })(),
       }));
       assert(layout.contentWidth <= layout.width + 1, `${width}px horizontal overflow`);
       assert(layout.phoneHeight < 350, "Phone preview stretched vertically");
       assert.equal(layout.customCtaLines, 1, `${width}px custom CTA should stay on one line`);
+      assert(layout.customCtaFits, `${width}px custom CTA text should stay inside the button`);
       if (width <= 700) assert.equal(layout.pricingAutoRows, "auto", "Mobile pricing cards should use natural heights");
+      const expectedPricingColumns = width > 1200 ? 4 : width > 700 ? 2 : 1;
+      assert.equal(layout.pricingColumns, expectedPricingColumns, `${width}px pricing columns should match the responsive layout`);
     }
     assert.deepEqual(errors, [], `${colorScheme} browser errors`);
-    console.log(`PASS ${colorScheme}: pricing, FAQ, all quotes, case study, mobile controls, 4 widths`);
+    console.log(`PASS ${colorScheme}: pricing, FAQ, all quotes, case study, mobile controls, 8 widths`);
     await page.close();
   }
 } finally {
