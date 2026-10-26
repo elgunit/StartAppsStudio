@@ -42,3 +42,31 @@ mtime_ms = 1792894713788
 storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/c91860e0-e149-4ac6-b830-bc5c6a7b033b/19fd4dcd-ba2c-421c-8a81-a8c679936b2e"
 storage_version_token = "1792894716368788"
 content_type = "application/octet-stream"
+
+[[outputs]]
+id = "TWpNoc00w3AKWLwAm5lWH"
+uri = "file://docs/JOURNAL_REBUILD_BRIEF.md"
+type = "text"
+title = "Journal Content & Rebuild Brief (Markdown)"
+description = "Journal-only Markdown handoff with the routes, article inventory, current excerpts, page structure, localization, and editorial rules."
+logical_id = "b1165c4c-3cdc-4106-8f24-9027c8d86918"
+content_hash = "sha256:dd4efe9c31ec9d18d3ce438e34eb11c7b536d397022a7999f48e64dda5afb806"
+size = 7823
+mtime_ms = 1792983866329
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/b1165c4c-3cdc-4106-8f24-9027c8d86918/ad3239f5-90b0-4293-9f72-818a20a76273"
+storage_version_token = "1792983887230804"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "fahTpf55ACT4WNEvg70SO"
+uri = "file://docs/JOURNAL_REBUILD_BRIEF.zip"
+type = "unspecified"
+title = "Journal Markdown — Download ZIP"
+description = "Downloadable ZIP containing the Journal Markdown brief."
+logical_id = "93a91b0a-49f5-472d-982b-4e3e623c1398"
+content_hash = "sha256:1fb01d91f550ea24d35161f94c74d438e3c044cd8bbc374929a188fac77ea127"
+size = 3414
+mtime_ms = 1792983882465
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/93a91b0a-49f5-472d-982b-4e3e623c1398/e1245517-81e5-4309-9bd2-20fb03ee16dd"
+storage_version_token = "1792983887709979"
+content_type = "application/octet-stream"
