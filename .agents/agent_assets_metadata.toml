@@ -70,3 +70,31 @@ mtime_ms = 1792983882465
 storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/93a91b0a-49f5-472d-982b-4e3e623c1398/e1245517-81e5-4309-9bd2-20fb03ee16dd"
 storage_version_token = "1792983887709979"
 content_type = "application/octet-stream"
+
+[[outputs]]
+id = "kMBM0aGtDhUYy4SiQl_J-"
+uri = "file://generated-artifacts/journal-full-content-export.md"
+type = "text"
+title = "Journal Full Content — Markdown"
+description = "Complete Journal export: all 9 full articles, metadata, source references, and Journal interface copy in all 11 locales."
+logical_id = "eeade65d-4fb3-4cbb-aabf-bfcae91997f8"
+content_hash = "sha256:50030b77ced34fb9f6b7c5e99323e65391ddd4e9cd7f9448a9ffdfb3cad9ed5a"
+size = 935669
+mtime_ms = 1793019978854
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/eeade65d-4fb3-4cbb-aabf-bfcae91997f8/2a59e42b-a348-4d4d-bda4-269da5697f23"
+storage_version_token = "1793020033405583"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "D1ri-5DswcoC9tL9hP-w6"
+uri = "file://generated-artifacts/journal-full-content-export.zip"
+type = "unspecified"
+title = "Journal Full Content — Download ZIP"
+description = "Downloadable ZIP containing the complete Markdown export of all 9 Journal articles and their translations across 11 locales."
+logical_id = "b92733e3-cbb6-418d-b8a6-929952ab4582"
+content_hash = "sha256:9891756bcfd780271893fb6d055dc89e81e52d97ee853155e5747b8d71ccba31"
+size = 281360
+mtime_ms = 1793020004841
+storage_uri = "gcs://replit-rams-assets-worf/rams/assets/repl:3d415151-4a6e-4a32-a024-cb2ffdead70b/b92733e3-cbb6-418d-b8a6-929952ab4582/35e22e20-9daf-4df7-bc31-8714fee4152b"
+storage_version_token = "1793020033963303"
+content_type = "application/octet-stream"
